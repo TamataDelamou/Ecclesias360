@@ -1,0 +1,11 @@
+{
+  "@@locale": "fr",
+  "appTitle": "Ecclésias360",
+  "@appTitle": {
+    "description": "Nom de l'application affiché dans le titre de la fenêtre/tâche."
+  },
+  "homeWelcome": "Bienvenue sur Ecclésias360",
+  "@homeWelcome": {
+    "description": "Message d'accueil de l'écran d'accueil."
+  }
+}
