@@ -139,8 +139,8 @@ confirmation utilisateur, exécution par le service métier normal, traçée. Ch
 
 | Module (n° Cahier) | Statut |
 |---|---|
-| Socle transversal (Phase 1) | ⬜ à faire |
-| I — Organisation | ⬜ à faire |
+| Socle transversal (Phase 1) | ⚠️ partiel — `AppDatabase` (Drift), `IdGenerator`, `SyncCoordinator` (outbox RG-OFF-02) livrés |
+| I — Organisation | ⚠️ partiel — Lot 1 (Domaine & Données) livré : `organisation_nodes`/`historique_rattachements`, RG-I-01/02/06/08/09, migration `0001` vérifiée par exécution réelle (PGlite). Lot 2 (Contrôleur & écrans) à venir |
 | II — Fidèles | ⬜ à faire |
 | XXIII — Paramètres de l'application | ⬜ à faire |
 | III — Ministères et départements | ⬜ à faire |
