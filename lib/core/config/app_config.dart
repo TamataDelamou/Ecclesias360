@@ -20,8 +20,11 @@ class AppConfig {
     return config;
   }
 
+  /// `.env` n'est jamais commité (§9/§10 AGENTS.md) : absent d'un
+  /// clonage fraîchement effectué tant que le développeur ne l'a pas créé
+  /// depuis `.env.example` — chargement optionnel, valeurs vides en repli.
   static Future<void> load() async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: '.env', isOptional: true);
     _instance = AppConfig._(
       dotenv.get('SUPABASE_URL', fallback: ''),
       dotenv.get('SUPABASE_PUBLISHABLE_KEY', fallback: ''),

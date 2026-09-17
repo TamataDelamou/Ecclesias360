@@ -6,6 +6,7 @@ import '../../../core/error/app_error.dart';
 import '../../../core/sync/sync_coordinator.dart';
 import '../../../core/utils/id_generator.dart';
 import '../domain/models/categorie_confessionnelle.dart';
+import '../domain/models/historique_rattachement.dart';
 import '../domain/models/organisation_node.dart';
 import '../domain/models/statut_noeud.dart';
 import '../domain/models/type_noeud.dart';
@@ -63,6 +64,26 @@ class OrganisationNodeRepository {
     final query = _db.select(_db.organisationNodes)
       ..where((t) => t.noeudParentId.equals(noeudParentId));
     return query.watch().map((rows) => rows.map(_toDomain).toList(growable: false));
+  }
+
+  Stream<List<HistoriqueRattachement>> watchHistorique(String noeudId) {
+    final query = _db.select(_db.historiqueRattachements)
+      ..where((t) => t.noeudId.equals(noeudId))
+      ..orderBy([(t) => OrderingTerm.desc(t.dateEffet)]);
+    return query.watch().map(
+          (rows) => rows
+              .map(
+                (row) => HistoriqueRattachement(
+                  id: row.id,
+                  noeudId: row.noeudId,
+                  ancienParentId: row.ancienParentId,
+                  nouveauParentId: row.nouveauParentId,
+                  dateEffet: row.dateEffet,
+                  motif: row.motif,
+                ),
+              )
+              .toList(growable: false),
+        );
   }
 
   Future<OrganisationNode?> findById(String id) async {
@@ -149,6 +170,41 @@ class OrganisationNodeRepository {
 
     await _enqueueEtSynchroniser(id, 'upsert');
 
+    return (await findById(id))!;
+  }
+
+  /// RG-I-05 — met à jour la fiche d'identité d'un nœud existant. Le type,
+  /// le rattachement (RG-I-06 : `changerRattachement`) et la catégorie
+  /// confessionnelle (RG-I-09 : immuable après création) ne sont pas
+  /// modifiables ici.
+  Future<OrganisationNode> modifierInfosNoeud({
+    required String id,
+    String? nom,
+    String? codeInterne,
+    String? logoUrl,
+    String? cachetUrl,
+    DateTime? dateFondation,
+  }) async {
+    final existant = await findById(id);
+    if (existant == null) {
+      throw ArgumentError('Nœud introuvable : $id');
+    }
+    if (codeInterne != null && await _codeInterneDejaUtilise(codeInterne, excluId: id)) {
+      throw AppError.codeInterneAlreadyUsed();
+    }
+
+    await (_db.update(_db.organisationNodes)..where((t) => t.id.equals(id))).write(
+      OrganisationNodesCompanion(
+        nom: nom == null ? const Value.absent() : Value(nom),
+        codeInterne: codeInterne == null ? const Value.absent() : Value(codeInterne),
+        logoUrl: logoUrl == null ? const Value.absent() : Value(logoUrl),
+        cachetUrl: cachetUrl == null ? const Value.absent() : Value(cachetUrl),
+        dateFondation: dateFondation == null ? const Value.absent() : Value(dateFondation),
+        updatedAt: Value(DateTime.now()),
+      ),
+    );
+
+    await _enqueueEtSynchroniser(id, 'upsert');
     return (await findById(id))!;
   }
 

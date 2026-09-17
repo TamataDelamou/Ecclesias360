@@ -140,7 +140,7 @@ confirmation utilisateur, exécution par le service métier normal, traçée. Ch
 | Module (n° Cahier) | Statut |
 |---|---|
 | Socle transversal (Phase 1) | ⚠️ partiel — `AppDatabase` (Drift), `IdGenerator`, `SyncCoordinator` (outbox RG-OFF-02) livrés |
-| I — Organisation | ⚠️ partiel — Lot 1 (Domaine & Données) livré : `organisation_nodes`/`historique_rattachements`, RG-I-01/02/06/08/09, migration `0001` vérifiée par exécution réelle (PGlite). Lot 2 (Contrôleur & écrans) à venir |
+| I — Organisation | ⚠️ partiel — Lot 1 (Domaine & Données) + Lot 2 (Contrôleur & écrans) livrés : 7 des 9 points d'écran mobile du Cahier couverts (5 écrans réels — arbre avec recherche intégrée, fiche avec statistiques rapides intégrées, création/édition, historique des rattachements, annuaire des Églises). Écrans « Liste des responsables » et « Affectation d'un responsable » différés (dépendent de `node_responsables`/Module II, pas encore construit). Éditions Windows dédiées (layout multi-colonnes) non différenciées — même écrans que mobile pour l'instant |
 | II — Fidèles | ⬜ à faire |
 | XXIII — Paramètres de l'application | ⬜ à faire |
 | III — Ministères et départements | ⬜ à faire |

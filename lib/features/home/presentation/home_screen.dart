@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../core/constants/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -10,7 +12,19 @@ class HomeScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(title: Text(l10n.appTitle)),
-      body: Center(child: Text(l10n.homeWelcome)),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(l10n.homeWelcome),
+            const SizedBox(height: 16),
+            FilledButton(
+              onPressed: () => context.push(AppRoutes.organisation),
+              child: const Text('Organisation'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
