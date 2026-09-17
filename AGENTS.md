@@ -141,7 +141,7 @@ confirmation utilisateur, exécution par le service métier normal, traçée. Ch
 |---|---|
 | Socle transversal (Phase 1) | ⚠️ partiel — `AppDatabase` (Drift), `IdGenerator`, `SyncCoordinator` (outbox RG-OFF-02) livrés |
 | I — Organisation | ⚠️ partiel — Lot 1 (Domaine & Données) + Lot 2 (Contrôleur & écrans) livrés : 7 des 9 points d'écran mobile du Cahier couverts (5 écrans réels — arbre avec recherche intégrée, fiche avec statistiques rapides intégrées, création/édition, historique des rattachements, annuaire des Églises). Écrans « Liste des responsables » et « Affectation d'un responsable » différés (dépendent de `node_responsables`/Module II, pas encore construit). Éditions Windows dédiées (layout multi-colonnes) non différenciées — même écrans que mobile pour l'instant |
-| II — Fidèles | ⬜ à faire |
+| II — Fidèles | ⚠️ partiel — Lot 1 (Domaine & Données) + Lot 2 (Contrôleur & écrans) livrés : `fideles`/`liens_familiaux`/`historique_fideles`/`tuteurs`, RG-II-01/02/03/04/05/06/07(partiel)/08/09(non implémenté, import de masse)/10(non implémenté, écran profil XXIII). 6 écrans sur 14 (liste+recherche, fiche+cheminement+liens+tuteur, création, historique) ; scan photo, import contact, fiche imprimable, fusion doublons, notes pastorales, consentement RGPD différés (III→VII/IX/X/XI/XII/XVIII/XIX pas construits, RG-II-07 agrégation non câblée) |
 | XXIII — Paramètres de l'application | ⬜ à faire |
 | III — Ministères et départements | ⬜ à faire |
 | IV — Dons spirituels | ⬜ à faire |

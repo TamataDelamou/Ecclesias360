@@ -11,4 +11,10 @@ abstract final class AppRoutes {
       '/organisation/nouveau?parent=$parentId';
   static String organisationModifierNoeud(String id) => '/organisation/$id/modifier';
   static String organisationHistorique(String id) => '/organisation/$id/historique';
+
+  static const String fideles = '/fideles';
+  static const String fidelesNouveau = '/fideles/nouveau';
+
+  static String fidele(String id) => '/fideles/$id';
+  static String fideleHistorique(String id) => '/fideles/$id/historique';
 }

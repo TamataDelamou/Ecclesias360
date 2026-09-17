@@ -41,6 +41,78 @@ class HistoriqueRattachements extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Table Drift Fidèle (Module II, RG-II-*). `id` sert de matricule
+/// (RG-II-01).
+@DataClassName('FideleRow')
+class Fideles extends Table {
+  TextColumn get id => text()();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  TextColumn get nom => text()();
+  TextColumn get prenoms => text()();
+  DateTimeColumn get dateNaissance => dateTime()();
+  TextColumn get sexe => text()();
+  TextColumn get statutCivil => text()();
+  TextColumn get statutSpirituel => text().withDefault(const Constant('visiteur'))();
+  TextColumn get statut => text().withDefault(const Constant('actif'))();
+  DateTimeColumn get dateConversion => dateTime().nullable()();
+  DateTimeColumn get dateBapteme => dateTime().nullable()();
+  TextColumn get egliseProvenance => text().nullable()();
+  TextColumn get photoUrl => text().nullable()();
+  TextColumn get telephone => text().nullable()();
+  TextColumn get email => text().nullable()();
+  TextColumn get adresse => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift LienFamilial (RG-II-04).
+@DataClassName('LienFamilialRow')
+class LiensFamiliaux extends Table {
+  TextColumn get id => text()();
+  @ReferenceName('liensCommeFidele1')
+  TextColumn get fideleId1 => text().references(Fideles, #id)();
+  @ReferenceName('liensCommeFidele2')
+  TextColumn get fideleId2 => text().references(Fideles, #id)();
+  TextColumn get typeLien => text()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift HistoriqueFidele (RG-II-05).
+@DataClassName('HistoriqueFideleRow')
+class HistoriqueFideles extends Table {
+  TextColumn get id => text()();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  TextColumn get champModifie => text()();
+  TextColumn get ancienneValeur => text().nullable()();
+  TextColumn get nouvelleValeur => text().nullable()();
+  TextColumn get auteurFideleId => text().nullable()();
+  DateTimeColumn get date => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift Tuteur (RG-II-06).
+@DataClassName('TuteurRow')
+class Tuteurs extends Table {
+  TextColumn get id => text()();
+  @ReferenceName('tuteursCommeMineur')
+  TextColumn get mineurId => text().references(Fideles, #id)();
+  TextColumn get lien => text()();
+  @ReferenceName('tuteursCommeTuteur')
+  TextColumn get tuteurFideleId => text().nullable().references(Fideles, #id)();
+  TextColumn get tuteurTiersNom => text().nullable()();
+  TextColumn get tuteurTiersTelephone => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 /// File d'attente hors ligne (RG-OFF-02) : chaque écriture locale enregistre
 /// ici l'événement à rejouer vers Supabase dès qu'une connexion est
 /// disponible, dans l'ordre chronologique, jamais purgée avant confirmation

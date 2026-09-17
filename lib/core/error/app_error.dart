@@ -27,6 +27,21 @@ class AppError implements Exception {
         "Ce nœud ne peut pas être supprimé : des éléments y sont encore rattachés.",
       );
 
+  factory AppError.statutDisciplineReserveAuModuleX() => const AppError(
+        'statut_discipline_reserve_au_module_x',
+        "Le statut « en discipline » ne peut être déclenché que depuis le module Discipline.",
+      );
+
+  factory AppError.fideleHasBlockingReferences() => const AppError(
+        'fidele_has_blocking_references',
+        "Ce fidèle ne peut pas être supprimé : des éléments y sont encore rattachés. Utilisez l'archivage.",
+      );
+
+  factory AppError.mineurSansTuteur() => const AppError(
+        'mineur_sans_tuteur',
+        "Un tuteur légal doit être enregistré avant de valider le baptême d'un fidèle mineur.",
+      );
+
   @override
   String toString() => 'AppError($code): $message';
 }
