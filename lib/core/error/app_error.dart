@@ -42,6 +42,12 @@ class AppError implements Exception {
         "Un tuteur légal doit être enregistré avant de valider le baptême d'un fidèle mineur.",
       );
 
+  factory AppError.referentielEnUsage() => const AppError(
+        'referentiel_en_usage',
+        "Cette valeur de référentiel est utilisée par des enregistrements existants : "
+            "désactivez-la plutôt que de la supprimer.",
+      );
+
   @override
   String toString() => 'AppError($code): $message';
 }

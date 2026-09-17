@@ -9,6 +9,8 @@ import 'features/fideles/data/fidele_repository.dart';
 import 'features/organization/application/organisation_controller.dart';
 import 'features/organization/data/local/app_database.dart';
 import 'features/organization/data/organisation_node_repository.dart';
+import 'features/parametres/application/zone_geographique_controller.dart';
+import 'features/parametres/data/zone_geographique_repository.dart';
 import 'l10n/app_localizations.dart';
 
 class EcclesiasApp extends StatefulWidget {
@@ -26,6 +28,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final OrganisationController _organisationController;
   late final FideleRepository _fideleRepository;
   late final FideleController _fideleController;
+  late final ZoneGeographiqueRepository _zoneGeographiqueRepository;
+  late final ZoneGeographiqueController _zoneGeographiqueController;
 
   @override
   void initState() {
@@ -35,12 +39,15 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _organisationController = OrganisationController(_organisationRepository);
     _fideleRepository = FideleRepository(widget.database, _syncCoordinator);
     _fideleController = FideleController(_fideleRepository);
+    _zoneGeographiqueRepository = ZoneGeographiqueRepository(widget.database);
+    _zoneGeographiqueController = ZoneGeographiqueController(_zoneGeographiqueRepository);
   }
 
   @override
   void dispose() {
     _organisationController.dispose();
     _fideleController.dispose();
+    _zoneGeographiqueController.dispose();
     super.dispose();
   }
 
@@ -50,6 +57,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
       providers: [
         ChangeNotifierProvider<OrganisationController>.value(value: _organisationController),
         ChangeNotifierProvider<FideleController>.value(value: _fideleController),
+        ChangeNotifierProvider<ZoneGeographiqueController>.value(value: _zoneGeographiqueController),
       ],
       child: MaterialApp.router(
         onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,

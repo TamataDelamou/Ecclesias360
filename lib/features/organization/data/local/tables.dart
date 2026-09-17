@@ -113,6 +113,19 @@ class Tuteurs extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Table Drift ZoneGeographique (Module XXIII, référentiel — RG-XXIII-01/03).
+@DataClassName('ZoneGeographiqueRow')
+class ZonesGeographiques extends Table {
+  TextColumn get id => text()();
+  TextColumn get libelle => text()();
+  IntColumn get niveau => integer()();
+  TextColumn get parentId => text().nullable().references(ZonesGeographiques, #id)();
+  TextColumn get statut => text().withDefault(const Constant('actif'))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 /// File d'attente hors ligne (RG-OFF-02) : chaque écriture locale enregistre
 /// ici l'événement à rejouer vers Supabase dès qu'une connexion est
 /// disponible, dans l'ordre chronologique, jamais purgée avant confirmation

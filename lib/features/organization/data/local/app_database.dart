@@ -18,13 +18,14 @@ part 'app_database.g.dart';
   LiensFamiliaux,
   HistoriqueFideles,
   Tuteurs,
+  ZonesGeographiques,
   SyncOutbox,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -39,6 +40,10 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(liensFamiliaux);
             await m.createTable(historiqueFideles);
             await m.createTable(tuteurs);
+          }
+          // v2 -> v3 : ajout du référentiel ZoneGeographique (Module XXIII).
+          if (from < 3) {
+            await m.createTable(zonesGeographiques);
           }
         },
         beforeOpen: (details) async {

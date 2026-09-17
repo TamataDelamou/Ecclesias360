@@ -10,6 +10,8 @@ import '../../features/organization/presentation/hierarchy_screen.dart';
 import '../../features/organization/presentation/node_detail_screen.dart';
 import '../../features/organization/presentation/node_form_screen.dart';
 import '../../features/organization/presentation/rattachement_history_screen.dart';
+import '../../features/parametres/presentation/roles_screen.dart';
+import '../../features/parametres/presentation/zones_geographiques_screen.dart';
 import '../constants/app_routes.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -57,6 +59,14 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/fideles/:id/historique',
       builder: (context, state) => FideleHistoryScreen(fideleId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: AppRoutes.zonesGeographiques,
+      builder: (context, state) => const ZonesGeographiquesScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.roles,
+      builder: (context, state) => const RolesScreen(),
     ),
   ],
 );

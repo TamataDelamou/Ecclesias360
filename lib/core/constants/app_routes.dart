@@ -17,4 +17,7 @@ abstract final class AppRoutes {
 
   static String fidele(String id) => '/fideles/$id';
   static String fideleHistorique(String id) => '/fideles/$id/historique';
+
+  static const String zonesGeographiques = '/parametres/zones-geographiques';
+  static const String roles = '/parametres/roles';
 }

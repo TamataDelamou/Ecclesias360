@@ -3604,6 +3604,361 @@ class TuteursCompanion extends UpdateCompanion<TuteurRow> {
   }
 }
 
+class $ZonesGeographiquesTable extends ZonesGeographiques
+    with TableInfo<$ZonesGeographiquesTable, ZoneGeographiqueRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ZonesGeographiquesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _libelleMeta = const VerificationMeta(
+    'libelle',
+  );
+  @override
+  late final GeneratedColumn<String> libelle = GeneratedColumn<String>(
+    'libelle',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _niveauMeta = const VerificationMeta('niveau');
+  @override
+  late final GeneratedColumn<int> niveau = GeneratedColumn<int>(
+    'niveau',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _parentIdMeta = const VerificationMeta(
+    'parentId',
+  );
+  @override
+  late final GeneratedColumn<String> parentId = GeneratedColumn<String>(
+    'parent_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES zones_geographiques (id)',
+    ),
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('actif'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, libelle, niveau, parentId, statut];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'zones_geographiques';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ZoneGeographiqueRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('libelle')) {
+      context.handle(
+        _libelleMeta,
+        libelle.isAcceptableOrUnknown(data['libelle']!, _libelleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_libelleMeta);
+    }
+    if (data.containsKey('niveau')) {
+      context.handle(
+        _niveauMeta,
+        niveau.isAcceptableOrUnknown(data['niveau']!, _niveauMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_niveauMeta);
+    }
+    if (data.containsKey('parent_id')) {
+      context.handle(
+        _parentIdMeta,
+        parentId.isAcceptableOrUnknown(data['parent_id']!, _parentIdMeta),
+      );
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ZoneGeographiqueRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ZoneGeographiqueRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      libelle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}libelle'],
+      )!,
+      niveau: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}niveau'],
+      )!,
+      parentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parent_id'],
+      ),
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+    );
+  }
+
+  @override
+  $ZonesGeographiquesTable createAlias(String alias) {
+    return $ZonesGeographiquesTable(attachedDatabase, alias);
+  }
+}
+
+class ZoneGeographiqueRow extends DataClass
+    implements Insertable<ZoneGeographiqueRow> {
+  final String id;
+  final String libelle;
+  final int niveau;
+  final String? parentId;
+  final String statut;
+  const ZoneGeographiqueRow({
+    required this.id,
+    required this.libelle,
+    required this.niveau,
+    this.parentId,
+    required this.statut,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['libelle'] = Variable<String>(libelle);
+    map['niveau'] = Variable<int>(niveau);
+    if (!nullToAbsent || parentId != null) {
+      map['parent_id'] = Variable<String>(parentId);
+    }
+    map['statut'] = Variable<String>(statut);
+    return map;
+  }
+
+  ZonesGeographiquesCompanion toCompanion(bool nullToAbsent) {
+    return ZonesGeographiquesCompanion(
+      id: Value(id),
+      libelle: Value(libelle),
+      niveau: Value(niveau),
+      parentId: parentId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parentId),
+      statut: Value(statut),
+    );
+  }
+
+  factory ZoneGeographiqueRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ZoneGeographiqueRow(
+      id: serializer.fromJson<String>(json['id']),
+      libelle: serializer.fromJson<String>(json['libelle']),
+      niveau: serializer.fromJson<int>(json['niveau']),
+      parentId: serializer.fromJson<String?>(json['parentId']),
+      statut: serializer.fromJson<String>(json['statut']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'libelle': serializer.toJson<String>(libelle),
+      'niveau': serializer.toJson<int>(niveau),
+      'parentId': serializer.toJson<String?>(parentId),
+      'statut': serializer.toJson<String>(statut),
+    };
+  }
+
+  ZoneGeographiqueRow copyWith({
+    String? id,
+    String? libelle,
+    int? niveau,
+    Value<String?> parentId = const Value.absent(),
+    String? statut,
+  }) => ZoneGeographiqueRow(
+    id: id ?? this.id,
+    libelle: libelle ?? this.libelle,
+    niveau: niveau ?? this.niveau,
+    parentId: parentId.present ? parentId.value : this.parentId,
+    statut: statut ?? this.statut,
+  );
+  ZoneGeographiqueRow copyWithCompanion(ZonesGeographiquesCompanion data) {
+    return ZoneGeographiqueRow(
+      id: data.id.present ? data.id.value : this.id,
+      libelle: data.libelle.present ? data.libelle.value : this.libelle,
+      niveau: data.niveau.present ? data.niveau.value : this.niveau,
+      parentId: data.parentId.present ? data.parentId.value : this.parentId,
+      statut: data.statut.present ? data.statut.value : this.statut,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ZoneGeographiqueRow(')
+          ..write('id: $id, ')
+          ..write('libelle: $libelle, ')
+          ..write('niveau: $niveau, ')
+          ..write('parentId: $parentId, ')
+          ..write('statut: $statut')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, libelle, niveau, parentId, statut);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ZoneGeographiqueRow &&
+          other.id == this.id &&
+          other.libelle == this.libelle &&
+          other.niveau == this.niveau &&
+          other.parentId == this.parentId &&
+          other.statut == this.statut);
+}
+
+class ZonesGeographiquesCompanion extends UpdateCompanion<ZoneGeographiqueRow> {
+  final Value<String> id;
+  final Value<String> libelle;
+  final Value<int> niveau;
+  final Value<String?> parentId;
+  final Value<String> statut;
+  final Value<int> rowid;
+  const ZonesGeographiquesCompanion({
+    this.id = const Value.absent(),
+    this.libelle = const Value.absent(),
+    this.niveau = const Value.absent(),
+    this.parentId = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ZonesGeographiquesCompanion.insert({
+    required String id,
+    required String libelle,
+    required int niveau,
+    this.parentId = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       libelle = Value(libelle),
+       niveau = Value(niveau);
+  static Insertable<ZoneGeographiqueRow> custom({
+    Expression<String>? id,
+    Expression<String>? libelle,
+    Expression<int>? niveau,
+    Expression<String>? parentId,
+    Expression<String>? statut,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (libelle != null) 'libelle': libelle,
+      if (niveau != null) 'niveau': niveau,
+      if (parentId != null) 'parent_id': parentId,
+      if (statut != null) 'statut': statut,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ZonesGeographiquesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? libelle,
+    Value<int>? niveau,
+    Value<String?>? parentId,
+    Value<String>? statut,
+    Value<int>? rowid,
+  }) {
+    return ZonesGeographiquesCompanion(
+      id: id ?? this.id,
+      libelle: libelle ?? this.libelle,
+      niveau: niveau ?? this.niveau,
+      parentId: parentId ?? this.parentId,
+      statut: statut ?? this.statut,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (libelle.present) {
+      map['libelle'] = Variable<String>(libelle.value);
+    }
+    if (niveau.present) {
+      map['niveau'] = Variable<int>(niveau.value);
+    }
+    if (parentId.present) {
+      map['parent_id'] = Variable<String>(parentId.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ZonesGeographiquesCompanion(')
+          ..write('id: $id, ')
+          ..write('libelle: $libelle, ')
+          ..write('niveau: $niveau, ')
+          ..write('parentId: $parentId, ')
+          ..write('statut: $statut, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxRow> {
   @override
@@ -4145,6 +4500,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $HistoriqueFidelesTable historiqueFideles =
       $HistoriqueFidelesTable(this);
   late final $TuteursTable tuteurs = $TuteursTable(this);
+  late final $ZonesGeographiquesTable zonesGeographiques =
+      $ZonesGeographiquesTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -4157,6 +4514,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     liensFamiliaux,
     historiqueFideles,
     tuteurs,
+    zonesGeographiques,
     syncOutbox,
   ];
 }
@@ -7187,6 +7545,343 @@ typedef $$TuteursTableProcessedTableManager =
       TuteurRow,
       PrefetchHooks Function({bool mineurId, bool tuteurFideleId})
     >;
+typedef $$ZonesGeographiquesTableCreateCompanionBuilder =
+    ZonesGeographiquesCompanion Function({
+      required String id,
+      required String libelle,
+      required int niveau,
+      Value<String?> parentId,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+typedef $$ZonesGeographiquesTableUpdateCompanionBuilder =
+    ZonesGeographiquesCompanion Function({
+      Value<String> id,
+      Value<String> libelle,
+      Value<int> niveau,
+      Value<String?> parentId,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+
+final class $$ZonesGeographiquesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $ZonesGeographiquesTable,
+          ZoneGeographiqueRow
+        > {
+  $$ZonesGeographiquesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $ZonesGeographiquesTable _parentIdTable(_$AppDatabase db) => db
+      .zonesGeographiques
+      .createAlias('zones_geographiques__parent_id__zones_geographiques__id');
+
+  $$ZonesGeographiquesTableProcessedTableManager? get parentId {
+    final $_column = $_itemColumn<String>('parent_id');
+    if ($_column == null) return null;
+    final manager = $$ZonesGeographiquesTableTableManager(
+      $_db,
+      $_db.zonesGeographiques,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_parentIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ZonesGeographiquesTableFilterComposer
+    extends Composer<_$AppDatabase, $ZonesGeographiquesTable> {
+  $$ZonesGeographiquesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get niveau => $composableBuilder(
+    column: $table.niveau,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$ZonesGeographiquesTableFilterComposer get parentId {
+    final $$ZonesGeographiquesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.parentId,
+      referencedTable: $db.zonesGeographiques,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ZonesGeographiquesTableFilterComposer(
+            $db: $db,
+            $table: $db.zonesGeographiques,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ZonesGeographiquesTableOrderingComposer
+    extends Composer<_$AppDatabase, $ZonesGeographiquesTable> {
+  $$ZonesGeographiquesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get niveau => $composableBuilder(
+    column: $table.niveau,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$ZonesGeographiquesTableOrderingComposer get parentId {
+    final $$ZonesGeographiquesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.parentId,
+      referencedTable: $db.zonesGeographiques,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ZonesGeographiquesTableOrderingComposer(
+            $db: $db,
+            $table: $db.zonesGeographiques,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ZonesGeographiquesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ZonesGeographiquesTable> {
+  $$ZonesGeographiquesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get libelle =>
+      $composableBuilder(column: $table.libelle, builder: (column) => column);
+
+  GeneratedColumn<int> get niveau =>
+      $composableBuilder(column: $table.niveau, builder: (column) => column);
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  $$ZonesGeographiquesTableAnnotationComposer get parentId {
+    final $$ZonesGeographiquesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.parentId,
+          referencedTable: $db.zonesGeographiques,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ZonesGeographiquesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.zonesGeographiques,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$ZonesGeographiquesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ZonesGeographiquesTable,
+          ZoneGeographiqueRow,
+          $$ZonesGeographiquesTableFilterComposer,
+          $$ZonesGeographiquesTableOrderingComposer,
+          $$ZonesGeographiquesTableAnnotationComposer,
+          $$ZonesGeographiquesTableCreateCompanionBuilder,
+          $$ZonesGeographiquesTableUpdateCompanionBuilder,
+          (ZoneGeographiqueRow, $$ZonesGeographiquesTableReferences),
+          ZoneGeographiqueRow,
+          PrefetchHooks Function({bool parentId})
+        > {
+  $$ZonesGeographiquesTableTableManager(
+    _$AppDatabase db,
+    $ZonesGeographiquesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ZonesGeographiquesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ZonesGeographiquesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ZonesGeographiquesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> libelle = const Value.absent(),
+                Value<int> niveau = const Value.absent(),
+                Value<String?> parentId = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ZonesGeographiquesCompanion(
+                id: id,
+                libelle: libelle,
+                niveau: niveau,
+                parentId: parentId,
+                statut: statut,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String libelle,
+                required int niveau,
+                Value<String?> parentId = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ZonesGeographiquesCompanion.insert(
+                id: id,
+                libelle: libelle,
+                niveau: niveau,
+                parentId: parentId,
+                statut: statut,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ZonesGeographiquesTable, ZoneGeographiqueRow>(
+                    table,
+                  ),
+                  $$ZonesGeographiquesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({parentId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (parentId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.parentId,
+                                referencedTable:
+                                    $$ZonesGeographiquesTableReferences
+                                        ._parentIdTable(db),
+                                referencedColumn:
+                                    $$ZonesGeographiquesTableReferences
+                                        ._parentIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ZonesGeographiquesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ZonesGeographiquesTable,
+      ZoneGeographiqueRow,
+      $$ZonesGeographiquesTableFilterComposer,
+      $$ZonesGeographiquesTableOrderingComposer,
+      $$ZonesGeographiquesTableAnnotationComposer,
+      $$ZonesGeographiquesTableCreateCompanionBuilder,
+      $$ZonesGeographiquesTableUpdateCompanionBuilder,
+      (ZoneGeographiqueRow, $$ZonesGeographiquesTableReferences),
+      ZoneGeographiqueRow,
+      PrefetchHooks Function({bool parentId})
+    >;
 typedef $$SyncOutboxTableCreateCompanionBuilder =
     SyncOutboxCompanion Function({
       required String id,
@@ -7478,6 +8173,8 @@ class $AppDatabaseManager {
       $$HistoriqueFidelesTableTableManager(_db, _db.historiqueFideles);
   $$TuteursTableTableManager get tuteurs =>
       $$TuteursTableTableManager(_db, _db.tuteurs);
+  $$ZonesGeographiquesTableTableManager get zonesGeographiques =>
+      $$ZonesGeographiquesTableTableManager(_db, _db.zonesGeographiques);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }

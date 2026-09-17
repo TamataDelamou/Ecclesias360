@@ -1,0 +1,7 @@
+{
+  "roles": ["utilisateur_simple", "membre", "responsable", "pasteur", "administrateur"],
+  "capacites": {
+    "creer_noeud_niveau_superieur": "administrateur",
+    "consulter_annuaire_eglises": "responsable"
+  }
+}
