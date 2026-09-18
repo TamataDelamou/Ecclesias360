@@ -256,4 +256,54 @@ void main() {
 
     await db.close();
   });
+
+  test('un fichier créé en schéma v7 reçoit les tables du Module VI et le seed RG-VI-01 à l\'ouverture', () async {
+    final fichier = File(
+      path.join(Directory.systemTemp.path, 'ecclesias_migration_test_v7_${DateTime.now().microsecondsSinceEpoch}.sqlite'),
+    );
+    addTearDown(() {
+      if (fichier.existsSync()) fichier.deleteSync();
+    });
+
+    // Construit un vrai fichier v8 (via l'implémentation réelle), puis le
+    // ramène à v7 en retirant uniquement les tables propres au Module VI —
+    // plus fiable qu'une retranscription manuelle du DDL v7 complet.
+    final dbInitiale = AppDatabase(NativeDatabase(fichier));
+    await dbInitiale.into(dbInitiale.organisationNodes).insert(
+          OrganisationNodesCompanion.insert(
+            id: 'siege-1',
+            typeNoeud: 'siege',
+            nom: 'GSG',
+            codeInterne: 'GSG-SIEGE',
+            path: '/siege-1/',
+            depth: 0,
+            createdAt: DateTime(2026, 1, 1),
+            updatedAt: DateTime(2026, 1, 1),
+          ),
+        );
+    await dbInitiale.close();
+
+    final connexionBrute = sqlite3.sqlite3.open(fichier.path);
+    connexionBrute.execute('''
+      DROP TABLE appartenances_groupe;
+      DROP TABLE groupes_eglise;
+      PRAGMA user_version = 7;
+    ''');
+    connexionBrute.close();
+
+    final db = AppDatabase(NativeDatabase(fichier));
+
+    final noeuds = await db.select(db.organisationNodes).get();
+    expect(noeuds, hasLength(1));
+    expect(noeuds.single.nom, 'GSG');
+
+    // Ne doit plus lever "no such table: groupes_eglise".
+    final groupes = await db.select(db.groupesEglise).get();
+    expect(groupes, hasLength(11));
+
+    final appartenances = await db.select(db.appartenancesGroupe).get();
+    expect(appartenances, isEmpty);
+
+    await db.close();
+  });
 }

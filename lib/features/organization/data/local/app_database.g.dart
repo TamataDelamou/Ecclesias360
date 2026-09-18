@@ -8695,6 +8695,810 @@ class SollicitationsCompanion extends UpdateCompanion<SollicitationRow> {
   }
 }
 
+class $GroupesEgliseTable extends GroupesEglise
+    with TableInfo<$GroupesEgliseTable, GroupeEgliseRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GroupesEgliseTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+    'code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _libelleMeta = const VerificationMeta(
+    'libelle',
+  );
+  @override
+  late final GeneratedColumn<String> libelle = GeneratedColumn<String>(
+    'libelle',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _typeRegleMeta = const VerificationMeta(
+    'typeRegle',
+  );
+  @override
+  late final GeneratedColumn<String> typeRegle = GeneratedColumn<String>(
+    'type_regle',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _criteresJsonMeta = const VerificationMeta(
+    'criteresJson',
+  );
+  @override
+  late final GeneratedColumn<String> criteresJson = GeneratedColumn<String>(
+    'criteres_json',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    code,
+    libelle,
+    typeRegle,
+    criteresJson,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'groupes_eglise';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<GroupeEgliseRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+        _codeMeta,
+        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_codeMeta);
+    }
+    if (data.containsKey('libelle')) {
+      context.handle(
+        _libelleMeta,
+        libelle.isAcceptableOrUnknown(data['libelle']!, _libelleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_libelleMeta);
+    }
+    if (data.containsKey('type_regle')) {
+      context.handle(
+        _typeRegleMeta,
+        typeRegle.isAcceptableOrUnknown(data['type_regle']!, _typeRegleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_typeRegleMeta);
+    }
+    if (data.containsKey('criteres_json')) {
+      context.handle(
+        _criteresJsonMeta,
+        criteresJson.isAcceptableOrUnknown(
+          data['criteres_json']!,
+          _criteresJsonMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  GroupeEgliseRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return GroupeEgliseRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      code: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code'],
+      )!,
+      libelle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}libelle'],
+      )!,
+      typeRegle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type_regle'],
+      )!,
+      criteresJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}criteres_json'],
+      ),
+    );
+  }
+
+  @override
+  $GroupesEgliseTable createAlias(String alias) {
+    return $GroupesEgliseTable(attachedDatabase, alias);
+  }
+}
+
+class GroupeEgliseRow extends DataClass implements Insertable<GroupeEgliseRow> {
+  final String id;
+  final String code;
+  final String libelle;
+  final String typeRegle;
+  final String? criteresJson;
+  const GroupeEgliseRow({
+    required this.id,
+    required this.code,
+    required this.libelle,
+    required this.typeRegle,
+    this.criteresJson,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['code'] = Variable<String>(code);
+    map['libelle'] = Variable<String>(libelle);
+    map['type_regle'] = Variable<String>(typeRegle);
+    if (!nullToAbsent || criteresJson != null) {
+      map['criteres_json'] = Variable<String>(criteresJson);
+    }
+    return map;
+  }
+
+  GroupesEgliseCompanion toCompanion(bool nullToAbsent) {
+    return GroupesEgliseCompanion(
+      id: Value(id),
+      code: Value(code),
+      libelle: Value(libelle),
+      typeRegle: Value(typeRegle),
+      criteresJson: criteresJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(criteresJson),
+    );
+  }
+
+  factory GroupeEgliseRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return GroupeEgliseRow(
+      id: serializer.fromJson<String>(json['id']),
+      code: serializer.fromJson<String>(json['code']),
+      libelle: serializer.fromJson<String>(json['libelle']),
+      typeRegle: serializer.fromJson<String>(json['typeRegle']),
+      criteresJson: serializer.fromJson<String?>(json['criteresJson']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'code': serializer.toJson<String>(code),
+      'libelle': serializer.toJson<String>(libelle),
+      'typeRegle': serializer.toJson<String>(typeRegle),
+      'criteresJson': serializer.toJson<String?>(criteresJson),
+    };
+  }
+
+  GroupeEgliseRow copyWith({
+    String? id,
+    String? code,
+    String? libelle,
+    String? typeRegle,
+    Value<String?> criteresJson = const Value.absent(),
+  }) => GroupeEgliseRow(
+    id: id ?? this.id,
+    code: code ?? this.code,
+    libelle: libelle ?? this.libelle,
+    typeRegle: typeRegle ?? this.typeRegle,
+    criteresJson: criteresJson.present ? criteresJson.value : this.criteresJson,
+  );
+  GroupeEgliseRow copyWithCompanion(GroupesEgliseCompanion data) {
+    return GroupeEgliseRow(
+      id: data.id.present ? data.id.value : this.id,
+      code: data.code.present ? data.code.value : this.code,
+      libelle: data.libelle.present ? data.libelle.value : this.libelle,
+      typeRegle: data.typeRegle.present ? data.typeRegle.value : this.typeRegle,
+      criteresJson: data.criteresJson.present
+          ? data.criteresJson.value
+          : this.criteresJson,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GroupeEgliseRow(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('libelle: $libelle, ')
+          ..write('typeRegle: $typeRegle, ')
+          ..write('criteresJson: $criteresJson')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, code, libelle, typeRegle, criteresJson);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GroupeEgliseRow &&
+          other.id == this.id &&
+          other.code == this.code &&
+          other.libelle == this.libelle &&
+          other.typeRegle == this.typeRegle &&
+          other.criteresJson == this.criteresJson);
+}
+
+class GroupesEgliseCompanion extends UpdateCompanion<GroupeEgliseRow> {
+  final Value<String> id;
+  final Value<String> code;
+  final Value<String> libelle;
+  final Value<String> typeRegle;
+  final Value<String?> criteresJson;
+  final Value<int> rowid;
+  const GroupesEgliseCompanion({
+    this.id = const Value.absent(),
+    this.code = const Value.absent(),
+    this.libelle = const Value.absent(),
+    this.typeRegle = const Value.absent(),
+    this.criteresJson = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  GroupesEgliseCompanion.insert({
+    required String id,
+    required String code,
+    required String libelle,
+    required String typeRegle,
+    this.criteresJson = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       code = Value(code),
+       libelle = Value(libelle),
+       typeRegle = Value(typeRegle);
+  static Insertable<GroupeEgliseRow> custom({
+    Expression<String>? id,
+    Expression<String>? code,
+    Expression<String>? libelle,
+    Expression<String>? typeRegle,
+    Expression<String>? criteresJson,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (code != null) 'code': code,
+      if (libelle != null) 'libelle': libelle,
+      if (typeRegle != null) 'type_regle': typeRegle,
+      if (criteresJson != null) 'criteres_json': criteresJson,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  GroupesEgliseCompanion copyWith({
+    Value<String>? id,
+    Value<String>? code,
+    Value<String>? libelle,
+    Value<String>? typeRegle,
+    Value<String?>? criteresJson,
+    Value<int>? rowid,
+  }) {
+    return GroupesEgliseCompanion(
+      id: id ?? this.id,
+      code: code ?? this.code,
+      libelle: libelle ?? this.libelle,
+      typeRegle: typeRegle ?? this.typeRegle,
+      criteresJson: criteresJson ?? this.criteresJson,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (libelle.present) {
+      map['libelle'] = Variable<String>(libelle.value);
+    }
+    if (typeRegle.present) {
+      map['type_regle'] = Variable<String>(typeRegle.value);
+    }
+    if (criteresJson.present) {
+      map['criteres_json'] = Variable<String>(criteresJson.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GroupesEgliseCompanion(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('libelle: $libelle, ')
+          ..write('typeRegle: $typeRegle, ')
+          ..write('criteresJson: $criteresJson, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $AppartenancesGroupeTable extends AppartenancesGroupe
+    with TableInfo<$AppartenancesGroupeTable, AppartenanceGroupeRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AppartenancesGroupeTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _groupeIdMeta = const VerificationMeta(
+    'groupeId',
+  );
+  @override
+  late final GeneratedColumn<String> groupeId = GeneratedColumn<String>(
+    'groupe_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES groupes_eglise (id)',
+    ),
+  );
+  static const VerificationMeta _dateAffectationMeta = const VerificationMeta(
+    'dateAffectation',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateAffectation =
+      GeneratedColumn<DateTime>(
+        'date_affectation',
+        aliasedName,
+        false,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _origineMeta = const VerificationMeta(
+    'origine',
+  );
+  @override
+  late final GeneratedColumn<String> origine = GeneratedColumn<String>(
+    'origine',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _motifDerogationMeta = const VerificationMeta(
+    'motifDerogation',
+  );
+  @override
+  late final GeneratedColumn<String> motifDerogation = GeneratedColumn<String>(
+    'motif_derogation',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    fideleId,
+    groupeId,
+    dateAffectation,
+    origine,
+    motifDerogation,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'appartenances_groupe';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AppartenanceGroupeRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    if (data.containsKey('groupe_id')) {
+      context.handle(
+        _groupeIdMeta,
+        groupeId.isAcceptableOrUnknown(data['groupe_id']!, _groupeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_groupeIdMeta);
+    }
+    if (data.containsKey('date_affectation')) {
+      context.handle(
+        _dateAffectationMeta,
+        dateAffectation.isAcceptableOrUnknown(
+          data['date_affectation']!,
+          _dateAffectationMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_dateAffectationMeta);
+    }
+    if (data.containsKey('origine')) {
+      context.handle(
+        _origineMeta,
+        origine.isAcceptableOrUnknown(data['origine']!, _origineMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_origineMeta);
+    }
+    if (data.containsKey('motif_derogation')) {
+      context.handle(
+        _motifDerogationMeta,
+        motifDerogation.isAcceptableOrUnknown(
+          data['motif_derogation']!,
+          _motifDerogationMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AppartenanceGroupeRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AppartenanceGroupeRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+      groupeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}groupe_id'],
+      )!,
+      dateAffectation: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_affectation'],
+      )!,
+      origine: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}origine'],
+      )!,
+      motifDerogation: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}motif_derogation'],
+      ),
+    );
+  }
+
+  @override
+  $AppartenancesGroupeTable createAlias(String alias) {
+    return $AppartenancesGroupeTable(attachedDatabase, alias);
+  }
+}
+
+class AppartenanceGroupeRow extends DataClass
+    implements Insertable<AppartenanceGroupeRow> {
+  final String id;
+  final String fideleId;
+  final String groupeId;
+  final DateTime dateAffectation;
+  final String origine;
+  final String? motifDerogation;
+  const AppartenanceGroupeRow({
+    required this.id,
+    required this.fideleId,
+    required this.groupeId,
+    required this.dateAffectation,
+    required this.origine,
+    this.motifDerogation,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['fidele_id'] = Variable<String>(fideleId);
+    map['groupe_id'] = Variable<String>(groupeId);
+    map['date_affectation'] = Variable<DateTime>(dateAffectation);
+    map['origine'] = Variable<String>(origine);
+    if (!nullToAbsent || motifDerogation != null) {
+      map['motif_derogation'] = Variable<String>(motifDerogation);
+    }
+    return map;
+  }
+
+  AppartenancesGroupeCompanion toCompanion(bool nullToAbsent) {
+    return AppartenancesGroupeCompanion(
+      id: Value(id),
+      fideleId: Value(fideleId),
+      groupeId: Value(groupeId),
+      dateAffectation: Value(dateAffectation),
+      origine: Value(origine),
+      motifDerogation: motifDerogation == null && nullToAbsent
+          ? const Value.absent()
+          : Value(motifDerogation),
+    );
+  }
+
+  factory AppartenanceGroupeRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AppartenanceGroupeRow(
+      id: serializer.fromJson<String>(json['id']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+      groupeId: serializer.fromJson<String>(json['groupeId']),
+      dateAffectation: serializer.fromJson<DateTime>(json['dateAffectation']),
+      origine: serializer.fromJson<String>(json['origine']),
+      motifDerogation: serializer.fromJson<String?>(json['motifDerogation']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'fideleId': serializer.toJson<String>(fideleId),
+      'groupeId': serializer.toJson<String>(groupeId),
+      'dateAffectation': serializer.toJson<DateTime>(dateAffectation),
+      'origine': serializer.toJson<String>(origine),
+      'motifDerogation': serializer.toJson<String?>(motifDerogation),
+    };
+  }
+
+  AppartenanceGroupeRow copyWith({
+    String? id,
+    String? fideleId,
+    String? groupeId,
+    DateTime? dateAffectation,
+    String? origine,
+    Value<String?> motifDerogation = const Value.absent(),
+  }) => AppartenanceGroupeRow(
+    id: id ?? this.id,
+    fideleId: fideleId ?? this.fideleId,
+    groupeId: groupeId ?? this.groupeId,
+    dateAffectation: dateAffectation ?? this.dateAffectation,
+    origine: origine ?? this.origine,
+    motifDerogation: motifDerogation.present
+        ? motifDerogation.value
+        : this.motifDerogation,
+  );
+  AppartenanceGroupeRow copyWithCompanion(AppartenancesGroupeCompanion data) {
+    return AppartenanceGroupeRow(
+      id: data.id.present ? data.id.value : this.id,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      groupeId: data.groupeId.present ? data.groupeId.value : this.groupeId,
+      dateAffectation: data.dateAffectation.present
+          ? data.dateAffectation.value
+          : this.dateAffectation,
+      origine: data.origine.present ? data.origine.value : this.origine,
+      motifDerogation: data.motifDerogation.present
+          ? data.motifDerogation.value
+          : this.motifDerogation,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AppartenanceGroupeRow(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('groupeId: $groupeId, ')
+          ..write('dateAffectation: $dateAffectation, ')
+          ..write('origine: $origine, ')
+          ..write('motifDerogation: $motifDerogation')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    fideleId,
+    groupeId,
+    dateAffectation,
+    origine,
+    motifDerogation,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppartenanceGroupeRow &&
+          other.id == this.id &&
+          other.fideleId == this.fideleId &&
+          other.groupeId == this.groupeId &&
+          other.dateAffectation == this.dateAffectation &&
+          other.origine == this.origine &&
+          other.motifDerogation == this.motifDerogation);
+}
+
+class AppartenancesGroupeCompanion
+    extends UpdateCompanion<AppartenanceGroupeRow> {
+  final Value<String> id;
+  final Value<String> fideleId;
+  final Value<String> groupeId;
+  final Value<DateTime> dateAffectation;
+  final Value<String> origine;
+  final Value<String?> motifDerogation;
+  final Value<int> rowid;
+  const AppartenancesGroupeCompanion({
+    this.id = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.groupeId = const Value.absent(),
+    this.dateAffectation = const Value.absent(),
+    this.origine = const Value.absent(),
+    this.motifDerogation = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  AppartenancesGroupeCompanion.insert({
+    required String id,
+    required String fideleId,
+    required String groupeId,
+    required DateTime dateAffectation,
+    required String origine,
+    this.motifDerogation = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       fideleId = Value(fideleId),
+       groupeId = Value(groupeId),
+       dateAffectation = Value(dateAffectation),
+       origine = Value(origine);
+  static Insertable<AppartenanceGroupeRow> custom({
+    Expression<String>? id,
+    Expression<String>? fideleId,
+    Expression<String>? groupeId,
+    Expression<DateTime>? dateAffectation,
+    Expression<String>? origine,
+    Expression<String>? motifDerogation,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (groupeId != null) 'groupe_id': groupeId,
+      if (dateAffectation != null) 'date_affectation': dateAffectation,
+      if (origine != null) 'origine': origine,
+      if (motifDerogation != null) 'motif_derogation': motifDerogation,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  AppartenancesGroupeCompanion copyWith({
+    Value<String>? id,
+    Value<String>? fideleId,
+    Value<String>? groupeId,
+    Value<DateTime>? dateAffectation,
+    Value<String>? origine,
+    Value<String?>? motifDerogation,
+    Value<int>? rowid,
+  }) {
+    return AppartenancesGroupeCompanion(
+      id: id ?? this.id,
+      fideleId: fideleId ?? this.fideleId,
+      groupeId: groupeId ?? this.groupeId,
+      dateAffectation: dateAffectation ?? this.dateAffectation,
+      origine: origine ?? this.origine,
+      motifDerogation: motifDerogation ?? this.motifDerogation,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (groupeId.present) {
+      map['groupe_id'] = Variable<String>(groupeId.value);
+    }
+    if (dateAffectation.present) {
+      map['date_affectation'] = Variable<DateTime>(dateAffectation.value);
+    }
+    if (origine.present) {
+      map['origine'] = Variable<String>(origine.value);
+    }
+    if (motifDerogation.present) {
+      map['motif_derogation'] = Variable<String>(motifDerogation.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AppartenancesGroupeCompanion(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('groupeId: $groupeId, ')
+          ..write('dateAffectation: $dateAffectation, ')
+          ..write('origine: $origine, ')
+          ..write('motifDerogation: $motifDerogation, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxRow> {
   @override
@@ -9259,6 +10063,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ProfessionsFidelesTable professionsFideles =
       $ProfessionsFidelesTable(this);
   late final $SollicitationsTable sollicitations = $SollicitationsTable(this);
+  late final $GroupesEgliseTable groupesEglise = $GroupesEgliseTable(this);
+  late final $AppartenancesGroupeTable appartenancesGroupe =
+      $AppartenancesGroupeTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -9284,6 +10091,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     professions,
     professionsFideles,
     sollicitations,
+    groupesEglise,
+    appartenancesGroupe,
     syncOutbox,
   ];
 }
@@ -10589,6 +11398,30 @@ final class $$FidelesTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<
+    $AppartenancesGroupeTable,
+    List<AppartenanceGroupeRow>
+  >
+  _appartenancesGroupeRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.appartenancesGroupe,
+        aliasName: 'fideles__id__appartenances_groupe__fidele_id',
+      );
+
+  $$AppartenancesGroupeTableProcessedTableManager get appartenancesGroupeRefs {
+    final manager = $$AppartenancesGroupeTableTableManager(
+      $_db,
+      $_db.appartenancesGroupe,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _appartenancesGroupeRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$FidelesTableFilterComposer
@@ -11025,6 +11858,31 @@ class $$FidelesTableFilterComposer
           }) => $$SollicitationsTableFilterComposer(
             $db: $db,
             $table: $db.sollicitations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> appartenancesGroupeRefs(
+    Expression<bool> Function($$AppartenancesGroupeTableFilterComposer f) f,
+  ) {
+    final $$AppartenancesGroupeTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.appartenancesGroupe,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AppartenancesGroupeTableFilterComposer(
+            $db: $db,
+            $table: $db.appartenancesGroupe,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -11578,6 +12436,32 @@ class $$FidelesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> appartenancesGroupeRefs<T extends Object>(
+    Expression<T> Function($$AppartenancesGroupeTableAnnotationComposer a) f,
+  ) {
+    final $$AppartenancesGroupeTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.appartenancesGroupe,
+          getReferencedColumn: (t) => t.fideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$AppartenancesGroupeTableAnnotationComposer(
+                $db: $db,
+                $table: $db.appartenancesGroupe,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$FidelesTableTableManager
@@ -11608,6 +12492,7 @@ class $$FidelesTableTableManager
             bool evaluationsCommeResponsable,
             bool professionsFidelesRefs,
             bool sollicitationsRefs,
+            bool appartenancesGroupeRefs,
           })
         > {
   $$FidelesTableTableManager(_$AppDatabase db, $FidelesTable table)
@@ -11729,6 +12614,7 @@ class $$FidelesTableTableManager
                 evaluationsCommeResponsable = false,
                 professionsFidelesRefs = false,
                 sollicitationsRefs = false,
+                appartenancesGroupeRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -11746,6 +12632,7 @@ class $$FidelesTableTableManager
                     if (evaluationsCommeResponsable) db.donsFideles,
                     if (professionsFidelesRefs) db.professionsFideles,
                     if (sollicitationsRefs) db.sollicitations,
+                    if (appartenancesGroupeRefs) db.appartenancesGroupe,
                   ],
                   addJoins:
                       <
@@ -12054,6 +12941,27 @@ class $$FidelesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (appartenancesGroupeRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          AppartenanceGroupeRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._appartenancesGroupeRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).appartenancesGroupeRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -12089,6 +12997,7 @@ typedef $$FidelesTableProcessedTableManager =
         bool evaluationsCommeResponsable,
         bool professionsFidelesRefs,
         bool sollicitationsRefs,
+        bool appartenancesGroupeRefs,
       })
     >;
 typedef $$NodeResponsablesTableCreateCompanionBuilder =
@@ -19022,6 +19931,773 @@ typedef $$SollicitationsTableProcessedTableManager =
       SollicitationRow,
       PrefetchHooks Function({bool fideleId})
     >;
+typedef $$GroupesEgliseTableCreateCompanionBuilder =
+    GroupesEgliseCompanion Function({
+      required String id,
+      required String code,
+      required String libelle,
+      required String typeRegle,
+      Value<String?> criteresJson,
+      Value<int> rowid,
+    });
+typedef $$GroupesEgliseTableUpdateCompanionBuilder =
+    GroupesEgliseCompanion Function({
+      Value<String> id,
+      Value<String> code,
+      Value<String> libelle,
+      Value<String> typeRegle,
+      Value<String?> criteresJson,
+      Value<int> rowid,
+    });
+
+final class $$GroupesEgliseTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $GroupesEgliseTable, GroupeEgliseRow> {
+  $$GroupesEgliseTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<
+    $AppartenancesGroupeTable,
+    List<AppartenanceGroupeRow>
+  >
+  _appartenancesGroupeRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.appartenancesGroupe,
+        aliasName: 'groupes_eglise__id__appartenances_groupe__groupe_id',
+      );
+
+  $$AppartenancesGroupeTableProcessedTableManager get appartenancesGroupeRefs {
+    final manager = $$AppartenancesGroupeTableTableManager(
+      $_db,
+      $_db.appartenancesGroupe,
+    ).filter((f) => f.groupeId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _appartenancesGroupeRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$GroupesEgliseTableFilterComposer
+    extends Composer<_$AppDatabase, $GroupesEgliseTable> {
+  $$GroupesEgliseTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get typeRegle => $composableBuilder(
+    column: $table.typeRegle,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get criteresJson => $composableBuilder(
+    column: $table.criteresJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> appartenancesGroupeRefs(
+    Expression<bool> Function($$AppartenancesGroupeTableFilterComposer f) f,
+  ) {
+    final $$AppartenancesGroupeTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.appartenancesGroupe,
+      getReferencedColumn: (t) => t.groupeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AppartenancesGroupeTableFilterComposer(
+            $db: $db,
+            $table: $db.appartenancesGroupe,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$GroupesEgliseTableOrderingComposer
+    extends Composer<_$AppDatabase, $GroupesEgliseTable> {
+  $$GroupesEgliseTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get typeRegle => $composableBuilder(
+    column: $table.typeRegle,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get criteresJson => $composableBuilder(
+    column: $table.criteresJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$GroupesEgliseTableAnnotationComposer
+    extends Composer<_$AppDatabase, $GroupesEgliseTable> {
+  $$GroupesEgliseTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<String> get libelle =>
+      $composableBuilder(column: $table.libelle, builder: (column) => column);
+
+  GeneratedColumn<String> get typeRegle =>
+      $composableBuilder(column: $table.typeRegle, builder: (column) => column);
+
+  GeneratedColumn<String> get criteresJson => $composableBuilder(
+    column: $table.criteresJson,
+    builder: (column) => column,
+  );
+
+  Expression<T> appartenancesGroupeRefs<T extends Object>(
+    Expression<T> Function($$AppartenancesGroupeTableAnnotationComposer a) f,
+  ) {
+    final $$AppartenancesGroupeTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.appartenancesGroupe,
+          getReferencedColumn: (t) => t.groupeId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$AppartenancesGroupeTableAnnotationComposer(
+                $db: $db,
+                $table: $db.appartenancesGroupe,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$GroupesEgliseTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $GroupesEgliseTable,
+          GroupeEgliseRow,
+          $$GroupesEgliseTableFilterComposer,
+          $$GroupesEgliseTableOrderingComposer,
+          $$GroupesEgliseTableAnnotationComposer,
+          $$GroupesEgliseTableCreateCompanionBuilder,
+          $$GroupesEgliseTableUpdateCompanionBuilder,
+          (GroupeEgliseRow, $$GroupesEgliseTableReferences),
+          GroupeEgliseRow,
+          PrefetchHooks Function({bool appartenancesGroupeRefs})
+        > {
+  $$GroupesEgliseTableTableManager(_$AppDatabase db, $GroupesEgliseTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$GroupesEgliseTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$GroupesEgliseTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$GroupesEgliseTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> code = const Value.absent(),
+                Value<String> libelle = const Value.absent(),
+                Value<String> typeRegle = const Value.absent(),
+                Value<String?> criteresJson = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => GroupesEgliseCompanion(
+                id: id,
+                code: code,
+                libelle: libelle,
+                typeRegle: typeRegle,
+                criteresJson: criteresJson,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String code,
+                required String libelle,
+                required String typeRegle,
+                Value<String?> criteresJson = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => GroupesEgliseCompanion.insert(
+                id: id,
+                code: code,
+                libelle: libelle,
+                typeRegle: typeRegle,
+                criteresJson: criteresJson,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$GroupesEgliseTable, GroupeEgliseRow>(table),
+                  $$GroupesEgliseTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({appartenancesGroupeRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (appartenancesGroupeRefs) db.appartenancesGroupe,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (appartenancesGroupeRefs)
+                    await $_getPrefetchedData<
+                      GroupeEgliseRow,
+                      $GroupesEgliseTable,
+                      AppartenanceGroupeRow
+                    >(
+                      currentTable: table,
+                      referencedTable: $$GroupesEgliseTableReferences
+                          ._appartenancesGroupeRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$GroupesEgliseTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).appartenancesGroupeRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.groupeId == item.id),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$GroupesEgliseTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $GroupesEgliseTable,
+      GroupeEgliseRow,
+      $$GroupesEgliseTableFilterComposer,
+      $$GroupesEgliseTableOrderingComposer,
+      $$GroupesEgliseTableAnnotationComposer,
+      $$GroupesEgliseTableCreateCompanionBuilder,
+      $$GroupesEgliseTableUpdateCompanionBuilder,
+      (GroupeEgliseRow, $$GroupesEgliseTableReferences),
+      GroupeEgliseRow,
+      PrefetchHooks Function({bool appartenancesGroupeRefs})
+    >;
+typedef $$AppartenancesGroupeTableCreateCompanionBuilder =
+    AppartenancesGroupeCompanion Function({
+      required String id,
+      required String fideleId,
+      required String groupeId,
+      required DateTime dateAffectation,
+      required String origine,
+      Value<String?> motifDerogation,
+      Value<int> rowid,
+    });
+typedef $$AppartenancesGroupeTableUpdateCompanionBuilder =
+    AppartenancesGroupeCompanion Function({
+      Value<String> id,
+      Value<String> fideleId,
+      Value<String> groupeId,
+      Value<DateTime> dateAffectation,
+      Value<String> origine,
+      Value<String?> motifDerogation,
+      Value<int> rowid,
+    });
+
+final class $$AppartenancesGroupeTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $AppartenancesGroupeTable,
+          AppartenanceGroupeRow
+        > {
+  $$AppartenancesGroupeTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('appartenances_groupe__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $GroupesEgliseTable _groupeIdTable(_$AppDatabase db) => db
+      .groupesEglise
+      .createAlias('appartenances_groupe__groupe_id__groupes_eglise__id');
+
+  $$GroupesEgliseTableProcessedTableManager get groupeId {
+    final $_column = $_itemColumn<String>('groupe_id')!;
+
+    final manager = $$GroupesEgliseTableTableManager(
+      $_db,
+      $_db.groupesEglise,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_groupeIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$AppartenancesGroupeTableFilterComposer
+    extends Composer<_$AppDatabase, $AppartenancesGroupeTable> {
+  $$AppartenancesGroupeTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateAffectation => $composableBuilder(
+    column: $table.dateAffectation,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get origine => $composableBuilder(
+    column: $table.origine,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get motifDerogation => $composableBuilder(
+    column: $table.motifDerogation,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$GroupesEgliseTableFilterComposer get groupeId {
+    final $$GroupesEgliseTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.groupeId,
+      referencedTable: $db.groupesEglise,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$GroupesEgliseTableFilterComposer(
+            $db: $db,
+            $table: $db.groupesEglise,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$AppartenancesGroupeTableOrderingComposer
+    extends Composer<_$AppDatabase, $AppartenancesGroupeTable> {
+  $$AppartenancesGroupeTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateAffectation => $composableBuilder(
+    column: $table.dateAffectation,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get origine => $composableBuilder(
+    column: $table.origine,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get motifDerogation => $composableBuilder(
+    column: $table.motifDerogation,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$GroupesEgliseTableOrderingComposer get groupeId {
+    final $$GroupesEgliseTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.groupeId,
+      referencedTable: $db.groupesEglise,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$GroupesEgliseTableOrderingComposer(
+            $db: $db,
+            $table: $db.groupesEglise,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$AppartenancesGroupeTableAnnotationComposer
+    extends Composer<_$AppDatabase, $AppartenancesGroupeTable> {
+  $$AppartenancesGroupeTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateAffectation => $composableBuilder(
+    column: $table.dateAffectation,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get origine =>
+      $composableBuilder(column: $table.origine, builder: (column) => column);
+
+  GeneratedColumn<String> get motifDerogation => $composableBuilder(
+    column: $table.motifDerogation,
+    builder: (column) => column,
+  );
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$GroupesEgliseTableAnnotationComposer get groupeId {
+    final $$GroupesEgliseTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.groupeId,
+      referencedTable: $db.groupesEglise,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$GroupesEgliseTableAnnotationComposer(
+            $db: $db,
+            $table: $db.groupesEglise,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$AppartenancesGroupeTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $AppartenancesGroupeTable,
+          AppartenanceGroupeRow,
+          $$AppartenancesGroupeTableFilterComposer,
+          $$AppartenancesGroupeTableOrderingComposer,
+          $$AppartenancesGroupeTableAnnotationComposer,
+          $$AppartenancesGroupeTableCreateCompanionBuilder,
+          $$AppartenancesGroupeTableUpdateCompanionBuilder,
+          (AppartenanceGroupeRow, $$AppartenancesGroupeTableReferences),
+          AppartenanceGroupeRow,
+          PrefetchHooks Function({bool fideleId, bool groupeId})
+        > {
+  $$AppartenancesGroupeTableTableManager(
+    _$AppDatabase db,
+    $AppartenancesGroupeTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AppartenancesGroupeTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$AppartenancesGroupeTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$AppartenancesGroupeTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<String> groupeId = const Value.absent(),
+                Value<DateTime> dateAffectation = const Value.absent(),
+                Value<String> origine = const Value.absent(),
+                Value<String?> motifDerogation = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => AppartenancesGroupeCompanion(
+                id: id,
+                fideleId: fideleId,
+                groupeId: groupeId,
+                dateAffectation: dateAffectation,
+                origine: origine,
+                motifDerogation: motifDerogation,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String fideleId,
+                required String groupeId,
+                required DateTime dateAffectation,
+                required String origine,
+                Value<String?> motifDerogation = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => AppartenancesGroupeCompanion.insert(
+                id: id,
+                fideleId: fideleId,
+                groupeId: groupeId,
+                dateAffectation: dateAffectation,
+                origine: origine,
+                motifDerogation: motifDerogation,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$AppartenancesGroupeTable, AppartenanceGroupeRow>(
+                    table,
+                  ),
+                  $$AppartenancesGroupeTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({fideleId = false, groupeId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (fideleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.fideleId,
+                                referencedTable:
+                                    $$AppartenancesGroupeTableReferences
+                                        ._fideleIdTable(db),
+                                referencedColumn:
+                                    $$AppartenancesGroupeTableReferences
+                                        ._fideleIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (groupeId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.groupeId,
+                                referencedTable:
+                                    $$AppartenancesGroupeTableReferences
+                                        ._groupeIdTable(db),
+                                referencedColumn:
+                                    $$AppartenancesGroupeTableReferences
+                                        ._groupeIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$AppartenancesGroupeTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $AppartenancesGroupeTable,
+      AppartenanceGroupeRow,
+      $$AppartenancesGroupeTableFilterComposer,
+      $$AppartenancesGroupeTableOrderingComposer,
+      $$AppartenancesGroupeTableAnnotationComposer,
+      $$AppartenancesGroupeTableCreateCompanionBuilder,
+      $$AppartenancesGroupeTableUpdateCompanionBuilder,
+      (AppartenanceGroupeRow, $$AppartenancesGroupeTableReferences),
+      AppartenanceGroupeRow,
+      PrefetchHooks Function({bool fideleId, bool groupeId})
+    >;
 typedef $$SyncOutboxTableCreateCompanionBuilder =
     SyncOutboxCompanion Function({
       required String id,
@@ -19345,6 +21021,10 @@ class $AppDatabaseManager {
       $$ProfessionsFidelesTableTableManager(_db, _db.professionsFideles);
   $$SollicitationsTableTableManager get sollicitations =>
       $$SollicitationsTableTableManager(_db, _db.sollicitations);
+  $$GroupesEgliseTableTableManager get groupesEglise =>
+      $$GroupesEgliseTableTableManager(_db, _db.groupesEglise);
+  $$AppartenancesGroupeTableTableManager get appartenancesGroupe =>
+      $$AppartenancesGroupeTableTableManager(_db, _db.appartenancesGroupe);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }

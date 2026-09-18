@@ -316,6 +316,42 @@ class Sollicitations extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Table Drift GroupeEglise (Module VI, RG-VI-01/02) — segment
+/// démographique ou fonctionnel de l'assemblée. `criteresJson` n'est
+/// renseigné que pour `typeRegle = auto` (voir `CriteresGroupe`).
+@DataClassName('GroupeEgliseRow')
+class GroupesEglise extends Table {
+  TextColumn get id => text()();
+  TextColumn get code => text()();
+  TextColumn get libelle => text()();
+  TextColumn get typeRegle => text()();
+  TextColumn get criteresJson => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (code)'];
+}
+
+/// Table Drift AppartenanceGroupe (Module VI, RG-VI-01/02) — non exclusive,
+/// un fidèle peut appartenir à plusieurs groupes.
+@DataClassName('AppartenanceGroupeRow')
+class AppartenancesGroupe extends Table {
+  TextColumn get id => text()();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  TextColumn get groupeId => text().references(GroupesEglise, #id)();
+  DateTimeColumn get dateAffectation => dateTime()();
+  TextColumn get origine => text()();
+  TextColumn get motifDerogation => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (fidele_id, groupe_id)'];
+}
+
 /// File d'attente hors ligne (RG-OFF-02) : chaque écriture locale enregistre
 /// ici l'événement à rejouer vers Supabase dès qu'une connexion est
 /// disponible, dans l'ordre chronologique, jamais purgée avant confirmation

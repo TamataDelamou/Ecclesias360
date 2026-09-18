@@ -73,6 +73,25 @@ const List<(String code, String categorie, String libelle)> professionsDeDepart 
   ('commercant', 'Commerce', 'Commerçant'),
 ];
 
+/// RG-VI-01 — groupes de départ : sept groupes démographiques calculables
+/// automatiquement à partir de la fiche fidèle (`criteresJson`, format
+/// `CriteresGroupe.toJson()`) et quatre groupes fonctionnels purement
+/// manuels (aucun critère calculable). Mêmes codes des deux côtés (local et
+/// Supabase).
+const List<(String code, String libelle, String typeRegle, String? criteresJson)> groupesEgliseDeDepart = [
+  ('hommes', 'Hommes', 'auto', '{"sexe":"masculin"}'),
+  ('femmes', 'Femmes', 'auto', '{"sexe":"feminin"}'),
+  ('jeunesse', 'Jeunesse', 'auto', '{"ageMin":12,"ageMax":35}'),
+  ('couples', 'Couples', 'auto', '{"statutCivil":"marie"}'),
+  ('celibataires', 'Célibataires', 'auto', '{"statutCivil":"celibataire"}'),
+  ('veuves', 'Veuves', 'auto', '{"statutCivil":"veuf"}'),
+  ('nouveaux_convertis', 'Nouveaux convertis', 'auto', '{"statutSpirituel":"nouveau_converti"}'),
+  ('missionnaires', 'Missionnaires', 'manuel', null),
+  ('pasteurs', 'Pasteurs', 'manuel', null),
+  ('anciens', 'Anciens', 'manuel', null),
+  ('diacres', 'Diacres', 'manuel', null),
+];
+
 /// Base Drift/SQLite unique, offline-first (RG-OFF-01), partagée par tous
 /// les modules (voir AGENTS.md §4).
 @DriftDatabase(tables: [
@@ -95,13 +114,15 @@ const List<(String code, String categorie, String libelle)> professionsDeDepart 
   Professions,
   ProfessionsFideles,
   Sollicitations,
+  GroupesEglise,
+  AppartenancesGroupe,
   SyncOutbox,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 7;
+  int get schemaVersion => 8;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -148,6 +169,12 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(sollicitations);
             await _seedProfessionsDeDepart();
           }
+          // v7 -> v8 : ajout du Module VI (Groupes de l'Église).
+          if (from < 8) {
+            await m.createTable(groupesEglise);
+            await m.createTable(appartenancesGroupe);
+            await _seedGroupesEgliseDeDepart();
+          }
         },
         beforeOpen: (details) async {
           // SQLite n'applique pas les contraintes de clé étrangère par
@@ -158,6 +185,7 @@ class AppDatabase extends _$AppDatabase {
             await _seedTypesMinisteresStandards();
             await _seedDonsSpirituelsStandards();
             await _seedProfessionsDeDepart();
+            await _seedGroupesEgliseDeDepart();
           }
         },
       );
@@ -209,6 +237,25 @@ class AppDatabase extends _$AppDatabase {
               code: code,
               categorie: categorie,
               libelle: libelle,
+            ),
+        ],
+        mode: InsertMode.insertOrIgnore,
+      );
+    });
+  }
+
+  Future<void> _seedGroupesEgliseDeDepart() async {
+    await batch((b) {
+      b.insertAll(
+        groupesEglise,
+        [
+          for (final (code, libelle, typeRegle, criteresJson) in groupesEgliseDeDepart)
+            GroupesEgliseCompanion.insert(
+              id: IdGenerator.newId(),
+              code: code,
+              libelle: libelle,
+              typeRegle: typeRegle,
+              criteresJson: Value(criteresJson),
             ),
         ],
         mode: InsertMode.insertOrIgnore,

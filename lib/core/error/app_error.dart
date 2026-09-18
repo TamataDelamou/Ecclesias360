@@ -58,6 +58,12 @@ class AppError implements Exception {
         "Ce type de ministère standard ne peut pas être désactivé.",
       );
 
+  factory AppError.derogationRequisePourAffectationManuelle() => const AppError(
+        'derogation_requise_pour_affectation_manuelle',
+        "Ce fidèle ne correspond pas aux critères automatiques de ce groupe : "
+            "indiquez un motif de dérogation pour l'affecter quand même.",
+      );
+
   @override
   String toString() => 'AppError($code): $message';
 }
