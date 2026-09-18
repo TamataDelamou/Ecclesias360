@@ -110,6 +110,12 @@ class FideleDetailScreen extends StatelessWidget {
           Text('Liens familiaux', style: Theme.of(context).textTheme.titleMedium),
           _LiensFamiliauxSection(controller: controller, fideleId: fidele.id),
           const Divider(height: 32),
+          OutlinedButton.icon(
+            icon: const Icon(Icons.auto_awesome_outlined),
+            label: const Text('Dons spirituels'),
+            onPressed: () => context.push(AppRoutes.donsFidele(fidele.id)),
+          ),
+          const SizedBox(height: 8),
           if (fidele.statut != StatutFidele.inactif)
             OutlinedButton.icon(
               icon: const Icon(Icons.archive_outlined),

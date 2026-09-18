@@ -1,5 +1,11 @@
 import 'package:go_router/go_router.dart';
 
+import '../../features/dons_spirituels/presentation/don_evaluation_form_screen.dart';
+import '../../features/dons_spirituels/presentation/don_historique_screen.dart';
+import '../../features/dons_spirituels/presentation/don_ministeres_compatibles_screen.dart';
+import '../../features/dons_spirituels/presentation/dons_fidele_list_screen.dart';
+import '../../features/dons_spirituels/presentation/dons_referentiel_screen.dart';
+import '../../features/dons_spirituels/presentation/dons_statistiques_screen.dart';
 import '../../features/fideles/presentation/fidele_detail_screen.dart';
 import '../../features/fideles/presentation/fidele_form_screen.dart';
 import '../../features/fideles/presentation/fidele_history_screen.dart';
@@ -108,6 +114,39 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/ministeres/:id/journal',
       builder: (context, state) => MinistereJournalScreen(ministereId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: AppRoutes.donsReferentiel,
+      builder: (context, state) => const DonsReferentielScreen(),
+    ),
+    GoRoute(
+      path: '/fideles/:fideleId/dons',
+      builder: (context, state) => DonsFideleListScreen(fideleId: state.pathParameters['fideleId']!),
+    ),
+    GoRoute(
+      path: '/fideles/:fideleId/dons/:donId',
+      builder: (context, state) => DonHistoriqueScreen(
+        fideleId: state.pathParameters['fideleId']!,
+        donId: state.pathParameters['donId']!,
+      ),
+    ),
+    GoRoute(
+      path: '/fideles/:fideleId/dons/:donId/evaluer',
+      builder: (context, state) => DonEvaluationFormScreen(
+        fideleId: state.pathParameters['fideleId']!,
+        donId: state.pathParameters['donId']!,
+      ),
+    ),
+    GoRoute(
+      path: '/fideles/:fideleId/dons/:donId/ministeres-compatibles',
+      builder: (context, state) => DonMinisteresCompatiblesScreen(
+        fideleId: state.pathParameters['fideleId']!,
+        donId: state.pathParameters['donId']!,
+      ),
+    ),
+    GoRoute(
+      path: '/organisation/:id/dons-statistiques',
+      builder: (context, state) => DonsStatistiquesScreen(noeudId: state.pathParameters['id']!),
     ),
   ],
 );

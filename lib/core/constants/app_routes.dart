@@ -29,4 +29,12 @@ abstract final class AppRoutes {
   static String ministereHistoriqueResponsables(String id) => '/ministeres/$id/historique-responsables';
   static String ministereJournal(String id) => '/ministeres/$id/journal';
   static const String mandatsEcheance = '/ministeres/mandats-echeance';
+
+  static const String donsReferentiel = '/dons-spirituels/referentiel';
+  static String donsFidele(String fideleId) => '/fideles/$fideleId/dons';
+  static String donHistorique(String fideleId, String donId) => '/fideles/$fideleId/dons/$donId';
+  static String donEvaluer(String fideleId, String donId) => '/fideles/$fideleId/dons/$donId/evaluer';
+  static String donMinisteresCompatibles(String fideleId, String donId) =>
+      '/fideles/$fideleId/dons/$donId/ministeres-compatibles';
+  static String donsStatistiques(String noeudId) => '/organisation/$noeudId/dons-statistiques';
 }

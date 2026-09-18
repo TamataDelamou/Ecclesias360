@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'core/router/app_router.dart';
 import 'core/sync/sync_coordinator.dart';
 import 'core/theme/design_tokens.dart';
+import 'features/dons_spirituels/application/don_spirituel_controller.dart';
+import 'features/dons_spirituels/data/don_spirituel_repository.dart';
 import 'features/fideles/application/fidele_controller.dart';
 import 'features/fideles/data/fidele_repository.dart';
 import 'features/ministeres/application/ministere_controller.dart';
@@ -34,6 +36,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final ZoneGeographiqueController _zoneGeographiqueController;
   late final MinistereRepository _ministereRepository;
   late final MinistereController _ministereController;
+  late final DonSpirituelRepository _donSpirituelRepository;
+  late final DonSpirituelController _donSpirituelController;
 
   @override
   void initState() {
@@ -47,6 +51,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _zoneGeographiqueController = ZoneGeographiqueController(_zoneGeographiqueRepository);
     _ministereRepository = MinistereRepository(widget.database, _syncCoordinator);
     _ministereController = MinistereController(_ministereRepository);
+    _donSpirituelRepository = DonSpirituelRepository(widget.database);
+    _donSpirituelController = DonSpirituelController(_donSpirituelRepository);
   }
 
   @override
@@ -55,6 +61,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _fideleController.dispose();
     _zoneGeographiqueController.dispose();
     _ministereController.dispose();
+    _donSpirituelController.dispose();
     super.dispose();
   }
 
@@ -66,6 +73,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
         ChangeNotifierProvider<FideleController>.value(value: _fideleController),
         ChangeNotifierProvider<ZoneGeographiqueController>.value(value: _zoneGeographiqueController),
         ChangeNotifierProvider<MinistereController>.value(value: _ministereController),
+        ChangeNotifierProvider<DonSpirituelController>.value(value: _donSpirituelController),
       ],
       child: MaterialApp.router(
         onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,

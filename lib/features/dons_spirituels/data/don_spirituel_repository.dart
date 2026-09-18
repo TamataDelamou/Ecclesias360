@@ -31,6 +31,15 @@ class DonSpirituelRepository {
 
   // --- Évaluations (RG-IV-01/02) ------------------------------------------
 
+  /// Toutes les évaluations, tous fidèles et tous dons confondus — utilisé
+  /// pour les statistiques de répartition (écran 6), l'appelant filtre par
+  /// nœud via les fidèles concernés.
+  Stream<List<DonFidele>> watchToutesEvaluations() {
+    return _db.select(_db.donsFideles).watch().map(
+          (rows) => rows.map(_evaluationToDomain).toList(growable: false),
+        );
+  }
+
   /// Toutes les évaluations d'un fidèle (tous dons confondus), les plus
   /// récentes en premier — l'appelant filtre par don si besoin.
   Stream<List<DonFidele>> watchEvaluations(String fideleId) {

@@ -22,4 +22,27 @@ abstract final class DonFideleRules {
         .map((c) => c.typeMinistereId)
         .toList(growable: false);
   }
+
+  /// Statistiques de répartition (écran 6, « vue locale ») — pour chaque
+  /// don, le nombre de fidèles de [fideleIds] dont l'évaluation courante
+  /// (RG-IV-02) le concerne.
+  static Map<String, int> repartitionParDon(
+    List<DonFidele> evaluations, {
+    required Set<String> fideleIds,
+  }) {
+    final parPaire = <String, List<DonFidele>>{};
+    for (final evaluation in evaluations) {
+      if (!fideleIds.contains(evaluation.fideleId)) continue;
+      parPaire.putIfAbsent('${evaluation.fideleId}|${evaluation.donId}', () => []).add(evaluation);
+    }
+
+    final compteur = <String, int>{};
+    for (final groupe in parPaire.values) {
+      final courante = evaluationCourante(groupe);
+      if (courante != null) {
+        compteur.update(courante.donId, (n) => n + 1, ifAbsent: () => 1);
+      }
+    }
+    return compteur;
+  }
 }
