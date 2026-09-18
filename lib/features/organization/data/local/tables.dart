@@ -271,6 +271,51 @@ class DonsMinisteresCompatibles extends Table {
   List<String> get customConstraints => ['UNIQUE (don_id, type_ministere_id)'];
 }
 
+/// Table Drift Profession (Module V, RG-V-02) — référentiel hiérarchisé
+/// (catégorie / métier), paramétrable.
+@DataClassName('ProfessionRow')
+class Professions extends Table {
+  TextColumn get id => text()();
+  TextColumn get code => text()();
+  TextColumn get categorie => text()();
+  TextColumn get libelle => text()();
+  TextColumn get statut => text().withDefault(const Constant('actif'))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (code)'];
+}
+
+/// Table Drift ProfessionFidele (Module V, RG-V-01) — déclaration d'une
+/// profession/compétence par un fidèle, vérifiable.
+@DataClassName('ProfessionFideleRow')
+class ProfessionsFideles extends Table {
+  TextColumn get id => text()();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  TextColumn get professionId => text().references(Professions, #id)();
+  TextColumn get statutVerification => text().withDefault(const Constant('declare'))();
+  IntColumn get anneesExperience => integer().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift Sollicitation (Module V, RG-V-03) — sollicitation nommée
+/// d'un fidèle pour un projet ou une action sociale, réponse tracée.
+@DataClassName('SollicitationRow')
+class Sollicitations extends Table {
+  TextColumn get id => text()();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  TextColumn get objet => text()();
+  DateTimeColumn get date => dateTime()();
+  TextColumn get reponse => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 /// File d'attente hors ligne (RG-OFF-02) : chaque écriture locale enregistre
 /// ici l'événement à rejouer vers Supabase dès qu'une connexion est
 /// disponible, dans l'ordre chronologique, jamais purgée avant confirmation

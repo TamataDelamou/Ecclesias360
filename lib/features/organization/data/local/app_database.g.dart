@@ -7595,6 +7595,1106 @@ class DonsMinisteresCompatiblesCompanion
   }
 }
 
+class $ProfessionsTable extends Professions
+    with TableInfo<$ProfessionsTable, ProfessionRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ProfessionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+    'code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _categorieMeta = const VerificationMeta(
+    'categorie',
+  );
+  @override
+  late final GeneratedColumn<String> categorie = GeneratedColumn<String>(
+    'categorie',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _libelleMeta = const VerificationMeta(
+    'libelle',
+  );
+  @override
+  late final GeneratedColumn<String> libelle = GeneratedColumn<String>(
+    'libelle',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('actif'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, code, categorie, libelle, statut];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'professions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ProfessionRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+        _codeMeta,
+        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_codeMeta);
+    }
+    if (data.containsKey('categorie')) {
+      context.handle(
+        _categorieMeta,
+        categorie.isAcceptableOrUnknown(data['categorie']!, _categorieMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categorieMeta);
+    }
+    if (data.containsKey('libelle')) {
+      context.handle(
+        _libelleMeta,
+        libelle.isAcceptableOrUnknown(data['libelle']!, _libelleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_libelleMeta);
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ProfessionRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ProfessionRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      code: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code'],
+      )!,
+      categorie: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}categorie'],
+      )!,
+      libelle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}libelle'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+    );
+  }
+
+  @override
+  $ProfessionsTable createAlias(String alias) {
+    return $ProfessionsTable(attachedDatabase, alias);
+  }
+}
+
+class ProfessionRow extends DataClass implements Insertable<ProfessionRow> {
+  final String id;
+  final String code;
+  final String categorie;
+  final String libelle;
+  final String statut;
+  const ProfessionRow({
+    required this.id,
+    required this.code,
+    required this.categorie,
+    required this.libelle,
+    required this.statut,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['code'] = Variable<String>(code);
+    map['categorie'] = Variable<String>(categorie);
+    map['libelle'] = Variable<String>(libelle);
+    map['statut'] = Variable<String>(statut);
+    return map;
+  }
+
+  ProfessionsCompanion toCompanion(bool nullToAbsent) {
+    return ProfessionsCompanion(
+      id: Value(id),
+      code: Value(code),
+      categorie: Value(categorie),
+      libelle: Value(libelle),
+      statut: Value(statut),
+    );
+  }
+
+  factory ProfessionRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ProfessionRow(
+      id: serializer.fromJson<String>(json['id']),
+      code: serializer.fromJson<String>(json['code']),
+      categorie: serializer.fromJson<String>(json['categorie']),
+      libelle: serializer.fromJson<String>(json['libelle']),
+      statut: serializer.fromJson<String>(json['statut']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'code': serializer.toJson<String>(code),
+      'categorie': serializer.toJson<String>(categorie),
+      'libelle': serializer.toJson<String>(libelle),
+      'statut': serializer.toJson<String>(statut),
+    };
+  }
+
+  ProfessionRow copyWith({
+    String? id,
+    String? code,
+    String? categorie,
+    String? libelle,
+    String? statut,
+  }) => ProfessionRow(
+    id: id ?? this.id,
+    code: code ?? this.code,
+    categorie: categorie ?? this.categorie,
+    libelle: libelle ?? this.libelle,
+    statut: statut ?? this.statut,
+  );
+  ProfessionRow copyWithCompanion(ProfessionsCompanion data) {
+    return ProfessionRow(
+      id: data.id.present ? data.id.value : this.id,
+      code: data.code.present ? data.code.value : this.code,
+      categorie: data.categorie.present ? data.categorie.value : this.categorie,
+      libelle: data.libelle.present ? data.libelle.value : this.libelle,
+      statut: data.statut.present ? data.statut.value : this.statut,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProfessionRow(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('categorie: $categorie, ')
+          ..write('libelle: $libelle, ')
+          ..write('statut: $statut')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, code, categorie, libelle, statut);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ProfessionRow &&
+          other.id == this.id &&
+          other.code == this.code &&
+          other.categorie == this.categorie &&
+          other.libelle == this.libelle &&
+          other.statut == this.statut);
+}
+
+class ProfessionsCompanion extends UpdateCompanion<ProfessionRow> {
+  final Value<String> id;
+  final Value<String> code;
+  final Value<String> categorie;
+  final Value<String> libelle;
+  final Value<String> statut;
+  final Value<int> rowid;
+  const ProfessionsCompanion({
+    this.id = const Value.absent(),
+    this.code = const Value.absent(),
+    this.categorie = const Value.absent(),
+    this.libelle = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ProfessionsCompanion.insert({
+    required String id,
+    required String code,
+    required String categorie,
+    required String libelle,
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       code = Value(code),
+       categorie = Value(categorie),
+       libelle = Value(libelle);
+  static Insertable<ProfessionRow> custom({
+    Expression<String>? id,
+    Expression<String>? code,
+    Expression<String>? categorie,
+    Expression<String>? libelle,
+    Expression<String>? statut,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (code != null) 'code': code,
+      if (categorie != null) 'categorie': categorie,
+      if (libelle != null) 'libelle': libelle,
+      if (statut != null) 'statut': statut,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ProfessionsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? code,
+    Value<String>? categorie,
+    Value<String>? libelle,
+    Value<String>? statut,
+    Value<int>? rowid,
+  }) {
+    return ProfessionsCompanion(
+      id: id ?? this.id,
+      code: code ?? this.code,
+      categorie: categorie ?? this.categorie,
+      libelle: libelle ?? this.libelle,
+      statut: statut ?? this.statut,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (categorie.present) {
+      map['categorie'] = Variable<String>(categorie.value);
+    }
+    if (libelle.present) {
+      map['libelle'] = Variable<String>(libelle.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProfessionsCompanion(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('categorie: $categorie, ')
+          ..write('libelle: $libelle, ')
+          ..write('statut: $statut, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ProfessionsFidelesTable extends ProfessionsFideles
+    with TableInfo<$ProfessionsFidelesTable, ProfessionFideleRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ProfessionsFidelesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _professionIdMeta = const VerificationMeta(
+    'professionId',
+  );
+  @override
+  late final GeneratedColumn<String> professionId = GeneratedColumn<String>(
+    'profession_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES professions (id)',
+    ),
+  );
+  static const VerificationMeta _statutVerificationMeta =
+      const VerificationMeta('statutVerification');
+  @override
+  late final GeneratedColumn<String> statutVerification =
+      GeneratedColumn<String>(
+        'statut_verification',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultValue: const Constant('declare'),
+      );
+  static const VerificationMeta _anneesExperienceMeta = const VerificationMeta(
+    'anneesExperience',
+  );
+  @override
+  late final GeneratedColumn<int> anneesExperience = GeneratedColumn<int>(
+    'annees_experience',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    fideleId,
+    professionId,
+    statutVerification,
+    anneesExperience,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'professions_fideles';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ProfessionFideleRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    if (data.containsKey('profession_id')) {
+      context.handle(
+        _professionIdMeta,
+        professionId.isAcceptableOrUnknown(
+          data['profession_id']!,
+          _professionIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_professionIdMeta);
+    }
+    if (data.containsKey('statut_verification')) {
+      context.handle(
+        _statutVerificationMeta,
+        statutVerification.isAcceptableOrUnknown(
+          data['statut_verification']!,
+          _statutVerificationMeta,
+        ),
+      );
+    }
+    if (data.containsKey('annees_experience')) {
+      context.handle(
+        _anneesExperienceMeta,
+        anneesExperience.isAcceptableOrUnknown(
+          data['annees_experience']!,
+          _anneesExperienceMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ProfessionFideleRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ProfessionFideleRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+      professionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}profession_id'],
+      )!,
+      statutVerification: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut_verification'],
+      )!,
+      anneesExperience: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}annees_experience'],
+      ),
+    );
+  }
+
+  @override
+  $ProfessionsFidelesTable createAlias(String alias) {
+    return $ProfessionsFidelesTable(attachedDatabase, alias);
+  }
+}
+
+class ProfessionFideleRow extends DataClass
+    implements Insertable<ProfessionFideleRow> {
+  final String id;
+  final String fideleId;
+  final String professionId;
+  final String statutVerification;
+  final int? anneesExperience;
+  const ProfessionFideleRow({
+    required this.id,
+    required this.fideleId,
+    required this.professionId,
+    required this.statutVerification,
+    this.anneesExperience,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['fidele_id'] = Variable<String>(fideleId);
+    map['profession_id'] = Variable<String>(professionId);
+    map['statut_verification'] = Variable<String>(statutVerification);
+    if (!nullToAbsent || anneesExperience != null) {
+      map['annees_experience'] = Variable<int>(anneesExperience);
+    }
+    return map;
+  }
+
+  ProfessionsFidelesCompanion toCompanion(bool nullToAbsent) {
+    return ProfessionsFidelesCompanion(
+      id: Value(id),
+      fideleId: Value(fideleId),
+      professionId: Value(professionId),
+      statutVerification: Value(statutVerification),
+      anneesExperience: anneesExperience == null && nullToAbsent
+          ? const Value.absent()
+          : Value(anneesExperience),
+    );
+  }
+
+  factory ProfessionFideleRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ProfessionFideleRow(
+      id: serializer.fromJson<String>(json['id']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+      professionId: serializer.fromJson<String>(json['professionId']),
+      statutVerification: serializer.fromJson<String>(
+        json['statutVerification'],
+      ),
+      anneesExperience: serializer.fromJson<int?>(json['anneesExperience']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'fideleId': serializer.toJson<String>(fideleId),
+      'professionId': serializer.toJson<String>(professionId),
+      'statutVerification': serializer.toJson<String>(statutVerification),
+      'anneesExperience': serializer.toJson<int?>(anneesExperience),
+    };
+  }
+
+  ProfessionFideleRow copyWith({
+    String? id,
+    String? fideleId,
+    String? professionId,
+    String? statutVerification,
+    Value<int?> anneesExperience = const Value.absent(),
+  }) => ProfessionFideleRow(
+    id: id ?? this.id,
+    fideleId: fideleId ?? this.fideleId,
+    professionId: professionId ?? this.professionId,
+    statutVerification: statutVerification ?? this.statutVerification,
+    anneesExperience: anneesExperience.present
+        ? anneesExperience.value
+        : this.anneesExperience,
+  );
+  ProfessionFideleRow copyWithCompanion(ProfessionsFidelesCompanion data) {
+    return ProfessionFideleRow(
+      id: data.id.present ? data.id.value : this.id,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      professionId: data.professionId.present
+          ? data.professionId.value
+          : this.professionId,
+      statutVerification: data.statutVerification.present
+          ? data.statutVerification.value
+          : this.statutVerification,
+      anneesExperience: data.anneesExperience.present
+          ? data.anneesExperience.value
+          : this.anneesExperience,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProfessionFideleRow(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('professionId: $professionId, ')
+          ..write('statutVerification: $statutVerification, ')
+          ..write('anneesExperience: $anneesExperience')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    fideleId,
+    professionId,
+    statutVerification,
+    anneesExperience,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ProfessionFideleRow &&
+          other.id == this.id &&
+          other.fideleId == this.fideleId &&
+          other.professionId == this.professionId &&
+          other.statutVerification == this.statutVerification &&
+          other.anneesExperience == this.anneesExperience);
+}
+
+class ProfessionsFidelesCompanion extends UpdateCompanion<ProfessionFideleRow> {
+  final Value<String> id;
+  final Value<String> fideleId;
+  final Value<String> professionId;
+  final Value<String> statutVerification;
+  final Value<int?> anneesExperience;
+  final Value<int> rowid;
+  const ProfessionsFidelesCompanion({
+    this.id = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.professionId = const Value.absent(),
+    this.statutVerification = const Value.absent(),
+    this.anneesExperience = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ProfessionsFidelesCompanion.insert({
+    required String id,
+    required String fideleId,
+    required String professionId,
+    this.statutVerification = const Value.absent(),
+    this.anneesExperience = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       fideleId = Value(fideleId),
+       professionId = Value(professionId);
+  static Insertable<ProfessionFideleRow> custom({
+    Expression<String>? id,
+    Expression<String>? fideleId,
+    Expression<String>? professionId,
+    Expression<String>? statutVerification,
+    Expression<int>? anneesExperience,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (professionId != null) 'profession_id': professionId,
+      if (statutVerification != null) 'statut_verification': statutVerification,
+      if (anneesExperience != null) 'annees_experience': anneesExperience,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ProfessionsFidelesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? fideleId,
+    Value<String>? professionId,
+    Value<String>? statutVerification,
+    Value<int?>? anneesExperience,
+    Value<int>? rowid,
+  }) {
+    return ProfessionsFidelesCompanion(
+      id: id ?? this.id,
+      fideleId: fideleId ?? this.fideleId,
+      professionId: professionId ?? this.professionId,
+      statutVerification: statutVerification ?? this.statutVerification,
+      anneesExperience: anneesExperience ?? this.anneesExperience,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (professionId.present) {
+      map['profession_id'] = Variable<String>(professionId.value);
+    }
+    if (statutVerification.present) {
+      map['statut_verification'] = Variable<String>(statutVerification.value);
+    }
+    if (anneesExperience.present) {
+      map['annees_experience'] = Variable<int>(anneesExperience.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProfessionsFidelesCompanion(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('professionId: $professionId, ')
+          ..write('statutVerification: $statutVerification, ')
+          ..write('anneesExperience: $anneesExperience, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SollicitationsTable extends Sollicitations
+    with TableInfo<$SollicitationsTable, SollicitationRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SollicitationsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _objetMeta = const VerificationMeta('objet');
+  @override
+  late final GeneratedColumn<String> objet = GeneratedColumn<String>(
+    'objet',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _reponseMeta = const VerificationMeta(
+    'reponse',
+  );
+  @override
+  late final GeneratedColumn<String> reponse = GeneratedColumn<String>(
+    'reponse',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, fideleId, objet, date, reponse];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'sollicitations';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SollicitationRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    if (data.containsKey('objet')) {
+      context.handle(
+        _objetMeta,
+        objet.isAcceptableOrUnknown(data['objet']!, _objetMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_objetMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('reponse')) {
+      context.handle(
+        _reponseMeta,
+        reponse.isAcceptableOrUnknown(data['reponse']!, _reponseMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SollicitationRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SollicitationRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+      objet: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}objet'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date'],
+      )!,
+      reponse: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reponse'],
+      ),
+    );
+  }
+
+  @override
+  $SollicitationsTable createAlias(String alias) {
+    return $SollicitationsTable(attachedDatabase, alias);
+  }
+}
+
+class SollicitationRow extends DataClass
+    implements Insertable<SollicitationRow> {
+  final String id;
+  final String fideleId;
+  final String objet;
+  final DateTime date;
+  final String? reponse;
+  const SollicitationRow({
+    required this.id,
+    required this.fideleId,
+    required this.objet,
+    required this.date,
+    this.reponse,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['fidele_id'] = Variable<String>(fideleId);
+    map['objet'] = Variable<String>(objet);
+    map['date'] = Variable<DateTime>(date);
+    if (!nullToAbsent || reponse != null) {
+      map['reponse'] = Variable<String>(reponse);
+    }
+    return map;
+  }
+
+  SollicitationsCompanion toCompanion(bool nullToAbsent) {
+    return SollicitationsCompanion(
+      id: Value(id),
+      fideleId: Value(fideleId),
+      objet: Value(objet),
+      date: Value(date),
+      reponse: reponse == null && nullToAbsent
+          ? const Value.absent()
+          : Value(reponse),
+    );
+  }
+
+  factory SollicitationRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SollicitationRow(
+      id: serializer.fromJson<String>(json['id']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+      objet: serializer.fromJson<String>(json['objet']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      reponse: serializer.fromJson<String?>(json['reponse']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'fideleId': serializer.toJson<String>(fideleId),
+      'objet': serializer.toJson<String>(objet),
+      'date': serializer.toJson<DateTime>(date),
+      'reponse': serializer.toJson<String?>(reponse),
+    };
+  }
+
+  SollicitationRow copyWith({
+    String? id,
+    String? fideleId,
+    String? objet,
+    DateTime? date,
+    Value<String?> reponse = const Value.absent(),
+  }) => SollicitationRow(
+    id: id ?? this.id,
+    fideleId: fideleId ?? this.fideleId,
+    objet: objet ?? this.objet,
+    date: date ?? this.date,
+    reponse: reponse.present ? reponse.value : this.reponse,
+  );
+  SollicitationRow copyWithCompanion(SollicitationsCompanion data) {
+    return SollicitationRow(
+      id: data.id.present ? data.id.value : this.id,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      objet: data.objet.present ? data.objet.value : this.objet,
+      date: data.date.present ? data.date.value : this.date,
+      reponse: data.reponse.present ? data.reponse.value : this.reponse,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SollicitationRow(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('objet: $objet, ')
+          ..write('date: $date, ')
+          ..write('reponse: $reponse')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, fideleId, objet, date, reponse);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SollicitationRow &&
+          other.id == this.id &&
+          other.fideleId == this.fideleId &&
+          other.objet == this.objet &&
+          other.date == this.date &&
+          other.reponse == this.reponse);
+}
+
+class SollicitationsCompanion extends UpdateCompanion<SollicitationRow> {
+  final Value<String> id;
+  final Value<String> fideleId;
+  final Value<String> objet;
+  final Value<DateTime> date;
+  final Value<String?> reponse;
+  final Value<int> rowid;
+  const SollicitationsCompanion({
+    this.id = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.objet = const Value.absent(),
+    this.date = const Value.absent(),
+    this.reponse = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SollicitationsCompanion.insert({
+    required String id,
+    required String fideleId,
+    required String objet,
+    required DateTime date,
+    this.reponse = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       fideleId = Value(fideleId),
+       objet = Value(objet),
+       date = Value(date);
+  static Insertable<SollicitationRow> custom({
+    Expression<String>? id,
+    Expression<String>? fideleId,
+    Expression<String>? objet,
+    Expression<DateTime>? date,
+    Expression<String>? reponse,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (objet != null) 'objet': objet,
+      if (date != null) 'date': date,
+      if (reponse != null) 'reponse': reponse,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SollicitationsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? fideleId,
+    Value<String>? objet,
+    Value<DateTime>? date,
+    Value<String?>? reponse,
+    Value<int>? rowid,
+  }) {
+    return SollicitationsCompanion(
+      id: id ?? this.id,
+      fideleId: fideleId ?? this.fideleId,
+      objet: objet ?? this.objet,
+      date: date ?? this.date,
+      reponse: reponse ?? this.reponse,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (objet.present) {
+      map['objet'] = Variable<String>(objet.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (reponse.present) {
+      map['reponse'] = Variable<String>(reponse.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SollicitationsCompanion(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('objet: $objet, ')
+          ..write('date: $date, ')
+          ..write('reponse: $reponse, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxRow> {
   @override
@@ -8155,6 +9255,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $DonsFidelesTable donsFideles = $DonsFidelesTable(this);
   late final $DonsMinisteresCompatiblesTable donsMinisteresCompatibles =
       $DonsMinisteresCompatiblesTable(this);
+  late final $ProfessionsTable professions = $ProfessionsTable(this);
+  late final $ProfessionsFidelesTable professionsFideles =
+      $ProfessionsFidelesTable(this);
+  late final $SollicitationsTable sollicitations = $SollicitationsTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -8177,6 +9281,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     donsSpirituels,
     donsFideles,
     donsMinisteresCompatibles,
+    professions,
+    professionsFideles,
+    sollicitations,
     syncOutbox,
   ];
 }
@@ -9440,6 +10547,48 @@ final class $$FidelesTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<
+    $ProfessionsFidelesTable,
+    List<ProfessionFideleRow>
+  >
+  _professionsFidelesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.professionsFideles,
+        aliasName: 'fideles__id__professions_fideles__fidele_id',
+      );
+
+  $$ProfessionsFidelesTableProcessedTableManager get professionsFidelesRefs {
+    final manager = $$ProfessionsFidelesTableTableManager(
+      $_db,
+      $_db.professionsFideles,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _professionsFidelesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$SollicitationsTable, List<SollicitationRow>>
+  _sollicitationsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.sollicitations,
+    aliasName: 'fideles__id__sollicitations__fidele_id',
+  );
+
+  $$SollicitationsTableProcessedTableManager get sollicitationsRefs {
+    final manager = $$SollicitationsTableTableManager(
+      $_db,
+      $_db.sollicitations,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_sollicitationsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$FidelesTableFilterComposer
@@ -9826,6 +10975,56 @@ class $$FidelesTableFilterComposer
           }) => $$DonsFidelesTableFilterComposer(
             $db: $db,
             $table: $db.donsFideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> professionsFidelesRefs(
+    Expression<bool> Function($$ProfessionsFidelesTableFilterComposer f) f,
+  ) {
+    final $$ProfessionsFidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.professionsFideles,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProfessionsFidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.professionsFideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> sollicitationsRefs(
+    Expression<bool> Function($$SollicitationsTableFilterComposer f) f,
+  ) {
+    final $$SollicitationsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.sollicitations,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SollicitationsTableFilterComposer(
+            $db: $db,
+            $table: $db.sollicitations,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -10328,6 +11527,57 @@ class $$FidelesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> professionsFidelesRefs<T extends Object>(
+    Expression<T> Function($$ProfessionsFidelesTableAnnotationComposer a) f,
+  ) {
+    final $$ProfessionsFidelesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.professionsFideles,
+          getReferencedColumn: (t) => t.fideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ProfessionsFidelesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.professionsFideles,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> sollicitationsRefs<T extends Object>(
+    Expression<T> Function($$SollicitationsTableAnnotationComposer a) f,
+  ) {
+    final $$SollicitationsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.sollicitations,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SollicitationsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.sollicitations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$FidelesTableTableManager
@@ -10356,6 +11606,8 @@ class $$FidelesTableTableManager
             bool activitesCommeAuteur,
             bool donsFidelesRefs,
             bool evaluationsCommeResponsable,
+            bool professionsFidelesRefs,
+            bool sollicitationsRefs,
           })
         > {
   $$FidelesTableTableManager(_$AppDatabase db, $FidelesTable table)
@@ -10475,6 +11727,8 @@ class $$FidelesTableTableManager
                 activitesCommeAuteur = false,
                 donsFidelesRefs = false,
                 evaluationsCommeResponsable = false,
+                professionsFidelesRefs = false,
+                sollicitationsRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -10490,6 +11744,8 @@ class $$FidelesTableTableManager
                     if (activitesCommeAuteur) db.activitesMinisteres,
                     if (donsFidelesRefs) db.donsFideles,
                     if (evaluationsCommeResponsable) db.donsFideles,
+                    if (professionsFidelesRefs) db.professionsFideles,
+                    if (sollicitationsRefs) db.sollicitations,
                   ],
                   addJoins:
                       <
@@ -10756,6 +12012,48 @@ class $$FidelesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (professionsFidelesRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          ProfessionFideleRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._professionsFidelesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).professionsFidelesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (sollicitationsRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          SollicitationRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._sollicitationsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).sollicitationsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -10789,6 +12087,8 @@ typedef $$FidelesTableProcessedTableManager =
         bool activitesCommeAuteur,
         bool donsFidelesRefs,
         bool evaluationsCommeResponsable,
+        bool professionsFidelesRefs,
+        bool sollicitationsRefs,
       })
     >;
 typedef $$NodeResponsablesTableCreateCompanionBuilder =
@@ -16657,6 +17957,1071 @@ typedef $$DonsMinisteresCompatiblesTableProcessedTableManager =
       DonMinistereCompatibleRow,
       PrefetchHooks Function({bool donId, bool typeMinistereId})
     >;
+typedef $$ProfessionsTableCreateCompanionBuilder =
+    ProfessionsCompanion Function({
+      required String id,
+      required String code,
+      required String categorie,
+      required String libelle,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+typedef $$ProfessionsTableUpdateCompanionBuilder =
+    ProfessionsCompanion Function({
+      Value<String> id,
+      Value<String> code,
+      Value<String> categorie,
+      Value<String> libelle,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+
+final class $$ProfessionsTableReferences
+    extends BaseReferences<_$AppDatabase, $ProfessionsTable, ProfessionRow> {
+  $$ProfessionsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<
+    $ProfessionsFidelesTable,
+    List<ProfessionFideleRow>
+  >
+  _professionsFidelesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.professionsFideles,
+        aliasName: 'professions__id__professions_fideles__profession_id',
+      );
+
+  $$ProfessionsFidelesTableProcessedTableManager get professionsFidelesRefs {
+    final manager = $$ProfessionsFidelesTableTableManager(
+      $_db,
+      $_db.professionsFideles,
+    ).filter((f) => f.professionId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _professionsFidelesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$ProfessionsTableFilterComposer
+    extends Composer<_$AppDatabase, $ProfessionsTable> {
+  $$ProfessionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get categorie => $composableBuilder(
+    column: $table.categorie,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> professionsFidelesRefs(
+    Expression<bool> Function($$ProfessionsFidelesTableFilterComposer f) f,
+  ) {
+    final $$ProfessionsFidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.professionsFideles,
+      getReferencedColumn: (t) => t.professionId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProfessionsFidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.professionsFideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ProfessionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ProfessionsTable> {
+  $$ProfessionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get categorie => $composableBuilder(
+    column: $table.categorie,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ProfessionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ProfessionsTable> {
+  $$ProfessionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<String> get categorie =>
+      $composableBuilder(column: $table.categorie, builder: (column) => column);
+
+  GeneratedColumn<String> get libelle =>
+      $composableBuilder(column: $table.libelle, builder: (column) => column);
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  Expression<T> professionsFidelesRefs<T extends Object>(
+    Expression<T> Function($$ProfessionsFidelesTableAnnotationComposer a) f,
+  ) {
+    final $$ProfessionsFidelesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.professionsFideles,
+          getReferencedColumn: (t) => t.professionId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ProfessionsFidelesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.professionsFideles,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$ProfessionsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ProfessionsTable,
+          ProfessionRow,
+          $$ProfessionsTableFilterComposer,
+          $$ProfessionsTableOrderingComposer,
+          $$ProfessionsTableAnnotationComposer,
+          $$ProfessionsTableCreateCompanionBuilder,
+          $$ProfessionsTableUpdateCompanionBuilder,
+          (ProfessionRow, $$ProfessionsTableReferences),
+          ProfessionRow,
+          PrefetchHooks Function({bool professionsFidelesRefs})
+        > {
+  $$ProfessionsTableTableManager(_$AppDatabase db, $ProfessionsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ProfessionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ProfessionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ProfessionsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> code = const Value.absent(),
+                Value<String> categorie = const Value.absent(),
+                Value<String> libelle = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ProfessionsCompanion(
+                id: id,
+                code: code,
+                categorie: categorie,
+                libelle: libelle,
+                statut: statut,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String code,
+                required String categorie,
+                required String libelle,
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ProfessionsCompanion.insert(
+                id: id,
+                code: code,
+                categorie: categorie,
+                libelle: libelle,
+                statut: statut,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ProfessionsTable, ProfessionRow>(table),
+                  $$ProfessionsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({professionsFidelesRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (professionsFidelesRefs) db.professionsFideles,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (professionsFidelesRefs)
+                    await $_getPrefetchedData<
+                      ProfessionRow,
+                      $ProfessionsTable,
+                      ProfessionFideleRow
+                    >(
+                      currentTable: table,
+                      referencedTable: $$ProfessionsTableReferences
+                          ._professionsFidelesRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$ProfessionsTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).professionsFidelesRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where(
+                            (e) => e.professionId == item.id,
+                          ),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ProfessionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ProfessionsTable,
+      ProfessionRow,
+      $$ProfessionsTableFilterComposer,
+      $$ProfessionsTableOrderingComposer,
+      $$ProfessionsTableAnnotationComposer,
+      $$ProfessionsTableCreateCompanionBuilder,
+      $$ProfessionsTableUpdateCompanionBuilder,
+      (ProfessionRow, $$ProfessionsTableReferences),
+      ProfessionRow,
+      PrefetchHooks Function({bool professionsFidelesRefs})
+    >;
+typedef $$ProfessionsFidelesTableCreateCompanionBuilder =
+    ProfessionsFidelesCompanion Function({
+      required String id,
+      required String fideleId,
+      required String professionId,
+      Value<String> statutVerification,
+      Value<int?> anneesExperience,
+      Value<int> rowid,
+    });
+typedef $$ProfessionsFidelesTableUpdateCompanionBuilder =
+    ProfessionsFidelesCompanion Function({
+      Value<String> id,
+      Value<String> fideleId,
+      Value<String> professionId,
+      Value<String> statutVerification,
+      Value<int?> anneesExperience,
+      Value<int> rowid,
+    });
+
+final class $$ProfessionsFidelesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $ProfessionsFidelesTable,
+          ProfessionFideleRow
+        > {
+  $$ProfessionsFidelesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('professions_fideles__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $ProfessionsTable _professionIdTable(_$AppDatabase db) => db
+      .professions
+      .createAlias('professions_fideles__profession_id__professions__id');
+
+  $$ProfessionsTableProcessedTableManager get professionId {
+    final $_column = $_itemColumn<String>('profession_id')!;
+
+    final manager = $$ProfessionsTableTableManager(
+      $_db,
+      $_db.professions,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_professionIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ProfessionsFidelesTableFilterComposer
+    extends Composer<_$AppDatabase, $ProfessionsFidelesTable> {
+  $$ProfessionsFidelesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statutVerification => $composableBuilder(
+    column: $table.statutVerification,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get anneesExperience => $composableBuilder(
+    column: $table.anneesExperience,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ProfessionsTableFilterComposer get professionId {
+    final $$ProfessionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.professionId,
+      referencedTable: $db.professions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProfessionsTableFilterComposer(
+            $db: $db,
+            $table: $db.professions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ProfessionsFidelesTableOrderingComposer
+    extends Composer<_$AppDatabase, $ProfessionsFidelesTable> {
+  $$ProfessionsFidelesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statutVerification => $composableBuilder(
+    column: $table.statutVerification,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get anneesExperience => $composableBuilder(
+    column: $table.anneesExperience,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ProfessionsTableOrderingComposer get professionId {
+    final $$ProfessionsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.professionId,
+      referencedTable: $db.professions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProfessionsTableOrderingComposer(
+            $db: $db,
+            $table: $db.professions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ProfessionsFidelesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ProfessionsFidelesTable> {
+  $$ProfessionsFidelesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get statutVerification => $composableBuilder(
+    column: $table.statutVerification,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get anneesExperience => $composableBuilder(
+    column: $table.anneesExperience,
+    builder: (column) => column,
+  );
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ProfessionsTableAnnotationComposer get professionId {
+    final $$ProfessionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.professionId,
+      referencedTable: $db.professions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProfessionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.professions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ProfessionsFidelesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ProfessionsFidelesTable,
+          ProfessionFideleRow,
+          $$ProfessionsFidelesTableFilterComposer,
+          $$ProfessionsFidelesTableOrderingComposer,
+          $$ProfessionsFidelesTableAnnotationComposer,
+          $$ProfessionsFidelesTableCreateCompanionBuilder,
+          $$ProfessionsFidelesTableUpdateCompanionBuilder,
+          (ProfessionFideleRow, $$ProfessionsFidelesTableReferences),
+          ProfessionFideleRow,
+          PrefetchHooks Function({bool fideleId, bool professionId})
+        > {
+  $$ProfessionsFidelesTableTableManager(
+    _$AppDatabase db,
+    $ProfessionsFidelesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ProfessionsFidelesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ProfessionsFidelesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ProfessionsFidelesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<String> professionId = const Value.absent(),
+                Value<String> statutVerification = const Value.absent(),
+                Value<int?> anneesExperience = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ProfessionsFidelesCompanion(
+                id: id,
+                fideleId: fideleId,
+                professionId: professionId,
+                statutVerification: statutVerification,
+                anneesExperience: anneesExperience,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String fideleId,
+                required String professionId,
+                Value<String> statutVerification = const Value.absent(),
+                Value<int?> anneesExperience = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ProfessionsFidelesCompanion.insert(
+                id: id,
+                fideleId: fideleId,
+                professionId: professionId,
+                statutVerification: statutVerification,
+                anneesExperience: anneesExperience,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ProfessionsFidelesTable, ProfessionFideleRow>(
+                    table,
+                  ),
+                  $$ProfessionsFidelesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({fideleId = false, professionId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (fideleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.fideleId,
+                                referencedTable:
+                                    $$ProfessionsFidelesTableReferences
+                                        ._fideleIdTable(db),
+                                referencedColumn:
+                                    $$ProfessionsFidelesTableReferences
+                                        ._fideleIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (professionId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.professionId,
+                                referencedTable:
+                                    $$ProfessionsFidelesTableReferences
+                                        ._professionIdTable(db),
+                                referencedColumn:
+                                    $$ProfessionsFidelesTableReferences
+                                        ._professionIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ProfessionsFidelesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ProfessionsFidelesTable,
+      ProfessionFideleRow,
+      $$ProfessionsFidelesTableFilterComposer,
+      $$ProfessionsFidelesTableOrderingComposer,
+      $$ProfessionsFidelesTableAnnotationComposer,
+      $$ProfessionsFidelesTableCreateCompanionBuilder,
+      $$ProfessionsFidelesTableUpdateCompanionBuilder,
+      (ProfessionFideleRow, $$ProfessionsFidelesTableReferences),
+      ProfessionFideleRow,
+      PrefetchHooks Function({bool fideleId, bool professionId})
+    >;
+typedef $$SollicitationsTableCreateCompanionBuilder =
+    SollicitationsCompanion Function({
+      required String id,
+      required String fideleId,
+      required String objet,
+      required DateTime date,
+      Value<String?> reponse,
+      Value<int> rowid,
+    });
+typedef $$SollicitationsTableUpdateCompanionBuilder =
+    SollicitationsCompanion Function({
+      Value<String> id,
+      Value<String> fideleId,
+      Value<String> objet,
+      Value<DateTime> date,
+      Value<String?> reponse,
+      Value<int> rowid,
+    });
+
+final class $$SollicitationsTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $SollicitationsTable, SollicitationRow> {
+  $$SollicitationsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('sollicitations__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$SollicitationsTableFilterComposer
+    extends Composer<_$AppDatabase, $SollicitationsTable> {
+  $$SollicitationsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get objet => $composableBuilder(
+    column: $table.objet,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get reponse => $composableBuilder(
+    column: $table.reponse,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SollicitationsTableOrderingComposer
+    extends Composer<_$AppDatabase, $SollicitationsTable> {
+  $$SollicitationsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get objet => $composableBuilder(
+    column: $table.objet,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get reponse => $composableBuilder(
+    column: $table.reponse,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SollicitationsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SollicitationsTable> {
+  $$SollicitationsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get objet =>
+      $composableBuilder(column: $table.objet, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<String> get reponse =>
+      $composableBuilder(column: $table.reponse, builder: (column) => column);
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SollicitationsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SollicitationsTable,
+          SollicitationRow,
+          $$SollicitationsTableFilterComposer,
+          $$SollicitationsTableOrderingComposer,
+          $$SollicitationsTableAnnotationComposer,
+          $$SollicitationsTableCreateCompanionBuilder,
+          $$SollicitationsTableUpdateCompanionBuilder,
+          (SollicitationRow, $$SollicitationsTableReferences),
+          SollicitationRow,
+          PrefetchHooks Function({bool fideleId})
+        > {
+  $$SollicitationsTableTableManager(
+    _$AppDatabase db,
+    $SollicitationsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SollicitationsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SollicitationsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SollicitationsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<String> objet = const Value.absent(),
+                Value<DateTime> date = const Value.absent(),
+                Value<String?> reponse = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SollicitationsCompanion(
+                id: id,
+                fideleId: fideleId,
+                objet: objet,
+                date: date,
+                reponse: reponse,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String fideleId,
+                required String objet,
+                required DateTime date,
+                Value<String?> reponse = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SollicitationsCompanion.insert(
+                id: id,
+                fideleId: fideleId,
+                objet: objet,
+                date: date,
+                reponse: reponse,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$SollicitationsTable, SollicitationRow>(table),
+                  $$SollicitationsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({fideleId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (fideleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.fideleId,
+                                referencedTable: $$SollicitationsTableReferences
+                                    ._fideleIdTable(db),
+                                referencedColumn:
+                                    $$SollicitationsTableReferences
+                                        ._fideleIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$SollicitationsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SollicitationsTable,
+      SollicitationRow,
+      $$SollicitationsTableFilterComposer,
+      $$SollicitationsTableOrderingComposer,
+      $$SollicitationsTableAnnotationComposer,
+      $$SollicitationsTableCreateCompanionBuilder,
+      $$SollicitationsTableUpdateCompanionBuilder,
+      (SollicitationRow, $$SollicitationsTableReferences),
+      SollicitationRow,
+      PrefetchHooks Function({bool fideleId})
+    >;
 typedef $$SyncOutboxTableCreateCompanionBuilder =
     SyncOutboxCompanion Function({
       required String id,
@@ -16974,6 +19339,12 @@ class $AppDatabaseManager {
         _db,
         _db.donsMinisteresCompatibles,
       );
+  $$ProfessionsTableTableManager get professions =>
+      $$ProfessionsTableTableManager(_db, _db.professions);
+  $$ProfessionsFidelesTableTableManager get professionsFideles =>
+      $$ProfessionsFidelesTableTableManager(_db, _db.professionsFideles);
+  $$SollicitationsTableTableManager get sollicitations =>
+      $$SollicitationsTableTableManager(_db, _db.sollicitations);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }

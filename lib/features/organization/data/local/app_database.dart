@@ -54,6 +54,25 @@ const List<(String code, String libelle, String descriptionBiblique)> donsSpirit
   ('interpretation_des_langues', 'Interprétation des langues', '1 Corinthiens 12:10'),
 ];
 
+/// RG-V-02 — quelques métiers de départ pour amorcer le référentiel
+/// hiérarchisé (catégorie / métier), entièrement paramétrable ensuite
+/// (contrairement aux référentiels fixes des Modules III/IV, aucune
+/// protection « standard » ici).
+const List<(String code, String categorie, String libelle)> professionsDeDepart = [
+  ('medecin', 'Santé', 'Médecin'),
+  ('infirmier', 'Santé', 'Infirmier'),
+  ('enseignant', 'Éducation', 'Enseignant'),
+  ('developpeur_informatique', 'Informatique', 'Développeur informatique'),
+  ('ingenieur', 'Ingénierie et BTP', 'Ingénieur'),
+  ('architecte', 'Ingénierie et BTP', 'Architecte'),
+  ('artisan_macon', 'Ingénierie et BTP', 'Artisan / Maçon'),
+  ('avocat', 'Droit et affaires', 'Avocat'),
+  ('comptable', 'Droit et affaires', 'Comptable'),
+  ('entrepreneur', 'Droit et affaires', 'Entrepreneur'),
+  ('chauffeur', 'Transport et services', 'Chauffeur'),
+  ('commercant', 'Commerce', 'Commerçant'),
+];
+
 /// Base Drift/SQLite unique, offline-first (RG-OFF-01), partagée par tous
 /// les modules (voir AGENTS.md §4).
 @DriftDatabase(tables: [
@@ -73,13 +92,16 @@ const List<(String code, String libelle, String descriptionBiblique)> donsSpirit
   DonsSpirituels,
   DonsFideles,
   DonsMinisteresCompatibles,
+  Professions,
+  ProfessionsFideles,
+  Sollicitations,
   SyncOutbox,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 6;
+  int get schemaVersion => 7;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -119,6 +141,13 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(donsMinisteresCompatibles);
             await _seedDonsSpirituelsStandards();
           }
+          // v6 -> v7 : ajout du Module V (Groupes professionnels).
+          if (from < 7) {
+            await m.createTable(professions);
+            await m.createTable(professionsFideles);
+            await m.createTable(sollicitations);
+            await _seedProfessionsDeDepart();
+          }
         },
         beforeOpen: (details) async {
           // SQLite n'applique pas les contraintes de clé étrangère par
@@ -128,6 +157,7 @@ class AppDatabase extends _$AppDatabase {
           if (details.wasCreated) {
             await _seedTypesMinisteresStandards();
             await _seedDonsSpirituelsStandards();
+            await _seedProfessionsDeDepart();
           }
         },
       );
@@ -161,6 +191,24 @@ class AppDatabase extends _$AppDatabase {
               code: code,
               libelle: libelle,
               descriptionBiblique: descriptionBiblique,
+            ),
+        ],
+        mode: InsertMode.insertOrIgnore,
+      );
+    });
+  }
+
+  Future<void> _seedProfessionsDeDepart() async {
+    await batch((b) {
+      b.insertAll(
+        professions,
+        [
+          for (final (code, categorie, libelle) in professionsDeDepart)
+            ProfessionsCompanion.insert(
+              id: IdGenerator.newId(),
+              code: code,
+              categorie: categorie,
+              libelle: libelle,
             ),
         ],
         mode: InsertMode.insertOrIgnore,
