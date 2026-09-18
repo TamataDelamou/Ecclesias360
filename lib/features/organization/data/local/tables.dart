@@ -352,6 +352,122 @@ class AppartenancesGroupe extends Table {
   List<String> get customConstraints => ['UNIQUE (fidele_id, groupe_id)'];
 }
 
+/// Table Drift QuorumComite (Module VII, RG-VII-05) — quorum minimum
+/// paramétrable par nœud, une ligne par nœud configuré.
+@DataClassName('QuorumComiteRow')
+class QuorumsComite extends Table {
+  TextColumn get id => text()();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  IntColumn get quorumMinimum => integer()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (noeud_id)'];
+}
+
+/// Table Drift MembreComite (Module VII, RG-VII-01) — sous-ensemble qualifié
+/// des fidèles, jamais sans fiche fidèle sous-jacente (FK non nullable).
+@DataClassName('MembreComiteRow')
+class MembresComite extends Table {
+  TextColumn get id => text()();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  TextColumn get fonction => text()();
+  DateTimeColumn get dateDebut => dateTime()();
+  DateTimeColumn get dateFin => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift SeanceComite (Module VII, RG-VII-05).
+@DataClassName('SeanceComiteRow')
+class SeancesComite extends Table {
+  TextColumn get id => text()();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  DateTimeColumn get date => dateTime()();
+  TextColumn get ordreDuJour => text()();
+  BoolColumn get quorumAtteint => boolean().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift PresentSeance (Module VII, RG-VII-05) — liste des présents
+/// d'une séance, base du calcul de quorum.
+@DataClassName('PresentSeanceRow')
+class PresentsSeance extends Table {
+  TextColumn get id => text()();
+  TextColumn get seanceId => text().references(SeancesComite, #id)();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (seance_id, fidele_id)'];
+}
+
+/// Table Drift Decision (Module VII, RG-VII-04/05).
+@DataClassName('DecisionRow')
+class Decisions extends Table {
+  TextColumn get id => text()();
+  TextColumn get seanceId => text().references(SeancesComite, #id)();
+  TextColumn get libelle => text()();
+  TextColumn get resultatVote => text().nullable()();
+  TextColumn get statut => text().withDefault(const Constant('ajourne'))();
+  BoolColumn get porteeDisciplinaire => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift ProcesVerbal (Module VII, RG-VII-02/03).
+@DataClassName('ProcesVerbalRow')
+class ProcesVerbaux extends Table {
+  TextColumn get id => text()();
+  TextColumn get seanceId => text().references(SeancesComite, #id)();
+  TextColumn get contenu => text()();
+  TextColumn get statut => text().withDefault(const Constant('brouillon'))();
+  TextColumn get documentArchiveId => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (seance_id)'];
+}
+
+/// Table Drift ErratumPv (Module VII, RG-VII-02) — correction tracée d'un
+/// PV déjà validé, jamais de modification silencieuse du contenu original.
+@DataClassName('ErratumPvRow')
+class ErratumsPv extends Table {
+  TextColumn get id => text()();
+  TextColumn get procesVerbalId => text().references(ProcesVerbaux, #id)();
+  TextColumn get texte => text()();
+  DateTimeColumn get dateAjout => dateTime()();
+  TextColumn get auteurFideleId => text().nullable().references(Fideles, #id)();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift TacheSuivi (Module VII, RG-VII-03).
+@DataClassName('TacheSuiviRow')
+class TachesSuivi extends Table {
+  TextColumn get id => text()();
+  TextColumn get decisionId => text().references(Decisions, #id)();
+  TextColumn get description => text()();
+  TextColumn get assigneFideleId => text().references(Fideles, #id)();
+  TextColumn get statut => text().withDefault(const Constant('a_faire'))();
+  DateTimeColumn get dateCreation => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 /// File d'attente hors ligne (RG-OFF-02) : chaque écriture locale enregistre
 /// ici l'événement à rejouer vers Supabase dès qu'une connexion est
 /// disponible, dans l'ordre chronologique, jamais purgée avant confirmation

@@ -64,6 +64,16 @@ class AppError implements Exception {
             "indiquez un motif de dérogation pour l'affecter quand même.",
       );
 
+  factory AppError.quorumNonAtteintPourAdoption() => const AppError(
+        'quorum_non_atteint_pour_adoption',
+        "Cette décision ne peut être adoptée : le quorum de la séance n'est pas atteint (ou non configuré).",
+      );
+
+  factory AppError.procesVerbalValideImmuable() => const AppError(
+        'proces_verbal_valide_immuable',
+        "Ce procès-verbal est validé et immuable : toute correction doit passer par un erratum tracé.",
+      );
+
   @override
   String toString() => 'AppError($code): $message';
 }

@@ -116,13 +116,21 @@ const List<(String code, String libelle, String typeRegle, String? criteresJson)
   Sollicitations,
   GroupesEglise,
   AppartenancesGroupe,
+  QuorumsComite,
+  MembresComite,
+  SeancesComite,
+  PresentsSeance,
+  Decisions,
+  ProcesVerbaux,
+  ErratumsPv,
+  TachesSuivi,
   SyncOutbox,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 8;
+  int get schemaVersion => 9;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -174,6 +182,17 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(groupesEglise);
             await m.createTable(appartenancesGroupe);
             await _seedGroupesEgliseDeDepart();
+          }
+          // v8 -> v9 : ajout du Module VII (Comité local).
+          if (from < 9) {
+            await m.createTable(quorumsComite);
+            await m.createTable(membresComite);
+            await m.createTable(seancesComite);
+            await m.createTable(presentsSeance);
+            await m.createTable(decisions);
+            await m.createTable(procesVerbaux);
+            await m.createTable(erratumsPv);
+            await m.createTable(tachesSuivi);
           }
         },
         beforeOpen: (details) async {

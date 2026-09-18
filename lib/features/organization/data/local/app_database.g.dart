@@ -9499,6 +9499,2957 @@ class AppartenancesGroupeCompanion
   }
 }
 
+class $QuorumsComiteTable extends QuorumsComite
+    with TableInfo<$QuorumsComiteTable, QuorumComiteRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $QuorumsComiteTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _noeudIdMeta = const VerificationMeta(
+    'noeudId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudId = GeneratedColumn<String>(
+    'noeud_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _quorumMinimumMeta = const VerificationMeta(
+    'quorumMinimum',
+  );
+  @override
+  late final GeneratedColumn<int> quorumMinimum = GeneratedColumn<int>(
+    'quorum_minimum',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, noeudId, quorumMinimum];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'quorums_comite';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<QuorumComiteRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('noeud_id')) {
+      context.handle(
+        _noeudIdMeta,
+        noeudId.isAcceptableOrUnknown(data['noeud_id']!, _noeudIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudIdMeta);
+    }
+    if (data.containsKey('quorum_minimum')) {
+      context.handle(
+        _quorumMinimumMeta,
+        quorumMinimum.isAcceptableOrUnknown(
+          data['quorum_minimum']!,
+          _quorumMinimumMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_quorumMinimumMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  QuorumComiteRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return QuorumComiteRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      noeudId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_id'],
+      )!,
+      quorumMinimum: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}quorum_minimum'],
+      )!,
+    );
+  }
+
+  @override
+  $QuorumsComiteTable createAlias(String alias) {
+    return $QuorumsComiteTable(attachedDatabase, alias);
+  }
+}
+
+class QuorumComiteRow extends DataClass implements Insertable<QuorumComiteRow> {
+  final String id;
+  final String noeudId;
+  final int quorumMinimum;
+  const QuorumComiteRow({
+    required this.id,
+    required this.noeudId,
+    required this.quorumMinimum,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['noeud_id'] = Variable<String>(noeudId);
+    map['quorum_minimum'] = Variable<int>(quorumMinimum);
+    return map;
+  }
+
+  QuorumsComiteCompanion toCompanion(bool nullToAbsent) {
+    return QuorumsComiteCompanion(
+      id: Value(id),
+      noeudId: Value(noeudId),
+      quorumMinimum: Value(quorumMinimum),
+    );
+  }
+
+  factory QuorumComiteRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return QuorumComiteRow(
+      id: serializer.fromJson<String>(json['id']),
+      noeudId: serializer.fromJson<String>(json['noeudId']),
+      quorumMinimum: serializer.fromJson<int>(json['quorumMinimum']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'noeudId': serializer.toJson<String>(noeudId),
+      'quorumMinimum': serializer.toJson<int>(quorumMinimum),
+    };
+  }
+
+  QuorumComiteRow copyWith({String? id, String? noeudId, int? quorumMinimum}) =>
+      QuorumComiteRow(
+        id: id ?? this.id,
+        noeudId: noeudId ?? this.noeudId,
+        quorumMinimum: quorumMinimum ?? this.quorumMinimum,
+      );
+  QuorumComiteRow copyWithCompanion(QuorumsComiteCompanion data) {
+    return QuorumComiteRow(
+      id: data.id.present ? data.id.value : this.id,
+      noeudId: data.noeudId.present ? data.noeudId.value : this.noeudId,
+      quorumMinimum: data.quorumMinimum.present
+          ? data.quorumMinimum.value
+          : this.quorumMinimum,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('QuorumComiteRow(')
+          ..write('id: $id, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('quorumMinimum: $quorumMinimum')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, noeudId, quorumMinimum);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is QuorumComiteRow &&
+          other.id == this.id &&
+          other.noeudId == this.noeudId &&
+          other.quorumMinimum == this.quorumMinimum);
+}
+
+class QuorumsComiteCompanion extends UpdateCompanion<QuorumComiteRow> {
+  final Value<String> id;
+  final Value<String> noeudId;
+  final Value<int> quorumMinimum;
+  final Value<int> rowid;
+  const QuorumsComiteCompanion({
+    this.id = const Value.absent(),
+    this.noeudId = const Value.absent(),
+    this.quorumMinimum = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  QuorumsComiteCompanion.insert({
+    required String id,
+    required String noeudId,
+    required int quorumMinimum,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       noeudId = Value(noeudId),
+       quorumMinimum = Value(quorumMinimum);
+  static Insertable<QuorumComiteRow> custom({
+    Expression<String>? id,
+    Expression<String>? noeudId,
+    Expression<int>? quorumMinimum,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (noeudId != null) 'noeud_id': noeudId,
+      if (quorumMinimum != null) 'quorum_minimum': quorumMinimum,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  QuorumsComiteCompanion copyWith({
+    Value<String>? id,
+    Value<String>? noeudId,
+    Value<int>? quorumMinimum,
+    Value<int>? rowid,
+  }) {
+    return QuorumsComiteCompanion(
+      id: id ?? this.id,
+      noeudId: noeudId ?? this.noeudId,
+      quorumMinimum: quorumMinimum ?? this.quorumMinimum,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (noeudId.present) {
+      map['noeud_id'] = Variable<String>(noeudId.value);
+    }
+    if (quorumMinimum.present) {
+      map['quorum_minimum'] = Variable<int>(quorumMinimum.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('QuorumsComiteCompanion(')
+          ..write('id: $id, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('quorumMinimum: $quorumMinimum, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MembresComiteTable extends MembresComite
+    with TableInfo<$MembresComiteTable, MembreComiteRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MembresComiteTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _noeudIdMeta = const VerificationMeta(
+    'noeudId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudId = GeneratedColumn<String>(
+    'noeud_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _fonctionMeta = const VerificationMeta(
+    'fonction',
+  );
+  @override
+  late final GeneratedColumn<String> fonction = GeneratedColumn<String>(
+    'fonction',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateDebutMeta = const VerificationMeta(
+    'dateDebut',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateDebut = GeneratedColumn<DateTime>(
+    'date_debut',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateFinMeta = const VerificationMeta(
+    'dateFin',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateFin = GeneratedColumn<DateTime>(
+    'date_fin',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    fideleId,
+    noeudId,
+    fonction,
+    dateDebut,
+    dateFin,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'membres_comite';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MembreComiteRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    if (data.containsKey('noeud_id')) {
+      context.handle(
+        _noeudIdMeta,
+        noeudId.isAcceptableOrUnknown(data['noeud_id']!, _noeudIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudIdMeta);
+    }
+    if (data.containsKey('fonction')) {
+      context.handle(
+        _fonctionMeta,
+        fonction.isAcceptableOrUnknown(data['fonction']!, _fonctionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fonctionMeta);
+    }
+    if (data.containsKey('date_debut')) {
+      context.handle(
+        _dateDebutMeta,
+        dateDebut.isAcceptableOrUnknown(data['date_debut']!, _dateDebutMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateDebutMeta);
+    }
+    if (data.containsKey('date_fin')) {
+      context.handle(
+        _dateFinMeta,
+        dateFin.isAcceptableOrUnknown(data['date_fin']!, _dateFinMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MembreComiteRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MembreComiteRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+      noeudId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_id'],
+      )!,
+      fonction: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fonction'],
+      )!,
+      dateDebut: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_debut'],
+      )!,
+      dateFin: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_fin'],
+      ),
+    );
+  }
+
+  @override
+  $MembresComiteTable createAlias(String alias) {
+    return $MembresComiteTable(attachedDatabase, alias);
+  }
+}
+
+class MembreComiteRow extends DataClass implements Insertable<MembreComiteRow> {
+  final String id;
+  final String fideleId;
+  final String noeudId;
+  final String fonction;
+  final DateTime dateDebut;
+  final DateTime? dateFin;
+  const MembreComiteRow({
+    required this.id,
+    required this.fideleId,
+    required this.noeudId,
+    required this.fonction,
+    required this.dateDebut,
+    this.dateFin,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['fidele_id'] = Variable<String>(fideleId);
+    map['noeud_id'] = Variable<String>(noeudId);
+    map['fonction'] = Variable<String>(fonction);
+    map['date_debut'] = Variable<DateTime>(dateDebut);
+    if (!nullToAbsent || dateFin != null) {
+      map['date_fin'] = Variable<DateTime>(dateFin);
+    }
+    return map;
+  }
+
+  MembresComiteCompanion toCompanion(bool nullToAbsent) {
+    return MembresComiteCompanion(
+      id: Value(id),
+      fideleId: Value(fideleId),
+      noeudId: Value(noeudId),
+      fonction: Value(fonction),
+      dateDebut: Value(dateDebut),
+      dateFin: dateFin == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dateFin),
+    );
+  }
+
+  factory MembreComiteRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MembreComiteRow(
+      id: serializer.fromJson<String>(json['id']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+      noeudId: serializer.fromJson<String>(json['noeudId']),
+      fonction: serializer.fromJson<String>(json['fonction']),
+      dateDebut: serializer.fromJson<DateTime>(json['dateDebut']),
+      dateFin: serializer.fromJson<DateTime?>(json['dateFin']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'fideleId': serializer.toJson<String>(fideleId),
+      'noeudId': serializer.toJson<String>(noeudId),
+      'fonction': serializer.toJson<String>(fonction),
+      'dateDebut': serializer.toJson<DateTime>(dateDebut),
+      'dateFin': serializer.toJson<DateTime?>(dateFin),
+    };
+  }
+
+  MembreComiteRow copyWith({
+    String? id,
+    String? fideleId,
+    String? noeudId,
+    String? fonction,
+    DateTime? dateDebut,
+    Value<DateTime?> dateFin = const Value.absent(),
+  }) => MembreComiteRow(
+    id: id ?? this.id,
+    fideleId: fideleId ?? this.fideleId,
+    noeudId: noeudId ?? this.noeudId,
+    fonction: fonction ?? this.fonction,
+    dateDebut: dateDebut ?? this.dateDebut,
+    dateFin: dateFin.present ? dateFin.value : this.dateFin,
+  );
+  MembreComiteRow copyWithCompanion(MembresComiteCompanion data) {
+    return MembreComiteRow(
+      id: data.id.present ? data.id.value : this.id,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      noeudId: data.noeudId.present ? data.noeudId.value : this.noeudId,
+      fonction: data.fonction.present ? data.fonction.value : this.fonction,
+      dateDebut: data.dateDebut.present ? data.dateDebut.value : this.dateDebut,
+      dateFin: data.dateFin.present ? data.dateFin.value : this.dateFin,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MembreComiteRow(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('fonction: $fonction, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('dateFin: $dateFin')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, fideleId, noeudId, fonction, dateDebut, dateFin);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MembreComiteRow &&
+          other.id == this.id &&
+          other.fideleId == this.fideleId &&
+          other.noeudId == this.noeudId &&
+          other.fonction == this.fonction &&
+          other.dateDebut == this.dateDebut &&
+          other.dateFin == this.dateFin);
+}
+
+class MembresComiteCompanion extends UpdateCompanion<MembreComiteRow> {
+  final Value<String> id;
+  final Value<String> fideleId;
+  final Value<String> noeudId;
+  final Value<String> fonction;
+  final Value<DateTime> dateDebut;
+  final Value<DateTime?> dateFin;
+  final Value<int> rowid;
+  const MembresComiteCompanion({
+    this.id = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.noeudId = const Value.absent(),
+    this.fonction = const Value.absent(),
+    this.dateDebut = const Value.absent(),
+    this.dateFin = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MembresComiteCompanion.insert({
+    required String id,
+    required String fideleId,
+    required String noeudId,
+    required String fonction,
+    required DateTime dateDebut,
+    this.dateFin = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       fideleId = Value(fideleId),
+       noeudId = Value(noeudId),
+       fonction = Value(fonction),
+       dateDebut = Value(dateDebut);
+  static Insertable<MembreComiteRow> custom({
+    Expression<String>? id,
+    Expression<String>? fideleId,
+    Expression<String>? noeudId,
+    Expression<String>? fonction,
+    Expression<DateTime>? dateDebut,
+    Expression<DateTime>? dateFin,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (noeudId != null) 'noeud_id': noeudId,
+      if (fonction != null) 'fonction': fonction,
+      if (dateDebut != null) 'date_debut': dateDebut,
+      if (dateFin != null) 'date_fin': dateFin,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MembresComiteCompanion copyWith({
+    Value<String>? id,
+    Value<String>? fideleId,
+    Value<String>? noeudId,
+    Value<String>? fonction,
+    Value<DateTime>? dateDebut,
+    Value<DateTime?>? dateFin,
+    Value<int>? rowid,
+  }) {
+    return MembresComiteCompanion(
+      id: id ?? this.id,
+      fideleId: fideleId ?? this.fideleId,
+      noeudId: noeudId ?? this.noeudId,
+      fonction: fonction ?? this.fonction,
+      dateDebut: dateDebut ?? this.dateDebut,
+      dateFin: dateFin ?? this.dateFin,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (noeudId.present) {
+      map['noeud_id'] = Variable<String>(noeudId.value);
+    }
+    if (fonction.present) {
+      map['fonction'] = Variable<String>(fonction.value);
+    }
+    if (dateDebut.present) {
+      map['date_debut'] = Variable<DateTime>(dateDebut.value);
+    }
+    if (dateFin.present) {
+      map['date_fin'] = Variable<DateTime>(dateFin.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MembresComiteCompanion(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('fonction: $fonction, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('dateFin: $dateFin, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SeancesComiteTable extends SeancesComite
+    with TableInfo<$SeancesComiteTable, SeanceComiteRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SeancesComiteTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _noeudIdMeta = const VerificationMeta(
+    'noeudId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudId = GeneratedColumn<String>(
+    'noeud_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _ordreDuJourMeta = const VerificationMeta(
+    'ordreDuJour',
+  );
+  @override
+  late final GeneratedColumn<String> ordreDuJour = GeneratedColumn<String>(
+    'ordre_du_jour',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _quorumAtteintMeta = const VerificationMeta(
+    'quorumAtteint',
+  );
+  @override
+  late final GeneratedColumn<bool> quorumAtteint = GeneratedColumn<bool>(
+    'quorum_atteint',
+    aliasedName,
+    true,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("quorum_atteint" IN (0, 1))',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    noeudId,
+    date,
+    ordreDuJour,
+    quorumAtteint,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'seances_comite';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SeanceComiteRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('noeud_id')) {
+      context.handle(
+        _noeudIdMeta,
+        noeudId.isAcceptableOrUnknown(data['noeud_id']!, _noeudIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudIdMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('ordre_du_jour')) {
+      context.handle(
+        _ordreDuJourMeta,
+        ordreDuJour.isAcceptableOrUnknown(
+          data['ordre_du_jour']!,
+          _ordreDuJourMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_ordreDuJourMeta);
+    }
+    if (data.containsKey('quorum_atteint')) {
+      context.handle(
+        _quorumAtteintMeta,
+        quorumAtteint.isAcceptableOrUnknown(
+          data['quorum_atteint']!,
+          _quorumAtteintMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SeanceComiteRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SeanceComiteRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      noeudId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_id'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date'],
+      )!,
+      ordreDuJour: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ordre_du_jour'],
+      )!,
+      quorumAtteint: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}quorum_atteint'],
+      ),
+    );
+  }
+
+  @override
+  $SeancesComiteTable createAlias(String alias) {
+    return $SeancesComiteTable(attachedDatabase, alias);
+  }
+}
+
+class SeanceComiteRow extends DataClass implements Insertable<SeanceComiteRow> {
+  final String id;
+  final String noeudId;
+  final DateTime date;
+  final String ordreDuJour;
+  final bool? quorumAtteint;
+  const SeanceComiteRow({
+    required this.id,
+    required this.noeudId,
+    required this.date,
+    required this.ordreDuJour,
+    this.quorumAtteint,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['noeud_id'] = Variable<String>(noeudId);
+    map['date'] = Variable<DateTime>(date);
+    map['ordre_du_jour'] = Variable<String>(ordreDuJour);
+    if (!nullToAbsent || quorumAtteint != null) {
+      map['quorum_atteint'] = Variable<bool>(quorumAtteint);
+    }
+    return map;
+  }
+
+  SeancesComiteCompanion toCompanion(bool nullToAbsent) {
+    return SeancesComiteCompanion(
+      id: Value(id),
+      noeudId: Value(noeudId),
+      date: Value(date),
+      ordreDuJour: Value(ordreDuJour),
+      quorumAtteint: quorumAtteint == null && nullToAbsent
+          ? const Value.absent()
+          : Value(quorumAtteint),
+    );
+  }
+
+  factory SeanceComiteRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SeanceComiteRow(
+      id: serializer.fromJson<String>(json['id']),
+      noeudId: serializer.fromJson<String>(json['noeudId']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      ordreDuJour: serializer.fromJson<String>(json['ordreDuJour']),
+      quorumAtteint: serializer.fromJson<bool?>(json['quorumAtteint']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'noeudId': serializer.toJson<String>(noeudId),
+      'date': serializer.toJson<DateTime>(date),
+      'ordreDuJour': serializer.toJson<String>(ordreDuJour),
+      'quorumAtteint': serializer.toJson<bool?>(quorumAtteint),
+    };
+  }
+
+  SeanceComiteRow copyWith({
+    String? id,
+    String? noeudId,
+    DateTime? date,
+    String? ordreDuJour,
+    Value<bool?> quorumAtteint = const Value.absent(),
+  }) => SeanceComiteRow(
+    id: id ?? this.id,
+    noeudId: noeudId ?? this.noeudId,
+    date: date ?? this.date,
+    ordreDuJour: ordreDuJour ?? this.ordreDuJour,
+    quorumAtteint: quorumAtteint.present
+        ? quorumAtteint.value
+        : this.quorumAtteint,
+  );
+  SeanceComiteRow copyWithCompanion(SeancesComiteCompanion data) {
+    return SeanceComiteRow(
+      id: data.id.present ? data.id.value : this.id,
+      noeudId: data.noeudId.present ? data.noeudId.value : this.noeudId,
+      date: data.date.present ? data.date.value : this.date,
+      ordreDuJour: data.ordreDuJour.present
+          ? data.ordreDuJour.value
+          : this.ordreDuJour,
+      quorumAtteint: data.quorumAtteint.present
+          ? data.quorumAtteint.value
+          : this.quorumAtteint,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SeanceComiteRow(')
+          ..write('id: $id, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('date: $date, ')
+          ..write('ordreDuJour: $ordreDuJour, ')
+          ..write('quorumAtteint: $quorumAtteint')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, noeudId, date, ordreDuJour, quorumAtteint);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SeanceComiteRow &&
+          other.id == this.id &&
+          other.noeudId == this.noeudId &&
+          other.date == this.date &&
+          other.ordreDuJour == this.ordreDuJour &&
+          other.quorumAtteint == this.quorumAtteint);
+}
+
+class SeancesComiteCompanion extends UpdateCompanion<SeanceComiteRow> {
+  final Value<String> id;
+  final Value<String> noeudId;
+  final Value<DateTime> date;
+  final Value<String> ordreDuJour;
+  final Value<bool?> quorumAtteint;
+  final Value<int> rowid;
+  const SeancesComiteCompanion({
+    this.id = const Value.absent(),
+    this.noeudId = const Value.absent(),
+    this.date = const Value.absent(),
+    this.ordreDuJour = const Value.absent(),
+    this.quorumAtteint = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SeancesComiteCompanion.insert({
+    required String id,
+    required String noeudId,
+    required DateTime date,
+    required String ordreDuJour,
+    this.quorumAtteint = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       noeudId = Value(noeudId),
+       date = Value(date),
+       ordreDuJour = Value(ordreDuJour);
+  static Insertable<SeanceComiteRow> custom({
+    Expression<String>? id,
+    Expression<String>? noeudId,
+    Expression<DateTime>? date,
+    Expression<String>? ordreDuJour,
+    Expression<bool>? quorumAtteint,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (noeudId != null) 'noeud_id': noeudId,
+      if (date != null) 'date': date,
+      if (ordreDuJour != null) 'ordre_du_jour': ordreDuJour,
+      if (quorumAtteint != null) 'quorum_atteint': quorumAtteint,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SeancesComiteCompanion copyWith({
+    Value<String>? id,
+    Value<String>? noeudId,
+    Value<DateTime>? date,
+    Value<String>? ordreDuJour,
+    Value<bool?>? quorumAtteint,
+    Value<int>? rowid,
+  }) {
+    return SeancesComiteCompanion(
+      id: id ?? this.id,
+      noeudId: noeudId ?? this.noeudId,
+      date: date ?? this.date,
+      ordreDuJour: ordreDuJour ?? this.ordreDuJour,
+      quorumAtteint: quorumAtteint ?? this.quorumAtteint,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (noeudId.present) {
+      map['noeud_id'] = Variable<String>(noeudId.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (ordreDuJour.present) {
+      map['ordre_du_jour'] = Variable<String>(ordreDuJour.value);
+    }
+    if (quorumAtteint.present) {
+      map['quorum_atteint'] = Variable<bool>(quorumAtteint.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SeancesComiteCompanion(')
+          ..write('id: $id, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('date: $date, ')
+          ..write('ordreDuJour: $ordreDuJour, ')
+          ..write('quorumAtteint: $quorumAtteint, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PresentsSeanceTable extends PresentsSeance
+    with TableInfo<$PresentsSeanceTable, PresentSeanceRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PresentsSeanceTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _seanceIdMeta = const VerificationMeta(
+    'seanceId',
+  );
+  @override
+  late final GeneratedColumn<String> seanceId = GeneratedColumn<String>(
+    'seance_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES seances_comite (id)',
+    ),
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, seanceId, fideleId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'presents_seance';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PresentSeanceRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('seance_id')) {
+      context.handle(
+        _seanceIdMeta,
+        seanceId.isAcceptableOrUnknown(data['seance_id']!, _seanceIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_seanceIdMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PresentSeanceRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PresentSeanceRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      seanceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}seance_id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+    );
+  }
+
+  @override
+  $PresentsSeanceTable createAlias(String alias) {
+    return $PresentsSeanceTable(attachedDatabase, alias);
+  }
+}
+
+class PresentSeanceRow extends DataClass
+    implements Insertable<PresentSeanceRow> {
+  final String id;
+  final String seanceId;
+  final String fideleId;
+  const PresentSeanceRow({
+    required this.id,
+    required this.seanceId,
+    required this.fideleId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['seance_id'] = Variable<String>(seanceId);
+    map['fidele_id'] = Variable<String>(fideleId);
+    return map;
+  }
+
+  PresentsSeanceCompanion toCompanion(bool nullToAbsent) {
+    return PresentsSeanceCompanion(
+      id: Value(id),
+      seanceId: Value(seanceId),
+      fideleId: Value(fideleId),
+    );
+  }
+
+  factory PresentSeanceRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PresentSeanceRow(
+      id: serializer.fromJson<String>(json['id']),
+      seanceId: serializer.fromJson<String>(json['seanceId']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'seanceId': serializer.toJson<String>(seanceId),
+      'fideleId': serializer.toJson<String>(fideleId),
+    };
+  }
+
+  PresentSeanceRow copyWith({String? id, String? seanceId, String? fideleId}) =>
+      PresentSeanceRow(
+        id: id ?? this.id,
+        seanceId: seanceId ?? this.seanceId,
+        fideleId: fideleId ?? this.fideleId,
+      );
+  PresentSeanceRow copyWithCompanion(PresentsSeanceCompanion data) {
+    return PresentSeanceRow(
+      id: data.id.present ? data.id.value : this.id,
+      seanceId: data.seanceId.present ? data.seanceId.value : this.seanceId,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PresentSeanceRow(')
+          ..write('id: $id, ')
+          ..write('seanceId: $seanceId, ')
+          ..write('fideleId: $fideleId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, seanceId, fideleId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PresentSeanceRow &&
+          other.id == this.id &&
+          other.seanceId == this.seanceId &&
+          other.fideleId == this.fideleId);
+}
+
+class PresentsSeanceCompanion extends UpdateCompanion<PresentSeanceRow> {
+  final Value<String> id;
+  final Value<String> seanceId;
+  final Value<String> fideleId;
+  final Value<int> rowid;
+  const PresentsSeanceCompanion({
+    this.id = const Value.absent(),
+    this.seanceId = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PresentsSeanceCompanion.insert({
+    required String id,
+    required String seanceId,
+    required String fideleId,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       seanceId = Value(seanceId),
+       fideleId = Value(fideleId);
+  static Insertable<PresentSeanceRow> custom({
+    Expression<String>? id,
+    Expression<String>? seanceId,
+    Expression<String>? fideleId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (seanceId != null) 'seance_id': seanceId,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PresentsSeanceCompanion copyWith({
+    Value<String>? id,
+    Value<String>? seanceId,
+    Value<String>? fideleId,
+    Value<int>? rowid,
+  }) {
+    return PresentsSeanceCompanion(
+      id: id ?? this.id,
+      seanceId: seanceId ?? this.seanceId,
+      fideleId: fideleId ?? this.fideleId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (seanceId.present) {
+      map['seance_id'] = Variable<String>(seanceId.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PresentsSeanceCompanion(')
+          ..write('id: $id, ')
+          ..write('seanceId: $seanceId, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $DecisionsTable extends Decisions
+    with TableInfo<$DecisionsTable, DecisionRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DecisionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _seanceIdMeta = const VerificationMeta(
+    'seanceId',
+  );
+  @override
+  late final GeneratedColumn<String> seanceId = GeneratedColumn<String>(
+    'seance_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES seances_comite (id)',
+    ),
+  );
+  static const VerificationMeta _libelleMeta = const VerificationMeta(
+    'libelle',
+  );
+  @override
+  late final GeneratedColumn<String> libelle = GeneratedColumn<String>(
+    'libelle',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _resultatVoteMeta = const VerificationMeta(
+    'resultatVote',
+  );
+  @override
+  late final GeneratedColumn<String> resultatVote = GeneratedColumn<String>(
+    'resultat_vote',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('ajourne'),
+  );
+  static const VerificationMeta _porteeDisciplinaireMeta =
+      const VerificationMeta('porteeDisciplinaire');
+  @override
+  late final GeneratedColumn<bool> porteeDisciplinaire = GeneratedColumn<bool>(
+    'portee_disciplinaire',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("portee_disciplinaire" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    seanceId,
+    libelle,
+    resultatVote,
+    statut,
+    porteeDisciplinaire,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'decisions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DecisionRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('seance_id')) {
+      context.handle(
+        _seanceIdMeta,
+        seanceId.isAcceptableOrUnknown(data['seance_id']!, _seanceIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_seanceIdMeta);
+    }
+    if (data.containsKey('libelle')) {
+      context.handle(
+        _libelleMeta,
+        libelle.isAcceptableOrUnknown(data['libelle']!, _libelleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_libelleMeta);
+    }
+    if (data.containsKey('resultat_vote')) {
+      context.handle(
+        _resultatVoteMeta,
+        resultatVote.isAcceptableOrUnknown(
+          data['resultat_vote']!,
+          _resultatVoteMeta,
+        ),
+      );
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    if (data.containsKey('portee_disciplinaire')) {
+      context.handle(
+        _porteeDisciplinaireMeta,
+        porteeDisciplinaire.isAcceptableOrUnknown(
+          data['portee_disciplinaire']!,
+          _porteeDisciplinaireMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  DecisionRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DecisionRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      seanceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}seance_id'],
+      )!,
+      libelle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}libelle'],
+      )!,
+      resultatVote: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}resultat_vote'],
+      ),
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+      porteeDisciplinaire: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}portee_disciplinaire'],
+      )!,
+    );
+  }
+
+  @override
+  $DecisionsTable createAlias(String alias) {
+    return $DecisionsTable(attachedDatabase, alias);
+  }
+}
+
+class DecisionRow extends DataClass implements Insertable<DecisionRow> {
+  final String id;
+  final String seanceId;
+  final String libelle;
+  final String? resultatVote;
+  final String statut;
+  final bool porteeDisciplinaire;
+  const DecisionRow({
+    required this.id,
+    required this.seanceId,
+    required this.libelle,
+    this.resultatVote,
+    required this.statut,
+    required this.porteeDisciplinaire,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['seance_id'] = Variable<String>(seanceId);
+    map['libelle'] = Variable<String>(libelle);
+    if (!nullToAbsent || resultatVote != null) {
+      map['resultat_vote'] = Variable<String>(resultatVote);
+    }
+    map['statut'] = Variable<String>(statut);
+    map['portee_disciplinaire'] = Variable<bool>(porteeDisciplinaire);
+    return map;
+  }
+
+  DecisionsCompanion toCompanion(bool nullToAbsent) {
+    return DecisionsCompanion(
+      id: Value(id),
+      seanceId: Value(seanceId),
+      libelle: Value(libelle),
+      resultatVote: resultatVote == null && nullToAbsent
+          ? const Value.absent()
+          : Value(resultatVote),
+      statut: Value(statut),
+      porteeDisciplinaire: Value(porteeDisciplinaire),
+    );
+  }
+
+  factory DecisionRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DecisionRow(
+      id: serializer.fromJson<String>(json['id']),
+      seanceId: serializer.fromJson<String>(json['seanceId']),
+      libelle: serializer.fromJson<String>(json['libelle']),
+      resultatVote: serializer.fromJson<String?>(json['resultatVote']),
+      statut: serializer.fromJson<String>(json['statut']),
+      porteeDisciplinaire: serializer.fromJson<bool>(
+        json['porteeDisciplinaire'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'seanceId': serializer.toJson<String>(seanceId),
+      'libelle': serializer.toJson<String>(libelle),
+      'resultatVote': serializer.toJson<String?>(resultatVote),
+      'statut': serializer.toJson<String>(statut),
+      'porteeDisciplinaire': serializer.toJson<bool>(porteeDisciplinaire),
+    };
+  }
+
+  DecisionRow copyWith({
+    String? id,
+    String? seanceId,
+    String? libelle,
+    Value<String?> resultatVote = const Value.absent(),
+    String? statut,
+    bool? porteeDisciplinaire,
+  }) => DecisionRow(
+    id: id ?? this.id,
+    seanceId: seanceId ?? this.seanceId,
+    libelle: libelle ?? this.libelle,
+    resultatVote: resultatVote.present ? resultatVote.value : this.resultatVote,
+    statut: statut ?? this.statut,
+    porteeDisciplinaire: porteeDisciplinaire ?? this.porteeDisciplinaire,
+  );
+  DecisionRow copyWithCompanion(DecisionsCompanion data) {
+    return DecisionRow(
+      id: data.id.present ? data.id.value : this.id,
+      seanceId: data.seanceId.present ? data.seanceId.value : this.seanceId,
+      libelle: data.libelle.present ? data.libelle.value : this.libelle,
+      resultatVote: data.resultatVote.present
+          ? data.resultatVote.value
+          : this.resultatVote,
+      statut: data.statut.present ? data.statut.value : this.statut,
+      porteeDisciplinaire: data.porteeDisciplinaire.present
+          ? data.porteeDisciplinaire.value
+          : this.porteeDisciplinaire,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DecisionRow(')
+          ..write('id: $id, ')
+          ..write('seanceId: $seanceId, ')
+          ..write('libelle: $libelle, ')
+          ..write('resultatVote: $resultatVote, ')
+          ..write('statut: $statut, ')
+          ..write('porteeDisciplinaire: $porteeDisciplinaire')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    seanceId,
+    libelle,
+    resultatVote,
+    statut,
+    porteeDisciplinaire,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DecisionRow &&
+          other.id == this.id &&
+          other.seanceId == this.seanceId &&
+          other.libelle == this.libelle &&
+          other.resultatVote == this.resultatVote &&
+          other.statut == this.statut &&
+          other.porteeDisciplinaire == this.porteeDisciplinaire);
+}
+
+class DecisionsCompanion extends UpdateCompanion<DecisionRow> {
+  final Value<String> id;
+  final Value<String> seanceId;
+  final Value<String> libelle;
+  final Value<String?> resultatVote;
+  final Value<String> statut;
+  final Value<bool> porteeDisciplinaire;
+  final Value<int> rowid;
+  const DecisionsCompanion({
+    this.id = const Value.absent(),
+    this.seanceId = const Value.absent(),
+    this.libelle = const Value.absent(),
+    this.resultatVote = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.porteeDisciplinaire = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DecisionsCompanion.insert({
+    required String id,
+    required String seanceId,
+    required String libelle,
+    this.resultatVote = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.porteeDisciplinaire = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       seanceId = Value(seanceId),
+       libelle = Value(libelle);
+  static Insertable<DecisionRow> custom({
+    Expression<String>? id,
+    Expression<String>? seanceId,
+    Expression<String>? libelle,
+    Expression<String>? resultatVote,
+    Expression<String>? statut,
+    Expression<bool>? porteeDisciplinaire,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (seanceId != null) 'seance_id': seanceId,
+      if (libelle != null) 'libelle': libelle,
+      if (resultatVote != null) 'resultat_vote': resultatVote,
+      if (statut != null) 'statut': statut,
+      if (porteeDisciplinaire != null)
+        'portee_disciplinaire': porteeDisciplinaire,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DecisionsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? seanceId,
+    Value<String>? libelle,
+    Value<String?>? resultatVote,
+    Value<String>? statut,
+    Value<bool>? porteeDisciplinaire,
+    Value<int>? rowid,
+  }) {
+    return DecisionsCompanion(
+      id: id ?? this.id,
+      seanceId: seanceId ?? this.seanceId,
+      libelle: libelle ?? this.libelle,
+      resultatVote: resultatVote ?? this.resultatVote,
+      statut: statut ?? this.statut,
+      porteeDisciplinaire: porteeDisciplinaire ?? this.porteeDisciplinaire,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (seanceId.present) {
+      map['seance_id'] = Variable<String>(seanceId.value);
+    }
+    if (libelle.present) {
+      map['libelle'] = Variable<String>(libelle.value);
+    }
+    if (resultatVote.present) {
+      map['resultat_vote'] = Variable<String>(resultatVote.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (porteeDisciplinaire.present) {
+      map['portee_disciplinaire'] = Variable<bool>(porteeDisciplinaire.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DecisionsCompanion(')
+          ..write('id: $id, ')
+          ..write('seanceId: $seanceId, ')
+          ..write('libelle: $libelle, ')
+          ..write('resultatVote: $resultatVote, ')
+          ..write('statut: $statut, ')
+          ..write('porteeDisciplinaire: $porteeDisciplinaire, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ProcesVerbauxTable extends ProcesVerbaux
+    with TableInfo<$ProcesVerbauxTable, ProcesVerbalRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ProcesVerbauxTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _seanceIdMeta = const VerificationMeta(
+    'seanceId',
+  );
+  @override
+  late final GeneratedColumn<String> seanceId = GeneratedColumn<String>(
+    'seance_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES seances_comite (id)',
+    ),
+  );
+  static const VerificationMeta _contenuMeta = const VerificationMeta(
+    'contenu',
+  );
+  @override
+  late final GeneratedColumn<String> contenu = GeneratedColumn<String>(
+    'contenu',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('brouillon'),
+  );
+  static const VerificationMeta _documentArchiveIdMeta = const VerificationMeta(
+    'documentArchiveId',
+  );
+  @override
+  late final GeneratedColumn<String> documentArchiveId =
+      GeneratedColumn<String>(
+        'document_archive_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    seanceId,
+    contenu,
+    statut,
+    documentArchiveId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'proces_verbaux';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ProcesVerbalRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('seance_id')) {
+      context.handle(
+        _seanceIdMeta,
+        seanceId.isAcceptableOrUnknown(data['seance_id']!, _seanceIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_seanceIdMeta);
+    }
+    if (data.containsKey('contenu')) {
+      context.handle(
+        _contenuMeta,
+        contenu.isAcceptableOrUnknown(data['contenu']!, _contenuMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_contenuMeta);
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    if (data.containsKey('document_archive_id')) {
+      context.handle(
+        _documentArchiveIdMeta,
+        documentArchiveId.isAcceptableOrUnknown(
+          data['document_archive_id']!,
+          _documentArchiveIdMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ProcesVerbalRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ProcesVerbalRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      seanceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}seance_id'],
+      )!,
+      contenu: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}contenu'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+      documentArchiveId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}document_archive_id'],
+      ),
+    );
+  }
+
+  @override
+  $ProcesVerbauxTable createAlias(String alias) {
+    return $ProcesVerbauxTable(attachedDatabase, alias);
+  }
+}
+
+class ProcesVerbalRow extends DataClass implements Insertable<ProcesVerbalRow> {
+  final String id;
+  final String seanceId;
+  final String contenu;
+  final String statut;
+  final String? documentArchiveId;
+  const ProcesVerbalRow({
+    required this.id,
+    required this.seanceId,
+    required this.contenu,
+    required this.statut,
+    this.documentArchiveId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['seance_id'] = Variable<String>(seanceId);
+    map['contenu'] = Variable<String>(contenu);
+    map['statut'] = Variable<String>(statut);
+    if (!nullToAbsent || documentArchiveId != null) {
+      map['document_archive_id'] = Variable<String>(documentArchiveId);
+    }
+    return map;
+  }
+
+  ProcesVerbauxCompanion toCompanion(bool nullToAbsent) {
+    return ProcesVerbauxCompanion(
+      id: Value(id),
+      seanceId: Value(seanceId),
+      contenu: Value(contenu),
+      statut: Value(statut),
+      documentArchiveId: documentArchiveId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(documentArchiveId),
+    );
+  }
+
+  factory ProcesVerbalRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ProcesVerbalRow(
+      id: serializer.fromJson<String>(json['id']),
+      seanceId: serializer.fromJson<String>(json['seanceId']),
+      contenu: serializer.fromJson<String>(json['contenu']),
+      statut: serializer.fromJson<String>(json['statut']),
+      documentArchiveId: serializer.fromJson<String?>(
+        json['documentArchiveId'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'seanceId': serializer.toJson<String>(seanceId),
+      'contenu': serializer.toJson<String>(contenu),
+      'statut': serializer.toJson<String>(statut),
+      'documentArchiveId': serializer.toJson<String?>(documentArchiveId),
+    };
+  }
+
+  ProcesVerbalRow copyWith({
+    String? id,
+    String? seanceId,
+    String? contenu,
+    String? statut,
+    Value<String?> documentArchiveId = const Value.absent(),
+  }) => ProcesVerbalRow(
+    id: id ?? this.id,
+    seanceId: seanceId ?? this.seanceId,
+    contenu: contenu ?? this.contenu,
+    statut: statut ?? this.statut,
+    documentArchiveId: documentArchiveId.present
+        ? documentArchiveId.value
+        : this.documentArchiveId,
+  );
+  ProcesVerbalRow copyWithCompanion(ProcesVerbauxCompanion data) {
+    return ProcesVerbalRow(
+      id: data.id.present ? data.id.value : this.id,
+      seanceId: data.seanceId.present ? data.seanceId.value : this.seanceId,
+      contenu: data.contenu.present ? data.contenu.value : this.contenu,
+      statut: data.statut.present ? data.statut.value : this.statut,
+      documentArchiveId: data.documentArchiveId.present
+          ? data.documentArchiveId.value
+          : this.documentArchiveId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProcesVerbalRow(')
+          ..write('id: $id, ')
+          ..write('seanceId: $seanceId, ')
+          ..write('contenu: $contenu, ')
+          ..write('statut: $statut, ')
+          ..write('documentArchiveId: $documentArchiveId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, seanceId, contenu, statut, documentArchiveId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ProcesVerbalRow &&
+          other.id == this.id &&
+          other.seanceId == this.seanceId &&
+          other.contenu == this.contenu &&
+          other.statut == this.statut &&
+          other.documentArchiveId == this.documentArchiveId);
+}
+
+class ProcesVerbauxCompanion extends UpdateCompanion<ProcesVerbalRow> {
+  final Value<String> id;
+  final Value<String> seanceId;
+  final Value<String> contenu;
+  final Value<String> statut;
+  final Value<String?> documentArchiveId;
+  final Value<int> rowid;
+  const ProcesVerbauxCompanion({
+    this.id = const Value.absent(),
+    this.seanceId = const Value.absent(),
+    this.contenu = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.documentArchiveId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ProcesVerbauxCompanion.insert({
+    required String id,
+    required String seanceId,
+    required String contenu,
+    this.statut = const Value.absent(),
+    this.documentArchiveId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       seanceId = Value(seanceId),
+       contenu = Value(contenu);
+  static Insertable<ProcesVerbalRow> custom({
+    Expression<String>? id,
+    Expression<String>? seanceId,
+    Expression<String>? contenu,
+    Expression<String>? statut,
+    Expression<String>? documentArchiveId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (seanceId != null) 'seance_id': seanceId,
+      if (contenu != null) 'contenu': contenu,
+      if (statut != null) 'statut': statut,
+      if (documentArchiveId != null) 'document_archive_id': documentArchiveId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ProcesVerbauxCompanion copyWith({
+    Value<String>? id,
+    Value<String>? seanceId,
+    Value<String>? contenu,
+    Value<String>? statut,
+    Value<String?>? documentArchiveId,
+    Value<int>? rowid,
+  }) {
+    return ProcesVerbauxCompanion(
+      id: id ?? this.id,
+      seanceId: seanceId ?? this.seanceId,
+      contenu: contenu ?? this.contenu,
+      statut: statut ?? this.statut,
+      documentArchiveId: documentArchiveId ?? this.documentArchiveId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (seanceId.present) {
+      map['seance_id'] = Variable<String>(seanceId.value);
+    }
+    if (contenu.present) {
+      map['contenu'] = Variable<String>(contenu.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (documentArchiveId.present) {
+      map['document_archive_id'] = Variable<String>(documentArchiveId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProcesVerbauxCompanion(')
+          ..write('id: $id, ')
+          ..write('seanceId: $seanceId, ')
+          ..write('contenu: $contenu, ')
+          ..write('statut: $statut, ')
+          ..write('documentArchiveId: $documentArchiveId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ErratumsPvTable extends ErratumsPv
+    with TableInfo<$ErratumsPvTable, ErratumPvRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ErratumsPvTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _procesVerbalIdMeta = const VerificationMeta(
+    'procesVerbalId',
+  );
+  @override
+  late final GeneratedColumn<String> procesVerbalId = GeneratedColumn<String>(
+    'proces_verbal_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES proces_verbaux (id)',
+    ),
+  );
+  static const VerificationMeta _texteMeta = const VerificationMeta('texte');
+  @override
+  late final GeneratedColumn<String> texte = GeneratedColumn<String>(
+    'texte',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateAjoutMeta = const VerificationMeta(
+    'dateAjout',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateAjout = GeneratedColumn<DateTime>(
+    'date_ajout',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _auteurFideleIdMeta = const VerificationMeta(
+    'auteurFideleId',
+  );
+  @override
+  late final GeneratedColumn<String> auteurFideleId = GeneratedColumn<String>(
+    'auteur_fidele_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    procesVerbalId,
+    texte,
+    dateAjout,
+    auteurFideleId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'erratums_pv';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ErratumPvRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('proces_verbal_id')) {
+      context.handle(
+        _procesVerbalIdMeta,
+        procesVerbalId.isAcceptableOrUnknown(
+          data['proces_verbal_id']!,
+          _procesVerbalIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_procesVerbalIdMeta);
+    }
+    if (data.containsKey('texte')) {
+      context.handle(
+        _texteMeta,
+        texte.isAcceptableOrUnknown(data['texte']!, _texteMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_texteMeta);
+    }
+    if (data.containsKey('date_ajout')) {
+      context.handle(
+        _dateAjoutMeta,
+        dateAjout.isAcceptableOrUnknown(data['date_ajout']!, _dateAjoutMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateAjoutMeta);
+    }
+    if (data.containsKey('auteur_fidele_id')) {
+      context.handle(
+        _auteurFideleIdMeta,
+        auteurFideleId.isAcceptableOrUnknown(
+          data['auteur_fidele_id']!,
+          _auteurFideleIdMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ErratumPvRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ErratumPvRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      procesVerbalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}proces_verbal_id'],
+      )!,
+      texte: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}texte'],
+      )!,
+      dateAjout: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_ajout'],
+      )!,
+      auteurFideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}auteur_fidele_id'],
+      ),
+    );
+  }
+
+  @override
+  $ErratumsPvTable createAlias(String alias) {
+    return $ErratumsPvTable(attachedDatabase, alias);
+  }
+}
+
+class ErratumPvRow extends DataClass implements Insertable<ErratumPvRow> {
+  final String id;
+  final String procesVerbalId;
+  final String texte;
+  final DateTime dateAjout;
+  final String? auteurFideleId;
+  const ErratumPvRow({
+    required this.id,
+    required this.procesVerbalId,
+    required this.texte,
+    required this.dateAjout,
+    this.auteurFideleId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['proces_verbal_id'] = Variable<String>(procesVerbalId);
+    map['texte'] = Variable<String>(texte);
+    map['date_ajout'] = Variable<DateTime>(dateAjout);
+    if (!nullToAbsent || auteurFideleId != null) {
+      map['auteur_fidele_id'] = Variable<String>(auteurFideleId);
+    }
+    return map;
+  }
+
+  ErratumsPvCompanion toCompanion(bool nullToAbsent) {
+    return ErratumsPvCompanion(
+      id: Value(id),
+      procesVerbalId: Value(procesVerbalId),
+      texte: Value(texte),
+      dateAjout: Value(dateAjout),
+      auteurFideleId: auteurFideleId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(auteurFideleId),
+    );
+  }
+
+  factory ErratumPvRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ErratumPvRow(
+      id: serializer.fromJson<String>(json['id']),
+      procesVerbalId: serializer.fromJson<String>(json['procesVerbalId']),
+      texte: serializer.fromJson<String>(json['texte']),
+      dateAjout: serializer.fromJson<DateTime>(json['dateAjout']),
+      auteurFideleId: serializer.fromJson<String?>(json['auteurFideleId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'procesVerbalId': serializer.toJson<String>(procesVerbalId),
+      'texte': serializer.toJson<String>(texte),
+      'dateAjout': serializer.toJson<DateTime>(dateAjout),
+      'auteurFideleId': serializer.toJson<String?>(auteurFideleId),
+    };
+  }
+
+  ErratumPvRow copyWith({
+    String? id,
+    String? procesVerbalId,
+    String? texte,
+    DateTime? dateAjout,
+    Value<String?> auteurFideleId = const Value.absent(),
+  }) => ErratumPvRow(
+    id: id ?? this.id,
+    procesVerbalId: procesVerbalId ?? this.procesVerbalId,
+    texte: texte ?? this.texte,
+    dateAjout: dateAjout ?? this.dateAjout,
+    auteurFideleId: auteurFideleId.present
+        ? auteurFideleId.value
+        : this.auteurFideleId,
+  );
+  ErratumPvRow copyWithCompanion(ErratumsPvCompanion data) {
+    return ErratumPvRow(
+      id: data.id.present ? data.id.value : this.id,
+      procesVerbalId: data.procesVerbalId.present
+          ? data.procesVerbalId.value
+          : this.procesVerbalId,
+      texte: data.texte.present ? data.texte.value : this.texte,
+      dateAjout: data.dateAjout.present ? data.dateAjout.value : this.dateAjout,
+      auteurFideleId: data.auteurFideleId.present
+          ? data.auteurFideleId.value
+          : this.auteurFideleId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ErratumPvRow(')
+          ..write('id: $id, ')
+          ..write('procesVerbalId: $procesVerbalId, ')
+          ..write('texte: $texte, ')
+          ..write('dateAjout: $dateAjout, ')
+          ..write('auteurFideleId: $auteurFideleId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, procesVerbalId, texte, dateAjout, auteurFideleId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ErratumPvRow &&
+          other.id == this.id &&
+          other.procesVerbalId == this.procesVerbalId &&
+          other.texte == this.texte &&
+          other.dateAjout == this.dateAjout &&
+          other.auteurFideleId == this.auteurFideleId);
+}
+
+class ErratumsPvCompanion extends UpdateCompanion<ErratumPvRow> {
+  final Value<String> id;
+  final Value<String> procesVerbalId;
+  final Value<String> texte;
+  final Value<DateTime> dateAjout;
+  final Value<String?> auteurFideleId;
+  final Value<int> rowid;
+  const ErratumsPvCompanion({
+    this.id = const Value.absent(),
+    this.procesVerbalId = const Value.absent(),
+    this.texte = const Value.absent(),
+    this.dateAjout = const Value.absent(),
+    this.auteurFideleId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ErratumsPvCompanion.insert({
+    required String id,
+    required String procesVerbalId,
+    required String texte,
+    required DateTime dateAjout,
+    this.auteurFideleId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       procesVerbalId = Value(procesVerbalId),
+       texte = Value(texte),
+       dateAjout = Value(dateAjout);
+  static Insertable<ErratumPvRow> custom({
+    Expression<String>? id,
+    Expression<String>? procesVerbalId,
+    Expression<String>? texte,
+    Expression<DateTime>? dateAjout,
+    Expression<String>? auteurFideleId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (procesVerbalId != null) 'proces_verbal_id': procesVerbalId,
+      if (texte != null) 'texte': texte,
+      if (dateAjout != null) 'date_ajout': dateAjout,
+      if (auteurFideleId != null) 'auteur_fidele_id': auteurFideleId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ErratumsPvCompanion copyWith({
+    Value<String>? id,
+    Value<String>? procesVerbalId,
+    Value<String>? texte,
+    Value<DateTime>? dateAjout,
+    Value<String?>? auteurFideleId,
+    Value<int>? rowid,
+  }) {
+    return ErratumsPvCompanion(
+      id: id ?? this.id,
+      procesVerbalId: procesVerbalId ?? this.procesVerbalId,
+      texte: texte ?? this.texte,
+      dateAjout: dateAjout ?? this.dateAjout,
+      auteurFideleId: auteurFideleId ?? this.auteurFideleId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (procesVerbalId.present) {
+      map['proces_verbal_id'] = Variable<String>(procesVerbalId.value);
+    }
+    if (texte.present) {
+      map['texte'] = Variable<String>(texte.value);
+    }
+    if (dateAjout.present) {
+      map['date_ajout'] = Variable<DateTime>(dateAjout.value);
+    }
+    if (auteurFideleId.present) {
+      map['auteur_fidele_id'] = Variable<String>(auteurFideleId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ErratumsPvCompanion(')
+          ..write('id: $id, ')
+          ..write('procesVerbalId: $procesVerbalId, ')
+          ..write('texte: $texte, ')
+          ..write('dateAjout: $dateAjout, ')
+          ..write('auteurFideleId: $auteurFideleId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TachesSuiviTable extends TachesSuivi
+    with TableInfo<$TachesSuiviTable, TacheSuiviRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TachesSuiviTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _decisionIdMeta = const VerificationMeta(
+    'decisionId',
+  );
+  @override
+  late final GeneratedColumn<String> decisionId = GeneratedColumn<String>(
+    'decision_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES decisions (id)',
+    ),
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _assigneFideleIdMeta = const VerificationMeta(
+    'assigneFideleId',
+  );
+  @override
+  late final GeneratedColumn<String> assigneFideleId = GeneratedColumn<String>(
+    'assigne_fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('a_faire'),
+  );
+  static const VerificationMeta _dateCreationMeta = const VerificationMeta(
+    'dateCreation',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateCreation = GeneratedColumn<DateTime>(
+    'date_creation',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    decisionId,
+    description,
+    assigneFideleId,
+    statut,
+    dateCreation,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'taches_suivi';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TacheSuiviRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('decision_id')) {
+      context.handle(
+        _decisionIdMeta,
+        decisionId.isAcceptableOrUnknown(data['decision_id']!, _decisionIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_decisionIdMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('assigne_fidele_id')) {
+      context.handle(
+        _assigneFideleIdMeta,
+        assigneFideleId.isAcceptableOrUnknown(
+          data['assigne_fidele_id']!,
+          _assigneFideleIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_assigneFideleIdMeta);
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    if (data.containsKey('date_creation')) {
+      context.handle(
+        _dateCreationMeta,
+        dateCreation.isAcceptableOrUnknown(
+          data['date_creation']!,
+          _dateCreationMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_dateCreationMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TacheSuiviRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TacheSuiviRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      decisionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}decision_id'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      )!,
+      assigneFideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}assigne_fidele_id'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+      dateCreation: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_creation'],
+      )!,
+    );
+  }
+
+  @override
+  $TachesSuiviTable createAlias(String alias) {
+    return $TachesSuiviTable(attachedDatabase, alias);
+  }
+}
+
+class TacheSuiviRow extends DataClass implements Insertable<TacheSuiviRow> {
+  final String id;
+  final String decisionId;
+  final String description;
+  final String assigneFideleId;
+  final String statut;
+  final DateTime dateCreation;
+  const TacheSuiviRow({
+    required this.id,
+    required this.decisionId,
+    required this.description,
+    required this.assigneFideleId,
+    required this.statut,
+    required this.dateCreation,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['decision_id'] = Variable<String>(decisionId);
+    map['description'] = Variable<String>(description);
+    map['assigne_fidele_id'] = Variable<String>(assigneFideleId);
+    map['statut'] = Variable<String>(statut);
+    map['date_creation'] = Variable<DateTime>(dateCreation);
+    return map;
+  }
+
+  TachesSuiviCompanion toCompanion(bool nullToAbsent) {
+    return TachesSuiviCompanion(
+      id: Value(id),
+      decisionId: Value(decisionId),
+      description: Value(description),
+      assigneFideleId: Value(assigneFideleId),
+      statut: Value(statut),
+      dateCreation: Value(dateCreation),
+    );
+  }
+
+  factory TacheSuiviRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TacheSuiviRow(
+      id: serializer.fromJson<String>(json['id']),
+      decisionId: serializer.fromJson<String>(json['decisionId']),
+      description: serializer.fromJson<String>(json['description']),
+      assigneFideleId: serializer.fromJson<String>(json['assigneFideleId']),
+      statut: serializer.fromJson<String>(json['statut']),
+      dateCreation: serializer.fromJson<DateTime>(json['dateCreation']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'decisionId': serializer.toJson<String>(decisionId),
+      'description': serializer.toJson<String>(description),
+      'assigneFideleId': serializer.toJson<String>(assigneFideleId),
+      'statut': serializer.toJson<String>(statut),
+      'dateCreation': serializer.toJson<DateTime>(dateCreation),
+    };
+  }
+
+  TacheSuiviRow copyWith({
+    String? id,
+    String? decisionId,
+    String? description,
+    String? assigneFideleId,
+    String? statut,
+    DateTime? dateCreation,
+  }) => TacheSuiviRow(
+    id: id ?? this.id,
+    decisionId: decisionId ?? this.decisionId,
+    description: description ?? this.description,
+    assigneFideleId: assigneFideleId ?? this.assigneFideleId,
+    statut: statut ?? this.statut,
+    dateCreation: dateCreation ?? this.dateCreation,
+  );
+  TacheSuiviRow copyWithCompanion(TachesSuiviCompanion data) {
+    return TacheSuiviRow(
+      id: data.id.present ? data.id.value : this.id,
+      decisionId: data.decisionId.present
+          ? data.decisionId.value
+          : this.decisionId,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      assigneFideleId: data.assigneFideleId.present
+          ? data.assigneFideleId.value
+          : this.assigneFideleId,
+      statut: data.statut.present ? data.statut.value : this.statut,
+      dateCreation: data.dateCreation.present
+          ? data.dateCreation.value
+          : this.dateCreation,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TacheSuiviRow(')
+          ..write('id: $id, ')
+          ..write('decisionId: $decisionId, ')
+          ..write('description: $description, ')
+          ..write('assigneFideleId: $assigneFideleId, ')
+          ..write('statut: $statut, ')
+          ..write('dateCreation: $dateCreation')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    decisionId,
+    description,
+    assigneFideleId,
+    statut,
+    dateCreation,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TacheSuiviRow &&
+          other.id == this.id &&
+          other.decisionId == this.decisionId &&
+          other.description == this.description &&
+          other.assigneFideleId == this.assigneFideleId &&
+          other.statut == this.statut &&
+          other.dateCreation == this.dateCreation);
+}
+
+class TachesSuiviCompanion extends UpdateCompanion<TacheSuiviRow> {
+  final Value<String> id;
+  final Value<String> decisionId;
+  final Value<String> description;
+  final Value<String> assigneFideleId;
+  final Value<String> statut;
+  final Value<DateTime> dateCreation;
+  final Value<int> rowid;
+  const TachesSuiviCompanion({
+    this.id = const Value.absent(),
+    this.decisionId = const Value.absent(),
+    this.description = const Value.absent(),
+    this.assigneFideleId = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.dateCreation = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TachesSuiviCompanion.insert({
+    required String id,
+    required String decisionId,
+    required String description,
+    required String assigneFideleId,
+    this.statut = const Value.absent(),
+    required DateTime dateCreation,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       decisionId = Value(decisionId),
+       description = Value(description),
+       assigneFideleId = Value(assigneFideleId),
+       dateCreation = Value(dateCreation);
+  static Insertable<TacheSuiviRow> custom({
+    Expression<String>? id,
+    Expression<String>? decisionId,
+    Expression<String>? description,
+    Expression<String>? assigneFideleId,
+    Expression<String>? statut,
+    Expression<DateTime>? dateCreation,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (decisionId != null) 'decision_id': decisionId,
+      if (description != null) 'description': description,
+      if (assigneFideleId != null) 'assigne_fidele_id': assigneFideleId,
+      if (statut != null) 'statut': statut,
+      if (dateCreation != null) 'date_creation': dateCreation,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TachesSuiviCompanion copyWith({
+    Value<String>? id,
+    Value<String>? decisionId,
+    Value<String>? description,
+    Value<String>? assigneFideleId,
+    Value<String>? statut,
+    Value<DateTime>? dateCreation,
+    Value<int>? rowid,
+  }) {
+    return TachesSuiviCompanion(
+      id: id ?? this.id,
+      decisionId: decisionId ?? this.decisionId,
+      description: description ?? this.description,
+      assigneFideleId: assigneFideleId ?? this.assigneFideleId,
+      statut: statut ?? this.statut,
+      dateCreation: dateCreation ?? this.dateCreation,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (decisionId.present) {
+      map['decision_id'] = Variable<String>(decisionId.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (assigneFideleId.present) {
+      map['assigne_fidele_id'] = Variable<String>(assigneFideleId.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (dateCreation.present) {
+      map['date_creation'] = Variable<DateTime>(dateCreation.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TachesSuiviCompanion(')
+          ..write('id: $id, ')
+          ..write('decisionId: $decisionId, ')
+          ..write('description: $description, ')
+          ..write('assigneFideleId: $assigneFideleId, ')
+          ..write('statut: $statut, ')
+          ..write('dateCreation: $dateCreation, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxRow> {
   @override
@@ -10066,6 +13017,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $GroupesEgliseTable groupesEglise = $GroupesEgliseTable(this);
   late final $AppartenancesGroupeTable appartenancesGroupe =
       $AppartenancesGroupeTable(this);
+  late final $QuorumsComiteTable quorumsComite = $QuorumsComiteTable(this);
+  late final $MembresComiteTable membresComite = $MembresComiteTable(this);
+  late final $SeancesComiteTable seancesComite = $SeancesComiteTable(this);
+  late final $PresentsSeanceTable presentsSeance = $PresentsSeanceTable(this);
+  late final $DecisionsTable decisions = $DecisionsTable(this);
+  late final $ProcesVerbauxTable procesVerbaux = $ProcesVerbauxTable(this);
+  late final $ErratumsPvTable erratumsPv = $ErratumsPvTable(this);
+  late final $TachesSuiviTable tachesSuivi = $TachesSuiviTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -10093,6 +13052,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     sollicitations,
     groupesEglise,
     appartenancesGroupe,
+    quorumsComite,
+    membresComite,
+    seancesComite,
+    presentsSeance,
+    decisions,
+    procesVerbaux,
+    erratumsPv,
+    tachesSuivi,
     syncOutbox,
   ];
 }
@@ -10201,6 +13168,60 @@ final class $$OrganisationNodesTableReferences
     ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_ministeresRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$QuorumsComiteTable, List<QuorumComiteRow>>
+  _quorumsComiteRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.quorumsComite,
+    aliasName: 'organisation_nodes__id__quorums_comite__noeud_id',
+  );
+
+  $$QuorumsComiteTableProcessedTableManager get quorumsComiteRefs {
+    final manager = $$QuorumsComiteTableTableManager(
+      $_db,
+      $_db.quorumsComite,
+    ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_quorumsComiteRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$MembresComiteTable, List<MembreComiteRow>>
+  _membresComiteRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.membresComite,
+    aliasName: 'organisation_nodes__id__membres_comite__noeud_id',
+  );
+
+  $$MembresComiteTableProcessedTableManager get membresComiteRefs {
+    final manager = $$MembresComiteTableTableManager(
+      $_db,
+      $_db.membresComite,
+    ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_membresComiteRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$SeancesComiteTable, List<SeanceComiteRow>>
+  _seancesComiteRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.seancesComite,
+    aliasName: 'organisation_nodes__id__seances_comite__noeud_id',
+  );
+
+  $$SeancesComiteTableProcessedTableManager get seancesComiteRefs {
+    final manager = $$SeancesComiteTableTableManager(
+      $_db,
+      $_db.seancesComite,
+    ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_seancesComiteRefsTable($_db));
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -10357,6 +13378,81 @@ class $$OrganisationNodesTableFilterComposer
           }) => $$MinisteresTableFilterComposer(
             $db: $db,
             $table: $db.ministeres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> quorumsComiteRefs(
+    Expression<bool> Function($$QuorumsComiteTableFilterComposer f) f,
+  ) {
+    final $$QuorumsComiteTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.quorumsComite,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$QuorumsComiteTableFilterComposer(
+            $db: $db,
+            $table: $db.quorumsComite,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> membresComiteRefs(
+    Expression<bool> Function($$MembresComiteTableFilterComposer f) f,
+  ) {
+    final $$MembresComiteTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.membresComite,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MembresComiteTableFilterComposer(
+            $db: $db,
+            $table: $db.membresComite,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> seancesComiteRefs(
+    Expression<bool> Function($$SeancesComiteTableFilterComposer f) f,
+  ) {
+    final $$SeancesComiteTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.seancesComite,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SeancesComiteTableFilterComposer(
+            $db: $db,
+            $table: $db.seancesComite,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -10588,6 +13684,81 @@ class $$OrganisationNodesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> quorumsComiteRefs<T extends Object>(
+    Expression<T> Function($$QuorumsComiteTableAnnotationComposer a) f,
+  ) {
+    final $$QuorumsComiteTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.quorumsComite,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$QuorumsComiteTableAnnotationComposer(
+            $db: $db,
+            $table: $db.quorumsComite,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> membresComiteRefs<T extends Object>(
+    Expression<T> Function($$MembresComiteTableAnnotationComposer a) f,
+  ) {
+    final $$MembresComiteTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.membresComite,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MembresComiteTableAnnotationComposer(
+            $db: $db,
+            $table: $db.membresComite,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> seancesComiteRefs<T extends Object>(
+    Expression<T> Function($$SeancesComiteTableAnnotationComposer a) f,
+  ) {
+    final $$SeancesComiteTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.seancesComite,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SeancesComiteTableAnnotationComposer(
+            $db: $db,
+            $table: $db.seancesComite,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$OrganisationNodesTableTableManager
@@ -10607,6 +13778,9 @@ class $$OrganisationNodesTableTableManager
             bool fidelesRefs,
             bool nodeResponsablesRefs,
             bool ministeresRefs,
+            bool quorumsComiteRefs,
+            bool membresComiteRefs,
+            bool seancesComiteRefs,
           })
         > {
   $$OrganisationNodesTableTableManager(
@@ -10712,6 +13886,9 @@ class $$OrganisationNodesTableTableManager
                 fidelesRefs = false,
                 nodeResponsablesRefs = false,
                 ministeresRefs = false,
+                quorumsComiteRefs = false,
+                membresComiteRefs = false,
+                seancesComiteRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -10719,6 +13896,9 @@ class $$OrganisationNodesTableTableManager
                     if (fidelesRefs) db.fideles,
                     if (nodeResponsablesRefs) db.nodeResponsables,
                     if (ministeresRefs) db.ministeres,
+                    if (quorumsComiteRefs) db.quorumsComite,
+                    if (membresComiteRefs) db.membresComite,
+                    if (seancesComiteRefs) db.seancesComite,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -10786,6 +13966,69 @@ class $$OrganisationNodesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (quorumsComiteRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          QuorumComiteRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._quorumsComiteRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).quorumsComiteRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (membresComiteRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          MembreComiteRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._membresComiteRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).membresComiteRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (seancesComiteRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          SeanceComiteRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._seancesComiteRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).seancesComiteRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -10810,6 +14053,9 @@ typedef $$OrganisationNodesTableProcessedTableManager =
         bool fidelesRefs,
         bool nodeResponsablesRefs,
         bool ministeresRefs,
+        bool quorumsComiteRefs,
+        bool membresComiteRefs,
+        bool seancesComiteRefs,
       })
     >;
 typedef $$HistoriqueRattachementsTableCreateCompanionBuilder =
@@ -11422,6 +14668,78 @@ final class $$FidelesTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$MembresComiteTable, List<MembreComiteRow>>
+  _membresComiteRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.membresComite,
+    aliasName: 'fideles__id__membres_comite__fidele_id',
+  );
+
+  $$MembresComiteTableProcessedTableManager get membresComiteRefs {
+    final manager = $$MembresComiteTableTableManager(
+      $_db,
+      $_db.membresComite,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_membresComiteRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$PresentsSeanceTable, List<PresentSeanceRow>>
+  _presentsSeanceRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.presentsSeance,
+    aliasName: 'fideles__id__presents_seance__fidele_id',
+  );
+
+  $$PresentsSeanceTableProcessedTableManager get presentsSeanceRefs {
+    final manager = $$PresentsSeanceTableTableManager(
+      $_db,
+      $_db.presentsSeance,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_presentsSeanceRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$ErratumsPvTable, List<ErratumPvRow>>
+  _erratumsPvRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.erratumsPv,
+    aliasName: 'fideles__id__erratums_pv__auteur_fidele_id',
+  );
+
+  $$ErratumsPvTableProcessedTableManager get erratumsPvRefs {
+    final manager = $$ErratumsPvTableTableManager(
+      $_db,
+      $_db.erratumsPv,
+    ).filter((f) => f.auteurFideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_erratumsPvRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$TachesSuiviTable, List<TacheSuiviRow>>
+  _tachesSuiviRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.tachesSuivi,
+    aliasName: 'fideles__id__taches_suivi__assigne_fidele_id',
+  );
+
+  $$TachesSuiviTableProcessedTableManager get tachesSuiviRefs {
+    final manager = $$TachesSuiviTableTableManager($_db, $_db.tachesSuivi)
+        .filter(
+          (f) => f.assigneFideleId.id.sqlEquals($_itemColumn<String>('id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(_tachesSuiviRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$FidelesTableFilterComposer
@@ -11883,6 +15201,106 @@ class $$FidelesTableFilterComposer
           }) => $$AppartenancesGroupeTableFilterComposer(
             $db: $db,
             $table: $db.appartenancesGroupe,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> membresComiteRefs(
+    Expression<bool> Function($$MembresComiteTableFilterComposer f) f,
+  ) {
+    final $$MembresComiteTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.membresComite,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MembresComiteTableFilterComposer(
+            $db: $db,
+            $table: $db.membresComite,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> presentsSeanceRefs(
+    Expression<bool> Function($$PresentsSeanceTableFilterComposer f) f,
+  ) {
+    final $$PresentsSeanceTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.presentsSeance,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PresentsSeanceTableFilterComposer(
+            $db: $db,
+            $table: $db.presentsSeance,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> erratumsPvRefs(
+    Expression<bool> Function($$ErratumsPvTableFilterComposer f) f,
+  ) {
+    final $$ErratumsPvTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.erratumsPv,
+      getReferencedColumn: (t) => t.auteurFideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ErratumsPvTableFilterComposer(
+            $db: $db,
+            $table: $db.erratumsPv,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> tachesSuiviRefs(
+    Expression<bool> Function($$TachesSuiviTableFilterComposer f) f,
+  ) {
+    final $$TachesSuiviTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.tachesSuivi,
+      getReferencedColumn: (t) => t.assigneFideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TachesSuiviTableFilterComposer(
+            $db: $db,
+            $table: $db.tachesSuivi,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -12462,6 +15880,106 @@ class $$FidelesTableAnnotationComposer
         );
     return f(composer);
   }
+
+  Expression<T> membresComiteRefs<T extends Object>(
+    Expression<T> Function($$MembresComiteTableAnnotationComposer a) f,
+  ) {
+    final $$MembresComiteTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.membresComite,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MembresComiteTableAnnotationComposer(
+            $db: $db,
+            $table: $db.membresComite,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> presentsSeanceRefs<T extends Object>(
+    Expression<T> Function($$PresentsSeanceTableAnnotationComposer a) f,
+  ) {
+    final $$PresentsSeanceTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.presentsSeance,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PresentsSeanceTableAnnotationComposer(
+            $db: $db,
+            $table: $db.presentsSeance,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> erratumsPvRefs<T extends Object>(
+    Expression<T> Function($$ErratumsPvTableAnnotationComposer a) f,
+  ) {
+    final $$ErratumsPvTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.erratumsPv,
+      getReferencedColumn: (t) => t.auteurFideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ErratumsPvTableAnnotationComposer(
+            $db: $db,
+            $table: $db.erratumsPv,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> tachesSuiviRefs<T extends Object>(
+    Expression<T> Function($$TachesSuiviTableAnnotationComposer a) f,
+  ) {
+    final $$TachesSuiviTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.tachesSuivi,
+      getReferencedColumn: (t) => t.assigneFideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TachesSuiviTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tachesSuivi,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$FidelesTableTableManager
@@ -12493,6 +16011,10 @@ class $$FidelesTableTableManager
             bool professionsFidelesRefs,
             bool sollicitationsRefs,
             bool appartenancesGroupeRefs,
+            bool membresComiteRefs,
+            bool presentsSeanceRefs,
+            bool erratumsPvRefs,
+            bool tachesSuiviRefs,
           })
         > {
   $$FidelesTableTableManager(_$AppDatabase db, $FidelesTable table)
@@ -12615,6 +16137,10 @@ class $$FidelesTableTableManager
                 professionsFidelesRefs = false,
                 sollicitationsRefs = false,
                 appartenancesGroupeRefs = false,
+                membresComiteRefs = false,
+                presentsSeanceRefs = false,
+                erratumsPvRefs = false,
+                tachesSuiviRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -12633,6 +16159,10 @@ class $$FidelesTableTableManager
                     if (professionsFidelesRefs) db.professionsFideles,
                     if (sollicitationsRefs) db.sollicitations,
                     if (appartenancesGroupeRefs) db.appartenancesGroupe,
+                    if (membresComiteRefs) db.membresComite,
+                    if (presentsSeanceRefs) db.presentsSeance,
+                    if (erratumsPvRefs) db.erratumsPv,
+                    if (tachesSuiviRefs) db.tachesSuivi,
                   ],
                   addJoins:
                       <
@@ -12962,6 +16492,90 @@ class $$FidelesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (membresComiteRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          MembreComiteRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._membresComiteRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).membresComiteRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (presentsSeanceRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          PresentSeanceRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._presentsSeanceRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).presentsSeanceRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (erratumsPvRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          ErratumPvRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._erratumsPvRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).erratumsPvRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.auteurFideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (tachesSuiviRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          TacheSuiviRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._tachesSuiviRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).tachesSuiviRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.assigneFideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -12998,6 +16612,10 @@ typedef $$FidelesTableProcessedTableManager =
         bool professionsFidelesRefs,
         bool sollicitationsRefs,
         bool appartenancesGroupeRefs,
+        bool membresComiteRefs,
+        bool presentsSeanceRefs,
+        bool erratumsPvRefs,
+        bool tachesSuiviRefs,
       })
     >;
 typedef $$NodeResponsablesTableCreateCompanionBuilder =
@@ -20698,6 +24316,3397 @@ typedef $$AppartenancesGroupeTableProcessedTableManager =
       AppartenanceGroupeRow,
       PrefetchHooks Function({bool fideleId, bool groupeId})
     >;
+typedef $$QuorumsComiteTableCreateCompanionBuilder =
+    QuorumsComiteCompanion Function({
+      required String id,
+      required String noeudId,
+      required int quorumMinimum,
+      Value<int> rowid,
+    });
+typedef $$QuorumsComiteTableUpdateCompanionBuilder =
+    QuorumsComiteCompanion Function({
+      Value<String> id,
+      Value<String> noeudId,
+      Value<int> quorumMinimum,
+      Value<int> rowid,
+    });
+
+final class $$QuorumsComiteTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $QuorumsComiteTable, QuorumComiteRow> {
+  $$QuorumsComiteTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $OrganisationNodesTable _noeudIdTable(_$AppDatabase db) => db
+      .organisationNodes
+      .createAlias('quorums_comite__noeud_id__organisation_nodes__id');
+
+  $$OrganisationNodesTableProcessedTableManager get noeudId {
+    final $_column = $_itemColumn<String>('noeud_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$QuorumsComiteTableFilterComposer
+    extends Composer<_$AppDatabase, $QuorumsComiteTable> {
+  $$QuorumsComiteTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get quorumMinimum => $composableBuilder(
+    column: $table.quorumMinimum,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$OrganisationNodesTableFilterComposer get noeudId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$QuorumsComiteTableOrderingComposer
+    extends Composer<_$AppDatabase, $QuorumsComiteTable> {
+  $$QuorumsComiteTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get quorumMinimum => $composableBuilder(
+    column: $table.quorumMinimum,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$OrganisationNodesTableOrderingComposer get noeudId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$QuorumsComiteTableAnnotationComposer
+    extends Composer<_$AppDatabase, $QuorumsComiteTable> {
+  $$QuorumsComiteTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get quorumMinimum => $composableBuilder(
+    column: $table.quorumMinimum,
+    builder: (column) => column,
+  );
+
+  $$OrganisationNodesTableAnnotationComposer get noeudId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$QuorumsComiteTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $QuorumsComiteTable,
+          QuorumComiteRow,
+          $$QuorumsComiteTableFilterComposer,
+          $$QuorumsComiteTableOrderingComposer,
+          $$QuorumsComiteTableAnnotationComposer,
+          $$QuorumsComiteTableCreateCompanionBuilder,
+          $$QuorumsComiteTableUpdateCompanionBuilder,
+          (QuorumComiteRow, $$QuorumsComiteTableReferences),
+          QuorumComiteRow,
+          PrefetchHooks Function({bool noeudId})
+        > {
+  $$QuorumsComiteTableTableManager(_$AppDatabase db, $QuorumsComiteTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$QuorumsComiteTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$QuorumsComiteTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$QuorumsComiteTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> noeudId = const Value.absent(),
+                Value<int> quorumMinimum = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => QuorumsComiteCompanion(
+                id: id,
+                noeudId: noeudId,
+                quorumMinimum: quorumMinimum,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String noeudId,
+                required int quorumMinimum,
+                Value<int> rowid = const Value.absent(),
+              }) => QuorumsComiteCompanion.insert(
+                id: id,
+                noeudId: noeudId,
+                quorumMinimum: quorumMinimum,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$QuorumsComiteTable, QuorumComiteRow>(table),
+                  $$QuorumsComiteTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({noeudId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (noeudId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.noeudId,
+                                referencedTable: $$QuorumsComiteTableReferences
+                                    ._noeudIdTable(db),
+                                referencedColumn: $$QuorumsComiteTableReferences
+                                    ._noeudIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$QuorumsComiteTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $QuorumsComiteTable,
+      QuorumComiteRow,
+      $$QuorumsComiteTableFilterComposer,
+      $$QuorumsComiteTableOrderingComposer,
+      $$QuorumsComiteTableAnnotationComposer,
+      $$QuorumsComiteTableCreateCompanionBuilder,
+      $$QuorumsComiteTableUpdateCompanionBuilder,
+      (QuorumComiteRow, $$QuorumsComiteTableReferences),
+      QuorumComiteRow,
+      PrefetchHooks Function({bool noeudId})
+    >;
+typedef $$MembresComiteTableCreateCompanionBuilder =
+    MembresComiteCompanion Function({
+      required String id,
+      required String fideleId,
+      required String noeudId,
+      required String fonction,
+      required DateTime dateDebut,
+      Value<DateTime?> dateFin,
+      Value<int> rowid,
+    });
+typedef $$MembresComiteTableUpdateCompanionBuilder =
+    MembresComiteCompanion Function({
+      Value<String> id,
+      Value<String> fideleId,
+      Value<String> noeudId,
+      Value<String> fonction,
+      Value<DateTime> dateDebut,
+      Value<DateTime?> dateFin,
+      Value<int> rowid,
+    });
+
+final class $$MembresComiteTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $MembresComiteTable, MembreComiteRow> {
+  $$MembresComiteTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('membres_comite__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $OrganisationNodesTable _noeudIdTable(_$AppDatabase db) => db
+      .organisationNodes
+      .createAlias('membres_comite__noeud_id__organisation_nodes__id');
+
+  $$OrganisationNodesTableProcessedTableManager get noeudId {
+    final $_column = $_itemColumn<String>('noeud_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$MembresComiteTableFilterComposer
+    extends Composer<_$AppDatabase, $MembresComiteTable> {
+  $$MembresComiteTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fonction => $composableBuilder(
+    column: $table.fonction,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateFin => $composableBuilder(
+    column: $table.dateFin,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableFilterComposer get noeudId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MembresComiteTableOrderingComposer
+    extends Composer<_$AppDatabase, $MembresComiteTable> {
+  $$MembresComiteTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fonction => $composableBuilder(
+    column: $table.fonction,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateFin => $composableBuilder(
+    column: $table.dateFin,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableOrderingComposer get noeudId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MembresComiteTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MembresComiteTable> {
+  $$MembresComiteTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get fonction =>
+      $composableBuilder(column: $table.fonction, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateDebut =>
+      $composableBuilder(column: $table.dateDebut, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateFin =>
+      $composableBuilder(column: $table.dateFin, builder: (column) => column);
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableAnnotationComposer get noeudId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$MembresComiteTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MembresComiteTable,
+          MembreComiteRow,
+          $$MembresComiteTableFilterComposer,
+          $$MembresComiteTableOrderingComposer,
+          $$MembresComiteTableAnnotationComposer,
+          $$MembresComiteTableCreateCompanionBuilder,
+          $$MembresComiteTableUpdateCompanionBuilder,
+          (MembreComiteRow, $$MembresComiteTableReferences),
+          MembreComiteRow,
+          PrefetchHooks Function({bool fideleId, bool noeudId})
+        > {
+  $$MembresComiteTableTableManager(_$AppDatabase db, $MembresComiteTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MembresComiteTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MembresComiteTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MembresComiteTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<String> noeudId = const Value.absent(),
+                Value<String> fonction = const Value.absent(),
+                Value<DateTime> dateDebut = const Value.absent(),
+                Value<DateTime?> dateFin = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MembresComiteCompanion(
+                id: id,
+                fideleId: fideleId,
+                noeudId: noeudId,
+                fonction: fonction,
+                dateDebut: dateDebut,
+                dateFin: dateFin,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String fideleId,
+                required String noeudId,
+                required String fonction,
+                required DateTime dateDebut,
+                Value<DateTime?> dateFin = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MembresComiteCompanion.insert(
+                id: id,
+                fideleId: fideleId,
+                noeudId: noeudId,
+                fonction: fonction,
+                dateDebut: dateDebut,
+                dateFin: dateFin,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$MembresComiteTable, MembreComiteRow>(table),
+                  $$MembresComiteTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({fideleId = false, noeudId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (fideleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.fideleId,
+                                referencedTable: $$MembresComiteTableReferences
+                                    ._fideleIdTable(db),
+                                referencedColumn: $$MembresComiteTableReferences
+                                    ._fideleIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+                    if (noeudId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.noeudId,
+                                referencedTable: $$MembresComiteTableReferences
+                                    ._noeudIdTable(db),
+                                referencedColumn: $$MembresComiteTableReferences
+                                    ._noeudIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$MembresComiteTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MembresComiteTable,
+      MembreComiteRow,
+      $$MembresComiteTableFilterComposer,
+      $$MembresComiteTableOrderingComposer,
+      $$MembresComiteTableAnnotationComposer,
+      $$MembresComiteTableCreateCompanionBuilder,
+      $$MembresComiteTableUpdateCompanionBuilder,
+      (MembreComiteRow, $$MembresComiteTableReferences),
+      MembreComiteRow,
+      PrefetchHooks Function({bool fideleId, bool noeudId})
+    >;
+typedef $$SeancesComiteTableCreateCompanionBuilder =
+    SeancesComiteCompanion Function({
+      required String id,
+      required String noeudId,
+      required DateTime date,
+      required String ordreDuJour,
+      Value<bool?> quorumAtteint,
+      Value<int> rowid,
+    });
+typedef $$SeancesComiteTableUpdateCompanionBuilder =
+    SeancesComiteCompanion Function({
+      Value<String> id,
+      Value<String> noeudId,
+      Value<DateTime> date,
+      Value<String> ordreDuJour,
+      Value<bool?> quorumAtteint,
+      Value<int> rowid,
+    });
+
+final class $$SeancesComiteTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $SeancesComiteTable, SeanceComiteRow> {
+  $$SeancesComiteTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $OrganisationNodesTable _noeudIdTable(_$AppDatabase db) => db
+      .organisationNodes
+      .createAlias('seances_comite__noeud_id__organisation_nodes__id');
+
+  $$OrganisationNodesTableProcessedTableManager get noeudId {
+    final $_column = $_itemColumn<String>('noeud_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$PresentsSeanceTable, List<PresentSeanceRow>>
+  _presentsSeanceRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.presentsSeance,
+    aliasName: 'seances_comite__id__presents_seance__seance_id',
+  );
+
+  $$PresentsSeanceTableProcessedTableManager get presentsSeanceRefs {
+    final manager = $$PresentsSeanceTableTableManager(
+      $_db,
+      $_db.presentsSeance,
+    ).filter((f) => f.seanceId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_presentsSeanceRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$DecisionsTable, List<DecisionRow>>
+  _decisionsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.decisions,
+    aliasName: 'seances_comite__id__decisions__seance_id',
+  );
+
+  $$DecisionsTableProcessedTableManager get decisionsRefs {
+    final manager = $$DecisionsTableTableManager(
+      $_db,
+      $_db.decisions,
+    ).filter((f) => f.seanceId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_decisionsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$ProcesVerbauxTable, List<ProcesVerbalRow>>
+  _procesVerbauxRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.procesVerbaux,
+    aliasName: 'seances_comite__id__proces_verbaux__seance_id',
+  );
+
+  $$ProcesVerbauxTableProcessedTableManager get procesVerbauxRefs {
+    final manager = $$ProcesVerbauxTableTableManager(
+      $_db,
+      $_db.procesVerbaux,
+    ).filter((f) => f.seanceId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_procesVerbauxRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$SeancesComiteTableFilterComposer
+    extends Composer<_$AppDatabase, $SeancesComiteTable> {
+  $$SeancesComiteTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ordreDuJour => $composableBuilder(
+    column: $table.ordreDuJour,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get quorumAtteint => $composableBuilder(
+    column: $table.quorumAtteint,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$OrganisationNodesTableFilterComposer get noeudId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> presentsSeanceRefs(
+    Expression<bool> Function($$PresentsSeanceTableFilterComposer f) f,
+  ) {
+    final $$PresentsSeanceTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.presentsSeance,
+      getReferencedColumn: (t) => t.seanceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PresentsSeanceTableFilterComposer(
+            $db: $db,
+            $table: $db.presentsSeance,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> decisionsRefs(
+    Expression<bool> Function($$DecisionsTableFilterComposer f) f,
+  ) {
+    final $$DecisionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.decisions,
+      getReferencedColumn: (t) => t.seanceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DecisionsTableFilterComposer(
+            $db: $db,
+            $table: $db.decisions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> procesVerbauxRefs(
+    Expression<bool> Function($$ProcesVerbauxTableFilterComposer f) f,
+  ) {
+    final $$ProcesVerbauxTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.procesVerbaux,
+      getReferencedColumn: (t) => t.seanceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProcesVerbauxTableFilterComposer(
+            $db: $db,
+            $table: $db.procesVerbaux,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$SeancesComiteTableOrderingComposer
+    extends Composer<_$AppDatabase, $SeancesComiteTable> {
+  $$SeancesComiteTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ordreDuJour => $composableBuilder(
+    column: $table.ordreDuJour,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get quorumAtteint => $composableBuilder(
+    column: $table.quorumAtteint,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$OrganisationNodesTableOrderingComposer get noeudId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SeancesComiteTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SeancesComiteTable> {
+  $$SeancesComiteTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<String> get ordreDuJour => $composableBuilder(
+    column: $table.ordreDuJour,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get quorumAtteint => $composableBuilder(
+    column: $table.quorumAtteint,
+    builder: (column) => column,
+  );
+
+  $$OrganisationNodesTableAnnotationComposer get noeudId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  Expression<T> presentsSeanceRefs<T extends Object>(
+    Expression<T> Function($$PresentsSeanceTableAnnotationComposer a) f,
+  ) {
+    final $$PresentsSeanceTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.presentsSeance,
+      getReferencedColumn: (t) => t.seanceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PresentsSeanceTableAnnotationComposer(
+            $db: $db,
+            $table: $db.presentsSeance,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> decisionsRefs<T extends Object>(
+    Expression<T> Function($$DecisionsTableAnnotationComposer a) f,
+  ) {
+    final $$DecisionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.decisions,
+      getReferencedColumn: (t) => t.seanceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DecisionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.decisions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> procesVerbauxRefs<T extends Object>(
+    Expression<T> Function($$ProcesVerbauxTableAnnotationComposer a) f,
+  ) {
+    final $$ProcesVerbauxTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.procesVerbaux,
+      getReferencedColumn: (t) => t.seanceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProcesVerbauxTableAnnotationComposer(
+            $db: $db,
+            $table: $db.procesVerbaux,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$SeancesComiteTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SeancesComiteTable,
+          SeanceComiteRow,
+          $$SeancesComiteTableFilterComposer,
+          $$SeancesComiteTableOrderingComposer,
+          $$SeancesComiteTableAnnotationComposer,
+          $$SeancesComiteTableCreateCompanionBuilder,
+          $$SeancesComiteTableUpdateCompanionBuilder,
+          (SeanceComiteRow, $$SeancesComiteTableReferences),
+          SeanceComiteRow,
+          PrefetchHooks Function({
+            bool noeudId,
+            bool presentsSeanceRefs,
+            bool decisionsRefs,
+            bool procesVerbauxRefs,
+          })
+        > {
+  $$SeancesComiteTableTableManager(_$AppDatabase db, $SeancesComiteTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SeancesComiteTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SeancesComiteTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SeancesComiteTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> noeudId = const Value.absent(),
+                Value<DateTime> date = const Value.absent(),
+                Value<String> ordreDuJour = const Value.absent(),
+                Value<bool?> quorumAtteint = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SeancesComiteCompanion(
+                id: id,
+                noeudId: noeudId,
+                date: date,
+                ordreDuJour: ordreDuJour,
+                quorumAtteint: quorumAtteint,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String noeudId,
+                required DateTime date,
+                required String ordreDuJour,
+                Value<bool?> quorumAtteint = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SeancesComiteCompanion.insert(
+                id: id,
+                noeudId: noeudId,
+                date: date,
+                ordreDuJour: ordreDuJour,
+                quorumAtteint: quorumAtteint,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$SeancesComiteTable, SeanceComiteRow>(table),
+                  $$SeancesComiteTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                noeudId = false,
+                presentsSeanceRefs = false,
+                decisionsRefs = false,
+                procesVerbauxRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (presentsSeanceRefs) db.presentsSeance,
+                    if (decisionsRefs) db.decisions,
+                    if (procesVerbauxRefs) db.procesVerbaux,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (noeudId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.noeudId,
+                                    referencedTable:
+                                        $$SeancesComiteTableReferences
+                                            ._noeudIdTable(db),
+                                    referencedColumn:
+                                        $$SeancesComiteTableReferences
+                                            ._noeudIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (presentsSeanceRefs)
+                        await $_getPrefetchedData<
+                          SeanceComiteRow,
+                          $SeancesComiteTable,
+                          PresentSeanceRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$SeancesComiteTableReferences
+                              ._presentsSeanceRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$SeancesComiteTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).presentsSeanceRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.seanceId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (decisionsRefs)
+                        await $_getPrefetchedData<
+                          SeanceComiteRow,
+                          $SeancesComiteTable,
+                          DecisionRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$SeancesComiteTableReferences
+                              ._decisionsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$SeancesComiteTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).decisionsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.seanceId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (procesVerbauxRefs)
+                        await $_getPrefetchedData<
+                          SeanceComiteRow,
+                          $SeancesComiteTable,
+                          ProcesVerbalRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$SeancesComiteTableReferences
+                              ._procesVerbauxRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$SeancesComiteTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).procesVerbauxRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.seanceId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$SeancesComiteTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SeancesComiteTable,
+      SeanceComiteRow,
+      $$SeancesComiteTableFilterComposer,
+      $$SeancesComiteTableOrderingComposer,
+      $$SeancesComiteTableAnnotationComposer,
+      $$SeancesComiteTableCreateCompanionBuilder,
+      $$SeancesComiteTableUpdateCompanionBuilder,
+      (SeanceComiteRow, $$SeancesComiteTableReferences),
+      SeanceComiteRow,
+      PrefetchHooks Function({
+        bool noeudId,
+        bool presentsSeanceRefs,
+        bool decisionsRefs,
+        bool procesVerbauxRefs,
+      })
+    >;
+typedef $$PresentsSeanceTableCreateCompanionBuilder =
+    PresentsSeanceCompanion Function({
+      required String id,
+      required String seanceId,
+      required String fideleId,
+      Value<int> rowid,
+    });
+typedef $$PresentsSeanceTableUpdateCompanionBuilder =
+    PresentsSeanceCompanion Function({
+      Value<String> id,
+      Value<String> seanceId,
+      Value<String> fideleId,
+      Value<int> rowid,
+    });
+
+final class $$PresentsSeanceTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $PresentsSeanceTable, PresentSeanceRow> {
+  $$PresentsSeanceTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $SeancesComiteTable _seanceIdTable(_$AppDatabase db) => db
+      .seancesComite
+      .createAlias('presents_seance__seance_id__seances_comite__id');
+
+  $$SeancesComiteTableProcessedTableManager get seanceId {
+    final $_column = $_itemColumn<String>('seance_id')!;
+
+    final manager = $$SeancesComiteTableTableManager(
+      $_db,
+      $_db.seancesComite,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_seanceIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('presents_seance__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$PresentsSeanceTableFilterComposer
+    extends Composer<_$AppDatabase, $PresentsSeanceTable> {
+  $$PresentsSeanceTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$SeancesComiteTableFilterComposer get seanceId {
+    final $$SeancesComiteTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.seanceId,
+      referencedTable: $db.seancesComite,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SeancesComiteTableFilterComposer(
+            $db: $db,
+            $table: $db.seancesComite,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PresentsSeanceTableOrderingComposer
+    extends Composer<_$AppDatabase, $PresentsSeanceTable> {
+  $$PresentsSeanceTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$SeancesComiteTableOrderingComposer get seanceId {
+    final $$SeancesComiteTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.seanceId,
+      referencedTable: $db.seancesComite,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SeancesComiteTableOrderingComposer(
+            $db: $db,
+            $table: $db.seancesComite,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PresentsSeanceTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PresentsSeanceTable> {
+  $$PresentsSeanceTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  $$SeancesComiteTableAnnotationComposer get seanceId {
+    final $$SeancesComiteTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.seanceId,
+      referencedTable: $db.seancesComite,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SeancesComiteTableAnnotationComposer(
+            $db: $db,
+            $table: $db.seancesComite,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PresentsSeanceTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PresentsSeanceTable,
+          PresentSeanceRow,
+          $$PresentsSeanceTableFilterComposer,
+          $$PresentsSeanceTableOrderingComposer,
+          $$PresentsSeanceTableAnnotationComposer,
+          $$PresentsSeanceTableCreateCompanionBuilder,
+          $$PresentsSeanceTableUpdateCompanionBuilder,
+          (PresentSeanceRow, $$PresentsSeanceTableReferences),
+          PresentSeanceRow,
+          PrefetchHooks Function({bool seanceId, bool fideleId})
+        > {
+  $$PresentsSeanceTableTableManager(
+    _$AppDatabase db,
+    $PresentsSeanceTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PresentsSeanceTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PresentsSeanceTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PresentsSeanceTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> seanceId = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PresentsSeanceCompanion(
+                id: id,
+                seanceId: seanceId,
+                fideleId: fideleId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String seanceId,
+                required String fideleId,
+                Value<int> rowid = const Value.absent(),
+              }) => PresentsSeanceCompanion.insert(
+                id: id,
+                seanceId: seanceId,
+                fideleId: fideleId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$PresentsSeanceTable, PresentSeanceRow>(table),
+                  $$PresentsSeanceTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({seanceId = false, fideleId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (seanceId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.seanceId,
+                                referencedTable: $$PresentsSeanceTableReferences
+                                    ._seanceIdTable(db),
+                                referencedColumn:
+                                    $$PresentsSeanceTableReferences
+                                        ._seanceIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (fideleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.fideleId,
+                                referencedTable: $$PresentsSeanceTableReferences
+                                    ._fideleIdTable(db),
+                                referencedColumn:
+                                    $$PresentsSeanceTableReferences
+                                        ._fideleIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$PresentsSeanceTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PresentsSeanceTable,
+      PresentSeanceRow,
+      $$PresentsSeanceTableFilterComposer,
+      $$PresentsSeanceTableOrderingComposer,
+      $$PresentsSeanceTableAnnotationComposer,
+      $$PresentsSeanceTableCreateCompanionBuilder,
+      $$PresentsSeanceTableUpdateCompanionBuilder,
+      (PresentSeanceRow, $$PresentsSeanceTableReferences),
+      PresentSeanceRow,
+      PrefetchHooks Function({bool seanceId, bool fideleId})
+    >;
+typedef $$DecisionsTableCreateCompanionBuilder =
+    DecisionsCompanion Function({
+      required String id,
+      required String seanceId,
+      required String libelle,
+      Value<String?> resultatVote,
+      Value<String> statut,
+      Value<bool> porteeDisciplinaire,
+      Value<int> rowid,
+    });
+typedef $$DecisionsTableUpdateCompanionBuilder =
+    DecisionsCompanion Function({
+      Value<String> id,
+      Value<String> seanceId,
+      Value<String> libelle,
+      Value<String?> resultatVote,
+      Value<String> statut,
+      Value<bool> porteeDisciplinaire,
+      Value<int> rowid,
+    });
+
+final class $$DecisionsTableReferences
+    extends BaseReferences<_$AppDatabase, $DecisionsTable, DecisionRow> {
+  $$DecisionsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $SeancesComiteTable _seanceIdTable(_$AppDatabase db) =>
+      db.seancesComite.createAlias('decisions__seance_id__seances_comite__id');
+
+  $$SeancesComiteTableProcessedTableManager get seanceId {
+    final $_column = $_itemColumn<String>('seance_id')!;
+
+    final manager = $$SeancesComiteTableTableManager(
+      $_db,
+      $_db.seancesComite,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_seanceIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$TachesSuiviTable, List<TacheSuiviRow>>
+  _tachesSuiviRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.tachesSuivi,
+    aliasName: 'decisions__id__taches_suivi__decision_id',
+  );
+
+  $$TachesSuiviTableProcessedTableManager get tachesSuiviRefs {
+    final manager = $$TachesSuiviTableTableManager(
+      $_db,
+      $_db.tachesSuivi,
+    ).filter((f) => f.decisionId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_tachesSuiviRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$DecisionsTableFilterComposer
+    extends Composer<_$AppDatabase, $DecisionsTable> {
+  $$DecisionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get resultatVote => $composableBuilder(
+    column: $table.resultatVote,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get porteeDisciplinaire => $composableBuilder(
+    column: $table.porteeDisciplinaire,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$SeancesComiteTableFilterComposer get seanceId {
+    final $$SeancesComiteTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.seanceId,
+      referencedTable: $db.seancesComite,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SeancesComiteTableFilterComposer(
+            $db: $db,
+            $table: $db.seancesComite,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> tachesSuiviRefs(
+    Expression<bool> Function($$TachesSuiviTableFilterComposer f) f,
+  ) {
+    final $$TachesSuiviTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.tachesSuivi,
+      getReferencedColumn: (t) => t.decisionId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TachesSuiviTableFilterComposer(
+            $db: $db,
+            $table: $db.tachesSuivi,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$DecisionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $DecisionsTable> {
+  $$DecisionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get resultatVote => $composableBuilder(
+    column: $table.resultatVote,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get porteeDisciplinaire => $composableBuilder(
+    column: $table.porteeDisciplinaire,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$SeancesComiteTableOrderingComposer get seanceId {
+    final $$SeancesComiteTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.seanceId,
+      referencedTable: $db.seancesComite,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SeancesComiteTableOrderingComposer(
+            $db: $db,
+            $table: $db.seancesComite,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DecisionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $DecisionsTable> {
+  $$DecisionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get libelle =>
+      $composableBuilder(column: $table.libelle, builder: (column) => column);
+
+  GeneratedColumn<String> get resultatVote => $composableBuilder(
+    column: $table.resultatVote,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  GeneratedColumn<bool> get porteeDisciplinaire => $composableBuilder(
+    column: $table.porteeDisciplinaire,
+    builder: (column) => column,
+  );
+
+  $$SeancesComiteTableAnnotationComposer get seanceId {
+    final $$SeancesComiteTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.seanceId,
+      referencedTable: $db.seancesComite,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SeancesComiteTableAnnotationComposer(
+            $db: $db,
+            $table: $db.seancesComite,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> tachesSuiviRefs<T extends Object>(
+    Expression<T> Function($$TachesSuiviTableAnnotationComposer a) f,
+  ) {
+    final $$TachesSuiviTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.tachesSuivi,
+      getReferencedColumn: (t) => t.decisionId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TachesSuiviTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tachesSuivi,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$DecisionsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $DecisionsTable,
+          DecisionRow,
+          $$DecisionsTableFilterComposer,
+          $$DecisionsTableOrderingComposer,
+          $$DecisionsTableAnnotationComposer,
+          $$DecisionsTableCreateCompanionBuilder,
+          $$DecisionsTableUpdateCompanionBuilder,
+          (DecisionRow, $$DecisionsTableReferences),
+          DecisionRow,
+          PrefetchHooks Function({bool seanceId, bool tachesSuiviRefs})
+        > {
+  $$DecisionsTableTableManager(_$AppDatabase db, $DecisionsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DecisionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$DecisionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$DecisionsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> seanceId = const Value.absent(),
+                Value<String> libelle = const Value.absent(),
+                Value<String?> resultatVote = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<bool> porteeDisciplinaire = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DecisionsCompanion(
+                id: id,
+                seanceId: seanceId,
+                libelle: libelle,
+                resultatVote: resultatVote,
+                statut: statut,
+                porteeDisciplinaire: porteeDisciplinaire,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String seanceId,
+                required String libelle,
+                Value<String?> resultatVote = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<bool> porteeDisciplinaire = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DecisionsCompanion.insert(
+                id: id,
+                seanceId: seanceId,
+                libelle: libelle,
+                resultatVote: resultatVote,
+                statut: statut,
+                porteeDisciplinaire: porteeDisciplinaire,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$DecisionsTable, DecisionRow>(table),
+                  $$DecisionsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({seanceId = false, tachesSuiviRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (tachesSuiviRefs) db.tachesSuivi],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (seanceId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.seanceId,
+                                referencedTable: $$DecisionsTableReferences
+                                    ._seanceIdTable(db),
+                                referencedColumn: $$DecisionsTableReferences
+                                    ._seanceIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (tachesSuiviRefs)
+                    await $_getPrefetchedData<
+                      DecisionRow,
+                      $DecisionsTable,
+                      TacheSuiviRow
+                    >(
+                      currentTable: table,
+                      referencedTable: $$DecisionsTableReferences
+                          ._tachesSuiviRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$DecisionsTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).tachesSuiviRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.decisionId == item.id),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$DecisionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $DecisionsTable,
+      DecisionRow,
+      $$DecisionsTableFilterComposer,
+      $$DecisionsTableOrderingComposer,
+      $$DecisionsTableAnnotationComposer,
+      $$DecisionsTableCreateCompanionBuilder,
+      $$DecisionsTableUpdateCompanionBuilder,
+      (DecisionRow, $$DecisionsTableReferences),
+      DecisionRow,
+      PrefetchHooks Function({bool seanceId, bool tachesSuiviRefs})
+    >;
+typedef $$ProcesVerbauxTableCreateCompanionBuilder =
+    ProcesVerbauxCompanion Function({
+      required String id,
+      required String seanceId,
+      required String contenu,
+      Value<String> statut,
+      Value<String?> documentArchiveId,
+      Value<int> rowid,
+    });
+typedef $$ProcesVerbauxTableUpdateCompanionBuilder =
+    ProcesVerbauxCompanion Function({
+      Value<String> id,
+      Value<String> seanceId,
+      Value<String> contenu,
+      Value<String> statut,
+      Value<String?> documentArchiveId,
+      Value<int> rowid,
+    });
+
+final class $$ProcesVerbauxTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $ProcesVerbauxTable, ProcesVerbalRow> {
+  $$ProcesVerbauxTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $SeancesComiteTable _seanceIdTable(_$AppDatabase db) => db
+      .seancesComite
+      .createAlias('proces_verbaux__seance_id__seances_comite__id');
+
+  $$SeancesComiteTableProcessedTableManager get seanceId {
+    final $_column = $_itemColumn<String>('seance_id')!;
+
+    final manager = $$SeancesComiteTableTableManager(
+      $_db,
+      $_db.seancesComite,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_seanceIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$ErratumsPvTable, List<ErratumPvRow>>
+  _erratumsPvRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.erratumsPv,
+    aliasName: 'proces_verbaux__id__erratums_pv__proces_verbal_id',
+  );
+
+  $$ErratumsPvTableProcessedTableManager get erratumsPvRefs {
+    final manager = $$ErratumsPvTableTableManager(
+      $_db,
+      $_db.erratumsPv,
+    ).filter((f) => f.procesVerbalId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_erratumsPvRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$ProcesVerbauxTableFilterComposer
+    extends Composer<_$AppDatabase, $ProcesVerbauxTable> {
+  $$ProcesVerbauxTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get contenu => $composableBuilder(
+    column: $table.contenu,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get documentArchiveId => $composableBuilder(
+    column: $table.documentArchiveId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$SeancesComiteTableFilterComposer get seanceId {
+    final $$SeancesComiteTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.seanceId,
+      referencedTable: $db.seancesComite,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SeancesComiteTableFilterComposer(
+            $db: $db,
+            $table: $db.seancesComite,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> erratumsPvRefs(
+    Expression<bool> Function($$ErratumsPvTableFilterComposer f) f,
+  ) {
+    final $$ErratumsPvTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.erratumsPv,
+      getReferencedColumn: (t) => t.procesVerbalId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ErratumsPvTableFilterComposer(
+            $db: $db,
+            $table: $db.erratumsPv,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ProcesVerbauxTableOrderingComposer
+    extends Composer<_$AppDatabase, $ProcesVerbauxTable> {
+  $$ProcesVerbauxTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get contenu => $composableBuilder(
+    column: $table.contenu,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get documentArchiveId => $composableBuilder(
+    column: $table.documentArchiveId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$SeancesComiteTableOrderingComposer get seanceId {
+    final $$SeancesComiteTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.seanceId,
+      referencedTable: $db.seancesComite,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SeancesComiteTableOrderingComposer(
+            $db: $db,
+            $table: $db.seancesComite,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ProcesVerbauxTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ProcesVerbauxTable> {
+  $$ProcesVerbauxTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get contenu =>
+      $composableBuilder(column: $table.contenu, builder: (column) => column);
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  GeneratedColumn<String> get documentArchiveId => $composableBuilder(
+    column: $table.documentArchiveId,
+    builder: (column) => column,
+  );
+
+  $$SeancesComiteTableAnnotationComposer get seanceId {
+    final $$SeancesComiteTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.seanceId,
+      referencedTable: $db.seancesComite,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SeancesComiteTableAnnotationComposer(
+            $db: $db,
+            $table: $db.seancesComite,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> erratumsPvRefs<T extends Object>(
+    Expression<T> Function($$ErratumsPvTableAnnotationComposer a) f,
+  ) {
+    final $$ErratumsPvTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.erratumsPv,
+      getReferencedColumn: (t) => t.procesVerbalId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ErratumsPvTableAnnotationComposer(
+            $db: $db,
+            $table: $db.erratumsPv,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ProcesVerbauxTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ProcesVerbauxTable,
+          ProcesVerbalRow,
+          $$ProcesVerbauxTableFilterComposer,
+          $$ProcesVerbauxTableOrderingComposer,
+          $$ProcesVerbauxTableAnnotationComposer,
+          $$ProcesVerbauxTableCreateCompanionBuilder,
+          $$ProcesVerbauxTableUpdateCompanionBuilder,
+          (ProcesVerbalRow, $$ProcesVerbauxTableReferences),
+          ProcesVerbalRow,
+          PrefetchHooks Function({bool seanceId, bool erratumsPvRefs})
+        > {
+  $$ProcesVerbauxTableTableManager(_$AppDatabase db, $ProcesVerbauxTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ProcesVerbauxTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ProcesVerbauxTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ProcesVerbauxTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> seanceId = const Value.absent(),
+                Value<String> contenu = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<String?> documentArchiveId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ProcesVerbauxCompanion(
+                id: id,
+                seanceId: seanceId,
+                contenu: contenu,
+                statut: statut,
+                documentArchiveId: documentArchiveId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String seanceId,
+                required String contenu,
+                Value<String> statut = const Value.absent(),
+                Value<String?> documentArchiveId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ProcesVerbauxCompanion.insert(
+                id: id,
+                seanceId: seanceId,
+                contenu: contenu,
+                statut: statut,
+                documentArchiveId: documentArchiveId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ProcesVerbauxTable, ProcesVerbalRow>(table),
+                  $$ProcesVerbauxTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({seanceId = false, erratumsPvRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (erratumsPvRefs) db.erratumsPv],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (seanceId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.seanceId,
+                                referencedTable: $$ProcesVerbauxTableReferences
+                                    ._seanceIdTable(db),
+                                referencedColumn: $$ProcesVerbauxTableReferences
+                                    ._seanceIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (erratumsPvRefs)
+                    await $_getPrefetchedData<
+                      ProcesVerbalRow,
+                      $ProcesVerbauxTable,
+                      ErratumPvRow
+                    >(
+                      currentTable: table,
+                      referencedTable: $$ProcesVerbauxTableReferences
+                          ._erratumsPvRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$ProcesVerbauxTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).erratumsPvRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where(
+                            (e) => e.procesVerbalId == item.id,
+                          ),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ProcesVerbauxTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ProcesVerbauxTable,
+      ProcesVerbalRow,
+      $$ProcesVerbauxTableFilterComposer,
+      $$ProcesVerbauxTableOrderingComposer,
+      $$ProcesVerbauxTableAnnotationComposer,
+      $$ProcesVerbauxTableCreateCompanionBuilder,
+      $$ProcesVerbauxTableUpdateCompanionBuilder,
+      (ProcesVerbalRow, $$ProcesVerbauxTableReferences),
+      ProcesVerbalRow,
+      PrefetchHooks Function({bool seanceId, bool erratumsPvRefs})
+    >;
+typedef $$ErratumsPvTableCreateCompanionBuilder =
+    ErratumsPvCompanion Function({
+      required String id,
+      required String procesVerbalId,
+      required String texte,
+      required DateTime dateAjout,
+      Value<String?> auteurFideleId,
+      Value<int> rowid,
+    });
+typedef $$ErratumsPvTableUpdateCompanionBuilder =
+    ErratumsPvCompanion Function({
+      Value<String> id,
+      Value<String> procesVerbalId,
+      Value<String> texte,
+      Value<DateTime> dateAjout,
+      Value<String?> auteurFideleId,
+      Value<int> rowid,
+    });
+
+final class $$ErratumsPvTableReferences
+    extends BaseReferences<_$AppDatabase, $ErratumsPvTable, ErratumPvRow> {
+  $$ErratumsPvTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $ProcesVerbauxTable _procesVerbalIdTable(_$AppDatabase db) => db
+      .procesVerbaux
+      .createAlias('erratums_pv__proces_verbal_id__proces_verbaux__id');
+
+  $$ProcesVerbauxTableProcessedTableManager get procesVerbalId {
+    final $_column = $_itemColumn<String>('proces_verbal_id')!;
+
+    final manager = $$ProcesVerbauxTableTableManager(
+      $_db,
+      $_db.procesVerbaux,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_procesVerbalIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $FidelesTable _auteurFideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('erratums_pv__auteur_fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager? get auteurFideleId {
+    final $_column = $_itemColumn<String>('auteur_fidele_id');
+    if ($_column == null) return null;
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_auteurFideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ErratumsPvTableFilterComposer
+    extends Composer<_$AppDatabase, $ErratumsPvTable> {
+  $$ErratumsPvTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get texte => $composableBuilder(
+    column: $table.texte,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateAjout => $composableBuilder(
+    column: $table.dateAjout,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$ProcesVerbauxTableFilterComposer get procesVerbalId {
+    final $$ProcesVerbauxTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.procesVerbalId,
+      referencedTable: $db.procesVerbaux,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProcesVerbauxTableFilterComposer(
+            $db: $db,
+            $table: $db.procesVerbaux,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableFilterComposer get auteurFideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.auteurFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ErratumsPvTableOrderingComposer
+    extends Composer<_$AppDatabase, $ErratumsPvTable> {
+  $$ErratumsPvTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get texte => $composableBuilder(
+    column: $table.texte,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateAjout => $composableBuilder(
+    column: $table.dateAjout,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$ProcesVerbauxTableOrderingComposer get procesVerbalId {
+    final $$ProcesVerbauxTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.procesVerbalId,
+      referencedTable: $db.procesVerbaux,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProcesVerbauxTableOrderingComposer(
+            $db: $db,
+            $table: $db.procesVerbaux,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableOrderingComposer get auteurFideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.auteurFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ErratumsPvTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ErratumsPvTable> {
+  $$ErratumsPvTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get texte =>
+      $composableBuilder(column: $table.texte, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateAjout =>
+      $composableBuilder(column: $table.dateAjout, builder: (column) => column);
+
+  $$ProcesVerbauxTableAnnotationComposer get procesVerbalId {
+    final $$ProcesVerbauxTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.procesVerbalId,
+      referencedTable: $db.procesVerbaux,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProcesVerbauxTableAnnotationComposer(
+            $db: $db,
+            $table: $db.procesVerbaux,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableAnnotationComposer get auteurFideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.auteurFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ErratumsPvTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ErratumsPvTable,
+          ErratumPvRow,
+          $$ErratumsPvTableFilterComposer,
+          $$ErratumsPvTableOrderingComposer,
+          $$ErratumsPvTableAnnotationComposer,
+          $$ErratumsPvTableCreateCompanionBuilder,
+          $$ErratumsPvTableUpdateCompanionBuilder,
+          (ErratumPvRow, $$ErratumsPvTableReferences),
+          ErratumPvRow,
+          PrefetchHooks Function({bool procesVerbalId, bool auteurFideleId})
+        > {
+  $$ErratumsPvTableTableManager(_$AppDatabase db, $ErratumsPvTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ErratumsPvTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ErratumsPvTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ErratumsPvTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> procesVerbalId = const Value.absent(),
+                Value<String> texte = const Value.absent(),
+                Value<DateTime> dateAjout = const Value.absent(),
+                Value<String?> auteurFideleId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ErratumsPvCompanion(
+                id: id,
+                procesVerbalId: procesVerbalId,
+                texte: texte,
+                dateAjout: dateAjout,
+                auteurFideleId: auteurFideleId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String procesVerbalId,
+                required String texte,
+                required DateTime dateAjout,
+                Value<String?> auteurFideleId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ErratumsPvCompanion.insert(
+                id: id,
+                procesVerbalId: procesVerbalId,
+                texte: texte,
+                dateAjout: dateAjout,
+                auteurFideleId: auteurFideleId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ErratumsPvTable, ErratumPvRow>(table),
+                  $$ErratumsPvTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({procesVerbalId = false, auteurFideleId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (procesVerbalId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.procesVerbalId,
+                                    referencedTable: $$ErratumsPvTableReferences
+                                        ._procesVerbalIdTable(db),
+                                    referencedColumn:
+                                        $$ErratumsPvTableReferences
+                                            ._procesVerbalIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (auteurFideleId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.auteurFideleId,
+                                    referencedTable: $$ErratumsPvTableReferences
+                                        ._auteurFideleIdTable(db),
+                                    referencedColumn:
+                                        $$ErratumsPvTableReferences
+                                            ._auteurFideleIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$ErratumsPvTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ErratumsPvTable,
+      ErratumPvRow,
+      $$ErratumsPvTableFilterComposer,
+      $$ErratumsPvTableOrderingComposer,
+      $$ErratumsPvTableAnnotationComposer,
+      $$ErratumsPvTableCreateCompanionBuilder,
+      $$ErratumsPvTableUpdateCompanionBuilder,
+      (ErratumPvRow, $$ErratumsPvTableReferences),
+      ErratumPvRow,
+      PrefetchHooks Function({bool procesVerbalId, bool auteurFideleId})
+    >;
+typedef $$TachesSuiviTableCreateCompanionBuilder =
+    TachesSuiviCompanion Function({
+      required String id,
+      required String decisionId,
+      required String description,
+      required String assigneFideleId,
+      Value<String> statut,
+      required DateTime dateCreation,
+      Value<int> rowid,
+    });
+typedef $$TachesSuiviTableUpdateCompanionBuilder =
+    TachesSuiviCompanion Function({
+      Value<String> id,
+      Value<String> decisionId,
+      Value<String> description,
+      Value<String> assigneFideleId,
+      Value<String> statut,
+      Value<DateTime> dateCreation,
+      Value<int> rowid,
+    });
+
+final class $$TachesSuiviTableReferences
+    extends BaseReferences<_$AppDatabase, $TachesSuiviTable, TacheSuiviRow> {
+  $$TachesSuiviTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $DecisionsTable _decisionIdTable(_$AppDatabase db) =>
+      db.decisions.createAlias('taches_suivi__decision_id__decisions__id');
+
+  $$DecisionsTableProcessedTableManager get decisionId {
+    final $_column = $_itemColumn<String>('decision_id')!;
+
+    final manager = $$DecisionsTableTableManager(
+      $_db,
+      $_db.decisions,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_decisionIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $FidelesTable _assigneFideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('taches_suivi__assigne_fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get assigneFideleId {
+    final $_column = $_itemColumn<String>('assigne_fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_assigneFideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$TachesSuiviTableFilterComposer
+    extends Composer<_$AppDatabase, $TachesSuiviTable> {
+  $$TachesSuiviTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateCreation => $composableBuilder(
+    column: $table.dateCreation,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$DecisionsTableFilterComposer get decisionId {
+    final $$DecisionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.decisionId,
+      referencedTable: $db.decisions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DecisionsTableFilterComposer(
+            $db: $db,
+            $table: $db.decisions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableFilterComposer get assigneFideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.assigneFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TachesSuiviTableOrderingComposer
+    extends Composer<_$AppDatabase, $TachesSuiviTable> {
+  $$TachesSuiviTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateCreation => $composableBuilder(
+    column: $table.dateCreation,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$DecisionsTableOrderingComposer get decisionId {
+    final $$DecisionsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.decisionId,
+      referencedTable: $db.decisions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DecisionsTableOrderingComposer(
+            $db: $db,
+            $table: $db.decisions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableOrderingComposer get assigneFideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.assigneFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TachesSuiviTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TachesSuiviTable> {
+  $$TachesSuiviTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateCreation => $composableBuilder(
+    column: $table.dateCreation,
+    builder: (column) => column,
+  );
+
+  $$DecisionsTableAnnotationComposer get decisionId {
+    final $$DecisionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.decisionId,
+      referencedTable: $db.decisions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DecisionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.decisions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableAnnotationComposer get assigneFideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.assigneFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TachesSuiviTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $TachesSuiviTable,
+          TacheSuiviRow,
+          $$TachesSuiviTableFilterComposer,
+          $$TachesSuiviTableOrderingComposer,
+          $$TachesSuiviTableAnnotationComposer,
+          $$TachesSuiviTableCreateCompanionBuilder,
+          $$TachesSuiviTableUpdateCompanionBuilder,
+          (TacheSuiviRow, $$TachesSuiviTableReferences),
+          TacheSuiviRow,
+          PrefetchHooks Function({bool decisionId, bool assigneFideleId})
+        > {
+  $$TachesSuiviTableTableManager(_$AppDatabase db, $TachesSuiviTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TachesSuiviTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TachesSuiviTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TachesSuiviTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> decisionId = const Value.absent(),
+                Value<String> description = const Value.absent(),
+                Value<String> assigneFideleId = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<DateTime> dateCreation = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TachesSuiviCompanion(
+                id: id,
+                decisionId: decisionId,
+                description: description,
+                assigneFideleId: assigneFideleId,
+                statut: statut,
+                dateCreation: dateCreation,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String decisionId,
+                required String description,
+                required String assigneFideleId,
+                Value<String> statut = const Value.absent(),
+                required DateTime dateCreation,
+                Value<int> rowid = const Value.absent(),
+              }) => TachesSuiviCompanion.insert(
+                id: id,
+                decisionId: decisionId,
+                description: description,
+                assigneFideleId: assigneFideleId,
+                statut: statut,
+                dateCreation: dateCreation,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$TachesSuiviTable, TacheSuiviRow>(table),
+                  $$TachesSuiviTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({decisionId = false, assigneFideleId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (decisionId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.decisionId,
+                                    referencedTable:
+                                        $$TachesSuiviTableReferences
+                                            ._decisionIdTable(db),
+                                    referencedColumn:
+                                        $$TachesSuiviTableReferences
+                                            ._decisionIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (assigneFideleId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.assigneFideleId,
+                                    referencedTable:
+                                        $$TachesSuiviTableReferences
+                                            ._assigneFideleIdTable(db),
+                                    referencedColumn:
+                                        $$TachesSuiviTableReferences
+                                            ._assigneFideleIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$TachesSuiviTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $TachesSuiviTable,
+      TacheSuiviRow,
+      $$TachesSuiviTableFilterComposer,
+      $$TachesSuiviTableOrderingComposer,
+      $$TachesSuiviTableAnnotationComposer,
+      $$TachesSuiviTableCreateCompanionBuilder,
+      $$TachesSuiviTableUpdateCompanionBuilder,
+      (TacheSuiviRow, $$TachesSuiviTableReferences),
+      TacheSuiviRow,
+      PrefetchHooks Function({bool decisionId, bool assigneFideleId})
+    >;
 typedef $$SyncOutboxTableCreateCompanionBuilder =
     SyncOutboxCompanion Function({
       required String id,
@@ -21025,6 +28034,22 @@ class $AppDatabaseManager {
       $$GroupesEgliseTableTableManager(_db, _db.groupesEglise);
   $$AppartenancesGroupeTableTableManager get appartenancesGroupe =>
       $$AppartenancesGroupeTableTableManager(_db, _db.appartenancesGroupe);
+  $$QuorumsComiteTableTableManager get quorumsComite =>
+      $$QuorumsComiteTableTableManager(_db, _db.quorumsComite);
+  $$MembresComiteTableTableManager get membresComite =>
+      $$MembresComiteTableTableManager(_db, _db.membresComite);
+  $$SeancesComiteTableTableManager get seancesComite =>
+      $$SeancesComiteTableTableManager(_db, _db.seancesComite);
+  $$PresentsSeanceTableTableManager get presentsSeance =>
+      $$PresentsSeanceTableTableManager(_db, _db.presentsSeance);
+  $$DecisionsTableTableManager get decisions =>
+      $$DecisionsTableTableManager(_db, _db.decisions);
+  $$ProcesVerbauxTableTableManager get procesVerbaux =>
+      $$ProcesVerbauxTableTableManager(_db, _db.procesVerbaux);
+  $$ErratumsPvTableTableManager get erratumsPv =>
+      $$ErratumsPvTableTableManager(_db, _db.erratumsPv);
+  $$TachesSuiviTableTableManager get tachesSuivi =>
+      $$TachesSuiviTableTableManager(_db, _db.tachesSuivi);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }
