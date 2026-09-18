@@ -122,6 +122,12 @@ class FideleDetailScreen extends StatelessWidget {
             onPressed: () => context.push(AppRoutes.fideleCompetences(fidele.id)),
           ),
           const SizedBox(height: 8),
+          OutlinedButton.icon(
+            icon: const Icon(Icons.groups_2_outlined),
+            label: const Text('Groupes de l\'Église'),
+            onPressed: () => context.push(AppRoutes.fideleGroupes(fidele.id)),
+          ),
+          const SizedBox(height: 8),
           if (fidele.statut != StatutFidele.inactif)
             OutlinedButton.icon(
               icon: const Icon(Icons.archive_outlined),

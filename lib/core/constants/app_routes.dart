@@ -41,4 +41,9 @@ abstract final class AppRoutes {
   static const String professions = '/professions';
   static String professionGroupe(String professionId) => '/professions/$professionId';
   static String fideleCompetences(String fideleId) => '/fideles/$fideleId/competences';
+
+  static const String groupesEglise = '/groupes-eglise';
+  static String groupeMembres(String groupeId) => '/groupes-eglise/$groupeId/membres';
+  static String groupeRegles(String groupeId) => '/groupes-eglise/$groupeId/regles';
+  static String fideleGroupes(String fideleId) => '/fideles/$fideleId/groupes';
 }

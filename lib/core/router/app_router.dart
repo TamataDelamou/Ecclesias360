@@ -10,6 +10,10 @@ import '../../features/fideles/presentation/fidele_detail_screen.dart';
 import '../../features/fideles/presentation/fidele_form_screen.dart';
 import '../../features/fideles/presentation/fidele_history_screen.dart';
 import '../../features/fideles/presentation/fidele_list_screen.dart';
+import '../../features/groupes_eglise/presentation/fidele_groupes_screen.dart';
+import '../../features/groupes_eglise/presentation/groupe_membres_screen.dart';
+import '../../features/groupes_eglise/presentation/groupe_regles_screen.dart';
+import '../../features/groupes_eglise/presentation/groupes_eglise_list_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/ministeres/presentation/mandats_echeance_screen.dart';
 import '../../features/ministeres/presentation/ministere_detail_screen.dart';
@@ -162,6 +166,22 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/fideles/:fideleId/competences',
       builder: (context, state) => FideleCompetencesScreen(fideleId: state.pathParameters['fideleId']!),
+    ),
+    GoRoute(
+      path: AppRoutes.groupesEglise,
+      builder: (context, state) => const GroupesEgliseListScreen(),
+    ),
+    GoRoute(
+      path: '/groupes-eglise/:id/membres',
+      builder: (context, state) => GroupeMembresScreen(groupeId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: '/groupes-eglise/:id/regles',
+      builder: (context, state) => GroupeReglesScreen(groupeId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: '/fideles/:fideleId/groupes',
+      builder: (context, state) => FideleGroupesScreen(fideleId: state.pathParameters['fideleId']!),
     ),
   ],
 );

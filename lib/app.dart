@@ -8,6 +8,8 @@ import 'features/dons_spirituels/application/don_spirituel_controller.dart';
 import 'features/dons_spirituels/data/don_spirituel_repository.dart';
 import 'features/fideles/application/fidele_controller.dart';
 import 'features/fideles/data/fidele_repository.dart';
+import 'features/groupes_eglise/application/groupe_controller.dart';
+import 'features/groupes_eglise/data/groupe_repository.dart';
 import 'features/ministeres/application/ministere_controller.dart';
 import 'features/ministeres/data/ministere_repository.dart';
 import 'features/organization/application/organisation_controller.dart';
@@ -42,6 +44,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final DonSpirituelController _donSpirituelController;
   late final ProfessionRepository _professionRepository;
   late final ProfessionController _professionController;
+  late final GroupeRepository _groupeRepository;
+  late final GroupeController _groupeController;
 
   @override
   void initState() {
@@ -59,6 +63,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _donSpirituelController = DonSpirituelController(_donSpirituelRepository);
     _professionRepository = ProfessionRepository(widget.database);
     _professionController = ProfessionController(_professionRepository);
+    _groupeRepository = GroupeRepository(widget.database);
+    _groupeController = GroupeController(_groupeRepository);
   }
 
   @override
@@ -69,6 +75,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _ministereController.dispose();
     _donSpirituelController.dispose();
     _professionController.dispose();
+    _groupeController.dispose();
     super.dispose();
   }
 
@@ -82,6 +89,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
         ChangeNotifierProvider<MinistereController>.value(value: _ministereController),
         ChangeNotifierProvider<DonSpirituelController>.value(value: _donSpirituelController),
         ChangeNotifierProvider<ProfessionController>.value(value: _professionController),
+        ChangeNotifierProvider<GroupeController>.value(value: _groupeController),
       ],
       child: MaterialApp.router(
         onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,

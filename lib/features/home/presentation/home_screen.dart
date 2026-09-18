@@ -52,6 +52,11 @@ class HomeScreen extends StatelessWidget {
               onPressed: () => context.push(AppRoutes.professions),
               child: const Text('Groupes professionnels'),
             ),
+            const SizedBox(height: 8),
+            FilledButton(
+              onPressed: () => context.push(AppRoutes.groupesEglise),
+              child: const Text('Groupes de l\'Église'),
+            ),
           ],
         ),
       ),
