@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'core/router/app_router.dart';
 import 'core/sync/sync_coordinator.dart';
 import 'core/theme/design_tokens.dart';
+import 'features/comite/application/comite_controller.dart';
+import 'features/comite/data/comite_repository.dart';
 import 'features/dons_spirituels/application/don_spirituel_controller.dart';
 import 'features/dons_spirituels/data/don_spirituel_repository.dart';
 import 'features/fideles/application/fidele_controller.dart';
@@ -46,6 +48,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final ProfessionController _professionController;
   late final GroupeRepository _groupeRepository;
   late final GroupeController _groupeController;
+  late final ComiteRepository _comiteRepository;
+  late final ComiteController _comiteController;
 
   @override
   void initState() {
@@ -65,6 +69,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _professionController = ProfessionController(_professionRepository);
     _groupeRepository = GroupeRepository(widget.database);
     _groupeController = GroupeController(_groupeRepository);
+    _comiteRepository = ComiteRepository(widget.database);
+    _comiteController = ComiteController(_comiteRepository);
   }
 
   @override
@@ -76,6 +82,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _donSpirituelController.dispose();
     _professionController.dispose();
     _groupeController.dispose();
+    _comiteController.dispose();
     super.dispose();
   }
 
@@ -90,6 +97,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
         ChangeNotifierProvider<DonSpirituelController>.value(value: _donSpirituelController),
         ChangeNotifierProvider<ProfessionController>.value(value: _professionController),
         ChangeNotifierProvider<GroupeController>.value(value: _groupeController),
+        ChangeNotifierProvider<ComiteController>.value(value: _comiteController),
       ],
       child: MaterialApp.router(
         onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,

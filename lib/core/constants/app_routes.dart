@@ -46,4 +46,9 @@ abstract final class AppRoutes {
   static String groupeMembres(String groupeId) => '/groupes-eglise/$groupeId/membres';
   static String groupeRegles(String groupeId) => '/groupes-eglise/$groupeId/regles';
   static String fideleGroupes(String fideleId) => '/fideles/$fideleId/groupes';
+
+  static String comiteMembres(String noeudId) => '/organisation/$noeudId/comite/membres';
+  static String comiteSeances(String noeudId) => '/organisation/$noeudId/comite/seances';
+  static String comiteNouvelleSeance(String noeudId) => '/organisation/$noeudId/comite/seances/nouvelle';
+  static String comiteSeance(String seanceId) => '/comite/seances/$seanceId';
 }
