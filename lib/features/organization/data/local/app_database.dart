@@ -5,9 +5,40 @@ import 'package:drift/native.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 
+import '../../../../core/utils/id_generator.dart';
 import 'tables.dart';
 
 part 'app_database.g.dart';
+
+/// RG-III-04 — les vingt-quatre types de ministères standards, seedés à la
+/// création/mise à niveau de la base locale et dans la migration Supabase
+/// correspondante (mêmes codes des deux côtés).
+const List<(String code, String libelle)> typesMinisteresStandards = [
+  ('chorale', 'Chorale'),
+  ('louange', 'Louange'),
+  ('intercession', 'Intercession et prière'),
+  ('jeunesse', 'Jeunesse'),
+  ('diaconat', 'Diaconat'),
+  ('media', 'Média'),
+  ('sonorisation', 'Sonorisation et son'),
+  ('action_sociale', 'Action sociale'),
+  ('evangelisation', 'Évangélisation'),
+  ('enfants', 'Enfants et école du dimanche'),
+  ('hospitalite', 'Hospitalité et accueil'),
+  ('protocole', 'Protocole'),
+  ('securite', 'Sécurité'),
+  ('finances_offrandes', 'Finances et offrandes'),
+  ('visitation_pastorale', 'Visitation pastorale'),
+  ('enseignement_biblique', 'Enseignement biblique'),
+  ('communication', 'Communication'),
+  ('technique_informatique', 'Technique et informatique'),
+  ('missions', 'Missions'),
+  ('patrimoine', 'Construction et patrimoine'),
+  ('sport', 'Sport'),
+  ('arts_culture', 'Arts et culture'),
+  ('femmes', 'Ministère des femmes'),
+  ('hommes', 'Ministère des hommes'),
+];
 
 /// Base Drift/SQLite unique, offline-first (RG-OFF-01), partagée par tous
 /// les modules (voir AGENTS.md §4).
@@ -20,13 +51,18 @@ part 'app_database.g.dart';
   HistoriqueFideles,
   Tuteurs,
   ZonesGeographiques,
+  TypesMinisteres,
+  Ministeres,
+  AffectationsMinisteres,
+  MandatsResponsables,
+  ActivitesMinisteres,
   SyncOutbox,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -50,14 +86,44 @@ class AppDatabase extends _$AppDatabase {
           if (from < 4) {
             await m.createTable(nodeResponsables);
           }
+          // v4 -> v5 : ajout du Module III (Ministères et départements).
+          if (from < 5) {
+            await m.createTable(typesMinisteres);
+            await m.createTable(ministeres);
+            await m.createTable(affectationsMinisteres);
+            await m.createTable(mandatsResponsables);
+            await m.createTable(activitesMinisteres);
+            await _seedTypesMinisteresStandards();
+          }
         },
         beforeOpen: (details) async {
           // SQLite n'applique pas les contraintes de clé étrangère par
           // défaut : sans ceci, les `references()` déclarées dans
           // tables.dart ne sont que déclaratives.
           await customStatement('PRAGMA foreign_keys = ON');
+          if (details.wasCreated) {
+            await _seedTypesMinisteresStandards();
+          }
         },
       );
+
+  Future<void> _seedTypesMinisteresStandards() async {
+    await batch((b) {
+      b.insertAll(
+        typesMinisteres,
+        [
+          for (final (code, libelle) in typesMinisteresStandards)
+            TypesMinisteresCompanion.insert(
+              id: IdGenerator.newId(),
+              code: code,
+              libelle: libelle,
+              standard: const Value(true),
+            ),
+        ],
+        mode: InsertMode.insertOrIgnore,
+      );
+    });
+  }
 
   static QueryExecutor _openConnection() {
     return LazyDatabase(() async {

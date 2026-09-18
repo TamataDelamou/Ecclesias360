@@ -48,6 +48,16 @@ class AppError implements Exception {
             "désactivez-la plutôt que de la supprimer.",
       );
 
+  factory AppError.responsableMinistereDejaActif() => const AppError(
+        'responsable_ministere_deja_actif',
+        "Ce ministère a déjà un responsable actif : clôturez son mandat avant d'en affecter un autre.",
+      );
+
+  factory AppError.typeMinistereStandardProtege() => const AppError(
+        'type_ministere_standard_protege',
+        "Ce type de ministère standard ne peut pas être désactivé.",
+      );
+
   @override
   String toString() => 'AppError($code): $message';
 }

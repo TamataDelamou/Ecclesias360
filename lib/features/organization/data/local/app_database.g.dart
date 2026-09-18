@@ -4377,6 +4377,2127 @@ class ZonesGeographiquesCompanion extends UpdateCompanion<ZoneGeographiqueRow> {
   }
 }
 
+class $TypesMinisteresTable extends TypesMinisteres
+    with TableInfo<$TypesMinisteresTable, TypeMinistereRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TypesMinisteresTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+    'code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _libelleMeta = const VerificationMeta(
+    'libelle',
+  );
+  @override
+  late final GeneratedColumn<String> libelle = GeneratedColumn<String>(
+    'libelle',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _standardMeta = const VerificationMeta(
+    'standard',
+  );
+  @override
+  late final GeneratedColumn<bool> standard = GeneratedColumn<bool>(
+    'standard',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("standard" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('actif'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, code, libelle, standard, statut];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'types_ministeres';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TypeMinistereRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+        _codeMeta,
+        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_codeMeta);
+    }
+    if (data.containsKey('libelle')) {
+      context.handle(
+        _libelleMeta,
+        libelle.isAcceptableOrUnknown(data['libelle']!, _libelleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_libelleMeta);
+    }
+    if (data.containsKey('standard')) {
+      context.handle(
+        _standardMeta,
+        standard.isAcceptableOrUnknown(data['standard']!, _standardMeta),
+      );
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TypeMinistereRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TypeMinistereRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      code: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code'],
+      )!,
+      libelle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}libelle'],
+      )!,
+      standard: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}standard'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+    );
+  }
+
+  @override
+  $TypesMinisteresTable createAlias(String alias) {
+    return $TypesMinisteresTable(attachedDatabase, alias);
+  }
+}
+
+class TypeMinistereRow extends DataClass
+    implements Insertable<TypeMinistereRow> {
+  final String id;
+  final String code;
+  final String libelle;
+  final bool standard;
+  final String statut;
+  const TypeMinistereRow({
+    required this.id,
+    required this.code,
+    required this.libelle,
+    required this.standard,
+    required this.statut,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['code'] = Variable<String>(code);
+    map['libelle'] = Variable<String>(libelle);
+    map['standard'] = Variable<bool>(standard);
+    map['statut'] = Variable<String>(statut);
+    return map;
+  }
+
+  TypesMinisteresCompanion toCompanion(bool nullToAbsent) {
+    return TypesMinisteresCompanion(
+      id: Value(id),
+      code: Value(code),
+      libelle: Value(libelle),
+      standard: Value(standard),
+      statut: Value(statut),
+    );
+  }
+
+  factory TypeMinistereRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TypeMinistereRow(
+      id: serializer.fromJson<String>(json['id']),
+      code: serializer.fromJson<String>(json['code']),
+      libelle: serializer.fromJson<String>(json['libelle']),
+      standard: serializer.fromJson<bool>(json['standard']),
+      statut: serializer.fromJson<String>(json['statut']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'code': serializer.toJson<String>(code),
+      'libelle': serializer.toJson<String>(libelle),
+      'standard': serializer.toJson<bool>(standard),
+      'statut': serializer.toJson<String>(statut),
+    };
+  }
+
+  TypeMinistereRow copyWith({
+    String? id,
+    String? code,
+    String? libelle,
+    bool? standard,
+    String? statut,
+  }) => TypeMinistereRow(
+    id: id ?? this.id,
+    code: code ?? this.code,
+    libelle: libelle ?? this.libelle,
+    standard: standard ?? this.standard,
+    statut: statut ?? this.statut,
+  );
+  TypeMinistereRow copyWithCompanion(TypesMinisteresCompanion data) {
+    return TypeMinistereRow(
+      id: data.id.present ? data.id.value : this.id,
+      code: data.code.present ? data.code.value : this.code,
+      libelle: data.libelle.present ? data.libelle.value : this.libelle,
+      standard: data.standard.present ? data.standard.value : this.standard,
+      statut: data.statut.present ? data.statut.value : this.statut,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TypeMinistereRow(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('libelle: $libelle, ')
+          ..write('standard: $standard, ')
+          ..write('statut: $statut')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, code, libelle, standard, statut);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TypeMinistereRow &&
+          other.id == this.id &&
+          other.code == this.code &&
+          other.libelle == this.libelle &&
+          other.standard == this.standard &&
+          other.statut == this.statut);
+}
+
+class TypesMinisteresCompanion extends UpdateCompanion<TypeMinistereRow> {
+  final Value<String> id;
+  final Value<String> code;
+  final Value<String> libelle;
+  final Value<bool> standard;
+  final Value<String> statut;
+  final Value<int> rowid;
+  const TypesMinisteresCompanion({
+    this.id = const Value.absent(),
+    this.code = const Value.absent(),
+    this.libelle = const Value.absent(),
+    this.standard = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TypesMinisteresCompanion.insert({
+    required String id,
+    required String code,
+    required String libelle,
+    this.standard = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       code = Value(code),
+       libelle = Value(libelle);
+  static Insertable<TypeMinistereRow> custom({
+    Expression<String>? id,
+    Expression<String>? code,
+    Expression<String>? libelle,
+    Expression<bool>? standard,
+    Expression<String>? statut,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (code != null) 'code': code,
+      if (libelle != null) 'libelle': libelle,
+      if (standard != null) 'standard': standard,
+      if (statut != null) 'statut': statut,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TypesMinisteresCompanion copyWith({
+    Value<String>? id,
+    Value<String>? code,
+    Value<String>? libelle,
+    Value<bool>? standard,
+    Value<String>? statut,
+    Value<int>? rowid,
+  }) {
+    return TypesMinisteresCompanion(
+      id: id ?? this.id,
+      code: code ?? this.code,
+      libelle: libelle ?? this.libelle,
+      standard: standard ?? this.standard,
+      statut: statut ?? this.statut,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (libelle.present) {
+      map['libelle'] = Variable<String>(libelle.value);
+    }
+    if (standard.present) {
+      map['standard'] = Variable<bool>(standard.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TypesMinisteresCompanion(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('libelle: $libelle, ')
+          ..write('standard: $standard, ')
+          ..write('statut: $statut, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MinisteresTable extends Ministeres
+    with TableInfo<$MinisteresTable, MinistereRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MinisteresTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _noeudIdMeta = const VerificationMeta(
+    'noeudId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudId = GeneratedColumn<String>(
+    'noeud_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _typeMinistereIdMeta = const VerificationMeta(
+    'typeMinistereId',
+  );
+  @override
+  late final GeneratedColumn<String> typeMinistereId = GeneratedColumn<String>(
+    'type_ministere_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES types_ministeres (id)',
+    ),
+  );
+  static const VerificationMeta _nomMeta = const VerificationMeta('nom');
+  @override
+  late final GeneratedColumn<String> nom = GeneratedColumn<String>(
+    'nom',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateCreationMeta = const VerificationMeta(
+    'dateCreation',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateCreation = GeneratedColumn<DateTime>(
+    'date_creation',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('actif'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    noeudId,
+    typeMinistereId,
+    nom,
+    dateCreation,
+    statut,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'ministeres';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MinistereRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('noeud_id')) {
+      context.handle(
+        _noeudIdMeta,
+        noeudId.isAcceptableOrUnknown(data['noeud_id']!, _noeudIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudIdMeta);
+    }
+    if (data.containsKey('type_ministere_id')) {
+      context.handle(
+        _typeMinistereIdMeta,
+        typeMinistereId.isAcceptableOrUnknown(
+          data['type_ministere_id']!,
+          _typeMinistereIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_typeMinistereIdMeta);
+    }
+    if (data.containsKey('nom')) {
+      context.handle(
+        _nomMeta,
+        nom.isAcceptableOrUnknown(data['nom']!, _nomMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nomMeta);
+    }
+    if (data.containsKey('date_creation')) {
+      context.handle(
+        _dateCreationMeta,
+        dateCreation.isAcceptableOrUnknown(
+          data['date_creation']!,
+          _dateCreationMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_dateCreationMeta);
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MinistereRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MinistereRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      noeudId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_id'],
+      )!,
+      typeMinistereId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type_ministere_id'],
+      )!,
+      nom: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}nom'],
+      )!,
+      dateCreation: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_creation'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+    );
+  }
+
+  @override
+  $MinisteresTable createAlias(String alias) {
+    return $MinisteresTable(attachedDatabase, alias);
+  }
+}
+
+class MinistereRow extends DataClass implements Insertable<MinistereRow> {
+  final String id;
+  final String noeudId;
+  final String typeMinistereId;
+  final String nom;
+  final DateTime dateCreation;
+  final String statut;
+  const MinistereRow({
+    required this.id,
+    required this.noeudId,
+    required this.typeMinistereId,
+    required this.nom,
+    required this.dateCreation,
+    required this.statut,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['noeud_id'] = Variable<String>(noeudId);
+    map['type_ministere_id'] = Variable<String>(typeMinistereId);
+    map['nom'] = Variable<String>(nom);
+    map['date_creation'] = Variable<DateTime>(dateCreation);
+    map['statut'] = Variable<String>(statut);
+    return map;
+  }
+
+  MinisteresCompanion toCompanion(bool nullToAbsent) {
+    return MinisteresCompanion(
+      id: Value(id),
+      noeudId: Value(noeudId),
+      typeMinistereId: Value(typeMinistereId),
+      nom: Value(nom),
+      dateCreation: Value(dateCreation),
+      statut: Value(statut),
+    );
+  }
+
+  factory MinistereRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MinistereRow(
+      id: serializer.fromJson<String>(json['id']),
+      noeudId: serializer.fromJson<String>(json['noeudId']),
+      typeMinistereId: serializer.fromJson<String>(json['typeMinistereId']),
+      nom: serializer.fromJson<String>(json['nom']),
+      dateCreation: serializer.fromJson<DateTime>(json['dateCreation']),
+      statut: serializer.fromJson<String>(json['statut']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'noeudId': serializer.toJson<String>(noeudId),
+      'typeMinistereId': serializer.toJson<String>(typeMinistereId),
+      'nom': serializer.toJson<String>(nom),
+      'dateCreation': serializer.toJson<DateTime>(dateCreation),
+      'statut': serializer.toJson<String>(statut),
+    };
+  }
+
+  MinistereRow copyWith({
+    String? id,
+    String? noeudId,
+    String? typeMinistereId,
+    String? nom,
+    DateTime? dateCreation,
+    String? statut,
+  }) => MinistereRow(
+    id: id ?? this.id,
+    noeudId: noeudId ?? this.noeudId,
+    typeMinistereId: typeMinistereId ?? this.typeMinistereId,
+    nom: nom ?? this.nom,
+    dateCreation: dateCreation ?? this.dateCreation,
+    statut: statut ?? this.statut,
+  );
+  MinistereRow copyWithCompanion(MinisteresCompanion data) {
+    return MinistereRow(
+      id: data.id.present ? data.id.value : this.id,
+      noeudId: data.noeudId.present ? data.noeudId.value : this.noeudId,
+      typeMinistereId: data.typeMinistereId.present
+          ? data.typeMinistereId.value
+          : this.typeMinistereId,
+      nom: data.nom.present ? data.nom.value : this.nom,
+      dateCreation: data.dateCreation.present
+          ? data.dateCreation.value
+          : this.dateCreation,
+      statut: data.statut.present ? data.statut.value : this.statut,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MinistereRow(')
+          ..write('id: $id, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('typeMinistereId: $typeMinistereId, ')
+          ..write('nom: $nom, ')
+          ..write('dateCreation: $dateCreation, ')
+          ..write('statut: $statut')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, noeudId, typeMinistereId, nom, dateCreation, statut);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MinistereRow &&
+          other.id == this.id &&
+          other.noeudId == this.noeudId &&
+          other.typeMinistereId == this.typeMinistereId &&
+          other.nom == this.nom &&
+          other.dateCreation == this.dateCreation &&
+          other.statut == this.statut);
+}
+
+class MinisteresCompanion extends UpdateCompanion<MinistereRow> {
+  final Value<String> id;
+  final Value<String> noeudId;
+  final Value<String> typeMinistereId;
+  final Value<String> nom;
+  final Value<DateTime> dateCreation;
+  final Value<String> statut;
+  final Value<int> rowid;
+  const MinisteresCompanion({
+    this.id = const Value.absent(),
+    this.noeudId = const Value.absent(),
+    this.typeMinistereId = const Value.absent(),
+    this.nom = const Value.absent(),
+    this.dateCreation = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MinisteresCompanion.insert({
+    required String id,
+    required String noeudId,
+    required String typeMinistereId,
+    required String nom,
+    required DateTime dateCreation,
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       noeudId = Value(noeudId),
+       typeMinistereId = Value(typeMinistereId),
+       nom = Value(nom),
+       dateCreation = Value(dateCreation);
+  static Insertable<MinistereRow> custom({
+    Expression<String>? id,
+    Expression<String>? noeudId,
+    Expression<String>? typeMinistereId,
+    Expression<String>? nom,
+    Expression<DateTime>? dateCreation,
+    Expression<String>? statut,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (noeudId != null) 'noeud_id': noeudId,
+      if (typeMinistereId != null) 'type_ministere_id': typeMinistereId,
+      if (nom != null) 'nom': nom,
+      if (dateCreation != null) 'date_creation': dateCreation,
+      if (statut != null) 'statut': statut,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MinisteresCompanion copyWith({
+    Value<String>? id,
+    Value<String>? noeudId,
+    Value<String>? typeMinistereId,
+    Value<String>? nom,
+    Value<DateTime>? dateCreation,
+    Value<String>? statut,
+    Value<int>? rowid,
+  }) {
+    return MinisteresCompanion(
+      id: id ?? this.id,
+      noeudId: noeudId ?? this.noeudId,
+      typeMinistereId: typeMinistereId ?? this.typeMinistereId,
+      nom: nom ?? this.nom,
+      dateCreation: dateCreation ?? this.dateCreation,
+      statut: statut ?? this.statut,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (noeudId.present) {
+      map['noeud_id'] = Variable<String>(noeudId.value);
+    }
+    if (typeMinistereId.present) {
+      map['type_ministere_id'] = Variable<String>(typeMinistereId.value);
+    }
+    if (nom.present) {
+      map['nom'] = Variable<String>(nom.value);
+    }
+    if (dateCreation.present) {
+      map['date_creation'] = Variable<DateTime>(dateCreation.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MinisteresCompanion(')
+          ..write('id: $id, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('typeMinistereId: $typeMinistereId, ')
+          ..write('nom: $nom, ')
+          ..write('dateCreation: $dateCreation, ')
+          ..write('statut: $statut, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $AffectationsMinisteresTable extends AffectationsMinisteres
+    with TableInfo<$AffectationsMinisteresTable, AffectationMinistereRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AffectationsMinisteresTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _ministereIdMeta = const VerificationMeta(
+    'ministereId',
+  );
+  @override
+  late final GeneratedColumn<String> ministereId = GeneratedColumn<String>(
+    'ministere_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES ministeres (id)',
+    ),
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _roleMeta = const VerificationMeta('role');
+  @override
+  late final GeneratedColumn<String> role = GeneratedColumn<String>(
+    'role',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateDebutMeta = const VerificationMeta(
+    'dateDebut',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateDebut = GeneratedColumn<DateTime>(
+    'date_debut',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateFinMeta = const VerificationMeta(
+    'dateFin',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateFin = GeneratedColumn<DateTime>(
+    'date_fin',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('active'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    ministereId,
+    fideleId,
+    role,
+    dateDebut,
+    dateFin,
+    statut,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'affectations_ministeres';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AffectationMinistereRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('ministere_id')) {
+      context.handle(
+        _ministereIdMeta,
+        ministereId.isAcceptableOrUnknown(
+          data['ministere_id']!,
+          _ministereIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_ministereIdMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    if (data.containsKey('role')) {
+      context.handle(
+        _roleMeta,
+        role.isAcceptableOrUnknown(data['role']!, _roleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_roleMeta);
+    }
+    if (data.containsKey('date_debut')) {
+      context.handle(
+        _dateDebutMeta,
+        dateDebut.isAcceptableOrUnknown(data['date_debut']!, _dateDebutMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateDebutMeta);
+    }
+    if (data.containsKey('date_fin')) {
+      context.handle(
+        _dateFinMeta,
+        dateFin.isAcceptableOrUnknown(data['date_fin']!, _dateFinMeta),
+      );
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AffectationMinistereRow map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AffectationMinistereRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      ministereId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ministere_id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+      role: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}role'],
+      )!,
+      dateDebut: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_debut'],
+      )!,
+      dateFin: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_fin'],
+      ),
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+    );
+  }
+
+  @override
+  $AffectationsMinisteresTable createAlias(String alias) {
+    return $AffectationsMinisteresTable(attachedDatabase, alias);
+  }
+}
+
+class AffectationMinistereRow extends DataClass
+    implements Insertable<AffectationMinistereRow> {
+  final String id;
+  final String ministereId;
+  final String fideleId;
+  final String role;
+  final DateTime dateDebut;
+  final DateTime? dateFin;
+  final String statut;
+  const AffectationMinistereRow({
+    required this.id,
+    required this.ministereId,
+    required this.fideleId,
+    required this.role,
+    required this.dateDebut,
+    this.dateFin,
+    required this.statut,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['ministere_id'] = Variable<String>(ministereId);
+    map['fidele_id'] = Variable<String>(fideleId);
+    map['role'] = Variable<String>(role);
+    map['date_debut'] = Variable<DateTime>(dateDebut);
+    if (!nullToAbsent || dateFin != null) {
+      map['date_fin'] = Variable<DateTime>(dateFin);
+    }
+    map['statut'] = Variable<String>(statut);
+    return map;
+  }
+
+  AffectationsMinisteresCompanion toCompanion(bool nullToAbsent) {
+    return AffectationsMinisteresCompanion(
+      id: Value(id),
+      ministereId: Value(ministereId),
+      fideleId: Value(fideleId),
+      role: Value(role),
+      dateDebut: Value(dateDebut),
+      dateFin: dateFin == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dateFin),
+      statut: Value(statut),
+    );
+  }
+
+  factory AffectationMinistereRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AffectationMinistereRow(
+      id: serializer.fromJson<String>(json['id']),
+      ministereId: serializer.fromJson<String>(json['ministereId']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+      role: serializer.fromJson<String>(json['role']),
+      dateDebut: serializer.fromJson<DateTime>(json['dateDebut']),
+      dateFin: serializer.fromJson<DateTime?>(json['dateFin']),
+      statut: serializer.fromJson<String>(json['statut']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'ministereId': serializer.toJson<String>(ministereId),
+      'fideleId': serializer.toJson<String>(fideleId),
+      'role': serializer.toJson<String>(role),
+      'dateDebut': serializer.toJson<DateTime>(dateDebut),
+      'dateFin': serializer.toJson<DateTime?>(dateFin),
+      'statut': serializer.toJson<String>(statut),
+    };
+  }
+
+  AffectationMinistereRow copyWith({
+    String? id,
+    String? ministereId,
+    String? fideleId,
+    String? role,
+    DateTime? dateDebut,
+    Value<DateTime?> dateFin = const Value.absent(),
+    String? statut,
+  }) => AffectationMinistereRow(
+    id: id ?? this.id,
+    ministereId: ministereId ?? this.ministereId,
+    fideleId: fideleId ?? this.fideleId,
+    role: role ?? this.role,
+    dateDebut: dateDebut ?? this.dateDebut,
+    dateFin: dateFin.present ? dateFin.value : this.dateFin,
+    statut: statut ?? this.statut,
+  );
+  AffectationMinistereRow copyWithCompanion(
+    AffectationsMinisteresCompanion data,
+  ) {
+    return AffectationMinistereRow(
+      id: data.id.present ? data.id.value : this.id,
+      ministereId: data.ministereId.present
+          ? data.ministereId.value
+          : this.ministereId,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      role: data.role.present ? data.role.value : this.role,
+      dateDebut: data.dateDebut.present ? data.dateDebut.value : this.dateDebut,
+      dateFin: data.dateFin.present ? data.dateFin.value : this.dateFin,
+      statut: data.statut.present ? data.statut.value : this.statut,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AffectationMinistereRow(')
+          ..write('id: $id, ')
+          ..write('ministereId: $ministereId, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('role: $role, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('dateFin: $dateFin, ')
+          ..write('statut: $statut')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, ministereId, fideleId, role, dateDebut, dateFin, statut);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AffectationMinistereRow &&
+          other.id == this.id &&
+          other.ministereId == this.ministereId &&
+          other.fideleId == this.fideleId &&
+          other.role == this.role &&
+          other.dateDebut == this.dateDebut &&
+          other.dateFin == this.dateFin &&
+          other.statut == this.statut);
+}
+
+class AffectationsMinisteresCompanion
+    extends UpdateCompanion<AffectationMinistereRow> {
+  final Value<String> id;
+  final Value<String> ministereId;
+  final Value<String> fideleId;
+  final Value<String> role;
+  final Value<DateTime> dateDebut;
+  final Value<DateTime?> dateFin;
+  final Value<String> statut;
+  final Value<int> rowid;
+  const AffectationsMinisteresCompanion({
+    this.id = const Value.absent(),
+    this.ministereId = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.role = const Value.absent(),
+    this.dateDebut = const Value.absent(),
+    this.dateFin = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  AffectationsMinisteresCompanion.insert({
+    required String id,
+    required String ministereId,
+    required String fideleId,
+    required String role,
+    required DateTime dateDebut,
+    this.dateFin = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       ministereId = Value(ministereId),
+       fideleId = Value(fideleId),
+       role = Value(role),
+       dateDebut = Value(dateDebut);
+  static Insertable<AffectationMinistereRow> custom({
+    Expression<String>? id,
+    Expression<String>? ministereId,
+    Expression<String>? fideleId,
+    Expression<String>? role,
+    Expression<DateTime>? dateDebut,
+    Expression<DateTime>? dateFin,
+    Expression<String>? statut,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (ministereId != null) 'ministere_id': ministereId,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (role != null) 'role': role,
+      if (dateDebut != null) 'date_debut': dateDebut,
+      if (dateFin != null) 'date_fin': dateFin,
+      if (statut != null) 'statut': statut,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  AffectationsMinisteresCompanion copyWith({
+    Value<String>? id,
+    Value<String>? ministereId,
+    Value<String>? fideleId,
+    Value<String>? role,
+    Value<DateTime>? dateDebut,
+    Value<DateTime?>? dateFin,
+    Value<String>? statut,
+    Value<int>? rowid,
+  }) {
+    return AffectationsMinisteresCompanion(
+      id: id ?? this.id,
+      ministereId: ministereId ?? this.ministereId,
+      fideleId: fideleId ?? this.fideleId,
+      role: role ?? this.role,
+      dateDebut: dateDebut ?? this.dateDebut,
+      dateFin: dateFin ?? this.dateFin,
+      statut: statut ?? this.statut,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (ministereId.present) {
+      map['ministere_id'] = Variable<String>(ministereId.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (role.present) {
+      map['role'] = Variable<String>(role.value);
+    }
+    if (dateDebut.present) {
+      map['date_debut'] = Variable<DateTime>(dateDebut.value);
+    }
+    if (dateFin.present) {
+      map['date_fin'] = Variable<DateTime>(dateFin.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AffectationsMinisteresCompanion(')
+          ..write('id: $id, ')
+          ..write('ministereId: $ministereId, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('role: $role, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('dateFin: $dateFin, ')
+          ..write('statut: $statut, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MandatsResponsablesTable extends MandatsResponsables
+    with TableInfo<$MandatsResponsablesTable, MandatResponsableRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MandatsResponsablesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _ministereIdMeta = const VerificationMeta(
+    'ministereId',
+  );
+  @override
+  late final GeneratedColumn<String> ministereId = GeneratedColumn<String>(
+    'ministere_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES ministeres (id)',
+    ),
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _dateDebutMeta = const VerificationMeta(
+    'dateDebut',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateDebut = GeneratedColumn<DateTime>(
+    'date_debut',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateFinPrevueMeta = const VerificationMeta(
+    'dateFinPrevue',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateFinPrevue =
+      GeneratedColumn<DateTime>(
+        'date_fin_prevue',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _dateFinReelleMeta = const VerificationMeta(
+    'dateFinReelle',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateFinReelle =
+      GeneratedColumn<DateTime>(
+        'date_fin_reelle',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    ministereId,
+    fideleId,
+    dateDebut,
+    dateFinPrevue,
+    dateFinReelle,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'mandats_responsables';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MandatResponsableRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('ministere_id')) {
+      context.handle(
+        _ministereIdMeta,
+        ministereId.isAcceptableOrUnknown(
+          data['ministere_id']!,
+          _ministereIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_ministereIdMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    if (data.containsKey('date_debut')) {
+      context.handle(
+        _dateDebutMeta,
+        dateDebut.isAcceptableOrUnknown(data['date_debut']!, _dateDebutMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateDebutMeta);
+    }
+    if (data.containsKey('date_fin_prevue')) {
+      context.handle(
+        _dateFinPrevueMeta,
+        dateFinPrevue.isAcceptableOrUnknown(
+          data['date_fin_prevue']!,
+          _dateFinPrevueMeta,
+        ),
+      );
+    }
+    if (data.containsKey('date_fin_reelle')) {
+      context.handle(
+        _dateFinReelleMeta,
+        dateFinReelle.isAcceptableOrUnknown(
+          data['date_fin_reelle']!,
+          _dateFinReelleMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MandatResponsableRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MandatResponsableRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      ministereId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ministere_id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+      dateDebut: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_debut'],
+      )!,
+      dateFinPrevue: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_fin_prevue'],
+      ),
+      dateFinReelle: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_fin_reelle'],
+      ),
+    );
+  }
+
+  @override
+  $MandatsResponsablesTable createAlias(String alias) {
+    return $MandatsResponsablesTable(attachedDatabase, alias);
+  }
+}
+
+class MandatResponsableRow extends DataClass
+    implements Insertable<MandatResponsableRow> {
+  final String id;
+  final String ministereId;
+  final String fideleId;
+  final DateTime dateDebut;
+  final DateTime? dateFinPrevue;
+  final DateTime? dateFinReelle;
+  const MandatResponsableRow({
+    required this.id,
+    required this.ministereId,
+    required this.fideleId,
+    required this.dateDebut,
+    this.dateFinPrevue,
+    this.dateFinReelle,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['ministere_id'] = Variable<String>(ministereId);
+    map['fidele_id'] = Variable<String>(fideleId);
+    map['date_debut'] = Variable<DateTime>(dateDebut);
+    if (!nullToAbsent || dateFinPrevue != null) {
+      map['date_fin_prevue'] = Variable<DateTime>(dateFinPrevue);
+    }
+    if (!nullToAbsent || dateFinReelle != null) {
+      map['date_fin_reelle'] = Variable<DateTime>(dateFinReelle);
+    }
+    return map;
+  }
+
+  MandatsResponsablesCompanion toCompanion(bool nullToAbsent) {
+    return MandatsResponsablesCompanion(
+      id: Value(id),
+      ministereId: Value(ministereId),
+      fideleId: Value(fideleId),
+      dateDebut: Value(dateDebut),
+      dateFinPrevue: dateFinPrevue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dateFinPrevue),
+      dateFinReelle: dateFinReelle == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dateFinReelle),
+    );
+  }
+
+  factory MandatResponsableRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MandatResponsableRow(
+      id: serializer.fromJson<String>(json['id']),
+      ministereId: serializer.fromJson<String>(json['ministereId']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+      dateDebut: serializer.fromJson<DateTime>(json['dateDebut']),
+      dateFinPrevue: serializer.fromJson<DateTime?>(json['dateFinPrevue']),
+      dateFinReelle: serializer.fromJson<DateTime?>(json['dateFinReelle']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'ministereId': serializer.toJson<String>(ministereId),
+      'fideleId': serializer.toJson<String>(fideleId),
+      'dateDebut': serializer.toJson<DateTime>(dateDebut),
+      'dateFinPrevue': serializer.toJson<DateTime?>(dateFinPrevue),
+      'dateFinReelle': serializer.toJson<DateTime?>(dateFinReelle),
+    };
+  }
+
+  MandatResponsableRow copyWith({
+    String? id,
+    String? ministereId,
+    String? fideleId,
+    DateTime? dateDebut,
+    Value<DateTime?> dateFinPrevue = const Value.absent(),
+    Value<DateTime?> dateFinReelle = const Value.absent(),
+  }) => MandatResponsableRow(
+    id: id ?? this.id,
+    ministereId: ministereId ?? this.ministereId,
+    fideleId: fideleId ?? this.fideleId,
+    dateDebut: dateDebut ?? this.dateDebut,
+    dateFinPrevue: dateFinPrevue.present
+        ? dateFinPrevue.value
+        : this.dateFinPrevue,
+    dateFinReelle: dateFinReelle.present
+        ? dateFinReelle.value
+        : this.dateFinReelle,
+  );
+  MandatResponsableRow copyWithCompanion(MandatsResponsablesCompanion data) {
+    return MandatResponsableRow(
+      id: data.id.present ? data.id.value : this.id,
+      ministereId: data.ministereId.present
+          ? data.ministereId.value
+          : this.ministereId,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      dateDebut: data.dateDebut.present ? data.dateDebut.value : this.dateDebut,
+      dateFinPrevue: data.dateFinPrevue.present
+          ? data.dateFinPrevue.value
+          : this.dateFinPrevue,
+      dateFinReelle: data.dateFinReelle.present
+          ? data.dateFinReelle.value
+          : this.dateFinReelle,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MandatResponsableRow(')
+          ..write('id: $id, ')
+          ..write('ministereId: $ministereId, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('dateFinPrevue: $dateFinPrevue, ')
+          ..write('dateFinReelle: $dateFinReelle')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    ministereId,
+    fideleId,
+    dateDebut,
+    dateFinPrevue,
+    dateFinReelle,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MandatResponsableRow &&
+          other.id == this.id &&
+          other.ministereId == this.ministereId &&
+          other.fideleId == this.fideleId &&
+          other.dateDebut == this.dateDebut &&
+          other.dateFinPrevue == this.dateFinPrevue &&
+          other.dateFinReelle == this.dateFinReelle);
+}
+
+class MandatsResponsablesCompanion
+    extends UpdateCompanion<MandatResponsableRow> {
+  final Value<String> id;
+  final Value<String> ministereId;
+  final Value<String> fideleId;
+  final Value<DateTime> dateDebut;
+  final Value<DateTime?> dateFinPrevue;
+  final Value<DateTime?> dateFinReelle;
+  final Value<int> rowid;
+  const MandatsResponsablesCompanion({
+    this.id = const Value.absent(),
+    this.ministereId = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.dateDebut = const Value.absent(),
+    this.dateFinPrevue = const Value.absent(),
+    this.dateFinReelle = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MandatsResponsablesCompanion.insert({
+    required String id,
+    required String ministereId,
+    required String fideleId,
+    required DateTime dateDebut,
+    this.dateFinPrevue = const Value.absent(),
+    this.dateFinReelle = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       ministereId = Value(ministereId),
+       fideleId = Value(fideleId),
+       dateDebut = Value(dateDebut);
+  static Insertable<MandatResponsableRow> custom({
+    Expression<String>? id,
+    Expression<String>? ministereId,
+    Expression<String>? fideleId,
+    Expression<DateTime>? dateDebut,
+    Expression<DateTime>? dateFinPrevue,
+    Expression<DateTime>? dateFinReelle,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (ministereId != null) 'ministere_id': ministereId,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (dateDebut != null) 'date_debut': dateDebut,
+      if (dateFinPrevue != null) 'date_fin_prevue': dateFinPrevue,
+      if (dateFinReelle != null) 'date_fin_reelle': dateFinReelle,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MandatsResponsablesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? ministereId,
+    Value<String>? fideleId,
+    Value<DateTime>? dateDebut,
+    Value<DateTime?>? dateFinPrevue,
+    Value<DateTime?>? dateFinReelle,
+    Value<int>? rowid,
+  }) {
+    return MandatsResponsablesCompanion(
+      id: id ?? this.id,
+      ministereId: ministereId ?? this.ministereId,
+      fideleId: fideleId ?? this.fideleId,
+      dateDebut: dateDebut ?? this.dateDebut,
+      dateFinPrevue: dateFinPrevue ?? this.dateFinPrevue,
+      dateFinReelle: dateFinReelle ?? this.dateFinReelle,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (ministereId.present) {
+      map['ministere_id'] = Variable<String>(ministereId.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (dateDebut.present) {
+      map['date_debut'] = Variable<DateTime>(dateDebut.value);
+    }
+    if (dateFinPrevue.present) {
+      map['date_fin_prevue'] = Variable<DateTime>(dateFinPrevue.value);
+    }
+    if (dateFinReelle.present) {
+      map['date_fin_reelle'] = Variable<DateTime>(dateFinReelle.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MandatsResponsablesCompanion(')
+          ..write('id: $id, ')
+          ..write('ministereId: $ministereId, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('dateFinPrevue: $dateFinPrevue, ')
+          ..write('dateFinReelle: $dateFinReelle, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ActivitesMinisteresTable extends ActivitesMinisteres
+    with TableInfo<$ActivitesMinisteresTable, ActiviteMinistereRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ActivitesMinisteresTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _ministereIdMeta = const VerificationMeta(
+    'ministereId',
+  );
+  @override
+  late final GeneratedColumn<String> ministereId = GeneratedColumn<String>(
+    'ministere_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES ministeres (id)',
+    ),
+  );
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+    'type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _auteurFideleIdMeta = const VerificationMeta(
+    'auteurFideleId',
+  );
+  @override
+  late final GeneratedColumn<String> auteurFideleId = GeneratedColumn<String>(
+    'auteur_fidele_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    ministereId,
+    type,
+    description,
+    date,
+    auteurFideleId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'activites_ministeres';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ActiviteMinistereRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('ministere_id')) {
+      context.handle(
+        _ministereIdMeta,
+        ministereId.isAcceptableOrUnknown(
+          data['ministere_id']!,
+          _ministereIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_ministereIdMeta);
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+        _typeMeta,
+        type.isAcceptableOrUnknown(data['type']!, _typeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('auteur_fidele_id')) {
+      context.handle(
+        _auteurFideleIdMeta,
+        auteurFideleId.isAcceptableOrUnknown(
+          data['auteur_fidele_id']!,
+          _auteurFideleIdMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ActiviteMinistereRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ActiviteMinistereRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      ministereId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ministere_id'],
+      )!,
+      type: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date'],
+      )!,
+      auteurFideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}auteur_fidele_id'],
+      ),
+    );
+  }
+
+  @override
+  $ActivitesMinisteresTable createAlias(String alias) {
+    return $ActivitesMinisteresTable(attachedDatabase, alias);
+  }
+}
+
+class ActiviteMinistereRow extends DataClass
+    implements Insertable<ActiviteMinistereRow> {
+  final String id;
+  final String ministereId;
+  final String type;
+  final String description;
+  final DateTime date;
+  final String? auteurFideleId;
+  const ActiviteMinistereRow({
+    required this.id,
+    required this.ministereId,
+    required this.type,
+    required this.description,
+    required this.date,
+    this.auteurFideleId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['ministere_id'] = Variable<String>(ministereId);
+    map['type'] = Variable<String>(type);
+    map['description'] = Variable<String>(description);
+    map['date'] = Variable<DateTime>(date);
+    if (!nullToAbsent || auteurFideleId != null) {
+      map['auteur_fidele_id'] = Variable<String>(auteurFideleId);
+    }
+    return map;
+  }
+
+  ActivitesMinisteresCompanion toCompanion(bool nullToAbsent) {
+    return ActivitesMinisteresCompanion(
+      id: Value(id),
+      ministereId: Value(ministereId),
+      type: Value(type),
+      description: Value(description),
+      date: Value(date),
+      auteurFideleId: auteurFideleId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(auteurFideleId),
+    );
+  }
+
+  factory ActiviteMinistereRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ActiviteMinistereRow(
+      id: serializer.fromJson<String>(json['id']),
+      ministereId: serializer.fromJson<String>(json['ministereId']),
+      type: serializer.fromJson<String>(json['type']),
+      description: serializer.fromJson<String>(json['description']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      auteurFideleId: serializer.fromJson<String?>(json['auteurFideleId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'ministereId': serializer.toJson<String>(ministereId),
+      'type': serializer.toJson<String>(type),
+      'description': serializer.toJson<String>(description),
+      'date': serializer.toJson<DateTime>(date),
+      'auteurFideleId': serializer.toJson<String?>(auteurFideleId),
+    };
+  }
+
+  ActiviteMinistereRow copyWith({
+    String? id,
+    String? ministereId,
+    String? type,
+    String? description,
+    DateTime? date,
+    Value<String?> auteurFideleId = const Value.absent(),
+  }) => ActiviteMinistereRow(
+    id: id ?? this.id,
+    ministereId: ministereId ?? this.ministereId,
+    type: type ?? this.type,
+    description: description ?? this.description,
+    date: date ?? this.date,
+    auteurFideleId: auteurFideleId.present
+        ? auteurFideleId.value
+        : this.auteurFideleId,
+  );
+  ActiviteMinistereRow copyWithCompanion(ActivitesMinisteresCompanion data) {
+    return ActiviteMinistereRow(
+      id: data.id.present ? data.id.value : this.id,
+      ministereId: data.ministereId.present
+          ? data.ministereId.value
+          : this.ministereId,
+      type: data.type.present ? data.type.value : this.type,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      date: data.date.present ? data.date.value : this.date,
+      auteurFideleId: data.auteurFideleId.present
+          ? data.auteurFideleId.value
+          : this.auteurFideleId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ActiviteMinistereRow(')
+          ..write('id: $id, ')
+          ..write('ministereId: $ministereId, ')
+          ..write('type: $type, ')
+          ..write('description: $description, ')
+          ..write('date: $date, ')
+          ..write('auteurFideleId: $auteurFideleId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, ministereId, type, description, date, auteurFideleId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ActiviteMinistereRow &&
+          other.id == this.id &&
+          other.ministereId == this.ministereId &&
+          other.type == this.type &&
+          other.description == this.description &&
+          other.date == this.date &&
+          other.auteurFideleId == this.auteurFideleId);
+}
+
+class ActivitesMinisteresCompanion
+    extends UpdateCompanion<ActiviteMinistereRow> {
+  final Value<String> id;
+  final Value<String> ministereId;
+  final Value<String> type;
+  final Value<String> description;
+  final Value<DateTime> date;
+  final Value<String?> auteurFideleId;
+  final Value<int> rowid;
+  const ActivitesMinisteresCompanion({
+    this.id = const Value.absent(),
+    this.ministereId = const Value.absent(),
+    this.type = const Value.absent(),
+    this.description = const Value.absent(),
+    this.date = const Value.absent(),
+    this.auteurFideleId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ActivitesMinisteresCompanion.insert({
+    required String id,
+    required String ministereId,
+    required String type,
+    required String description,
+    required DateTime date,
+    this.auteurFideleId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       ministereId = Value(ministereId),
+       type = Value(type),
+       description = Value(description),
+       date = Value(date);
+  static Insertable<ActiviteMinistereRow> custom({
+    Expression<String>? id,
+    Expression<String>? ministereId,
+    Expression<String>? type,
+    Expression<String>? description,
+    Expression<DateTime>? date,
+    Expression<String>? auteurFideleId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (ministereId != null) 'ministere_id': ministereId,
+      if (type != null) 'type': type,
+      if (description != null) 'description': description,
+      if (date != null) 'date': date,
+      if (auteurFideleId != null) 'auteur_fidele_id': auteurFideleId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ActivitesMinisteresCompanion copyWith({
+    Value<String>? id,
+    Value<String>? ministereId,
+    Value<String>? type,
+    Value<String>? description,
+    Value<DateTime>? date,
+    Value<String?>? auteurFideleId,
+    Value<int>? rowid,
+  }) {
+    return ActivitesMinisteresCompanion(
+      id: id ?? this.id,
+      ministereId: ministereId ?? this.ministereId,
+      type: type ?? this.type,
+      description: description ?? this.description,
+      date: date ?? this.date,
+      auteurFideleId: auteurFideleId ?? this.auteurFideleId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (ministereId.present) {
+      map['ministere_id'] = Variable<String>(ministereId.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (auteurFideleId.present) {
+      map['auteur_fidele_id'] = Variable<String>(auteurFideleId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ActivitesMinisteresCompanion(')
+          ..write('id: $id, ')
+          ..write('ministereId: $ministereId, ')
+          ..write('type: $type, ')
+          ..write('description: $description, ')
+          ..write('date: $date, ')
+          ..write('auteurFideleId: $auteurFideleId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxRow> {
   @override
@@ -4923,6 +7044,16 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $TuteursTable tuteurs = $TuteursTable(this);
   late final $ZonesGeographiquesTable zonesGeographiques =
       $ZonesGeographiquesTable(this);
+  late final $TypesMinisteresTable typesMinisteres = $TypesMinisteresTable(
+    this,
+  );
+  late final $MinisteresTable ministeres = $MinisteresTable(this);
+  late final $AffectationsMinisteresTable affectationsMinisteres =
+      $AffectationsMinisteresTable(this);
+  late final $MandatsResponsablesTable mandatsResponsables =
+      $MandatsResponsablesTable(this);
+  late final $ActivitesMinisteresTable activitesMinisteres =
+      $ActivitesMinisteresTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -4937,6 +7068,11 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     historiqueFideles,
     tuteurs,
     zonesGeographiques,
+    typesMinisteres,
+    ministeres,
+    affectationsMinisteres,
+    mandatsResponsables,
+    activitesMinisteres,
     syncOutbox,
   ];
 }
@@ -5027,6 +7163,24 @@ final class $$OrganisationNodesTableReferences
     final cache = $_typedResult.readTableOrNull(
       _nodeResponsablesRefsTable($_db),
     );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$MinisteresTable, List<MinistereRow>>
+  _ministeresRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.ministeres,
+    aliasName: 'organisation_nodes__id__ministeres__noeud_id',
+  );
+
+  $$MinisteresTableProcessedTableManager get ministeresRefs {
+    final manager = $$MinisteresTableTableManager(
+      $_db,
+      $_db.ministeres,
+    ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_ministeresRefsTable($_db));
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -5158,6 +7312,31 @@ class $$OrganisationNodesTableFilterComposer
           }) => $$NodeResponsablesTableFilterComposer(
             $db: $db,
             $table: $db.nodeResponsables,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> ministeresRefs(
+    Expression<bool> Function($$MinisteresTableFilterComposer f) f,
+  ) {
+    final $$MinisteresTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.ministeres,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MinisteresTableFilterComposer(
+            $db: $db,
+            $table: $db.ministeres,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -5364,6 +7543,31 @@ class $$OrganisationNodesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> ministeresRefs<T extends Object>(
+    Expression<T> Function($$MinisteresTableAnnotationComposer a) f,
+  ) {
+    final $$MinisteresTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.ministeres,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MinisteresTableAnnotationComposer(
+            $db: $db,
+            $table: $db.ministeres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$OrganisationNodesTableTableManager
@@ -5379,7 +7583,11 @@ class $$OrganisationNodesTableTableManager
           $$OrganisationNodesTableUpdateCompanionBuilder,
           (OrganisationNodeRow, $$OrganisationNodesTableReferences),
           OrganisationNodeRow,
-          PrefetchHooks Function({bool fidelesRefs, bool nodeResponsablesRefs})
+          PrefetchHooks Function({
+            bool fidelesRefs,
+            bool nodeResponsablesRefs,
+            bool ministeresRefs,
+          })
         > {
   $$OrganisationNodesTableTableManager(
     _$AppDatabase db,
@@ -5480,12 +7688,17 @@ class $$OrganisationNodesTableTableManager
               )
               .toList(),
           prefetchHooksCallback:
-              ({fidelesRefs = false, nodeResponsablesRefs = false}) {
+              ({
+                fidelesRefs = false,
+                nodeResponsablesRefs = false,
+                ministeresRefs = false,
+              }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
                     if (fidelesRefs) db.fideles,
                     if (nodeResponsablesRefs) db.nodeResponsables,
+                    if (ministeresRefs) db.ministeres,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -5532,6 +7745,27 @@ class $$OrganisationNodesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (ministeresRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          MinistereRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._ministeresRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).ministeresRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -5552,7 +7786,11 @@ typedef $$OrganisationNodesTableProcessedTableManager =
       $$OrganisationNodesTableUpdateCompanionBuilder,
       (OrganisationNodeRow, $$OrganisationNodesTableReferences),
       OrganisationNodeRow,
-      PrefetchHooks Function({bool fidelesRefs, bool nodeResponsablesRefs})
+      PrefetchHooks Function({
+        bool fidelesRefs,
+        bool nodeResponsablesRefs,
+        bool ministeresRefs,
+      })
     >;
 typedef $$HistoriqueRattachementsTableCreateCompanionBuilder =
     HistoriqueRattachementsCompanion Function({
@@ -5987,6 +8225,78 @@ final class $$FidelesTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<
+    $AffectationsMinisteresTable,
+    List<AffectationMinistereRow>
+  >
+  _affectationsMinisteresRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.affectationsMinisteres,
+        aliasName: 'fideles__id__affectations_ministeres__fidele_id',
+      );
+
+  $$AffectationsMinisteresTableProcessedTableManager
+  get affectationsMinisteresRefs {
+    final manager = $$AffectationsMinisteresTableTableManager(
+      $_db,
+      $_db.affectationsMinisteres,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _affectationsMinisteresRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $MandatsResponsablesTable,
+    List<MandatResponsableRow>
+  >
+  _mandatsResponsablesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.mandatsResponsables,
+        aliasName: 'fideles__id__mandats_responsables__fidele_id',
+      );
+
+  $$MandatsResponsablesTableProcessedTableManager get mandatsResponsablesRefs {
+    final manager = $$MandatsResponsablesTableTableManager(
+      $_db,
+      $_db.mandatsResponsables,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _mandatsResponsablesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $ActivitesMinisteresTable,
+    List<ActiviteMinistereRow>
+  >
+  _activitesCommeAuteurTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.activitesMinisteres,
+    aliasName: 'fideles__id__activites_ministeres__auteur_fidele_id',
+  );
+
+  $$ActivitesMinisteresTableProcessedTableManager get activitesCommeAuteur {
+    final manager = $$ActivitesMinisteresTableTableManager(
+      $_db,
+      $_db.activitesMinisteres,
+    ).filter((f) => f.auteurFideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _activitesCommeAuteurTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$FidelesTableFilterComposer
@@ -6247,6 +8557,82 @@ class $$FidelesTableFilterComposer
           }) => $$TuteursTableFilterComposer(
             $db: $db,
             $table: $db.tuteurs,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> affectationsMinisteresRefs(
+    Expression<bool> Function($$AffectationsMinisteresTableFilterComposer f) f,
+  ) {
+    final $$AffectationsMinisteresTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.affectationsMinisteres,
+          getReferencedColumn: (t) => t.fideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$AffectationsMinisteresTableFilterComposer(
+                $db: $db,
+                $table: $db.affectationsMinisteres,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> mandatsResponsablesRefs(
+    Expression<bool> Function($$MandatsResponsablesTableFilterComposer f) f,
+  ) {
+    final $$MandatsResponsablesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.mandatsResponsables,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MandatsResponsablesTableFilterComposer(
+            $db: $db,
+            $table: $db.mandatsResponsables,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> activitesCommeAuteur(
+    Expression<bool> Function($$ActivitesMinisteresTableFilterComposer f) f,
+  ) {
+    final $$ActivitesMinisteresTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.activitesMinisteres,
+      getReferencedColumn: (t) => t.auteurFideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ActivitesMinisteresTableFilterComposer(
+            $db: $db,
+            $table: $db.activitesMinisteres,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -6621,6 +9007,84 @@ class $$FidelesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> affectationsMinisteresRefs<T extends Object>(
+    Expression<T> Function($$AffectationsMinisteresTableAnnotationComposer a) f,
+  ) {
+    final $$AffectationsMinisteresTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.affectationsMinisteres,
+          getReferencedColumn: (t) => t.fideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$AffectationsMinisteresTableAnnotationComposer(
+                $db: $db,
+                $table: $db.affectationsMinisteres,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> mandatsResponsablesRefs<T extends Object>(
+    Expression<T> Function($$MandatsResponsablesTableAnnotationComposer a) f,
+  ) {
+    final $$MandatsResponsablesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.mandatsResponsables,
+          getReferencedColumn: (t) => t.fideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MandatsResponsablesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.mandatsResponsables,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> activitesCommeAuteur<T extends Object>(
+    Expression<T> Function($$ActivitesMinisteresTableAnnotationComposer a) f,
+  ) {
+    final $$ActivitesMinisteresTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.activitesMinisteres,
+          getReferencedColumn: (t) => t.auteurFideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ActivitesMinisteresTableAnnotationComposer(
+                $db: $db,
+                $table: $db.activitesMinisteres,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$FidelesTableTableManager
@@ -6644,6 +9108,9 @@ class $$FidelesTableTableManager
             bool historiqueFidelesRefs,
             bool tuteursCommeMineur,
             bool tuteursCommeTuteur,
+            bool affectationsMinisteresRefs,
+            bool mandatsResponsablesRefs,
+            bool activitesCommeAuteur,
           })
         > {
   $$FidelesTableTableManager(_$AppDatabase db, $FidelesTable table)
@@ -6758,6 +9225,9 @@ class $$FidelesTableTableManager
                 historiqueFidelesRefs = false,
                 tuteursCommeMineur = false,
                 tuteursCommeTuteur = false,
+                affectationsMinisteresRefs = false,
+                mandatsResponsablesRefs = false,
+                activitesCommeAuteur = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -6768,6 +9238,9 @@ class $$FidelesTableTableManager
                     if (historiqueFidelesRefs) db.historiqueFideles,
                     if (tuteursCommeMineur) db.tuteurs,
                     if (tuteursCommeTuteur) db.tuteurs,
+                    if (affectationsMinisteresRefs) db.affectationsMinisteres,
+                    if (mandatsResponsablesRefs) db.mandatsResponsables,
+                    if (activitesCommeAuteur) db.activitesMinisteres,
                   ],
                   addJoins:
                       <
@@ -6929,6 +9402,69 @@ class $$FidelesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (affectationsMinisteresRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          AffectationMinistereRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._affectationsMinisteresRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).affectationsMinisteresRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (mandatsResponsablesRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          MandatResponsableRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._mandatsResponsablesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).mandatsResponsablesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (activitesCommeAuteur)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          ActiviteMinistereRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._activitesCommeAuteurTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).activitesCommeAuteur,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.auteurFideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -6957,6 +9493,9 @@ typedef $$FidelesTableProcessedTableManager =
         bool historiqueFidelesRefs,
         bool tuteursCommeMineur,
         bool tuteursCommeTuteur,
+        bool affectationsMinisteresRefs,
+        bool mandatsResponsablesRefs,
+        bool activitesCommeAuteur,
       })
     >;
 typedef $$NodeResponsablesTableCreateCompanionBuilder =
@@ -8937,6 +11476,2423 @@ typedef $$ZonesGeographiquesTableProcessedTableManager =
       ZoneGeographiqueRow,
       PrefetchHooks Function({bool parentId})
     >;
+typedef $$TypesMinisteresTableCreateCompanionBuilder =
+    TypesMinisteresCompanion Function({
+      required String id,
+      required String code,
+      required String libelle,
+      Value<bool> standard,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+typedef $$TypesMinisteresTableUpdateCompanionBuilder =
+    TypesMinisteresCompanion Function({
+      Value<String> id,
+      Value<String> code,
+      Value<String> libelle,
+      Value<bool> standard,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+
+final class $$TypesMinisteresTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $TypesMinisteresTable, TypeMinistereRow> {
+  $$TypesMinisteresTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<$MinisteresTable, List<MinistereRow>>
+  _ministeresRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.ministeres,
+    aliasName: 'types_ministeres__id__ministeres__type_ministere_id',
+  );
+
+  $$MinisteresTableProcessedTableManager get ministeresRefs {
+    final manager = $$MinisteresTableTableManager($_db, $_db.ministeres).filter(
+      (f) => f.typeMinistereId.id.sqlEquals($_itemColumn<String>('id')!),
+    );
+
+    final cache = $_typedResult.readTableOrNull(_ministeresRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$TypesMinisteresTableFilterComposer
+    extends Composer<_$AppDatabase, $TypesMinisteresTable> {
+  $$TypesMinisteresTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get standard => $composableBuilder(
+    column: $table.standard,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> ministeresRefs(
+    Expression<bool> Function($$MinisteresTableFilterComposer f) f,
+  ) {
+    final $$MinisteresTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.ministeres,
+      getReferencedColumn: (t) => t.typeMinistereId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MinisteresTableFilterComposer(
+            $db: $db,
+            $table: $db.ministeres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$TypesMinisteresTableOrderingComposer
+    extends Composer<_$AppDatabase, $TypesMinisteresTable> {
+  $$TypesMinisteresTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get standard => $composableBuilder(
+    column: $table.standard,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TypesMinisteresTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TypesMinisteresTable> {
+  $$TypesMinisteresTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<String> get libelle =>
+      $composableBuilder(column: $table.libelle, builder: (column) => column);
+
+  GeneratedColumn<bool> get standard =>
+      $composableBuilder(column: $table.standard, builder: (column) => column);
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  Expression<T> ministeresRefs<T extends Object>(
+    Expression<T> Function($$MinisteresTableAnnotationComposer a) f,
+  ) {
+    final $$MinisteresTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.ministeres,
+      getReferencedColumn: (t) => t.typeMinistereId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MinisteresTableAnnotationComposer(
+            $db: $db,
+            $table: $db.ministeres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$TypesMinisteresTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $TypesMinisteresTable,
+          TypeMinistereRow,
+          $$TypesMinisteresTableFilterComposer,
+          $$TypesMinisteresTableOrderingComposer,
+          $$TypesMinisteresTableAnnotationComposer,
+          $$TypesMinisteresTableCreateCompanionBuilder,
+          $$TypesMinisteresTableUpdateCompanionBuilder,
+          (TypeMinistereRow, $$TypesMinisteresTableReferences),
+          TypeMinistereRow,
+          PrefetchHooks Function({bool ministeresRefs})
+        > {
+  $$TypesMinisteresTableTableManager(
+    _$AppDatabase db,
+    $TypesMinisteresTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TypesMinisteresTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TypesMinisteresTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TypesMinisteresTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> code = const Value.absent(),
+                Value<String> libelle = const Value.absent(),
+                Value<bool> standard = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TypesMinisteresCompanion(
+                id: id,
+                code: code,
+                libelle: libelle,
+                standard: standard,
+                statut: statut,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String code,
+                required String libelle,
+                Value<bool> standard = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TypesMinisteresCompanion.insert(
+                id: id,
+                code: code,
+                libelle: libelle,
+                standard: standard,
+                statut: statut,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$TypesMinisteresTable, TypeMinistereRow>(table),
+                  $$TypesMinisteresTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({ministeresRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (ministeresRefs) db.ministeres],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (ministeresRefs)
+                    await $_getPrefetchedData<
+                      TypeMinistereRow,
+                      $TypesMinisteresTable,
+                      MinistereRow
+                    >(
+                      currentTable: table,
+                      referencedTable: $$TypesMinisteresTableReferences
+                          ._ministeresRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$TypesMinisteresTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).ministeresRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where(
+                            (e) => e.typeMinistereId == item.id,
+                          ),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$TypesMinisteresTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $TypesMinisteresTable,
+      TypeMinistereRow,
+      $$TypesMinisteresTableFilterComposer,
+      $$TypesMinisteresTableOrderingComposer,
+      $$TypesMinisteresTableAnnotationComposer,
+      $$TypesMinisteresTableCreateCompanionBuilder,
+      $$TypesMinisteresTableUpdateCompanionBuilder,
+      (TypeMinistereRow, $$TypesMinisteresTableReferences),
+      TypeMinistereRow,
+      PrefetchHooks Function({bool ministeresRefs})
+    >;
+typedef $$MinisteresTableCreateCompanionBuilder =
+    MinisteresCompanion Function({
+      required String id,
+      required String noeudId,
+      required String typeMinistereId,
+      required String nom,
+      required DateTime dateCreation,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+typedef $$MinisteresTableUpdateCompanionBuilder =
+    MinisteresCompanion Function({
+      Value<String> id,
+      Value<String> noeudId,
+      Value<String> typeMinistereId,
+      Value<String> nom,
+      Value<DateTime> dateCreation,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+
+final class $$MinisteresTableReferences
+    extends BaseReferences<_$AppDatabase, $MinisteresTable, MinistereRow> {
+  $$MinisteresTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $OrganisationNodesTable _noeudIdTable(_$AppDatabase db) => db
+      .organisationNodes
+      .createAlias('ministeres__noeud_id__organisation_nodes__id');
+
+  $$OrganisationNodesTableProcessedTableManager get noeudId {
+    final $_column = $_itemColumn<String>('noeud_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $TypesMinisteresTable _typeMinistereIdTable(_$AppDatabase db) => db
+      .typesMinisteres
+      .createAlias('ministeres__type_ministere_id__types_ministeres__id');
+
+  $$TypesMinisteresTableProcessedTableManager get typeMinistereId {
+    final $_column = $_itemColumn<String>('type_ministere_id')!;
+
+    final manager = $$TypesMinisteresTableTableManager(
+      $_db,
+      $_db.typesMinisteres,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_typeMinistereIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $AffectationsMinisteresTable,
+    List<AffectationMinistereRow>
+  >
+  _affectationsMinisteresRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.affectationsMinisteres,
+        aliasName: 'ministeres__id__affectations_ministeres__ministere_id',
+      );
+
+  $$AffectationsMinisteresTableProcessedTableManager
+  get affectationsMinisteresRefs {
+    final manager = $$AffectationsMinisteresTableTableManager(
+      $_db,
+      $_db.affectationsMinisteres,
+    ).filter((f) => f.ministereId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _affectationsMinisteresRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $MandatsResponsablesTable,
+    List<MandatResponsableRow>
+  >
+  _mandatsResponsablesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.mandatsResponsables,
+        aliasName: 'ministeres__id__mandats_responsables__ministere_id',
+      );
+
+  $$MandatsResponsablesTableProcessedTableManager get mandatsResponsablesRefs {
+    final manager = $$MandatsResponsablesTableTableManager(
+      $_db,
+      $_db.mandatsResponsables,
+    ).filter((f) => f.ministereId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _mandatsResponsablesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $ActivitesMinisteresTable,
+    List<ActiviteMinistereRow>
+  >
+  _activitesMinisteresRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.activitesMinisteres,
+        aliasName: 'ministeres__id__activites_ministeres__ministere_id',
+      );
+
+  $$ActivitesMinisteresTableProcessedTableManager get activitesMinisteresRefs {
+    final manager = $$ActivitesMinisteresTableTableManager(
+      $_db,
+      $_db.activitesMinisteres,
+    ).filter((f) => f.ministereId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _activitesMinisteresRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$MinisteresTableFilterComposer
+    extends Composer<_$AppDatabase, $MinisteresTable> {
+  $$MinisteresTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get nom => $composableBuilder(
+    column: $table.nom,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateCreation => $composableBuilder(
+    column: $table.dateCreation,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$OrganisationNodesTableFilterComposer get noeudId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TypesMinisteresTableFilterComposer get typeMinistereId {
+    final $$TypesMinisteresTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.typeMinistereId,
+      referencedTable: $db.typesMinisteres,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TypesMinisteresTableFilterComposer(
+            $db: $db,
+            $table: $db.typesMinisteres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> affectationsMinisteresRefs(
+    Expression<bool> Function($$AffectationsMinisteresTableFilterComposer f) f,
+  ) {
+    final $$AffectationsMinisteresTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.affectationsMinisteres,
+          getReferencedColumn: (t) => t.ministereId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$AffectationsMinisteresTableFilterComposer(
+                $db: $db,
+                $table: $db.affectationsMinisteres,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> mandatsResponsablesRefs(
+    Expression<bool> Function($$MandatsResponsablesTableFilterComposer f) f,
+  ) {
+    final $$MandatsResponsablesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.mandatsResponsables,
+      getReferencedColumn: (t) => t.ministereId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MandatsResponsablesTableFilterComposer(
+            $db: $db,
+            $table: $db.mandatsResponsables,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> activitesMinisteresRefs(
+    Expression<bool> Function($$ActivitesMinisteresTableFilterComposer f) f,
+  ) {
+    final $$ActivitesMinisteresTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.activitesMinisteres,
+      getReferencedColumn: (t) => t.ministereId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ActivitesMinisteresTableFilterComposer(
+            $db: $db,
+            $table: $db.activitesMinisteres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$MinisteresTableOrderingComposer
+    extends Composer<_$AppDatabase, $MinisteresTable> {
+  $$MinisteresTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get nom => $composableBuilder(
+    column: $table.nom,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateCreation => $composableBuilder(
+    column: $table.dateCreation,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$OrganisationNodesTableOrderingComposer get noeudId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TypesMinisteresTableOrderingComposer get typeMinistereId {
+    final $$TypesMinisteresTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.typeMinistereId,
+      referencedTable: $db.typesMinisteres,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TypesMinisteresTableOrderingComposer(
+            $db: $db,
+            $table: $db.typesMinisteres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MinisteresTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MinisteresTable> {
+  $$MinisteresTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get nom =>
+      $composableBuilder(column: $table.nom, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateCreation => $composableBuilder(
+    column: $table.dateCreation,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  $$OrganisationNodesTableAnnotationComposer get noeudId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$TypesMinisteresTableAnnotationComposer get typeMinistereId {
+    final $$TypesMinisteresTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.typeMinistereId,
+      referencedTable: $db.typesMinisteres,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TypesMinisteresTableAnnotationComposer(
+            $db: $db,
+            $table: $db.typesMinisteres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> affectationsMinisteresRefs<T extends Object>(
+    Expression<T> Function($$AffectationsMinisteresTableAnnotationComposer a) f,
+  ) {
+    final $$AffectationsMinisteresTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.affectationsMinisteres,
+          getReferencedColumn: (t) => t.ministereId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$AffectationsMinisteresTableAnnotationComposer(
+                $db: $db,
+                $table: $db.affectationsMinisteres,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> mandatsResponsablesRefs<T extends Object>(
+    Expression<T> Function($$MandatsResponsablesTableAnnotationComposer a) f,
+  ) {
+    final $$MandatsResponsablesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.mandatsResponsables,
+          getReferencedColumn: (t) => t.ministereId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MandatsResponsablesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.mandatsResponsables,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> activitesMinisteresRefs<T extends Object>(
+    Expression<T> Function($$ActivitesMinisteresTableAnnotationComposer a) f,
+  ) {
+    final $$ActivitesMinisteresTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.activitesMinisteres,
+          getReferencedColumn: (t) => t.ministereId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ActivitesMinisteresTableAnnotationComposer(
+                $db: $db,
+                $table: $db.activitesMinisteres,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$MinisteresTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MinisteresTable,
+          MinistereRow,
+          $$MinisteresTableFilterComposer,
+          $$MinisteresTableOrderingComposer,
+          $$MinisteresTableAnnotationComposer,
+          $$MinisteresTableCreateCompanionBuilder,
+          $$MinisteresTableUpdateCompanionBuilder,
+          (MinistereRow, $$MinisteresTableReferences),
+          MinistereRow,
+          PrefetchHooks Function({
+            bool noeudId,
+            bool typeMinistereId,
+            bool affectationsMinisteresRefs,
+            bool mandatsResponsablesRefs,
+            bool activitesMinisteresRefs,
+          })
+        > {
+  $$MinisteresTableTableManager(_$AppDatabase db, $MinisteresTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MinisteresTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MinisteresTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MinisteresTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> noeudId = const Value.absent(),
+                Value<String> typeMinistereId = const Value.absent(),
+                Value<String> nom = const Value.absent(),
+                Value<DateTime> dateCreation = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MinisteresCompanion(
+                id: id,
+                noeudId: noeudId,
+                typeMinistereId: typeMinistereId,
+                nom: nom,
+                dateCreation: dateCreation,
+                statut: statut,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String noeudId,
+                required String typeMinistereId,
+                required String nom,
+                required DateTime dateCreation,
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MinisteresCompanion.insert(
+                id: id,
+                noeudId: noeudId,
+                typeMinistereId: typeMinistereId,
+                nom: nom,
+                dateCreation: dateCreation,
+                statut: statut,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$MinisteresTable, MinistereRow>(table),
+                  $$MinisteresTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                noeudId = false,
+                typeMinistereId = false,
+                affectationsMinisteresRefs = false,
+                mandatsResponsablesRefs = false,
+                activitesMinisteresRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (affectationsMinisteresRefs) db.affectationsMinisteres,
+                    if (mandatsResponsablesRefs) db.mandatsResponsables,
+                    if (activitesMinisteresRefs) db.activitesMinisteres,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (noeudId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.noeudId,
+                                    referencedTable: $$MinisteresTableReferences
+                                        ._noeudIdTable(db),
+                                    referencedColumn:
+                                        $$MinisteresTableReferences
+                                            ._noeudIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (typeMinistereId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.typeMinistereId,
+                                    referencedTable: $$MinisteresTableReferences
+                                        ._typeMinistereIdTable(db),
+                                    referencedColumn:
+                                        $$MinisteresTableReferences
+                                            ._typeMinistereIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (affectationsMinisteresRefs)
+                        await $_getPrefetchedData<
+                          MinistereRow,
+                          $MinisteresTable,
+                          AffectationMinistereRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$MinisteresTableReferences
+                              ._affectationsMinisteresRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$MinisteresTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).affectationsMinisteresRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.ministereId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (mandatsResponsablesRefs)
+                        await $_getPrefetchedData<
+                          MinistereRow,
+                          $MinisteresTable,
+                          MandatResponsableRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$MinisteresTableReferences
+                              ._mandatsResponsablesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$MinisteresTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).mandatsResponsablesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.ministereId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (activitesMinisteresRefs)
+                        await $_getPrefetchedData<
+                          MinistereRow,
+                          $MinisteresTable,
+                          ActiviteMinistereRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$MinisteresTableReferences
+                              ._activitesMinisteresRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$MinisteresTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).activitesMinisteresRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.ministereId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$MinisteresTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MinisteresTable,
+      MinistereRow,
+      $$MinisteresTableFilterComposer,
+      $$MinisteresTableOrderingComposer,
+      $$MinisteresTableAnnotationComposer,
+      $$MinisteresTableCreateCompanionBuilder,
+      $$MinisteresTableUpdateCompanionBuilder,
+      (MinistereRow, $$MinisteresTableReferences),
+      MinistereRow,
+      PrefetchHooks Function({
+        bool noeudId,
+        bool typeMinistereId,
+        bool affectationsMinisteresRefs,
+        bool mandatsResponsablesRefs,
+        bool activitesMinisteresRefs,
+      })
+    >;
+typedef $$AffectationsMinisteresTableCreateCompanionBuilder =
+    AffectationsMinisteresCompanion Function({
+      required String id,
+      required String ministereId,
+      required String fideleId,
+      required String role,
+      required DateTime dateDebut,
+      Value<DateTime?> dateFin,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+typedef $$AffectationsMinisteresTableUpdateCompanionBuilder =
+    AffectationsMinisteresCompanion Function({
+      Value<String> id,
+      Value<String> ministereId,
+      Value<String> fideleId,
+      Value<String> role,
+      Value<DateTime> dateDebut,
+      Value<DateTime?> dateFin,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+
+final class $$AffectationsMinisteresTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $AffectationsMinisteresTable,
+          AffectationMinistereRow
+        > {
+  $$AffectationsMinisteresTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $MinisteresTable _ministereIdTable(_$AppDatabase db) => db.ministeres
+      .createAlias('affectations_ministeres__ministere_id__ministeres__id');
+
+  $$MinisteresTableProcessedTableManager get ministereId {
+    final $_column = $_itemColumn<String>('ministere_id')!;
+
+    final manager = $$MinisteresTableTableManager(
+      $_db,
+      $_db.ministeres,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_ministereIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('affectations_ministeres__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$AffectationsMinisteresTableFilterComposer
+    extends Composer<_$AppDatabase, $AffectationsMinisteresTable> {
+  $$AffectationsMinisteresTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get role => $composableBuilder(
+    column: $table.role,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateFin => $composableBuilder(
+    column: $table.dateFin,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$MinisteresTableFilterComposer get ministereId {
+    final $$MinisteresTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.ministereId,
+      referencedTable: $db.ministeres,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MinisteresTableFilterComposer(
+            $db: $db,
+            $table: $db.ministeres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$AffectationsMinisteresTableOrderingComposer
+    extends Composer<_$AppDatabase, $AffectationsMinisteresTable> {
+  $$AffectationsMinisteresTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get role => $composableBuilder(
+    column: $table.role,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateFin => $composableBuilder(
+    column: $table.dateFin,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$MinisteresTableOrderingComposer get ministereId {
+    final $$MinisteresTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.ministereId,
+      referencedTable: $db.ministeres,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MinisteresTableOrderingComposer(
+            $db: $db,
+            $table: $db.ministeres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$AffectationsMinisteresTableAnnotationComposer
+    extends Composer<_$AppDatabase, $AffectationsMinisteresTable> {
+  $$AffectationsMinisteresTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get role =>
+      $composableBuilder(column: $table.role, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateDebut =>
+      $composableBuilder(column: $table.dateDebut, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateFin =>
+      $composableBuilder(column: $table.dateFin, builder: (column) => column);
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  $$MinisteresTableAnnotationComposer get ministereId {
+    final $$MinisteresTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.ministereId,
+      referencedTable: $db.ministeres,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MinisteresTableAnnotationComposer(
+            $db: $db,
+            $table: $db.ministeres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$AffectationsMinisteresTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $AffectationsMinisteresTable,
+          AffectationMinistereRow,
+          $$AffectationsMinisteresTableFilterComposer,
+          $$AffectationsMinisteresTableOrderingComposer,
+          $$AffectationsMinisteresTableAnnotationComposer,
+          $$AffectationsMinisteresTableCreateCompanionBuilder,
+          $$AffectationsMinisteresTableUpdateCompanionBuilder,
+          (AffectationMinistereRow, $$AffectationsMinisteresTableReferences),
+          AffectationMinistereRow,
+          PrefetchHooks Function({bool ministereId, bool fideleId})
+        > {
+  $$AffectationsMinisteresTableTableManager(
+    _$AppDatabase db,
+    $AffectationsMinisteresTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AffectationsMinisteresTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$AffectationsMinisteresTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$AffectationsMinisteresTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> ministereId = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<String> role = const Value.absent(),
+                Value<DateTime> dateDebut = const Value.absent(),
+                Value<DateTime?> dateFin = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => AffectationsMinisteresCompanion(
+                id: id,
+                ministereId: ministereId,
+                fideleId: fideleId,
+                role: role,
+                dateDebut: dateDebut,
+                dateFin: dateFin,
+                statut: statut,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String ministereId,
+                required String fideleId,
+                required String role,
+                required DateTime dateDebut,
+                Value<DateTime?> dateFin = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => AffectationsMinisteresCompanion.insert(
+                id: id,
+                ministereId: ministereId,
+                fideleId: fideleId,
+                role: role,
+                dateDebut: dateDebut,
+                dateFin: dateFin,
+                statut: statut,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $AffectationsMinisteresTable,
+                    AffectationMinistereRow
+                  >(table),
+                  $$AffectationsMinisteresTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({ministereId = false, fideleId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (ministereId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.ministereId,
+                                referencedTable:
+                                    $$AffectationsMinisteresTableReferences
+                                        ._ministereIdTable(db),
+                                referencedColumn:
+                                    $$AffectationsMinisteresTableReferences
+                                        ._ministereIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (fideleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.fideleId,
+                                referencedTable:
+                                    $$AffectationsMinisteresTableReferences
+                                        ._fideleIdTable(db),
+                                referencedColumn:
+                                    $$AffectationsMinisteresTableReferences
+                                        ._fideleIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$AffectationsMinisteresTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $AffectationsMinisteresTable,
+      AffectationMinistereRow,
+      $$AffectationsMinisteresTableFilterComposer,
+      $$AffectationsMinisteresTableOrderingComposer,
+      $$AffectationsMinisteresTableAnnotationComposer,
+      $$AffectationsMinisteresTableCreateCompanionBuilder,
+      $$AffectationsMinisteresTableUpdateCompanionBuilder,
+      (AffectationMinistereRow, $$AffectationsMinisteresTableReferences),
+      AffectationMinistereRow,
+      PrefetchHooks Function({bool ministereId, bool fideleId})
+    >;
+typedef $$MandatsResponsablesTableCreateCompanionBuilder =
+    MandatsResponsablesCompanion Function({
+      required String id,
+      required String ministereId,
+      required String fideleId,
+      required DateTime dateDebut,
+      Value<DateTime?> dateFinPrevue,
+      Value<DateTime?> dateFinReelle,
+      Value<int> rowid,
+    });
+typedef $$MandatsResponsablesTableUpdateCompanionBuilder =
+    MandatsResponsablesCompanion Function({
+      Value<String> id,
+      Value<String> ministereId,
+      Value<String> fideleId,
+      Value<DateTime> dateDebut,
+      Value<DateTime?> dateFinPrevue,
+      Value<DateTime?> dateFinReelle,
+      Value<int> rowid,
+    });
+
+final class $$MandatsResponsablesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $MandatsResponsablesTable,
+          MandatResponsableRow
+        > {
+  $$MandatsResponsablesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $MinisteresTable _ministereIdTable(_$AppDatabase db) => db.ministeres
+      .createAlias('mandats_responsables__ministere_id__ministeres__id');
+
+  $$MinisteresTableProcessedTableManager get ministereId {
+    final $_column = $_itemColumn<String>('ministere_id')!;
+
+    final manager = $$MinisteresTableTableManager(
+      $_db,
+      $_db.ministeres,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_ministereIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('mandats_responsables__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$MandatsResponsablesTableFilterComposer
+    extends Composer<_$AppDatabase, $MandatsResponsablesTable> {
+  $$MandatsResponsablesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateFinPrevue => $composableBuilder(
+    column: $table.dateFinPrevue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateFinReelle => $composableBuilder(
+    column: $table.dateFinReelle,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$MinisteresTableFilterComposer get ministereId {
+    final $$MinisteresTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.ministereId,
+      referencedTable: $db.ministeres,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MinisteresTableFilterComposer(
+            $db: $db,
+            $table: $db.ministeres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MandatsResponsablesTableOrderingComposer
+    extends Composer<_$AppDatabase, $MandatsResponsablesTable> {
+  $$MandatsResponsablesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateFinPrevue => $composableBuilder(
+    column: $table.dateFinPrevue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateFinReelle => $composableBuilder(
+    column: $table.dateFinReelle,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$MinisteresTableOrderingComposer get ministereId {
+    final $$MinisteresTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.ministereId,
+      referencedTable: $db.ministeres,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MinisteresTableOrderingComposer(
+            $db: $db,
+            $table: $db.ministeres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MandatsResponsablesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MandatsResponsablesTable> {
+  $$MandatsResponsablesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateDebut =>
+      $composableBuilder(column: $table.dateDebut, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateFinPrevue => $composableBuilder(
+    column: $table.dateFinPrevue,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get dateFinReelle => $composableBuilder(
+    column: $table.dateFinReelle,
+    builder: (column) => column,
+  );
+
+  $$MinisteresTableAnnotationComposer get ministereId {
+    final $$MinisteresTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.ministereId,
+      referencedTable: $db.ministeres,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MinisteresTableAnnotationComposer(
+            $db: $db,
+            $table: $db.ministeres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MandatsResponsablesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MandatsResponsablesTable,
+          MandatResponsableRow,
+          $$MandatsResponsablesTableFilterComposer,
+          $$MandatsResponsablesTableOrderingComposer,
+          $$MandatsResponsablesTableAnnotationComposer,
+          $$MandatsResponsablesTableCreateCompanionBuilder,
+          $$MandatsResponsablesTableUpdateCompanionBuilder,
+          (MandatResponsableRow, $$MandatsResponsablesTableReferences),
+          MandatResponsableRow,
+          PrefetchHooks Function({bool ministereId, bool fideleId})
+        > {
+  $$MandatsResponsablesTableTableManager(
+    _$AppDatabase db,
+    $MandatsResponsablesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MandatsResponsablesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MandatsResponsablesTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$MandatsResponsablesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> ministereId = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<DateTime> dateDebut = const Value.absent(),
+                Value<DateTime?> dateFinPrevue = const Value.absent(),
+                Value<DateTime?> dateFinReelle = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MandatsResponsablesCompanion(
+                id: id,
+                ministereId: ministereId,
+                fideleId: fideleId,
+                dateDebut: dateDebut,
+                dateFinPrevue: dateFinPrevue,
+                dateFinReelle: dateFinReelle,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String ministereId,
+                required String fideleId,
+                required DateTime dateDebut,
+                Value<DateTime?> dateFinPrevue = const Value.absent(),
+                Value<DateTime?> dateFinReelle = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MandatsResponsablesCompanion.insert(
+                id: id,
+                ministereId: ministereId,
+                fideleId: fideleId,
+                dateDebut: dateDebut,
+                dateFinPrevue: dateFinPrevue,
+                dateFinReelle: dateFinReelle,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$MandatsResponsablesTable, MandatResponsableRow>(
+                    table,
+                  ),
+                  $$MandatsResponsablesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({ministereId = false, fideleId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (ministereId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.ministereId,
+                                referencedTable:
+                                    $$MandatsResponsablesTableReferences
+                                        ._ministereIdTable(db),
+                                referencedColumn:
+                                    $$MandatsResponsablesTableReferences
+                                        ._ministereIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (fideleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.fideleId,
+                                referencedTable:
+                                    $$MandatsResponsablesTableReferences
+                                        ._fideleIdTable(db),
+                                referencedColumn:
+                                    $$MandatsResponsablesTableReferences
+                                        ._fideleIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$MandatsResponsablesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MandatsResponsablesTable,
+      MandatResponsableRow,
+      $$MandatsResponsablesTableFilterComposer,
+      $$MandatsResponsablesTableOrderingComposer,
+      $$MandatsResponsablesTableAnnotationComposer,
+      $$MandatsResponsablesTableCreateCompanionBuilder,
+      $$MandatsResponsablesTableUpdateCompanionBuilder,
+      (MandatResponsableRow, $$MandatsResponsablesTableReferences),
+      MandatResponsableRow,
+      PrefetchHooks Function({bool ministereId, bool fideleId})
+    >;
+typedef $$ActivitesMinisteresTableCreateCompanionBuilder =
+    ActivitesMinisteresCompanion Function({
+      required String id,
+      required String ministereId,
+      required String type,
+      required String description,
+      required DateTime date,
+      Value<String?> auteurFideleId,
+      Value<int> rowid,
+    });
+typedef $$ActivitesMinisteresTableUpdateCompanionBuilder =
+    ActivitesMinisteresCompanion Function({
+      Value<String> id,
+      Value<String> ministereId,
+      Value<String> type,
+      Value<String> description,
+      Value<DateTime> date,
+      Value<String?> auteurFideleId,
+      Value<int> rowid,
+    });
+
+final class $$ActivitesMinisteresTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $ActivitesMinisteresTable,
+          ActiviteMinistereRow
+        > {
+  $$ActivitesMinisteresTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $MinisteresTable _ministereIdTable(_$AppDatabase db) => db.ministeres
+      .createAlias('activites_ministeres__ministere_id__ministeres__id');
+
+  $$MinisteresTableProcessedTableManager get ministereId {
+    final $_column = $_itemColumn<String>('ministere_id')!;
+
+    final manager = $$MinisteresTableTableManager(
+      $_db,
+      $_db.ministeres,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_ministereIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $FidelesTable _auteurFideleIdTable(_$AppDatabase db) => db.fideles
+      .createAlias('activites_ministeres__auteur_fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager? get auteurFideleId {
+    final $_column = $_itemColumn<String>('auteur_fidele_id');
+    if ($_column == null) return null;
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_auteurFideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ActivitesMinisteresTableFilterComposer
+    extends Composer<_$AppDatabase, $ActivitesMinisteresTable> {
+  $$ActivitesMinisteresTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$MinisteresTableFilterComposer get ministereId {
+    final $$MinisteresTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.ministereId,
+      referencedTable: $db.ministeres,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MinisteresTableFilterComposer(
+            $db: $db,
+            $table: $db.ministeres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableFilterComposer get auteurFideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.auteurFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ActivitesMinisteresTableOrderingComposer
+    extends Composer<_$AppDatabase, $ActivitesMinisteresTable> {
+  $$ActivitesMinisteresTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$MinisteresTableOrderingComposer get ministereId {
+    final $$MinisteresTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.ministereId,
+      referencedTable: $db.ministeres,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MinisteresTableOrderingComposer(
+            $db: $db,
+            $table: $db.ministeres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableOrderingComposer get auteurFideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.auteurFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ActivitesMinisteresTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ActivitesMinisteresTable> {
+  $$ActivitesMinisteresTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  $$MinisteresTableAnnotationComposer get ministereId {
+    final $$MinisteresTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.ministereId,
+      referencedTable: $db.ministeres,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MinisteresTableAnnotationComposer(
+            $db: $db,
+            $table: $db.ministeres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableAnnotationComposer get auteurFideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.auteurFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ActivitesMinisteresTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ActivitesMinisteresTable,
+          ActiviteMinistereRow,
+          $$ActivitesMinisteresTableFilterComposer,
+          $$ActivitesMinisteresTableOrderingComposer,
+          $$ActivitesMinisteresTableAnnotationComposer,
+          $$ActivitesMinisteresTableCreateCompanionBuilder,
+          $$ActivitesMinisteresTableUpdateCompanionBuilder,
+          (ActiviteMinistereRow, $$ActivitesMinisteresTableReferences),
+          ActiviteMinistereRow,
+          PrefetchHooks Function({bool ministereId, bool auteurFideleId})
+        > {
+  $$ActivitesMinisteresTableTableManager(
+    _$AppDatabase db,
+    $ActivitesMinisteresTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ActivitesMinisteresTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ActivitesMinisteresTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ActivitesMinisteresTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> ministereId = const Value.absent(),
+                Value<String> type = const Value.absent(),
+                Value<String> description = const Value.absent(),
+                Value<DateTime> date = const Value.absent(),
+                Value<String?> auteurFideleId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ActivitesMinisteresCompanion(
+                id: id,
+                ministereId: ministereId,
+                type: type,
+                description: description,
+                date: date,
+                auteurFideleId: auteurFideleId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String ministereId,
+                required String type,
+                required String description,
+                required DateTime date,
+                Value<String?> auteurFideleId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ActivitesMinisteresCompanion.insert(
+                id: id,
+                ministereId: ministereId,
+                type: type,
+                description: description,
+                date: date,
+                auteurFideleId: auteurFideleId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ActivitesMinisteresTable, ActiviteMinistereRow>(
+                    table,
+                  ),
+                  $$ActivitesMinisteresTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({ministereId = false, auteurFideleId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (ministereId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.ministereId,
+                                    referencedTable:
+                                        $$ActivitesMinisteresTableReferences
+                                            ._ministereIdTable(db),
+                                    referencedColumn:
+                                        $$ActivitesMinisteresTableReferences
+                                            ._ministereIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (auteurFideleId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.auteurFideleId,
+                                    referencedTable:
+                                        $$ActivitesMinisteresTableReferences
+                                            ._auteurFideleIdTable(db),
+                                    referencedColumn:
+                                        $$ActivitesMinisteresTableReferences
+                                            ._auteurFideleIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$ActivitesMinisteresTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ActivitesMinisteresTable,
+      ActiviteMinistereRow,
+      $$ActivitesMinisteresTableFilterComposer,
+      $$ActivitesMinisteresTableOrderingComposer,
+      $$ActivitesMinisteresTableAnnotationComposer,
+      $$ActivitesMinisteresTableCreateCompanionBuilder,
+      $$ActivitesMinisteresTableUpdateCompanionBuilder,
+      (ActiviteMinistereRow, $$ActivitesMinisteresTableReferences),
+      ActiviteMinistereRow,
+      PrefetchHooks Function({bool ministereId, bool auteurFideleId})
+    >;
 typedef $$SyncOutboxTableCreateCompanionBuilder =
     SyncOutboxCompanion Function({
       required String id,
@@ -9232,6 +14188,19 @@ class $AppDatabaseManager {
       $$TuteursTableTableManager(_db, _db.tuteurs);
   $$ZonesGeographiquesTableTableManager get zonesGeographiques =>
       $$ZonesGeographiquesTableTableManager(_db, _db.zonesGeographiques);
+  $$TypesMinisteresTableTableManager get typesMinisteres =>
+      $$TypesMinisteresTableTableManager(_db, _db.typesMinisteres);
+  $$MinisteresTableTableManager get ministeres =>
+      $$MinisteresTableTableManager(_db, _db.ministeres);
+  $$AffectationsMinisteresTableTableManager get affectationsMinisteres =>
+      $$AffectationsMinisteresTableTableManager(
+        _db,
+        _db.affectationsMinisteres,
+      );
+  $$MandatsResponsablesTableTableManager get mandatsResponsables =>
+      $$MandatsResponsablesTableTableManager(_db, _db.mandatsResponsables);
+  $$ActivitesMinisteresTableTableManager get activitesMinisteres =>
+      $$ActivitesMinisteresTableTableManager(_db, _db.activitesMinisteres);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }

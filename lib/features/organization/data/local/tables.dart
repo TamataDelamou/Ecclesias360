@@ -143,6 +143,85 @@ class ZonesGeographiques extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Table Drift TypeMinistere (Module III, RG-III-04) — catalogue
+/// paramétrable, vingt-quatre types standards protégés par défaut (seedés
+/// en migration, non désactivables depuis l'UI actuelle).
+@DataClassName('TypeMinistereRow')
+class TypesMinisteres extends Table {
+  TextColumn get id => text()();
+  TextColumn get code => text()();
+  TextColumn get libelle => text()();
+  BoolColumn get standard => boolean().withDefault(const Constant(false))();
+  TextColumn get statut => text().withDefault(const Constant('actif'))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (code)'];
+}
+
+/// Table Drift Ministere (Module III, RG-III-01/04/05).
+@DataClassName('MinistereRow')
+class Ministeres extends Table {
+  TextColumn get id => text()();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  TextColumn get typeMinistereId => text().references(TypesMinisteres, #id)();
+  TextColumn get nom => text()();
+  DateTimeColumn get dateCreation => dateTime()();
+  TextColumn get statut => text().withDefault(const Constant('actif'))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift AffectationMinistere (Module III, RG-III-01/03).
+@DataClassName('AffectationMinistereRow')
+class AffectationsMinisteres extends Table {
+  TextColumn get id => text()();
+  TextColumn get ministereId => text().references(Ministeres, #id)();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  TextColumn get role => text()();
+  DateTimeColumn get dateDebut => dateTime()();
+  DateTimeColumn get dateFin => dateTime().nullable()();
+  TextColumn get statut => text().withDefault(const Constant('active'))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift MandatResponsable (Module III, RG-III-02/05) — les lignes
+/// closes (`dateFinReelle` non nulle) constituent l'historique des
+/// responsables successifs (écran 6), pas de table séparée.
+@DataClassName('MandatResponsableRow')
+class MandatsResponsables extends Table {
+  TextColumn get id => text()();
+  TextColumn get ministereId => text().references(Ministeres, #id)();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  DateTimeColumn get dateDebut => dateTime()();
+  DateTimeColumn get dateFinPrevue => dateTime().nullable()();
+  DateTimeColumn get dateFinReelle => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift ActiviteMinistere (Module III, RG-III-05) — journal
+/// d'activités (réunions, rapports).
+@DataClassName('ActiviteMinistereRow')
+class ActivitesMinisteres extends Table {
+  TextColumn get id => text()();
+  TextColumn get ministereId => text().references(Ministeres, #id)();
+  TextColumn get type => text()();
+  TextColumn get description => text()();
+  DateTimeColumn get date => dateTime()();
+  @ReferenceName('activitesCommeAuteur')
+  TextColumn get auteurFideleId => text().nullable().references(Fideles, #id)();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 /// File d'attente hors ligne (RG-OFF-02) : chaque écriture locale enregistre
 /// ici l'événement à rejouer vers Supabase dès qu'une connexion est
 /// disponible, dans l'ordre chronologique, jamais purgée avant confirmation
