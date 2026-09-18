@@ -5,6 +5,13 @@ import '../../features/fideles/presentation/fidele_form_screen.dart';
 import '../../features/fideles/presentation/fidele_history_screen.dart';
 import '../../features/fideles/presentation/fidele_list_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
+import '../../features/ministeres/presentation/mandats_echeance_screen.dart';
+import '../../features/ministeres/presentation/ministere_detail_screen.dart';
+import '../../features/ministeres/presentation/ministere_form_screen.dart';
+import '../../features/ministeres/presentation/ministere_historique_responsables_screen.dart';
+import '../../features/ministeres/presentation/ministere_journal_screen.dart';
+import '../../features/ministeres/presentation/ministere_membres_screen.dart';
+import '../../features/ministeres/presentation/ministeres_list_screen.dart';
 import '../../features/organization/presentation/church_directory_screen.dart';
 import '../../features/organization/presentation/hierarchy_screen.dart';
 import '../../features/organization/presentation/node_detail_screen.dart';
@@ -72,6 +79,35 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.roles,
       builder: (context, state) => const RolesScreen(),
+    ),
+    GoRoute(
+      path: '/organisation/:id/ministeres',
+      builder: (context, state) => MinisteresListScreen(noeudId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: '/organisation/:id/ministeres/nouveau',
+      builder: (context, state) => MinistereFormScreen(noeudId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: AppRoutes.mandatsEcheance,
+      builder: (context, state) => const MandatsEcheanceScreen(),
+    ),
+    GoRoute(
+      path: '/ministeres/:id',
+      builder: (context, state) => MinistereDetailScreen(ministereId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: '/ministeres/:id/membres',
+      builder: (context, state) => MinistereMembresScreen(ministereId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: '/ministeres/:id/historique-responsables',
+      builder: (context, state) =>
+          MinistereHistoriqueResponsablesScreen(ministereId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: '/ministeres/:id/journal',
+      builder: (context, state) => MinistereJournalScreen(ministereId: state.pathParameters['id']!),
     ),
   ],
 );

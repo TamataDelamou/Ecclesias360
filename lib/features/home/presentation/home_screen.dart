@@ -37,6 +37,11 @@ class HomeScreen extends StatelessWidget {
               onPressed: () => context.push(AppRoutes.roles),
               child: const Text('Rôles'),
             ),
+            const SizedBox(height: 8),
+            FilledButton(
+              onPressed: () => context.push(AppRoutes.mandatsEcheance),
+              child: const Text('Mandats arrivant à échéance'),
+            ),
           ],
         ),
       ),

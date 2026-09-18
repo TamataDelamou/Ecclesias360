@@ -6,6 +6,8 @@ import 'core/sync/sync_coordinator.dart';
 import 'core/theme/design_tokens.dart';
 import 'features/fideles/application/fidele_controller.dart';
 import 'features/fideles/data/fidele_repository.dart';
+import 'features/ministeres/application/ministere_controller.dart';
+import 'features/ministeres/data/ministere_repository.dart';
 import 'features/organization/application/organisation_controller.dart';
 import 'features/organization/data/local/app_database.dart';
 import 'features/organization/data/organisation_node_repository.dart';
@@ -30,6 +32,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final FideleController _fideleController;
   late final ZoneGeographiqueRepository _zoneGeographiqueRepository;
   late final ZoneGeographiqueController _zoneGeographiqueController;
+  late final MinistereRepository _ministereRepository;
+  late final MinistereController _ministereController;
 
   @override
   void initState() {
@@ -41,6 +45,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _fideleController = FideleController(_fideleRepository);
     _zoneGeographiqueRepository = ZoneGeographiqueRepository(widget.database);
     _zoneGeographiqueController = ZoneGeographiqueController(_zoneGeographiqueRepository);
+    _ministereRepository = MinistereRepository(widget.database, _syncCoordinator);
+    _ministereController = MinistereController(_ministereRepository);
   }
 
   @override
@@ -48,6 +54,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _organisationController.dispose();
     _fideleController.dispose();
     _zoneGeographiqueController.dispose();
+    _ministereController.dispose();
     super.dispose();
   }
 
@@ -58,6 +65,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
         ChangeNotifierProvider<OrganisationController>.value(value: _organisationController),
         ChangeNotifierProvider<FideleController>.value(value: _fideleController),
         ChangeNotifierProvider<ZoneGeographiqueController>.value(value: _zoneGeographiqueController),
+        ChangeNotifierProvider<MinistereController>.value(value: _ministereController),
       ],
       child: MaterialApp.router(
         onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
