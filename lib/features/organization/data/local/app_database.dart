@@ -40,6 +40,20 @@ const List<(String code, String libelle)> typesMinisteresStandards = [
   ('hommes', 'Ministère des hommes'),
 ];
 
+/// RG-IV-04 — les neuf dons spirituels (1 Corinthiens 12:8-10), référentiel
+/// fixe seedé des deux côtés (local et Supabase, mêmes codes).
+const List<(String code, String libelle, String descriptionBiblique)> donsSpirituelsStandards = [
+  ('parole_de_sagesse', 'Parole de sagesse', '1 Corinthiens 12:8'),
+  ('parole_de_connaissance', 'Parole de connaissance', '1 Corinthiens 12:8'),
+  ('foi', 'Foi', '1 Corinthiens 12:9'),
+  ('dons_de_guerisons', 'Dons de guérisons', '1 Corinthiens 12:9'),
+  ('operations_de_miracles', 'Opérations de miracles', '1 Corinthiens 12:10'),
+  ('prophetie', 'Prophétie', '1 Corinthiens 12:10'),
+  ('discernement_des_esprits', 'Discernement des esprits', '1 Corinthiens 12:10'),
+  ('diverses_langues', 'Diverses langues', '1 Corinthiens 12:10'),
+  ('interpretation_des_langues', 'Interprétation des langues', '1 Corinthiens 12:10'),
+];
+
 /// Base Drift/SQLite unique, offline-first (RG-OFF-01), partagée par tous
 /// les modules (voir AGENTS.md §4).
 @DriftDatabase(tables: [
@@ -56,13 +70,16 @@ const List<(String code, String libelle)> typesMinisteresStandards = [
   AffectationsMinisteres,
   MandatsResponsables,
   ActivitesMinisteres,
+  DonsSpirituels,
+  DonsFideles,
+  DonsMinisteresCompatibles,
   SyncOutbox,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -95,6 +112,13 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(activitesMinisteres);
             await _seedTypesMinisteresStandards();
           }
+          // v5 -> v6 : ajout du Module IV (Dons spirituels).
+          if (from < 6) {
+            await m.createTable(donsSpirituels);
+            await m.createTable(donsFideles);
+            await m.createTable(donsMinisteresCompatibles);
+            await _seedDonsSpirituelsStandards();
+          }
         },
         beforeOpen: (details) async {
           // SQLite n'applique pas les contraintes de clé étrangère par
@@ -103,6 +127,7 @@ class AppDatabase extends _$AppDatabase {
           await customStatement('PRAGMA foreign_keys = ON');
           if (details.wasCreated) {
             await _seedTypesMinisteresStandards();
+            await _seedDonsSpirituelsStandards();
           }
         },
       );
@@ -118,6 +143,24 @@ class AppDatabase extends _$AppDatabase {
               code: code,
               libelle: libelle,
               standard: const Value(true),
+            ),
+        ],
+        mode: InsertMode.insertOrIgnore,
+      );
+    });
+  }
+
+  Future<void> _seedDonsSpirituelsStandards() async {
+    await batch((b) {
+      b.insertAll(
+        donsSpirituels,
+        [
+          for (final (code, libelle, descriptionBiblique) in donsSpirituelsStandards)
+            DonsSpirituelsCompanion.insert(
+              id: IdGenerator.newId(),
+              code: code,
+              libelle: libelle,
+              descriptionBiblique: descriptionBiblique,
             ),
         ],
         mode: InsertMode.insertOrIgnore,

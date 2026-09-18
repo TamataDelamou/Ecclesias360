@@ -6498,6 +6498,1103 @@ class ActivitesMinisteresCompanion
   }
 }
 
+class $DonsSpirituelsTable extends DonsSpirituels
+    with TableInfo<$DonsSpirituelsTable, DonSpirituelRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DonsSpirituelsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+    'code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _libelleMeta = const VerificationMeta(
+    'libelle',
+  );
+  @override
+  late final GeneratedColumn<String> libelle = GeneratedColumn<String>(
+    'libelle',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionBibliqueMeta =
+      const VerificationMeta('descriptionBiblique');
+  @override
+  late final GeneratedColumn<String> descriptionBiblique =
+      GeneratedColumn<String>(
+        'description_biblique',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    code,
+    libelle,
+    descriptionBiblique,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'dons_spirituels';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DonSpirituelRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+        _codeMeta,
+        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_codeMeta);
+    }
+    if (data.containsKey('libelle')) {
+      context.handle(
+        _libelleMeta,
+        libelle.isAcceptableOrUnknown(data['libelle']!, _libelleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_libelleMeta);
+    }
+    if (data.containsKey('description_biblique')) {
+      context.handle(
+        _descriptionBibliqueMeta,
+        descriptionBiblique.isAcceptableOrUnknown(
+          data['description_biblique']!,
+          _descriptionBibliqueMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_descriptionBibliqueMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  DonSpirituelRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DonSpirituelRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      code: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code'],
+      )!,
+      libelle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}libelle'],
+      )!,
+      descriptionBiblique: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description_biblique'],
+      )!,
+    );
+  }
+
+  @override
+  $DonsSpirituelsTable createAlias(String alias) {
+    return $DonsSpirituelsTable(attachedDatabase, alias);
+  }
+}
+
+class DonSpirituelRow extends DataClass implements Insertable<DonSpirituelRow> {
+  final String id;
+  final String code;
+  final String libelle;
+  final String descriptionBiblique;
+  const DonSpirituelRow({
+    required this.id,
+    required this.code,
+    required this.libelle,
+    required this.descriptionBiblique,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['code'] = Variable<String>(code);
+    map['libelle'] = Variable<String>(libelle);
+    map['description_biblique'] = Variable<String>(descriptionBiblique);
+    return map;
+  }
+
+  DonsSpirituelsCompanion toCompanion(bool nullToAbsent) {
+    return DonsSpirituelsCompanion(
+      id: Value(id),
+      code: Value(code),
+      libelle: Value(libelle),
+      descriptionBiblique: Value(descriptionBiblique),
+    );
+  }
+
+  factory DonSpirituelRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DonSpirituelRow(
+      id: serializer.fromJson<String>(json['id']),
+      code: serializer.fromJson<String>(json['code']),
+      libelle: serializer.fromJson<String>(json['libelle']),
+      descriptionBiblique: serializer.fromJson<String>(
+        json['descriptionBiblique'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'code': serializer.toJson<String>(code),
+      'libelle': serializer.toJson<String>(libelle),
+      'descriptionBiblique': serializer.toJson<String>(descriptionBiblique),
+    };
+  }
+
+  DonSpirituelRow copyWith({
+    String? id,
+    String? code,
+    String? libelle,
+    String? descriptionBiblique,
+  }) => DonSpirituelRow(
+    id: id ?? this.id,
+    code: code ?? this.code,
+    libelle: libelle ?? this.libelle,
+    descriptionBiblique: descriptionBiblique ?? this.descriptionBiblique,
+  );
+  DonSpirituelRow copyWithCompanion(DonsSpirituelsCompanion data) {
+    return DonSpirituelRow(
+      id: data.id.present ? data.id.value : this.id,
+      code: data.code.present ? data.code.value : this.code,
+      libelle: data.libelle.present ? data.libelle.value : this.libelle,
+      descriptionBiblique: data.descriptionBiblique.present
+          ? data.descriptionBiblique.value
+          : this.descriptionBiblique,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DonSpirituelRow(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('libelle: $libelle, ')
+          ..write('descriptionBiblique: $descriptionBiblique')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, code, libelle, descriptionBiblique);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DonSpirituelRow &&
+          other.id == this.id &&
+          other.code == this.code &&
+          other.libelle == this.libelle &&
+          other.descriptionBiblique == this.descriptionBiblique);
+}
+
+class DonsSpirituelsCompanion extends UpdateCompanion<DonSpirituelRow> {
+  final Value<String> id;
+  final Value<String> code;
+  final Value<String> libelle;
+  final Value<String> descriptionBiblique;
+  final Value<int> rowid;
+  const DonsSpirituelsCompanion({
+    this.id = const Value.absent(),
+    this.code = const Value.absent(),
+    this.libelle = const Value.absent(),
+    this.descriptionBiblique = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DonsSpirituelsCompanion.insert({
+    required String id,
+    required String code,
+    required String libelle,
+    required String descriptionBiblique,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       code = Value(code),
+       libelle = Value(libelle),
+       descriptionBiblique = Value(descriptionBiblique);
+  static Insertable<DonSpirituelRow> custom({
+    Expression<String>? id,
+    Expression<String>? code,
+    Expression<String>? libelle,
+    Expression<String>? descriptionBiblique,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (code != null) 'code': code,
+      if (libelle != null) 'libelle': libelle,
+      if (descriptionBiblique != null)
+        'description_biblique': descriptionBiblique,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DonsSpirituelsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? code,
+    Value<String>? libelle,
+    Value<String>? descriptionBiblique,
+    Value<int>? rowid,
+  }) {
+    return DonsSpirituelsCompanion(
+      id: id ?? this.id,
+      code: code ?? this.code,
+      libelle: libelle ?? this.libelle,
+      descriptionBiblique: descriptionBiblique ?? this.descriptionBiblique,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (libelle.present) {
+      map['libelle'] = Variable<String>(libelle.value);
+    }
+    if (descriptionBiblique.present) {
+      map['description_biblique'] = Variable<String>(descriptionBiblique.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DonsSpirituelsCompanion(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('libelle: $libelle, ')
+          ..write('descriptionBiblique: $descriptionBiblique, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $DonsFidelesTable extends DonsFideles
+    with TableInfo<$DonsFidelesTable, DonFideleRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DonsFidelesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _donIdMeta = const VerificationMeta('donId');
+  @override
+  late final GeneratedColumn<String> donId = GeneratedColumn<String>(
+    'don_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES dons_spirituels (id)',
+    ),
+  );
+  static const VerificationMeta _niveauMaturiteMeta = const VerificationMeta(
+    'niveauMaturite',
+  );
+  @override
+  late final GeneratedColumn<String> niveauMaturite = GeneratedColumn<String>(
+    'niveau_maturite',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _responsableSuiviIdMeta =
+      const VerificationMeta('responsableSuiviId');
+  @override
+  late final GeneratedColumn<String> responsableSuiviId =
+      GeneratedColumn<String>(
+        'responsable_suivi_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES fideles (id)',
+        ),
+      );
+  static const VerificationMeta _dateEvaluationMeta = const VerificationMeta(
+    'dateEvaluation',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateEvaluation =
+      GeneratedColumn<DateTime>(
+        'date_evaluation',
+        aliasedName,
+        false,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _observationsMeta = const VerificationMeta(
+    'observations',
+  );
+  @override
+  late final GeneratedColumn<String> observations = GeneratedColumn<String>(
+    'observations',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    fideleId,
+    donId,
+    niveauMaturite,
+    responsableSuiviId,
+    dateEvaluation,
+    observations,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'dons_fideles';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DonFideleRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    if (data.containsKey('don_id')) {
+      context.handle(
+        _donIdMeta,
+        donId.isAcceptableOrUnknown(data['don_id']!, _donIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_donIdMeta);
+    }
+    if (data.containsKey('niveau_maturite')) {
+      context.handle(
+        _niveauMaturiteMeta,
+        niveauMaturite.isAcceptableOrUnknown(
+          data['niveau_maturite']!,
+          _niveauMaturiteMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_niveauMaturiteMeta);
+    }
+    if (data.containsKey('responsable_suivi_id')) {
+      context.handle(
+        _responsableSuiviIdMeta,
+        responsableSuiviId.isAcceptableOrUnknown(
+          data['responsable_suivi_id']!,
+          _responsableSuiviIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_responsableSuiviIdMeta);
+    }
+    if (data.containsKey('date_evaluation')) {
+      context.handle(
+        _dateEvaluationMeta,
+        dateEvaluation.isAcceptableOrUnknown(
+          data['date_evaluation']!,
+          _dateEvaluationMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_dateEvaluationMeta);
+    }
+    if (data.containsKey('observations')) {
+      context.handle(
+        _observationsMeta,
+        observations.isAcceptableOrUnknown(
+          data['observations']!,
+          _observationsMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  DonFideleRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DonFideleRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+      donId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}don_id'],
+      )!,
+      niveauMaturite: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}niveau_maturite'],
+      )!,
+      responsableSuiviId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}responsable_suivi_id'],
+      )!,
+      dateEvaluation: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_evaluation'],
+      )!,
+      observations: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}observations'],
+      ),
+    );
+  }
+
+  @override
+  $DonsFidelesTable createAlias(String alias) {
+    return $DonsFidelesTable(attachedDatabase, alias);
+  }
+}
+
+class DonFideleRow extends DataClass implements Insertable<DonFideleRow> {
+  final String id;
+  final String fideleId;
+  final String donId;
+  final String niveauMaturite;
+  final String responsableSuiviId;
+  final DateTime dateEvaluation;
+  final String? observations;
+  const DonFideleRow({
+    required this.id,
+    required this.fideleId,
+    required this.donId,
+    required this.niveauMaturite,
+    required this.responsableSuiviId,
+    required this.dateEvaluation,
+    this.observations,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['fidele_id'] = Variable<String>(fideleId);
+    map['don_id'] = Variable<String>(donId);
+    map['niveau_maturite'] = Variable<String>(niveauMaturite);
+    map['responsable_suivi_id'] = Variable<String>(responsableSuiviId);
+    map['date_evaluation'] = Variable<DateTime>(dateEvaluation);
+    if (!nullToAbsent || observations != null) {
+      map['observations'] = Variable<String>(observations);
+    }
+    return map;
+  }
+
+  DonsFidelesCompanion toCompanion(bool nullToAbsent) {
+    return DonsFidelesCompanion(
+      id: Value(id),
+      fideleId: Value(fideleId),
+      donId: Value(donId),
+      niveauMaturite: Value(niveauMaturite),
+      responsableSuiviId: Value(responsableSuiviId),
+      dateEvaluation: Value(dateEvaluation),
+      observations: observations == null && nullToAbsent
+          ? const Value.absent()
+          : Value(observations),
+    );
+  }
+
+  factory DonFideleRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DonFideleRow(
+      id: serializer.fromJson<String>(json['id']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+      donId: serializer.fromJson<String>(json['donId']),
+      niveauMaturite: serializer.fromJson<String>(json['niveauMaturite']),
+      responsableSuiviId: serializer.fromJson<String>(
+        json['responsableSuiviId'],
+      ),
+      dateEvaluation: serializer.fromJson<DateTime>(json['dateEvaluation']),
+      observations: serializer.fromJson<String?>(json['observations']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'fideleId': serializer.toJson<String>(fideleId),
+      'donId': serializer.toJson<String>(donId),
+      'niveauMaturite': serializer.toJson<String>(niveauMaturite),
+      'responsableSuiviId': serializer.toJson<String>(responsableSuiviId),
+      'dateEvaluation': serializer.toJson<DateTime>(dateEvaluation),
+      'observations': serializer.toJson<String?>(observations),
+    };
+  }
+
+  DonFideleRow copyWith({
+    String? id,
+    String? fideleId,
+    String? donId,
+    String? niveauMaturite,
+    String? responsableSuiviId,
+    DateTime? dateEvaluation,
+    Value<String?> observations = const Value.absent(),
+  }) => DonFideleRow(
+    id: id ?? this.id,
+    fideleId: fideleId ?? this.fideleId,
+    donId: donId ?? this.donId,
+    niveauMaturite: niveauMaturite ?? this.niveauMaturite,
+    responsableSuiviId: responsableSuiviId ?? this.responsableSuiviId,
+    dateEvaluation: dateEvaluation ?? this.dateEvaluation,
+    observations: observations.present ? observations.value : this.observations,
+  );
+  DonFideleRow copyWithCompanion(DonsFidelesCompanion data) {
+    return DonFideleRow(
+      id: data.id.present ? data.id.value : this.id,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      donId: data.donId.present ? data.donId.value : this.donId,
+      niveauMaturite: data.niveauMaturite.present
+          ? data.niveauMaturite.value
+          : this.niveauMaturite,
+      responsableSuiviId: data.responsableSuiviId.present
+          ? data.responsableSuiviId.value
+          : this.responsableSuiviId,
+      dateEvaluation: data.dateEvaluation.present
+          ? data.dateEvaluation.value
+          : this.dateEvaluation,
+      observations: data.observations.present
+          ? data.observations.value
+          : this.observations,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DonFideleRow(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('donId: $donId, ')
+          ..write('niveauMaturite: $niveauMaturite, ')
+          ..write('responsableSuiviId: $responsableSuiviId, ')
+          ..write('dateEvaluation: $dateEvaluation, ')
+          ..write('observations: $observations')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    fideleId,
+    donId,
+    niveauMaturite,
+    responsableSuiviId,
+    dateEvaluation,
+    observations,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DonFideleRow &&
+          other.id == this.id &&
+          other.fideleId == this.fideleId &&
+          other.donId == this.donId &&
+          other.niveauMaturite == this.niveauMaturite &&
+          other.responsableSuiviId == this.responsableSuiviId &&
+          other.dateEvaluation == this.dateEvaluation &&
+          other.observations == this.observations);
+}
+
+class DonsFidelesCompanion extends UpdateCompanion<DonFideleRow> {
+  final Value<String> id;
+  final Value<String> fideleId;
+  final Value<String> donId;
+  final Value<String> niveauMaturite;
+  final Value<String> responsableSuiviId;
+  final Value<DateTime> dateEvaluation;
+  final Value<String?> observations;
+  final Value<int> rowid;
+  const DonsFidelesCompanion({
+    this.id = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.donId = const Value.absent(),
+    this.niveauMaturite = const Value.absent(),
+    this.responsableSuiviId = const Value.absent(),
+    this.dateEvaluation = const Value.absent(),
+    this.observations = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DonsFidelesCompanion.insert({
+    required String id,
+    required String fideleId,
+    required String donId,
+    required String niveauMaturite,
+    required String responsableSuiviId,
+    required DateTime dateEvaluation,
+    this.observations = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       fideleId = Value(fideleId),
+       donId = Value(donId),
+       niveauMaturite = Value(niveauMaturite),
+       responsableSuiviId = Value(responsableSuiviId),
+       dateEvaluation = Value(dateEvaluation);
+  static Insertable<DonFideleRow> custom({
+    Expression<String>? id,
+    Expression<String>? fideleId,
+    Expression<String>? donId,
+    Expression<String>? niveauMaturite,
+    Expression<String>? responsableSuiviId,
+    Expression<DateTime>? dateEvaluation,
+    Expression<String>? observations,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (donId != null) 'don_id': donId,
+      if (niveauMaturite != null) 'niveau_maturite': niveauMaturite,
+      if (responsableSuiviId != null)
+        'responsable_suivi_id': responsableSuiviId,
+      if (dateEvaluation != null) 'date_evaluation': dateEvaluation,
+      if (observations != null) 'observations': observations,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DonsFidelesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? fideleId,
+    Value<String>? donId,
+    Value<String>? niveauMaturite,
+    Value<String>? responsableSuiviId,
+    Value<DateTime>? dateEvaluation,
+    Value<String?>? observations,
+    Value<int>? rowid,
+  }) {
+    return DonsFidelesCompanion(
+      id: id ?? this.id,
+      fideleId: fideleId ?? this.fideleId,
+      donId: donId ?? this.donId,
+      niveauMaturite: niveauMaturite ?? this.niveauMaturite,
+      responsableSuiviId: responsableSuiviId ?? this.responsableSuiviId,
+      dateEvaluation: dateEvaluation ?? this.dateEvaluation,
+      observations: observations ?? this.observations,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (donId.present) {
+      map['don_id'] = Variable<String>(donId.value);
+    }
+    if (niveauMaturite.present) {
+      map['niveau_maturite'] = Variable<String>(niveauMaturite.value);
+    }
+    if (responsableSuiviId.present) {
+      map['responsable_suivi_id'] = Variable<String>(responsableSuiviId.value);
+    }
+    if (dateEvaluation.present) {
+      map['date_evaluation'] = Variable<DateTime>(dateEvaluation.value);
+    }
+    if (observations.present) {
+      map['observations'] = Variable<String>(observations.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DonsFidelesCompanion(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('donId: $donId, ')
+          ..write('niveauMaturite: $niveauMaturite, ')
+          ..write('responsableSuiviId: $responsableSuiviId, ')
+          ..write('dateEvaluation: $dateEvaluation, ')
+          ..write('observations: $observations, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $DonsMinisteresCompatiblesTable extends DonsMinisteresCompatibles
+    with TableInfo<$DonsMinisteresCompatiblesTable, DonMinistereCompatibleRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DonsMinisteresCompatiblesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _donIdMeta = const VerificationMeta('donId');
+  @override
+  late final GeneratedColumn<String> donId = GeneratedColumn<String>(
+    'don_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES dons_spirituels (id)',
+    ),
+  );
+  static const VerificationMeta _typeMinistereIdMeta = const VerificationMeta(
+    'typeMinistereId',
+  );
+  @override
+  late final GeneratedColumn<String> typeMinistereId = GeneratedColumn<String>(
+    'type_ministere_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES types_ministeres (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, donId, typeMinistereId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'dons_ministeres_compatibles';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DonMinistereCompatibleRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('don_id')) {
+      context.handle(
+        _donIdMeta,
+        donId.isAcceptableOrUnknown(data['don_id']!, _donIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_donIdMeta);
+    }
+    if (data.containsKey('type_ministere_id')) {
+      context.handle(
+        _typeMinistereIdMeta,
+        typeMinistereId.isAcceptableOrUnknown(
+          data['type_ministere_id']!,
+          _typeMinistereIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_typeMinistereIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  DonMinistereCompatibleRow map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DonMinistereCompatibleRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      donId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}don_id'],
+      )!,
+      typeMinistereId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type_ministere_id'],
+      )!,
+    );
+  }
+
+  @override
+  $DonsMinisteresCompatiblesTable createAlias(String alias) {
+    return $DonsMinisteresCompatiblesTable(attachedDatabase, alias);
+  }
+}
+
+class DonMinistereCompatibleRow extends DataClass
+    implements Insertable<DonMinistereCompatibleRow> {
+  final String id;
+  final String donId;
+  final String typeMinistereId;
+  const DonMinistereCompatibleRow({
+    required this.id,
+    required this.donId,
+    required this.typeMinistereId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['don_id'] = Variable<String>(donId);
+    map['type_ministere_id'] = Variable<String>(typeMinistereId);
+    return map;
+  }
+
+  DonsMinisteresCompatiblesCompanion toCompanion(bool nullToAbsent) {
+    return DonsMinisteresCompatiblesCompanion(
+      id: Value(id),
+      donId: Value(donId),
+      typeMinistereId: Value(typeMinistereId),
+    );
+  }
+
+  factory DonMinistereCompatibleRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DonMinistereCompatibleRow(
+      id: serializer.fromJson<String>(json['id']),
+      donId: serializer.fromJson<String>(json['donId']),
+      typeMinistereId: serializer.fromJson<String>(json['typeMinistereId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'donId': serializer.toJson<String>(donId),
+      'typeMinistereId': serializer.toJson<String>(typeMinistereId),
+    };
+  }
+
+  DonMinistereCompatibleRow copyWith({
+    String? id,
+    String? donId,
+    String? typeMinistereId,
+  }) => DonMinistereCompatibleRow(
+    id: id ?? this.id,
+    donId: donId ?? this.donId,
+    typeMinistereId: typeMinistereId ?? this.typeMinistereId,
+  );
+  DonMinistereCompatibleRow copyWithCompanion(
+    DonsMinisteresCompatiblesCompanion data,
+  ) {
+    return DonMinistereCompatibleRow(
+      id: data.id.present ? data.id.value : this.id,
+      donId: data.donId.present ? data.donId.value : this.donId,
+      typeMinistereId: data.typeMinistereId.present
+          ? data.typeMinistereId.value
+          : this.typeMinistereId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DonMinistereCompatibleRow(')
+          ..write('id: $id, ')
+          ..write('donId: $donId, ')
+          ..write('typeMinistereId: $typeMinistereId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, donId, typeMinistereId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DonMinistereCompatibleRow &&
+          other.id == this.id &&
+          other.donId == this.donId &&
+          other.typeMinistereId == this.typeMinistereId);
+}
+
+class DonsMinisteresCompatiblesCompanion
+    extends UpdateCompanion<DonMinistereCompatibleRow> {
+  final Value<String> id;
+  final Value<String> donId;
+  final Value<String> typeMinistereId;
+  final Value<int> rowid;
+  const DonsMinisteresCompatiblesCompanion({
+    this.id = const Value.absent(),
+    this.donId = const Value.absent(),
+    this.typeMinistereId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DonsMinisteresCompatiblesCompanion.insert({
+    required String id,
+    required String donId,
+    required String typeMinistereId,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       donId = Value(donId),
+       typeMinistereId = Value(typeMinistereId);
+  static Insertable<DonMinistereCompatibleRow> custom({
+    Expression<String>? id,
+    Expression<String>? donId,
+    Expression<String>? typeMinistereId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (donId != null) 'don_id': donId,
+      if (typeMinistereId != null) 'type_ministere_id': typeMinistereId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DonsMinisteresCompatiblesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? donId,
+    Value<String>? typeMinistereId,
+    Value<int>? rowid,
+  }) {
+    return DonsMinisteresCompatiblesCompanion(
+      id: id ?? this.id,
+      donId: donId ?? this.donId,
+      typeMinistereId: typeMinistereId ?? this.typeMinistereId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (donId.present) {
+      map['don_id'] = Variable<String>(donId.value);
+    }
+    if (typeMinistereId.present) {
+      map['type_ministere_id'] = Variable<String>(typeMinistereId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DonsMinisteresCompatiblesCompanion(')
+          ..write('id: $id, ')
+          ..write('donId: $donId, ')
+          ..write('typeMinistereId: $typeMinistereId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxRow> {
   @override
@@ -7054,6 +8151,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $MandatsResponsablesTable(this);
   late final $ActivitesMinisteresTable activitesMinisteres =
       $ActivitesMinisteresTable(this);
+  late final $DonsSpirituelsTable donsSpirituels = $DonsSpirituelsTable(this);
+  late final $DonsFidelesTable donsFideles = $DonsFidelesTable(this);
+  late final $DonsMinisteresCompatiblesTable donsMinisteresCompatibles =
+      $DonsMinisteresCompatiblesTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -7073,6 +8174,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     affectationsMinisteres,
     mandatsResponsables,
     activitesMinisteres,
+    donsSpirituels,
+    donsFideles,
+    donsMinisteresCompatibles,
     syncOutbox,
   ];
 }
@@ -8297,6 +9401,45 @@ final class $$FidelesTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$DonsFidelesTable, List<DonFideleRow>>
+  _donsFidelesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.donsFideles,
+    aliasName: 'fideles__id__dons_fideles__fidele_id',
+  );
+
+  $$DonsFidelesTableProcessedTableManager get donsFidelesRefs {
+    final manager = $$DonsFidelesTableTableManager(
+      $_db,
+      $_db.donsFideles,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_donsFidelesRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$DonsFidelesTable, List<DonFideleRow>>
+  _evaluationsCommeResponsableTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.donsFideles,
+        aliasName: 'fideles__id__dons_fideles__responsable_suivi_id',
+      );
+
+  $$DonsFidelesTableProcessedTableManager get evaluationsCommeResponsable {
+    final manager = $$DonsFidelesTableTableManager($_db, $_db.donsFideles)
+        .filter(
+          (f) => f.responsableSuiviId.id.sqlEquals($_itemColumn<String>('id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(
+      _evaluationsCommeResponsableTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$FidelesTableFilterComposer
@@ -8633,6 +9776,56 @@ class $$FidelesTableFilterComposer
           }) => $$ActivitesMinisteresTableFilterComposer(
             $db: $db,
             $table: $db.activitesMinisteres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> donsFidelesRefs(
+    Expression<bool> Function($$DonsFidelesTableFilterComposer f) f,
+  ) {
+    final $$DonsFidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.donsFideles,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DonsFidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.donsFideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> evaluationsCommeResponsable(
+    Expression<bool> Function($$DonsFidelesTableFilterComposer f) f,
+  ) {
+    final $$DonsFidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.donsFideles,
+      getReferencedColumn: (t) => t.responsableSuiviId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DonsFidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.donsFideles,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -9085,6 +10278,56 @@ class $$FidelesTableAnnotationComposer
         );
     return f(composer);
   }
+
+  Expression<T> donsFidelesRefs<T extends Object>(
+    Expression<T> Function($$DonsFidelesTableAnnotationComposer a) f,
+  ) {
+    final $$DonsFidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.donsFideles,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DonsFidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.donsFideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> evaluationsCommeResponsable<T extends Object>(
+    Expression<T> Function($$DonsFidelesTableAnnotationComposer a) f,
+  ) {
+    final $$DonsFidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.donsFideles,
+      getReferencedColumn: (t) => t.responsableSuiviId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DonsFidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.donsFideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$FidelesTableTableManager
@@ -9111,6 +10354,8 @@ class $$FidelesTableTableManager
             bool affectationsMinisteresRefs,
             bool mandatsResponsablesRefs,
             bool activitesCommeAuteur,
+            bool donsFidelesRefs,
+            bool evaluationsCommeResponsable,
           })
         > {
   $$FidelesTableTableManager(_$AppDatabase db, $FidelesTable table)
@@ -9228,6 +10473,8 @@ class $$FidelesTableTableManager
                 affectationsMinisteresRefs = false,
                 mandatsResponsablesRefs = false,
                 activitesCommeAuteur = false,
+                donsFidelesRefs = false,
+                evaluationsCommeResponsable = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -9241,6 +10488,8 @@ class $$FidelesTableTableManager
                     if (affectationsMinisteresRefs) db.affectationsMinisteres,
                     if (mandatsResponsablesRefs) db.mandatsResponsables,
                     if (activitesCommeAuteur) db.activitesMinisteres,
+                    if (donsFidelesRefs) db.donsFideles,
+                    if (evaluationsCommeResponsable) db.donsFideles,
                   ],
                   addJoins:
                       <
@@ -9465,6 +10714,48 @@ class $$FidelesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (donsFidelesRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          DonFideleRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._donsFidelesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).donsFidelesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (evaluationsCommeResponsable)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          DonFideleRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._evaluationsCommeResponsableTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).evaluationsCommeResponsable,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.responsableSuiviId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -9496,6 +10787,8 @@ typedef $$FidelesTableProcessedTableManager =
         bool affectationsMinisteresRefs,
         bool mandatsResponsablesRefs,
         bool activitesCommeAuteur,
+        bool donsFidelesRefs,
+        bool evaluationsCommeResponsable,
       })
     >;
 typedef $$NodeResponsablesTableCreateCompanionBuilder =
@@ -11520,6 +12813,36 @@ final class $$TypesMinisteresTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<
+    $DonsMinisteresCompatiblesTable,
+    List<DonMinistereCompatibleRow>
+  >
+  _donsMinisteresCompatiblesRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.donsMinisteresCompatibles,
+    aliasName:
+        'types_ministeres__id__dons_ministeres_compatibles__type_ministere_id',
+  );
+
+  $$DonsMinisteresCompatiblesTableProcessedTableManager
+  get donsMinisteresCompatiblesRefs {
+    final manager =
+        $$DonsMinisteresCompatiblesTableTableManager(
+          $_db,
+          $_db.donsMinisteresCompatibles,
+        ).filter(
+          (f) => f.typeMinistereId.id.sqlEquals($_itemColumn<String>('id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(
+      _donsMinisteresCompatiblesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$TypesMinisteresTableFilterComposer
@@ -11578,6 +12901,33 @@ class $$TypesMinisteresTableFilterComposer
                 $removeJoinBuilderFromRootComposer,
           ),
     );
+    return f(composer);
+  }
+
+  Expression<bool> donsMinisteresCompatiblesRefs(
+    Expression<bool> Function($$DonsMinisteresCompatiblesTableFilterComposer f)
+    f,
+  ) {
+    final $$DonsMinisteresCompatiblesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.donsMinisteresCompatibles,
+          getReferencedColumn: (t) => t.typeMinistereId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DonsMinisteresCompatiblesTableFilterComposer(
+                $db: $db,
+                $table: $db.donsMinisteresCompatibles,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
     return f(composer);
   }
 }
@@ -11665,6 +13015,33 @@ class $$TypesMinisteresTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> donsMinisteresCompatiblesRefs<T extends Object>(
+    Expression<T> Function($$DonsMinisteresCompatiblesTableAnnotationComposer a)
+    f,
+  ) {
+    final $$DonsMinisteresCompatiblesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.donsMinisteresCompatibles,
+          getReferencedColumn: (t) => t.typeMinistereId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DonsMinisteresCompatiblesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.donsMinisteresCompatibles,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$TypesMinisteresTableTableManager
@@ -11680,7 +13057,10 @@ class $$TypesMinisteresTableTableManager
           $$TypesMinisteresTableUpdateCompanionBuilder,
           (TypeMinistereRow, $$TypesMinisteresTableReferences),
           TypeMinistereRow,
-          PrefetchHooks Function({bool ministeresRefs})
+          PrefetchHooks Function({
+            bool ministeresRefs,
+            bool donsMinisteresCompatiblesRefs,
+          })
         > {
   $$TypesMinisteresTableTableManager(
     _$AppDatabase db,
@@ -11735,38 +13115,67 @@ class $$TypesMinisteresTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({ministeresRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (ministeresRefs) db.ministeres],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (ministeresRefs)
-                    await $_getPrefetchedData<
-                      TypeMinistereRow,
-                      $TypesMinisteresTable,
-                      MinistereRow
-                    >(
-                      currentTable: table,
-                      referencedTable: $$TypesMinisteresTableReferences
-                          ._ministeresRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$TypesMinisteresTableReferences(
-                            db,
-                            table,
-                            p0,
-                          ).ministeresRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where(
-                            (e) => e.typeMinistereId == item.id,
-                          ),
-                      typedResults: items,
-                    ),
-                ];
+          prefetchHooksCallback:
+              ({
+                ministeresRefs = false,
+                donsMinisteresCompatiblesRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (ministeresRefs) db.ministeres,
+                    if (donsMinisteresCompatiblesRefs)
+                      db.donsMinisteresCompatibles,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (ministeresRefs)
+                        await $_getPrefetchedData<
+                          TypeMinistereRow,
+                          $TypesMinisteresTable,
+                          MinistereRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TypesMinisteresTableReferences
+                              ._ministeresRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TypesMinisteresTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).ministeresRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.typeMinistereId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (donsMinisteresCompatiblesRefs)
+                        await $_getPrefetchedData<
+                          TypeMinistereRow,
+                          $TypesMinisteresTable,
+                          DonMinistereCompatibleRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TypesMinisteresTableReferences
+                              ._donsMinisteresCompatiblesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TypesMinisteresTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).donsMinisteresCompatiblesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.typeMinistereId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -11783,7 +13192,10 @@ typedef $$TypesMinisteresTableProcessedTableManager =
       $$TypesMinisteresTableUpdateCompanionBuilder,
       (TypeMinistereRow, $$TypesMinisteresTableReferences),
       TypeMinistereRow,
-      PrefetchHooks Function({bool ministeresRefs})
+      PrefetchHooks Function({
+        bool ministeresRefs,
+        bool donsMinisteresCompatiblesRefs,
+      })
     >;
 typedef $$MinisteresTableCreateCompanionBuilder =
     MinisteresCompanion Function({
@@ -13893,6 +15305,1358 @@ typedef $$ActivitesMinisteresTableProcessedTableManager =
       ActiviteMinistereRow,
       PrefetchHooks Function({bool ministereId, bool auteurFideleId})
     >;
+typedef $$DonsSpirituelsTableCreateCompanionBuilder =
+    DonsSpirituelsCompanion Function({
+      required String id,
+      required String code,
+      required String libelle,
+      required String descriptionBiblique,
+      Value<int> rowid,
+    });
+typedef $$DonsSpirituelsTableUpdateCompanionBuilder =
+    DonsSpirituelsCompanion Function({
+      Value<String> id,
+      Value<String> code,
+      Value<String> libelle,
+      Value<String> descriptionBiblique,
+      Value<int> rowid,
+    });
+
+final class $$DonsSpirituelsTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $DonsSpirituelsTable, DonSpirituelRow> {
+  $$DonsSpirituelsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<$DonsFidelesTable, List<DonFideleRow>>
+  _donsFidelesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.donsFideles,
+    aliasName: 'dons_spirituels__id__dons_fideles__don_id',
+  );
+
+  $$DonsFidelesTableProcessedTableManager get donsFidelesRefs {
+    final manager = $$DonsFidelesTableTableManager(
+      $_db,
+      $_db.donsFideles,
+    ).filter((f) => f.donId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_donsFidelesRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $DonsMinisteresCompatiblesTable,
+    List<DonMinistereCompatibleRow>
+  >
+  _donsMinisteresCompatiblesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.donsMinisteresCompatibles,
+        aliasName: 'dons_spirituels__id__dons_ministeres_compatibles__don_id',
+      );
+
+  $$DonsMinisteresCompatiblesTableProcessedTableManager
+  get donsMinisteresCompatiblesRefs {
+    final manager = $$DonsMinisteresCompatiblesTableTableManager(
+      $_db,
+      $_db.donsMinisteresCompatibles,
+    ).filter((f) => f.donId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _donsMinisteresCompatiblesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$DonsSpirituelsTableFilterComposer
+    extends Composer<_$AppDatabase, $DonsSpirituelsTable> {
+  $$DonsSpirituelsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get descriptionBiblique => $composableBuilder(
+    column: $table.descriptionBiblique,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> donsFidelesRefs(
+    Expression<bool> Function($$DonsFidelesTableFilterComposer f) f,
+  ) {
+    final $$DonsFidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.donsFideles,
+      getReferencedColumn: (t) => t.donId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DonsFidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.donsFideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> donsMinisteresCompatiblesRefs(
+    Expression<bool> Function($$DonsMinisteresCompatiblesTableFilterComposer f)
+    f,
+  ) {
+    final $$DonsMinisteresCompatiblesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.donsMinisteresCompatibles,
+          getReferencedColumn: (t) => t.donId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DonsMinisteresCompatiblesTableFilterComposer(
+                $db: $db,
+                $table: $db.donsMinisteresCompatibles,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$DonsSpirituelsTableOrderingComposer
+    extends Composer<_$AppDatabase, $DonsSpirituelsTable> {
+  $$DonsSpirituelsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get descriptionBiblique => $composableBuilder(
+    column: $table.descriptionBiblique,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$DonsSpirituelsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $DonsSpirituelsTable> {
+  $$DonsSpirituelsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<String> get libelle =>
+      $composableBuilder(column: $table.libelle, builder: (column) => column);
+
+  GeneratedColumn<String> get descriptionBiblique => $composableBuilder(
+    column: $table.descriptionBiblique,
+    builder: (column) => column,
+  );
+
+  Expression<T> donsFidelesRefs<T extends Object>(
+    Expression<T> Function($$DonsFidelesTableAnnotationComposer a) f,
+  ) {
+    final $$DonsFidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.donsFideles,
+      getReferencedColumn: (t) => t.donId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DonsFidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.donsFideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> donsMinisteresCompatiblesRefs<T extends Object>(
+    Expression<T> Function($$DonsMinisteresCompatiblesTableAnnotationComposer a)
+    f,
+  ) {
+    final $$DonsMinisteresCompatiblesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.donsMinisteresCompatibles,
+          getReferencedColumn: (t) => t.donId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DonsMinisteresCompatiblesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.donsMinisteresCompatibles,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$DonsSpirituelsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $DonsSpirituelsTable,
+          DonSpirituelRow,
+          $$DonsSpirituelsTableFilterComposer,
+          $$DonsSpirituelsTableOrderingComposer,
+          $$DonsSpirituelsTableAnnotationComposer,
+          $$DonsSpirituelsTableCreateCompanionBuilder,
+          $$DonsSpirituelsTableUpdateCompanionBuilder,
+          (DonSpirituelRow, $$DonsSpirituelsTableReferences),
+          DonSpirituelRow,
+          PrefetchHooks Function({
+            bool donsFidelesRefs,
+            bool donsMinisteresCompatiblesRefs,
+          })
+        > {
+  $$DonsSpirituelsTableTableManager(
+    _$AppDatabase db,
+    $DonsSpirituelsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DonsSpirituelsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$DonsSpirituelsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$DonsSpirituelsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> code = const Value.absent(),
+                Value<String> libelle = const Value.absent(),
+                Value<String> descriptionBiblique = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DonsSpirituelsCompanion(
+                id: id,
+                code: code,
+                libelle: libelle,
+                descriptionBiblique: descriptionBiblique,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String code,
+                required String libelle,
+                required String descriptionBiblique,
+                Value<int> rowid = const Value.absent(),
+              }) => DonsSpirituelsCompanion.insert(
+                id: id,
+                code: code,
+                libelle: libelle,
+                descriptionBiblique: descriptionBiblique,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$DonsSpirituelsTable, DonSpirituelRow>(table),
+                  $$DonsSpirituelsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                donsFidelesRefs = false,
+                donsMinisteresCompatiblesRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (donsFidelesRefs) db.donsFideles,
+                    if (donsMinisteresCompatiblesRefs)
+                      db.donsMinisteresCompatibles,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (donsFidelesRefs)
+                        await $_getPrefetchedData<
+                          DonSpirituelRow,
+                          $DonsSpirituelsTable,
+                          DonFideleRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$DonsSpirituelsTableReferences
+                              ._donsFidelesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$DonsSpirituelsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).donsFidelesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.donId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (donsMinisteresCompatiblesRefs)
+                        await $_getPrefetchedData<
+                          DonSpirituelRow,
+                          $DonsSpirituelsTable,
+                          DonMinistereCompatibleRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$DonsSpirituelsTableReferences
+                              ._donsMinisteresCompatiblesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$DonsSpirituelsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).donsMinisteresCompatiblesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.donId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$DonsSpirituelsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $DonsSpirituelsTable,
+      DonSpirituelRow,
+      $$DonsSpirituelsTableFilterComposer,
+      $$DonsSpirituelsTableOrderingComposer,
+      $$DonsSpirituelsTableAnnotationComposer,
+      $$DonsSpirituelsTableCreateCompanionBuilder,
+      $$DonsSpirituelsTableUpdateCompanionBuilder,
+      (DonSpirituelRow, $$DonsSpirituelsTableReferences),
+      DonSpirituelRow,
+      PrefetchHooks Function({
+        bool donsFidelesRefs,
+        bool donsMinisteresCompatiblesRefs,
+      })
+    >;
+typedef $$DonsFidelesTableCreateCompanionBuilder =
+    DonsFidelesCompanion Function({
+      required String id,
+      required String fideleId,
+      required String donId,
+      required String niveauMaturite,
+      required String responsableSuiviId,
+      required DateTime dateEvaluation,
+      Value<String?> observations,
+      Value<int> rowid,
+    });
+typedef $$DonsFidelesTableUpdateCompanionBuilder =
+    DonsFidelesCompanion Function({
+      Value<String> id,
+      Value<String> fideleId,
+      Value<String> donId,
+      Value<String> niveauMaturite,
+      Value<String> responsableSuiviId,
+      Value<DateTime> dateEvaluation,
+      Value<String?> observations,
+      Value<int> rowid,
+    });
+
+final class $$DonsFidelesTableReferences
+    extends BaseReferences<_$AppDatabase, $DonsFidelesTable, DonFideleRow> {
+  $$DonsFidelesTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('dons_fideles__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $DonsSpirituelsTable _donIdTable(_$AppDatabase db) => db.donsSpirituels
+      .createAlias('dons_fideles__don_id__dons_spirituels__id');
+
+  $$DonsSpirituelsTableProcessedTableManager get donId {
+    final $_column = $_itemColumn<String>('don_id')!;
+
+    final manager = $$DonsSpirituelsTableTableManager(
+      $_db,
+      $_db.donsSpirituels,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_donIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $FidelesTable _responsableSuiviIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('dons_fideles__responsable_suivi_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get responsableSuiviId {
+    final $_column = $_itemColumn<String>('responsable_suivi_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_responsableSuiviIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$DonsFidelesTableFilterComposer
+    extends Composer<_$AppDatabase, $DonsFidelesTable> {
+  $$DonsFidelesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get niveauMaturite => $composableBuilder(
+    column: $table.niveauMaturite,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateEvaluation => $composableBuilder(
+    column: $table.dateEvaluation,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get observations => $composableBuilder(
+    column: $table.observations,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$DonsSpirituelsTableFilterComposer get donId {
+    final $$DonsSpirituelsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.donId,
+      referencedTable: $db.donsSpirituels,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DonsSpirituelsTableFilterComposer(
+            $db: $db,
+            $table: $db.donsSpirituels,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableFilterComposer get responsableSuiviId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.responsableSuiviId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DonsFidelesTableOrderingComposer
+    extends Composer<_$AppDatabase, $DonsFidelesTable> {
+  $$DonsFidelesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get niveauMaturite => $composableBuilder(
+    column: $table.niveauMaturite,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateEvaluation => $composableBuilder(
+    column: $table.dateEvaluation,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get observations => $composableBuilder(
+    column: $table.observations,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$DonsSpirituelsTableOrderingComposer get donId {
+    final $$DonsSpirituelsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.donId,
+      referencedTable: $db.donsSpirituels,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DonsSpirituelsTableOrderingComposer(
+            $db: $db,
+            $table: $db.donsSpirituels,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableOrderingComposer get responsableSuiviId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.responsableSuiviId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DonsFidelesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $DonsFidelesTable> {
+  $$DonsFidelesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get niveauMaturite => $composableBuilder(
+    column: $table.niveauMaturite,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get dateEvaluation => $composableBuilder(
+    column: $table.dateEvaluation,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get observations => $composableBuilder(
+    column: $table.observations,
+    builder: (column) => column,
+  );
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$DonsSpirituelsTableAnnotationComposer get donId {
+    final $$DonsSpirituelsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.donId,
+      referencedTable: $db.donsSpirituels,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DonsSpirituelsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.donsSpirituels,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableAnnotationComposer get responsableSuiviId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.responsableSuiviId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DonsFidelesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $DonsFidelesTable,
+          DonFideleRow,
+          $$DonsFidelesTableFilterComposer,
+          $$DonsFidelesTableOrderingComposer,
+          $$DonsFidelesTableAnnotationComposer,
+          $$DonsFidelesTableCreateCompanionBuilder,
+          $$DonsFidelesTableUpdateCompanionBuilder,
+          (DonFideleRow, $$DonsFidelesTableReferences),
+          DonFideleRow,
+          PrefetchHooks Function({
+            bool fideleId,
+            bool donId,
+            bool responsableSuiviId,
+          })
+        > {
+  $$DonsFidelesTableTableManager(_$AppDatabase db, $DonsFidelesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DonsFidelesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$DonsFidelesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$DonsFidelesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<String> donId = const Value.absent(),
+                Value<String> niveauMaturite = const Value.absent(),
+                Value<String> responsableSuiviId = const Value.absent(),
+                Value<DateTime> dateEvaluation = const Value.absent(),
+                Value<String?> observations = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DonsFidelesCompanion(
+                id: id,
+                fideleId: fideleId,
+                donId: donId,
+                niveauMaturite: niveauMaturite,
+                responsableSuiviId: responsableSuiviId,
+                dateEvaluation: dateEvaluation,
+                observations: observations,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String fideleId,
+                required String donId,
+                required String niveauMaturite,
+                required String responsableSuiviId,
+                required DateTime dateEvaluation,
+                Value<String?> observations = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DonsFidelesCompanion.insert(
+                id: id,
+                fideleId: fideleId,
+                donId: donId,
+                niveauMaturite: niveauMaturite,
+                responsableSuiviId: responsableSuiviId,
+                dateEvaluation: dateEvaluation,
+                observations: observations,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$DonsFidelesTable, DonFideleRow>(table),
+                  $$DonsFidelesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({fideleId = false, donId = false, responsableSuiviId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (fideleId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.fideleId,
+                                    referencedTable:
+                                        $$DonsFidelesTableReferences
+                                            ._fideleIdTable(db),
+                                    referencedColumn:
+                                        $$DonsFidelesTableReferences
+                                            ._fideleIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (donId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.donId,
+                                    referencedTable:
+                                        $$DonsFidelesTableReferences
+                                            ._donIdTable(db),
+                                    referencedColumn:
+                                        $$DonsFidelesTableReferences
+                                            ._donIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (responsableSuiviId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.responsableSuiviId,
+                                    referencedTable:
+                                        $$DonsFidelesTableReferences
+                                            ._responsableSuiviIdTable(db),
+                                    referencedColumn:
+                                        $$DonsFidelesTableReferences
+                                            ._responsableSuiviIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$DonsFidelesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $DonsFidelesTable,
+      DonFideleRow,
+      $$DonsFidelesTableFilterComposer,
+      $$DonsFidelesTableOrderingComposer,
+      $$DonsFidelesTableAnnotationComposer,
+      $$DonsFidelesTableCreateCompanionBuilder,
+      $$DonsFidelesTableUpdateCompanionBuilder,
+      (DonFideleRow, $$DonsFidelesTableReferences),
+      DonFideleRow,
+      PrefetchHooks Function({
+        bool fideleId,
+        bool donId,
+        bool responsableSuiviId,
+      })
+    >;
+typedef $$DonsMinisteresCompatiblesTableCreateCompanionBuilder =
+    DonsMinisteresCompatiblesCompanion Function({
+      required String id,
+      required String donId,
+      required String typeMinistereId,
+      Value<int> rowid,
+    });
+typedef $$DonsMinisteresCompatiblesTableUpdateCompanionBuilder =
+    DonsMinisteresCompatiblesCompanion Function({
+      Value<String> id,
+      Value<String> donId,
+      Value<String> typeMinistereId,
+      Value<int> rowid,
+    });
+
+final class $$DonsMinisteresCompatiblesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $DonsMinisteresCompatiblesTable,
+          DonMinistereCompatibleRow
+        > {
+  $$DonsMinisteresCompatiblesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $DonsSpirituelsTable _donIdTable(_$AppDatabase db) => db.donsSpirituels
+      .createAlias('dons_ministeres_compatibles__don_id__dons_spirituels__id');
+
+  $$DonsSpirituelsTableProcessedTableManager get donId {
+    final $_column = $_itemColumn<String>('don_id')!;
+
+    final manager = $$DonsSpirituelsTableTableManager(
+      $_db,
+      $_db.donsSpirituels,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_donIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $TypesMinisteresTable _typeMinistereIdTable(_$AppDatabase db) =>
+      db.typesMinisteres.createAlias(
+        'dons_ministeres_compatibles__type_ministere_id__types_ministeres__id',
+      );
+
+  $$TypesMinisteresTableProcessedTableManager get typeMinistereId {
+    final $_column = $_itemColumn<String>('type_ministere_id')!;
+
+    final manager = $$TypesMinisteresTableTableManager(
+      $_db,
+      $_db.typesMinisteres,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_typeMinistereIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$DonsMinisteresCompatiblesTableFilterComposer
+    extends Composer<_$AppDatabase, $DonsMinisteresCompatiblesTable> {
+  $$DonsMinisteresCompatiblesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$DonsSpirituelsTableFilterComposer get donId {
+    final $$DonsSpirituelsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.donId,
+      referencedTable: $db.donsSpirituels,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DonsSpirituelsTableFilterComposer(
+            $db: $db,
+            $table: $db.donsSpirituels,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TypesMinisteresTableFilterComposer get typeMinistereId {
+    final $$TypesMinisteresTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.typeMinistereId,
+      referencedTable: $db.typesMinisteres,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TypesMinisteresTableFilterComposer(
+            $db: $db,
+            $table: $db.typesMinisteres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DonsMinisteresCompatiblesTableOrderingComposer
+    extends Composer<_$AppDatabase, $DonsMinisteresCompatiblesTable> {
+  $$DonsMinisteresCompatiblesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$DonsSpirituelsTableOrderingComposer get donId {
+    final $$DonsSpirituelsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.donId,
+      referencedTable: $db.donsSpirituels,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DonsSpirituelsTableOrderingComposer(
+            $db: $db,
+            $table: $db.donsSpirituels,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TypesMinisteresTableOrderingComposer get typeMinistereId {
+    final $$TypesMinisteresTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.typeMinistereId,
+      referencedTable: $db.typesMinisteres,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TypesMinisteresTableOrderingComposer(
+            $db: $db,
+            $table: $db.typesMinisteres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DonsMinisteresCompatiblesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $DonsMinisteresCompatiblesTable> {
+  $$DonsMinisteresCompatiblesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  $$DonsSpirituelsTableAnnotationComposer get donId {
+    final $$DonsSpirituelsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.donId,
+      referencedTable: $db.donsSpirituels,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DonsSpirituelsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.donsSpirituels,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TypesMinisteresTableAnnotationComposer get typeMinistereId {
+    final $$TypesMinisteresTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.typeMinistereId,
+      referencedTable: $db.typesMinisteres,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TypesMinisteresTableAnnotationComposer(
+            $db: $db,
+            $table: $db.typesMinisteres,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DonsMinisteresCompatiblesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $DonsMinisteresCompatiblesTable,
+          DonMinistereCompatibleRow,
+          $$DonsMinisteresCompatiblesTableFilterComposer,
+          $$DonsMinisteresCompatiblesTableOrderingComposer,
+          $$DonsMinisteresCompatiblesTableAnnotationComposer,
+          $$DonsMinisteresCompatiblesTableCreateCompanionBuilder,
+          $$DonsMinisteresCompatiblesTableUpdateCompanionBuilder,
+          (
+            DonMinistereCompatibleRow,
+            $$DonsMinisteresCompatiblesTableReferences,
+          ),
+          DonMinistereCompatibleRow,
+          PrefetchHooks Function({bool donId, bool typeMinistereId})
+        > {
+  $$DonsMinisteresCompatiblesTableTableManager(
+    _$AppDatabase db,
+    $DonsMinisteresCompatiblesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DonsMinisteresCompatiblesTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$DonsMinisteresCompatiblesTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$DonsMinisteresCompatiblesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> donId = const Value.absent(),
+                Value<String> typeMinistereId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DonsMinisteresCompatiblesCompanion(
+                id: id,
+                donId: donId,
+                typeMinistereId: typeMinistereId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String donId,
+                required String typeMinistereId,
+                Value<int> rowid = const Value.absent(),
+              }) => DonsMinisteresCompatiblesCompanion.insert(
+                id: id,
+                donId: donId,
+                typeMinistereId: typeMinistereId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $DonsMinisteresCompatiblesTable,
+                    DonMinistereCompatibleRow
+                  >(table),
+                  $$DonsMinisteresCompatiblesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({donId = false, typeMinistereId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (donId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.donId,
+                                referencedTable:
+                                    $$DonsMinisteresCompatiblesTableReferences
+                                        ._donIdTable(db),
+                                referencedColumn:
+                                    $$DonsMinisteresCompatiblesTableReferences
+                                        ._donIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (typeMinistereId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.typeMinistereId,
+                                referencedTable:
+                                    $$DonsMinisteresCompatiblesTableReferences
+                                        ._typeMinistereIdTable(db),
+                                referencedColumn:
+                                    $$DonsMinisteresCompatiblesTableReferences
+                                        ._typeMinistereIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$DonsMinisteresCompatiblesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $DonsMinisteresCompatiblesTable,
+      DonMinistereCompatibleRow,
+      $$DonsMinisteresCompatiblesTableFilterComposer,
+      $$DonsMinisteresCompatiblesTableOrderingComposer,
+      $$DonsMinisteresCompatiblesTableAnnotationComposer,
+      $$DonsMinisteresCompatiblesTableCreateCompanionBuilder,
+      $$DonsMinisteresCompatiblesTableUpdateCompanionBuilder,
+      (DonMinistereCompatibleRow, $$DonsMinisteresCompatiblesTableReferences),
+      DonMinistereCompatibleRow,
+      PrefetchHooks Function({bool donId, bool typeMinistereId})
+    >;
 typedef $$SyncOutboxTableCreateCompanionBuilder =
     SyncOutboxCompanion Function({
       required String id,
@@ -14201,6 +16965,15 @@ class $AppDatabaseManager {
       $$MandatsResponsablesTableTableManager(_db, _db.mandatsResponsables);
   $$ActivitesMinisteresTableTableManager get activitesMinisteres =>
       $$ActivitesMinisteresTableTableManager(_db, _db.activitesMinisteres);
+  $$DonsSpirituelsTableTableManager get donsSpirituels =>
+      $$DonsSpirituelsTableTableManager(_db, _db.donsSpirituels);
+  $$DonsFidelesTableTableManager get donsFideles =>
+      $$DonsFidelesTableTableManager(_db, _db.donsFideles);
+  $$DonsMinisteresCompatiblesTableTableManager get donsMinisteresCompatibles =>
+      $$DonsMinisteresCompatiblesTableTableManager(
+        _db,
+        _db.donsMinisteresCompatibles,
+      );
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }

@@ -222,6 +222,55 @@ class ActivitesMinisteres extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Table Drift DonSpirituel (Module IV, RG-IV-04) — référentiel fixe des
+/// neuf dons spirituels (1 Corinthiens 12), seedé en migration.
+@DataClassName('DonSpirituelRow')
+class DonsSpirituels extends Table {
+  TextColumn get id => text()();
+  TextColumn get code => text()();
+  TextColumn get libelle => text()();
+  TextColumn get descriptionBiblique => text()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (code)'];
+}
+
+/// Table Drift DonFidele (Module IV, RG-IV-01/02) — chaque ligne est une
+/// évaluation ; jamais mise à jour, seulement ajoutée (historique complet).
+@DataClassName('DonFideleRow')
+class DonsFideles extends Table {
+  TextColumn get id => text()();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  TextColumn get donId => text().references(DonsSpirituels, #id)();
+  TextColumn get niveauMaturite => text()();
+  @ReferenceName('evaluationsCommeResponsable')
+  TextColumn get responsableSuiviId => text().references(Fideles, #id)();
+  DateTimeColumn get dateEvaluation => dateTime()();
+  TextColumn get observations => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift DonMinistereCompatible (Module IV, RG-IV-03) — table de
+/// correspondance alimentant la suggestion d'affectation (Module III),
+/// vide par défaut (jugement pastoral, hors périmètre technique).
+@DataClassName('DonMinistereCompatibleRow')
+class DonsMinisteresCompatibles extends Table {
+  TextColumn get id => text()();
+  TextColumn get donId => text().references(DonsSpirituels, #id)();
+  TextColumn get typeMinistereId => text().references(TypesMinisteres, #id)();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (don_id, type_ministere_id)'];
+}
+
 /// File d'attente hors ligne (RG-OFF-02) : chaque écriture locale enregistre
 /// ici l'événement à rejouer vers Supabase dès qu'une connexion est
 /// disponible, dans l'ordre chronologique, jamais purgée avant confirmation

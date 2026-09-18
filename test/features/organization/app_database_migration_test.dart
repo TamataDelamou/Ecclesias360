@@ -153,4 +153,56 @@ void main() {
 
     await db.close();
   });
+
+  test('un fichier créé en schéma v5 reçoit les tables du Module IV et le seed RG-IV-04 à l\'ouverture', () async {
+    final fichier = File(
+      path.join(Directory.systemTemp.path, 'ecclesias_migration_test_v5_${DateTime.now().microsecondsSinceEpoch}.sqlite'),
+    );
+    addTearDown(() {
+      if (fichier.existsSync()) fichier.deleteSync();
+    });
+
+    // Construit un vrai fichier v6 (via l'implémentation réelle, garantie
+    // fidèle au schéma courant), puis le ramène à v5 en retirant
+    // uniquement les tables propres au Module IV — plus fiable qu'une
+    // retranscription manuelle du DDL v5 complet.
+    final dbInitiale = AppDatabase(NativeDatabase(fichier));
+    await dbInitiale.into(dbInitiale.organisationNodes).insert(
+          OrganisationNodesCompanion.insert(
+            id: 'siege-1',
+            typeNoeud: 'siege',
+            nom: 'GSG',
+            codeInterne: 'GSG-SIEGE',
+            path: '/siege-1/',
+            depth: 0,
+            createdAt: DateTime(2026, 1, 1),
+            updatedAt: DateTime(2026, 1, 1),
+          ),
+        );
+    await dbInitiale.close();
+
+    final connexionBrute = sqlite3.sqlite3.open(fichier.path);
+    connexionBrute.execute('''
+      DROP TABLE dons_ministeres_compatibles;
+      DROP TABLE dons_fideles;
+      DROP TABLE dons_spirituels;
+      PRAGMA user_version = 5;
+    ''');
+    connexionBrute.close();
+
+    final db = AppDatabase(NativeDatabase(fichier));
+
+    final noeuds = await db.select(db.organisationNodes).get();
+    expect(noeuds, hasLength(1));
+    expect(noeuds.single.nom, 'GSG');
+
+    // Ne doit plus lever "no such table: dons_spirituels".
+    final dons = await db.select(db.donsSpirituels).get();
+    expect(dons, hasLength(9));
+
+    final evaluations = await db.select(db.donsFideles).get();
+    expect(evaluations, isEmpty);
+
+    await db.close();
+  });
 }
