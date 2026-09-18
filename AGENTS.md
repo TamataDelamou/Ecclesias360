@@ -139,8 +139,8 @@ confirmation utilisateur, exécution par le service métier normal, traçée. Ch
 
 | Module (n° Cahier) | Statut |
 |---|---|
-| Socle transversal (Phase 1) | ⚠️ partiel — `AppDatabase` (Drift), `IdGenerator`, `SyncCoordinator` (outbox RG-OFF-02) livrés |
-| I — Organisation | ⚠️ partiel — Lot 1 (Domaine & Données) + Lot 2 (Contrôleur & écrans) livrés : 7 des 9 points d'écran mobile du Cahier couverts (5 écrans réels — arbre avec recherche intégrée, fiche avec statistiques rapides intégrées, création/édition, historique des rattachements, annuaire des Églises). Écrans « Liste des responsables » et « Affectation d'un responsable » différés : entité `ResponsableNoeud`/`node_responsables` (RG-I-05, RECONSTRUCTION §3) pas encore créée, malgré Module II désormais disponible. Éditions Windows dédiées (layout multi-colonnes) non différenciées — même écrans que mobile pour l'instant |
+| Socle transversal (Phase 1) | ⚠️ partiel — `AppDatabase` (Drift), `IdGenerator`, `SyncCoordinator` (outbox RG-OFF-02) livrés. Sécurité de base (RG-SEC-05) : helpers `security definer` `fidele_courant_id()`/`role_courant()`/`noeuds_du_perimetre()` (search_path durci sur `pg_catalog, pg_temp`) livrés et vérifiés par exécution réelle (PGlite + stub du schéma `auth`), miroir Dart `PerimetreRules` testé en isolation. `create policy` intentionnellement absentes (activation groupée au déploiement de l'auth, RG-SEC-01, non construit) |
+| I — Organisation | ⚠️ partiel — Lot 1+2 (Domaine, Données, Contrôleur, écrans) + Lot 3 (`ResponsableNoeud`/`node_responsables`, RG-I-05) livrés : 9/9 points d'écran mobile du Cahier couverts (7 écrans réels — arbre avec recherche intégrée, fiche avec statistiques rapides intégrées, création/édition, historique des rattachements, annuaire des Églises, liste des responsables + affectation). Éditions Windows dédiées (layout multi-colonnes) non différenciées — même écrans que mobile pour l'instant |
 | II — Fidèles | ⚠️ partiel — Lot 1 (Domaine & Données) + Lot 2 (Contrôleur & écrans) livrés : `fideles`/`liens_familiaux`/`historique_fideles`/`tuteurs`, RG-II-01/02/03/04/05/06/07(partiel)/08/09(non implémenté, import de masse)/10(non implémenté, écran profil XXIII). 6 écrans sur 14 (liste+recherche, fiche+cheminement+liens+tuteur, création, historique) ; scan photo, import contact, fiche imprimable, fusion doublons, notes pastorales, consentement RGPD différés (III→VII/IX/X/XI/XII/XVIII/XIX pas construits, RG-II-07 agrégation non câblée) |
 | XXIII — Paramètres de l'application | ⚠️ partiel — RG-XXIII-02 (moteur de capacités `Role`/`CapacityRules`/`roles.json`) et RG-XXIII-03 (référentiel `ZoneGeographique`, désactivation non destructive) livrés, avec écrans de consultation (rôles) et de gestion (zones géographiques). Capacités non câblées dans l'UI des Modules I/II (nécessite un concept de session/rôle courant, lié à RG-SEC-01, différé). RG-XXIII-01 (versionnage propagé), 04 (sauvegardes), 05 (multilingue par nœud), 06 (audit) et les référentiels dons/offrandes/professions (dépendent de modules non construits) différés. Écran « Profil et préférences utilisateur » (RG-II-10) différé, même raison |
 | III — Ministères et départements | ⬜ à faire |
@@ -169,7 +169,7 @@ confirmation utilisateur, exécution par le service métier normal, traçée. Ch
 | **Extension** Cantiques (RG-CANT-*, sans n° Cahier) | ⬜ à faire — après XXIV Palier 1-2 |
 | **Extension** Église Sœur (RG-ES-*, sans n° Cahier) | ⬜ à faire — après I et IX |
 | i18n (socle ARB, sans `app_strings.dart`) | en continu, dès le premier module |
-| Sécurité RG-SEC-05 (helpers `noeuds_du_perimetre()` etc.) | ⬜ à faire — dès Phase 1 |
+| Sécurité RG-SEC-05 (helpers `noeuds_du_perimetre()` etc.) | ✅ livré (voir Socle transversal ci-dessus) |
 
 ---
 

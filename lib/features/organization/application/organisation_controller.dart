@@ -6,6 +6,7 @@ import '../../../core/error/app_error.dart';
 import '../data/organisation_node_repository.dart';
 import '../domain/models/categorie_confessionnelle.dart';
 import '../domain/models/historique_rattachement.dart';
+import '../domain/models/node_responsable.dart';
 import '../domain/models/organisation_node.dart';
 import '../domain/models/type_noeud.dart';
 
@@ -68,6 +69,19 @@ class OrganisationController extends ChangeNotifier {
 
   Stream<List<HistoriqueRattachement>> watchHistorique(String noeudId) =>
       _repository.watchHistorique(noeudId);
+
+  Stream<List<NodeResponsable>> watchResponsables(String noeudId) =>
+      _repository.watchResponsables(noeudId);
+
+  Future<bool> affecterResponsable({
+    required String noeudId,
+    required String fideleId,
+    required String fonction,
+  }) => _executer(
+        () => _repository.affecterResponsable(noeudId: noeudId, fideleId: fideleId, fonction: fonction),
+      );
+
+  Future<bool> retirerResponsable(String id) => _executer(() => _repository.retirerResponsable(id));
 
   Future<bool> creerNoeud({
     required TypeNoeud typeNoeud,

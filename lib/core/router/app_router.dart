@@ -9,6 +9,7 @@ import '../../features/organization/presentation/church_directory_screen.dart';
 import '../../features/organization/presentation/hierarchy_screen.dart';
 import '../../features/organization/presentation/node_detail_screen.dart';
 import '../../features/organization/presentation/node_form_screen.dart';
+import '../../features/organization/presentation/node_responsables_screen.dart';
 import '../../features/organization/presentation/rattachement_history_screen.dart';
 import '../../features/parametres/presentation/roles_screen.dart';
 import '../../features/parametres/presentation/zones_geographiques_screen.dart';
@@ -43,6 +44,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/organisation/:id/historique',
       builder: (context, state) => RattachementHistoryScreen(nodeId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: '/organisation/:id/responsables',
+      builder: (context, state) => NodeResponsablesScreen(nodeId: state.pathParameters['id']!),
     ),
     GoRoute(
       path: AppRoutes.fideles,

@@ -41,6 +41,23 @@ class HistoriqueRattachements extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Table Drift ResponsableNoeud (Module I, RG-I-05) — responsables en
+/// fonction d'un nœud, avec historique des mandats (`dateFin` nulle ou
+/// passée). Base de `noeuds_du_perimetre()` côté serveur (RG-SEC-05, voir
+/// RECONSTRUCTION_ecclesias360.md §3).
+@DataClassName('NodeResponsableRow')
+class NodeResponsables extends Table {
+  TextColumn get id => text()();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  TextColumn get fonction => text()();
+  DateTimeColumn get dateDebut => dateTime()();
+  DateTimeColumn get dateFin => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 /// Table Drift Fidèle (Module II, RG-II-*). `id` sert de matricule
 /// (RG-II-01).
 @DataClassName('FideleRow')

@@ -14,6 +14,7 @@ part 'app_database.g.dart';
 @DriftDatabase(tables: [
   OrganisationNodes,
   HistoriqueRattachements,
+  NodeResponsables,
   Fideles,
   LiensFamiliaux,
   HistoriqueFideles,
@@ -25,7 +26,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -44,6 +45,10 @@ class AppDatabase extends _$AppDatabase {
           // v2 -> v3 : ajout du référentiel ZoneGeographique (Module XXIII).
           if (from < 3) {
             await m.createTable(zonesGeographiques);
+          }
+          // v3 -> v4 : ajout de ResponsableNoeud (Module I, RG-I-05).
+          if (from < 4) {
+            await m.createTable(nodeResponsables);
           }
         },
         beforeOpen: (details) async {

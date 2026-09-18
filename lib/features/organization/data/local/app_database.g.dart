@@ -2345,6 +2345,424 @@ class FidelesCompanion extends UpdateCompanion<FideleRow> {
   }
 }
 
+class $NodeResponsablesTable extends NodeResponsables
+    with TableInfo<$NodeResponsablesTable, NodeResponsableRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NodeResponsablesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _noeudIdMeta = const VerificationMeta(
+    'noeudId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudId = GeneratedColumn<String>(
+    'noeud_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _fonctionMeta = const VerificationMeta(
+    'fonction',
+  );
+  @override
+  late final GeneratedColumn<String> fonction = GeneratedColumn<String>(
+    'fonction',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateDebutMeta = const VerificationMeta(
+    'dateDebut',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateDebut = GeneratedColumn<DateTime>(
+    'date_debut',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateFinMeta = const VerificationMeta(
+    'dateFin',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateFin = GeneratedColumn<DateTime>(
+    'date_fin',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    noeudId,
+    fideleId,
+    fonction,
+    dateDebut,
+    dateFin,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'node_responsables';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<NodeResponsableRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('noeud_id')) {
+      context.handle(
+        _noeudIdMeta,
+        noeudId.isAcceptableOrUnknown(data['noeud_id']!, _noeudIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudIdMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    if (data.containsKey('fonction')) {
+      context.handle(
+        _fonctionMeta,
+        fonction.isAcceptableOrUnknown(data['fonction']!, _fonctionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fonctionMeta);
+    }
+    if (data.containsKey('date_debut')) {
+      context.handle(
+        _dateDebutMeta,
+        dateDebut.isAcceptableOrUnknown(data['date_debut']!, _dateDebutMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateDebutMeta);
+    }
+    if (data.containsKey('date_fin')) {
+      context.handle(
+        _dateFinMeta,
+        dateFin.isAcceptableOrUnknown(data['date_fin']!, _dateFinMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  NodeResponsableRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NodeResponsableRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      noeudId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+      fonction: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fonction'],
+      )!,
+      dateDebut: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_debut'],
+      )!,
+      dateFin: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_fin'],
+      ),
+    );
+  }
+
+  @override
+  $NodeResponsablesTable createAlias(String alias) {
+    return $NodeResponsablesTable(attachedDatabase, alias);
+  }
+}
+
+class NodeResponsableRow extends DataClass
+    implements Insertable<NodeResponsableRow> {
+  final String id;
+  final String noeudId;
+  final String fideleId;
+  final String fonction;
+  final DateTime dateDebut;
+  final DateTime? dateFin;
+  const NodeResponsableRow({
+    required this.id,
+    required this.noeudId,
+    required this.fideleId,
+    required this.fonction,
+    required this.dateDebut,
+    this.dateFin,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['noeud_id'] = Variable<String>(noeudId);
+    map['fidele_id'] = Variable<String>(fideleId);
+    map['fonction'] = Variable<String>(fonction);
+    map['date_debut'] = Variable<DateTime>(dateDebut);
+    if (!nullToAbsent || dateFin != null) {
+      map['date_fin'] = Variable<DateTime>(dateFin);
+    }
+    return map;
+  }
+
+  NodeResponsablesCompanion toCompanion(bool nullToAbsent) {
+    return NodeResponsablesCompanion(
+      id: Value(id),
+      noeudId: Value(noeudId),
+      fideleId: Value(fideleId),
+      fonction: Value(fonction),
+      dateDebut: Value(dateDebut),
+      dateFin: dateFin == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dateFin),
+    );
+  }
+
+  factory NodeResponsableRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return NodeResponsableRow(
+      id: serializer.fromJson<String>(json['id']),
+      noeudId: serializer.fromJson<String>(json['noeudId']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+      fonction: serializer.fromJson<String>(json['fonction']),
+      dateDebut: serializer.fromJson<DateTime>(json['dateDebut']),
+      dateFin: serializer.fromJson<DateTime?>(json['dateFin']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'noeudId': serializer.toJson<String>(noeudId),
+      'fideleId': serializer.toJson<String>(fideleId),
+      'fonction': serializer.toJson<String>(fonction),
+      'dateDebut': serializer.toJson<DateTime>(dateDebut),
+      'dateFin': serializer.toJson<DateTime?>(dateFin),
+    };
+  }
+
+  NodeResponsableRow copyWith({
+    String? id,
+    String? noeudId,
+    String? fideleId,
+    String? fonction,
+    DateTime? dateDebut,
+    Value<DateTime?> dateFin = const Value.absent(),
+  }) => NodeResponsableRow(
+    id: id ?? this.id,
+    noeudId: noeudId ?? this.noeudId,
+    fideleId: fideleId ?? this.fideleId,
+    fonction: fonction ?? this.fonction,
+    dateDebut: dateDebut ?? this.dateDebut,
+    dateFin: dateFin.present ? dateFin.value : this.dateFin,
+  );
+  NodeResponsableRow copyWithCompanion(NodeResponsablesCompanion data) {
+    return NodeResponsableRow(
+      id: data.id.present ? data.id.value : this.id,
+      noeudId: data.noeudId.present ? data.noeudId.value : this.noeudId,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      fonction: data.fonction.present ? data.fonction.value : this.fonction,
+      dateDebut: data.dateDebut.present ? data.dateDebut.value : this.dateDebut,
+      dateFin: data.dateFin.present ? data.dateFin.value : this.dateFin,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NodeResponsableRow(')
+          ..write('id: $id, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('fonction: $fonction, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('dateFin: $dateFin')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, noeudId, fideleId, fonction, dateDebut, dateFin);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is NodeResponsableRow &&
+          other.id == this.id &&
+          other.noeudId == this.noeudId &&
+          other.fideleId == this.fideleId &&
+          other.fonction == this.fonction &&
+          other.dateDebut == this.dateDebut &&
+          other.dateFin == this.dateFin);
+}
+
+class NodeResponsablesCompanion extends UpdateCompanion<NodeResponsableRow> {
+  final Value<String> id;
+  final Value<String> noeudId;
+  final Value<String> fideleId;
+  final Value<String> fonction;
+  final Value<DateTime> dateDebut;
+  final Value<DateTime?> dateFin;
+  final Value<int> rowid;
+  const NodeResponsablesCompanion({
+    this.id = const Value.absent(),
+    this.noeudId = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.fonction = const Value.absent(),
+    this.dateDebut = const Value.absent(),
+    this.dateFin = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  NodeResponsablesCompanion.insert({
+    required String id,
+    required String noeudId,
+    required String fideleId,
+    required String fonction,
+    required DateTime dateDebut,
+    this.dateFin = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       noeudId = Value(noeudId),
+       fideleId = Value(fideleId),
+       fonction = Value(fonction),
+       dateDebut = Value(dateDebut);
+  static Insertable<NodeResponsableRow> custom({
+    Expression<String>? id,
+    Expression<String>? noeudId,
+    Expression<String>? fideleId,
+    Expression<String>? fonction,
+    Expression<DateTime>? dateDebut,
+    Expression<DateTime>? dateFin,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (noeudId != null) 'noeud_id': noeudId,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (fonction != null) 'fonction': fonction,
+      if (dateDebut != null) 'date_debut': dateDebut,
+      if (dateFin != null) 'date_fin': dateFin,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  NodeResponsablesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? noeudId,
+    Value<String>? fideleId,
+    Value<String>? fonction,
+    Value<DateTime>? dateDebut,
+    Value<DateTime?>? dateFin,
+    Value<int>? rowid,
+  }) {
+    return NodeResponsablesCompanion(
+      id: id ?? this.id,
+      noeudId: noeudId ?? this.noeudId,
+      fideleId: fideleId ?? this.fideleId,
+      fonction: fonction ?? this.fonction,
+      dateDebut: dateDebut ?? this.dateDebut,
+      dateFin: dateFin ?? this.dateFin,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (noeudId.present) {
+      map['noeud_id'] = Variable<String>(noeudId.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (fonction.present) {
+      map['fonction'] = Variable<String>(fonction.value);
+    }
+    if (dateDebut.present) {
+      map['date_debut'] = Variable<DateTime>(dateDebut.value);
+    }
+    if (dateFin.present) {
+      map['date_fin'] = Variable<DateTime>(dateFin.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NodeResponsablesCompanion(')
+          ..write('id: $id, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('fonction: $fonction, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('dateFin: $dateFin, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $LiensFamiliauxTable extends LiensFamiliaux
     with TableInfo<$LiensFamiliauxTable, LienFamilialRow> {
   @override
@@ -4496,6 +4914,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $HistoriqueRattachementsTable historiqueRattachements =
       $HistoriqueRattachementsTable(this);
   late final $FidelesTable fideles = $FidelesTable(this);
+  late final $NodeResponsablesTable nodeResponsables = $NodeResponsablesTable(
+    this,
+  );
   late final $LiensFamiliauxTable liensFamiliaux = $LiensFamiliauxTable(this);
   late final $HistoriqueFidelesTable historiqueFideles =
       $HistoriqueFidelesTable(this);
@@ -4511,6 +4932,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     organisationNodes,
     historiqueRattachements,
     fideles,
+    nodeResponsables,
     liensFamiliaux,
     historiqueFideles,
     tuteurs,
@@ -4585,6 +5007,26 @@ final class $$OrganisationNodesTableReferences
     ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_fidelesRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$NodeResponsablesTable, List<NodeResponsableRow>>
+  _nodeResponsablesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.nodeResponsables,
+    aliasName: 'organisation_nodes__id__node_responsables__noeud_id',
+  );
+
+  $$NodeResponsablesTableProcessedTableManager get nodeResponsablesRefs {
+    final manager = $$NodeResponsablesTableTableManager(
+      $_db,
+      $_db.nodeResponsables,
+    ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _nodeResponsablesRefsTable($_db),
+    );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -4691,6 +5133,31 @@ class $$OrganisationNodesTableFilterComposer
           }) => $$FidelesTableFilterComposer(
             $db: $db,
             $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> nodeResponsablesRefs(
+    Expression<bool> Function($$NodeResponsablesTableFilterComposer f) f,
+  ) {
+    final $$NodeResponsablesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.nodeResponsables,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$NodeResponsablesTableFilterComposer(
+            $db: $db,
+            $table: $db.nodeResponsables,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -4872,6 +5339,31 @@ class $$OrganisationNodesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> nodeResponsablesRefs<T extends Object>(
+    Expression<T> Function($$NodeResponsablesTableAnnotationComposer a) f,
+  ) {
+    final $$NodeResponsablesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.nodeResponsables,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$NodeResponsablesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.nodeResponsables,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$OrganisationNodesTableTableManager
@@ -4887,7 +5379,7 @@ class $$OrganisationNodesTableTableManager
           $$OrganisationNodesTableUpdateCompanionBuilder,
           (OrganisationNodeRow, $$OrganisationNodesTableReferences),
           OrganisationNodeRow,
-          PrefetchHooks Function({bool fidelesRefs})
+          PrefetchHooks Function({bool fidelesRefs, bool nodeResponsablesRefs})
         > {
   $$OrganisationNodesTableTableManager(
     _$AppDatabase db,
@@ -4987,36 +5479,63 @@ class $$OrganisationNodesTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({fidelesRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (fidelesRefs) db.fideles],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (fidelesRefs)
-                    await $_getPrefetchedData<
-                      OrganisationNodeRow,
-                      $OrganisationNodesTable,
-                      FideleRow
-                    >(
-                      currentTable: table,
-                      referencedTable: $$OrganisationNodesTableReferences
-                          ._fidelesRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$OrganisationNodesTableReferences(
-                            db,
-                            table,
-                            p0,
-                          ).fidelesRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where((e) => e.noeudId == item.id),
-                      typedResults: items,
-                    ),
-                ];
+          prefetchHooksCallback:
+              ({fidelesRefs = false, nodeResponsablesRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (fidelesRefs) db.fideles,
+                    if (nodeResponsablesRefs) db.nodeResponsables,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (fidelesRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          FideleRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._fidelesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).fidelesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (nodeResponsablesRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          NodeResponsableRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._nodeResponsablesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).nodeResponsablesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -5033,7 +5552,7 @@ typedef $$OrganisationNodesTableProcessedTableManager =
       $$OrganisationNodesTableUpdateCompanionBuilder,
       (OrganisationNodeRow, $$OrganisationNodesTableReferences),
       OrganisationNodeRow,
-      PrefetchHooks Function({bool fidelesRefs})
+      PrefetchHooks Function({bool fidelesRefs, bool nodeResponsablesRefs})
     >;
 typedef $$HistoriqueRattachementsTableCreateCompanionBuilder =
     HistoriqueRattachementsCompanion Function({
@@ -5356,6 +5875,26 @@ final class $$FidelesTableReferences
     );
   }
 
+  static MultiTypedResultKey<$NodeResponsablesTable, List<NodeResponsableRow>>
+  _nodeResponsablesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.nodeResponsables,
+    aliasName: 'fideles__id__node_responsables__fidele_id',
+  );
+
+  $$NodeResponsablesTableProcessedTableManager get nodeResponsablesRefs {
+    final manager = $$NodeResponsablesTableTableManager(
+      $_db,
+      $_db.nodeResponsables,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _nodeResponsablesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
   static MultiTypedResultKey<$LiensFamiliauxTable, List<LienFamilialRow>>
   _liensCommeFidele1Table(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.liensFamiliaux,
@@ -5565,6 +6104,31 @@ class $$FidelesTableFilterComposer
           ),
     );
     return composer;
+  }
+
+  Expression<bool> nodeResponsablesRefs(
+    Expression<bool> Function($$NodeResponsablesTableFilterComposer f) f,
+  ) {
+    final $$NodeResponsablesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.nodeResponsables,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$NodeResponsablesTableFilterComposer(
+            $db: $db,
+            $table: $db.nodeResponsables,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
   }
 
   Expression<bool> liensCommeFidele1(
@@ -5907,6 +6471,31 @@ class $$FidelesTableAnnotationComposer
     return composer;
   }
 
+  Expression<T> nodeResponsablesRefs<T extends Object>(
+    Expression<T> Function($$NodeResponsablesTableAnnotationComposer a) f,
+  ) {
+    final $$NodeResponsablesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.nodeResponsables,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$NodeResponsablesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.nodeResponsables,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
   Expression<T> liensCommeFidele1<T extends Object>(
     Expression<T> Function($$LiensFamiliauxTableAnnotationComposer a) f,
   ) {
@@ -6049,6 +6638,7 @@ class $$FidelesTableTableManager
           FideleRow,
           PrefetchHooks Function({
             bool noeudId,
+            bool nodeResponsablesRefs,
             bool liensCommeFidele1,
             bool liensCommeFidele2,
             bool historiqueFidelesRefs,
@@ -6162,6 +6752,7 @@ class $$FidelesTableTableManager
           prefetchHooksCallback:
               ({
                 noeudId = false,
+                nodeResponsablesRefs = false,
                 liensCommeFidele1 = false,
                 liensCommeFidele2 = false,
                 historiqueFidelesRefs = false,
@@ -6171,6 +6762,7 @@ class $$FidelesTableTableManager
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
+                    if (nodeResponsablesRefs) db.nodeResponsables,
                     if (liensCommeFidele1) db.liensFamiliaux,
                     if (liensCommeFidele2) db.liensFamiliaux,
                     if (historiqueFidelesRefs) db.historiqueFideles,
@@ -6211,6 +6803,27 @@ class $$FidelesTableTableManager
                       },
                   getPrefetchedDataCallback: (items) async {
                     return [
+                      if (nodeResponsablesRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          NodeResponsableRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._nodeResponsablesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).nodeResponsablesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                       if (liensCommeFidele1)
                         await $_getPrefetchedData<
                           FideleRow,
@@ -6338,12 +6951,454 @@ typedef $$FidelesTableProcessedTableManager =
       FideleRow,
       PrefetchHooks Function({
         bool noeudId,
+        bool nodeResponsablesRefs,
         bool liensCommeFidele1,
         bool liensCommeFidele2,
         bool historiqueFidelesRefs,
         bool tuteursCommeMineur,
         bool tuteursCommeTuteur,
       })
+    >;
+typedef $$NodeResponsablesTableCreateCompanionBuilder =
+    NodeResponsablesCompanion Function({
+      required String id,
+      required String noeudId,
+      required String fideleId,
+      required String fonction,
+      required DateTime dateDebut,
+      Value<DateTime?> dateFin,
+      Value<int> rowid,
+    });
+typedef $$NodeResponsablesTableUpdateCompanionBuilder =
+    NodeResponsablesCompanion Function({
+      Value<String> id,
+      Value<String> noeudId,
+      Value<String> fideleId,
+      Value<String> fonction,
+      Value<DateTime> dateDebut,
+      Value<DateTime?> dateFin,
+      Value<int> rowid,
+    });
+
+final class $$NodeResponsablesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $NodeResponsablesTable,
+          NodeResponsableRow
+        > {
+  $$NodeResponsablesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $OrganisationNodesTable _noeudIdTable(_$AppDatabase db) => db
+      .organisationNodes
+      .createAlias('node_responsables__noeud_id__organisation_nodes__id');
+
+  $$OrganisationNodesTableProcessedTableManager get noeudId {
+    final $_column = $_itemColumn<String>('noeud_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('node_responsables__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$NodeResponsablesTableFilterComposer
+    extends Composer<_$AppDatabase, $NodeResponsablesTable> {
+  $$NodeResponsablesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fonction => $composableBuilder(
+    column: $table.fonction,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateFin => $composableBuilder(
+    column: $table.dateFin,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$OrganisationNodesTableFilterComposer get noeudId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$NodeResponsablesTableOrderingComposer
+    extends Composer<_$AppDatabase, $NodeResponsablesTable> {
+  $$NodeResponsablesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fonction => $composableBuilder(
+    column: $table.fonction,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateFin => $composableBuilder(
+    column: $table.dateFin,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$OrganisationNodesTableOrderingComposer get noeudId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$NodeResponsablesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $NodeResponsablesTable> {
+  $$NodeResponsablesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get fonction =>
+      $composableBuilder(column: $table.fonction, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateDebut =>
+      $composableBuilder(column: $table.dateDebut, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateFin =>
+      $composableBuilder(column: $table.dateFin, builder: (column) => column);
+
+  $$OrganisationNodesTableAnnotationComposer get noeudId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$NodeResponsablesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $NodeResponsablesTable,
+          NodeResponsableRow,
+          $$NodeResponsablesTableFilterComposer,
+          $$NodeResponsablesTableOrderingComposer,
+          $$NodeResponsablesTableAnnotationComposer,
+          $$NodeResponsablesTableCreateCompanionBuilder,
+          $$NodeResponsablesTableUpdateCompanionBuilder,
+          (NodeResponsableRow, $$NodeResponsablesTableReferences),
+          NodeResponsableRow,
+          PrefetchHooks Function({bool noeudId, bool fideleId})
+        > {
+  $$NodeResponsablesTableTableManager(
+    _$AppDatabase db,
+    $NodeResponsablesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$NodeResponsablesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$NodeResponsablesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$NodeResponsablesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> noeudId = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<String> fonction = const Value.absent(),
+                Value<DateTime> dateDebut = const Value.absent(),
+                Value<DateTime?> dateFin = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => NodeResponsablesCompanion(
+                id: id,
+                noeudId: noeudId,
+                fideleId: fideleId,
+                fonction: fonction,
+                dateDebut: dateDebut,
+                dateFin: dateFin,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String noeudId,
+                required String fideleId,
+                required String fonction,
+                required DateTime dateDebut,
+                Value<DateTime?> dateFin = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => NodeResponsablesCompanion.insert(
+                id: id,
+                noeudId: noeudId,
+                fideleId: fideleId,
+                fonction: fonction,
+                dateDebut: dateDebut,
+                dateFin: dateFin,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$NodeResponsablesTable, NodeResponsableRow>(
+                    table,
+                  ),
+                  $$NodeResponsablesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({noeudId = false, fideleId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (noeudId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.noeudId,
+                                referencedTable:
+                                    $$NodeResponsablesTableReferences
+                                        ._noeudIdTable(db),
+                                referencedColumn:
+                                    $$NodeResponsablesTableReferences
+                                        ._noeudIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (fideleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.fideleId,
+                                referencedTable:
+                                    $$NodeResponsablesTableReferences
+                                        ._fideleIdTable(db),
+                                referencedColumn:
+                                    $$NodeResponsablesTableReferences
+                                        ._fideleIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$NodeResponsablesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $NodeResponsablesTable,
+      NodeResponsableRow,
+      $$NodeResponsablesTableFilterComposer,
+      $$NodeResponsablesTableOrderingComposer,
+      $$NodeResponsablesTableAnnotationComposer,
+      $$NodeResponsablesTableCreateCompanionBuilder,
+      $$NodeResponsablesTableUpdateCompanionBuilder,
+      (NodeResponsableRow, $$NodeResponsablesTableReferences),
+      NodeResponsableRow,
+      PrefetchHooks Function({bool noeudId, bool fideleId})
     >;
 typedef $$LiensFamiliauxTableCreateCompanionBuilder =
     LiensFamiliauxCompanion Function({
@@ -8167,6 +9222,8 @@ class $AppDatabaseManager {
       );
   $$FidelesTableTableManager get fideles =>
       $$FidelesTableTableManager(_db, _db.fideles);
+  $$NodeResponsablesTableTableManager get nodeResponsables =>
+      $$NodeResponsablesTableTableManager(_db, _db.nodeResponsables);
   $$LiensFamiliauxTableTableManager get liensFamiliaux =>
       $$LiensFamiliauxTableTableManager(_db, _db.liensFamiliaux);
   $$HistoriqueFidelesTableTableManager get historiqueFideles =>

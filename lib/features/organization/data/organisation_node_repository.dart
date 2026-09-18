@@ -7,6 +7,7 @@ import '../../../core/sync/sync_coordinator.dart';
 import '../../../core/utils/id_generator.dart';
 import '../domain/models/categorie_confessionnelle.dart';
 import '../domain/models/historique_rattachement.dart';
+import '../domain/models/node_responsable.dart';
 import '../domain/models/organisation_node.dart';
 import '../domain/models/statut_noeud.dart';
 import '../domain/models/type_noeud.dart';
@@ -84,6 +85,54 @@ class OrganisationNodeRepository {
               )
               .toList(growable: false),
         );
+  }
+
+  Stream<List<NodeResponsable>> watchResponsables(String noeudId) {
+    final query = _db.select(_db.nodeResponsables)
+      ..where((t) => t.noeudId.equals(noeudId))
+      ..orderBy([(t) => OrderingTerm.desc(t.dateDebut)]);
+    return query.watch().map(
+          (rows) => rows
+              .map(
+                (row) => NodeResponsable(
+                  id: row.id,
+                  noeudId: row.noeudId,
+                  fideleId: row.fideleId,
+                  fonction: row.fonction,
+                  dateDebut: row.dateDebut,
+                  dateFin: row.dateFin,
+                ),
+              )
+              .toList(growable: false),
+        );
+  }
+
+  /// RG-I-05 — affecte un responsable à un nœud. N'interdit pas les mandats
+  /// concurrents (le Cahier ne borne pas leur nombre par nœud) ; c'est la
+  /// liste des responsables actifs, pas un remplacement.
+  Future<void> affecterResponsable({
+    required String noeudId,
+    required String fideleId,
+    required String fonction,
+    DateTime? dateDebut,
+  }) {
+    return _db.into(_db.nodeResponsables).insert(
+          NodeResponsablesCompanion.insert(
+            id: IdGenerator.newId(),
+            noeudId: noeudId,
+            fideleId: fideleId,
+            fonction: fonction,
+            dateDebut: dateDebut ?? DateTime.now(),
+          ),
+        );
+  }
+
+  /// RG-I-05 — met fin au mandat (l'historique des titulaires est conservé,
+  /// jamais supprimé).
+  Future<void> retirerResponsable(String id) {
+    return (_db.update(_db.nodeResponsables)..where((t) => t.id.equals(id))).write(
+      NodeResponsablesCompanion(dateFin: Value(DateTime.now())),
+    );
   }
 
   Future<OrganisationNode?> findById(String id) async {
