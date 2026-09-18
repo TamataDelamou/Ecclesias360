@@ -25,6 +25,9 @@ import '../../features/organization/presentation/node_form_screen.dart';
 import '../../features/organization/presentation/node_responsables_screen.dart';
 import '../../features/organization/presentation/rattachement_history_screen.dart';
 import '../../features/parametres/presentation/roles_screen.dart';
+import '../../features/professions/presentation/fidele_competences_screen.dart';
+import '../../features/professions/presentation/profession_groupe_screen.dart';
+import '../../features/professions/presentation/professions_list_screen.dart';
 import '../../features/parametres/presentation/zones_geographiques_screen.dart';
 import '../constants/app_routes.dart';
 
@@ -147,6 +150,18 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/organisation/:id/dons-statistiques',
       builder: (context, state) => DonsStatistiquesScreen(noeudId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: AppRoutes.professions,
+      builder: (context, state) => const ProfessionsListScreen(),
+    ),
+    GoRoute(
+      path: '/professions/:id',
+      builder: (context, state) => ProfessionGroupeScreen(professionId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: '/fideles/:fideleId/competences',
+      builder: (context, state) => FideleCompetencesScreen(fideleId: state.pathParameters['fideleId']!),
     ),
   ],
 );

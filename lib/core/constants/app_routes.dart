@@ -37,4 +37,8 @@ abstract final class AppRoutes {
   static String donMinisteresCompatibles(String fideleId, String donId) =>
       '/fideles/$fideleId/dons/$donId/ministeres-compatibles';
   static String donsStatistiques(String noeudId) => '/organisation/$noeudId/dons-statistiques';
+
+  static const String professions = '/professions';
+  static String professionGroupe(String professionId) => '/professions/$professionId';
+  static String fideleCompetences(String fideleId) => '/fideles/$fideleId/competences';
 }

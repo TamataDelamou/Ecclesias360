@@ -15,6 +15,8 @@ import 'features/organization/data/local/app_database.dart';
 import 'features/organization/data/organisation_node_repository.dart';
 import 'features/parametres/application/zone_geographique_controller.dart';
 import 'features/parametres/data/zone_geographique_repository.dart';
+import 'features/professions/application/profession_controller.dart';
+import 'features/professions/data/profession_repository.dart';
 import 'l10n/app_localizations.dart';
 
 class EcclesiasApp extends StatefulWidget {
@@ -38,6 +40,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final MinistereController _ministereController;
   late final DonSpirituelRepository _donSpirituelRepository;
   late final DonSpirituelController _donSpirituelController;
+  late final ProfessionRepository _professionRepository;
+  late final ProfessionController _professionController;
 
   @override
   void initState() {
@@ -53,6 +57,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _ministereController = MinistereController(_ministereRepository);
     _donSpirituelRepository = DonSpirituelRepository(widget.database);
     _donSpirituelController = DonSpirituelController(_donSpirituelRepository);
+    _professionRepository = ProfessionRepository(widget.database);
+    _professionController = ProfessionController(_professionRepository);
   }
 
   @override
@@ -62,6 +68,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _zoneGeographiqueController.dispose();
     _ministereController.dispose();
     _donSpirituelController.dispose();
+    _professionController.dispose();
     super.dispose();
   }
 
@@ -74,6 +81,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
         ChangeNotifierProvider<ZoneGeographiqueController>.value(value: _zoneGeographiqueController),
         ChangeNotifierProvider<MinistereController>.value(value: _ministereController),
         ChangeNotifierProvider<DonSpirituelController>.value(value: _donSpirituelController),
+        ChangeNotifierProvider<ProfessionController>.value(value: _professionController),
       ],
       child: MaterialApp.router(
         onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,

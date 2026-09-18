@@ -116,6 +116,12 @@ class FideleDetailScreen extends StatelessWidget {
             onPressed: () => context.push(AppRoutes.donsFidele(fidele.id)),
           ),
           const SizedBox(height: 8),
+          OutlinedButton.icon(
+            icon: const Icon(Icons.work_outline),
+            label: const Text('Compétences professionnelles'),
+            onPressed: () => context.push(AppRoutes.fideleCompetences(fidele.id)),
+          ),
+          const SizedBox(height: 8),
           if (fidele.statut != StatutFidele.inactif)
             OutlinedButton.icon(
               icon: const Icon(Icons.archive_outlined),
