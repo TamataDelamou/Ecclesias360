@@ -4,7 +4,7 @@ import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
 
-/// The translations for Spanish (`es`).
+/// The translations for Spanish Castilian (`es`).
 class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
@@ -60,10 +60,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get comiteChampOrdreDuJour => 'Orden del día';
 
   @override
-  String get comiteChampPorteeDisciplinaire => 'Alcance disciplinario (Módulo X)';
+  String get comiteChampPorteeDisciplinaire =>
+      'Alcance disciplinario (Módulo X)';
 
   @override
-  String get comiteChampResultatVote => 'Resultado de la votación (ej. 5 a favor, 1 en contra)';
+  String get comiteChampResultatVote =>
+      'Resultado de la votación (ej. 5 a favor, 1 en contra)';
 
   @override
   String get comiteCloreMandatTooltip => 'Finalizar el mandato';
@@ -81,10 +83,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get comiteErratumsTitre => 'Erratas';
 
   @override
-  String comiteMembreActif(String fonction, String date) => '$fonction — desde el $date';
+  String comiteMembreActif(String fonction, String date) {
+    return '$fonction — desde el $date';
+  }
 
   @override
-  String comiteMembreClos(String fonction) => '$fonction (mandato finalizado)';
+  String comiteMembreClos(String fonction) {
+    return '$fonction (mandato finalizado)';
+  }
 
   @override
   String get comiteMembresTitre => 'Miembros del comité';
@@ -105,7 +111,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get comiteProcesVerbalTitre => 'Acta';
 
   @override
-  String get comitePvValideEtImmuable => 'Esta acta está validada y es inmutable.';
+  String get comitePvValideEtImmuable =>
+      'Esta acta está validada y es inmutable.';
 
   @override
   String get comiteQuorumAtteint => 'Cuórum alcanzado';
@@ -240,7 +247,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get cultePublicationTitre => 'Publicación posterior al culto';
 
   @override
-  String cultePublieLe(String date) => 'Publicado el $date';
+  String cultePublieLe(String date) {
+    return 'Publicado el $date';
+  }
 
   @override
   String get cultePublierBouton => 'Publicar';
@@ -339,13 +348,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get fideleCheminementTitre => 'Camino espiritual';
 
   @override
-  String fideleDateNaissanceValeur(String date) => 'Fecha de nacimiento: $date';
+  String fideleDateNaissanceValeur(String date) {
+    return 'Fecha de nacimiento: $date';
+  }
 
   @override
   String get fideleHistoriqueAucune => 'Ninguna modificación registrada.';
 
   @override
-  String fideleHistoriqueTitre(String nom) => 'Historial — $nom';
+  String fideleHistoriqueTitre(String nom) {
+    return 'Historial — $nom';
+  }
 
   @override
   String get fideleHistoriqueTooltip => 'Historial de modificaciones';
@@ -366,10 +379,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get fideleStatutActuel => 'Estado actual';
 
   @override
-  String get fideleStatutDisciplineNote => 'Este estado solo puede modificarse desde el módulo Disciplina (RG-II-03).';
+  String get fideleStatutDisciplineNote =>
+      'Este estado solo puede modificarse desde el módulo Disciplina (RG-II-03).';
 
   @override
-  String fideleTransitionVers(String cible) => '→ $cible';
+  String fideleTransitionVers(String cible) {
+    return '→ $cible';
+  }
 
   @override
   String get fideleTuteurLegalTitre => 'Tutor legal (RG-II-06)';
@@ -381,7 +397,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get fidelesCreerAction => 'Crear un feligrés';
 
   @override
-  String get fidelesRechercherIndice => 'Buscar un feligrés (apellido o nombres)';
+  String get fidelesRechercherIndice =>
+      'Buscar un feligrés (apellido o nombres)';
 
   @override
   String get fidelesTitre => 'Feligreses';

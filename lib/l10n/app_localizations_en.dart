@@ -81,10 +81,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get comiteErratumsTitre => 'Corrections';
 
   @override
-  String comiteMembreActif(String fonction, String date) => '$fonction — since $date';
+  String comiteMembreActif(String fonction, String date) {
+    return '$fonction — since $date';
+  }
 
   @override
-  String comiteMembreClos(String fonction) => '$fonction (term ended)';
+  String comiteMembreClos(String fonction) {
+    return '$fonction (term ended)';
+  }
 
   @override
   String get comiteMembresTitre => 'Committee members';
@@ -105,7 +109,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get comiteProcesVerbalTitre => 'Minutes';
 
   @override
-  String get comitePvValideEtImmuable => 'These minutes are validated and immutable.';
+  String get comitePvValideEtImmuable =>
+      'These minutes are validated and immutable.';
 
   @override
   String get comiteQuorumAtteint => 'Quorum reached';
@@ -117,7 +122,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get comiteQuorumNonConfigure => 'Quorum not configured';
 
   @override
-  String get comiteSeanceIntrouvableCorps => 'This meeting does not exist (anymore).';
+  String get comiteSeanceIntrouvableCorps =>
+      'This meeting does not exist (anymore).';
 
   @override
   String get comiteSeanceTitre => 'Meeting';
@@ -240,7 +246,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cultePublicationTitre => 'Post-service publication';
 
   @override
-  String cultePublieLe(String date) => 'Published on $date';
+  String cultePublieLe(String date) {
+    return 'Published on $date';
+  }
 
   @override
   String get cultePublierBouton => 'Publish';
@@ -339,13 +347,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fideleCheminementTitre => 'Spiritual journey';
 
   @override
-  String fideleDateNaissanceValeur(String date) => 'Date of birth: $date';
+  String fideleDateNaissanceValeur(String date) {
+    return 'Date of birth: $date';
+  }
 
   @override
   String get fideleHistoriqueAucune => 'No changes recorded yet.';
 
   @override
-  String fideleHistoriqueTitre(String nom) => 'History — $nom';
+  String fideleHistoriqueTitre(String nom) {
+    return 'History — $nom';
+  }
 
   @override
   String get fideleHistoriqueTooltip => 'Change history';
@@ -366,10 +378,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fideleStatutActuel => 'Current status';
 
   @override
-  String get fideleStatutDisciplineNote => 'This status can only be changed from the Discipline module (RG-II-03).';
+  String get fideleStatutDisciplineNote =>
+      'This status can only be changed from the Discipline module (RG-II-03).';
 
   @override
-  String fideleTransitionVers(String cible) => '→ $cible';
+  String fideleTransitionVers(String cible) {
+    return '→ $cible';
+  }
 
   @override
   String get fideleTuteurLegalTitre => 'Legal guardian (RG-II-06)';

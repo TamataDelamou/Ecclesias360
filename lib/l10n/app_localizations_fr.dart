@@ -60,10 +60,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get comiteChampOrdreDuJour => 'Ordre du jour';
 
   @override
-  String get comiteChampPorteeDisciplinaire => 'Portée disciplinaire (Module X)';
+  String get comiteChampPorteeDisciplinaire =>
+      'Portée disciplinaire (Module X)';
 
   @override
-  String get comiteChampResultatVote => 'Résultat du vote (ex. 5 pour, 1 contre)';
+  String get comiteChampResultatVote =>
+      'Résultat du vote (ex. 5 pour, 1 contre)';
 
   @override
   String get comiteCloreMandatTooltip => 'Clore le mandat';
@@ -81,10 +83,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get comiteErratumsTitre => 'Erratums';
 
   @override
-  String comiteMembreActif(String fonction, String date) => '$fonction — depuis le $date';
+  String comiteMembreActif(String fonction, String date) {
+    return '$fonction — depuis le $date';
+  }
 
   @override
-  String comiteMembreClos(String fonction) => '$fonction (mandat clos)';
+  String comiteMembreClos(String fonction) {
+    return '$fonction (mandat clos)';
+  }
 
   @override
   String get comiteMembresTitre => 'Membres du comité';
@@ -105,7 +111,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get comiteProcesVerbalTitre => 'Procès-verbal';
 
   @override
-  String get comitePvValideEtImmuable => 'Ce procès-verbal est validé et immuable.';
+  String get comitePvValideEtImmuable =>
+      'Ce procès-verbal est validé et immuable.';
 
   @override
   String get comiteQuorumAtteint => 'Quorum atteint';
@@ -117,7 +124,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get comiteQuorumNonConfigure => 'Quorum non configuré';
 
   @override
-  String get comiteSeanceIntrouvableCorps => 'Cette séance n\'existe pas (ou plus).';
+  String get comiteSeanceIntrouvableCorps =>
+      'Cette séance n\'existe pas (ou plus).';
 
   @override
   String get comiteSeanceTitre => 'Séance';
@@ -240,7 +248,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get cultePublicationTitre => 'Publication post-culte';
 
   @override
-  String cultePublieLe(String date) => 'Publié le $date';
+  String cultePublieLe(String date) {
+    return 'Publié le $date';
+  }
 
   @override
   String get cultePublierBouton => 'Publier';
@@ -339,13 +349,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String get fideleCheminementTitre => 'Cheminement spirituel';
 
   @override
-  String fideleDateNaissanceValeur(String date) => 'Date de naissance : $date';
+  String fideleDateNaissanceValeur(String date) {
+    return 'Date de naissance : $date';
+  }
 
   @override
   String get fideleHistoriqueAucune => 'Aucune modification historisée.';
 
   @override
-  String fideleHistoriqueTitre(String nom) => 'Historique — $nom';
+  String fideleHistoriqueTitre(String nom) {
+    return 'Historique — $nom';
+  }
 
   @override
   String get fideleHistoriqueTooltip => 'Historique des modifications';
@@ -366,10 +380,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get fideleStatutActuel => 'Statut actuel';
 
   @override
-  String get fideleStatutDisciplineNote => 'Ce statut ne peut être modifié que depuis le module Discipline (RG-II-03).';
+  String get fideleStatutDisciplineNote =>
+      'Ce statut ne peut être modifié que depuis le module Discipline (RG-II-03).';
 
   @override
-  String fideleTransitionVers(String cible) => '→ $cible';
+  String fideleTransitionVers(String cible) {
+    return '→ $cible';
+  }
 
   @override
   String get fideleTuteurLegalTitre => 'Tuteur légal (RG-II-06)';

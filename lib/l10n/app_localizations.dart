@@ -321,7 +321,7 @@ abstract class AppLocalizations {
   /// Corps du message quand la séance demandée n'existe pas.
   ///
   /// In fr, this message translates to:
-  /// **'Cette séance n'existe pas (ou plus).'**
+  /// **'Cette séance n\'existe pas (ou plus).'**
   String get comiteSeanceIntrouvableCorps;
 
   /// Titre de l'écran de détail d'une séance.
@@ -453,7 +453,7 @@ abstract class AppLocalizations {
   /// Libellé du champ nombre d'occurrences d'une série récurrente.
   ///
   /// In fr, this message translates to:
-  /// **'Nombre d'occurrences'**
+  /// **'Nombre d\'occurrences'**
   String get culteChampNombreOccurrences;
 
   /// Libellé du champ ordre d'une séquence liturgique.
@@ -519,7 +519,7 @@ abstract class AppLocalizations {
   /// Libellé du champ date/heure avant sélection.
   ///
   /// In fr, this message translates to:
-  /// **'Choisir la date et l'heure'**
+  /// **'Choisir la date et l\'heure'**
   String get culteDateHeureChoisir;
 
   /// Bouton d'enregistrement du compte global de présence.
@@ -627,7 +627,7 @@ abstract class AppLocalizations {
   /// Bouton d'accès aux groupes de l'Église d'un fidèle.
   ///
   /// In fr, this message translates to:
-  /// **'Groupes de l'Église'**
+  /// **'Groupes de l\'Église'**
   String get fideleActionGroupes;
 
   /// Bouton d'ajout d'un lien familial dans la liste.
@@ -687,13 +687,13 @@ abstract class AppLocalizations {
   /// Libellé du champ nœud d'appartenance.
   ///
   /// In fr, this message translates to:
-  /// **'Nœud d'appartenance'**
+  /// **'Nœud d\'appartenance'**
   String get fideleChampNoeud;
 
   /// Message de validation du champ nœud d'appartenance.
   ///
   /// In fr, this message translates to:
-  /// **'Choisissez un nœud d'appartenance.'**
+  /// **'Choisissez un nœud d\'appartenance.'**
   String get fideleChampNoeudErreur;
 
   /// Libellé du champ nom de famille.
@@ -789,7 +789,7 @@ abstract class AppLocalizations {
   /// Corps du message quand le fidèle demandé n'existe pas.
   ///
   /// In fr, this message translates to:
-  /// **'Ce fidèle n'existe pas (ou plus).'**
+  /// **'Ce fidèle n\'existe pas (ou plus).'**
   String get fideleIntrouvableCorps;
 
   /// Titre affiché quand le fidèle demandé n'existe pas.
@@ -867,7 +867,7 @@ abstract class AppLocalizations {
   /// Libellé de la tuile de module Groupes de l'Église sur l'écran d'accueil.
   ///
   /// In fr, this message translates to:
-  /// **'Groupes de l'Église'**
+  /// **'Groupes de l\'Église'**
   String get moduleGroupesEglise;
 
   /// Libellé de la tuile de module Mandats arrivant à échéance sur l'écran d'accueil.
