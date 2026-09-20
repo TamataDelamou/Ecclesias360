@@ -41,8 +41,13 @@ abstract final class FideleRules {
       return;
     }
 
-    if (actuel == StatutSpirituel.membreEnDiscipline && !viaModuleDiscipline) {
-      throw ArgumentError('Seul le Module X peut faire sortir un fidèle du statut en discipline.');
+    if (actuel == StatutSpirituel.membreEnDiscipline) {
+      if (!viaModuleDiscipline) {
+        throw ArgumentError('Seul le Module X peut faire sortir un fidèle du statut en discipline.');
+      }
+      // Symétrique de l'entrée : le Module X restaure librement le statut
+      // antérieur (RG-X-04), hors chaîne de progression normale.
+      return;
     }
 
     if (actuel == StatutSpirituel.membreDecede) {

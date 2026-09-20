@@ -17572,6 +17572,2318 @@ class LettresRecommandationCompanion
   }
 }
 
+class $NaturesFauteTable extends NaturesFaute
+    with TableInfo<$NaturesFauteTable, NatureFauteRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NaturesFauteTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+    'code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _libelleMeta = const VerificationMeta(
+    'libelle',
+  );
+  @override
+  late final GeneratedColumn<String> libelle = GeneratedColumn<String>(
+    'libelle',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _standardMeta = const VerificationMeta(
+    'standard',
+  );
+  @override
+  late final GeneratedColumn<bool> standard = GeneratedColumn<bool>(
+    'standard',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("standard" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('actif'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, code, libelle, standard, statut];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'natures_faute';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<NatureFauteRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+        _codeMeta,
+        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_codeMeta);
+    }
+    if (data.containsKey('libelle')) {
+      context.handle(
+        _libelleMeta,
+        libelle.isAcceptableOrUnknown(data['libelle']!, _libelleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_libelleMeta);
+    }
+    if (data.containsKey('standard')) {
+      context.handle(
+        _standardMeta,
+        standard.isAcceptableOrUnknown(data['standard']!, _standardMeta),
+      );
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  NatureFauteRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NatureFauteRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      code: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code'],
+      )!,
+      libelle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}libelle'],
+      )!,
+      standard: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}standard'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+    );
+  }
+
+  @override
+  $NaturesFauteTable createAlias(String alias) {
+    return $NaturesFauteTable(attachedDatabase, alias);
+  }
+}
+
+class NatureFauteRow extends DataClass implements Insertable<NatureFauteRow> {
+  final String id;
+  final String code;
+  final String libelle;
+  final bool standard;
+  final String statut;
+  const NatureFauteRow({
+    required this.id,
+    required this.code,
+    required this.libelle,
+    required this.standard,
+    required this.statut,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['code'] = Variable<String>(code);
+    map['libelle'] = Variable<String>(libelle);
+    map['standard'] = Variable<bool>(standard);
+    map['statut'] = Variable<String>(statut);
+    return map;
+  }
+
+  NaturesFauteCompanion toCompanion(bool nullToAbsent) {
+    return NaturesFauteCompanion(
+      id: Value(id),
+      code: Value(code),
+      libelle: Value(libelle),
+      standard: Value(standard),
+      statut: Value(statut),
+    );
+  }
+
+  factory NatureFauteRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return NatureFauteRow(
+      id: serializer.fromJson<String>(json['id']),
+      code: serializer.fromJson<String>(json['code']),
+      libelle: serializer.fromJson<String>(json['libelle']),
+      standard: serializer.fromJson<bool>(json['standard']),
+      statut: serializer.fromJson<String>(json['statut']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'code': serializer.toJson<String>(code),
+      'libelle': serializer.toJson<String>(libelle),
+      'standard': serializer.toJson<bool>(standard),
+      'statut': serializer.toJson<String>(statut),
+    };
+  }
+
+  NatureFauteRow copyWith({
+    String? id,
+    String? code,
+    String? libelle,
+    bool? standard,
+    String? statut,
+  }) => NatureFauteRow(
+    id: id ?? this.id,
+    code: code ?? this.code,
+    libelle: libelle ?? this.libelle,
+    standard: standard ?? this.standard,
+    statut: statut ?? this.statut,
+  );
+  NatureFauteRow copyWithCompanion(NaturesFauteCompanion data) {
+    return NatureFauteRow(
+      id: data.id.present ? data.id.value : this.id,
+      code: data.code.present ? data.code.value : this.code,
+      libelle: data.libelle.present ? data.libelle.value : this.libelle,
+      standard: data.standard.present ? data.standard.value : this.standard,
+      statut: data.statut.present ? data.statut.value : this.statut,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NatureFauteRow(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('libelle: $libelle, ')
+          ..write('standard: $standard, ')
+          ..write('statut: $statut')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, code, libelle, standard, statut);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is NatureFauteRow &&
+          other.id == this.id &&
+          other.code == this.code &&
+          other.libelle == this.libelle &&
+          other.standard == this.standard &&
+          other.statut == this.statut);
+}
+
+class NaturesFauteCompanion extends UpdateCompanion<NatureFauteRow> {
+  final Value<String> id;
+  final Value<String> code;
+  final Value<String> libelle;
+  final Value<bool> standard;
+  final Value<String> statut;
+  final Value<int> rowid;
+  const NaturesFauteCompanion({
+    this.id = const Value.absent(),
+    this.code = const Value.absent(),
+    this.libelle = const Value.absent(),
+    this.standard = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  NaturesFauteCompanion.insert({
+    required String id,
+    required String code,
+    required String libelle,
+    this.standard = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       code = Value(code),
+       libelle = Value(libelle);
+  static Insertable<NatureFauteRow> custom({
+    Expression<String>? id,
+    Expression<String>? code,
+    Expression<String>? libelle,
+    Expression<bool>? standard,
+    Expression<String>? statut,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (code != null) 'code': code,
+      if (libelle != null) 'libelle': libelle,
+      if (standard != null) 'standard': standard,
+      if (statut != null) 'statut': statut,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  NaturesFauteCompanion copyWith({
+    Value<String>? id,
+    Value<String>? code,
+    Value<String>? libelle,
+    Value<bool>? standard,
+    Value<String>? statut,
+    Value<int>? rowid,
+  }) {
+    return NaturesFauteCompanion(
+      id: id ?? this.id,
+      code: code ?? this.code,
+      libelle: libelle ?? this.libelle,
+      standard: standard ?? this.standard,
+      statut: statut ?? this.statut,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (libelle.present) {
+      map['libelle'] = Variable<String>(libelle.value);
+    }
+    if (standard.present) {
+      map['standard'] = Variable<bool>(standard.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NaturesFauteCompanion(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('libelle: $libelle, ')
+          ..write('standard: $standard, ')
+          ..write('statut: $statut, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CommissionsDisciplinairesTable extends CommissionsDisciplinaires
+    with
+        TableInfo<$CommissionsDisciplinairesTable, CommissionDisciplinaireRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CommissionsDisciplinairesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _noeudIdMeta = const VerificationMeta(
+    'noeudId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudId = GeneratedColumn<String>(
+    'noeud_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _nomMeta = const VerificationMeta('nom');
+  @override
+  late final GeneratedColumn<String> nom = GeneratedColumn<String>(
+    'nom',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('active'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, noeudId, nom, statut];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'commissions_disciplinaires';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CommissionDisciplinaireRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('noeud_id')) {
+      context.handle(
+        _noeudIdMeta,
+        noeudId.isAcceptableOrUnknown(data['noeud_id']!, _noeudIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudIdMeta);
+    }
+    if (data.containsKey('nom')) {
+      context.handle(
+        _nomMeta,
+        nom.isAcceptableOrUnknown(data['nom']!, _nomMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nomMeta);
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CommissionDisciplinaireRow map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CommissionDisciplinaireRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      noeudId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_id'],
+      )!,
+      nom: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}nom'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+    );
+  }
+
+  @override
+  $CommissionsDisciplinairesTable createAlias(String alias) {
+    return $CommissionsDisciplinairesTable(attachedDatabase, alias);
+  }
+}
+
+class CommissionDisciplinaireRow extends DataClass
+    implements Insertable<CommissionDisciplinaireRow> {
+  final String id;
+  final String noeudId;
+  final String nom;
+  final String statut;
+  const CommissionDisciplinaireRow({
+    required this.id,
+    required this.noeudId,
+    required this.nom,
+    required this.statut,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['noeud_id'] = Variable<String>(noeudId);
+    map['nom'] = Variable<String>(nom);
+    map['statut'] = Variable<String>(statut);
+    return map;
+  }
+
+  CommissionsDisciplinairesCompanion toCompanion(bool nullToAbsent) {
+    return CommissionsDisciplinairesCompanion(
+      id: Value(id),
+      noeudId: Value(noeudId),
+      nom: Value(nom),
+      statut: Value(statut),
+    );
+  }
+
+  factory CommissionDisciplinaireRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CommissionDisciplinaireRow(
+      id: serializer.fromJson<String>(json['id']),
+      noeudId: serializer.fromJson<String>(json['noeudId']),
+      nom: serializer.fromJson<String>(json['nom']),
+      statut: serializer.fromJson<String>(json['statut']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'noeudId': serializer.toJson<String>(noeudId),
+      'nom': serializer.toJson<String>(nom),
+      'statut': serializer.toJson<String>(statut),
+    };
+  }
+
+  CommissionDisciplinaireRow copyWith({
+    String? id,
+    String? noeudId,
+    String? nom,
+    String? statut,
+  }) => CommissionDisciplinaireRow(
+    id: id ?? this.id,
+    noeudId: noeudId ?? this.noeudId,
+    nom: nom ?? this.nom,
+    statut: statut ?? this.statut,
+  );
+  CommissionDisciplinaireRow copyWithCompanion(
+    CommissionsDisciplinairesCompanion data,
+  ) {
+    return CommissionDisciplinaireRow(
+      id: data.id.present ? data.id.value : this.id,
+      noeudId: data.noeudId.present ? data.noeudId.value : this.noeudId,
+      nom: data.nom.present ? data.nom.value : this.nom,
+      statut: data.statut.present ? data.statut.value : this.statut,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommissionDisciplinaireRow(')
+          ..write('id: $id, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('nom: $nom, ')
+          ..write('statut: $statut')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, noeudId, nom, statut);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CommissionDisciplinaireRow &&
+          other.id == this.id &&
+          other.noeudId == this.noeudId &&
+          other.nom == this.nom &&
+          other.statut == this.statut);
+}
+
+class CommissionsDisciplinairesCompanion
+    extends UpdateCompanion<CommissionDisciplinaireRow> {
+  final Value<String> id;
+  final Value<String> noeudId;
+  final Value<String> nom;
+  final Value<String> statut;
+  final Value<int> rowid;
+  const CommissionsDisciplinairesCompanion({
+    this.id = const Value.absent(),
+    this.noeudId = const Value.absent(),
+    this.nom = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CommissionsDisciplinairesCompanion.insert({
+    required String id,
+    required String noeudId,
+    required String nom,
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       noeudId = Value(noeudId),
+       nom = Value(nom);
+  static Insertable<CommissionDisciplinaireRow> custom({
+    Expression<String>? id,
+    Expression<String>? noeudId,
+    Expression<String>? nom,
+    Expression<String>? statut,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (noeudId != null) 'noeud_id': noeudId,
+      if (nom != null) 'nom': nom,
+      if (statut != null) 'statut': statut,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CommissionsDisciplinairesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? noeudId,
+    Value<String>? nom,
+    Value<String>? statut,
+    Value<int>? rowid,
+  }) {
+    return CommissionsDisciplinairesCompanion(
+      id: id ?? this.id,
+      noeudId: noeudId ?? this.noeudId,
+      nom: nom ?? this.nom,
+      statut: statut ?? this.statut,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (noeudId.present) {
+      map['noeud_id'] = Variable<String>(noeudId.value);
+    }
+    if (nom.present) {
+      map['nom'] = Variable<String>(nom.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommissionsDisciplinairesCompanion(')
+          ..write('id: $id, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('nom: $nom, ')
+          ..write('statut: $statut, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MembresCommissionDisciplinaireTable
+    extends MembresCommissionDisciplinaire
+    with TableInfo<$MembresCommissionDisciplinaireTable, MembreCommissionRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MembresCommissionDisciplinaireTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _commissionIdMeta = const VerificationMeta(
+    'commissionId',
+  );
+  @override
+  late final GeneratedColumn<String> commissionId = GeneratedColumn<String>(
+    'commission_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES commissions_disciplinaires (id)',
+    ),
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, commissionId, fideleId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'membres_commission_disciplinaire';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MembreCommissionRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('commission_id')) {
+      context.handle(
+        _commissionIdMeta,
+        commissionId.isAcceptableOrUnknown(
+          data['commission_id']!,
+          _commissionIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_commissionIdMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MembreCommissionRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MembreCommissionRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      commissionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}commission_id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+    );
+  }
+
+  @override
+  $MembresCommissionDisciplinaireTable createAlias(String alias) {
+    return $MembresCommissionDisciplinaireTable(attachedDatabase, alias);
+  }
+}
+
+class MembreCommissionRow extends DataClass
+    implements Insertable<MembreCommissionRow> {
+  final String id;
+  final String commissionId;
+  final String fideleId;
+  const MembreCommissionRow({
+    required this.id,
+    required this.commissionId,
+    required this.fideleId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['commission_id'] = Variable<String>(commissionId);
+    map['fidele_id'] = Variable<String>(fideleId);
+    return map;
+  }
+
+  MembresCommissionDisciplinaireCompanion toCompanion(bool nullToAbsent) {
+    return MembresCommissionDisciplinaireCompanion(
+      id: Value(id),
+      commissionId: Value(commissionId),
+      fideleId: Value(fideleId),
+    );
+  }
+
+  factory MembreCommissionRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MembreCommissionRow(
+      id: serializer.fromJson<String>(json['id']),
+      commissionId: serializer.fromJson<String>(json['commissionId']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'commissionId': serializer.toJson<String>(commissionId),
+      'fideleId': serializer.toJson<String>(fideleId),
+    };
+  }
+
+  MembreCommissionRow copyWith({
+    String? id,
+    String? commissionId,
+    String? fideleId,
+  }) => MembreCommissionRow(
+    id: id ?? this.id,
+    commissionId: commissionId ?? this.commissionId,
+    fideleId: fideleId ?? this.fideleId,
+  );
+  MembreCommissionRow copyWithCompanion(
+    MembresCommissionDisciplinaireCompanion data,
+  ) {
+    return MembreCommissionRow(
+      id: data.id.present ? data.id.value : this.id,
+      commissionId: data.commissionId.present
+          ? data.commissionId.value
+          : this.commissionId,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MembreCommissionRow(')
+          ..write('id: $id, ')
+          ..write('commissionId: $commissionId, ')
+          ..write('fideleId: $fideleId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, commissionId, fideleId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MembreCommissionRow &&
+          other.id == this.id &&
+          other.commissionId == this.commissionId &&
+          other.fideleId == this.fideleId);
+}
+
+class MembresCommissionDisciplinaireCompanion
+    extends UpdateCompanion<MembreCommissionRow> {
+  final Value<String> id;
+  final Value<String> commissionId;
+  final Value<String> fideleId;
+  final Value<int> rowid;
+  const MembresCommissionDisciplinaireCompanion({
+    this.id = const Value.absent(),
+    this.commissionId = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MembresCommissionDisciplinaireCompanion.insert({
+    required String id,
+    required String commissionId,
+    required String fideleId,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       commissionId = Value(commissionId),
+       fideleId = Value(fideleId);
+  static Insertable<MembreCommissionRow> custom({
+    Expression<String>? id,
+    Expression<String>? commissionId,
+    Expression<String>? fideleId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (commissionId != null) 'commission_id': commissionId,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MembresCommissionDisciplinaireCompanion copyWith({
+    Value<String>? id,
+    Value<String>? commissionId,
+    Value<String>? fideleId,
+    Value<int>? rowid,
+  }) {
+    return MembresCommissionDisciplinaireCompanion(
+      id: id ?? this.id,
+      commissionId: commissionId ?? this.commissionId,
+      fideleId: fideleId ?? this.fideleId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (commissionId.present) {
+      map['commission_id'] = Variable<String>(commissionId.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MembresCommissionDisciplinaireCompanion(')
+          ..write('id: $id, ')
+          ..write('commissionId: $commissionId, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $DossiersDisciplinairesTable extends DossiersDisciplinaires
+    with TableInfo<$DossiersDisciplinairesTable, DossierDisciplinaireRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DossiersDisciplinairesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _noeudIdMeta = const VerificationMeta(
+    'noeudId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudId = GeneratedColumn<String>(
+    'noeud_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _natureFauteIdMeta = const VerificationMeta(
+    'natureFauteId',
+  );
+  @override
+  late final GeneratedColumn<String> natureFauteId = GeneratedColumn<String>(
+    'nature_faute_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES natures_faute (id)',
+    ),
+  );
+  static const VerificationMeta _dateOuvertureMeta = const VerificationMeta(
+    'dateOuverture',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateOuverture =
+      GeneratedColumn<DateTime>(
+        'date_ouverture',
+        aliasedName,
+        false,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('en_instruction'),
+  );
+  static const VerificationMeta _ouvertParFideleIdMeta = const VerificationMeta(
+    'ouvertParFideleId',
+  );
+  @override
+  late final GeneratedColumn<String> ouvertParFideleId =
+      GeneratedColumn<String>(
+        'ouvert_par_fidele_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES fideles (id)',
+        ),
+      );
+  static const VerificationMeta _statutSpirituelAnterieurMeta =
+      const VerificationMeta('statutSpirituelAnterieur');
+  @override
+  late final GeneratedColumn<String> statutSpirituelAnterieur =
+      GeneratedColumn<String>(
+        'statut_spirituel_anterieur',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _commissionIdMeta = const VerificationMeta(
+    'commissionId',
+  );
+  @override
+  late final GeneratedColumn<String> commissionId = GeneratedColumn<String>(
+    'commission_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES commissions_disciplinaires (id)',
+    ),
+  );
+  static const VerificationMeta _decisionMeta = const VerificationMeta(
+    'decision',
+  );
+  @override
+  late final GeneratedColumn<String> decision = GeneratedColumn<String>(
+    'decision',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _dateDecisionMeta = const VerificationMeta(
+    'dateDecision',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateDecision = GeneratedColumn<DateTime>(
+    'date_decision',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _dureeSanctionJoursMeta =
+      const VerificationMeta('dureeSanctionJours');
+  @override
+  late final GeneratedColumn<int> dureeSanctionJours = GeneratedColumn<int>(
+    'duree_sanction_jours',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _dateReintegrationPrevueMeta =
+      const VerificationMeta('dateReintegrationPrevue');
+  @override
+  late final GeneratedColumn<DateTime> dateReintegrationPrevue =
+      GeneratedColumn<DateTime>(
+        'date_reintegration_prevue',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _suspensionMinisteresAppliqueeMeta =
+      const VerificationMeta('suspensionMinisteresAppliquee');
+  @override
+  late final GeneratedColumn<bool> suspensionMinisteresAppliquee =
+      GeneratedColumn<bool>(
+        'suspension_ministeres_appliquee',
+        aliasedName,
+        false,
+        type: DriftSqlType.bool,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("suspension_ministeres_appliquee" IN (0, 1))',
+        ),
+        defaultValue: const Constant(false),
+      );
+  static const VerificationMeta _decisionComiteOrigineIdMeta =
+      const VerificationMeta('decisionComiteOrigineId');
+  @override
+  late final GeneratedColumn<String> decisionComiteOrigineId =
+      GeneratedColumn<String>(
+        'decision_comite_origine_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES decisions (id)',
+        ),
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    fideleId,
+    noeudId,
+    natureFauteId,
+    dateOuverture,
+    statut,
+    ouvertParFideleId,
+    statutSpirituelAnterieur,
+    commissionId,
+    decision,
+    dateDecision,
+    dureeSanctionJours,
+    dateReintegrationPrevue,
+    suspensionMinisteresAppliquee,
+    decisionComiteOrigineId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'dossiers_disciplinaires';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DossierDisciplinaireRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    if (data.containsKey('noeud_id')) {
+      context.handle(
+        _noeudIdMeta,
+        noeudId.isAcceptableOrUnknown(data['noeud_id']!, _noeudIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudIdMeta);
+    }
+    if (data.containsKey('nature_faute_id')) {
+      context.handle(
+        _natureFauteIdMeta,
+        natureFauteId.isAcceptableOrUnknown(
+          data['nature_faute_id']!,
+          _natureFauteIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_natureFauteIdMeta);
+    }
+    if (data.containsKey('date_ouverture')) {
+      context.handle(
+        _dateOuvertureMeta,
+        dateOuverture.isAcceptableOrUnknown(
+          data['date_ouverture']!,
+          _dateOuvertureMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_dateOuvertureMeta);
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    if (data.containsKey('ouvert_par_fidele_id')) {
+      context.handle(
+        _ouvertParFideleIdMeta,
+        ouvertParFideleId.isAcceptableOrUnknown(
+          data['ouvert_par_fidele_id']!,
+          _ouvertParFideleIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('statut_spirituel_anterieur')) {
+      context.handle(
+        _statutSpirituelAnterieurMeta,
+        statutSpirituelAnterieur.isAcceptableOrUnknown(
+          data['statut_spirituel_anterieur']!,
+          _statutSpirituelAnterieurMeta,
+        ),
+      );
+    }
+    if (data.containsKey('commission_id')) {
+      context.handle(
+        _commissionIdMeta,
+        commissionId.isAcceptableOrUnknown(
+          data['commission_id']!,
+          _commissionIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('decision')) {
+      context.handle(
+        _decisionMeta,
+        decision.isAcceptableOrUnknown(data['decision']!, _decisionMeta),
+      );
+    }
+    if (data.containsKey('date_decision')) {
+      context.handle(
+        _dateDecisionMeta,
+        dateDecision.isAcceptableOrUnknown(
+          data['date_decision']!,
+          _dateDecisionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('duree_sanction_jours')) {
+      context.handle(
+        _dureeSanctionJoursMeta,
+        dureeSanctionJours.isAcceptableOrUnknown(
+          data['duree_sanction_jours']!,
+          _dureeSanctionJoursMeta,
+        ),
+      );
+    }
+    if (data.containsKey('date_reintegration_prevue')) {
+      context.handle(
+        _dateReintegrationPrevueMeta,
+        dateReintegrationPrevue.isAcceptableOrUnknown(
+          data['date_reintegration_prevue']!,
+          _dateReintegrationPrevueMeta,
+        ),
+      );
+    }
+    if (data.containsKey('suspension_ministeres_appliquee')) {
+      context.handle(
+        _suspensionMinisteresAppliqueeMeta,
+        suspensionMinisteresAppliquee.isAcceptableOrUnknown(
+          data['suspension_ministeres_appliquee']!,
+          _suspensionMinisteresAppliqueeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('decision_comite_origine_id')) {
+      context.handle(
+        _decisionComiteOrigineIdMeta,
+        decisionComiteOrigineId.isAcceptableOrUnknown(
+          data['decision_comite_origine_id']!,
+          _decisionComiteOrigineIdMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  DossierDisciplinaireRow map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DossierDisciplinaireRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+      noeudId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_id'],
+      )!,
+      natureFauteId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}nature_faute_id'],
+      )!,
+      dateOuverture: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_ouverture'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+      ouvertParFideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ouvert_par_fidele_id'],
+      ),
+      statutSpirituelAnterieur: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut_spirituel_anterieur'],
+      ),
+      commissionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}commission_id'],
+      ),
+      decision: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}decision'],
+      ),
+      dateDecision: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_decision'],
+      ),
+      dureeSanctionJours: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}duree_sanction_jours'],
+      ),
+      dateReintegrationPrevue: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_reintegration_prevue'],
+      ),
+      suspensionMinisteresAppliquee: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}suspension_ministeres_appliquee'],
+      )!,
+      decisionComiteOrigineId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}decision_comite_origine_id'],
+      ),
+    );
+  }
+
+  @override
+  $DossiersDisciplinairesTable createAlias(String alias) {
+    return $DossiersDisciplinairesTable(attachedDatabase, alias);
+  }
+}
+
+class DossierDisciplinaireRow extends DataClass
+    implements Insertable<DossierDisciplinaireRow> {
+  final String id;
+  final String fideleId;
+  final String noeudId;
+  final String natureFauteId;
+  final DateTime dateOuverture;
+  final String statut;
+  final String? ouvertParFideleId;
+  final String? statutSpirituelAnterieur;
+  final String? commissionId;
+  final String? decision;
+  final DateTime? dateDecision;
+  final int? dureeSanctionJours;
+  final DateTime? dateReintegrationPrevue;
+  final bool suspensionMinisteresAppliquee;
+  final String? decisionComiteOrigineId;
+  const DossierDisciplinaireRow({
+    required this.id,
+    required this.fideleId,
+    required this.noeudId,
+    required this.natureFauteId,
+    required this.dateOuverture,
+    required this.statut,
+    this.ouvertParFideleId,
+    this.statutSpirituelAnterieur,
+    this.commissionId,
+    this.decision,
+    this.dateDecision,
+    this.dureeSanctionJours,
+    this.dateReintegrationPrevue,
+    required this.suspensionMinisteresAppliquee,
+    this.decisionComiteOrigineId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['fidele_id'] = Variable<String>(fideleId);
+    map['noeud_id'] = Variable<String>(noeudId);
+    map['nature_faute_id'] = Variable<String>(natureFauteId);
+    map['date_ouverture'] = Variable<DateTime>(dateOuverture);
+    map['statut'] = Variable<String>(statut);
+    if (!nullToAbsent || ouvertParFideleId != null) {
+      map['ouvert_par_fidele_id'] = Variable<String>(ouvertParFideleId);
+    }
+    if (!nullToAbsent || statutSpirituelAnterieur != null) {
+      map['statut_spirituel_anterieur'] = Variable<String>(
+        statutSpirituelAnterieur,
+      );
+    }
+    if (!nullToAbsent || commissionId != null) {
+      map['commission_id'] = Variable<String>(commissionId);
+    }
+    if (!nullToAbsent || decision != null) {
+      map['decision'] = Variable<String>(decision);
+    }
+    if (!nullToAbsent || dateDecision != null) {
+      map['date_decision'] = Variable<DateTime>(dateDecision);
+    }
+    if (!nullToAbsent || dureeSanctionJours != null) {
+      map['duree_sanction_jours'] = Variable<int>(dureeSanctionJours);
+    }
+    if (!nullToAbsent || dateReintegrationPrevue != null) {
+      map['date_reintegration_prevue'] = Variable<DateTime>(
+        dateReintegrationPrevue,
+      );
+    }
+    map['suspension_ministeres_appliquee'] = Variable<bool>(
+      suspensionMinisteresAppliquee,
+    );
+    if (!nullToAbsent || decisionComiteOrigineId != null) {
+      map['decision_comite_origine_id'] = Variable<String>(
+        decisionComiteOrigineId,
+      );
+    }
+    return map;
+  }
+
+  DossiersDisciplinairesCompanion toCompanion(bool nullToAbsent) {
+    return DossiersDisciplinairesCompanion(
+      id: Value(id),
+      fideleId: Value(fideleId),
+      noeudId: Value(noeudId),
+      natureFauteId: Value(natureFauteId),
+      dateOuverture: Value(dateOuverture),
+      statut: Value(statut),
+      ouvertParFideleId: ouvertParFideleId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ouvertParFideleId),
+      statutSpirituelAnterieur: statutSpirituelAnterieur == null && nullToAbsent
+          ? const Value.absent()
+          : Value(statutSpirituelAnterieur),
+      commissionId: commissionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(commissionId),
+      decision: decision == null && nullToAbsent
+          ? const Value.absent()
+          : Value(decision),
+      dateDecision: dateDecision == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dateDecision),
+      dureeSanctionJours: dureeSanctionJours == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dureeSanctionJours),
+      dateReintegrationPrevue: dateReintegrationPrevue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dateReintegrationPrevue),
+      suspensionMinisteresAppliquee: Value(suspensionMinisteresAppliquee),
+      decisionComiteOrigineId: decisionComiteOrigineId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(decisionComiteOrigineId),
+    );
+  }
+
+  factory DossierDisciplinaireRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DossierDisciplinaireRow(
+      id: serializer.fromJson<String>(json['id']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+      noeudId: serializer.fromJson<String>(json['noeudId']),
+      natureFauteId: serializer.fromJson<String>(json['natureFauteId']),
+      dateOuverture: serializer.fromJson<DateTime>(json['dateOuverture']),
+      statut: serializer.fromJson<String>(json['statut']),
+      ouvertParFideleId: serializer.fromJson<String?>(
+        json['ouvertParFideleId'],
+      ),
+      statutSpirituelAnterieur: serializer.fromJson<String?>(
+        json['statutSpirituelAnterieur'],
+      ),
+      commissionId: serializer.fromJson<String?>(json['commissionId']),
+      decision: serializer.fromJson<String?>(json['decision']),
+      dateDecision: serializer.fromJson<DateTime?>(json['dateDecision']),
+      dureeSanctionJours: serializer.fromJson<int?>(json['dureeSanctionJours']),
+      dateReintegrationPrevue: serializer.fromJson<DateTime?>(
+        json['dateReintegrationPrevue'],
+      ),
+      suspensionMinisteresAppliquee: serializer.fromJson<bool>(
+        json['suspensionMinisteresAppliquee'],
+      ),
+      decisionComiteOrigineId: serializer.fromJson<String?>(
+        json['decisionComiteOrigineId'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'fideleId': serializer.toJson<String>(fideleId),
+      'noeudId': serializer.toJson<String>(noeudId),
+      'natureFauteId': serializer.toJson<String>(natureFauteId),
+      'dateOuverture': serializer.toJson<DateTime>(dateOuverture),
+      'statut': serializer.toJson<String>(statut),
+      'ouvertParFideleId': serializer.toJson<String?>(ouvertParFideleId),
+      'statutSpirituelAnterieur': serializer.toJson<String?>(
+        statutSpirituelAnterieur,
+      ),
+      'commissionId': serializer.toJson<String?>(commissionId),
+      'decision': serializer.toJson<String?>(decision),
+      'dateDecision': serializer.toJson<DateTime?>(dateDecision),
+      'dureeSanctionJours': serializer.toJson<int?>(dureeSanctionJours),
+      'dateReintegrationPrevue': serializer.toJson<DateTime?>(
+        dateReintegrationPrevue,
+      ),
+      'suspensionMinisteresAppliquee': serializer.toJson<bool>(
+        suspensionMinisteresAppliquee,
+      ),
+      'decisionComiteOrigineId': serializer.toJson<String?>(
+        decisionComiteOrigineId,
+      ),
+    };
+  }
+
+  DossierDisciplinaireRow copyWith({
+    String? id,
+    String? fideleId,
+    String? noeudId,
+    String? natureFauteId,
+    DateTime? dateOuverture,
+    String? statut,
+    Value<String?> ouvertParFideleId = const Value.absent(),
+    Value<String?> statutSpirituelAnterieur = const Value.absent(),
+    Value<String?> commissionId = const Value.absent(),
+    Value<String?> decision = const Value.absent(),
+    Value<DateTime?> dateDecision = const Value.absent(),
+    Value<int?> dureeSanctionJours = const Value.absent(),
+    Value<DateTime?> dateReintegrationPrevue = const Value.absent(),
+    bool? suspensionMinisteresAppliquee,
+    Value<String?> decisionComiteOrigineId = const Value.absent(),
+  }) => DossierDisciplinaireRow(
+    id: id ?? this.id,
+    fideleId: fideleId ?? this.fideleId,
+    noeudId: noeudId ?? this.noeudId,
+    natureFauteId: natureFauteId ?? this.natureFauteId,
+    dateOuverture: dateOuverture ?? this.dateOuverture,
+    statut: statut ?? this.statut,
+    ouvertParFideleId: ouvertParFideleId.present
+        ? ouvertParFideleId.value
+        : this.ouvertParFideleId,
+    statutSpirituelAnterieur: statutSpirituelAnterieur.present
+        ? statutSpirituelAnterieur.value
+        : this.statutSpirituelAnterieur,
+    commissionId: commissionId.present ? commissionId.value : this.commissionId,
+    decision: decision.present ? decision.value : this.decision,
+    dateDecision: dateDecision.present ? dateDecision.value : this.dateDecision,
+    dureeSanctionJours: dureeSanctionJours.present
+        ? dureeSanctionJours.value
+        : this.dureeSanctionJours,
+    dateReintegrationPrevue: dateReintegrationPrevue.present
+        ? dateReintegrationPrevue.value
+        : this.dateReintegrationPrevue,
+    suspensionMinisteresAppliquee:
+        suspensionMinisteresAppliquee ?? this.suspensionMinisteresAppliquee,
+    decisionComiteOrigineId: decisionComiteOrigineId.present
+        ? decisionComiteOrigineId.value
+        : this.decisionComiteOrigineId,
+  );
+  DossierDisciplinaireRow copyWithCompanion(
+    DossiersDisciplinairesCompanion data,
+  ) {
+    return DossierDisciplinaireRow(
+      id: data.id.present ? data.id.value : this.id,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      noeudId: data.noeudId.present ? data.noeudId.value : this.noeudId,
+      natureFauteId: data.natureFauteId.present
+          ? data.natureFauteId.value
+          : this.natureFauteId,
+      dateOuverture: data.dateOuverture.present
+          ? data.dateOuverture.value
+          : this.dateOuverture,
+      statut: data.statut.present ? data.statut.value : this.statut,
+      ouvertParFideleId: data.ouvertParFideleId.present
+          ? data.ouvertParFideleId.value
+          : this.ouvertParFideleId,
+      statutSpirituelAnterieur: data.statutSpirituelAnterieur.present
+          ? data.statutSpirituelAnterieur.value
+          : this.statutSpirituelAnterieur,
+      commissionId: data.commissionId.present
+          ? data.commissionId.value
+          : this.commissionId,
+      decision: data.decision.present ? data.decision.value : this.decision,
+      dateDecision: data.dateDecision.present
+          ? data.dateDecision.value
+          : this.dateDecision,
+      dureeSanctionJours: data.dureeSanctionJours.present
+          ? data.dureeSanctionJours.value
+          : this.dureeSanctionJours,
+      dateReintegrationPrevue: data.dateReintegrationPrevue.present
+          ? data.dateReintegrationPrevue.value
+          : this.dateReintegrationPrevue,
+      suspensionMinisteresAppliquee: data.suspensionMinisteresAppliquee.present
+          ? data.suspensionMinisteresAppliquee.value
+          : this.suspensionMinisteresAppliquee,
+      decisionComiteOrigineId: data.decisionComiteOrigineId.present
+          ? data.decisionComiteOrigineId.value
+          : this.decisionComiteOrigineId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DossierDisciplinaireRow(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('natureFauteId: $natureFauteId, ')
+          ..write('dateOuverture: $dateOuverture, ')
+          ..write('statut: $statut, ')
+          ..write('ouvertParFideleId: $ouvertParFideleId, ')
+          ..write('statutSpirituelAnterieur: $statutSpirituelAnterieur, ')
+          ..write('commissionId: $commissionId, ')
+          ..write('decision: $decision, ')
+          ..write('dateDecision: $dateDecision, ')
+          ..write('dureeSanctionJours: $dureeSanctionJours, ')
+          ..write('dateReintegrationPrevue: $dateReintegrationPrevue, ')
+          ..write(
+            'suspensionMinisteresAppliquee: $suspensionMinisteresAppliquee, ',
+          )
+          ..write('decisionComiteOrigineId: $decisionComiteOrigineId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    fideleId,
+    noeudId,
+    natureFauteId,
+    dateOuverture,
+    statut,
+    ouvertParFideleId,
+    statutSpirituelAnterieur,
+    commissionId,
+    decision,
+    dateDecision,
+    dureeSanctionJours,
+    dateReintegrationPrevue,
+    suspensionMinisteresAppliquee,
+    decisionComiteOrigineId,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DossierDisciplinaireRow &&
+          other.id == this.id &&
+          other.fideleId == this.fideleId &&
+          other.noeudId == this.noeudId &&
+          other.natureFauteId == this.natureFauteId &&
+          other.dateOuverture == this.dateOuverture &&
+          other.statut == this.statut &&
+          other.ouvertParFideleId == this.ouvertParFideleId &&
+          other.statutSpirituelAnterieur == this.statutSpirituelAnterieur &&
+          other.commissionId == this.commissionId &&
+          other.decision == this.decision &&
+          other.dateDecision == this.dateDecision &&
+          other.dureeSanctionJours == this.dureeSanctionJours &&
+          other.dateReintegrationPrevue == this.dateReintegrationPrevue &&
+          other.suspensionMinisteresAppliquee ==
+              this.suspensionMinisteresAppliquee &&
+          other.decisionComiteOrigineId == this.decisionComiteOrigineId);
+}
+
+class DossiersDisciplinairesCompanion
+    extends UpdateCompanion<DossierDisciplinaireRow> {
+  final Value<String> id;
+  final Value<String> fideleId;
+  final Value<String> noeudId;
+  final Value<String> natureFauteId;
+  final Value<DateTime> dateOuverture;
+  final Value<String> statut;
+  final Value<String?> ouvertParFideleId;
+  final Value<String?> statutSpirituelAnterieur;
+  final Value<String?> commissionId;
+  final Value<String?> decision;
+  final Value<DateTime?> dateDecision;
+  final Value<int?> dureeSanctionJours;
+  final Value<DateTime?> dateReintegrationPrevue;
+  final Value<bool> suspensionMinisteresAppliquee;
+  final Value<String?> decisionComiteOrigineId;
+  final Value<int> rowid;
+  const DossiersDisciplinairesCompanion({
+    this.id = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.noeudId = const Value.absent(),
+    this.natureFauteId = const Value.absent(),
+    this.dateOuverture = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.ouvertParFideleId = const Value.absent(),
+    this.statutSpirituelAnterieur = const Value.absent(),
+    this.commissionId = const Value.absent(),
+    this.decision = const Value.absent(),
+    this.dateDecision = const Value.absent(),
+    this.dureeSanctionJours = const Value.absent(),
+    this.dateReintegrationPrevue = const Value.absent(),
+    this.suspensionMinisteresAppliquee = const Value.absent(),
+    this.decisionComiteOrigineId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DossiersDisciplinairesCompanion.insert({
+    required String id,
+    required String fideleId,
+    required String noeudId,
+    required String natureFauteId,
+    required DateTime dateOuverture,
+    this.statut = const Value.absent(),
+    this.ouvertParFideleId = const Value.absent(),
+    this.statutSpirituelAnterieur = const Value.absent(),
+    this.commissionId = const Value.absent(),
+    this.decision = const Value.absent(),
+    this.dateDecision = const Value.absent(),
+    this.dureeSanctionJours = const Value.absent(),
+    this.dateReintegrationPrevue = const Value.absent(),
+    this.suspensionMinisteresAppliquee = const Value.absent(),
+    this.decisionComiteOrigineId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       fideleId = Value(fideleId),
+       noeudId = Value(noeudId),
+       natureFauteId = Value(natureFauteId),
+       dateOuverture = Value(dateOuverture);
+  static Insertable<DossierDisciplinaireRow> custom({
+    Expression<String>? id,
+    Expression<String>? fideleId,
+    Expression<String>? noeudId,
+    Expression<String>? natureFauteId,
+    Expression<DateTime>? dateOuverture,
+    Expression<String>? statut,
+    Expression<String>? ouvertParFideleId,
+    Expression<String>? statutSpirituelAnterieur,
+    Expression<String>? commissionId,
+    Expression<String>? decision,
+    Expression<DateTime>? dateDecision,
+    Expression<int>? dureeSanctionJours,
+    Expression<DateTime>? dateReintegrationPrevue,
+    Expression<bool>? suspensionMinisteresAppliquee,
+    Expression<String>? decisionComiteOrigineId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (noeudId != null) 'noeud_id': noeudId,
+      if (natureFauteId != null) 'nature_faute_id': natureFauteId,
+      if (dateOuverture != null) 'date_ouverture': dateOuverture,
+      if (statut != null) 'statut': statut,
+      if (ouvertParFideleId != null) 'ouvert_par_fidele_id': ouvertParFideleId,
+      if (statutSpirituelAnterieur != null)
+        'statut_spirituel_anterieur': statutSpirituelAnterieur,
+      if (commissionId != null) 'commission_id': commissionId,
+      if (decision != null) 'decision': decision,
+      if (dateDecision != null) 'date_decision': dateDecision,
+      if (dureeSanctionJours != null)
+        'duree_sanction_jours': dureeSanctionJours,
+      if (dateReintegrationPrevue != null)
+        'date_reintegration_prevue': dateReintegrationPrevue,
+      if (suspensionMinisteresAppliquee != null)
+        'suspension_ministeres_appliquee': suspensionMinisteresAppliquee,
+      if (decisionComiteOrigineId != null)
+        'decision_comite_origine_id': decisionComiteOrigineId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DossiersDisciplinairesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? fideleId,
+    Value<String>? noeudId,
+    Value<String>? natureFauteId,
+    Value<DateTime>? dateOuverture,
+    Value<String>? statut,
+    Value<String?>? ouvertParFideleId,
+    Value<String?>? statutSpirituelAnterieur,
+    Value<String?>? commissionId,
+    Value<String?>? decision,
+    Value<DateTime?>? dateDecision,
+    Value<int?>? dureeSanctionJours,
+    Value<DateTime?>? dateReintegrationPrevue,
+    Value<bool>? suspensionMinisteresAppliquee,
+    Value<String?>? decisionComiteOrigineId,
+    Value<int>? rowid,
+  }) {
+    return DossiersDisciplinairesCompanion(
+      id: id ?? this.id,
+      fideleId: fideleId ?? this.fideleId,
+      noeudId: noeudId ?? this.noeudId,
+      natureFauteId: natureFauteId ?? this.natureFauteId,
+      dateOuverture: dateOuverture ?? this.dateOuverture,
+      statut: statut ?? this.statut,
+      ouvertParFideleId: ouvertParFideleId ?? this.ouvertParFideleId,
+      statutSpirituelAnterieur:
+          statutSpirituelAnterieur ?? this.statutSpirituelAnterieur,
+      commissionId: commissionId ?? this.commissionId,
+      decision: decision ?? this.decision,
+      dateDecision: dateDecision ?? this.dateDecision,
+      dureeSanctionJours: dureeSanctionJours ?? this.dureeSanctionJours,
+      dateReintegrationPrevue:
+          dateReintegrationPrevue ?? this.dateReintegrationPrevue,
+      suspensionMinisteresAppliquee:
+          suspensionMinisteresAppliquee ?? this.suspensionMinisteresAppliquee,
+      decisionComiteOrigineId:
+          decisionComiteOrigineId ?? this.decisionComiteOrigineId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (noeudId.present) {
+      map['noeud_id'] = Variable<String>(noeudId.value);
+    }
+    if (natureFauteId.present) {
+      map['nature_faute_id'] = Variable<String>(natureFauteId.value);
+    }
+    if (dateOuverture.present) {
+      map['date_ouverture'] = Variable<DateTime>(dateOuverture.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (ouvertParFideleId.present) {
+      map['ouvert_par_fidele_id'] = Variable<String>(ouvertParFideleId.value);
+    }
+    if (statutSpirituelAnterieur.present) {
+      map['statut_spirituel_anterieur'] = Variable<String>(
+        statutSpirituelAnterieur.value,
+      );
+    }
+    if (commissionId.present) {
+      map['commission_id'] = Variable<String>(commissionId.value);
+    }
+    if (decision.present) {
+      map['decision'] = Variable<String>(decision.value);
+    }
+    if (dateDecision.present) {
+      map['date_decision'] = Variable<DateTime>(dateDecision.value);
+    }
+    if (dureeSanctionJours.present) {
+      map['duree_sanction_jours'] = Variable<int>(dureeSanctionJours.value);
+    }
+    if (dateReintegrationPrevue.present) {
+      map['date_reintegration_prevue'] = Variable<DateTime>(
+        dateReintegrationPrevue.value,
+      );
+    }
+    if (suspensionMinisteresAppliquee.present) {
+      map['suspension_ministeres_appliquee'] = Variable<bool>(
+        suspensionMinisteresAppliquee.value,
+      );
+    }
+    if (decisionComiteOrigineId.present) {
+      map['decision_comite_origine_id'] = Variable<String>(
+        decisionComiteOrigineId.value,
+      );
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DossiersDisciplinairesCompanion(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('natureFauteId: $natureFauteId, ')
+          ..write('dateOuverture: $dateOuverture, ')
+          ..write('statut: $statut, ')
+          ..write('ouvertParFideleId: $ouvertParFideleId, ')
+          ..write('statutSpirituelAnterieur: $statutSpirituelAnterieur, ')
+          ..write('commissionId: $commissionId, ')
+          ..write('decision: $decision, ')
+          ..write('dateDecision: $dateDecision, ')
+          ..write('dureeSanctionJours: $dureeSanctionJours, ')
+          ..write('dateReintegrationPrevue: $dateReintegrationPrevue, ')
+          ..write(
+            'suspensionMinisteresAppliquee: $suspensionMinisteresAppliquee, ',
+          )
+          ..write('decisionComiteOrigineId: $decisionComiteOrigineId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PiecesDossierTable extends PiecesDossier
+    with TableInfo<$PiecesDossierTable, PieceDossierRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PiecesDossierTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dossierIdMeta = const VerificationMeta(
+    'dossierId',
+  );
+  @override
+  late final GeneratedColumn<String> dossierId = GeneratedColumn<String>(
+    'dossier_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES dossiers_disciplinaires (id)',
+    ),
+  );
+  static const VerificationMeta _natureMeta = const VerificationMeta('nature');
+  @override
+  late final GeneratedColumn<String> nature = GeneratedColumn<String>(
+    'nature',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _ajouteLeMeta = const VerificationMeta(
+    'ajouteLe',
+  );
+  @override
+  late final GeneratedColumn<DateTime> ajouteLe = GeneratedColumn<DateTime>(
+    'ajoute_le',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _documentArchiveIdMeta = const VerificationMeta(
+    'documentArchiveId',
+  );
+  @override
+  late final GeneratedColumn<String> documentArchiveId =
+      GeneratedColumn<String>(
+        'document_archive_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES documents_archive (id)',
+        ),
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    dossierId,
+    nature,
+    ajouteLe,
+    documentArchiveId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pieces_dossier';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PieceDossierRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('dossier_id')) {
+      context.handle(
+        _dossierIdMeta,
+        dossierId.isAcceptableOrUnknown(data['dossier_id']!, _dossierIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dossierIdMeta);
+    }
+    if (data.containsKey('nature')) {
+      context.handle(
+        _natureMeta,
+        nature.isAcceptableOrUnknown(data['nature']!, _natureMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_natureMeta);
+    }
+    if (data.containsKey('ajoute_le')) {
+      context.handle(
+        _ajouteLeMeta,
+        ajouteLe.isAcceptableOrUnknown(data['ajoute_le']!, _ajouteLeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_ajouteLeMeta);
+    }
+    if (data.containsKey('document_archive_id')) {
+      context.handle(
+        _documentArchiveIdMeta,
+        documentArchiveId.isAcceptableOrUnknown(
+          data['document_archive_id']!,
+          _documentArchiveIdMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PieceDossierRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PieceDossierRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      dossierId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}dossier_id'],
+      )!,
+      nature: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}nature'],
+      )!,
+      ajouteLe: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}ajoute_le'],
+      )!,
+      documentArchiveId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}document_archive_id'],
+      ),
+    );
+  }
+
+  @override
+  $PiecesDossierTable createAlias(String alias) {
+    return $PiecesDossierTable(attachedDatabase, alias);
+  }
+}
+
+class PieceDossierRow extends DataClass implements Insertable<PieceDossierRow> {
+  final String id;
+  final String dossierId;
+  final String nature;
+  final DateTime ajouteLe;
+  final String? documentArchiveId;
+  const PieceDossierRow({
+    required this.id,
+    required this.dossierId,
+    required this.nature,
+    required this.ajouteLe,
+    this.documentArchiveId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['dossier_id'] = Variable<String>(dossierId);
+    map['nature'] = Variable<String>(nature);
+    map['ajoute_le'] = Variable<DateTime>(ajouteLe);
+    if (!nullToAbsent || documentArchiveId != null) {
+      map['document_archive_id'] = Variable<String>(documentArchiveId);
+    }
+    return map;
+  }
+
+  PiecesDossierCompanion toCompanion(bool nullToAbsent) {
+    return PiecesDossierCompanion(
+      id: Value(id),
+      dossierId: Value(dossierId),
+      nature: Value(nature),
+      ajouteLe: Value(ajouteLe),
+      documentArchiveId: documentArchiveId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(documentArchiveId),
+    );
+  }
+
+  factory PieceDossierRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PieceDossierRow(
+      id: serializer.fromJson<String>(json['id']),
+      dossierId: serializer.fromJson<String>(json['dossierId']),
+      nature: serializer.fromJson<String>(json['nature']),
+      ajouteLe: serializer.fromJson<DateTime>(json['ajouteLe']),
+      documentArchiveId: serializer.fromJson<String?>(
+        json['documentArchiveId'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'dossierId': serializer.toJson<String>(dossierId),
+      'nature': serializer.toJson<String>(nature),
+      'ajouteLe': serializer.toJson<DateTime>(ajouteLe),
+      'documentArchiveId': serializer.toJson<String?>(documentArchiveId),
+    };
+  }
+
+  PieceDossierRow copyWith({
+    String? id,
+    String? dossierId,
+    String? nature,
+    DateTime? ajouteLe,
+    Value<String?> documentArchiveId = const Value.absent(),
+  }) => PieceDossierRow(
+    id: id ?? this.id,
+    dossierId: dossierId ?? this.dossierId,
+    nature: nature ?? this.nature,
+    ajouteLe: ajouteLe ?? this.ajouteLe,
+    documentArchiveId: documentArchiveId.present
+        ? documentArchiveId.value
+        : this.documentArchiveId,
+  );
+  PieceDossierRow copyWithCompanion(PiecesDossierCompanion data) {
+    return PieceDossierRow(
+      id: data.id.present ? data.id.value : this.id,
+      dossierId: data.dossierId.present ? data.dossierId.value : this.dossierId,
+      nature: data.nature.present ? data.nature.value : this.nature,
+      ajouteLe: data.ajouteLe.present ? data.ajouteLe.value : this.ajouteLe,
+      documentArchiveId: data.documentArchiveId.present
+          ? data.documentArchiveId.value
+          : this.documentArchiveId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PieceDossierRow(')
+          ..write('id: $id, ')
+          ..write('dossierId: $dossierId, ')
+          ..write('nature: $nature, ')
+          ..write('ajouteLe: $ajouteLe, ')
+          ..write('documentArchiveId: $documentArchiveId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, dossierId, nature, ajouteLe, documentArchiveId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PieceDossierRow &&
+          other.id == this.id &&
+          other.dossierId == this.dossierId &&
+          other.nature == this.nature &&
+          other.ajouteLe == this.ajouteLe &&
+          other.documentArchiveId == this.documentArchiveId);
+}
+
+class PiecesDossierCompanion extends UpdateCompanion<PieceDossierRow> {
+  final Value<String> id;
+  final Value<String> dossierId;
+  final Value<String> nature;
+  final Value<DateTime> ajouteLe;
+  final Value<String?> documentArchiveId;
+  final Value<int> rowid;
+  const PiecesDossierCompanion({
+    this.id = const Value.absent(),
+    this.dossierId = const Value.absent(),
+    this.nature = const Value.absent(),
+    this.ajouteLe = const Value.absent(),
+    this.documentArchiveId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PiecesDossierCompanion.insert({
+    required String id,
+    required String dossierId,
+    required String nature,
+    required DateTime ajouteLe,
+    this.documentArchiveId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       dossierId = Value(dossierId),
+       nature = Value(nature),
+       ajouteLe = Value(ajouteLe);
+  static Insertable<PieceDossierRow> custom({
+    Expression<String>? id,
+    Expression<String>? dossierId,
+    Expression<String>? nature,
+    Expression<DateTime>? ajouteLe,
+    Expression<String>? documentArchiveId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (dossierId != null) 'dossier_id': dossierId,
+      if (nature != null) 'nature': nature,
+      if (ajouteLe != null) 'ajoute_le': ajouteLe,
+      if (documentArchiveId != null) 'document_archive_id': documentArchiveId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PiecesDossierCompanion copyWith({
+    Value<String>? id,
+    Value<String>? dossierId,
+    Value<String>? nature,
+    Value<DateTime>? ajouteLe,
+    Value<String?>? documentArchiveId,
+    Value<int>? rowid,
+  }) {
+    return PiecesDossierCompanion(
+      id: id ?? this.id,
+      dossierId: dossierId ?? this.dossierId,
+      nature: nature ?? this.nature,
+      ajouteLe: ajouteLe ?? this.ajouteLe,
+      documentArchiveId: documentArchiveId ?? this.documentArchiveId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (dossierId.present) {
+      map['dossier_id'] = Variable<String>(dossierId.value);
+    }
+    if (nature.present) {
+      map['nature'] = Variable<String>(nature.value);
+    }
+    if (ajouteLe.present) {
+      map['ajoute_le'] = Variable<DateTime>(ajouteLe.value);
+    }
+    if (documentArchiveId.present) {
+      map['document_archive_id'] = Variable<String>(documentArchiveId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PiecesDossierCompanion(')
+          ..write('id: $id, ')
+          ..write('dossierId: $dossierId, ')
+          ..write('nature: $nature, ')
+          ..write('ajouteLe: $ajouteLe, ')
+          ..write('documentArchiveId: $documentArchiveId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxRow> {
   @override
@@ -18169,6 +20481,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $MutationsTable mutations = $MutationsTable(this);
   late final $LettresRecommandationTable lettresRecommandation =
       $LettresRecommandationTable(this);
+  late final $NaturesFauteTable naturesFaute = $NaturesFauteTable(this);
+  late final $CommissionsDisciplinairesTable commissionsDisciplinaires =
+      $CommissionsDisciplinairesTable(this);
+  late final $MembresCommissionDisciplinaireTable
+  membresCommissionDisciplinaire = $MembresCommissionDisciplinaireTable(this);
+  late final $DossiersDisciplinairesTable dossiersDisciplinaires =
+      $DossiersDisciplinairesTable(this);
+  late final $PiecesDossierTable piecesDossier = $PiecesDossierTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -18215,6 +20535,11 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     versionsDocument,
     mutations,
     lettresRecommandation,
+    naturesFaute,
+    commissionsDisciplinaires,
+    membresCommissionDisciplinaire,
+    dossiersDisciplinaires,
+    piecesDossier,
     syncOutbox,
   ];
 }
@@ -18456,6 +20781,57 @@ final class $$OrganisationNodesTableReferences
 
     final cache = $_typedResult.readTableOrNull(
       _mutationsCommeDestinationTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $CommissionsDisciplinairesTable,
+    List<CommissionDisciplinaireRow>
+  >
+  _commissionsDisciplinairesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.commissionsDisciplinaires,
+        aliasName:
+            'organisation_nodes__id__commissions_disciplinaires__noeud_id',
+      );
+
+  $$CommissionsDisciplinairesTableProcessedTableManager
+  get commissionsDisciplinairesRefs {
+    final manager = $$CommissionsDisciplinairesTableTableManager(
+      $_db,
+      $_db.commissionsDisciplinaires,
+    ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _commissionsDisciplinairesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $DossiersDisciplinairesTable,
+    List<DossierDisciplinaireRow>
+  >
+  _dossiersDisciplinairesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.dossiersDisciplinaires,
+        aliasName: 'organisation_nodes__id__dossiers_disciplinaires__noeud_id',
+      );
+
+  $$DossiersDisciplinairesTableProcessedTableManager
+  get dossiersDisciplinairesRefs {
+    final manager = $$DossiersDisciplinairesTableTableManager(
+      $_db,
+      $_db.dossiersDisciplinaires,
+    ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _dossiersDisciplinairesRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -18794,6 +21170,59 @@ class $$OrganisationNodesTableFilterComposer
                 $removeJoinBuilderFromRootComposer,
           ),
     );
+    return f(composer);
+  }
+
+  Expression<bool> commissionsDisciplinairesRefs(
+    Expression<bool> Function($$CommissionsDisciplinairesTableFilterComposer f)
+    f,
+  ) {
+    final $$CommissionsDisciplinairesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.commissionsDisciplinaires,
+          getReferencedColumn: (t) => t.noeudId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CommissionsDisciplinairesTableFilterComposer(
+                $db: $db,
+                $table: $db.commissionsDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> dossiersDisciplinairesRefs(
+    Expression<bool> Function($$DossiersDisciplinairesTableFilterComposer f) f,
+  ) {
+    final $$DossiersDisciplinairesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.noeudId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableFilterComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
     return f(composer);
   }
 }
@@ -19194,6 +21623,59 @@ class $$OrganisationNodesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> commissionsDisciplinairesRefs<T extends Object>(
+    Expression<T> Function($$CommissionsDisciplinairesTableAnnotationComposer a)
+    f,
+  ) {
+    final $$CommissionsDisciplinairesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.commissionsDisciplinaires,
+          getReferencedColumn: (t) => t.noeudId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CommissionsDisciplinairesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.commissionsDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> dossiersDisciplinairesRefs<T extends Object>(
+    Expression<T> Function($$DossiersDisciplinairesTableAnnotationComposer a) f,
+  ) {
+    final $$DossiersDisciplinairesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.noeudId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$OrganisationNodesTableTableManager
@@ -19220,6 +21702,8 @@ class $$OrganisationNodesTableTableManager
             bool documentsArchiveRefs,
             bool mutationsCommeOrigine,
             bool mutationsCommeDestination,
+            bool commissionsDisciplinairesRefs,
+            bool dossiersDisciplinairesRefs,
           })
         > {
   $$OrganisationNodesTableTableManager(
@@ -19332,6 +21816,8 @@ class $$OrganisationNodesTableTableManager
                 documentsArchiveRefs = false,
                 mutationsCommeOrigine = false,
                 mutationsCommeDestination = false,
+                commissionsDisciplinairesRefs = false,
+                dossiersDisciplinairesRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -19346,6 +21832,9 @@ class $$OrganisationNodesTableTableManager
                     if (documentsArchiveRefs) db.documentsArchive,
                     if (mutationsCommeOrigine) db.mutations,
                     if (mutationsCommeDestination) db.mutations,
+                    if (commissionsDisciplinairesRefs)
+                      db.commissionsDisciplinaires,
+                    if (dossiersDisciplinairesRefs) db.dossiersDisciplinaires,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -19560,6 +22049,48 @@ class $$OrganisationNodesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (commissionsDisciplinairesRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          CommissionDisciplinaireRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._commissionsDisciplinairesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).commissionsDisciplinairesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (dossiersDisciplinairesRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          DossierDisciplinaireRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._dossiersDisciplinairesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).dossiersDisciplinairesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -19591,6 +22122,8 @@ typedef $$OrganisationNodesTableProcessedTableManager =
         bool documentsArchiveRefs,
         bool mutationsCommeOrigine,
         bool mutationsCommeDestination,
+        bool commissionsDisciplinairesRefs,
+        bool dossiersDisciplinairesRefs,
       })
     >;
 typedef $$HistoriqueRattachementsTableCreateCompanionBuilder =
@@ -20396,6 +22929,84 @@ final class $$FidelesTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<
+    $MembresCommissionDisciplinaireTable,
+    List<MembreCommissionRow>
+  >
+  _membresCommissionDisciplinaireRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.membresCommissionDisciplinaire,
+        aliasName: 'fideles__id__membres_commission_disciplinaire__fidele_id',
+      );
+
+  $$MembresCommissionDisciplinaireTableProcessedTableManager
+  get membresCommissionDisciplinaireRefs {
+    final manager = $$MembresCommissionDisciplinaireTableTableManager(
+      $_db,
+      $_db.membresCommissionDisciplinaire,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _membresCommissionDisciplinaireRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $DossiersDisciplinairesTable,
+    List<DossierDisciplinaireRow>
+  >
+  _dossiersDisciplinairesCommeMisEnCauseTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.dossiersDisciplinaires,
+        aliasName: 'fideles__id__dossiers_disciplinaires__fidele_id',
+      );
+
+  $$DossiersDisciplinairesTableProcessedTableManager
+  get dossiersDisciplinairesCommeMisEnCause {
+    final manager = $$DossiersDisciplinairesTableTableManager(
+      $_db,
+      $_db.dossiersDisciplinaires,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _dossiersDisciplinairesCommeMisEnCauseTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $DossiersDisciplinairesTable,
+    List<DossierDisciplinaireRow>
+  >
+  _dossiersDisciplinairesCommeAuteurTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.dossiersDisciplinaires,
+        aliasName: 'fideles__id__dossiers_disciplinaires__ouvert_par_fidele_id',
+      );
+
+  $$DossiersDisciplinairesTableProcessedTableManager
+  get dossiersDisciplinairesCommeAuteur {
+    final manager =
+        $$DossiersDisciplinairesTableTableManager(
+          $_db,
+          $_db.dossiersDisciplinaires,
+        ).filter(
+          (f) => f.ouvertParFideleId.id.sqlEquals($_itemColumn<String>('id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(
+      _dossiersDisciplinairesCommeAuteurTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$FidelesTableFilterComposer
@@ -21113,6 +23724,87 @@ class $$FidelesTableFilterComposer
                 $removeJoinBuilderFromRootComposer,
           ),
     );
+    return f(composer);
+  }
+
+  Expression<bool> membresCommissionDisciplinaireRefs(
+    Expression<bool> Function(
+      $$MembresCommissionDisciplinaireTableFilterComposer f,
+    )
+    f,
+  ) {
+    final $$MembresCommissionDisciplinaireTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.membresCommissionDisciplinaire,
+          getReferencedColumn: (t) => t.fideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MembresCommissionDisciplinaireTableFilterComposer(
+                $db: $db,
+                $table: $db.membresCommissionDisciplinaire,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> dossiersDisciplinairesCommeMisEnCause(
+    Expression<bool> Function($$DossiersDisciplinairesTableFilterComposer f) f,
+  ) {
+    final $$DossiersDisciplinairesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.fideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableFilterComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> dossiersDisciplinairesCommeAuteur(
+    Expression<bool> Function($$DossiersDisciplinairesTableFilterComposer f) f,
+  ) {
+    final $$DossiersDisciplinairesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.ouvertParFideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableFilterComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
     return f(composer);
   }
 }
@@ -21938,6 +24630,87 @@ class $$FidelesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> membresCommissionDisciplinaireRefs<T extends Object>(
+    Expression<T> Function(
+      $$MembresCommissionDisciplinaireTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$MembresCommissionDisciplinaireTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.membresCommissionDisciplinaire,
+          getReferencedColumn: (t) => t.fideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MembresCommissionDisciplinaireTableAnnotationComposer(
+                $db: $db,
+                $table: $db.membresCommissionDisciplinaire,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> dossiersDisciplinairesCommeMisEnCause<T extends Object>(
+    Expression<T> Function($$DossiersDisciplinairesTableAnnotationComposer a) f,
+  ) {
+    final $$DossiersDisciplinairesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.fideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> dossiersDisciplinairesCommeAuteur<T extends Object>(
+    Expression<T> Function($$DossiersDisciplinairesTableAnnotationComposer a) f,
+  ) {
+    final $$DossiersDisciplinairesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.ouvertParFideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$FidelesTableTableManager
@@ -21979,6 +24752,9 @@ class $$FidelesTableTableManager
             bool propositionsThemeRefs,
             bool votesPropositionRefs,
             bool mutationsRefs,
+            bool membresCommissionDisciplinaireRefs,
+            bool dossiersDisciplinairesCommeMisEnCause,
+            bool dossiersDisciplinairesCommeAuteur,
           })
         > {
   $$FidelesTableTableManager(_$AppDatabase db, $FidelesTable table)
@@ -22111,6 +24887,9 @@ class $$FidelesTableTableManager
                 propositionsThemeRefs = false,
                 votesPropositionRefs = false,
                 mutationsRefs = false,
+                membresCommissionDisciplinaireRefs = false,
+                dossiersDisciplinairesCommeMisEnCause = false,
+                dossiersDisciplinairesCommeAuteur = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -22139,6 +24918,12 @@ class $$FidelesTableTableManager
                     if (propositionsThemeRefs) db.propositionsTheme,
                     if (votesPropositionRefs) db.votesProposition,
                     if (mutationsRefs) db.mutations,
+                    if (membresCommissionDisciplinaireRefs)
+                      db.membresCommissionDisciplinaire,
+                    if (dossiersDisciplinairesCommeMisEnCause)
+                      db.dossiersDisciplinaires,
+                    if (dossiersDisciplinairesCommeAuteur)
+                      db.dossiersDisciplinaires,
                   ],
                   addJoins:
                       <
@@ -22678,6 +25463,69 @@ class $$FidelesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (membresCommissionDisciplinaireRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          MembreCommissionRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._membresCommissionDisciplinaireRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).membresCommissionDisciplinaireRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (dossiersDisciplinairesCommeMisEnCause)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          DossierDisciplinaireRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._dossiersDisciplinairesCommeMisEnCauseTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).dossiersDisciplinairesCommeMisEnCause,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (dossiersDisciplinairesCommeAuteur)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          DossierDisciplinaireRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._dossiersDisciplinairesCommeAuteurTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).dossiersDisciplinairesCommeAuteur,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.ouvertParFideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -22724,6 +25572,9 @@ typedef $$FidelesTableProcessedTableManager =
         bool propositionsThemeRefs,
         bool votesPropositionRefs,
         bool mutationsRefs,
+        bool membresCommissionDisciplinaireRefs,
+        bool dossiersDisciplinairesCommeMisEnCause,
+        bool dossiersDisciplinairesCommeAuteur,
       })
     >;
 typedef $$NodeResponsablesTableCreateCompanionBuilder =
@@ -32193,6 +35044,38 @@ final class $$DecisionsTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<
+    $DossiersDisciplinairesTable,
+    List<DossierDisciplinaireRow>
+  >
+  _dossiersDisciplinairesRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.dossiersDisciplinaires,
+    aliasName:
+        'decisions__id__dossiers_disciplinaires__decision_comite_origine_id',
+  );
+
+  $$DossiersDisciplinairesTableProcessedTableManager
+  get dossiersDisciplinairesRefs {
+    final manager =
+        $$DossiersDisciplinairesTableTableManager(
+          $_db,
+          $_db.dossiersDisciplinaires,
+        ).filter(
+          (f) => f.decisionComiteOrigineId.id.sqlEquals(
+            $_itemColumn<String>('id')!,
+          ),
+        );
+
+    final cache = $_typedResult.readTableOrNull(
+      _dossiersDisciplinairesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$DecisionsTableFilterComposer
@@ -32274,6 +35157,32 @@ class $$DecisionsTableFilterComposer
                 $removeJoinBuilderFromRootComposer,
           ),
     );
+    return f(composer);
+  }
+
+  Expression<bool> dossiersDisciplinairesRefs(
+    Expression<bool> Function($$DossiersDisciplinairesTableFilterComposer f) f,
+  ) {
+    final $$DossiersDisciplinairesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.decisionComiteOrigineId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableFilterComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
     return f(composer);
   }
 }
@@ -32411,6 +35320,32 @@ class $$DecisionsTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> dossiersDisciplinairesRefs<T extends Object>(
+    Expression<T> Function($$DossiersDisciplinairesTableAnnotationComposer a) f,
+  ) {
+    final $$DossiersDisciplinairesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.decisionComiteOrigineId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$DecisionsTableTableManager
@@ -32426,7 +35361,11 @@ class $$DecisionsTableTableManager
           $$DecisionsTableUpdateCompanionBuilder,
           (DecisionRow, $$DecisionsTableReferences),
           DecisionRow,
-          PrefetchHooks Function({bool seanceId, bool tachesSuiviRefs})
+          PrefetchHooks Function({
+            bool seanceId,
+            bool tachesSuiviRefs,
+            bool dossiersDisciplinairesRefs,
+          })
         > {
   $$DecisionsTableTableManager(_$AppDatabase db, $DecisionsTable table)
     : super(
@@ -32483,67 +35422,98 @@ class $$DecisionsTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({seanceId = false, tachesSuiviRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (tachesSuiviRefs) db.tachesSuivi],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (seanceId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.seanceId,
-                                referencedTable: $$DecisionsTableReferences
-                                    ._seanceIdTable(db),
-                                referencedColumn: $$DecisionsTableReferences
-                                    ._seanceIdTable(db)
-                                    .id,
-                              )
-                              as T;
-                    }
+          prefetchHooksCallback:
+              ({
+                seanceId = false,
+                tachesSuiviRefs = false,
+                dossiersDisciplinairesRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (tachesSuiviRefs) db.tachesSuivi,
+                    if (dossiersDisciplinairesRefs) db.dossiersDisciplinaires,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (seanceId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.seanceId,
+                                    referencedTable: $$DecisionsTableReferences
+                                        ._seanceIdTable(db),
+                                    referencedColumn: $$DecisionsTableReferences
+                                        ._seanceIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
 
-                    return state;
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (tachesSuiviRefs)
+                        await $_getPrefetchedData<
+                          DecisionRow,
+                          $DecisionsTable,
+                          TacheSuiviRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$DecisionsTableReferences
+                              ._tachesSuiviRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$DecisionsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).tachesSuiviRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.decisionId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (dossiersDisciplinairesRefs)
+                        await $_getPrefetchedData<
+                          DecisionRow,
+                          $DecisionsTable,
+                          DossierDisciplinaireRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$DecisionsTableReferences
+                              ._dossiersDisciplinairesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$DecisionsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).dossiersDisciplinairesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.decisionComiteOrigineId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
                   },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (tachesSuiviRefs)
-                    await $_getPrefetchedData<
-                      DecisionRow,
-                      $DecisionsTable,
-                      TacheSuiviRow
-                    >(
-                      currentTable: table,
-                      referencedTable: $$DecisionsTableReferences
-                          ._tachesSuiviRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$DecisionsTableReferences(
-                            db,
-                            table,
-                            p0,
-                          ).tachesSuiviRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where((e) => e.decisionId == item.id),
-                      typedResults: items,
-                    ),
-                ];
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -32560,7 +35530,11 @@ typedef $$DecisionsTableProcessedTableManager =
       $$DecisionsTableUpdateCompanionBuilder,
       (DecisionRow, $$DecisionsTableReferences),
       DecisionRow,
-      PrefetchHooks Function({bool seanceId, bool tachesSuiviRefs})
+      PrefetchHooks Function({
+        bool seanceId,
+        bool tachesSuiviRefs,
+        bool dossiersDisciplinairesRefs,
+      })
     >;
 typedef $$ProcesVerbauxTableCreateCompanionBuilder =
     ProcesVerbauxCompanion Function({
@@ -37031,6 +40005,24 @@ final class $$DocumentsArchiveTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$PiecesDossierTable, List<PieceDossierRow>>
+  _piecesDossierRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.piecesDossier,
+    aliasName: 'documents_archive__id__pieces_dossier__document_archive_id',
+  );
+
+  $$PiecesDossierTableProcessedTableManager get piecesDossierRefs {
+    final manager = $$PiecesDossierTableTableManager($_db, $_db.piecesDossier)
+        .filter(
+          (f) => f.documentArchiveId.id.sqlEquals($_itemColumn<String>('id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(_piecesDossierRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$DocumentsArchiveTableFilterComposer
@@ -37173,6 +40165,31 @@ class $$DocumentsArchiveTableFilterComposer
                     $removeJoinBuilderFromRootComposer,
               ),
         );
+    return f(composer);
+  }
+
+  Expression<bool> piecesDossierRefs(
+    Expression<bool> Function($$PiecesDossierTableFilterComposer f) f,
+  ) {
+    final $$PiecesDossierTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.piecesDossier,
+      getReferencedColumn: (t) => t.documentArchiveId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PiecesDossierTableFilterComposer(
+            $db: $db,
+            $table: $db.piecesDossier,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 }
@@ -37403,6 +40420,31 @@ class $$DocumentsArchiveTableAnnotationComposer
         );
     return f(composer);
   }
+
+  Expression<T> piecesDossierRefs<T extends Object>(
+    Expression<T> Function($$PiecesDossierTableAnnotationComposer a) f,
+  ) {
+    final $$PiecesDossierTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.piecesDossier,
+      getReferencedColumn: (t) => t.documentArchiveId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PiecesDossierTableAnnotationComposer(
+            $db: $db,
+            $table: $db.piecesDossier,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$DocumentsArchiveTableTableManager
@@ -37422,6 +40464,7 @@ class $$DocumentsArchiveTableTableManager
             bool noeudId,
             bool versionsDocumentRefs,
             bool lettresRecommandationRefs,
+            bool piecesDossierRefs,
           })
         > {
   $$DocumentsArchiveTableTableManager(
@@ -37516,12 +40559,14 @@ class $$DocumentsArchiveTableTableManager
                 noeudId = false,
                 versionsDocumentRefs = false,
                 lettresRecommandationRefs = false,
+                piecesDossierRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
                     if (versionsDocumentRefs) db.versionsDocument,
                     if (lettresRecommandationRefs) db.lettresRecommandation,
+                    if (piecesDossierRefs) db.piecesDossier,
                   ],
                   addJoins:
                       <
@@ -37601,6 +40646,27 @@ class $$DocumentsArchiveTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (piecesDossierRefs)
+                        await $_getPrefetchedData<
+                          DocumentArchiveRow,
+                          $DocumentsArchiveTable,
+                          PieceDossierRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$DocumentsArchiveTableReferences
+                              ._piecesDossierRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$DocumentsArchiveTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).piecesDossierRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.documentArchiveId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -37625,6 +40691,7 @@ typedef $$DocumentsArchiveTableProcessedTableManager =
         bool noeudId,
         bool versionsDocumentRefs,
         bool lettresRecommandationRefs,
+        bool piecesDossierRefs,
       })
     >;
 typedef $$VersionsDocumentTableCreateCompanionBuilder =
@@ -39092,6 +42159,2817 @@ typedef $$LettresRecommandationTableProcessedTableManager =
       LettreRecommandationRow,
       PrefetchHooks Function({bool mutationId, bool documentArchiveId})
     >;
+typedef $$NaturesFauteTableCreateCompanionBuilder =
+    NaturesFauteCompanion Function({
+      required String id,
+      required String code,
+      required String libelle,
+      Value<bool> standard,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+typedef $$NaturesFauteTableUpdateCompanionBuilder =
+    NaturesFauteCompanion Function({
+      Value<String> id,
+      Value<String> code,
+      Value<String> libelle,
+      Value<bool> standard,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+
+final class $$NaturesFauteTableReferences
+    extends BaseReferences<_$AppDatabase, $NaturesFauteTable, NatureFauteRow> {
+  $$NaturesFauteTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<
+    $DossiersDisciplinairesTable,
+    List<DossierDisciplinaireRow>
+  >
+  _dossiersDisciplinairesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.dossiersDisciplinaires,
+        aliasName:
+            'natures_faute__id__dossiers_disciplinaires__nature_faute_id',
+      );
+
+  $$DossiersDisciplinairesTableProcessedTableManager
+  get dossiersDisciplinairesRefs {
+    final manager = $$DossiersDisciplinairesTableTableManager(
+      $_db,
+      $_db.dossiersDisciplinaires,
+    ).filter((f) => f.natureFauteId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _dossiersDisciplinairesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$NaturesFauteTableFilterComposer
+    extends Composer<_$AppDatabase, $NaturesFauteTable> {
+  $$NaturesFauteTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get standard => $composableBuilder(
+    column: $table.standard,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> dossiersDisciplinairesRefs(
+    Expression<bool> Function($$DossiersDisciplinairesTableFilterComposer f) f,
+  ) {
+    final $$DossiersDisciplinairesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.natureFauteId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableFilterComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$NaturesFauteTableOrderingComposer
+    extends Composer<_$AppDatabase, $NaturesFauteTable> {
+  $$NaturesFauteTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get standard => $composableBuilder(
+    column: $table.standard,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$NaturesFauteTableAnnotationComposer
+    extends Composer<_$AppDatabase, $NaturesFauteTable> {
+  $$NaturesFauteTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<String> get libelle =>
+      $composableBuilder(column: $table.libelle, builder: (column) => column);
+
+  GeneratedColumn<bool> get standard =>
+      $composableBuilder(column: $table.standard, builder: (column) => column);
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  Expression<T> dossiersDisciplinairesRefs<T extends Object>(
+    Expression<T> Function($$DossiersDisciplinairesTableAnnotationComposer a) f,
+  ) {
+    final $$DossiersDisciplinairesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.natureFauteId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$NaturesFauteTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $NaturesFauteTable,
+          NatureFauteRow,
+          $$NaturesFauteTableFilterComposer,
+          $$NaturesFauteTableOrderingComposer,
+          $$NaturesFauteTableAnnotationComposer,
+          $$NaturesFauteTableCreateCompanionBuilder,
+          $$NaturesFauteTableUpdateCompanionBuilder,
+          (NatureFauteRow, $$NaturesFauteTableReferences),
+          NatureFauteRow,
+          PrefetchHooks Function({bool dossiersDisciplinairesRefs})
+        > {
+  $$NaturesFauteTableTableManager(_$AppDatabase db, $NaturesFauteTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$NaturesFauteTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$NaturesFauteTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$NaturesFauteTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> code = const Value.absent(),
+                Value<String> libelle = const Value.absent(),
+                Value<bool> standard = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => NaturesFauteCompanion(
+                id: id,
+                code: code,
+                libelle: libelle,
+                standard: standard,
+                statut: statut,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String code,
+                required String libelle,
+                Value<bool> standard = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => NaturesFauteCompanion.insert(
+                id: id,
+                code: code,
+                libelle: libelle,
+                standard: standard,
+                statut: statut,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$NaturesFauteTable, NatureFauteRow>(table),
+                  $$NaturesFauteTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({dossiersDisciplinairesRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (dossiersDisciplinairesRefs) db.dossiersDisciplinaires,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (dossiersDisciplinairesRefs)
+                    await $_getPrefetchedData<
+                      NatureFauteRow,
+                      $NaturesFauteTable,
+                      DossierDisciplinaireRow
+                    >(
+                      currentTable: table,
+                      referencedTable: $$NaturesFauteTableReferences
+                          ._dossiersDisciplinairesRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$NaturesFauteTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).dossiersDisciplinairesRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where(
+                            (e) => e.natureFauteId == item.id,
+                          ),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$NaturesFauteTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $NaturesFauteTable,
+      NatureFauteRow,
+      $$NaturesFauteTableFilterComposer,
+      $$NaturesFauteTableOrderingComposer,
+      $$NaturesFauteTableAnnotationComposer,
+      $$NaturesFauteTableCreateCompanionBuilder,
+      $$NaturesFauteTableUpdateCompanionBuilder,
+      (NatureFauteRow, $$NaturesFauteTableReferences),
+      NatureFauteRow,
+      PrefetchHooks Function({bool dossiersDisciplinairesRefs})
+    >;
+typedef $$CommissionsDisciplinairesTableCreateCompanionBuilder =
+    CommissionsDisciplinairesCompanion Function({
+      required String id,
+      required String noeudId,
+      required String nom,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+typedef $$CommissionsDisciplinairesTableUpdateCompanionBuilder =
+    CommissionsDisciplinairesCompanion Function({
+      Value<String> id,
+      Value<String> noeudId,
+      Value<String> nom,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+
+final class $$CommissionsDisciplinairesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $CommissionsDisciplinairesTable,
+          CommissionDisciplinaireRow
+        > {
+  $$CommissionsDisciplinairesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $OrganisationNodesTable _noeudIdTable(_$AppDatabase db) =>
+      db.organisationNodes.createAlias(
+        'commissions_disciplinaires__noeud_id__organisation_nodes__id',
+      );
+
+  $$OrganisationNodesTableProcessedTableManager get noeudId {
+    final $_column = $_itemColumn<String>('noeud_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $MembresCommissionDisciplinaireTable,
+    List<MembreCommissionRow>
+  >
+  _membresCommissionDisciplinaireRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.membresCommissionDisciplinaire,
+    aliasName:
+        'commissions_disciplinaires__id__membres_commission_disciplinaire__commission_id',
+  );
+
+  $$MembresCommissionDisciplinaireTableProcessedTableManager
+  get membresCommissionDisciplinaireRefs {
+    final manager = $$MembresCommissionDisciplinaireTableTableManager(
+      $_db,
+      $_db.membresCommissionDisciplinaire,
+    ).filter((f) => f.commissionId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _membresCommissionDisciplinaireRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $DossiersDisciplinairesTable,
+    List<DossierDisciplinaireRow>
+  >
+  _dossiersDisciplinairesRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.dossiersDisciplinaires,
+    aliasName:
+        'commissions_disciplinaires__id__dossiers_disciplinaires__commission_id',
+  );
+
+  $$DossiersDisciplinairesTableProcessedTableManager
+  get dossiersDisciplinairesRefs {
+    final manager = $$DossiersDisciplinairesTableTableManager(
+      $_db,
+      $_db.dossiersDisciplinaires,
+    ).filter((f) => f.commissionId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _dossiersDisciplinairesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$CommissionsDisciplinairesTableFilterComposer
+    extends Composer<_$AppDatabase, $CommissionsDisciplinairesTable> {
+  $$CommissionsDisciplinairesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get nom => $composableBuilder(
+    column: $table.nom,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$OrganisationNodesTableFilterComposer get noeudId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> membresCommissionDisciplinaireRefs(
+    Expression<bool> Function(
+      $$MembresCommissionDisciplinaireTableFilterComposer f,
+    )
+    f,
+  ) {
+    final $$MembresCommissionDisciplinaireTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.membresCommissionDisciplinaire,
+          getReferencedColumn: (t) => t.commissionId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MembresCommissionDisciplinaireTableFilterComposer(
+                $db: $db,
+                $table: $db.membresCommissionDisciplinaire,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> dossiersDisciplinairesRefs(
+    Expression<bool> Function($$DossiersDisciplinairesTableFilterComposer f) f,
+  ) {
+    final $$DossiersDisciplinairesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.commissionId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableFilterComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$CommissionsDisciplinairesTableOrderingComposer
+    extends Composer<_$AppDatabase, $CommissionsDisciplinairesTable> {
+  $$CommissionsDisciplinairesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get nom => $composableBuilder(
+    column: $table.nom,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$OrganisationNodesTableOrderingComposer get noeudId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$CommissionsDisciplinairesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CommissionsDisciplinairesTable> {
+  $$CommissionsDisciplinairesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get nom =>
+      $composableBuilder(column: $table.nom, builder: (column) => column);
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  $$OrganisationNodesTableAnnotationComposer get noeudId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  Expression<T> membresCommissionDisciplinaireRefs<T extends Object>(
+    Expression<T> Function(
+      $$MembresCommissionDisciplinaireTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$MembresCommissionDisciplinaireTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.membresCommissionDisciplinaire,
+          getReferencedColumn: (t) => t.commissionId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MembresCommissionDisciplinaireTableAnnotationComposer(
+                $db: $db,
+                $table: $db.membresCommissionDisciplinaire,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> dossiersDisciplinairesRefs<T extends Object>(
+    Expression<T> Function($$DossiersDisciplinairesTableAnnotationComposer a) f,
+  ) {
+    final $$DossiersDisciplinairesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.commissionId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$CommissionsDisciplinairesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CommissionsDisciplinairesTable,
+          CommissionDisciplinaireRow,
+          $$CommissionsDisciplinairesTableFilterComposer,
+          $$CommissionsDisciplinairesTableOrderingComposer,
+          $$CommissionsDisciplinairesTableAnnotationComposer,
+          $$CommissionsDisciplinairesTableCreateCompanionBuilder,
+          $$CommissionsDisciplinairesTableUpdateCompanionBuilder,
+          (
+            CommissionDisciplinaireRow,
+            $$CommissionsDisciplinairesTableReferences,
+          ),
+          CommissionDisciplinaireRow,
+          PrefetchHooks Function({
+            bool noeudId,
+            bool membresCommissionDisciplinaireRefs,
+            bool dossiersDisciplinairesRefs,
+          })
+        > {
+  $$CommissionsDisciplinairesTableTableManager(
+    _$AppDatabase db,
+    $CommissionsDisciplinairesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CommissionsDisciplinairesTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$CommissionsDisciplinairesTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$CommissionsDisciplinairesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> noeudId = const Value.absent(),
+                Value<String> nom = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CommissionsDisciplinairesCompanion(
+                id: id,
+                noeudId: noeudId,
+                nom: nom,
+                statut: statut,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String noeudId,
+                required String nom,
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CommissionsDisciplinairesCompanion.insert(
+                id: id,
+                noeudId: noeudId,
+                nom: nom,
+                statut: statut,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $CommissionsDisciplinairesTable,
+                    CommissionDisciplinaireRow
+                  >(table),
+                  $$CommissionsDisciplinairesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                noeudId = false,
+                membresCommissionDisciplinaireRefs = false,
+                dossiersDisciplinairesRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (membresCommissionDisciplinaireRefs)
+                      db.membresCommissionDisciplinaire,
+                    if (dossiersDisciplinairesRefs) db.dossiersDisciplinaires,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (noeudId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.noeudId,
+                                    referencedTable:
+                                        $$CommissionsDisciplinairesTableReferences
+                                            ._noeudIdTable(db),
+                                    referencedColumn:
+                                        $$CommissionsDisciplinairesTableReferences
+                                            ._noeudIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (membresCommissionDisciplinaireRefs)
+                        await $_getPrefetchedData<
+                          CommissionDisciplinaireRow,
+                          $CommissionsDisciplinairesTable,
+                          MembreCommissionRow
+                        >(
+                          currentTable: table,
+                          referencedTable:
+                              $$CommissionsDisciplinairesTableReferences
+                                  ._membresCommissionDisciplinaireRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CommissionsDisciplinairesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).membresCommissionDisciplinaireRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.commissionId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (dossiersDisciplinairesRefs)
+                        await $_getPrefetchedData<
+                          CommissionDisciplinaireRow,
+                          $CommissionsDisciplinairesTable,
+                          DossierDisciplinaireRow
+                        >(
+                          currentTable: table,
+                          referencedTable:
+                              $$CommissionsDisciplinairesTableReferences
+                                  ._dossiersDisciplinairesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CommissionsDisciplinairesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).dossiersDisciplinairesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.commissionId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$CommissionsDisciplinairesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CommissionsDisciplinairesTable,
+      CommissionDisciplinaireRow,
+      $$CommissionsDisciplinairesTableFilterComposer,
+      $$CommissionsDisciplinairesTableOrderingComposer,
+      $$CommissionsDisciplinairesTableAnnotationComposer,
+      $$CommissionsDisciplinairesTableCreateCompanionBuilder,
+      $$CommissionsDisciplinairesTableUpdateCompanionBuilder,
+      (CommissionDisciplinaireRow, $$CommissionsDisciplinairesTableReferences),
+      CommissionDisciplinaireRow,
+      PrefetchHooks Function({
+        bool noeudId,
+        bool membresCommissionDisciplinaireRefs,
+        bool dossiersDisciplinairesRefs,
+      })
+    >;
+typedef $$MembresCommissionDisciplinaireTableCreateCompanionBuilder =
+    MembresCommissionDisciplinaireCompanion Function({
+      required String id,
+      required String commissionId,
+      required String fideleId,
+      Value<int> rowid,
+    });
+typedef $$MembresCommissionDisciplinaireTableUpdateCompanionBuilder =
+    MembresCommissionDisciplinaireCompanion Function({
+      Value<String> id,
+      Value<String> commissionId,
+      Value<String> fideleId,
+      Value<int> rowid,
+    });
+
+final class $$MembresCommissionDisciplinaireTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $MembresCommissionDisciplinaireTable,
+          MembreCommissionRow
+        > {
+  $$MembresCommissionDisciplinaireTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $CommissionsDisciplinairesTable _commissionIdTable(
+    _$AppDatabase db,
+  ) => db.commissionsDisciplinaires.createAlias(
+    'membres_commission_disciplinaire__commission_id__commissions_disciplinaires__id',
+  );
+
+  $$CommissionsDisciplinairesTableProcessedTableManager get commissionId {
+    final $_column = $_itemColumn<String>('commission_id')!;
+
+    final manager = $$CommissionsDisciplinairesTableTableManager(
+      $_db,
+      $_db.commissionsDisciplinaires,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_commissionIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) => db.fideles
+      .createAlias('membres_commission_disciplinaire__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$MembresCommissionDisciplinaireTableFilterComposer
+    extends Composer<_$AppDatabase, $MembresCommissionDisciplinaireTable> {
+  $$MembresCommissionDisciplinaireTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$CommissionsDisciplinairesTableFilterComposer get commissionId {
+    final $$CommissionsDisciplinairesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.commissionId,
+          referencedTable: $db.commissionsDisciplinaires,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CommissionsDisciplinairesTableFilterComposer(
+                $db: $db,
+                $table: $db.commissionsDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MembresCommissionDisciplinaireTableOrderingComposer
+    extends Composer<_$AppDatabase, $MembresCommissionDisciplinaireTable> {
+  $$MembresCommissionDisciplinaireTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$CommissionsDisciplinairesTableOrderingComposer get commissionId {
+    final $$CommissionsDisciplinairesTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.commissionId,
+          referencedTable: $db.commissionsDisciplinaires,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CommissionsDisciplinairesTableOrderingComposer(
+                $db: $db,
+                $table: $db.commissionsDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MembresCommissionDisciplinaireTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MembresCommissionDisciplinaireTable> {
+  $$MembresCommissionDisciplinaireTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  $$CommissionsDisciplinairesTableAnnotationComposer get commissionId {
+    final $$CommissionsDisciplinairesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.commissionId,
+          referencedTable: $db.commissionsDisciplinaires,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CommissionsDisciplinairesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.commissionsDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MembresCommissionDisciplinaireTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MembresCommissionDisciplinaireTable,
+          MembreCommissionRow,
+          $$MembresCommissionDisciplinaireTableFilterComposer,
+          $$MembresCommissionDisciplinaireTableOrderingComposer,
+          $$MembresCommissionDisciplinaireTableAnnotationComposer,
+          $$MembresCommissionDisciplinaireTableCreateCompanionBuilder,
+          $$MembresCommissionDisciplinaireTableUpdateCompanionBuilder,
+          (
+            MembreCommissionRow,
+            $$MembresCommissionDisciplinaireTableReferences,
+          ),
+          MembreCommissionRow,
+          PrefetchHooks Function({bool commissionId, bool fideleId})
+        > {
+  $$MembresCommissionDisciplinaireTableTableManager(
+    _$AppDatabase db,
+    $MembresCommissionDisciplinaireTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MembresCommissionDisciplinaireTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$MembresCommissionDisciplinaireTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$MembresCommissionDisciplinaireTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> commissionId = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MembresCommissionDisciplinaireCompanion(
+                id: id,
+                commissionId: commissionId,
+                fideleId: fideleId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String commissionId,
+                required String fideleId,
+                Value<int> rowid = const Value.absent(),
+              }) => MembresCommissionDisciplinaireCompanion.insert(
+                id: id,
+                commissionId: commissionId,
+                fideleId: fideleId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $MembresCommissionDisciplinaireTable,
+                    MembreCommissionRow
+                  >(table),
+                  $$MembresCommissionDisciplinaireTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({commissionId = false, fideleId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (commissionId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.commissionId,
+                                referencedTable:
+                                    $$MembresCommissionDisciplinaireTableReferences
+                                        ._commissionIdTable(db),
+                                referencedColumn:
+                                    $$MembresCommissionDisciplinaireTableReferences
+                                        ._commissionIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (fideleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.fideleId,
+                                referencedTable:
+                                    $$MembresCommissionDisciplinaireTableReferences
+                                        ._fideleIdTable(db),
+                                referencedColumn:
+                                    $$MembresCommissionDisciplinaireTableReferences
+                                        ._fideleIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$MembresCommissionDisciplinaireTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MembresCommissionDisciplinaireTable,
+      MembreCommissionRow,
+      $$MembresCommissionDisciplinaireTableFilterComposer,
+      $$MembresCommissionDisciplinaireTableOrderingComposer,
+      $$MembresCommissionDisciplinaireTableAnnotationComposer,
+      $$MembresCommissionDisciplinaireTableCreateCompanionBuilder,
+      $$MembresCommissionDisciplinaireTableUpdateCompanionBuilder,
+      (MembreCommissionRow, $$MembresCommissionDisciplinaireTableReferences),
+      MembreCommissionRow,
+      PrefetchHooks Function({bool commissionId, bool fideleId})
+    >;
+typedef $$DossiersDisciplinairesTableCreateCompanionBuilder =
+    DossiersDisciplinairesCompanion Function({
+      required String id,
+      required String fideleId,
+      required String noeudId,
+      required String natureFauteId,
+      required DateTime dateOuverture,
+      Value<String> statut,
+      Value<String?> ouvertParFideleId,
+      Value<String?> statutSpirituelAnterieur,
+      Value<String?> commissionId,
+      Value<String?> decision,
+      Value<DateTime?> dateDecision,
+      Value<int?> dureeSanctionJours,
+      Value<DateTime?> dateReintegrationPrevue,
+      Value<bool> suspensionMinisteresAppliquee,
+      Value<String?> decisionComiteOrigineId,
+      Value<int> rowid,
+    });
+typedef $$DossiersDisciplinairesTableUpdateCompanionBuilder =
+    DossiersDisciplinairesCompanion Function({
+      Value<String> id,
+      Value<String> fideleId,
+      Value<String> noeudId,
+      Value<String> natureFauteId,
+      Value<DateTime> dateOuverture,
+      Value<String> statut,
+      Value<String?> ouvertParFideleId,
+      Value<String?> statutSpirituelAnterieur,
+      Value<String?> commissionId,
+      Value<String?> decision,
+      Value<DateTime?> dateDecision,
+      Value<int?> dureeSanctionJours,
+      Value<DateTime?> dateReintegrationPrevue,
+      Value<bool> suspensionMinisteresAppliquee,
+      Value<String?> decisionComiteOrigineId,
+      Value<int> rowid,
+    });
+
+final class $$DossiersDisciplinairesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $DossiersDisciplinairesTable,
+          DossierDisciplinaireRow
+        > {
+  $$DossiersDisciplinairesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('dossiers_disciplinaires__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $OrganisationNodesTable _noeudIdTable(_$AppDatabase db) => db
+      .organisationNodes
+      .createAlias('dossiers_disciplinaires__noeud_id__organisation_nodes__id');
+
+  $$OrganisationNodesTableProcessedTableManager get noeudId {
+    final $_column = $_itemColumn<String>('noeud_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $NaturesFauteTable _natureFauteIdTable(_$AppDatabase db) =>
+      db.naturesFaute.createAlias(
+        'dossiers_disciplinaires__nature_faute_id__natures_faute__id',
+      );
+
+  $$NaturesFauteTableProcessedTableManager get natureFauteId {
+    final $_column = $_itemColumn<String>('nature_faute_id')!;
+
+    final manager = $$NaturesFauteTableTableManager(
+      $_db,
+      $_db.naturesFaute,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_natureFauteIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $FidelesTable _ouvertParFideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias(
+        'dossiers_disciplinaires__ouvert_par_fidele_id__fideles__id',
+      );
+
+  $$FidelesTableProcessedTableManager? get ouvertParFideleId {
+    final $_column = $_itemColumn<String>('ouvert_par_fidele_id');
+    if ($_column == null) return null;
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_ouvertParFideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $CommissionsDisciplinairesTable _commissionIdTable(
+    _$AppDatabase db,
+  ) => db.commissionsDisciplinaires.createAlias(
+    'dossiers_disciplinaires__commission_id__commissions_disciplinaires__id',
+  );
+
+  $$CommissionsDisciplinairesTableProcessedTableManager? get commissionId {
+    final $_column = $_itemColumn<String>('commission_id');
+    if ($_column == null) return null;
+    final manager = $$CommissionsDisciplinairesTableTableManager(
+      $_db,
+      $_db.commissionsDisciplinaires,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_commissionIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $DecisionsTable _decisionComiteOrigineIdTable(_$AppDatabase db) =>
+      db.decisions.createAlias(
+        'dossiers_disciplinaires__decision_comite_origine_id__decisions__id',
+      );
+
+  $$DecisionsTableProcessedTableManager? get decisionComiteOrigineId {
+    final $_column = $_itemColumn<String>('decision_comite_origine_id');
+    if ($_column == null) return null;
+    final manager = $$DecisionsTableTableManager(
+      $_db,
+      $_db.decisions,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(
+      _decisionComiteOrigineIdTable($_db),
+    );
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$PiecesDossierTable, List<PieceDossierRow>>
+  _piecesDossierRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.piecesDossier,
+    aliasName: 'dossiers_disciplinaires__id__pieces_dossier__dossier_id',
+  );
+
+  $$PiecesDossierTableProcessedTableManager get piecesDossierRefs {
+    final manager = $$PiecesDossierTableTableManager(
+      $_db,
+      $_db.piecesDossier,
+    ).filter((f) => f.dossierId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_piecesDossierRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$DossiersDisciplinairesTableFilterComposer
+    extends Composer<_$AppDatabase, $DossiersDisciplinairesTable> {
+  $$DossiersDisciplinairesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateOuverture => $composableBuilder(
+    column: $table.dateOuverture,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statutSpirituelAnterieur => $composableBuilder(
+    column: $table.statutSpirituelAnterieur,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get decision => $composableBuilder(
+    column: $table.decision,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateDecision => $composableBuilder(
+    column: $table.dateDecision,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get dureeSanctionJours => $composableBuilder(
+    column: $table.dureeSanctionJours,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateReintegrationPrevue => $composableBuilder(
+    column: $table.dateReintegrationPrevue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get suspensionMinisteresAppliquee => $composableBuilder(
+    column: $table.suspensionMinisteresAppliquee,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableFilterComposer get noeudId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$NaturesFauteTableFilterComposer get natureFauteId {
+    final $$NaturesFauteTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.natureFauteId,
+      referencedTable: $db.naturesFaute,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$NaturesFauteTableFilterComposer(
+            $db: $db,
+            $table: $db.naturesFaute,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableFilterComposer get ouvertParFideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.ouvertParFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$CommissionsDisciplinairesTableFilterComposer get commissionId {
+    final $$CommissionsDisciplinairesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.commissionId,
+          referencedTable: $db.commissionsDisciplinaires,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CommissionsDisciplinairesTableFilterComposer(
+                $db: $db,
+                $table: $db.commissionsDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$DecisionsTableFilterComposer get decisionComiteOrigineId {
+    final $$DecisionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.decisionComiteOrigineId,
+      referencedTable: $db.decisions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DecisionsTableFilterComposer(
+            $db: $db,
+            $table: $db.decisions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> piecesDossierRefs(
+    Expression<bool> Function($$PiecesDossierTableFilterComposer f) f,
+  ) {
+    final $$PiecesDossierTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.piecesDossier,
+      getReferencedColumn: (t) => t.dossierId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PiecesDossierTableFilterComposer(
+            $db: $db,
+            $table: $db.piecesDossier,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$DossiersDisciplinairesTableOrderingComposer
+    extends Composer<_$AppDatabase, $DossiersDisciplinairesTable> {
+  $$DossiersDisciplinairesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateOuverture => $composableBuilder(
+    column: $table.dateOuverture,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statutSpirituelAnterieur => $composableBuilder(
+    column: $table.statutSpirituelAnterieur,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get decision => $composableBuilder(
+    column: $table.decision,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateDecision => $composableBuilder(
+    column: $table.dateDecision,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get dureeSanctionJours => $composableBuilder(
+    column: $table.dureeSanctionJours,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateReintegrationPrevue => $composableBuilder(
+    column: $table.dateReintegrationPrevue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get suspensionMinisteresAppliquee => $composableBuilder(
+    column: $table.suspensionMinisteresAppliquee,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableOrderingComposer get noeudId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$NaturesFauteTableOrderingComposer get natureFauteId {
+    final $$NaturesFauteTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.natureFauteId,
+      referencedTable: $db.naturesFaute,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$NaturesFauteTableOrderingComposer(
+            $db: $db,
+            $table: $db.naturesFaute,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableOrderingComposer get ouvertParFideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.ouvertParFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$CommissionsDisciplinairesTableOrderingComposer get commissionId {
+    final $$CommissionsDisciplinairesTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.commissionId,
+          referencedTable: $db.commissionsDisciplinaires,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CommissionsDisciplinairesTableOrderingComposer(
+                $db: $db,
+                $table: $db.commissionsDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$DecisionsTableOrderingComposer get decisionComiteOrigineId {
+    final $$DecisionsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.decisionComiteOrigineId,
+      referencedTable: $db.decisions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DecisionsTableOrderingComposer(
+            $db: $db,
+            $table: $db.decisions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DossiersDisciplinairesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $DossiersDisciplinairesTable> {
+  $$DossiersDisciplinairesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateOuverture => $composableBuilder(
+    column: $table.dateOuverture,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  GeneratedColumn<String> get statutSpirituelAnterieur => $composableBuilder(
+    column: $table.statutSpirituelAnterieur,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get decision =>
+      $composableBuilder(column: $table.decision, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateDecision => $composableBuilder(
+    column: $table.dateDecision,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get dureeSanctionJours => $composableBuilder(
+    column: $table.dureeSanctionJours,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get dateReintegrationPrevue => $composableBuilder(
+    column: $table.dateReintegrationPrevue,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get suspensionMinisteresAppliquee => $composableBuilder(
+    column: $table.suspensionMinisteresAppliquee,
+    builder: (column) => column,
+  );
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableAnnotationComposer get noeudId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$NaturesFauteTableAnnotationComposer get natureFauteId {
+    final $$NaturesFauteTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.natureFauteId,
+      referencedTable: $db.naturesFaute,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$NaturesFauteTableAnnotationComposer(
+            $db: $db,
+            $table: $db.naturesFaute,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableAnnotationComposer get ouvertParFideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.ouvertParFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$CommissionsDisciplinairesTableAnnotationComposer get commissionId {
+    final $$CommissionsDisciplinairesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.commissionId,
+          referencedTable: $db.commissionsDisciplinaires,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CommissionsDisciplinairesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.commissionsDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$DecisionsTableAnnotationComposer get decisionComiteOrigineId {
+    final $$DecisionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.decisionComiteOrigineId,
+      referencedTable: $db.decisions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DecisionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.decisions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> piecesDossierRefs<T extends Object>(
+    Expression<T> Function($$PiecesDossierTableAnnotationComposer a) f,
+  ) {
+    final $$PiecesDossierTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.piecesDossier,
+      getReferencedColumn: (t) => t.dossierId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PiecesDossierTableAnnotationComposer(
+            $db: $db,
+            $table: $db.piecesDossier,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$DossiersDisciplinairesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $DossiersDisciplinairesTable,
+          DossierDisciplinaireRow,
+          $$DossiersDisciplinairesTableFilterComposer,
+          $$DossiersDisciplinairesTableOrderingComposer,
+          $$DossiersDisciplinairesTableAnnotationComposer,
+          $$DossiersDisciplinairesTableCreateCompanionBuilder,
+          $$DossiersDisciplinairesTableUpdateCompanionBuilder,
+          (DossierDisciplinaireRow, $$DossiersDisciplinairesTableReferences),
+          DossierDisciplinaireRow,
+          PrefetchHooks Function({
+            bool fideleId,
+            bool noeudId,
+            bool natureFauteId,
+            bool ouvertParFideleId,
+            bool commissionId,
+            bool decisionComiteOrigineId,
+            bool piecesDossierRefs,
+          })
+        > {
+  $$DossiersDisciplinairesTableTableManager(
+    _$AppDatabase db,
+    $DossiersDisciplinairesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DossiersDisciplinairesTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$DossiersDisciplinairesTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$DossiersDisciplinairesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<String> noeudId = const Value.absent(),
+                Value<String> natureFauteId = const Value.absent(),
+                Value<DateTime> dateOuverture = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<String?> ouvertParFideleId = const Value.absent(),
+                Value<String?> statutSpirituelAnterieur = const Value.absent(),
+                Value<String?> commissionId = const Value.absent(),
+                Value<String?> decision = const Value.absent(),
+                Value<DateTime?> dateDecision = const Value.absent(),
+                Value<int?> dureeSanctionJours = const Value.absent(),
+                Value<DateTime?> dateReintegrationPrevue = const Value.absent(),
+                Value<bool> suspensionMinisteresAppliquee =
+                    const Value.absent(),
+                Value<String?> decisionComiteOrigineId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DossiersDisciplinairesCompanion(
+                id: id,
+                fideleId: fideleId,
+                noeudId: noeudId,
+                natureFauteId: natureFauteId,
+                dateOuverture: dateOuverture,
+                statut: statut,
+                ouvertParFideleId: ouvertParFideleId,
+                statutSpirituelAnterieur: statutSpirituelAnterieur,
+                commissionId: commissionId,
+                decision: decision,
+                dateDecision: dateDecision,
+                dureeSanctionJours: dureeSanctionJours,
+                dateReintegrationPrevue: dateReintegrationPrevue,
+                suspensionMinisteresAppliquee: suspensionMinisteresAppliquee,
+                decisionComiteOrigineId: decisionComiteOrigineId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String fideleId,
+                required String noeudId,
+                required String natureFauteId,
+                required DateTime dateOuverture,
+                Value<String> statut = const Value.absent(),
+                Value<String?> ouvertParFideleId = const Value.absent(),
+                Value<String?> statutSpirituelAnterieur = const Value.absent(),
+                Value<String?> commissionId = const Value.absent(),
+                Value<String?> decision = const Value.absent(),
+                Value<DateTime?> dateDecision = const Value.absent(),
+                Value<int?> dureeSanctionJours = const Value.absent(),
+                Value<DateTime?> dateReintegrationPrevue = const Value.absent(),
+                Value<bool> suspensionMinisteresAppliquee =
+                    const Value.absent(),
+                Value<String?> decisionComiteOrigineId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DossiersDisciplinairesCompanion.insert(
+                id: id,
+                fideleId: fideleId,
+                noeudId: noeudId,
+                natureFauteId: natureFauteId,
+                dateOuverture: dateOuverture,
+                statut: statut,
+                ouvertParFideleId: ouvertParFideleId,
+                statutSpirituelAnterieur: statutSpirituelAnterieur,
+                commissionId: commissionId,
+                decision: decision,
+                dateDecision: dateDecision,
+                dureeSanctionJours: dureeSanctionJours,
+                dateReintegrationPrevue: dateReintegrationPrevue,
+                suspensionMinisteresAppliquee: suspensionMinisteresAppliquee,
+                decisionComiteOrigineId: decisionComiteOrigineId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $DossiersDisciplinairesTable,
+                    DossierDisciplinaireRow
+                  >(table),
+                  $$DossiersDisciplinairesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                fideleId = false,
+                noeudId = false,
+                natureFauteId = false,
+                ouvertParFideleId = false,
+                commissionId = false,
+                decisionComiteOrigineId = false,
+                piecesDossierRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (piecesDossierRefs) db.piecesDossier,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (fideleId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.fideleId,
+                                    referencedTable:
+                                        $$DossiersDisciplinairesTableReferences
+                                            ._fideleIdTable(db),
+                                    referencedColumn:
+                                        $$DossiersDisciplinairesTableReferences
+                                            ._fideleIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (noeudId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.noeudId,
+                                    referencedTable:
+                                        $$DossiersDisciplinairesTableReferences
+                                            ._noeudIdTable(db),
+                                    referencedColumn:
+                                        $$DossiersDisciplinairesTableReferences
+                                            ._noeudIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (natureFauteId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.natureFauteId,
+                                    referencedTable:
+                                        $$DossiersDisciplinairesTableReferences
+                                            ._natureFauteIdTable(db),
+                                    referencedColumn:
+                                        $$DossiersDisciplinairesTableReferences
+                                            ._natureFauteIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (ouvertParFideleId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.ouvertParFideleId,
+                                    referencedTable:
+                                        $$DossiersDisciplinairesTableReferences
+                                            ._ouvertParFideleIdTable(db),
+                                    referencedColumn:
+                                        $$DossiersDisciplinairesTableReferences
+                                            ._ouvertParFideleIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (commissionId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.commissionId,
+                                    referencedTable:
+                                        $$DossiersDisciplinairesTableReferences
+                                            ._commissionIdTable(db),
+                                    referencedColumn:
+                                        $$DossiersDisciplinairesTableReferences
+                                            ._commissionIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (decisionComiteOrigineId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn:
+                                        table.decisionComiteOrigineId,
+                                    referencedTable:
+                                        $$DossiersDisciplinairesTableReferences
+                                            ._decisionComiteOrigineIdTable(db),
+                                    referencedColumn:
+                                        $$DossiersDisciplinairesTableReferences
+                                            ._decisionComiteOrigineIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (piecesDossierRefs)
+                        await $_getPrefetchedData<
+                          DossierDisciplinaireRow,
+                          $DossiersDisciplinairesTable,
+                          PieceDossierRow
+                        >(
+                          currentTable: table,
+                          referencedTable:
+                              $$DossiersDisciplinairesTableReferences
+                                  ._piecesDossierRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$DossiersDisciplinairesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).piecesDossierRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.dossierId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$DossiersDisciplinairesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $DossiersDisciplinairesTable,
+      DossierDisciplinaireRow,
+      $$DossiersDisciplinairesTableFilterComposer,
+      $$DossiersDisciplinairesTableOrderingComposer,
+      $$DossiersDisciplinairesTableAnnotationComposer,
+      $$DossiersDisciplinairesTableCreateCompanionBuilder,
+      $$DossiersDisciplinairesTableUpdateCompanionBuilder,
+      (DossierDisciplinaireRow, $$DossiersDisciplinairesTableReferences),
+      DossierDisciplinaireRow,
+      PrefetchHooks Function({
+        bool fideleId,
+        bool noeudId,
+        bool natureFauteId,
+        bool ouvertParFideleId,
+        bool commissionId,
+        bool decisionComiteOrigineId,
+        bool piecesDossierRefs,
+      })
+    >;
+typedef $$PiecesDossierTableCreateCompanionBuilder =
+    PiecesDossierCompanion Function({
+      required String id,
+      required String dossierId,
+      required String nature,
+      required DateTime ajouteLe,
+      Value<String?> documentArchiveId,
+      Value<int> rowid,
+    });
+typedef $$PiecesDossierTableUpdateCompanionBuilder =
+    PiecesDossierCompanion Function({
+      Value<String> id,
+      Value<String> dossierId,
+      Value<String> nature,
+      Value<DateTime> ajouteLe,
+      Value<String?> documentArchiveId,
+      Value<int> rowid,
+    });
+
+final class $$PiecesDossierTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $PiecesDossierTable, PieceDossierRow> {
+  $$PiecesDossierTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $DossiersDisciplinairesTable _dossierIdTable(_$AppDatabase db) => db
+      .dossiersDisciplinaires
+      .createAlias('pieces_dossier__dossier_id__dossiers_disciplinaires__id');
+
+  $$DossiersDisciplinairesTableProcessedTableManager get dossierId {
+    final $_column = $_itemColumn<String>('dossier_id')!;
+
+    final manager = $$DossiersDisciplinairesTableTableManager(
+      $_db,
+      $_db.dossiersDisciplinaires,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_dossierIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $DocumentsArchiveTable _documentArchiveIdTable(_$AppDatabase db) =>
+      db.documentsArchive.createAlias(
+        'pieces_dossier__document_archive_id__documents_archive__id',
+      );
+
+  $$DocumentsArchiveTableProcessedTableManager? get documentArchiveId {
+    final $_column = $_itemColumn<String>('document_archive_id');
+    if ($_column == null) return null;
+    final manager = $$DocumentsArchiveTableTableManager(
+      $_db,
+      $_db.documentsArchive,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_documentArchiveIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$PiecesDossierTableFilterComposer
+    extends Composer<_$AppDatabase, $PiecesDossierTable> {
+  $$PiecesDossierTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get nature => $composableBuilder(
+    column: $table.nature,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get ajouteLe => $composableBuilder(
+    column: $table.ajouteLe,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$DossiersDisciplinairesTableFilterComposer get dossierId {
+    final $$DossiersDisciplinairesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.dossierId,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableFilterComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$DocumentsArchiveTableFilterComposer get documentArchiveId {
+    final $$DocumentsArchiveTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.documentArchiveId,
+      referencedTable: $db.documentsArchive,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DocumentsArchiveTableFilterComposer(
+            $db: $db,
+            $table: $db.documentsArchive,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PiecesDossierTableOrderingComposer
+    extends Composer<_$AppDatabase, $PiecesDossierTable> {
+  $$PiecesDossierTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get nature => $composableBuilder(
+    column: $table.nature,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get ajouteLe => $composableBuilder(
+    column: $table.ajouteLe,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$DossiersDisciplinairesTableOrderingComposer get dossierId {
+    final $$DossiersDisciplinairesTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.dossierId,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableOrderingComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$DocumentsArchiveTableOrderingComposer get documentArchiveId {
+    final $$DocumentsArchiveTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.documentArchiveId,
+      referencedTable: $db.documentsArchive,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DocumentsArchiveTableOrderingComposer(
+            $db: $db,
+            $table: $db.documentsArchive,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PiecesDossierTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PiecesDossierTable> {
+  $$PiecesDossierTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get nature =>
+      $composableBuilder(column: $table.nature, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get ajouteLe =>
+      $composableBuilder(column: $table.ajouteLe, builder: (column) => column);
+
+  $$DossiersDisciplinairesTableAnnotationComposer get dossierId {
+    final $$DossiersDisciplinairesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.dossierId,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$DocumentsArchiveTableAnnotationComposer get documentArchiveId {
+    final $$DocumentsArchiveTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.documentArchiveId,
+      referencedTable: $db.documentsArchive,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DocumentsArchiveTableAnnotationComposer(
+            $db: $db,
+            $table: $db.documentsArchive,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PiecesDossierTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PiecesDossierTable,
+          PieceDossierRow,
+          $$PiecesDossierTableFilterComposer,
+          $$PiecesDossierTableOrderingComposer,
+          $$PiecesDossierTableAnnotationComposer,
+          $$PiecesDossierTableCreateCompanionBuilder,
+          $$PiecesDossierTableUpdateCompanionBuilder,
+          (PieceDossierRow, $$PiecesDossierTableReferences),
+          PieceDossierRow,
+          PrefetchHooks Function({bool dossierId, bool documentArchiveId})
+        > {
+  $$PiecesDossierTableTableManager(_$AppDatabase db, $PiecesDossierTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PiecesDossierTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PiecesDossierTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PiecesDossierTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> dossierId = const Value.absent(),
+                Value<String> nature = const Value.absent(),
+                Value<DateTime> ajouteLe = const Value.absent(),
+                Value<String?> documentArchiveId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PiecesDossierCompanion(
+                id: id,
+                dossierId: dossierId,
+                nature: nature,
+                ajouteLe: ajouteLe,
+                documentArchiveId: documentArchiveId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String dossierId,
+                required String nature,
+                required DateTime ajouteLe,
+                Value<String?> documentArchiveId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PiecesDossierCompanion.insert(
+                id: id,
+                dossierId: dossierId,
+                nature: nature,
+                ajouteLe: ajouteLe,
+                documentArchiveId: documentArchiveId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$PiecesDossierTable, PieceDossierRow>(table),
+                  $$PiecesDossierTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({dossierId = false, documentArchiveId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (dossierId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.dossierId,
+                                    referencedTable:
+                                        $$PiecesDossierTableReferences
+                                            ._dossierIdTable(db),
+                                    referencedColumn:
+                                        $$PiecesDossierTableReferences
+                                            ._dossierIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (documentArchiveId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.documentArchiveId,
+                                    referencedTable:
+                                        $$PiecesDossierTableReferences
+                                            ._documentArchiveIdTable(db),
+                                    referencedColumn:
+                                        $$PiecesDossierTableReferences
+                                            ._documentArchiveIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$PiecesDossierTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PiecesDossierTable,
+      PieceDossierRow,
+      $$PiecesDossierTableFilterComposer,
+      $$PiecesDossierTableOrderingComposer,
+      $$PiecesDossierTableAnnotationComposer,
+      $$PiecesDossierTableCreateCompanionBuilder,
+      $$PiecesDossierTableUpdateCompanionBuilder,
+      (PieceDossierRow, $$PiecesDossierTableReferences),
+      PieceDossierRow,
+      PrefetchHooks Function({bool dossierId, bool documentArchiveId})
+    >;
 typedef $$SyncOutboxTableCreateCompanionBuilder =
     SyncOutboxCompanion Function({
       required String id,
@@ -39460,6 +45338,26 @@ class $AppDatabaseManager {
       $$MutationsTableTableManager(_db, _db.mutations);
   $$LettresRecommandationTableTableManager get lettresRecommandation =>
       $$LettresRecommandationTableTableManager(_db, _db.lettresRecommandation);
+  $$NaturesFauteTableTableManager get naturesFaute =>
+      $$NaturesFauteTableTableManager(_db, _db.naturesFaute);
+  $$CommissionsDisciplinairesTableTableManager get commissionsDisciplinaires =>
+      $$CommissionsDisciplinairesTableTableManager(
+        _db,
+        _db.commissionsDisciplinaires,
+      );
+  $$MembresCommissionDisciplinaireTableTableManager
+  get membresCommissionDisciplinaire =>
+      $$MembresCommissionDisciplinaireTableTableManager(
+        _db,
+        _db.membresCommissionDisciplinaire,
+      );
+  $$DossiersDisciplinairesTableTableManager get dossiersDisciplinaires =>
+      $$DossiersDisciplinairesTableTableManager(
+        _db,
+        _db.dossiersDisciplinaires,
+      );
+  $$PiecesDossierTableTableManager get piecesDossier =>
+      $$PiecesDossierTableTableManager(_db, _db.piecesDossier);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }

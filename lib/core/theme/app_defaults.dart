@@ -20,4 +20,9 @@ abstract final class AppDefaults {
   /// l'autorise, paramétrable » : `false` par défaut (les deux nœuds doivent
   /// valider), en l'absence d'un module de politique réseau dédié.
   static const bool deplacementValidationUnilateraleAutorisee = false;
+
+  /// RG-X-04 — pour une sanction à durée indéterminée, intervalle (en jours)
+  /// au-delà duquel une revue périodique du dossier est signalée. Le Cahier
+  /// n'impose pas cette valeur.
+  static const int disciplineRevuePeriodiqueJours = 90;
 }

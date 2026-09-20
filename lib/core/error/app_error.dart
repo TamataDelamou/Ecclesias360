@@ -99,6 +99,26 @@ class AppError implements Exception {
         "Cette mutation a déjà été traitée (validée ou refusée) : elle ne peut plus être modifiée.",
       );
 
+  factory AppError.roleInsuffisantPourOuvertureDossier() => const AppError(
+        'role_insuffisant_pour_ouverture_dossier',
+        "Seul un pasteur référent ou un membre de commission désigné peut ouvrir un dossier disciplinaire.",
+      );
+
+  factory AppError.commissionRequisePourDecision() => const AppError(
+        'commission_requise_pour_decision',
+        "Une commission instructrice doit être assignée au dossier avant de prononcer une décision.",
+      );
+
+  factory AppError.dossierDisciplinaireNonEnInstruction() => const AppError(
+        'dossier_disciplinaire_non_en_instruction',
+        "Ce dossier disciplinaire n'est plus en instruction : une décision a déjà été prononcée ou il est clos.",
+      );
+
+  factory AppError.dossierDisciplinaireNonSanctionne() => const AppError(
+        'dossier_disciplinaire_non_sanctionne',
+        "Ce dossier disciplinaire ne peut être clôturé qu'après qu'une décision a été prononcée.",
+      );
+
   @override
   String toString() => 'AppError($code): $message';
 }

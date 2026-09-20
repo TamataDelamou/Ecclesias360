@@ -101,6 +101,21 @@ const List<(String typeDocument, String modeleNumerotation)> nomenclaturesArchiv
   ('lettre_recommandation', 'LR-{noeud}-{annee}-{sequence}'),
 ];
 
+/// RG-X-02 — natures de faute de départ, référentiel fermé et extensible.
+/// Décision pastorale, hors périmètre technique : liste volontairement
+/// courte et strictement administrative/procédurale (gouvernance,
+/// organisation, engagements) — aucune catégorie à caractère moral,
+/// doctrinal ou théologique n'y figure ni ne doit y être ajoutée, y compris
+/// dans une évolution future de cette liste (voir AGENTS.md §7, entrée
+/// Module X). Toute décision de ce type reste un jugement pastoral rendu
+/// hors du logiciel, jamais une catégorie codée en dur ici.
+const List<(String code, String libelle)> naturesFauteDeDepart = [
+  ('absenteisme_prolonge', 'Absentéisme prolongé et injustifié'),
+  ('desobeissance_autorite_pastorale', "Désobéissance à l'autorité pastorale"),
+  ('conflit_non_resolu', 'Conflit non résolu avec un membre ou un responsable'),
+  ('manquement_engagement_mandat', 'Manquement à un engagement ou à un mandat'),
+];
+
 /// Base Drift/SQLite unique, offline-first (RG-OFF-01), partagée par tous
 /// les modules (voir AGENTS.md §4).
 @DriftDatabase(tables: [
@@ -144,13 +159,18 @@ const List<(String typeDocument, String modeleNumerotation)> nomenclaturesArchiv
   VersionsDocument,
   Mutations,
   LettresRecommandation,
+  NaturesFaute,
+  CommissionsDisciplinaires,
+  MembresCommissionDisciplinaire,
+  DossiersDisciplinaires,
+  PiecesDossier,
   SyncOutbox,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 12;
+  int get schemaVersion => 13;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -237,6 +257,15 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(lettresRecommandation);
             await _seedNomenclaturesArchivageDeDepart();
           }
+          // v12 -> v13 : ajout du Module X (Discipline).
+          if (from < 13) {
+            await m.createTable(naturesFaute);
+            await m.createTable(commissionsDisciplinaires);
+            await m.createTable(membresCommissionDisciplinaire);
+            await m.createTable(dossiersDisciplinaires);
+            await m.createTable(piecesDossier);
+            await _seedNaturesFauteStandards();
+          }
         },
         beforeOpen: (details) async {
           // SQLite n'applique pas les contraintes de clé étrangère par
@@ -249,6 +278,7 @@ class AppDatabase extends _$AppDatabase {
             await _seedProfessionsDeDepart();
             await _seedGroupesEgliseDeDepart();
             await _seedNomenclaturesArchivageDeDepart();
+            await _seedNaturesFauteStandards();
           }
         },
       );
@@ -336,6 +366,24 @@ class AppDatabase extends _$AppDatabase {
               id: IdGenerator.newId(),
               typeDocument: typeDocument,
               modeleNumerotation: modeleNumerotation,
+            ),
+        ],
+        mode: InsertMode.insertOrIgnore,
+      );
+    });
+  }
+
+  Future<void> _seedNaturesFauteStandards() async {
+    await batch((b) {
+      b.insertAll(
+        naturesFaute,
+        [
+          for (final (code, libelle) in naturesFauteDeDepart)
+            NaturesFauteCompanion.insert(
+              id: IdGenerator.newId(),
+              code: code,
+              libelle: libelle,
+              standard: const Value(true),
             ),
         ],
         mode: InsertMode.insertOrIgnore,

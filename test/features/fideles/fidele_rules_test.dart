@@ -87,6 +87,31 @@ void main() {
       );
     });
 
+    test('sortie de discipline est autorisée via le module discipline (RG-X-04)', () {
+      // Restauration vers le statut antérieur : ne suit pas la chaîne de
+      // progression normale (un statut hors chaîne ne peut pas « avancer »
+      // vers membre actif autrement), d'où la branche symétrique dédiée.
+      expect(
+        () => FideleRules.validerTransitionStatutSpirituel(
+          actuel: StatutSpirituel.membreEnDiscipline,
+          cible: StatutSpirituel.membreActif,
+          viaModuleDiscipline: true,
+        ),
+        returnsNormally,
+      );
+    });
+
+    test('sortie de discipline via le module discipline vers un statut terminal (RG-X-04)', () {
+      expect(
+        () => FideleRules.validerTransitionStatutSpirituel(
+          actuel: StatutSpirituel.membreEnDiscipline,
+          cible: StatutSpirituel.membreDecede,
+          viaModuleDiscipline: true,
+        ),
+        returnsNormally,
+      );
+    });
+
     test('membre actif -> décédé est valide', () {
       expect(
         () => FideleRules.validerTransitionStatutSpirituel(

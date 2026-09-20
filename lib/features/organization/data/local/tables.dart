@@ -667,6 +667,93 @@ class LettresRecommandation extends Table {
   List<String> get customConstraints => ['UNIQUE (mutation_id)'];
 }
 
+/// Table Drift NatureFaute (Module X, RG-X-02) — référentiel fermé et
+/// extensible, même motif que `TypesMinisteres`. Strictement administratif
+/// et procédural : ne jamais y inscrire de catégorie à caractère moral,
+/// doctrinal ou théologique (voir AGENTS.md §7, entrée Module X).
+@DataClassName('NatureFauteRow')
+class NaturesFaute extends Table {
+  TextColumn get id => text()();
+  TextColumn get code => text()();
+  TextColumn get libelle => text()();
+  BoolColumn get standard => boolean().withDefault(const Constant(false))();
+  TextColumn get statut => text().withDefault(const Constant('actif'))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (code)'];
+}
+
+/// Table Drift CommissionDisciplinaire (Module X, RG-X-02).
+@DataClassName('CommissionDisciplinaireRow')
+class CommissionsDisciplinaires extends Table {
+  TextColumn get id => text()();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  TextColumn get nom => text()();
+  TextColumn get statut => text().withDefault(const Constant('active'))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift MembreCommission (Module X, RG-X-02).
+@DataClassName('MembreCommissionRow')
+class MembresCommissionDisciplinaire extends Table {
+  TextColumn get id => text()();
+  TextColumn get commissionId => text().references(CommissionsDisciplinaires, #id)();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (commission_id, fidele_id)'];
+}
+
+/// Table Drift DossierDisciplinaire (Module X, RG-X-01 à 04). Voir
+/// `DossierDisciplinaire` (domaine) pour la justification des quatre champs
+/// ajoutés au-delà du tableau minimal du Cahier.
+@DataClassName('DossierDisciplinaireRow')
+class DossiersDisciplinaires extends Table {
+  TextColumn get id => text()();
+  @ReferenceName('dossiersDisciplinairesCommeMisEnCause')
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  TextColumn get natureFauteId => text().references(NaturesFaute, #id)();
+  DateTimeColumn get dateOuverture => dateTime()();
+  TextColumn get statut => text().withDefault(const Constant('en_instruction'))();
+  @ReferenceName('dossiersDisciplinairesCommeAuteur')
+  TextColumn get ouvertParFideleId => text().nullable().references(Fideles, #id)();
+  TextColumn get statutSpirituelAnterieur => text().nullable()();
+  TextColumn get commissionId => text().nullable().references(CommissionsDisciplinaires, #id)();
+  TextColumn get decision => text().nullable()();
+  DateTimeColumn get dateDecision => dateTime().nullable()();
+  IntColumn get dureeSanctionJours => integer().nullable()();
+  DateTimeColumn get dateReintegrationPrevue => dateTime().nullable()();
+  BoolColumn get suspensionMinisteresAppliquee => boolean().withDefault(const Constant(false))();
+  TextColumn get decisionComiteOrigineId => text().nullable().references(Decisions, #id)();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift PieceDossier (Module X, RG-X-02/06). `documentArchiveId`
+/// nullable — rempli seulement si `ArchivageRepository` est injecté dans
+/// `DisciplineRepository`, même précédent que `ProcesVerbal` (module VII).
+@DataClassName('PieceDossierRow')
+class PiecesDossier extends Table {
+  TextColumn get id => text()();
+  TextColumn get dossierId => text().references(DossiersDisciplinaires, #id)();
+  TextColumn get nature => text()();
+  DateTimeColumn get ajouteLe => dateTime()();
+  TextColumn get documentArchiveId => text().nullable().references(DocumentsArchive, #id)();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 /// File d'attente hors ligne (RG-OFF-02) : chaque écriture locale enregistre
 /// ici l'événement à rejouer vers Supabase dès qu'une connexion est
 /// disponible, dans l'ordre chronologique, jamais purgée avant confirmation

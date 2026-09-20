@@ -359,4 +359,54 @@ void main() {
 
     await db.close();
   });
+
+  test('un fichier créé en schéma v12 reçoit les tables et le seed du Module X à l\'ouverture', () async {
+    final fichier = File(
+      path.join(Directory.systemTemp.path, 'ecclesias_migration_test_v12_${DateTime.now().microsecondsSinceEpoch}.sqlite'),
+    );
+    addTearDown(() {
+      if (fichier.existsSync()) fichier.deleteSync();
+    });
+
+    final dbInitiale = AppDatabase(NativeDatabase(fichier));
+    await dbInitiale.into(dbInitiale.organisationNodes).insert(
+          OrganisationNodesCompanion.insert(
+            id: 'siege-1',
+            typeNoeud: 'siege',
+            nom: 'GSG',
+            codeInterne: 'GSG-SIEGE',
+            path: '/siege-1/',
+            depth: 0,
+            createdAt: DateTime(2026, 1, 1),
+            updatedAt: DateTime(2026, 1, 1),
+          ),
+        );
+    await dbInitiale.close();
+
+    final connexionBrute = sqlite3.sqlite3.open(fichier.path);
+    connexionBrute.execute('''
+      DROP TABLE pieces_dossier;
+      DROP TABLE dossiers_disciplinaires;
+      DROP TABLE membres_commission_disciplinaire;
+      DROP TABLE commissions_disciplinaires;
+      DROP TABLE natures_faute;
+      PRAGMA user_version = 12;
+    ''');
+    connexionBrute.close();
+
+    final db = AppDatabase(NativeDatabase(fichier));
+
+    final noeuds = await db.select(db.organisationNodes).get();
+    expect(noeuds, hasLength(1));
+    expect(noeuds.single.nom, 'GSG');
+
+    // Ne doit plus lever "no such table: dossiers_disciplinaires".
+    final dossiers = await db.select(db.dossiersDisciplinaires).get();
+    expect(dossiers, isEmpty);
+
+    final natures = await db.select(db.naturesFaute).get();
+    expect(natures, hasLength(4));
+
+    await db.close();
+  });
 }
