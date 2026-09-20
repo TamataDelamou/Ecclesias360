@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_routes.dart';
+import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -17,42 +18,42 @@ class HomeScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(l10n.homeWelcome),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimensions.spacingLg),
             FilledButton(
               onPressed: () => context.push(AppRoutes.organisation),
               child: const Text('Organisation'),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppDimensions.spacingSm),
             FilledButton(
               onPressed: () => context.push(AppRoutes.fideles),
               child: const Text('Fidèles'),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppDimensions.spacingSm),
             FilledButton(
               onPressed: () => context.push(AppRoutes.zonesGeographiques),
               child: const Text('Zones géographiques'),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppDimensions.spacingSm),
             FilledButton(
               onPressed: () => context.push(AppRoutes.roles),
               child: const Text('Rôles'),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppDimensions.spacingSm),
             FilledButton(
               onPressed: () => context.push(AppRoutes.mandatsEcheance),
               child: const Text('Mandats arrivant à échéance'),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppDimensions.spacingSm),
             FilledButton(
               onPressed: () => context.push(AppRoutes.donsReferentiel),
               child: const Text('Référentiel des dons spirituels'),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppDimensions.spacingSm),
             FilledButton(
               onPressed: () => context.push(AppRoutes.professions),
               child: const Text('Groupes professionnels'),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppDimensions.spacingSm),
             FilledButton(
               onPressed: () => context.push(AppRoutes.groupesEglise),
               child: const Text('Groupes de l\'Église'),

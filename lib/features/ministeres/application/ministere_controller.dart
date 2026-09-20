@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 import '../../../core/error/app_error.dart';
+import '../../../core/theme/app_defaults.dart';
 import '../data/ministere_repository.dart';
 import '../domain/models/activite_ministere.dart';
 import '../domain/models/affectation_ministere.dart';
@@ -62,7 +63,9 @@ class MinistereController extends ChangeNotifier {
 
   /// RG-III-02 — mandats ouverts arrivant à échéance, tous ministères
   /// confondus (écran 9).
-  Future<List<MandatResponsable>> mandatsArrivantAEcheance({Duration horizon = const Duration(days: 30)}) async {
+  Future<List<MandatResponsable>> mandatsArrivantAEcheance({
+    Duration horizon = const Duration(days: AppDefaults.mandatEcheanceHorizonJours),
+  }) async {
     final ouverts = await _repository.mandatsOuverts();
     return MinistereRules.mandatsArrivantAEcheance(ouverts, maintenant: DateTime.now(), horizon: horizon);
   }

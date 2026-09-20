@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/constants/app_routes.dart';
+import '../../../core/theme/app_dimensions.dart';
 import '../application/organisation_controller.dart';
 import '../domain/models/organisation_node.dart';
 
@@ -45,7 +46,7 @@ class _HierarchyScreenState extends State<HierarchyScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(AppDimensions.spacingMd),
             child: TextField(
               controller: _rechercheController,
               decoration: const InputDecoration(
@@ -112,7 +113,10 @@ class _NodeTile extends StatelessWidget {
 
     if (enfants.isEmpty) {
       return ListTile(
-        contentPadding: EdgeInsets.only(left: 16.0 + node.depth * 16, right: 16),
+        contentPadding: EdgeInsets.only(
+          left: AppDimensions.spacingLg + node.depth * AppDimensions.treeIndentPerDepth,
+          right: AppDimensions.spacingLg,
+        ),
         title: Text(node.nom),
         subtitle: Text(node.codeInterne),
         onTap: () => context.push(AppRoutes.organisationNoeud(node.id)),
@@ -120,7 +124,10 @@ class _NodeTile extends StatelessWidget {
     }
 
     return ExpansionTile(
-      tilePadding: EdgeInsets.only(left: 16.0 + node.depth * 16, right: 16),
+      tilePadding: EdgeInsets.only(
+          left: AppDimensions.spacingLg + node.depth * AppDimensions.treeIndentPerDepth,
+          right: AppDimensions.spacingLg,
+        ),
       title: Text(node.nom),
       subtitle: Text(node.codeInterne),
       onExpansionChanged: (_) {},

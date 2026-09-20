@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../application/organisation_controller.dart';
+import '../../../core/theme/app_dimensions.dart';
 import '../domain/models/categorie_confessionnelle.dart';
 import '../domain/models/type_noeud.dart';
 
@@ -85,11 +86,11 @@ class _NodeFormScreenState extends State<NodeFormScreen> {
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppDimensions.spacingLg),
           children: [
             if (!_estEdition && widget.parentId == null)
               const Padding(
-                padding: EdgeInsets.only(bottom: 16),
+                padding: EdgeInsets.only(bottom: AppDimensions.spacingLg),
                 child: Text('Ce formulaire crée la racine unique (siège) de la plateforme.'),
               ),
             if (!_estEdition && widget.parentId != null) ...[
@@ -102,11 +103,11 @@ class _NodeFormScreenState extends State<NodeFormScreen> {
                 onChanged: (valeur) => setState(() => _typeChoisi = valeur),
                 validator: (valeur) => valeur == null ? 'Choisissez un type.' : null,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppDimensions.spacingLg),
             ],
             if (_estEdition && _typeChoisi != null)
               Padding(
-                padding: const EdgeInsets.only(bottom: 16),
+                padding: const EdgeInsets.only(bottom: AppDimensions.spacingLg),
                 child: Text('Type (non modifiable) : ${_typeChoisi!.code}'),
               ),
             TextFormField(
@@ -114,7 +115,7 @@ class _NodeFormScreenState extends State<NodeFormScreen> {
               decoration: const InputDecoration(labelText: 'Nom', border: OutlineInputBorder()),
               validator: (valeur) => (valeur == null || valeur.trim().isEmpty) ? 'Le nom est requis.' : null,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimensions.spacingLg),
             TextFormField(
               controller: _codeInterneController,
               decoration: const InputDecoration(labelText: 'Code interne', border: OutlineInputBorder()),
@@ -122,7 +123,7 @@ class _NodeFormScreenState extends State<NodeFormScreen> {
                   (valeur == null || valeur.trim().isEmpty) ? 'Le code interne est requis.' : null,
             ),
             if (!_estEdition && _typeChoisi == TypeNoeud.egliseLocale) ...[
-              const SizedBox(height: 16),
+              const SizedBox(height: AppDimensions.spacingLg),
               DropdownButtonFormField<CategorieConfessionnelle>(
                 initialValue: _categorieChoisie,
                 decoration: const InputDecoration(
@@ -138,13 +139,13 @@ class _NodeFormScreenState extends State<NodeFormScreen> {
               ),
             ],
             if (_estEdition && _categorieChoisie != null) ...[
-              const SizedBox(height: 16),
+              const SizedBox(height: AppDimensions.spacingLg),
               Text('Catégorie confessionnelle (immuable) : ${_categorieChoisie!.code}'),
             ],
-            const SizedBox(height: 24),
+            const SizedBox(height: AppDimensions.spacingXl),
             if (controller.erreur != null) ...[
               Text(controller.erreur!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppDimensions.spacingLg),
             ],
             FilledButton(
               onPressed: controller.enCours ? null : () => _soumettre(controller),

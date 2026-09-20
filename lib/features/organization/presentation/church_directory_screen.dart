@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/constants/app_routes.dart';
+import '../../../core/theme/app_dimensions.dart';
 import '../application/organisation_controller.dart';
 import '../domain/models/categorie_confessionnelle.dart';
 
@@ -28,7 +29,7 @@ class _ChurchDirectoryScreenState extends State<ChurchDirectoryScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(AppDimensions.spacingMd),
             child: SegmentedButton<CategorieConfessionnelle?>(
               segments: const [
                 ButtonSegment(value: null, label: Text('Toutes')),

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/constants/app_routes.dart';
+import '../../../core/theme/app_dimensions.dart';
 import '../application/organisation_controller.dart';
 import '../domain/models/statut_noeud.dart';
 
@@ -43,7 +44,7 @@ class NodeDetailScreen extends StatelessWidget {
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppDimensions.spacingLg),
         children: [
           _LigneInfo(label: 'Type', valeur: noeud.typeNoeud.code),
           _LigneInfo(label: 'Code interne', valeur: noeud.codeInterne),
@@ -52,55 +53,55 @@ class NodeDetailScreen extends StatelessWidget {
             _LigneInfo(label: 'Catégorie confessionnelle', valeur: noeud.categorieConfessionnelle!.code),
           if (noeud.dateFondation != null)
             _LigneInfo(label: 'Date de fondation', valeur: noeud.dateFondation!.toIso8601String().split('T').first),
-          const Divider(height: 32),
+          const Divider(height: AppDimensions.spacingXxl),
           Text('Statistiques rapides', style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppDimensions.spacingSm),
           _LigneInfo(label: 'Profondeur dans la hiérarchie', valeur: noeud.depth.toString()),
           _LigneInfo(label: 'Nœuds enfants directs', valeur: enfants.length.toString()),
-          const Divider(height: 32),
+          const Divider(height: AppDimensions.spacingXxl),
           if (noeud.statut == StatutNoeud.provisoire)
             FilledButton.icon(
               icon: const Icon(Icons.check_circle_outline),
               label: const Text('Valider ce nœud (le faire passer au statut actif)'),
               onPressed: () => controller.validerNoeud(noeud.id),
             ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppDimensions.spacingSm),
           OutlinedButton.icon(
             icon: const Icon(Icons.people_outline),
             label: const Text('Responsables'),
             onPressed: () => context.push(AppRoutes.organisationResponsables(noeud.id)),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppDimensions.spacingSm),
           OutlinedButton.icon(
             icon: const Icon(Icons.groups_outlined),
             label: const Text('Ministères'),
             onPressed: () => context.push(AppRoutes.ministeresDuNoeud(noeud.id)),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppDimensions.spacingSm),
           OutlinedButton.icon(
             icon: const Icon(Icons.auto_awesome_outlined),
             label: const Text('Statistiques des dons spirituels'),
             onPressed: () => context.push(AppRoutes.donsStatistiques(noeud.id)),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppDimensions.spacingSm),
           OutlinedButton.icon(
             icon: const Icon(Icons.gavel_outlined),
             label: const Text('Membres du comité'),
             onPressed: () => context.push(AppRoutes.comiteMembres(noeud.id)),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppDimensions.spacingSm),
           OutlinedButton.icon(
             icon: const Icon(Icons.event_note_outlined),
             label: const Text('Séances du comité'),
             onPressed: () => context.push(AppRoutes.comiteSeances(noeud.id)),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppDimensions.spacingSm),
           OutlinedButton.icon(
             icon: const Icon(Icons.add),
             label: const Text('Ajouter un nœud enfant'),
             onPressed: () => context.push(AppRoutes.organisationNouveauSousNoeud(noeud.id)),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppDimensions.spacingSm),
           if (noeud.statut != StatutNoeud.archive)
             OutlinedButton.icon(
               icon: const Icon(Icons.archive_outlined),
@@ -108,7 +109,7 @@ class NodeDetailScreen extends StatelessWidget {
               onPressed: () => controller.archiverNoeud(noeud.id),
             ),
           if (controller.erreur != null) ...[
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimensions.spacingLg),
             Text(controller.erreur!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
           ],
         ],
@@ -126,11 +127,11 @@ class _LigneInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: AppDimensions.spacingXs),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: 200, child: Text(label, style: const TextStyle(fontWeight: FontWeight.w600))),
+          SizedBox(width: AppDimensions.labelColumnWidth, child: Text(label, style: const TextStyle(fontWeight: FontWeight.w600))),
           Expanded(child: Text(valeur)),
         ],
       ),

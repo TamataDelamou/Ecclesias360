@@ -1,4 +1,5 @@
 import '../../../../core/error/app_error.dart';
+import '../../../../core/theme/app_defaults.dart';
 import '../models/mandat_responsable.dart';
 
 /// Règles métier pures du Module III (RG-III-*).
@@ -22,7 +23,7 @@ abstract final class MinistereRules {
   static List<MandatResponsable> mandatsArrivantAEcheance(
     List<MandatResponsable> mandats, {
     required DateTime maintenant,
-    Duration horizon = const Duration(days: 30),
+    Duration horizon = const Duration(days: AppDefaults.mandatEcheanceHorizonJours),
   }) {
     return mandats.where((m) {
       if (!m.estActif) return false;
