@@ -205,6 +205,151 @@
   "@commonOui": {
     "description": "Valeur affichée pour un champ booléen vrai."
   },
+  "culteAjouterSequenceBouton": "Ajouter une séquence",
+  "@culteAjouterSequenceBouton": {
+    "description": "Bouton d'ajout d'une séquence liturgique."
+  },
+  "culteAjouterSequenceTitre": "Ajouter une séquence",
+  "@culteAjouterSequenceTitre": {
+    "description": "Titre de la boîte de dialogue d'ajout d'une séquence liturgique."
+  },
+  "culteAucunPredicateur": "Aucun",
+  "@culteAucunPredicateur": {
+    "description": "Option « aucun » du sélecteur de prédicateur."
+  },
+  "culteAucuneSequence": "Aucune séquence.",
+  "@culteAucuneSequence": {
+    "description": "État vide de la liste des séquences liturgiques."
+  },
+  "culteChampAudioUrl": "Lien audio",
+  "@culteChampAudioUrl": {
+    "description": "Libellé du champ lien audio de la publication post-culte."
+  },
+  "culteChampCompteGlobal": "Compte global de présence",
+  "@culteChampCompteGlobal": {
+    "description": "Libellé du champ compte global de présence d'un culte."
+  },
+  "culteChampDateHeure": "Date et heure",
+  "@culteChampDateHeure": {
+    "description": "Libellé du champ date et heure d'un culte."
+  },
+  "culteChampDureeMinutes": "Durée prévue (minutes)",
+  "@culteChampDureeMinutes": {
+    "description": "Libellé du champ durée prévue en minutes d'une séquence liturgique."
+  },
+  "culteChampLibelleSequence": "Libellé (ex. Louange, Prédication)",
+  "@culteChampLibelleSequence": {
+    "description": "Libellé du champ libellé d'une séquence liturgique."
+  },
+  "culteChampModePresence": "Mode de présence",
+  "@culteChampModePresence": {
+    "description": "Libellé du champ mode de présence d'un culte."
+  },
+  "culteChampNombreOccurrences": "Nombre d'occurrences",
+  "@culteChampNombreOccurrences": {
+    "description": "Libellé du champ nombre d'occurrences d'une série récurrente."
+  },
+  "culteChampOrdre": "Ordre",
+  "@culteChampOrdre": {
+    "description": "Libellé du champ ordre d'une séquence liturgique."
+  },
+  "culteChampPdfUrl": "Lien PDF",
+  "@culteChampPdfUrl": {
+    "description": "Libellé du champ lien PDF de la publication post-culte."
+  },
+  "culteChampPredicateur": "Prédicateur (optionnel)",
+  "@culteChampPredicateur": {
+    "description": "Libellé du champ prédicateur (optionnel) d'un culte."
+  },
+  "culteChampRecurrent": "Créer une série récurrente (hebdomadaire)",
+  "@culteChampRecurrent": {
+    "description": "Libellé de la case à cocher série récurrente d'un culte."
+  },
+  "culteChampResponsable": "Responsable (optionnel)",
+  "@culteChampResponsable": {
+    "description": "Libellé du champ responsable (optionnel) d'une séquence liturgique."
+  },
+  "culteChampTexteBiblique": "Texte biblique",
+  "@culteChampTexteBiblique": {
+    "description": "Libellé du champ texte biblique de la publication post-culte."
+  },
+  "culteChampTheme": "Thème (optionnel)",
+  "@culteChampTheme": {
+    "description": "Libellé du champ thème (optionnel) d'un culte."
+  },
+  "culteChampType": "Type de culte (ex. Culte dominical)",
+  "@culteChampType": {
+    "description": "Libellé du champ type de culte."
+  },
+  "culteChampTypeErreur": "Le type de culte est requis.",
+  "@culteChampTypeErreur": {
+    "description": "Message de validation du champ type de culte."
+  },
+  "culteChampVideoUrl": "Lien vidéo",
+  "@culteChampVideoUrl": {
+    "description": "Libellé du champ lien vidéo de la publication post-culte."
+  },
+  "culteDateHeureChoisir": "Choisir la date et l'heure",
+  "@culteDateHeureChoisir": {
+    "description": "Libellé du champ date/heure avant sélection."
+  },
+  "culteEnregistrerCompte": "Enregistrer le compte",
+  "@culteEnregistrerCompte": {
+    "description": "Bouton d'enregistrement du compte global de présence."
+  },
+  "culteLiturgieTitre": "Liturgie",
+  "@culteLiturgieTitre": {
+    "description": "Titre de la section liturgie (séquences) d'un culte."
+  },
+  "culteModePresenceGlobal": "Global (compte total)",
+  "@culteModePresenceGlobal": {
+    "description": "Libellé de l'option de mode de présence globale."
+  },
+  "culteModePresenceNominal": "Nominal (par fidèle)",
+  "@culteModePresenceNominal": {
+    "description": "Libellé de l'option de mode de présence nominal."
+  },
+  "culteNonPublie": "Aucune publication pour ce culte.",
+  "@culteNonPublie": {
+    "description": "État indiquant qu'aucune publication post-culte n'existe encore."
+  },
+  "cultePresencesTitre": "Présences",
+  "@cultePresencesTitre": {
+    "description": "Titre de la section présences d'un culte."
+  },
+  "cultePublicationTitre": "Publication post-culte",
+  "@cultePublicationTitre": {
+    "description": "Titre de la section publication post-culte."
+  },
+  "cultePublieLe": "Publié le {date}",
+  "@cultePublieLe": {
+    "description": "Note indiquant la date de publication post-culte, avec la date.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "cultePublierBouton": "Publier",
+  "@cultePublierBouton": {
+    "description": "Bouton de publication post-culte."
+  },
+  "culteStatutTitre": "Statut",
+  "@culteStatutTitre": {
+    "description": "Titre de la section statut d'un culte."
+  },
+  "cultesAucun": "Aucun culte enregistré.",
+  "@cultesAucun": {
+    "description": "État vide de la liste des cultes."
+  },
+  "cultesNouveauTooltip": "Nouveau culte",
+  "@cultesNouveauTooltip": {
+    "description": "Infobulle du bouton flottant de création d'un culte."
+  },
+  "cultesTitre": "Cultes",
+  "@cultesTitre": {
+    "description": "Titre de l'écran liste des cultes."
+  },
   "dashboardModulesTitre": "Modules",
   "@dashboardModulesTitre": {
     "description": "Titre de la section des tuiles de modules sur l'écran d'accueil."
@@ -427,5 +572,33 @@
   "parametresTitre": "Paramètres",
   "@parametresTitre": {
     "description": "Titre de l'écran Paramètres."
+  },
+  "propositionChampExplication": "Brève explication (optionnelle)",
+  "@propositionChampExplication": {
+    "description": "Libellé du champ explication (optionnelle) d'une proposition de thème."
+  },
+  "propositionChampTitre": "Titre",
+  "@propositionChampTitre": {
+    "description": "Libellé du champ titre d'une proposition de thème."
+  },
+  "propositionSoumettreTitre": "Soumettre une proposition de thème",
+  "@propositionSoumettreTitre": {
+    "description": "Titre de la boîte de dialogue de soumission d'une proposition de thème."
+  },
+  "propositionSoumettreTooltip": "Soumettre une proposition",
+  "@propositionSoumettreTooltip": {
+    "description": "Infobulle du bouton flottant de soumission d'une proposition de thème."
+  },
+  "propositionsAucune": "Aucune proposition soumise.",
+  "@propositionsAucune": {
+    "description": "État vide de la liste des propositions de thème."
+  },
+  "propositionsThemeTitre": "Propositions de thème",
+  "@propositionsThemeTitre": {
+    "description": "Titre de l'écran des propositions de thème de culte."
+  },
+  "propositionsVoterEnTantQue": "Voter/soumettre en tant que",
+  "@propositionsVoterEnTantQue": {
+    "description": "Libellé du sélecteur de fidèle actif pour soumettre/voter (pas de session réelle, RG-SEC-01 non construit)."
   }
 }

@@ -6,6 +6,8 @@ import 'core/sync/sync_coordinator.dart';
 import 'core/theme/design_tokens.dart';
 import 'features/comite/application/comite_controller.dart';
 import 'features/comite/data/comite_repository.dart';
+import 'features/cultes/application/culte_controller.dart';
+import 'features/cultes/data/culte_repository.dart';
 import 'features/dons_spirituels/application/don_spirituel_controller.dart';
 import 'features/dons_spirituels/data/don_spirituel_repository.dart';
 import 'features/fideles/application/fidele_controller.dart';
@@ -50,6 +52,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final GroupeController _groupeController;
   late final ComiteRepository _comiteRepository;
   late final ComiteController _comiteController;
+  late final CulteRepository _culteRepository;
+  late final CulteController _culteController;
 
   @override
   void initState() {
@@ -71,6 +75,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _groupeController = GroupeController(_groupeRepository);
     _comiteRepository = ComiteRepository(widget.database);
     _comiteController = ComiteController(_comiteRepository);
+    _culteRepository = CulteRepository(widget.database);
+    _culteController = CulteController(_culteRepository);
   }
 
   @override
@@ -83,6 +89,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _professionController.dispose();
     _groupeController.dispose();
     _comiteController.dispose();
+    _culteController.dispose();
     super.dispose();
   }
 
@@ -98,6 +105,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
         ChangeNotifierProvider<ProfessionController>.value(value: _professionController),
         ChangeNotifierProvider<GroupeController>.value(value: _groupeController),
         ChangeNotifierProvider<ComiteController>.value(value: _comiteController),
+        ChangeNotifierProvider<CulteController>.value(value: _culteController),
       ],
       child: MaterialApp.router(
         onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,

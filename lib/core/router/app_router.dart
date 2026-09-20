@@ -4,6 +4,10 @@ import '../../features/comite/presentation/membres_comite_screen.dart';
 import '../../features/comite/presentation/seance_detail_screen.dart';
 import '../../features/comite/presentation/seance_form_screen.dart';
 import '../../features/comite/presentation/seances_comite_list_screen.dart';
+import '../../features/cultes/presentation/culte_detail_screen.dart';
+import '../../features/cultes/presentation/culte_form_screen.dart';
+import '../../features/cultes/presentation/cultes_list_screen.dart';
+import '../../features/cultes/presentation/propositions_theme_screen.dart';
 import '../../features/dons_spirituels/presentation/don_evaluation_form_screen.dart';
 import '../../features/dons_spirituels/presentation/don_historique_screen.dart';
 import '../../features/dons_spirituels/presentation/don_ministeres_compatibles_screen.dart';
@@ -213,6 +217,22 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/comite/seances/:id',
       builder: (context, state) => SeanceDetailScreen(seanceId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: '/organisation/:id/cultes',
+      builder: (context, state) => CultesListScreen(noeudId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: '/organisation/:id/cultes/nouveau',
+      builder: (context, state) => CulteFormScreen(noeudId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: '/cultes/:id',
+      builder: (context, state) => CulteDetailScreen(culteId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: AppRoutes.propositionsTheme,
+      builder: (context, state) => const PropositionsThemeScreen(),
     ),
   ],
 );

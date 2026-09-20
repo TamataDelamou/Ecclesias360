@@ -153,6 +153,111 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonOui => 'yes';
 
   @override
+  String get culteAjouterSequenceBouton => 'Add a sequence';
+
+  @override
+  String get culteAjouterSequenceTitre => 'Add a sequence';
+
+  @override
+  String get culteAucunPredicateur => 'None';
+
+  @override
+  String get culteAucuneSequence => 'No sequence yet.';
+
+  @override
+  String get culteChampAudioUrl => 'Audio link';
+
+  @override
+  String get culteChampCompteGlobal => 'Aggregate attendance count';
+
+  @override
+  String get culteChampDateHeure => 'Date and time';
+
+  @override
+  String get culteChampDureeMinutes => 'Planned duration (minutes)';
+
+  @override
+  String get culteChampLibelleSequence => 'Label (e.g. Worship, Sermon)';
+
+  @override
+  String get culteChampModePresence => 'Attendance mode';
+
+  @override
+  String get culteChampNombreOccurrences => 'Number of occurrences';
+
+  @override
+  String get culteChampOrdre => 'Order';
+
+  @override
+  String get culteChampPdfUrl => 'PDF link';
+
+  @override
+  String get culteChampPredicateur => 'Preacher (optional)';
+
+  @override
+  String get culteChampRecurrent => 'Create a recurring series (weekly)';
+
+  @override
+  String get culteChampResponsable => 'Person in charge (optional)';
+
+  @override
+  String get culteChampTexteBiblique => 'Bible passage';
+
+  @override
+  String get culteChampTheme => 'Theme (optional)';
+
+  @override
+  String get culteChampType => 'Service type (e.g. Sunday service)';
+
+  @override
+  String get culteChampTypeErreur => 'The service type is required.';
+
+  @override
+  String get culteChampVideoUrl => 'Video link';
+
+  @override
+  String get culteDateHeureChoisir => 'Choose the date and time';
+
+  @override
+  String get culteEnregistrerCompte => 'Save the count';
+
+  @override
+  String get culteLiturgieTitre => 'Liturgy';
+
+  @override
+  String get culteModePresenceGlobal => 'Aggregate (total count)';
+
+  @override
+  String get culteModePresenceNominal => 'Individual (per member)';
+
+  @override
+  String get culteNonPublie => 'No publication for this service yet.';
+
+  @override
+  String get cultePresencesTitre => 'Attendance';
+
+  @override
+  String get cultePublicationTitre => 'Post-service publication';
+
+  @override
+  String cultePublieLe(String date) => 'Published on $date';
+
+  @override
+  String get cultePublierBouton => 'Publish';
+
+  @override
+  String get culteStatutTitre => 'Status';
+
+  @override
+  String get cultesAucun => 'No worship services recorded yet.';
+
+  @override
+  String get cultesNouveauTooltip => 'New worship service';
+
+  @override
+  String get cultesTitre => 'Worship services';
+
+  @override
   String get dashboardModulesTitre => 'Modules';
 
   @override
@@ -307,4 +412,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get parametresTitre => 'Settings';
+
+  @override
+  String get propositionChampExplication => 'Brief explanation (optional)';
+
+  @override
+  String get propositionChampTitre => 'Title';
+
+  @override
+  String get propositionSoumettreTitre => 'Submit a theme proposal';
+
+  @override
+  String get propositionSoumettreTooltip => 'Submit a proposal';
+
+  @override
+  String get propositionsAucune => 'No proposal submitted yet.';
+
+  @override
+  String get propositionsThemeTitre => 'Theme proposals';
+
+  @override
+  String get propositionsVoterEnTantQue => 'Vote/submit as';
 }

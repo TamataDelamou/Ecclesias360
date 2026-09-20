@@ -390,6 +390,216 @@ abstract class AppLocalizations {
   /// **'oui'**
   String get commonOui;
 
+  /// Bouton d'ajout d'une séquence liturgique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une séquence'**
+  String get culteAjouterSequenceBouton;
+
+  /// Titre de la boîte de dialogue d'ajout d'une séquence liturgique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une séquence'**
+  String get culteAjouterSequenceTitre;
+
+  /// Option « aucun » du sélecteur de prédicateur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun'**
+  String get culteAucunPredicateur;
+
+  /// État vide de la liste des séquences liturgiques.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune séquence.'**
+  String get culteAucuneSequence;
+
+  /// Libellé du champ lien audio de la publication post-culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lien audio'**
+  String get culteChampAudioUrl;
+
+  /// Libellé du champ compte global de présence d'un culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte global de présence'**
+  String get culteChampCompteGlobal;
+
+  /// Libellé du champ date et heure d'un culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date et heure'**
+  String get culteChampDateHeure;
+
+  /// Libellé du champ durée prévue en minutes d'une séquence liturgique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Durée prévue (minutes)'**
+  String get culteChampDureeMinutes;
+
+  /// Libellé du champ libellé d'une séquence liturgique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Libellé (ex. Louange, Prédication)'**
+  String get culteChampLibelleSequence;
+
+  /// Libellé du champ mode de présence d'un culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mode de présence'**
+  String get culteChampModePresence;
+
+  /// Libellé du champ nombre d'occurrences d'une série récurrente.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nombre d'occurrences'**
+  String get culteChampNombreOccurrences;
+
+  /// Libellé du champ ordre d'une séquence liturgique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ordre'**
+  String get culteChampOrdre;
+
+  /// Libellé du champ lien PDF de la publication post-culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lien PDF'**
+  String get culteChampPdfUrl;
+
+  /// Libellé du champ prédicateur (optionnel) d'un culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prédicateur (optionnel)'**
+  String get culteChampPredicateur;
+
+  /// Libellé de la case à cocher série récurrente d'un culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer une série récurrente (hebdomadaire)'**
+  String get culteChampRecurrent;
+
+  /// Libellé du champ responsable (optionnel) d'une séquence liturgique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Responsable (optionnel)'**
+  String get culteChampResponsable;
+
+  /// Libellé du champ texte biblique de la publication post-culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Texte biblique'**
+  String get culteChampTexteBiblique;
+
+  /// Libellé du champ thème (optionnel) d'un culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Thème (optionnel)'**
+  String get culteChampTheme;
+
+  /// Libellé du champ type de culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type de culte (ex. Culte dominical)'**
+  String get culteChampType;
+
+  /// Message de validation du champ type de culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le type de culte est requis.'**
+  String get culteChampTypeErreur;
+
+  /// Libellé du champ lien vidéo de la publication post-culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lien vidéo'**
+  String get culteChampVideoUrl;
+
+  /// Libellé du champ date/heure avant sélection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir la date et l'heure'**
+  String get culteDateHeureChoisir;
+
+  /// Bouton d'enregistrement du compte global de présence.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer le compte'**
+  String get culteEnregistrerCompte;
+
+  /// Titre de la section liturgie (séquences) d'un culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Liturgie'**
+  String get culteLiturgieTitre;
+
+  /// Libellé de l'option de mode de présence globale.
+  ///
+  /// In fr, this message translates to:
+  /// **'Global (compte total)'**
+  String get culteModePresenceGlobal;
+
+  /// Libellé de l'option de mode de présence nominal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nominal (par fidèle)'**
+  String get culteModePresenceNominal;
+
+  /// État indiquant qu'aucune publication post-culte n'existe encore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune publication pour ce culte.'**
+  String get culteNonPublie;
+
+  /// Titre de la section présences d'un culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Présences'**
+  String get cultePresencesTitre;
+
+  /// Titre de la section publication post-culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publication post-culte'**
+  String get cultePublicationTitre;
+
+  /// Note indiquant la date de publication post-culte, avec la date.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publié le {date}'**
+  String cultePublieLe(String date);
+
+  /// Bouton de publication post-culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier'**
+  String get cultePublierBouton;
+
+  /// Titre de la section statut d'un culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Statut'**
+  String get culteStatutTitre;
+
+  /// État vide de la liste des cultes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun culte enregistré.'**
+  String get cultesAucun;
+
+  /// Infobulle du bouton flottant de création d'un culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau culte'**
+  String get cultesNouveauTooltip;
+
+  /// Titre de l'écran liste des cultes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cultes'**
+  String get cultesTitre;
+
   /// Titre de la section des tuiles de modules sur l'écran d'accueil.
   ///
   /// In fr, this message translates to:
@@ -701,6 +911,48 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Paramètres'**
   String get parametresTitre;
+
+  /// Libellé du champ explication (optionnelle) d'une proposition de thème.
+  ///
+  /// In fr, this message translates to:
+  /// **'Brève explication (optionnelle)'**
+  String get propositionChampExplication;
+
+  /// Libellé du champ titre d'une proposition de thème.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre'**
+  String get propositionChampTitre;
+
+  /// Titre de la boîte de dialogue de soumission d'une proposition de thème.
+  ///
+  /// In fr, this message translates to:
+  /// **'Soumettre une proposition de thème'**
+  String get propositionSoumettreTitre;
+
+  /// Infobulle du bouton flottant de soumission d'une proposition de thème.
+  ///
+  /// In fr, this message translates to:
+  /// **'Soumettre une proposition'**
+  String get propositionSoumettreTooltip;
+
+  /// État vide de la liste des propositions de thème.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune proposition soumise.'**
+  String get propositionsAucune;
+
+  /// Titre de l'écran des propositions de thème de culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Propositions de thème'**
+  String get propositionsThemeTitre;
+
+  /// Libellé du sélecteur de fidèle actif pour soumettre/voter (pas de session réelle, RG-SEC-01 non construit).
+  ///
+  /// In fr, this message translates to:
+  /// **'Voter/soumettre en tant que'**
+  String get propositionsVoterEnTantQue;
 }
 
 class _AppLocalizationsDelegate

@@ -47,6 +47,10 @@ void main() {
       'lib/features/comite/presentation/seance_form_screen.dart',
       'lib/features/parametres/presentation/parametres_screen.dart',
       'lib/core/widgets/app_shell.dart',
+      'lib/features/cultes/presentation/cultes_list_screen.dart',
+      'lib/features/cultes/presentation/culte_form_screen.dart',
+      'lib/features/cultes/presentation/culte_detail_screen.dart',
+      'lib/features/cultes/presentation/propositions_theme_screen.dart',
     ];
     // EdgeInsets.only(...) legitime pour l'indentation d'arbre : dépend de
     // node.depth, pas un nombre en dur isolé — exclu explicitement du motif.
