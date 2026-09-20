@@ -74,6 +74,11 @@ class AppError implements Exception {
         "Ce procès-verbal est validé et immuable : toute correction doit passer par un erratum tracé.",
       );
 
+  factory AppError.modePresenceIncompatible() => const AppError(
+        'mode_presence_incompatible',
+        "Ce culte utilise l'autre mode de présence : les deux modes sont mutuellement exclusifs.",
+      );
+
   @override
   String toString() => 'AppError($code): $message';
 }

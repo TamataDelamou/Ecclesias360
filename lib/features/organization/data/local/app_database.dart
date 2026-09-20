@@ -124,13 +124,19 @@ const List<(String code, String libelle, String typeRegle, String? criteresJson)
   ProcesVerbaux,
   ErratumsPv,
   TachesSuivi,
+  Cultes,
+  SequencesLiturgiques,
+  PresencesCulte,
+  PublicationsCulte,
+  PropositionsTheme,
+  VotesProposition,
   SyncOutbox,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 9;
+  int get schemaVersion => 10;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -193,6 +199,15 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(procesVerbaux);
             await m.createTable(erratumsPv);
             await m.createTable(tachesSuivi);
+          }
+          // v9 -> v10 : ajout du Module XII (Cultes).
+          if (from < 10) {
+            await m.createTable(cultes);
+            await m.createTable(sequencesLiturgiques);
+            await m.createTable(presencesCulte);
+            await m.createTable(publicationsCulte);
+            await m.createTable(propositionsTheme);
+            await m.createTable(votesProposition);
           }
         },
         beforeOpen: (details) async {

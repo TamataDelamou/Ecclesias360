@@ -468,6 +468,106 @@ class TachesSuivi extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Table Drift Culte (Module XII, RG-XII-01/02/05).
+@DataClassName('CulteRow')
+class Cultes extends Table {
+  TextColumn get id => text()();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  DateTimeColumn get dateHeure => dateTime()();
+  TextColumn get typeCulte => text()();
+  TextColumn get theme => text().nullable()();
+  TextColumn get predicateurId => text().nullable().references(Fideles, #id)();
+  TextColumn get statut => text().withDefault(const Constant('planifie'))();
+  TextColumn get modePresence => text().withDefault(const Constant('nominal'))();
+  IntColumn get compteGlobalPresence => integer().nullable()();
+  TextColumn get serieRecurrenteId => text().nullable()();
+  BoolColumn get estException => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift SequenceLiturgique (Module XII, RG-XII-01).
+@DataClassName('SequenceLiturgiqueRow')
+class SequencesLiturgiques extends Table {
+  TextColumn get id => text()();
+  TextColumn get culteId => text().references(Cultes, #id)();
+  IntColumn get ordre => integer()();
+  TextColumn get libelle => text()();
+  TextColumn get responsableId => text().nullable().references(Fideles, #id)();
+  IntColumn get dureePrevueMinutes => integer().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift PresenceCulte (Module XII, RG-XII-02) — pointage nominal
+/// uniquement (voir `Cultes.compteGlobalPresence` pour le mode global).
+@DataClassName('PresenceCulteRow')
+class PresencesCulte extends Table {
+  TextColumn get id => text()();
+  TextColumn get culteId => text().references(Cultes, #id)();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (culte_id, fidele_id)'];
+}
+
+/// Table Drift PublicationCulte (Module XII, RG-XII-03) — l'archivage
+/// automatique dans la médiathèque (Module XIII) reste différé.
+@DataClassName('PublicationCulteRow')
+class PublicationsCulte extends Table {
+  TextColumn get id => text()();
+  TextColumn get culteId => text().references(Cultes, #id)();
+  DateTimeColumn get datePublication => dateTime()();
+  TextColumn get texteBiblique => text().nullable()();
+  TextColumn get audioUrl => text().nullable()();
+  TextColumn get videoUrl => text().nullable()();
+  TextColumn get pdfUrl => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (culte_id)'];
+}
+
+/// Table Drift PropositionTheme (Module XII, RG-XII-06) — le classement
+/// automatique par l'assistant IA (Module XVI) reste différé,
+/// `categorie` nullable en attendant.
+@DataClassName('PropositionThemeRow')
+class PropositionsTheme extends Table {
+  TextColumn get id => text()();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  TextColumn get titre => text()();
+  TextColumn get explication => text().nullable()();
+  TextColumn get categorie => text().nullable()();
+  TextColumn get statut => text().withDefault(const Constant('soumise'))();
+  DateTimeColumn get dateSoumission => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift VoteProposition (Module XII, RG-XII-06) — un vote par
+/// fidèle et par proposition, modifiable.
+@DataClassName('VotePropositionRow')
+class VotesProposition extends Table {
+  TextColumn get id => text()();
+  TextColumn get propositionId => text().references(PropositionsTheme, #id)();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  TextColumn get valeur => text()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (proposition_id, fidele_id)'];
+}
+
 /// File d'attente hors ligne (RG-OFF-02) : chaque écriture locale enregistre
 /// ici l'événement à rejouer vers Supabase dès qu'une connexion est
 /// disponible, dans l'ordre chronologique, jamais purgée avant confirmation
