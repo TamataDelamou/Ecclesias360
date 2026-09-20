@@ -14,4 +14,10 @@ abstract final class AppDefaults {
   /// RG-VIII-05 — délai par défaut (en jours) avant qu'un document mis en
   /// corbeille devienne purgeable. Le Cahier n'impose pas cette valeur.
   static const int archivageDelaiPurgeJoursParDefaut = 365;
+
+  /// RG-IX-01 — le Cahier prévoit qu'une mutation puisse être validée d'un
+  /// seul côté (origine ou destination) « si la politique du réseau
+  /// l'autorise, paramétrable » : `false` par défaut (les deux nœuds doivent
+  /// valider), en l'absence d'un module de politique réseau dédié.
+  static const bool deplacementValidationUnilateraleAutorisee = false;
 }

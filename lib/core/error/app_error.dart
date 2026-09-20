@@ -89,6 +89,16 @@ class AppError implements Exception {
         "Ce document ne peut pas être purgé : le délai de corbeille n'est pas écoulé (ou le document n'est pas en corbeille).",
       );
 
+  factory AppError.noeudOrigineEtDestinationIdentiques() => const AppError(
+        'noeud_origine_et_destination_identiques',
+        "Le nœud d'origine et le nœud de destination d'une mutation doivent être différents.",
+      );
+
+  factory AppError.mutationNonEnAttente() => const AppError(
+        'mutation_non_en_attente',
+        "Cette mutation a déjà été traitée (validée ou refusée) : elle ne peut plus être modifiée.",
+      );
+
   @override
   String toString() => 'AppError($code): $message';
 }

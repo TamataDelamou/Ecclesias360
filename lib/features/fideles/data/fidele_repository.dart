@@ -214,6 +214,36 @@ class FideleRepository {
     await _enqueueEtSynchroniser(fideleId, 'upsert');
   }
 
+  /// RG-IX-01/03 — change le nœud de rattachement d'un fidèle (mutation
+  /// validée, Module IX) et historise le changement (RG-IX-03 : l'historique
+  /// des rattachements successifs reste consultable depuis la fiche).
+  Future<void> changerNoeud({
+    required String fideleId,
+    required String nouveauNoeudId,
+    String? auteurFideleId,
+  }) async {
+    final fidele = await findById(fideleId);
+    if (fidele == null) {
+      throw ArgumentError('Fidèle introuvable : $fideleId');
+    }
+
+    await (_db.update(_db.fideles)..where((t) => t.id.equals(fideleId))).write(
+      FidelesCompanion(
+        noeudId: Value(nouveauNoeudId),
+        updatedAt: Value(DateTime.now()),
+      ),
+    );
+
+    await _historiser(
+      fideleId: fideleId,
+      champModifie: 'noeud_id',
+      ancienneValeur: fidele.noeudId,
+      nouvelleValeur: nouveauNoeudId,
+      auteurFideleId: auteurFideleId,
+    );
+    await _enqueueEtSynchroniser(fideleId, 'upsert');
+  }
+
   /// RG-II-06 — ajoute un tuteur légal (fidèle enregistré ou tiers).
   Future<void> ajouterTuteur({
     required String mineurId,

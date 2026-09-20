@@ -628,6 +628,45 @@ class VersionsDocument extends Table {
   List<String> get customConstraints => ['UNIQUE (document_id, numero_version)'];
 }
 
+/// Table Drift Mutation (Module IX — Déplacements, RG-IX-01/02/03/04).
+/// `valideeParOrigine`/`valideeParDestination` portent la double validation
+/// pastorale (RG-IX-01), au-delà du modèle minimal du Cahier qui ne prévoit
+/// qu'un `statut` global.
+@DataClassName('MutationRow')
+class Mutations extends Table {
+  TextColumn get id => text()();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  @ReferenceName('mutationsCommeOrigine')
+  TextColumn get noeudOrigineId => text().references(OrganisationNodes, #id)();
+  @ReferenceName('mutationsCommeDestination')
+  TextColumn get noeudDestinationId => text().references(OrganisationNodes, #id)();
+  TextColumn get motif => text()();
+  TextColumn get statut => text().withDefault(const Constant('en_attente'))();
+  BoolColumn get valideeParOrigine => boolean().withDefault(const Constant(false))();
+  BoolColumn get valideeParDestination => boolean().withDefault(const Constant(false))();
+  TextColumn get motifRefus => text().nullable()();
+  DateTimeColumn get dateDemande => dateTime()();
+  DateTimeColumn get dateValidation => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift LettreRecommandation (RG-IX-02) — lien vers le document
+/// archivé (Module VIII) généré à la validation d'une mutation.
+@DataClassName('LettreRecommandationRow')
+class LettresRecommandation extends Table {
+  TextColumn get id => text()();
+  TextColumn get mutationId => text().references(Mutations, #id)();
+  TextColumn get documentArchiveId => text().references(DocumentsArchive, #id)();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (mutation_id)'];
+}
+
 /// File d'attente hors ligne (RG-OFF-02) : chaque écriture locale enregistre
 /// ici l'événement à rejouer vers Supabase dès qu'une connexion est
 /// disponible, dans l'ordre chronologique, jamais purgée avant confirmation

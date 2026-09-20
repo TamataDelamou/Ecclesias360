@@ -16580,6 +16580,998 @@ class VersionsDocumentCompanion extends UpdateCompanion<VersionDocumentRow> {
   }
 }
 
+class $MutationsTable extends Mutations
+    with TableInfo<$MutationsTable, MutationRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MutationsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _noeudOrigineIdMeta = const VerificationMeta(
+    'noeudOrigineId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudOrigineId = GeneratedColumn<String>(
+    'noeud_origine_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _noeudDestinationIdMeta =
+      const VerificationMeta('noeudDestinationId');
+  @override
+  late final GeneratedColumn<String> noeudDestinationId =
+      GeneratedColumn<String>(
+        'noeud_destination_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES organisation_nodes (id)',
+        ),
+      );
+  static const VerificationMeta _motifMeta = const VerificationMeta('motif');
+  @override
+  late final GeneratedColumn<String> motif = GeneratedColumn<String>(
+    'motif',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('en_attente'),
+  );
+  static const VerificationMeta _valideeParOrigineMeta = const VerificationMeta(
+    'valideeParOrigine',
+  );
+  @override
+  late final GeneratedColumn<bool> valideeParOrigine = GeneratedColumn<bool>(
+    'validee_par_origine',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("validee_par_origine" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _valideeParDestinationMeta =
+      const VerificationMeta('valideeParDestination');
+  @override
+  late final GeneratedColumn<bool> valideeParDestination =
+      GeneratedColumn<bool>(
+        'validee_par_destination',
+        aliasedName,
+        false,
+        type: DriftSqlType.bool,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("validee_par_destination" IN (0, 1))',
+        ),
+        defaultValue: const Constant(false),
+      );
+  static const VerificationMeta _motifRefusMeta = const VerificationMeta(
+    'motifRefus',
+  );
+  @override
+  late final GeneratedColumn<String> motifRefus = GeneratedColumn<String>(
+    'motif_refus',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _dateDemandeMeta = const VerificationMeta(
+    'dateDemande',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateDemande = GeneratedColumn<DateTime>(
+    'date_demande',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateValidationMeta = const VerificationMeta(
+    'dateValidation',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateValidation =
+      GeneratedColumn<DateTime>(
+        'date_validation',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    fideleId,
+    noeudOrigineId,
+    noeudDestinationId,
+    motif,
+    statut,
+    valideeParOrigine,
+    valideeParDestination,
+    motifRefus,
+    dateDemande,
+    dateValidation,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'mutations';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MutationRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    if (data.containsKey('noeud_origine_id')) {
+      context.handle(
+        _noeudOrigineIdMeta,
+        noeudOrigineId.isAcceptableOrUnknown(
+          data['noeud_origine_id']!,
+          _noeudOrigineIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudOrigineIdMeta);
+    }
+    if (data.containsKey('noeud_destination_id')) {
+      context.handle(
+        _noeudDestinationIdMeta,
+        noeudDestinationId.isAcceptableOrUnknown(
+          data['noeud_destination_id']!,
+          _noeudDestinationIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudDestinationIdMeta);
+    }
+    if (data.containsKey('motif')) {
+      context.handle(
+        _motifMeta,
+        motif.isAcceptableOrUnknown(data['motif']!, _motifMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_motifMeta);
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    if (data.containsKey('validee_par_origine')) {
+      context.handle(
+        _valideeParOrigineMeta,
+        valideeParOrigine.isAcceptableOrUnknown(
+          data['validee_par_origine']!,
+          _valideeParOrigineMeta,
+        ),
+      );
+    }
+    if (data.containsKey('validee_par_destination')) {
+      context.handle(
+        _valideeParDestinationMeta,
+        valideeParDestination.isAcceptableOrUnknown(
+          data['validee_par_destination']!,
+          _valideeParDestinationMeta,
+        ),
+      );
+    }
+    if (data.containsKey('motif_refus')) {
+      context.handle(
+        _motifRefusMeta,
+        motifRefus.isAcceptableOrUnknown(data['motif_refus']!, _motifRefusMeta),
+      );
+    }
+    if (data.containsKey('date_demande')) {
+      context.handle(
+        _dateDemandeMeta,
+        dateDemande.isAcceptableOrUnknown(
+          data['date_demande']!,
+          _dateDemandeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_dateDemandeMeta);
+    }
+    if (data.containsKey('date_validation')) {
+      context.handle(
+        _dateValidationMeta,
+        dateValidation.isAcceptableOrUnknown(
+          data['date_validation']!,
+          _dateValidationMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MutationRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MutationRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+      noeudOrigineId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_origine_id'],
+      )!,
+      noeudDestinationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_destination_id'],
+      )!,
+      motif: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}motif'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+      valideeParOrigine: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}validee_par_origine'],
+      )!,
+      valideeParDestination: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}validee_par_destination'],
+      )!,
+      motifRefus: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}motif_refus'],
+      ),
+      dateDemande: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_demande'],
+      )!,
+      dateValidation: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_validation'],
+      ),
+    );
+  }
+
+  @override
+  $MutationsTable createAlias(String alias) {
+    return $MutationsTable(attachedDatabase, alias);
+  }
+}
+
+class MutationRow extends DataClass implements Insertable<MutationRow> {
+  final String id;
+  final String fideleId;
+  final String noeudOrigineId;
+  final String noeudDestinationId;
+  final String motif;
+  final String statut;
+  final bool valideeParOrigine;
+  final bool valideeParDestination;
+  final String? motifRefus;
+  final DateTime dateDemande;
+  final DateTime? dateValidation;
+  const MutationRow({
+    required this.id,
+    required this.fideleId,
+    required this.noeudOrigineId,
+    required this.noeudDestinationId,
+    required this.motif,
+    required this.statut,
+    required this.valideeParOrigine,
+    required this.valideeParDestination,
+    this.motifRefus,
+    required this.dateDemande,
+    this.dateValidation,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['fidele_id'] = Variable<String>(fideleId);
+    map['noeud_origine_id'] = Variable<String>(noeudOrigineId);
+    map['noeud_destination_id'] = Variable<String>(noeudDestinationId);
+    map['motif'] = Variable<String>(motif);
+    map['statut'] = Variable<String>(statut);
+    map['validee_par_origine'] = Variable<bool>(valideeParOrigine);
+    map['validee_par_destination'] = Variable<bool>(valideeParDestination);
+    if (!nullToAbsent || motifRefus != null) {
+      map['motif_refus'] = Variable<String>(motifRefus);
+    }
+    map['date_demande'] = Variable<DateTime>(dateDemande);
+    if (!nullToAbsent || dateValidation != null) {
+      map['date_validation'] = Variable<DateTime>(dateValidation);
+    }
+    return map;
+  }
+
+  MutationsCompanion toCompanion(bool nullToAbsent) {
+    return MutationsCompanion(
+      id: Value(id),
+      fideleId: Value(fideleId),
+      noeudOrigineId: Value(noeudOrigineId),
+      noeudDestinationId: Value(noeudDestinationId),
+      motif: Value(motif),
+      statut: Value(statut),
+      valideeParOrigine: Value(valideeParOrigine),
+      valideeParDestination: Value(valideeParDestination),
+      motifRefus: motifRefus == null && nullToAbsent
+          ? const Value.absent()
+          : Value(motifRefus),
+      dateDemande: Value(dateDemande),
+      dateValidation: dateValidation == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dateValidation),
+    );
+  }
+
+  factory MutationRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MutationRow(
+      id: serializer.fromJson<String>(json['id']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+      noeudOrigineId: serializer.fromJson<String>(json['noeudOrigineId']),
+      noeudDestinationId: serializer.fromJson<String>(
+        json['noeudDestinationId'],
+      ),
+      motif: serializer.fromJson<String>(json['motif']),
+      statut: serializer.fromJson<String>(json['statut']),
+      valideeParOrigine: serializer.fromJson<bool>(json['valideeParOrigine']),
+      valideeParDestination: serializer.fromJson<bool>(
+        json['valideeParDestination'],
+      ),
+      motifRefus: serializer.fromJson<String?>(json['motifRefus']),
+      dateDemande: serializer.fromJson<DateTime>(json['dateDemande']),
+      dateValidation: serializer.fromJson<DateTime?>(json['dateValidation']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'fideleId': serializer.toJson<String>(fideleId),
+      'noeudOrigineId': serializer.toJson<String>(noeudOrigineId),
+      'noeudDestinationId': serializer.toJson<String>(noeudDestinationId),
+      'motif': serializer.toJson<String>(motif),
+      'statut': serializer.toJson<String>(statut),
+      'valideeParOrigine': serializer.toJson<bool>(valideeParOrigine),
+      'valideeParDestination': serializer.toJson<bool>(valideeParDestination),
+      'motifRefus': serializer.toJson<String?>(motifRefus),
+      'dateDemande': serializer.toJson<DateTime>(dateDemande),
+      'dateValidation': serializer.toJson<DateTime?>(dateValidation),
+    };
+  }
+
+  MutationRow copyWith({
+    String? id,
+    String? fideleId,
+    String? noeudOrigineId,
+    String? noeudDestinationId,
+    String? motif,
+    String? statut,
+    bool? valideeParOrigine,
+    bool? valideeParDestination,
+    Value<String?> motifRefus = const Value.absent(),
+    DateTime? dateDemande,
+    Value<DateTime?> dateValidation = const Value.absent(),
+  }) => MutationRow(
+    id: id ?? this.id,
+    fideleId: fideleId ?? this.fideleId,
+    noeudOrigineId: noeudOrigineId ?? this.noeudOrigineId,
+    noeudDestinationId: noeudDestinationId ?? this.noeudDestinationId,
+    motif: motif ?? this.motif,
+    statut: statut ?? this.statut,
+    valideeParOrigine: valideeParOrigine ?? this.valideeParOrigine,
+    valideeParDestination: valideeParDestination ?? this.valideeParDestination,
+    motifRefus: motifRefus.present ? motifRefus.value : this.motifRefus,
+    dateDemande: dateDemande ?? this.dateDemande,
+    dateValidation: dateValidation.present
+        ? dateValidation.value
+        : this.dateValidation,
+  );
+  MutationRow copyWithCompanion(MutationsCompanion data) {
+    return MutationRow(
+      id: data.id.present ? data.id.value : this.id,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      noeudOrigineId: data.noeudOrigineId.present
+          ? data.noeudOrigineId.value
+          : this.noeudOrigineId,
+      noeudDestinationId: data.noeudDestinationId.present
+          ? data.noeudDestinationId.value
+          : this.noeudDestinationId,
+      motif: data.motif.present ? data.motif.value : this.motif,
+      statut: data.statut.present ? data.statut.value : this.statut,
+      valideeParOrigine: data.valideeParOrigine.present
+          ? data.valideeParOrigine.value
+          : this.valideeParOrigine,
+      valideeParDestination: data.valideeParDestination.present
+          ? data.valideeParDestination.value
+          : this.valideeParDestination,
+      motifRefus: data.motifRefus.present
+          ? data.motifRefus.value
+          : this.motifRefus,
+      dateDemande: data.dateDemande.present
+          ? data.dateDemande.value
+          : this.dateDemande,
+      dateValidation: data.dateValidation.present
+          ? data.dateValidation.value
+          : this.dateValidation,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MutationRow(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('noeudOrigineId: $noeudOrigineId, ')
+          ..write('noeudDestinationId: $noeudDestinationId, ')
+          ..write('motif: $motif, ')
+          ..write('statut: $statut, ')
+          ..write('valideeParOrigine: $valideeParOrigine, ')
+          ..write('valideeParDestination: $valideeParDestination, ')
+          ..write('motifRefus: $motifRefus, ')
+          ..write('dateDemande: $dateDemande, ')
+          ..write('dateValidation: $dateValidation')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    fideleId,
+    noeudOrigineId,
+    noeudDestinationId,
+    motif,
+    statut,
+    valideeParOrigine,
+    valideeParDestination,
+    motifRefus,
+    dateDemande,
+    dateValidation,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MutationRow &&
+          other.id == this.id &&
+          other.fideleId == this.fideleId &&
+          other.noeudOrigineId == this.noeudOrigineId &&
+          other.noeudDestinationId == this.noeudDestinationId &&
+          other.motif == this.motif &&
+          other.statut == this.statut &&
+          other.valideeParOrigine == this.valideeParOrigine &&
+          other.valideeParDestination == this.valideeParDestination &&
+          other.motifRefus == this.motifRefus &&
+          other.dateDemande == this.dateDemande &&
+          other.dateValidation == this.dateValidation);
+}
+
+class MutationsCompanion extends UpdateCompanion<MutationRow> {
+  final Value<String> id;
+  final Value<String> fideleId;
+  final Value<String> noeudOrigineId;
+  final Value<String> noeudDestinationId;
+  final Value<String> motif;
+  final Value<String> statut;
+  final Value<bool> valideeParOrigine;
+  final Value<bool> valideeParDestination;
+  final Value<String?> motifRefus;
+  final Value<DateTime> dateDemande;
+  final Value<DateTime?> dateValidation;
+  final Value<int> rowid;
+  const MutationsCompanion({
+    this.id = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.noeudOrigineId = const Value.absent(),
+    this.noeudDestinationId = const Value.absent(),
+    this.motif = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.valideeParOrigine = const Value.absent(),
+    this.valideeParDestination = const Value.absent(),
+    this.motifRefus = const Value.absent(),
+    this.dateDemande = const Value.absent(),
+    this.dateValidation = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MutationsCompanion.insert({
+    required String id,
+    required String fideleId,
+    required String noeudOrigineId,
+    required String noeudDestinationId,
+    required String motif,
+    this.statut = const Value.absent(),
+    this.valideeParOrigine = const Value.absent(),
+    this.valideeParDestination = const Value.absent(),
+    this.motifRefus = const Value.absent(),
+    required DateTime dateDemande,
+    this.dateValidation = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       fideleId = Value(fideleId),
+       noeudOrigineId = Value(noeudOrigineId),
+       noeudDestinationId = Value(noeudDestinationId),
+       motif = Value(motif),
+       dateDemande = Value(dateDemande);
+  static Insertable<MutationRow> custom({
+    Expression<String>? id,
+    Expression<String>? fideleId,
+    Expression<String>? noeudOrigineId,
+    Expression<String>? noeudDestinationId,
+    Expression<String>? motif,
+    Expression<String>? statut,
+    Expression<bool>? valideeParOrigine,
+    Expression<bool>? valideeParDestination,
+    Expression<String>? motifRefus,
+    Expression<DateTime>? dateDemande,
+    Expression<DateTime>? dateValidation,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (noeudOrigineId != null) 'noeud_origine_id': noeudOrigineId,
+      if (noeudDestinationId != null)
+        'noeud_destination_id': noeudDestinationId,
+      if (motif != null) 'motif': motif,
+      if (statut != null) 'statut': statut,
+      if (valideeParOrigine != null) 'validee_par_origine': valideeParOrigine,
+      if (valideeParDestination != null)
+        'validee_par_destination': valideeParDestination,
+      if (motifRefus != null) 'motif_refus': motifRefus,
+      if (dateDemande != null) 'date_demande': dateDemande,
+      if (dateValidation != null) 'date_validation': dateValidation,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MutationsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? fideleId,
+    Value<String>? noeudOrigineId,
+    Value<String>? noeudDestinationId,
+    Value<String>? motif,
+    Value<String>? statut,
+    Value<bool>? valideeParOrigine,
+    Value<bool>? valideeParDestination,
+    Value<String?>? motifRefus,
+    Value<DateTime>? dateDemande,
+    Value<DateTime?>? dateValidation,
+    Value<int>? rowid,
+  }) {
+    return MutationsCompanion(
+      id: id ?? this.id,
+      fideleId: fideleId ?? this.fideleId,
+      noeudOrigineId: noeudOrigineId ?? this.noeudOrigineId,
+      noeudDestinationId: noeudDestinationId ?? this.noeudDestinationId,
+      motif: motif ?? this.motif,
+      statut: statut ?? this.statut,
+      valideeParOrigine: valideeParOrigine ?? this.valideeParOrigine,
+      valideeParDestination:
+          valideeParDestination ?? this.valideeParDestination,
+      motifRefus: motifRefus ?? this.motifRefus,
+      dateDemande: dateDemande ?? this.dateDemande,
+      dateValidation: dateValidation ?? this.dateValidation,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (noeudOrigineId.present) {
+      map['noeud_origine_id'] = Variable<String>(noeudOrigineId.value);
+    }
+    if (noeudDestinationId.present) {
+      map['noeud_destination_id'] = Variable<String>(noeudDestinationId.value);
+    }
+    if (motif.present) {
+      map['motif'] = Variable<String>(motif.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (valideeParOrigine.present) {
+      map['validee_par_origine'] = Variable<bool>(valideeParOrigine.value);
+    }
+    if (valideeParDestination.present) {
+      map['validee_par_destination'] = Variable<bool>(
+        valideeParDestination.value,
+      );
+    }
+    if (motifRefus.present) {
+      map['motif_refus'] = Variable<String>(motifRefus.value);
+    }
+    if (dateDemande.present) {
+      map['date_demande'] = Variable<DateTime>(dateDemande.value);
+    }
+    if (dateValidation.present) {
+      map['date_validation'] = Variable<DateTime>(dateValidation.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MutationsCompanion(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('noeudOrigineId: $noeudOrigineId, ')
+          ..write('noeudDestinationId: $noeudDestinationId, ')
+          ..write('motif: $motif, ')
+          ..write('statut: $statut, ')
+          ..write('valideeParOrigine: $valideeParOrigine, ')
+          ..write('valideeParDestination: $valideeParDestination, ')
+          ..write('motifRefus: $motifRefus, ')
+          ..write('dateDemande: $dateDemande, ')
+          ..write('dateValidation: $dateValidation, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $LettresRecommandationTable extends LettresRecommandation
+    with TableInfo<$LettresRecommandationTable, LettreRecommandationRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LettresRecommandationTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _mutationIdMeta = const VerificationMeta(
+    'mutationId',
+  );
+  @override
+  late final GeneratedColumn<String> mutationId = GeneratedColumn<String>(
+    'mutation_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES mutations (id)',
+    ),
+  );
+  static const VerificationMeta _documentArchiveIdMeta = const VerificationMeta(
+    'documentArchiveId',
+  );
+  @override
+  late final GeneratedColumn<String> documentArchiveId =
+      GeneratedColumn<String>(
+        'document_archive_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES documents_archive (id)',
+        ),
+      );
+  @override
+  List<GeneratedColumn> get $columns => [id, mutationId, documentArchiveId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'lettres_recommandation';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<LettreRecommandationRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('mutation_id')) {
+      context.handle(
+        _mutationIdMeta,
+        mutationId.isAcceptableOrUnknown(data['mutation_id']!, _mutationIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_mutationIdMeta);
+    }
+    if (data.containsKey('document_archive_id')) {
+      context.handle(
+        _documentArchiveIdMeta,
+        documentArchiveId.isAcceptableOrUnknown(
+          data['document_archive_id']!,
+          _documentArchiveIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_documentArchiveIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  LettreRecommandationRow map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LettreRecommandationRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      mutationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}mutation_id'],
+      )!,
+      documentArchiveId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}document_archive_id'],
+      )!,
+    );
+  }
+
+  @override
+  $LettresRecommandationTable createAlias(String alias) {
+    return $LettresRecommandationTable(attachedDatabase, alias);
+  }
+}
+
+class LettreRecommandationRow extends DataClass
+    implements Insertable<LettreRecommandationRow> {
+  final String id;
+  final String mutationId;
+  final String documentArchiveId;
+  const LettreRecommandationRow({
+    required this.id,
+    required this.mutationId,
+    required this.documentArchiveId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['mutation_id'] = Variable<String>(mutationId);
+    map['document_archive_id'] = Variable<String>(documentArchiveId);
+    return map;
+  }
+
+  LettresRecommandationCompanion toCompanion(bool nullToAbsent) {
+    return LettresRecommandationCompanion(
+      id: Value(id),
+      mutationId: Value(mutationId),
+      documentArchiveId: Value(documentArchiveId),
+    );
+  }
+
+  factory LettreRecommandationRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LettreRecommandationRow(
+      id: serializer.fromJson<String>(json['id']),
+      mutationId: serializer.fromJson<String>(json['mutationId']),
+      documentArchiveId: serializer.fromJson<String>(json['documentArchiveId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'mutationId': serializer.toJson<String>(mutationId),
+      'documentArchiveId': serializer.toJson<String>(documentArchiveId),
+    };
+  }
+
+  LettreRecommandationRow copyWith({
+    String? id,
+    String? mutationId,
+    String? documentArchiveId,
+  }) => LettreRecommandationRow(
+    id: id ?? this.id,
+    mutationId: mutationId ?? this.mutationId,
+    documentArchiveId: documentArchiveId ?? this.documentArchiveId,
+  );
+  LettreRecommandationRow copyWithCompanion(
+    LettresRecommandationCompanion data,
+  ) {
+    return LettreRecommandationRow(
+      id: data.id.present ? data.id.value : this.id,
+      mutationId: data.mutationId.present
+          ? data.mutationId.value
+          : this.mutationId,
+      documentArchiveId: data.documentArchiveId.present
+          ? data.documentArchiveId.value
+          : this.documentArchiveId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LettreRecommandationRow(')
+          ..write('id: $id, ')
+          ..write('mutationId: $mutationId, ')
+          ..write('documentArchiveId: $documentArchiveId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, mutationId, documentArchiveId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LettreRecommandationRow &&
+          other.id == this.id &&
+          other.mutationId == this.mutationId &&
+          other.documentArchiveId == this.documentArchiveId);
+}
+
+class LettresRecommandationCompanion
+    extends UpdateCompanion<LettreRecommandationRow> {
+  final Value<String> id;
+  final Value<String> mutationId;
+  final Value<String> documentArchiveId;
+  final Value<int> rowid;
+  const LettresRecommandationCompanion({
+    this.id = const Value.absent(),
+    this.mutationId = const Value.absent(),
+    this.documentArchiveId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LettresRecommandationCompanion.insert({
+    required String id,
+    required String mutationId,
+    required String documentArchiveId,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       mutationId = Value(mutationId),
+       documentArchiveId = Value(documentArchiveId);
+  static Insertable<LettreRecommandationRow> custom({
+    Expression<String>? id,
+    Expression<String>? mutationId,
+    Expression<String>? documentArchiveId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (mutationId != null) 'mutation_id': mutationId,
+      if (documentArchiveId != null) 'document_archive_id': documentArchiveId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LettresRecommandationCompanion copyWith({
+    Value<String>? id,
+    Value<String>? mutationId,
+    Value<String>? documentArchiveId,
+    Value<int>? rowid,
+  }) {
+    return LettresRecommandationCompanion(
+      id: id ?? this.id,
+      mutationId: mutationId ?? this.mutationId,
+      documentArchiveId: documentArchiveId ?? this.documentArchiveId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (mutationId.present) {
+      map['mutation_id'] = Variable<String>(mutationId.value);
+    }
+    if (documentArchiveId.present) {
+      map['document_archive_id'] = Variable<String>(documentArchiveId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LettresRecommandationCompanion(')
+          ..write('id: $id, ')
+          ..write('mutationId: $mutationId, ')
+          ..write('documentArchiveId: $documentArchiveId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxRow> {
   @override
@@ -17174,6 +18166,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $VersionsDocumentTable versionsDocument = $VersionsDocumentTable(
     this,
   );
+  late final $MutationsTable mutations = $MutationsTable(this);
+  late final $LettresRecommandationTable lettresRecommandation =
+      $LettresRecommandationTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -17218,6 +18213,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     nomenclaturesArchivage,
     documentsArchive,
     versionsDocument,
+    mutations,
+    lettresRecommandation,
     syncOutbox,
   ];
 }
@@ -17418,6 +18415,47 @@ final class $$OrganisationNodesTableReferences
 
     final cache = $_typedResult.readTableOrNull(
       _documentsArchiveRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$MutationsTable, List<MutationRow>>
+  _mutationsCommeOrigineTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.mutations,
+        aliasName: 'organisation_nodes__id__mutations__noeud_origine_id',
+      );
+
+  $$MutationsTableProcessedTableManager get mutationsCommeOrigine {
+    final manager = $$MutationsTableTableManager(
+      $_db,
+      $_db.mutations,
+    ).filter((f) => f.noeudOrigineId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _mutationsCommeOrigineTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$MutationsTable, List<MutationRow>>
+  _mutationsCommeDestinationTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.mutations,
+        aliasName: 'organisation_nodes__id__mutations__noeud_destination_id',
+      );
+
+  $$MutationsTableProcessedTableManager get mutationsCommeDestination {
+    final manager = $$MutationsTableTableManager($_db, $_db.mutations).filter(
+      (f) => f.noeudDestinationId.id.sqlEquals($_itemColumn<String>('id')!),
+    );
+
+    final cache = $_typedResult.readTableOrNull(
+      _mutationsCommeDestinationTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -17700,6 +18738,56 @@ class $$OrganisationNodesTableFilterComposer
           }) => $$DocumentsArchiveTableFilterComposer(
             $db: $db,
             $table: $db.documentsArchive,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> mutationsCommeOrigine(
+    Expression<bool> Function($$MutationsTableFilterComposer f) f,
+  ) {
+    final $$MutationsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.mutations,
+      getReferencedColumn: (t) => t.noeudOrigineId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MutationsTableFilterComposer(
+            $db: $db,
+            $table: $db.mutations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> mutationsCommeDestination(
+    Expression<bool> Function($$MutationsTableFilterComposer f) f,
+  ) {
+    final $$MutationsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.mutations,
+      getReferencedColumn: (t) => t.noeudDestinationId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MutationsTableFilterComposer(
+            $db: $db,
+            $table: $db.mutations,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -18056,6 +19144,56 @@ class $$OrganisationNodesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> mutationsCommeOrigine<T extends Object>(
+    Expression<T> Function($$MutationsTableAnnotationComposer a) f,
+  ) {
+    final $$MutationsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.mutations,
+      getReferencedColumn: (t) => t.noeudOrigineId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MutationsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.mutations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> mutationsCommeDestination<T extends Object>(
+    Expression<T> Function($$MutationsTableAnnotationComposer a) f,
+  ) {
+    final $$MutationsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.mutations,
+      getReferencedColumn: (t) => t.noeudDestinationId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MutationsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.mutations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$OrganisationNodesTableTableManager
@@ -18080,6 +19218,8 @@ class $$OrganisationNodesTableTableManager
             bool seancesComiteRefs,
             bool cultesRefs,
             bool documentsArchiveRefs,
+            bool mutationsCommeOrigine,
+            bool mutationsCommeDestination,
           })
         > {
   $$OrganisationNodesTableTableManager(
@@ -18190,6 +19330,8 @@ class $$OrganisationNodesTableTableManager
                 seancesComiteRefs = false,
                 cultesRefs = false,
                 documentsArchiveRefs = false,
+                mutationsCommeOrigine = false,
+                mutationsCommeDestination = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -18202,6 +19344,8 @@ class $$OrganisationNodesTableTableManager
                     if (seancesComiteRefs) db.seancesComite,
                     if (cultesRefs) db.cultes,
                     if (documentsArchiveRefs) db.documentsArchive,
+                    if (mutationsCommeOrigine) db.mutations,
+                    if (mutationsCommeDestination) db.mutations,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -18374,6 +19518,48 @@ class $$OrganisationNodesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (mutationsCommeOrigine)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          MutationRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._mutationsCommeOrigineTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).mutationsCommeOrigine,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudOrigineId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (mutationsCommeDestination)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          MutationRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._mutationsCommeDestinationTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).mutationsCommeDestination,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudDestinationId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -18403,6 +19589,8 @@ typedef $$OrganisationNodesTableProcessedTableManager =
         bool seancesComiteRefs,
         bool cultesRefs,
         bool documentsArchiveRefs,
+        bool mutationsCommeOrigine,
+        bool mutationsCommeDestination,
       })
     >;
 typedef $$HistoriqueRattachementsTableCreateCompanionBuilder =
@@ -19190,6 +20378,24 @@ final class $$FidelesTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$MutationsTable, List<MutationRow>>
+  _mutationsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.mutations,
+    aliasName: 'fideles__id__mutations__fidele_id',
+  );
+
+  $$MutationsTableProcessedTableManager get mutationsRefs {
+    final manager = $$MutationsTableTableManager(
+      $_db,
+      $_db.mutations,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_mutationsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$FidelesTableFilterComposer
@@ -19876,6 +21082,31 @@ class $$FidelesTableFilterComposer
           }) => $$VotesPropositionTableFilterComposer(
             $db: $db,
             $table: $db.votesProposition,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> mutationsRefs(
+    Expression<bool> Function($$MutationsTableFilterComposer f) f,
+  ) {
+    final $$MutationsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.mutations,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MutationsTableFilterComposer(
+            $db: $db,
+            $table: $db.mutations,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -20682,6 +21913,31 @@ class $$FidelesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> mutationsRefs<T extends Object>(
+    Expression<T> Function($$MutationsTableAnnotationComposer a) f,
+  ) {
+    final $$MutationsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.mutations,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MutationsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.mutations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$FidelesTableTableManager
@@ -20722,6 +21978,7 @@ class $$FidelesTableTableManager
             bool presencesCulteRefs,
             bool propositionsThemeRefs,
             bool votesPropositionRefs,
+            bool mutationsRefs,
           })
         > {
   $$FidelesTableTableManager(_$AppDatabase db, $FidelesTable table)
@@ -20853,6 +22110,7 @@ class $$FidelesTableTableManager
                 presencesCulteRefs = false,
                 propositionsThemeRefs = false,
                 votesPropositionRefs = false,
+                mutationsRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -20880,6 +22138,7 @@ class $$FidelesTableTableManager
                     if (presencesCulteRefs) db.presencesCulte,
                     if (propositionsThemeRefs) db.propositionsTheme,
                     if (votesPropositionRefs) db.votesProposition,
+                    if (mutationsRefs) db.mutations,
                   ],
                   addJoins:
                       <
@@ -21398,6 +22657,27 @@ class $$FidelesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (mutationsRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          MutationRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._mutationsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).mutationsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -21443,6 +22723,7 @@ typedef $$FidelesTableProcessedTableManager =
         bool presencesCulteRefs,
         bool propositionsThemeRefs,
         bool votesPropositionRefs,
+        bool mutationsRefs,
       })
     >;
 typedef $$NodeResponsablesTableCreateCompanionBuilder =
@@ -35720,6 +37001,36 @@ final class $$DocumentsArchiveTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<
+    $LettresRecommandationTable,
+    List<LettreRecommandationRow>
+  >
+  _lettresRecommandationRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.lettresRecommandation,
+    aliasName:
+        'documents_archive__id__lettres_recommandation__document_archive_id',
+  );
+
+  $$LettresRecommandationTableProcessedTableManager
+  get lettresRecommandationRefs {
+    final manager =
+        $$LettresRecommandationTableTableManager(
+          $_db,
+          $_db.lettresRecommandation,
+        ).filter(
+          (f) => f.documentArchiveId.id.sqlEquals($_itemColumn<String>('id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(
+      _lettresRecommandationRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$DocumentsArchiveTableFilterComposer
@@ -35836,6 +37147,32 @@ class $$DocumentsArchiveTableFilterComposer
                 $removeJoinBuilderFromRootComposer,
           ),
     );
+    return f(composer);
+  }
+
+  Expression<bool> lettresRecommandationRefs(
+    Expression<bool> Function($$LettresRecommandationTableFilterComposer f) f,
+  ) {
+    final $$LettresRecommandationTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.lettresRecommandation,
+          getReferencedColumn: (t) => t.documentArchiveId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$LettresRecommandationTableFilterComposer(
+                $db: $db,
+                $table: $db.lettresRecommandation,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
     return f(composer);
   }
 }
@@ -36040,6 +37377,32 @@ class $$DocumentsArchiveTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> lettresRecommandationRefs<T extends Object>(
+    Expression<T> Function($$LettresRecommandationTableAnnotationComposer a) f,
+  ) {
+    final $$LettresRecommandationTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.lettresRecommandation,
+          getReferencedColumn: (t) => t.documentArchiveId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$LettresRecommandationTableAnnotationComposer(
+                $db: $db,
+                $table: $db.lettresRecommandation,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$DocumentsArchiveTableTableManager
@@ -36055,7 +37418,11 @@ class $$DocumentsArchiveTableTableManager
           $$DocumentsArchiveTableUpdateCompanionBuilder,
           (DocumentArchiveRow, $$DocumentsArchiveTableReferences),
           DocumentArchiveRow,
-          PrefetchHooks Function({bool noeudId, bool versionsDocumentRefs})
+          PrefetchHooks Function({
+            bool noeudId,
+            bool versionsDocumentRefs,
+            bool lettresRecommandationRefs,
+          })
         > {
   $$DocumentsArchiveTableTableManager(
     _$AppDatabase db,
@@ -36145,11 +37512,16 @@ class $$DocumentsArchiveTableTableManager
               )
               .toList(),
           prefetchHooksCallback:
-              ({noeudId = false, versionsDocumentRefs = false}) {
+              ({
+                noeudId = false,
+                versionsDocumentRefs = false,
+                lettresRecommandationRefs = false,
+              }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
                     if (versionsDocumentRefs) db.versionsDocument,
+                    if (lettresRecommandationRefs) db.lettresRecommandation,
                   ],
                   addJoins:
                       <
@@ -36208,6 +37580,27 @@ class $$DocumentsArchiveTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (lettresRecommandationRefs)
+                        await $_getPrefetchedData<
+                          DocumentArchiveRow,
+                          $DocumentsArchiveTable,
+                          LettreRecommandationRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$DocumentsArchiveTableReferences
+                              ._lettresRecommandationRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$DocumentsArchiveTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).lettresRecommandationRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.documentArchiveId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -36228,7 +37621,11 @@ typedef $$DocumentsArchiveTableProcessedTableManager =
       $$DocumentsArchiveTableUpdateCompanionBuilder,
       (DocumentArchiveRow, $$DocumentsArchiveTableReferences),
       DocumentArchiveRow,
-      PrefetchHooks Function({bool noeudId, bool versionsDocumentRefs})
+      PrefetchHooks Function({
+        bool noeudId,
+        bool versionsDocumentRefs,
+        bool lettresRecommandationRefs,
+      })
     >;
 typedef $$VersionsDocumentTableCreateCompanionBuilder =
     VersionsDocumentCompanion Function({
@@ -36564,6 +37961,1136 @@ typedef $$VersionsDocumentTableProcessedTableManager =
       (VersionDocumentRow, $$VersionsDocumentTableReferences),
       VersionDocumentRow,
       PrefetchHooks Function({bool documentId})
+    >;
+typedef $$MutationsTableCreateCompanionBuilder =
+    MutationsCompanion Function({
+      required String id,
+      required String fideleId,
+      required String noeudOrigineId,
+      required String noeudDestinationId,
+      required String motif,
+      Value<String> statut,
+      Value<bool> valideeParOrigine,
+      Value<bool> valideeParDestination,
+      Value<String?> motifRefus,
+      required DateTime dateDemande,
+      Value<DateTime?> dateValidation,
+      Value<int> rowid,
+    });
+typedef $$MutationsTableUpdateCompanionBuilder =
+    MutationsCompanion Function({
+      Value<String> id,
+      Value<String> fideleId,
+      Value<String> noeudOrigineId,
+      Value<String> noeudDestinationId,
+      Value<String> motif,
+      Value<String> statut,
+      Value<bool> valideeParOrigine,
+      Value<bool> valideeParDestination,
+      Value<String?> motifRefus,
+      Value<DateTime> dateDemande,
+      Value<DateTime?> dateValidation,
+      Value<int> rowid,
+    });
+
+final class $$MutationsTableReferences
+    extends BaseReferences<_$AppDatabase, $MutationsTable, MutationRow> {
+  $$MutationsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('mutations__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $OrganisationNodesTable _noeudOrigineIdTable(_$AppDatabase db) => db
+      .organisationNodes
+      .createAlias('mutations__noeud_origine_id__organisation_nodes__id');
+
+  $$OrganisationNodesTableProcessedTableManager get noeudOrigineId {
+    final $_column = $_itemColumn<String>('noeud_origine_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudOrigineIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $OrganisationNodesTable _noeudDestinationIdTable(_$AppDatabase db) =>
+      db.organisationNodes.createAlias(
+        'mutations__noeud_destination_id__organisation_nodes__id',
+      );
+
+  $$OrganisationNodesTableProcessedTableManager get noeudDestinationId {
+    final $_column = $_itemColumn<String>('noeud_destination_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudDestinationIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $LettresRecommandationTable,
+    List<LettreRecommandationRow>
+  >
+  _lettresRecommandationRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.lettresRecommandation,
+        aliasName: 'mutations__id__lettres_recommandation__mutation_id',
+      );
+
+  $$LettresRecommandationTableProcessedTableManager
+  get lettresRecommandationRefs {
+    final manager = $$LettresRecommandationTableTableManager(
+      $_db,
+      $_db.lettresRecommandation,
+    ).filter((f) => f.mutationId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _lettresRecommandationRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$MutationsTableFilterComposer
+    extends Composer<_$AppDatabase, $MutationsTable> {
+  $$MutationsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get motif => $composableBuilder(
+    column: $table.motif,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get valideeParOrigine => $composableBuilder(
+    column: $table.valideeParOrigine,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get valideeParDestination => $composableBuilder(
+    column: $table.valideeParDestination,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get motifRefus => $composableBuilder(
+    column: $table.motifRefus,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateDemande => $composableBuilder(
+    column: $table.dateDemande,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateValidation => $composableBuilder(
+    column: $table.dateValidation,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableFilterComposer get noeudOrigineId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudOrigineId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableFilterComposer get noeudDestinationId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudDestinationId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> lettresRecommandationRefs(
+    Expression<bool> Function($$LettresRecommandationTableFilterComposer f) f,
+  ) {
+    final $$LettresRecommandationTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.lettresRecommandation,
+          getReferencedColumn: (t) => t.mutationId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$LettresRecommandationTableFilterComposer(
+                $db: $db,
+                $table: $db.lettresRecommandation,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$MutationsTableOrderingComposer
+    extends Composer<_$AppDatabase, $MutationsTable> {
+  $$MutationsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get motif => $composableBuilder(
+    column: $table.motif,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get valideeParOrigine => $composableBuilder(
+    column: $table.valideeParOrigine,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get valideeParDestination => $composableBuilder(
+    column: $table.valideeParDestination,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get motifRefus => $composableBuilder(
+    column: $table.motifRefus,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateDemande => $composableBuilder(
+    column: $table.dateDemande,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateValidation => $composableBuilder(
+    column: $table.dateValidation,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableOrderingComposer get noeudOrigineId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudOrigineId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableOrderingComposer get noeudDestinationId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudDestinationId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MutationsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MutationsTable> {
+  $$MutationsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get motif =>
+      $composableBuilder(column: $table.motif, builder: (column) => column);
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  GeneratedColumn<bool> get valideeParOrigine => $composableBuilder(
+    column: $table.valideeParOrigine,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get valideeParDestination => $composableBuilder(
+    column: $table.valideeParDestination,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get motifRefus => $composableBuilder(
+    column: $table.motifRefus,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get dateDemande => $composableBuilder(
+    column: $table.dateDemande,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get dateValidation => $composableBuilder(
+    column: $table.dateValidation,
+    builder: (column) => column,
+  );
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableAnnotationComposer get noeudOrigineId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudOrigineId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$OrganisationNodesTableAnnotationComposer get noeudDestinationId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudDestinationId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  Expression<T> lettresRecommandationRefs<T extends Object>(
+    Expression<T> Function($$LettresRecommandationTableAnnotationComposer a) f,
+  ) {
+    final $$LettresRecommandationTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.lettresRecommandation,
+          getReferencedColumn: (t) => t.mutationId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$LettresRecommandationTableAnnotationComposer(
+                $db: $db,
+                $table: $db.lettresRecommandation,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$MutationsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MutationsTable,
+          MutationRow,
+          $$MutationsTableFilterComposer,
+          $$MutationsTableOrderingComposer,
+          $$MutationsTableAnnotationComposer,
+          $$MutationsTableCreateCompanionBuilder,
+          $$MutationsTableUpdateCompanionBuilder,
+          (MutationRow, $$MutationsTableReferences),
+          MutationRow,
+          PrefetchHooks Function({
+            bool fideleId,
+            bool noeudOrigineId,
+            bool noeudDestinationId,
+            bool lettresRecommandationRefs,
+          })
+        > {
+  $$MutationsTableTableManager(_$AppDatabase db, $MutationsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MutationsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MutationsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MutationsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<String> noeudOrigineId = const Value.absent(),
+                Value<String> noeudDestinationId = const Value.absent(),
+                Value<String> motif = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<bool> valideeParOrigine = const Value.absent(),
+                Value<bool> valideeParDestination = const Value.absent(),
+                Value<String?> motifRefus = const Value.absent(),
+                Value<DateTime> dateDemande = const Value.absent(),
+                Value<DateTime?> dateValidation = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MutationsCompanion(
+                id: id,
+                fideleId: fideleId,
+                noeudOrigineId: noeudOrigineId,
+                noeudDestinationId: noeudDestinationId,
+                motif: motif,
+                statut: statut,
+                valideeParOrigine: valideeParOrigine,
+                valideeParDestination: valideeParDestination,
+                motifRefus: motifRefus,
+                dateDemande: dateDemande,
+                dateValidation: dateValidation,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String fideleId,
+                required String noeudOrigineId,
+                required String noeudDestinationId,
+                required String motif,
+                Value<String> statut = const Value.absent(),
+                Value<bool> valideeParOrigine = const Value.absent(),
+                Value<bool> valideeParDestination = const Value.absent(),
+                Value<String?> motifRefus = const Value.absent(),
+                required DateTime dateDemande,
+                Value<DateTime?> dateValidation = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MutationsCompanion.insert(
+                id: id,
+                fideleId: fideleId,
+                noeudOrigineId: noeudOrigineId,
+                noeudDestinationId: noeudDestinationId,
+                motif: motif,
+                statut: statut,
+                valideeParOrigine: valideeParOrigine,
+                valideeParDestination: valideeParDestination,
+                motifRefus: motifRefus,
+                dateDemande: dateDemande,
+                dateValidation: dateValidation,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$MutationsTable, MutationRow>(table),
+                  $$MutationsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                fideleId = false,
+                noeudOrigineId = false,
+                noeudDestinationId = false,
+                lettresRecommandationRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (lettresRecommandationRefs) db.lettresRecommandation,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (fideleId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.fideleId,
+                                    referencedTable: $$MutationsTableReferences
+                                        ._fideleIdTable(db),
+                                    referencedColumn: $$MutationsTableReferences
+                                        ._fideleIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
+                        if (noeudOrigineId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.noeudOrigineId,
+                                    referencedTable: $$MutationsTableReferences
+                                        ._noeudOrigineIdTable(db),
+                                    referencedColumn: $$MutationsTableReferences
+                                        ._noeudOrigineIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
+                        if (noeudDestinationId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.noeudDestinationId,
+                                    referencedTable: $$MutationsTableReferences
+                                        ._noeudDestinationIdTable(db),
+                                    referencedColumn: $$MutationsTableReferences
+                                        ._noeudDestinationIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (lettresRecommandationRefs)
+                        await $_getPrefetchedData<
+                          MutationRow,
+                          $MutationsTable,
+                          LettreRecommandationRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$MutationsTableReferences
+                              ._lettresRecommandationRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$MutationsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).lettresRecommandationRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.mutationId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$MutationsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MutationsTable,
+      MutationRow,
+      $$MutationsTableFilterComposer,
+      $$MutationsTableOrderingComposer,
+      $$MutationsTableAnnotationComposer,
+      $$MutationsTableCreateCompanionBuilder,
+      $$MutationsTableUpdateCompanionBuilder,
+      (MutationRow, $$MutationsTableReferences),
+      MutationRow,
+      PrefetchHooks Function({
+        bool fideleId,
+        bool noeudOrigineId,
+        bool noeudDestinationId,
+        bool lettresRecommandationRefs,
+      })
+    >;
+typedef $$LettresRecommandationTableCreateCompanionBuilder =
+    LettresRecommandationCompanion Function({
+      required String id,
+      required String mutationId,
+      required String documentArchiveId,
+      Value<int> rowid,
+    });
+typedef $$LettresRecommandationTableUpdateCompanionBuilder =
+    LettresRecommandationCompanion Function({
+      Value<String> id,
+      Value<String> mutationId,
+      Value<String> documentArchiveId,
+      Value<int> rowid,
+    });
+
+final class $$LettresRecommandationTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $LettresRecommandationTable,
+          LettreRecommandationRow
+        > {
+  $$LettresRecommandationTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $MutationsTable _mutationIdTable(_$AppDatabase db) => db.mutations
+      .createAlias('lettres_recommandation__mutation_id__mutations__id');
+
+  $$MutationsTableProcessedTableManager get mutationId {
+    final $_column = $_itemColumn<String>('mutation_id')!;
+
+    final manager = $$MutationsTableTableManager(
+      $_db,
+      $_db.mutations,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_mutationIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $DocumentsArchiveTable _documentArchiveIdTable(_$AppDatabase db) =>
+      db.documentsArchive.createAlias(
+        'lettres_recommandation__document_archive_id__documents_archive__id',
+      );
+
+  $$DocumentsArchiveTableProcessedTableManager get documentArchiveId {
+    final $_column = $_itemColumn<String>('document_archive_id')!;
+
+    final manager = $$DocumentsArchiveTableTableManager(
+      $_db,
+      $_db.documentsArchive,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_documentArchiveIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$LettresRecommandationTableFilterComposer
+    extends Composer<_$AppDatabase, $LettresRecommandationTable> {
+  $$LettresRecommandationTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$MutationsTableFilterComposer get mutationId {
+    final $$MutationsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.mutationId,
+      referencedTable: $db.mutations,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MutationsTableFilterComposer(
+            $db: $db,
+            $table: $db.mutations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$DocumentsArchiveTableFilterComposer get documentArchiveId {
+    final $$DocumentsArchiveTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.documentArchiveId,
+      referencedTable: $db.documentsArchive,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DocumentsArchiveTableFilterComposer(
+            $db: $db,
+            $table: $db.documentsArchive,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$LettresRecommandationTableOrderingComposer
+    extends Composer<_$AppDatabase, $LettresRecommandationTable> {
+  $$LettresRecommandationTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$MutationsTableOrderingComposer get mutationId {
+    final $$MutationsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.mutationId,
+      referencedTable: $db.mutations,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MutationsTableOrderingComposer(
+            $db: $db,
+            $table: $db.mutations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$DocumentsArchiveTableOrderingComposer get documentArchiveId {
+    final $$DocumentsArchiveTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.documentArchiveId,
+      referencedTable: $db.documentsArchive,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DocumentsArchiveTableOrderingComposer(
+            $db: $db,
+            $table: $db.documentsArchive,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$LettresRecommandationTableAnnotationComposer
+    extends Composer<_$AppDatabase, $LettresRecommandationTable> {
+  $$LettresRecommandationTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  $$MutationsTableAnnotationComposer get mutationId {
+    final $$MutationsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.mutationId,
+      referencedTable: $db.mutations,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MutationsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.mutations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$DocumentsArchiveTableAnnotationComposer get documentArchiveId {
+    final $$DocumentsArchiveTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.documentArchiveId,
+      referencedTable: $db.documentsArchive,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DocumentsArchiveTableAnnotationComposer(
+            $db: $db,
+            $table: $db.documentsArchive,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$LettresRecommandationTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $LettresRecommandationTable,
+          LettreRecommandationRow,
+          $$LettresRecommandationTableFilterComposer,
+          $$LettresRecommandationTableOrderingComposer,
+          $$LettresRecommandationTableAnnotationComposer,
+          $$LettresRecommandationTableCreateCompanionBuilder,
+          $$LettresRecommandationTableUpdateCompanionBuilder,
+          (LettreRecommandationRow, $$LettresRecommandationTableReferences),
+          LettreRecommandationRow,
+          PrefetchHooks Function({bool mutationId, bool documentArchiveId})
+        > {
+  $$LettresRecommandationTableTableManager(
+    _$AppDatabase db,
+    $LettresRecommandationTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LettresRecommandationTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$LettresRecommandationTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$LettresRecommandationTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> mutationId = const Value.absent(),
+                Value<String> documentArchiveId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LettresRecommandationCompanion(
+                id: id,
+                mutationId: mutationId,
+                documentArchiveId: documentArchiveId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String mutationId,
+                required String documentArchiveId,
+                Value<int> rowid = const Value.absent(),
+              }) => LettresRecommandationCompanion.insert(
+                id: id,
+                mutationId: mutationId,
+                documentArchiveId: documentArchiveId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $LettresRecommandationTable,
+                    LettreRecommandationRow
+                  >(table),
+                  $$LettresRecommandationTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({mutationId = false, documentArchiveId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (mutationId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.mutationId,
+                                    referencedTable:
+                                        $$LettresRecommandationTableReferences
+                                            ._mutationIdTable(db),
+                                    referencedColumn:
+                                        $$LettresRecommandationTableReferences
+                                            ._mutationIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (documentArchiveId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.documentArchiveId,
+                                    referencedTable:
+                                        $$LettresRecommandationTableReferences
+                                            ._documentArchiveIdTable(db),
+                                    referencedColumn:
+                                        $$LettresRecommandationTableReferences
+                                            ._documentArchiveIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$LettresRecommandationTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $LettresRecommandationTable,
+      LettreRecommandationRow,
+      $$LettresRecommandationTableFilterComposer,
+      $$LettresRecommandationTableOrderingComposer,
+      $$LettresRecommandationTableAnnotationComposer,
+      $$LettresRecommandationTableCreateCompanionBuilder,
+      $$LettresRecommandationTableUpdateCompanionBuilder,
+      (LettreRecommandationRow, $$LettresRecommandationTableReferences),
+      LettreRecommandationRow,
+      PrefetchHooks Function({bool mutationId, bool documentArchiveId})
     >;
 typedef $$SyncOutboxTableCreateCompanionBuilder =
     SyncOutboxCompanion Function({
@@ -36929,6 +39456,10 @@ class $AppDatabaseManager {
       $$DocumentsArchiveTableTableManager(_db, _db.documentsArchive);
   $$VersionsDocumentTableTableManager get versionsDocument =>
       $$VersionsDocumentTableTableManager(_db, _db.versionsDocument);
+  $$MutationsTableTableManager get mutations =>
+      $$MutationsTableTableManager(_db, _db.mutations);
+  $$LettresRecommandationTableTableManager get lettresRecommandation =>
+      $$LettresRecommandationTableTableManager(_db, _db.lettresRecommandation);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }

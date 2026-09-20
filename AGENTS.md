@@ -168,7 +168,7 @@ confirmation utilisateur, exécution par le service métier normal, traçée. Ch
 | VII — Comité local | ⚠️ partiel — `MembreComite` (RG-VII-01, sous-ensemble qualifié des fidèles) + `QuorumComite` (RG-VII-05, paramétrable par nœud) + `SeanceComite`/présents + `Decision` (RG-VII-04/05) + `ProcesVerbal`/`ErratumPv` (RG-VII-02, immuabilité après validation) + `TacheSuivi` (RG-VII-03) livrés. Le quorum est calculé par le système (jamais déclaré), une décision ne peut être adoptée que si le quorum de sa séance est explicitement atteint. 7 écrans du Cahier couverts par 4 écrans réels (membres+fiche combinés, séances/historique des PV, création de séance combinant convocation+saisie, détail de séance combinant décisions+PV+tâches). **RG-VII-03 archivage automatique (Module VIII)** — ✅ livré : `documentArchiveId` est renseigné automatiquement à la validation du PV quand `ComiteRepository` reçoit un `ArchivageRepository` (voir Module VIII ci-dessus). **RG-VII-04 propagation au Module X** — `porteeDisciplinaire` est un simple drapeau informatif, bloqué par le Module X, non construit. Synchronisation distante différée pour ce module (même précédent documenté que les modules précédents) |
 | XII — Cultes | ⚠️ partiel — `Culte`/`SequenceLiturgique`/`PresenceCulte`/`PublicationCulte`/`PropositionTheme`/`VoteProposition` (RG-XII-01/02/03/05/06) livrés : domaine, données Drift, migration. RG-XII-02 (modes de présence nominal/global mutuellement exclusifs) et RG-XII-05 (séries récurrentes hebdomadaires) câblés dans `CulteRepository`. RG-XII-06 : décompte des votes toujours recalculé depuis `votes_proposition`, jamais un compteur mutable. 9 écrans du Cahier couverts par 4 écrans réels (liste des cultes + création avec option série récurrente, fiche détaillée combinant statut/liturgie/présences/publication post-culte, propositions de thème avec soumission et vote) ; **`propositionsVoterEnTantQue`** — sélecteur de fidèle actif en l'absence de session réelle (RG-SEC-01 non construit), même convention que les autres modules ; **RG-XII-03 archivage automatique dans la médiathèque (Module XIII)** — non construit, la publication reste locale au Module XII pour cette itération ; **RG-XII-04 rapprochement des offrandes de culte** — bloqué par le Module XI (Finances), non construit ; **classement automatique des propositions par l'assistant IA (Module XVI, RG-XII-06)** — non construit, `categorie` reste `null`. Synchronisation distante différée pour ce module (même précédent documenté que les modules précédents) |
 | VIII — Archivage documentaire | ⚠️ partiel — Lot 1 (domaine, données, migration) livré : `DocumentArchive`/`VersionDocument`/`NomenclatureArchivage` (RG-VIII-01/02/03/04/05). `ArchivageRepository.archiver` attribue un numéro immuable dès l'appel (nomenclature paramétrable, jetons `{type}`/`{noeud}`/`{annee}`/`{sequence}`), crée systématiquement la version 1 ; `nouvelleVersion`/`mettreEnCorbeille`/`restaurerDeCorbeille`/`purgerDefinitivement` couvrent RG-VIII-02/05 (aucune méthode de modification ou de suppression directe n'est exposée — absence d'API délibérée) ; `documentsDe` couvre la navigation croisée RG-VIII-04. Branché en producteur réel : `ComiteRepository` reçoit un `ArchivageRepository?` optionnel et archive automatiquement le PV à sa validation (RG-VII-03), même pattern d'injection optionnelle que CV/Déplacements documenté dans `RECONSTRUCTION_ecclesias360.md` §2. Éléments différés, chacun avec sa dépendance exacte : **RG-VIII-06 (garantie de séquence unique inter-appareils à la synchronisation)** — bloqué par l'absence de synchronisation distante active, même précédent documenté que tous les autres modules ; numérotation locale déterministe pour cette itération ; **écrans (Lot 2)** — ✅ livrés : bibliothèque documentaire avec recherche locale (`DocumentsArchiveListScreen`), consultation d'un document + historique des versions combinés (`DocumentArchiveDetailScreen`, ajout de nouvelle version), corbeille avec purge conditionnée au délai (`CorbeilleDocumentsScreen`) ; point d'entrée depuis la fiche de nœud. Transitions personnalisées (`sharedAxisPage`, glissement + fondu) et apparition échelonnée des listes (`StaggeredFadeIn`) introduites pour ce module, scopées à ses 3 écrans pour l'instant (non retrofittées sur le reste de l'app). Navigation croisée vers l'objet d'origine (RG-VIII-04) limitée à une mention texte (module/identifiant), pas encore cliquable — nécessiterait un registre de routes par module producteur, non construit tant que peu de producteurs existent ; **file d'attente hors ligne, non construite ; **écran « génération depuis un modèle » / éditeur de modèles de documents** — le modèle de données du Cahier ne définit aucune entité `ModeleDocument` (seulement `NomenclatureArchivage`, qui numérote, ne génère pas de contenu), différé faute d'entité porteuse ; **écran « signature/validation »** — reste dans le module producteur (ex. `ComiteRepository.validerProcesVerbal`, déjà existant), Module VIII n'est appelé qu'une fois le contenu définitivement validé ; **restriction d'accès par niveau de confidentialité (RG-VIII-03)** — le niveau est calculé et stocké, mais son application (masquage réel à la consultation) reste bloquée par RG-SEC-01, même précédent que les capacités des Modules I/II/XXIII. Synchronisation distante différée pour ce module (même précédent documenté que les modules précédents) |
-| IX — Déplacements | ⬜ à faire |
+| IX — Déplacements | ⚠️ partiel — Lot 1 (domaine, données, migration) livré : `Mutation`/`LettreRecommandation` (RG-IX-01/02/03/04). `DeplacementRepository.demanderMutation` crée la mutation `enAttente` (RG-IX-04 : aucune statistique touchée avant validation) ; `validerCote` porte la double validation pastorale (`valideeParOrigine`/`valideeParDestination`, champs ajoutés au-delà du tableau minimal du Cahier), avec politique de validation unilatérale paramétrable (`AppDefaults.deplacementValidationUnilateraleAutorisee`, `false` par défaut, RG-IX-01) ; une fois validée, le rattachement du fidèle change via la nouvelle méthode `FideleRepository.changerNoeud` (historisée dans `historique_fideles`, RG-IX-03) et la lettre de recommandation est archivée dans le Module VIII (RG-IX-02, `ArchivageRepository?` optionnel, échec non bloquant — même pattern que `ComiteRepository`) ; `refuserMutation`, `mutationsDe`/`watchMutations` couvrent le reste. Nom `DeplacementRepository` et méthode `validerCote` repris de `RECONSTRUCTION_ecclesias360.md` §2 pour rester compatibles avec le futur point d'intégration CV Ecclésiastique (`annexerCvAuTitulaire`, non câblé — l'extension CV n'existe pas encore, voir AGENTS.md §11). Écrans (Lot 2) non construits. Synchronisation distante différée pour ce module (même précédent documenté que les modules précédents) |
 | X — Discipline | ⬜ à faire |
 | XI — Finances | ⬜ à faire |
 | XX — Biens (patrimoine) | ⬜ à faire |
@@ -266,3 +266,52 @@ prérequis de phase existent — voir tableau §7.
    erreurs applicatives. Le bus d'événements et l'Audit du Kernel (§8.5 du Cahier : « non à ce
    stade ») ne sont pas construits — aucune action requise avant leur construction, mais toute
    future intégration doit transporter `AppError.code` ou équivalent, jamais un message traduit.
+
+---
+
+## 12. UX transversale — accueil, langue/thème, Bible-Cantiques (points ouverts)
+
+> Décisions de conception remontées par le porteur du projet, à ne pas perdre de vue tant que
+> les Modules XXIII (paramètres) et XXIV (Bible numérique) ne sont pas construits. Consignées ici
+> plutôt que dans le Cahier pour rester au plus près du suivi d'implémentation ; à reporter dans
+> le Cahier au moment de construire ces modules si elles impliquent une modification durable de ses
+> règles de gestion.
+
+1. **Regroupement des modules par axe sur l'accueil — TRANCHÉ, à appliquer.**
+   L'accueil actuel (`lib/features/home/presentation/home_screen.dart`) affiche les modules en
+   grille plate, sans distinction. Le Cahier définit déjà 7 axes fonctionnels (§1.1) : Pilier
+   hiérarchique, Pilier humain, Axe spirituel, Axe administratif et disciplinaire, Axe financier
+   et patrimonial, Axe numérique et pédagogique, Pilier de gouvernance. Décision : l'accueil doit
+   regrouper ses tuiles de module par axe (sections avec en-tête), plutôt qu'en grille unique —
+   même défaut identifié sur la maquette `ecclesias360_Nouveau` (`dashboard_screen.dart`), à ne
+   pas reproduire. Reste à faire : refonte de `home_screen.dart` (aucune dépendance bloquante,
+   réalisable dès maintenant avec les 9 modules déjà construits).
+
+2. **L'accueil comme « page de direction » — TRANCHÉ, à construire avec le Module XXIII.**
+   Au-delà de la navigation groupée par axe (point 1), l'accueil porte aussi les décisions et
+   réglages globaux de l'utilisateur : accès direct à l'espace Bible/Cantiques (Module XXIV) et
+   sélecteurs de langue et de thème, plutôt que des réglages enfouis uniquement dans l'écran
+   Paramètres (Module XXIII). Cohérent avec RG-SEC-06ter du Cahier (personnalisation de l'accueil
+   par widgets, préférences sous les widgets essentiels) et avec l'écran « 2. Choix de langue » déjà
+   prévu au Module XXIII. Différé : Module XXIV n'existe pas encore, l'emplacement Bible/Cantiques
+   sur l'accueil n'a donc rien à cibler pour l'instant.
+
+3. **Langue et thème choisis à l'accueil influencent l'espace Bible/Cantiques — TRANCHÉ, à
+   construire avec les Modules XXIII et XXIV.**
+   La langue et le thème ne doivent pas être un réglage local à l'écran Paramètres consommé par lui
+   seul : ils doivent être un état global (au niveau de `app.dart` / DI), consommé par tous les
+   modules et en premier lieu par la lecture biblique et les cantiques (police, mode sombre/lecture
+   déjà prévu au Module XXIV écran 10, langue de la version biblique affichée par défaut). Implique
+   que le `ArchivageController`-like controller de préférences (langue/thème) soit instancié au
+   niveau racine de l'app, pas dans le sous-arbre du Module XXIII.
+
+4. **Langues locales pour la Bible et les cantiques, en prévision — NON TRANCHÉ, contrainte de
+   conception à respecter dès la construction du Module XXIV.**
+   RG-XXIV-01 du Cahier ne prévoit actuellement que 3 traductions libres de droits embarquées
+   (Louis Segond 1910, Darby, King James Version), énumérées comme un ensemble fermé. Pour
+   permettre l'ajout ultérieur d'une langue nationale/locale sans nouvelle version applicative —
+   même principe que RG-XXIII-05 pour le paramétrage multilingue général — `VersionBiblique` (et
+   son pendant pour les cantiques, non encore modélisé au Cahier) doit être conçu dès le départ
+   comme un référentiel extensible en données (table paramétrable), jamais comme un enum Dart figé
+   dans le code. À vérifier explicitement au moment de l'architecture du Module XXIV.
+

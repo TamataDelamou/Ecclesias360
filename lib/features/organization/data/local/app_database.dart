@@ -98,6 +98,7 @@ const List<(String code, String libelle, String typeRegle, String? criteresJson)
 /// seedés au fil de la construction de leurs modules producteurs respectifs.
 const List<(String typeDocument, String modeleNumerotation)> nomenclaturesArchivageDeDepart = [
   ('proces_verbal_comite', 'PV-{noeud}-{annee}-{sequence}'),
+  ('lettre_recommandation', 'LR-{noeud}-{annee}-{sequence}'),
 ];
 
 /// Base Drift/SQLite unique, offline-first (RG-OFF-01), partagée par tous
@@ -141,13 +142,15 @@ const List<(String typeDocument, String modeleNumerotation)> nomenclaturesArchiv
   NomenclaturesArchivage,
   DocumentsArchive,
   VersionsDocument,
+  Mutations,
+  LettresRecommandation,
   SyncOutbox,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 11;
+  int get schemaVersion => 12;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -225,6 +228,13 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(nomenclaturesArchivage);
             await m.createTable(documentsArchive);
             await m.createTable(versionsDocument);
+            await _seedNomenclaturesArchivageDeDepart();
+          }
+          // v11 -> v12 : ajout du Module IX (Déplacements) + nomenclature
+          // de la lettre de recommandation (RG-IX-02).
+          if (from < 12) {
+            await m.createTable(mutations);
+            await m.createTable(lettresRecommandation);
             await _seedNomenclaturesArchivageDeDepart();
           }
         },
