@@ -205,6 +205,10 @@
   "@commonOui": {
     "description": "Valeur affichée pour un champ booléen vrai."
   },
+  "dashboardModulesTitre": "Modules",
+  "@dashboardModulesTitre": {
+    "description": "Titre de la section des tuiles de modules sur l'écran d'accueil."
+  },
   "fideleActionArchiver": "Archiver (RG-II-08)",
   "@fideleActionArchiver": {
     "description": "Bouton d'archivage d'un fidèle."
@@ -387,5 +391,41 @@
   "fidelesTitre": "Fidèles",
   "@fidelesTitre": {
     "description": "Titre de l'écran liste des fidèles."
+  },
+  "moduleDonsReferentiel": "Référentiel des dons spirituels",
+  "@moduleDonsReferentiel": {
+    "description": "Libellé de la tuile de module Référentiel des dons spirituels sur l'écran d'accueil."
+  },
+  "moduleGroupesEglise": "Groupes de l'Église",
+  "@moduleGroupesEglise": {
+    "description": "Libellé de la tuile de module Groupes de l'Église sur l'écran d'accueil."
+  },
+  "moduleMandatsEcheance": "Mandats arrivant à échéance",
+  "@moduleMandatsEcheance": {
+    "description": "Libellé de la tuile de module Mandats arrivant à échéance sur l'écran d'accueil."
+  },
+  "moduleOrganisation": "Organisation",
+  "@moduleOrganisation": {
+    "description": "Libellé de la tuile de module Organisation sur l'écran d'accueil."
+  },
+  "moduleProfessions": "Groupes professionnels",
+  "@moduleProfessions": {
+    "description": "Libellé de la tuile de module Groupes professionnels sur l'écran d'accueil."
+  },
+  "moduleRoles": "Rôles",
+  "@moduleRoles": {
+    "description": "Libellé de la tuile de module Rôles sur l'écran d'accueil."
+  },
+  "moduleZonesGeographiques": "Zones géographiques",
+  "@moduleZonesGeographiques": {
+    "description": "Libellé de la tuile de module Zones géographiques sur l'écran d'accueil."
+  },
+  "navAccueil": "Accueil",
+  "@navAccueil": {
+    "description": "Libellé de l'onglet Accueil dans la navigation principale (AppShell)."
+  },
+  "parametresTitre": "Paramètres",
+  "@parametresTitre": {
+    "description": "Titre de l'écran Paramètres."
   }
 }

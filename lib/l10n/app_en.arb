@@ -48,6 +48,7 @@
   "commonEnregistrer": "Save",
   "commonFidele": "Member",
   "commonOui": "yes",
+  "dashboardModulesTitre": "Modules",
   "fideleActionArchiver": "Archive (RG-II-08)",
   "fideleActionCompetences": "Professional skills",
   "fideleActionDons": "Spiritual gifts",
@@ -89,5 +90,14 @@
   "fidelesAucun": "No members registered yet.",
   "fidelesCreerAction": "Create a member",
   "fidelesRechercherIndice": "Search a member (last or first name)",
-  "fidelesTitre": "Members"
+  "fidelesTitre": "Members",
+  "moduleDonsReferentiel": "Spiritual gifts reference",
+  "moduleGroupesEglise": "Church groups",
+  "moduleMandatsEcheance": "Terms coming due",
+  "moduleOrganisation": "Organization",
+  "moduleProfessions": "Professional groups",
+  "moduleRoles": "Roles",
+  "moduleZonesGeographiques": "Geographic zones",
+  "navAccueil": "Home",
+  "parametresTitre": "Settings"
 }

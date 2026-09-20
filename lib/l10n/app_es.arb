@@ -48,6 +48,7 @@
   "commonEnregistrer": "Guardar",
   "commonFidele": "Feligrés",
   "commonOui": "sí",
+  "dashboardModulesTitre": "Módulos",
   "fideleActionArchiver": "Archivar (RG-II-08)",
   "fideleActionCompetences": "Competencias profesionales",
   "fideleActionDons": "Dones espirituales",
@@ -89,5 +90,14 @@
   "fidelesAucun": "Ningún feligrés registrado.",
   "fidelesCreerAction": "Crear un feligrés",
   "fidelesRechercherIndice": "Buscar un feligrés (apellido o nombres)",
-  "fidelesTitre": "Feligreses"
+  "fidelesTitre": "Feligreses",
+  "moduleDonsReferentiel": "Referencial de dones espirituales",
+  "moduleGroupesEglise": "Grupos de la Iglesia",
+  "moduleMandatsEcheance": "Mandatos por vencer",
+  "moduleOrganisation": "Organización",
+  "moduleProfessions": "Grupos profesionales",
+  "moduleRoles": "Roles",
+  "moduleZonesGeographiques": "Zonas geográficas",
+  "navAccueil": "Inicio",
+  "parametresTitre": "Configuración"
 }

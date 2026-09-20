@@ -153,6 +153,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get commonOui => 'sí';
 
   @override
+  String get dashboardModulesTitre => 'Módulos';
+
+  @override
   String get fideleActionArchiver => 'Archivar (RG-II-08)';
 
   @override
@@ -277,4 +280,31 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get fidelesTitre => 'Feligreses';
+
+  @override
+  String get moduleDonsReferentiel => 'Referencial de dones espirituales';
+
+  @override
+  String get moduleGroupesEglise => 'Grupos de la Iglesia';
+
+  @override
+  String get moduleMandatsEcheance => 'Mandatos por vencer';
+
+  @override
+  String get moduleOrganisation => 'Organización';
+
+  @override
+  String get moduleProfessions => 'Grupos profesionales';
+
+  @override
+  String get moduleRoles => 'Roles';
+
+  @override
+  String get moduleZonesGeographiques => 'Zonas geográficas';
+
+  @override
+  String get navAccueil => 'Inicio';
+
+  @override
+  String get parametresTitre => 'Configuración';
 }

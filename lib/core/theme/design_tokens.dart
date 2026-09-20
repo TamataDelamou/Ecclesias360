@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'app_dimensions.dart';
 import 'app_palettes.dart';
@@ -29,11 +30,21 @@ abstract final class DesignTokens {
       outline: palette.cardBorder,
     );
 
+    // Maquette (app_theme.dart) : thèmes sombres plats (bordure, pas d'ombre),
+    // thème clair (Lumière) avec une véritable élévation/ombre portée.
+    final estClair = palette.brightness == Brightness.light;
+    final baseTextTheme = estClair ? ThemeData.light().textTheme : ThemeData.dark().textTheme;
+    final texteAvecPolice = GoogleFonts.dmSansTextTheme(baseTextTheme).apply(
+      bodyColor: palette.textPrimary,
+      displayColor: palette.textPrimary,
+    );
+
     return ThemeData(
       useMaterial3: true,
       brightness: palette.brightness,
       colorScheme: colorScheme,
       scaffoldBackgroundColor: palette.background,
+      textTheme: texteAvecPolice,
       appBarTheme: AppBarTheme(
         backgroundColor: palette.backgroundSecondary,
         foregroundColor: palette.textPrimary,
@@ -41,10 +52,27 @@ abstract final class DesignTokens {
       ),
       cardTheme: CardThemeData(
         color: palette.cardBackground,
-        elevation: 0,
+        elevation: estClair ? 2 : 0,
+        shadowColor: estClair ? palette.cardBorder.withValues(alpha: 0.35) : null,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusLg),
           side: BorderSide(color: palette.cardBorder),
+        ),
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: palette.backgroundSecondary,
+        indicatorColor: palette.primary.withValues(alpha: 0.16),
+        labelTextStyle: WidgetStateProperty.resolveWith(
+          (states) => TextStyle(
+            fontSize: 12,
+            fontWeight: states.contains(WidgetState.selected) ? FontWeight.w600 : FontWeight.w400,
+            color: states.contains(WidgetState.selected) ? palette.primary : palette.textSecondary,
+          ),
+        ),
+        iconTheme: WidgetStateProperty.resolveWith(
+          (states) => IconThemeData(
+            color: states.contains(WidgetState.selected) ? palette.primary : palette.textSecondary,
+          ),
         ),
       ),
       extensions: [EcclesiasPaletteColors.fromPalette(palette)],

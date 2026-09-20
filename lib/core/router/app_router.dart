@@ -19,6 +19,7 @@ import '../../features/groupes_eglise/presentation/groupe_membres_screen.dart';
 import '../../features/groupes_eglise/presentation/groupe_regles_screen.dart';
 import '../../features/groupes_eglise/presentation/groupes_eglise_list_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
+import '../../features/parametres/presentation/parametres_screen.dart';
 import '../../features/ministeres/presentation/mandats_echeance_screen.dart';
 import '../../features/ministeres/presentation/ministere_detail_screen.dart';
 import '../../features/ministeres/presentation/ministere_form_screen.dart';
@@ -38,16 +39,30 @@ import '../../features/professions/presentation/profession_groupe_screen.dart';
 import '../../features/professions/presentation/professions_list_screen.dart';
 import '../../features/parametres/presentation/zones_geographiques_screen.dart';
 import '../constants/app_routes.dart';
+import '../widgets/app_shell.dart';
 
 final GoRouter appRouter = GoRouter(
   routes: [
-    GoRoute(
-      path: AppRoutes.home,
-      builder: (context, state) => const HomeScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.organisation,
-      builder: (context, state) => const HierarchyScreen(),
+    ShellRoute(
+      builder: (context, state, child) => AppShell(location: state.uri.path, child: child),
+      routes: [
+        GoRoute(
+          path: AppRoutes.home,
+          builder: (context, state) => const HomeScreen(),
+        ),
+        GoRoute(
+          path: AppRoutes.organisation,
+          builder: (context, state) => const HierarchyScreen(),
+        ),
+        GoRoute(
+          path: AppRoutes.fideles,
+          builder: (context, state) => const FideleListScreen(),
+        ),
+        GoRoute(
+          path: AppRoutes.parametres,
+          builder: (context, state) => const ParametresScreen(),
+        ),
+      ],
     ),
     GoRoute(
       path: AppRoutes.organisationNouveauNoeud,
@@ -72,10 +87,6 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/organisation/:id/responsables',
       builder: (context, state) => NodeResponsablesScreen(nodeId: state.pathParameters['id']!),
-    ),
-    GoRoute(
-      path: AppRoutes.fideles,
-      builder: (context, state) => const FideleListScreen(),
     ),
     GoRoute(
       path: AppRoutes.fidelesNouveau,

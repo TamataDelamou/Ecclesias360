@@ -48,6 +48,7 @@
   "commonEnregistrer": "Salvar",
   "commonFidele": "Membro",
   "commonOui": "sim",
+  "dashboardModulesTitre": "Módulos",
   "fideleActionArchiver": "Arquivar (RG-II-08)",
   "fideleActionCompetences": "Competências profissionais",
   "fideleActionDons": "Dons espirituais",
@@ -89,5 +90,14 @@
   "fidelesAucun": "Nenhum membro registrado.",
   "fidelesCreerAction": "Criar um membro",
   "fidelesRechercherIndice": "Buscar um membro (sobrenome ou nomes)",
-  "fidelesTitre": "Membros"
+  "fidelesTitre": "Membros",
+  "moduleDonsReferentiel": "Referencial de dons espirituais",
+  "moduleGroupesEglise": "Grupos da Igreja",
+  "moduleMandatsEcheance": "Mandatos a vencer",
+  "moduleOrganisation": "Organização",
+  "moduleProfessions": "Grupos profissionais",
+  "moduleRoles": "Papéis",
+  "moduleZonesGeographiques": "Zonas geográficas",
+  "navAccueil": "Início",
+  "parametresTitre": "Configurações"
 }

@@ -390,6 +390,12 @@ abstract class AppLocalizations {
   /// **'oui'**
   String get commonOui;
 
+  /// Titre de la section des tuiles de modules sur l'écran d'accueil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modules'**
+  String get dashboardModulesTitre;
+
   /// Bouton d'archivage d'un fidèle.
   ///
   /// In fr, this message translates to:
@@ -641,6 +647,60 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Fidèles'**
   String get fidelesTitre;
+
+  /// Libellé de la tuile de module Référentiel des dons spirituels sur l'écran d'accueil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Référentiel des dons spirituels'**
+  String get moduleDonsReferentiel;
+
+  /// Libellé de la tuile de module Groupes de l'Église sur l'écran d'accueil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Groupes de l'Église'**
+  String get moduleGroupesEglise;
+
+  /// Libellé de la tuile de module Mandats arrivant à échéance sur l'écran d'accueil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mandats arrivant à échéance'**
+  String get moduleMandatsEcheance;
+
+  /// Libellé de la tuile de module Organisation sur l'écran d'accueil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Organisation'**
+  String get moduleOrganisation;
+
+  /// Libellé de la tuile de module Groupes professionnels sur l'écran d'accueil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Groupes professionnels'**
+  String get moduleProfessions;
+
+  /// Libellé de la tuile de module Rôles sur l'écran d'accueil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rôles'**
+  String get moduleRoles;
+
+  /// Libellé de la tuile de module Zones géographiques sur l'écran d'accueil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Zones géographiques'**
+  String get moduleZonesGeographiques;
+
+  /// Libellé de l'onglet Accueil dans la navigation principale (AppShell).
+  ///
+  /// In fr, this message translates to:
+  /// **'Accueil'**
+  String get navAccueil;
+
+  /// Titre de l'écran Paramètres.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paramètres'**
+  String get parametresTitre;
 }
 
 class _AppLocalizationsDelegate
