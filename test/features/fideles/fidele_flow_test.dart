@@ -11,10 +11,25 @@ void main() {
       final database = AppDatabase(NativeDatabase.memory());
       addTearDown(database.close);
 
+      // Les écrans utilisent l10n.* : fige la locale pour que les libellés
+      // tapés dans ce test (français) correspondent, quelle que soit la
+      // locale système de la machine qui exécute les tests.
+      tester.platformDispatcher.localeTestValue = const Locale('fr');
+      tester.platformDispatcher.localesTestValue = const [Locale('fr')];
+      addTearDown(tester.platformDispatcher.clearLocaleTestValue);
+      addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+
       await tester.pumpWidget(EcclesiasApp(database: database));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Organisation'));
+      // « Organisation » et « Fidèles » apparaissent à la fois comme tuile du
+      // tableau de bord ; on cible spécifiquement la grille (`GridView`) pour
+      // éviter toute ambiguïté avec le libellé identique de la barre de navigation.
+      final navOrganisation =
+          find.descendant(of: find.byType(GridView), matching: find.text('Organisation'));
+      final navFideles = find.descendant(of: find.byType(GridView), matching: find.text('Fidèles'));
+
+      await tester.tap(navOrganisation);
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Icons.add));
       await tester.pumpAndSettle();
@@ -25,10 +40,10 @@ void main() {
 
       // La création du siège fait déjà un pop automatique vers l'arbre :
       // un seul retour suffit pour revenir à l'accueil.
-      await tester.pageBack();
+      await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Fidèles'));
+      await tester.tap(navFideles);
       await tester.pumpAndSettle();
 
       expect(find.text('Aucun fidèle enregistré.'), findsOneWidget);
