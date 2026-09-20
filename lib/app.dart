@@ -10,6 +10,8 @@ import 'features/comite/application/comite_controller.dart';
 import 'features/comite/data/comite_repository.dart';
 import 'features/cultes/application/culte_controller.dart';
 import 'features/cultes/data/culte_repository.dart';
+import 'features/deplacements/application/deplacement_controller.dart';
+import 'features/deplacements/data/deplacement_repository.dart';
 import 'features/dons_spirituels/application/don_spirituel_controller.dart';
 import 'features/dons_spirituels/data/don_spirituel_repository.dart';
 import 'features/fideles/application/fidele_controller.dart';
@@ -58,6 +60,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final ComiteController _comiteController;
   late final CulteRepository _culteRepository;
   late final CulteController _culteController;
+  late final DeplacementRepository _deplacementRepository;
+  late final DeplacementController _deplacementController;
 
   @override
   void initState() {
@@ -83,6 +87,12 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _comiteController = ComiteController(_comiteRepository);
     _culteRepository = CulteRepository(widget.database);
     _culteController = CulteController(_culteRepository);
+    _deplacementRepository = DeplacementRepository(
+      widget.database,
+      _fideleRepository,
+      archivageRepository: _archivageRepository,
+    );
+    _deplacementController = DeplacementController(_deplacementRepository);
   }
 
   @override
@@ -97,6 +107,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _groupeController.dispose();
     _comiteController.dispose();
     _culteController.dispose();
+    _deplacementController.dispose();
     super.dispose();
   }
 
@@ -114,6 +125,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
         ChangeNotifierProvider<ComiteController>.value(value: _comiteController),
         ChangeNotifierProvider<CulteController>.value(value: _culteController),
         ChangeNotifierProvider<ArchivageController>.value(value: _archivageController),
+        ChangeNotifierProvider<DeplacementController>.value(value: _deplacementController),
       ],
       child: MaterialApp.router(
         onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,

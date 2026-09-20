@@ -131,6 +131,12 @@ class FideleDetailScreen extends StatelessWidget {
             onPressed: () => context.push(AppRoutes.fideleGroupes(fidele.id)),
           ),
           const SizedBox(height: AppDimensions.spacingSm),
+          OutlinedButton.icon(
+            icon: const Icon(Icons.swap_horiz_outlined),
+            label: Text(l10n.deplacementsHistoriqueTitre),
+            onPressed: () => context.push(AppRoutes.mutationsDuFidele(fidele.id)),
+          ),
+          const SizedBox(height: AppDimensions.spacingSm),
           if (fidele.statut != StatutFidele.inactif)
             OutlinedButton.icon(
               icon: const Icon(Icons.archive_outlined),

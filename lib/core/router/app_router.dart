@@ -11,6 +11,8 @@ import '../../features/cultes/presentation/culte_detail_screen.dart';
 import '../../features/cultes/presentation/culte_form_screen.dart';
 import '../../features/cultes/presentation/cultes_list_screen.dart';
 import '../../features/cultes/presentation/propositions_theme_screen.dart';
+import '../../features/deplacements/presentation/mutation_detail_screen.dart';
+import '../../features/deplacements/presentation/mutations_list_screen.dart';
 import '../../features/dons_spirituels/presentation/don_evaluation_form_screen.dart';
 import '../../features/dons_spirituels/presentation/don_historique_screen.dart';
 import '../../features/dons_spirituels/presentation/don_ministeres_compatibles_screen.dart';
@@ -257,6 +259,27 @@ final GoRouter appRouter = GoRouter(
       pageBuilder: (context, state) => sharedAxisPage(
         key: state.pageKey,
         child: DocumentArchiveDetailScreen(documentId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/organisation/:id/mutations',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: MutationsListScreen(noeudId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/fideles/:id/mutations',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: MutationsListScreen(fideleId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/mutations/:id',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: MutationDetailScreen(mutationId: state.pathParameters['id']!),
       ),
     ),
   ],

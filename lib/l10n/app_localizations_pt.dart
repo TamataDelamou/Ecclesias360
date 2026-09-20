@@ -91,6 +91,78 @@ class AppLocalizationsPt extends AppLocalizations {
   String get archivageVersionsTitre => 'Histórico de versões';
 
   @override
+  String get deplacementsAucunDeplacement => 'Nenhuma mutação registrada.';
+
+  @override
+  String get deplacementsAucuneMutation => 'Nenhuma mutação.';
+
+  @override
+  String get deplacementsChampFidele => 'Membro';
+
+  @override
+  String get deplacementsChampMotif => 'Motivo';
+
+  @override
+  String get deplacementsChampMotifRefus => 'Motivo da recusa (opcional)';
+
+  @override
+  String get deplacementsChampNoeudDestination => 'Igreja de destino';
+
+  @override
+  String get deplacementsCoteDestinationLabel => 'Igreja de destino';
+
+  @override
+  String get deplacementsCoteOrigineLabel => 'Igreja de origem';
+
+  @override
+  String get deplacementsDateDemandeLabel => 'Solicitada em';
+
+  @override
+  String get deplacementsDateValidationLabel => 'Aprovada em';
+
+  @override
+  String get deplacementsDemanderTitre => 'Solicitar uma mutação';
+
+  @override
+  String get deplacementsDetailTitre => 'Mutação';
+
+  @override
+  String get deplacementsHistoriqueTitre => 'Histórico de mutações';
+
+  @override
+  String get deplacementsIntrouvable => 'Esta mutação não foi encontrada.';
+
+  @override
+  String get deplacementsMotifLabel => 'Motivo';
+
+  @override
+  String get deplacementsRefuserBouton => 'Recusar';
+
+  @override
+  String get deplacementsRefuserTitre => 'Recusar esta mutação?';
+
+  @override
+  String get deplacementsStatutEnAttente => 'Pendente';
+
+  @override
+  String get deplacementsStatutRefusee => 'Recusada';
+
+  @override
+  String get deplacementsStatutValidee => 'Aprovada';
+
+  @override
+  String get deplacementsTitre => 'Mutações';
+
+  @override
+  String get deplacementsValiderDestinationBouton => 'Aprovar (destino)';
+
+  @override
+  String get deplacementsValiderOrigineBouton => 'Aprovar (origem)';
+
+  @override
+  String get deplacementsVoirLettreBouton => 'Ver carta de recomendação';
+
+  @override
   String get comiteAjouterDecisionTitre => 'Adicionar uma decisão';
 
   @override

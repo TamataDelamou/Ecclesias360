@@ -111,6 +111,102 @@
   "@archivageVersionsTitre": {
     "description": "Titre de la section historique des versions d'un document archivé."
   },
+  "deplacementsAucunDeplacement": "Aucun déplacement enregistré.",
+  "@deplacementsAucunDeplacement": {
+    "description": "État vide de l'historique des déplacements d'un fidèle."
+  },
+  "deplacementsAucuneMutation": "Aucune mutation.",
+  "@deplacementsAucuneMutation": {
+    "description": "État vide de la liste des mutations d'un nœud."
+  },
+  "deplacementsChampFidele": "Fidèle",
+  "@deplacementsChampFidele": {
+    "description": "Libellé du champ fidèle lors de la demande de mutation."
+  },
+  "deplacementsChampMotif": "Motif",
+  "@deplacementsChampMotif": {
+    "description": "Libellé du champ motif lors de la demande de mutation."
+  },
+  "deplacementsChampMotifRefus": "Motif du refus (optionnel)",
+  "@deplacementsChampMotifRefus": {
+    "description": "Libellé du champ motif de refus d'une mutation."
+  },
+  "deplacementsChampNoeudDestination": "Église de destination",
+  "@deplacementsChampNoeudDestination": {
+    "description": "Libellé du champ nœud de destination lors de la demande de mutation."
+  },
+  "deplacementsCoteDestinationLabel": "Église de destination",
+  "@deplacementsCoteDestinationLabel": {
+    "description": "Libellé de la section église de destination d'une mutation."
+  },
+  "deplacementsCoteOrigineLabel": "Église d'origine",
+  "@deplacementsCoteOrigineLabel": {
+    "description": "Libellé de la section église d'origine d'une mutation."
+  },
+  "deplacementsDateDemandeLabel": "Demandée le",
+  "@deplacementsDateDemandeLabel": {
+    "description": "Libellé de la date de demande d'une mutation."
+  },
+  "deplacementsDateValidationLabel": "Validée le",
+  "@deplacementsDateValidationLabel": {
+    "description": "Libellé de la date de validation d'une mutation."
+  },
+  "deplacementsDemanderTitre": "Demander une mutation",
+  "@deplacementsDemanderTitre": {
+    "description": "Titre de la boîte de dialogue de demande de mutation."
+  },
+  "deplacementsDetailTitre": "Mutation",
+  "@deplacementsDetailTitre": {
+    "description": "Titre de l'écran de détail d'une mutation."
+  },
+  "deplacementsHistoriqueTitre": "Historique des déplacements",
+  "@deplacementsHistoriqueTitre": {
+    "description": "Titre de l'écran historique des déplacements d'un fidèle."
+  },
+  "deplacementsIntrouvable": "Cette mutation est introuvable.",
+  "@deplacementsIntrouvable": {
+    "description": "Message affiché quand la mutation demandée n'existe pas."
+  },
+  "deplacementsMotifLabel": "Motif",
+  "@deplacementsMotifLabel": {
+    "description": "Libellé affichant le motif d'une mutation."
+  },
+  "deplacementsRefuserBouton": "Refuser",
+  "@deplacementsRefuserBouton": {
+    "description": "Bouton de refus d'une mutation."
+  },
+  "deplacementsRefuserTitre": "Refuser cette mutation ?",
+  "@deplacementsRefuserTitre": {
+    "description": "Titre de la boîte de dialogue de refus d'une mutation."
+  },
+  "deplacementsStatutEnAttente": "En attente",
+  "@deplacementsStatutEnAttente": {
+    "description": "Libellé du statut de mutation en attente."
+  },
+  "deplacementsStatutRefusee": "Refusée",
+  "@deplacementsStatutRefusee": {
+    "description": "Libellé du statut de mutation refusée."
+  },
+  "deplacementsStatutValidee": "Validée",
+  "@deplacementsStatutValidee": {
+    "description": "Libellé du statut de mutation validée."
+  },
+  "deplacementsTitre": "Mutations",
+  "@deplacementsTitre": {
+    "description": "Titre de l'écran liste des mutations d'un nœud."
+  },
+  "deplacementsValiderDestinationBouton": "Valider (destination)",
+  "@deplacementsValiderDestinationBouton": {
+    "description": "Bouton de validation pastorale côté destination."
+  },
+  "deplacementsValiderOrigineBouton": "Valider (origine)",
+  "@deplacementsValiderOrigineBouton": {
+    "description": "Bouton de validation pastorale côté origine."
+  },
+  "deplacementsVoirLettreBouton": "Voir la lettre de recommandation",
+  "@deplacementsVoirLettreBouton": {
+    "description": "Bouton d'accès à la lettre de recommandation archivée d'une mutation validée."
+  },
   "comiteAjouterDecisionTitre": "Ajouter une décision",
   "@comiteAjouterDecisionTitre": {
     "description": "Titre de la boîte de dialogue d'ajout d'une décision."

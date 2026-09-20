@@ -111,6 +111,12 @@ class NodeDetailScreen extends StatelessWidget {
           ),
           const SizedBox(height: AppDimensions.spacingSm),
           OutlinedButton.icon(
+            icon: const Icon(Icons.swap_horiz_outlined),
+            label: Text(l10n.deplacementsTitre),
+            onPressed: () => context.push(AppRoutes.mutationsDuNoeud(noeud.id)),
+          ),
+          const SizedBox(height: AppDimensions.spacingSm),
+          OutlinedButton.icon(
             icon: const Icon(Icons.add),
             label: const Text('Ajouter un nœud enfant'),
             onPressed: () => context.push(AppRoutes.organisationNouveauSousNoeud(noeud.id)),

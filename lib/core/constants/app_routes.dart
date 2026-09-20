@@ -61,4 +61,8 @@ abstract final class AppRoutes {
   static String documentsArchive(String noeudId) => '/organisation/$noeudId/documents';
   static String documentsCorbeille(String noeudId) => '/organisation/$noeudId/documents/corbeille';
   static String documentArchive(String id) => '/documents/$id';
+
+  static String mutationsDuNoeud(String noeudId) => '/organisation/$noeudId/mutations';
+  static String mutationsDuFidele(String fideleId) => '/fideles/$fideleId/mutations';
+  static String mutation(String id) => '/mutations/$id';
 }

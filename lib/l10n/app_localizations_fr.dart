@@ -91,6 +91,78 @@ class AppLocalizationsFr extends AppLocalizations {
   String get archivageVersionsTitre => 'Historique des versions';
 
   @override
+  String get deplacementsAucunDeplacement => 'Aucun déplacement enregistré.';
+
+  @override
+  String get deplacementsAucuneMutation => 'Aucune mutation.';
+
+  @override
+  String get deplacementsChampFidele => 'Fidèle';
+
+  @override
+  String get deplacementsChampMotif => 'Motif';
+
+  @override
+  String get deplacementsChampMotifRefus => 'Motif du refus (optionnel)';
+
+  @override
+  String get deplacementsChampNoeudDestination => 'Église de destination';
+
+  @override
+  String get deplacementsCoteDestinationLabel => 'Église de destination';
+
+  @override
+  String get deplacementsCoteOrigineLabel => 'Église d\'origine';
+
+  @override
+  String get deplacementsDateDemandeLabel => 'Demandée le';
+
+  @override
+  String get deplacementsDateValidationLabel => 'Validée le';
+
+  @override
+  String get deplacementsDemanderTitre => 'Demander une mutation';
+
+  @override
+  String get deplacementsDetailTitre => 'Mutation';
+
+  @override
+  String get deplacementsHistoriqueTitre => 'Historique des déplacements';
+
+  @override
+  String get deplacementsIntrouvable => 'Cette mutation est introuvable.';
+
+  @override
+  String get deplacementsMotifLabel => 'Motif';
+
+  @override
+  String get deplacementsRefuserBouton => 'Refuser';
+
+  @override
+  String get deplacementsRefuserTitre => 'Refuser cette mutation ?';
+
+  @override
+  String get deplacementsStatutEnAttente => 'En attente';
+
+  @override
+  String get deplacementsStatutRefusee => 'Refusée';
+
+  @override
+  String get deplacementsStatutValidee => 'Validée';
+
+  @override
+  String get deplacementsTitre => 'Mutations';
+
+  @override
+  String get deplacementsValiderDestinationBouton => 'Valider (destination)';
+
+  @override
+  String get deplacementsValiderOrigineBouton => 'Valider (origine)';
+
+  @override
+  String get deplacementsVoirLettreBouton => 'Voir la lettre de recommandation';
+
+  @override
   String get comiteAjouterDecisionTitre => 'Ajouter une décision';
 
   @override

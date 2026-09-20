@@ -246,6 +246,150 @@ abstract class AppLocalizations {
   /// **'Historique des versions'**
   String get archivageVersionsTitre;
 
+  /// État vide de l'historique des déplacements d'un fidèle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun déplacement enregistré.'**
+  String get deplacementsAucunDeplacement;
+
+  /// État vide de la liste des mutations d'un nœud.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune mutation.'**
+  String get deplacementsAucuneMutation;
+
+  /// Libellé du champ fidèle lors de la demande de mutation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fidèle'**
+  String get deplacementsChampFidele;
+
+  /// Libellé du champ motif lors de la demande de mutation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Motif'**
+  String get deplacementsChampMotif;
+
+  /// Libellé du champ motif de refus d'une mutation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Motif du refus (optionnel)'**
+  String get deplacementsChampMotifRefus;
+
+  /// Libellé du champ nœud de destination lors de la demande de mutation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Église de destination'**
+  String get deplacementsChampNoeudDestination;
+
+  /// Libellé de la section église de destination d'une mutation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Église de destination'**
+  String get deplacementsCoteDestinationLabel;
+
+  /// Libellé de la section église d'origine d'une mutation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Église d\'origine'**
+  String get deplacementsCoteOrigineLabel;
+
+  /// Libellé de la date de demande d'une mutation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demandée le'**
+  String get deplacementsDateDemandeLabel;
+
+  /// Libellé de la date de validation d'une mutation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Validée le'**
+  String get deplacementsDateValidationLabel;
+
+  /// Titre de la boîte de dialogue de demande de mutation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demander une mutation'**
+  String get deplacementsDemanderTitre;
+
+  /// Titre de l'écran de détail d'une mutation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mutation'**
+  String get deplacementsDetailTitre;
+
+  /// Titre de l'écran historique des déplacements d'un fidèle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique des déplacements'**
+  String get deplacementsHistoriqueTitre;
+
+  /// Message affiché quand la mutation demandée n'existe pas.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette mutation est introuvable.'**
+  String get deplacementsIntrouvable;
+
+  /// Libellé affichant le motif d'une mutation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Motif'**
+  String get deplacementsMotifLabel;
+
+  /// Bouton de refus d'une mutation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refuser'**
+  String get deplacementsRefuserBouton;
+
+  /// Titre de la boîte de dialogue de refus d'une mutation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refuser cette mutation ?'**
+  String get deplacementsRefuserTitre;
+
+  /// Libellé du statut de mutation en attente.
+  ///
+  /// In fr, this message translates to:
+  /// **'En attente'**
+  String get deplacementsStatutEnAttente;
+
+  /// Libellé du statut de mutation refusée.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refusée'**
+  String get deplacementsStatutRefusee;
+
+  /// Libellé du statut de mutation validée.
+  ///
+  /// In fr, this message translates to:
+  /// **'Validée'**
+  String get deplacementsStatutValidee;
+
+  /// Titre de l'écran liste des mutations d'un nœud.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mutations'**
+  String get deplacementsTitre;
+
+  /// Bouton de validation pastorale côté destination.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider (destination)'**
+  String get deplacementsValiderDestinationBouton;
+
+  /// Bouton de validation pastorale côté origine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider (origine)'**
+  String get deplacementsValiderOrigineBouton;
+
+  /// Bouton d'accès à la lettre de recommandation archivée d'une mutation validée.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir la lettre de recommandation'**
+  String get deplacementsVoirLettreBouton;
+
   /// Titre de la boîte de dialogue d'ajout d'une décision.
   ///
   /// In fr, this message translates to:

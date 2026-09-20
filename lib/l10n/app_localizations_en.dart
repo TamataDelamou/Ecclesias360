@@ -90,6 +90,78 @@ class AppLocalizationsEn extends AppLocalizations {
   String get archivageVersionsTitre => 'Version history';
 
   @override
+  String get deplacementsAucunDeplacement => 'No mutation recorded.';
+
+  @override
+  String get deplacementsAucuneMutation => 'No mutations.';
+
+  @override
+  String get deplacementsChampFidele => 'Member';
+
+  @override
+  String get deplacementsChampMotif => 'Reason';
+
+  @override
+  String get deplacementsChampMotifRefus => 'Reason for rejection (optional)';
+
+  @override
+  String get deplacementsChampNoeudDestination => 'Destination church';
+
+  @override
+  String get deplacementsCoteDestinationLabel => 'Destination church';
+
+  @override
+  String get deplacementsCoteOrigineLabel => 'Origin church';
+
+  @override
+  String get deplacementsDateDemandeLabel => 'Requested on';
+
+  @override
+  String get deplacementsDateValidationLabel => 'Approved on';
+
+  @override
+  String get deplacementsDemanderTitre => 'Request a mutation';
+
+  @override
+  String get deplacementsDetailTitre => 'Mutation';
+
+  @override
+  String get deplacementsHistoriqueTitre => 'Mutation history';
+
+  @override
+  String get deplacementsIntrouvable => 'This mutation could not be found.';
+
+  @override
+  String get deplacementsMotifLabel => 'Reason';
+
+  @override
+  String get deplacementsRefuserBouton => 'Reject';
+
+  @override
+  String get deplacementsRefuserTitre => 'Reject this mutation?';
+
+  @override
+  String get deplacementsStatutEnAttente => 'Pending';
+
+  @override
+  String get deplacementsStatutRefusee => 'Rejected';
+
+  @override
+  String get deplacementsStatutValidee => 'Approved';
+
+  @override
+  String get deplacementsTitre => 'Mutations';
+
+  @override
+  String get deplacementsValiderDestinationBouton => 'Approve (destination)';
+
+  @override
+  String get deplacementsValiderOrigineBouton => 'Approve (origin)';
+
+  @override
+  String get deplacementsVoirLettreBouton => 'View recommendation letter';
+
+  @override
   String get comiteAjouterDecisionTitre => 'Add a decision';
 
   @override

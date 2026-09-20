@@ -149,10 +149,13 @@ class DeplacementRepository {
     return _findByIdOrThrow(mutationId);
   }
 
-  Stream<List<Mutation>> watchMutations({String? noeudId, StatutMutation? statut}) {
+  Stream<List<Mutation>> watchMutations({String? noeudId, String? fideleId, StatutMutation? statut}) {
     final query = _db.select(_db.mutations);
     if (noeudId != null) {
       query.where((t) => t.noeudOrigineId.equals(noeudId) | t.noeudDestinationId.equals(noeudId));
+    }
+    if (fideleId != null) {
+      query.where((t) => t.fideleId.equals(fideleId));
     }
     if (statut != null) {
       query.where((t) => t.statut.equals(statut.code));
