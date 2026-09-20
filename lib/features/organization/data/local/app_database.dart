@@ -92,6 +92,14 @@ const List<(String code, String libelle, String typeRegle, String? criteresJson)
   ('diacres', 'Diacres', 'manuel', null),
 ];
 
+/// RG-VIII-01 — nomenclature de départ : un seul type de document producteur
+/// existe déjà (le procès-verbal de comité, Module VII). Les autres types
+/// (certificats, lettres de mutation, décisions disciplinaires...) seront
+/// seedés au fil de la construction de leurs modules producteurs respectifs.
+const List<(String typeDocument, String modeleNumerotation)> nomenclaturesArchivageDeDepart = [
+  ('proces_verbal_comite', 'PV-{noeud}-{annee}-{sequence}'),
+];
+
 /// Base Drift/SQLite unique, offline-first (RG-OFF-01), partagée par tous
 /// les modules (voir AGENTS.md §4).
 @DriftDatabase(tables: [
@@ -130,13 +138,16 @@ const List<(String code, String libelle, String typeRegle, String? criteresJson)
   PublicationsCulte,
   PropositionsTheme,
   VotesProposition,
+  NomenclaturesArchivage,
+  DocumentsArchive,
+  VersionsDocument,
   SyncOutbox,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 10;
+  int get schemaVersion => 11;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -209,6 +220,13 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(propositionsTheme);
             await m.createTable(votesProposition);
           }
+          // v10 -> v11 : ajout du Module VIII (Archivage documentaire).
+          if (from < 11) {
+            await m.createTable(nomenclaturesArchivage);
+            await m.createTable(documentsArchive);
+            await m.createTable(versionsDocument);
+            await _seedNomenclaturesArchivageDeDepart();
+          }
         },
         beforeOpen: (details) async {
           // SQLite n'applique pas les contraintes de clé étrangère par
@@ -220,6 +238,7 @@ class AppDatabase extends _$AppDatabase {
             await _seedDonsSpirituelsStandards();
             await _seedProfessionsDeDepart();
             await _seedGroupesEgliseDeDepart();
+            await _seedNomenclaturesArchivageDeDepart();
           }
         },
       );
@@ -290,6 +309,23 @@ class AppDatabase extends _$AppDatabase {
               libelle: libelle,
               typeRegle: typeRegle,
               criteresJson: Value(criteresJson),
+            ),
+        ],
+        mode: InsertMode.insertOrIgnore,
+      );
+    });
+  }
+
+  Future<void> _seedNomenclaturesArchivageDeDepart() async {
+    await batch((b) {
+      b.insertAll(
+        nomenclaturesArchivage,
+        [
+          for (final (typeDocument, modeleNumerotation) in nomenclaturesArchivageDeDepart)
+            NomenclaturesArchivageCompanion.insert(
+              id: IdGenerator.newId(),
+              typeDocument: typeDocument,
+              modeleNumerotation: modeleNumerotation,
             ),
         ],
         mode: InsertMode.insertOrIgnore,

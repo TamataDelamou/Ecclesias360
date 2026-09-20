@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'core/router/app_router.dart';
 import 'core/sync/sync_coordinator.dart';
 import 'core/theme/design_tokens.dart';
+import 'features/archivage/data/archivage_repository.dart';
 import 'features/comite/application/comite_controller.dart';
 import 'features/comite/data/comite_repository.dart';
 import 'features/cultes/application/culte_controller.dart';
@@ -50,6 +51,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final ProfessionController _professionController;
   late final GroupeRepository _groupeRepository;
   late final GroupeController _groupeController;
+  late final ArchivageRepository _archivageRepository;
   late final ComiteRepository _comiteRepository;
   late final ComiteController _comiteController;
   late final CulteRepository _culteRepository;
@@ -73,7 +75,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _professionController = ProfessionController(_professionRepository);
     _groupeRepository = GroupeRepository(widget.database);
     _groupeController = GroupeController(_groupeRepository);
-    _comiteRepository = ComiteRepository(widget.database);
+    _archivageRepository = ArchivageRepository(widget.database);
+    _comiteRepository = ComiteRepository(widget.database, archivageRepository: _archivageRepository);
     _comiteController = ComiteController(_comiteRepository);
     _culteRepository = CulteRepository(widget.database);
     _culteController = CulteController(_culteRepository);

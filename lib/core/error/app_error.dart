@@ -79,6 +79,16 @@ class AppError implements Exception {
         "Ce culte utilise l'autre mode de présence : les deux modes sont mutuellement exclusifs.",
       );
 
+  factory AppError.nomenclatureArchivageIntrouvable() => const AppError(
+        'nomenclature_archivage_introuvable',
+        "Aucune nomenclature de numérotation n'est configurée pour ce type de document.",
+      );
+
+  factory AppError.documentArchiveNonPurgeable() => const AppError(
+        'document_archive_non_purgeable',
+        "Ce document ne peut pas être purgé : le délai de corbeille n'est pas écoulé (ou le document n'est pas en corbeille).",
+      );
+
   @override
   String toString() => 'AppError($code): $message';
 }

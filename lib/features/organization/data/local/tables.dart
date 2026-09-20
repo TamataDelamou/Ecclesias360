@@ -568,6 +568,66 @@ class VotesProposition extends Table {
   List<String> get customConstraints => ['UNIQUE (proposition_id, fidele_id)'];
 }
 
+/// Table Drift NomenclatureArchivage (Module VIII, RG-VIII-01) — modèle de
+/// numérotation paramétrable par type de document, un type par ligne.
+@DataClassName('NomenclatureArchivageRow')
+class NomenclaturesArchivage extends Table {
+  TextColumn get id => text()();
+  TextColumn get typeDocument => text()();
+  TextColumn get modeleNumerotation => text()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (type_document)'];
+}
+
+/// Table Drift DocumentArchive (Module VIII, RG-VIII-01/02/03/04/05) —
+/// greffe transversale : `moduleOrigine`/`objetIdOrigine` pointent vers
+/// l'objet métier producteur, sans FK (les modules producteurs sont
+/// hétérogènes et certains n'existent pas encore).
+@DataClassName('DocumentArchiveRow')
+class DocumentsArchive extends Table {
+  TextColumn get id => text()();
+  TextColumn get numeroArchive => text()();
+  TextColumn get typeDocument => text()();
+  TextColumn get moduleOrigine => text()();
+  TextColumn get objetIdOrigine => text()();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  TextColumn get niveauConfidentialite => text().withDefault(const Constant('standard'))();
+  TextColumn get statut => text().withDefault(const Constant('actif'))();
+  TextColumn get fichier => text()();
+  DateTimeColumn get dateArchivage => dateTime()();
+  DateTimeColumn get dateMiseCorbeille => dateTime().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (numero_archive)'];
+}
+
+/// Table Drift VersionDocument (Module VIII, RG-VIII-02) — historique complet
+/// des versions ; la version 1 correspond au fichier fourni à l'archivage
+/// initial et reste accessible indéfiniment.
+@DataClassName('VersionDocumentRow')
+class VersionsDocument extends Table {
+  TextColumn get id => text()();
+  TextColumn get documentId => text().references(DocumentsArchive, #id)();
+  IntColumn get numeroVersion => integer()();
+  TextColumn get fichier => text()();
+  DateTimeColumn get date => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (document_id, numero_version)'];
+}
+
 /// File d'attente hors ligne (RG-OFF-02) : chaque écriture locale enregistre
 /// ici l'événement à rejouer vers Supabase dès qu'une connexion est
 /// disponible, dans l'ordre chronologique, jamais purgée avant confirmation

@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 
 import '../../../core/utils/id_generator.dart';
+import '../../archivage/data/archivage_repository.dart';
 import '../../organization/data/local/app_database.dart';
 import '../domain/models/decision.dart';
 import '../domain/models/erratum_pv.dart';
@@ -17,9 +18,15 @@ import '../domain/rules/comite_rules.dart';
 /// distante pour cette première itération, même précédent documenté que
 /// ZonesGeographiques/Ministere/DonSpirituel/Profession/GroupeEglise.
 class ComiteRepository {
-  ComiteRepository(this._db);
+  ComiteRepository(this._db, {ArchivageRepository? archivageRepository}) : _archivage = archivageRepository;
 
   final AppDatabase _db;
+
+  /// RG-VII-03 — dépôt d'archivage optionnel (Module VIII) : quand fourni,
+  /// `validerProcesVerbal` archive automatiquement le PV et renseigne
+  /// `documentArchiveId`. Absent (paramètre omis), le comportement reste
+  /// celui d'avant Module VIII : `documentArchiveId` reste `null`.
+  final ArchivageRepository? _archivage;
 
   // --- Quorum (RG-VII-05) --------------------------------------------------
 
@@ -206,11 +213,27 @@ class ComiteRepository {
   }
 
   /// RG-VII-02 — après validation, le contenu devient immuable (voir
-  /// `ajouterErratum`). RG-VII-03 — l'archivage automatique (Module VIII)
-  /// et la numérotation restent différés, non construits.
+  /// `ajouterErratum`). RG-VII-03 — si un `ArchivageRepository` est fourni,
+  /// le PV est archivé automatiquement (Module VIII, RG-VIII-01) et
+  /// `documentArchiveId` renseigné.
   Future<void> validerProcesVerbal(String id) async {
     await (_db.update(_db.procesVerbaux)..where((t) => t.id.equals(id)))
         .write(ProcesVerbauxCompanion(statut: Value(StatutProcesVerbal.valide.code)));
+
+    final archivage = _archivage;
+    if (archivage != null) {
+      final pv = await (_db.select(_db.procesVerbaux)..where((t) => t.id.equals(id))).getSingle();
+      final seance = await (_db.select(_db.seancesComite)..where((t) => t.id.equals(pv.seanceId))).getSingle();
+      final document = await archivage.archiver(
+        typeDocument: 'proces_verbal_comite',
+        moduleOrigine: 'comite',
+        objetIdOrigine: id,
+        noeudId: seance.noeudId,
+        fichier: pv.contenu,
+      );
+      await (_db.update(_db.procesVerbaux)..where((t) => t.id.equals(id)))
+          .write(ProcesVerbauxCompanion(documentArchiveId: Value(document.id)));
+    }
   }
 
   Stream<List<ErratumPv>> watchErratums(String procesVerbalId) {

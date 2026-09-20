@@ -1,5 +1,6 @@
 import 'package:drift/native.dart';
 import 'package:ecclesias_360/core/error/app_error.dart';
+import 'package:ecclesias_360/features/archivage/data/archivage_repository.dart';
 import 'package:ecclesias_360/features/comite/data/comite_repository.dart';
 import 'package:ecclesias_360/features/comite/domain/models/statut_decision.dart';
 import 'package:ecclesias_360/features/comite/domain/models/statut_proces_verbal.dart';
@@ -217,6 +218,48 @@ void main() {
 
       final pvRelu = await repository.watchProcesVerbal(seance.id).first;
       expect(pvRelu!.contenu, 'Version 1');
+    });
+  });
+
+  group('archivage automatique du PV (RG-VII-03, Module VIII)', () {
+    test('sans ArchivageRepository fourni, documentArchiveId reste null', () async {
+      final seance = await repository.creerSeance(
+        noeudId: noeudId,
+        date: DateTime.now(),
+        ordreDuJour: 'Budget',
+        presentsFideleIds: const [],
+      );
+      final pv = await repository.enregistrerBrouillon(seanceId: seance.id, contenu: 'Version 1');
+      await repository.validerProcesVerbal(pv.id);
+
+      final relu = await repository.watchProcesVerbal(seance.id).first;
+      expect(relu!.documentArchiveId, isNull);
+    });
+
+    test('avec ArchivageRepository fourni, le PV validé est archivé et documentArchiveId renseigné', () async {
+      final archivage = ArchivageRepository(db);
+      final repositoryAvecArchivage = ComiteRepository(db, archivageRepository: archivage);
+
+      final seance = await repositoryAvecArchivage.creerSeance(
+        noeudId: noeudId,
+        date: DateTime.now(),
+        ordreDuJour: 'Budget',
+        presentsFideleIds: const [],
+      );
+      final pv = await repositoryAvecArchivage.enregistrerBrouillon(seanceId: seance.id, contenu: 'Contenu du PV');
+      await repositoryAvecArchivage.validerProcesVerbal(pv.id);
+
+      final relu = await repositoryAvecArchivage.watchProcesVerbal(seance.id).first;
+      expect(relu!.documentArchiveId, isNotNull);
+
+      final document = await archivage.findById(relu.documentArchiveId!);
+      expect(document, isNotNull);
+      expect(document!.typeDocument, 'proces_verbal_comite');
+      expect(document.moduleOrigine, 'comite');
+      expect(document.objetIdOrigine, pv.id);
+      expect(document.fichier, 'Contenu du PV');
+      final annee = DateTime.now().year;
+      expect(document.numeroArchive, 'PV-GSG-$annee-0001');
     });
   });
 

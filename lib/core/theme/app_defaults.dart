@@ -6,4 +6,12 @@ abstract final class AppDefaults {
   /// cette valeur ; auparavant écrite deux fois (`MinistereRules` et
   /// `MinistereController`), désormais centralisée ici.
   static const int mandatEcheanceHorizonJours = 30;
+
+  /// RG-VIII-01 — largeur (nombre de chiffres) de la séquence dans un numéro
+  /// d'archive généré (ex. 0007). Le Cahier n'impose pas cette valeur.
+  static const int archivageSequencePadding = 4;
+
+  /// RG-VIII-05 — délai par défaut (en jours) avant qu'un document mis en
+  /// corbeille devienne purgeable. Le Cahier n'impose pas cette valeur.
+  static const int archivageDelaiPurgeJoursParDefaut = 365;
 }

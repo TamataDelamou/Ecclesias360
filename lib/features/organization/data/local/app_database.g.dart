@@ -15128,6 +15128,1458 @@ class VotesPropositionCompanion extends UpdateCompanion<VotePropositionRow> {
   }
 }
 
+class $NomenclaturesArchivageTable extends NomenclaturesArchivage
+    with TableInfo<$NomenclaturesArchivageTable, NomenclatureArchivageRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NomenclaturesArchivageTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _typeDocumentMeta = const VerificationMeta(
+    'typeDocument',
+  );
+  @override
+  late final GeneratedColumn<String> typeDocument = GeneratedColumn<String>(
+    'type_document',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _modeleNumerotationMeta =
+      const VerificationMeta('modeleNumerotation');
+  @override
+  late final GeneratedColumn<String> modeleNumerotation =
+      GeneratedColumn<String>(
+        'modele_numerotation',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [id, typeDocument, modeleNumerotation];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'nomenclatures_archivage';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<NomenclatureArchivageRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('type_document')) {
+      context.handle(
+        _typeDocumentMeta,
+        typeDocument.isAcceptableOrUnknown(
+          data['type_document']!,
+          _typeDocumentMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_typeDocumentMeta);
+    }
+    if (data.containsKey('modele_numerotation')) {
+      context.handle(
+        _modeleNumerotationMeta,
+        modeleNumerotation.isAcceptableOrUnknown(
+          data['modele_numerotation']!,
+          _modeleNumerotationMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_modeleNumerotationMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  NomenclatureArchivageRow map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NomenclatureArchivageRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      typeDocument: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type_document'],
+      )!,
+      modeleNumerotation: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}modele_numerotation'],
+      )!,
+    );
+  }
+
+  @override
+  $NomenclaturesArchivageTable createAlias(String alias) {
+    return $NomenclaturesArchivageTable(attachedDatabase, alias);
+  }
+}
+
+class NomenclatureArchivageRow extends DataClass
+    implements Insertable<NomenclatureArchivageRow> {
+  final String id;
+  final String typeDocument;
+  final String modeleNumerotation;
+  const NomenclatureArchivageRow({
+    required this.id,
+    required this.typeDocument,
+    required this.modeleNumerotation,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['type_document'] = Variable<String>(typeDocument);
+    map['modele_numerotation'] = Variable<String>(modeleNumerotation);
+    return map;
+  }
+
+  NomenclaturesArchivageCompanion toCompanion(bool nullToAbsent) {
+    return NomenclaturesArchivageCompanion(
+      id: Value(id),
+      typeDocument: Value(typeDocument),
+      modeleNumerotation: Value(modeleNumerotation),
+    );
+  }
+
+  factory NomenclatureArchivageRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return NomenclatureArchivageRow(
+      id: serializer.fromJson<String>(json['id']),
+      typeDocument: serializer.fromJson<String>(json['typeDocument']),
+      modeleNumerotation: serializer.fromJson<String>(
+        json['modeleNumerotation'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'typeDocument': serializer.toJson<String>(typeDocument),
+      'modeleNumerotation': serializer.toJson<String>(modeleNumerotation),
+    };
+  }
+
+  NomenclatureArchivageRow copyWith({
+    String? id,
+    String? typeDocument,
+    String? modeleNumerotation,
+  }) => NomenclatureArchivageRow(
+    id: id ?? this.id,
+    typeDocument: typeDocument ?? this.typeDocument,
+    modeleNumerotation: modeleNumerotation ?? this.modeleNumerotation,
+  );
+  NomenclatureArchivageRow copyWithCompanion(
+    NomenclaturesArchivageCompanion data,
+  ) {
+    return NomenclatureArchivageRow(
+      id: data.id.present ? data.id.value : this.id,
+      typeDocument: data.typeDocument.present
+          ? data.typeDocument.value
+          : this.typeDocument,
+      modeleNumerotation: data.modeleNumerotation.present
+          ? data.modeleNumerotation.value
+          : this.modeleNumerotation,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NomenclatureArchivageRow(')
+          ..write('id: $id, ')
+          ..write('typeDocument: $typeDocument, ')
+          ..write('modeleNumerotation: $modeleNumerotation')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, typeDocument, modeleNumerotation);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is NomenclatureArchivageRow &&
+          other.id == this.id &&
+          other.typeDocument == this.typeDocument &&
+          other.modeleNumerotation == this.modeleNumerotation);
+}
+
+class NomenclaturesArchivageCompanion
+    extends UpdateCompanion<NomenclatureArchivageRow> {
+  final Value<String> id;
+  final Value<String> typeDocument;
+  final Value<String> modeleNumerotation;
+  final Value<int> rowid;
+  const NomenclaturesArchivageCompanion({
+    this.id = const Value.absent(),
+    this.typeDocument = const Value.absent(),
+    this.modeleNumerotation = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  NomenclaturesArchivageCompanion.insert({
+    required String id,
+    required String typeDocument,
+    required String modeleNumerotation,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       typeDocument = Value(typeDocument),
+       modeleNumerotation = Value(modeleNumerotation);
+  static Insertable<NomenclatureArchivageRow> custom({
+    Expression<String>? id,
+    Expression<String>? typeDocument,
+    Expression<String>? modeleNumerotation,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (typeDocument != null) 'type_document': typeDocument,
+      if (modeleNumerotation != null) 'modele_numerotation': modeleNumerotation,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  NomenclaturesArchivageCompanion copyWith({
+    Value<String>? id,
+    Value<String>? typeDocument,
+    Value<String>? modeleNumerotation,
+    Value<int>? rowid,
+  }) {
+    return NomenclaturesArchivageCompanion(
+      id: id ?? this.id,
+      typeDocument: typeDocument ?? this.typeDocument,
+      modeleNumerotation: modeleNumerotation ?? this.modeleNumerotation,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (typeDocument.present) {
+      map['type_document'] = Variable<String>(typeDocument.value);
+    }
+    if (modeleNumerotation.present) {
+      map['modele_numerotation'] = Variable<String>(modeleNumerotation.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NomenclaturesArchivageCompanion(')
+          ..write('id: $id, ')
+          ..write('typeDocument: $typeDocument, ')
+          ..write('modeleNumerotation: $modeleNumerotation, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $DocumentsArchiveTable extends DocumentsArchive
+    with TableInfo<$DocumentsArchiveTable, DocumentArchiveRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DocumentsArchiveTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _numeroArchiveMeta = const VerificationMeta(
+    'numeroArchive',
+  );
+  @override
+  late final GeneratedColumn<String> numeroArchive = GeneratedColumn<String>(
+    'numero_archive',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _typeDocumentMeta = const VerificationMeta(
+    'typeDocument',
+  );
+  @override
+  late final GeneratedColumn<String> typeDocument = GeneratedColumn<String>(
+    'type_document',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _moduleOrigineMeta = const VerificationMeta(
+    'moduleOrigine',
+  );
+  @override
+  late final GeneratedColumn<String> moduleOrigine = GeneratedColumn<String>(
+    'module_origine',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _objetIdOrigineMeta = const VerificationMeta(
+    'objetIdOrigine',
+  );
+  @override
+  late final GeneratedColumn<String> objetIdOrigine = GeneratedColumn<String>(
+    'objet_id_origine',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _noeudIdMeta = const VerificationMeta(
+    'noeudId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudId = GeneratedColumn<String>(
+    'noeud_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _niveauConfidentialiteMeta =
+      const VerificationMeta('niveauConfidentialite');
+  @override
+  late final GeneratedColumn<String> niveauConfidentialite =
+      GeneratedColumn<String>(
+        'niveau_confidentialite',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultValue: const Constant('standard'),
+      );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('actif'),
+  );
+  static const VerificationMeta _fichierMeta = const VerificationMeta(
+    'fichier',
+  );
+  @override
+  late final GeneratedColumn<String> fichier = GeneratedColumn<String>(
+    'fichier',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateArchivageMeta = const VerificationMeta(
+    'dateArchivage',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateArchivage =
+      GeneratedColumn<DateTime>(
+        'date_archivage',
+        aliasedName,
+        false,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _dateMiseCorbeilleMeta = const VerificationMeta(
+    'dateMiseCorbeille',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateMiseCorbeille =
+      GeneratedColumn<DateTime>(
+        'date_mise_corbeille',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    numeroArchive,
+    typeDocument,
+    moduleOrigine,
+    objetIdOrigine,
+    noeudId,
+    niveauConfidentialite,
+    statut,
+    fichier,
+    dateArchivage,
+    dateMiseCorbeille,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'documents_archive';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DocumentArchiveRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('numero_archive')) {
+      context.handle(
+        _numeroArchiveMeta,
+        numeroArchive.isAcceptableOrUnknown(
+          data['numero_archive']!,
+          _numeroArchiveMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_numeroArchiveMeta);
+    }
+    if (data.containsKey('type_document')) {
+      context.handle(
+        _typeDocumentMeta,
+        typeDocument.isAcceptableOrUnknown(
+          data['type_document']!,
+          _typeDocumentMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_typeDocumentMeta);
+    }
+    if (data.containsKey('module_origine')) {
+      context.handle(
+        _moduleOrigineMeta,
+        moduleOrigine.isAcceptableOrUnknown(
+          data['module_origine']!,
+          _moduleOrigineMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_moduleOrigineMeta);
+    }
+    if (data.containsKey('objet_id_origine')) {
+      context.handle(
+        _objetIdOrigineMeta,
+        objetIdOrigine.isAcceptableOrUnknown(
+          data['objet_id_origine']!,
+          _objetIdOrigineMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_objetIdOrigineMeta);
+    }
+    if (data.containsKey('noeud_id')) {
+      context.handle(
+        _noeudIdMeta,
+        noeudId.isAcceptableOrUnknown(data['noeud_id']!, _noeudIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudIdMeta);
+    }
+    if (data.containsKey('niveau_confidentialite')) {
+      context.handle(
+        _niveauConfidentialiteMeta,
+        niveauConfidentialite.isAcceptableOrUnknown(
+          data['niveau_confidentialite']!,
+          _niveauConfidentialiteMeta,
+        ),
+      );
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    if (data.containsKey('fichier')) {
+      context.handle(
+        _fichierMeta,
+        fichier.isAcceptableOrUnknown(data['fichier']!, _fichierMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fichierMeta);
+    }
+    if (data.containsKey('date_archivage')) {
+      context.handle(
+        _dateArchivageMeta,
+        dateArchivage.isAcceptableOrUnknown(
+          data['date_archivage']!,
+          _dateArchivageMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_dateArchivageMeta);
+    }
+    if (data.containsKey('date_mise_corbeille')) {
+      context.handle(
+        _dateMiseCorbeilleMeta,
+        dateMiseCorbeille.isAcceptableOrUnknown(
+          data['date_mise_corbeille']!,
+          _dateMiseCorbeilleMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  DocumentArchiveRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DocumentArchiveRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      numeroArchive: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}numero_archive'],
+      )!,
+      typeDocument: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type_document'],
+      )!,
+      moduleOrigine: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}module_origine'],
+      )!,
+      objetIdOrigine: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}objet_id_origine'],
+      )!,
+      noeudId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_id'],
+      )!,
+      niveauConfidentialite: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}niveau_confidentialite'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+      fichier: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fichier'],
+      )!,
+      dateArchivage: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_archivage'],
+      )!,
+      dateMiseCorbeille: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_mise_corbeille'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $DocumentsArchiveTable createAlias(String alias) {
+    return $DocumentsArchiveTable(attachedDatabase, alias);
+  }
+}
+
+class DocumentArchiveRow extends DataClass
+    implements Insertable<DocumentArchiveRow> {
+  final String id;
+  final String numeroArchive;
+  final String typeDocument;
+  final String moduleOrigine;
+  final String objetIdOrigine;
+  final String noeudId;
+  final String niveauConfidentialite;
+  final String statut;
+  final String fichier;
+  final DateTime dateArchivage;
+  final DateTime? dateMiseCorbeille;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const DocumentArchiveRow({
+    required this.id,
+    required this.numeroArchive,
+    required this.typeDocument,
+    required this.moduleOrigine,
+    required this.objetIdOrigine,
+    required this.noeudId,
+    required this.niveauConfidentialite,
+    required this.statut,
+    required this.fichier,
+    required this.dateArchivage,
+    this.dateMiseCorbeille,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['numero_archive'] = Variable<String>(numeroArchive);
+    map['type_document'] = Variable<String>(typeDocument);
+    map['module_origine'] = Variable<String>(moduleOrigine);
+    map['objet_id_origine'] = Variable<String>(objetIdOrigine);
+    map['noeud_id'] = Variable<String>(noeudId);
+    map['niveau_confidentialite'] = Variable<String>(niveauConfidentialite);
+    map['statut'] = Variable<String>(statut);
+    map['fichier'] = Variable<String>(fichier);
+    map['date_archivage'] = Variable<DateTime>(dateArchivage);
+    if (!nullToAbsent || dateMiseCorbeille != null) {
+      map['date_mise_corbeille'] = Variable<DateTime>(dateMiseCorbeille);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  DocumentsArchiveCompanion toCompanion(bool nullToAbsent) {
+    return DocumentsArchiveCompanion(
+      id: Value(id),
+      numeroArchive: Value(numeroArchive),
+      typeDocument: Value(typeDocument),
+      moduleOrigine: Value(moduleOrigine),
+      objetIdOrigine: Value(objetIdOrigine),
+      noeudId: Value(noeudId),
+      niveauConfidentialite: Value(niveauConfidentialite),
+      statut: Value(statut),
+      fichier: Value(fichier),
+      dateArchivage: Value(dateArchivage),
+      dateMiseCorbeille: dateMiseCorbeille == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dateMiseCorbeille),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory DocumentArchiveRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DocumentArchiveRow(
+      id: serializer.fromJson<String>(json['id']),
+      numeroArchive: serializer.fromJson<String>(json['numeroArchive']),
+      typeDocument: serializer.fromJson<String>(json['typeDocument']),
+      moduleOrigine: serializer.fromJson<String>(json['moduleOrigine']),
+      objetIdOrigine: serializer.fromJson<String>(json['objetIdOrigine']),
+      noeudId: serializer.fromJson<String>(json['noeudId']),
+      niveauConfidentialite: serializer.fromJson<String>(
+        json['niveauConfidentialite'],
+      ),
+      statut: serializer.fromJson<String>(json['statut']),
+      fichier: serializer.fromJson<String>(json['fichier']),
+      dateArchivage: serializer.fromJson<DateTime>(json['dateArchivage']),
+      dateMiseCorbeille: serializer.fromJson<DateTime?>(
+        json['dateMiseCorbeille'],
+      ),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'numeroArchive': serializer.toJson<String>(numeroArchive),
+      'typeDocument': serializer.toJson<String>(typeDocument),
+      'moduleOrigine': serializer.toJson<String>(moduleOrigine),
+      'objetIdOrigine': serializer.toJson<String>(objetIdOrigine),
+      'noeudId': serializer.toJson<String>(noeudId),
+      'niveauConfidentialite': serializer.toJson<String>(niveauConfidentialite),
+      'statut': serializer.toJson<String>(statut),
+      'fichier': serializer.toJson<String>(fichier),
+      'dateArchivage': serializer.toJson<DateTime>(dateArchivage),
+      'dateMiseCorbeille': serializer.toJson<DateTime?>(dateMiseCorbeille),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  DocumentArchiveRow copyWith({
+    String? id,
+    String? numeroArchive,
+    String? typeDocument,
+    String? moduleOrigine,
+    String? objetIdOrigine,
+    String? noeudId,
+    String? niveauConfidentialite,
+    String? statut,
+    String? fichier,
+    DateTime? dateArchivage,
+    Value<DateTime?> dateMiseCorbeille = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => DocumentArchiveRow(
+    id: id ?? this.id,
+    numeroArchive: numeroArchive ?? this.numeroArchive,
+    typeDocument: typeDocument ?? this.typeDocument,
+    moduleOrigine: moduleOrigine ?? this.moduleOrigine,
+    objetIdOrigine: objetIdOrigine ?? this.objetIdOrigine,
+    noeudId: noeudId ?? this.noeudId,
+    niveauConfidentialite: niveauConfidentialite ?? this.niveauConfidentialite,
+    statut: statut ?? this.statut,
+    fichier: fichier ?? this.fichier,
+    dateArchivage: dateArchivage ?? this.dateArchivage,
+    dateMiseCorbeille: dateMiseCorbeille.present
+        ? dateMiseCorbeille.value
+        : this.dateMiseCorbeille,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  DocumentArchiveRow copyWithCompanion(DocumentsArchiveCompanion data) {
+    return DocumentArchiveRow(
+      id: data.id.present ? data.id.value : this.id,
+      numeroArchive: data.numeroArchive.present
+          ? data.numeroArchive.value
+          : this.numeroArchive,
+      typeDocument: data.typeDocument.present
+          ? data.typeDocument.value
+          : this.typeDocument,
+      moduleOrigine: data.moduleOrigine.present
+          ? data.moduleOrigine.value
+          : this.moduleOrigine,
+      objetIdOrigine: data.objetIdOrigine.present
+          ? data.objetIdOrigine.value
+          : this.objetIdOrigine,
+      noeudId: data.noeudId.present ? data.noeudId.value : this.noeudId,
+      niveauConfidentialite: data.niveauConfidentialite.present
+          ? data.niveauConfidentialite.value
+          : this.niveauConfidentialite,
+      statut: data.statut.present ? data.statut.value : this.statut,
+      fichier: data.fichier.present ? data.fichier.value : this.fichier,
+      dateArchivage: data.dateArchivage.present
+          ? data.dateArchivage.value
+          : this.dateArchivage,
+      dateMiseCorbeille: data.dateMiseCorbeille.present
+          ? data.dateMiseCorbeille.value
+          : this.dateMiseCorbeille,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DocumentArchiveRow(')
+          ..write('id: $id, ')
+          ..write('numeroArchive: $numeroArchive, ')
+          ..write('typeDocument: $typeDocument, ')
+          ..write('moduleOrigine: $moduleOrigine, ')
+          ..write('objetIdOrigine: $objetIdOrigine, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('niveauConfidentialite: $niveauConfidentialite, ')
+          ..write('statut: $statut, ')
+          ..write('fichier: $fichier, ')
+          ..write('dateArchivage: $dateArchivage, ')
+          ..write('dateMiseCorbeille: $dateMiseCorbeille, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    numeroArchive,
+    typeDocument,
+    moduleOrigine,
+    objetIdOrigine,
+    noeudId,
+    niveauConfidentialite,
+    statut,
+    fichier,
+    dateArchivage,
+    dateMiseCorbeille,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DocumentArchiveRow &&
+          other.id == this.id &&
+          other.numeroArchive == this.numeroArchive &&
+          other.typeDocument == this.typeDocument &&
+          other.moduleOrigine == this.moduleOrigine &&
+          other.objetIdOrigine == this.objetIdOrigine &&
+          other.noeudId == this.noeudId &&
+          other.niveauConfidentialite == this.niveauConfidentialite &&
+          other.statut == this.statut &&
+          other.fichier == this.fichier &&
+          other.dateArchivage == this.dateArchivage &&
+          other.dateMiseCorbeille == this.dateMiseCorbeille &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class DocumentsArchiveCompanion extends UpdateCompanion<DocumentArchiveRow> {
+  final Value<String> id;
+  final Value<String> numeroArchive;
+  final Value<String> typeDocument;
+  final Value<String> moduleOrigine;
+  final Value<String> objetIdOrigine;
+  final Value<String> noeudId;
+  final Value<String> niveauConfidentialite;
+  final Value<String> statut;
+  final Value<String> fichier;
+  final Value<DateTime> dateArchivage;
+  final Value<DateTime?> dateMiseCorbeille;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const DocumentsArchiveCompanion({
+    this.id = const Value.absent(),
+    this.numeroArchive = const Value.absent(),
+    this.typeDocument = const Value.absent(),
+    this.moduleOrigine = const Value.absent(),
+    this.objetIdOrigine = const Value.absent(),
+    this.noeudId = const Value.absent(),
+    this.niveauConfidentialite = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.fichier = const Value.absent(),
+    this.dateArchivage = const Value.absent(),
+    this.dateMiseCorbeille = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DocumentsArchiveCompanion.insert({
+    required String id,
+    required String numeroArchive,
+    required String typeDocument,
+    required String moduleOrigine,
+    required String objetIdOrigine,
+    required String noeudId,
+    this.niveauConfidentialite = const Value.absent(),
+    this.statut = const Value.absent(),
+    required String fichier,
+    required DateTime dateArchivage,
+    this.dateMiseCorbeille = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       numeroArchive = Value(numeroArchive),
+       typeDocument = Value(typeDocument),
+       moduleOrigine = Value(moduleOrigine),
+       objetIdOrigine = Value(objetIdOrigine),
+       noeudId = Value(noeudId),
+       fichier = Value(fichier),
+       dateArchivage = Value(dateArchivage),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<DocumentArchiveRow> custom({
+    Expression<String>? id,
+    Expression<String>? numeroArchive,
+    Expression<String>? typeDocument,
+    Expression<String>? moduleOrigine,
+    Expression<String>? objetIdOrigine,
+    Expression<String>? noeudId,
+    Expression<String>? niveauConfidentialite,
+    Expression<String>? statut,
+    Expression<String>? fichier,
+    Expression<DateTime>? dateArchivage,
+    Expression<DateTime>? dateMiseCorbeille,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (numeroArchive != null) 'numero_archive': numeroArchive,
+      if (typeDocument != null) 'type_document': typeDocument,
+      if (moduleOrigine != null) 'module_origine': moduleOrigine,
+      if (objetIdOrigine != null) 'objet_id_origine': objetIdOrigine,
+      if (noeudId != null) 'noeud_id': noeudId,
+      if (niveauConfidentialite != null)
+        'niveau_confidentialite': niveauConfidentialite,
+      if (statut != null) 'statut': statut,
+      if (fichier != null) 'fichier': fichier,
+      if (dateArchivage != null) 'date_archivage': dateArchivage,
+      if (dateMiseCorbeille != null) 'date_mise_corbeille': dateMiseCorbeille,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DocumentsArchiveCompanion copyWith({
+    Value<String>? id,
+    Value<String>? numeroArchive,
+    Value<String>? typeDocument,
+    Value<String>? moduleOrigine,
+    Value<String>? objetIdOrigine,
+    Value<String>? noeudId,
+    Value<String>? niveauConfidentialite,
+    Value<String>? statut,
+    Value<String>? fichier,
+    Value<DateTime>? dateArchivage,
+    Value<DateTime?>? dateMiseCorbeille,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return DocumentsArchiveCompanion(
+      id: id ?? this.id,
+      numeroArchive: numeroArchive ?? this.numeroArchive,
+      typeDocument: typeDocument ?? this.typeDocument,
+      moduleOrigine: moduleOrigine ?? this.moduleOrigine,
+      objetIdOrigine: objetIdOrigine ?? this.objetIdOrigine,
+      noeudId: noeudId ?? this.noeudId,
+      niveauConfidentialite:
+          niveauConfidentialite ?? this.niveauConfidentialite,
+      statut: statut ?? this.statut,
+      fichier: fichier ?? this.fichier,
+      dateArchivage: dateArchivage ?? this.dateArchivage,
+      dateMiseCorbeille: dateMiseCorbeille ?? this.dateMiseCorbeille,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (numeroArchive.present) {
+      map['numero_archive'] = Variable<String>(numeroArchive.value);
+    }
+    if (typeDocument.present) {
+      map['type_document'] = Variable<String>(typeDocument.value);
+    }
+    if (moduleOrigine.present) {
+      map['module_origine'] = Variable<String>(moduleOrigine.value);
+    }
+    if (objetIdOrigine.present) {
+      map['objet_id_origine'] = Variable<String>(objetIdOrigine.value);
+    }
+    if (noeudId.present) {
+      map['noeud_id'] = Variable<String>(noeudId.value);
+    }
+    if (niveauConfidentialite.present) {
+      map['niveau_confidentialite'] = Variable<String>(
+        niveauConfidentialite.value,
+      );
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (fichier.present) {
+      map['fichier'] = Variable<String>(fichier.value);
+    }
+    if (dateArchivage.present) {
+      map['date_archivage'] = Variable<DateTime>(dateArchivage.value);
+    }
+    if (dateMiseCorbeille.present) {
+      map['date_mise_corbeille'] = Variable<DateTime>(dateMiseCorbeille.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DocumentsArchiveCompanion(')
+          ..write('id: $id, ')
+          ..write('numeroArchive: $numeroArchive, ')
+          ..write('typeDocument: $typeDocument, ')
+          ..write('moduleOrigine: $moduleOrigine, ')
+          ..write('objetIdOrigine: $objetIdOrigine, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('niveauConfidentialite: $niveauConfidentialite, ')
+          ..write('statut: $statut, ')
+          ..write('fichier: $fichier, ')
+          ..write('dateArchivage: $dateArchivage, ')
+          ..write('dateMiseCorbeille: $dateMiseCorbeille, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $VersionsDocumentTable extends VersionsDocument
+    with TableInfo<$VersionsDocumentTable, VersionDocumentRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VersionsDocumentTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _documentIdMeta = const VerificationMeta(
+    'documentId',
+  );
+  @override
+  late final GeneratedColumn<String> documentId = GeneratedColumn<String>(
+    'document_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES documents_archive (id)',
+    ),
+  );
+  static const VerificationMeta _numeroVersionMeta = const VerificationMeta(
+    'numeroVersion',
+  );
+  @override
+  late final GeneratedColumn<int> numeroVersion = GeneratedColumn<int>(
+    'numero_version',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fichierMeta = const VerificationMeta(
+    'fichier',
+  );
+  @override
+  late final GeneratedColumn<String> fichier = GeneratedColumn<String>(
+    'fichier',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    documentId,
+    numeroVersion,
+    fichier,
+    date,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'versions_document';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<VersionDocumentRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('document_id')) {
+      context.handle(
+        _documentIdMeta,
+        documentId.isAcceptableOrUnknown(data['document_id']!, _documentIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_documentIdMeta);
+    }
+    if (data.containsKey('numero_version')) {
+      context.handle(
+        _numeroVersionMeta,
+        numeroVersion.isAcceptableOrUnknown(
+          data['numero_version']!,
+          _numeroVersionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_numeroVersionMeta);
+    }
+    if (data.containsKey('fichier')) {
+      context.handle(
+        _fichierMeta,
+        fichier.isAcceptableOrUnknown(data['fichier']!, _fichierMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fichierMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  VersionDocumentRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VersionDocumentRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      documentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}document_id'],
+      )!,
+      numeroVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}numero_version'],
+      )!,
+      fichier: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fichier'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date'],
+      )!,
+    );
+  }
+
+  @override
+  $VersionsDocumentTable createAlias(String alias) {
+    return $VersionsDocumentTable(attachedDatabase, alias);
+  }
+}
+
+class VersionDocumentRow extends DataClass
+    implements Insertable<VersionDocumentRow> {
+  final String id;
+  final String documentId;
+  final int numeroVersion;
+  final String fichier;
+  final DateTime date;
+  const VersionDocumentRow({
+    required this.id,
+    required this.documentId,
+    required this.numeroVersion,
+    required this.fichier,
+    required this.date,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['document_id'] = Variable<String>(documentId);
+    map['numero_version'] = Variable<int>(numeroVersion);
+    map['fichier'] = Variable<String>(fichier);
+    map['date'] = Variable<DateTime>(date);
+    return map;
+  }
+
+  VersionsDocumentCompanion toCompanion(bool nullToAbsent) {
+    return VersionsDocumentCompanion(
+      id: Value(id),
+      documentId: Value(documentId),
+      numeroVersion: Value(numeroVersion),
+      fichier: Value(fichier),
+      date: Value(date),
+    );
+  }
+
+  factory VersionDocumentRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VersionDocumentRow(
+      id: serializer.fromJson<String>(json['id']),
+      documentId: serializer.fromJson<String>(json['documentId']),
+      numeroVersion: serializer.fromJson<int>(json['numeroVersion']),
+      fichier: serializer.fromJson<String>(json['fichier']),
+      date: serializer.fromJson<DateTime>(json['date']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'documentId': serializer.toJson<String>(documentId),
+      'numeroVersion': serializer.toJson<int>(numeroVersion),
+      'fichier': serializer.toJson<String>(fichier),
+      'date': serializer.toJson<DateTime>(date),
+    };
+  }
+
+  VersionDocumentRow copyWith({
+    String? id,
+    String? documentId,
+    int? numeroVersion,
+    String? fichier,
+    DateTime? date,
+  }) => VersionDocumentRow(
+    id: id ?? this.id,
+    documentId: documentId ?? this.documentId,
+    numeroVersion: numeroVersion ?? this.numeroVersion,
+    fichier: fichier ?? this.fichier,
+    date: date ?? this.date,
+  );
+  VersionDocumentRow copyWithCompanion(VersionsDocumentCompanion data) {
+    return VersionDocumentRow(
+      id: data.id.present ? data.id.value : this.id,
+      documentId: data.documentId.present
+          ? data.documentId.value
+          : this.documentId,
+      numeroVersion: data.numeroVersion.present
+          ? data.numeroVersion.value
+          : this.numeroVersion,
+      fichier: data.fichier.present ? data.fichier.value : this.fichier,
+      date: data.date.present ? data.date.value : this.date,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VersionDocumentRow(')
+          ..write('id: $id, ')
+          ..write('documentId: $documentId, ')
+          ..write('numeroVersion: $numeroVersion, ')
+          ..write('fichier: $fichier, ')
+          ..write('date: $date')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, documentId, numeroVersion, fichier, date);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VersionDocumentRow &&
+          other.id == this.id &&
+          other.documentId == this.documentId &&
+          other.numeroVersion == this.numeroVersion &&
+          other.fichier == this.fichier &&
+          other.date == this.date);
+}
+
+class VersionsDocumentCompanion extends UpdateCompanion<VersionDocumentRow> {
+  final Value<String> id;
+  final Value<String> documentId;
+  final Value<int> numeroVersion;
+  final Value<String> fichier;
+  final Value<DateTime> date;
+  final Value<int> rowid;
+  const VersionsDocumentCompanion({
+    this.id = const Value.absent(),
+    this.documentId = const Value.absent(),
+    this.numeroVersion = const Value.absent(),
+    this.fichier = const Value.absent(),
+    this.date = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  VersionsDocumentCompanion.insert({
+    required String id,
+    required String documentId,
+    required int numeroVersion,
+    required String fichier,
+    required DateTime date,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       documentId = Value(documentId),
+       numeroVersion = Value(numeroVersion),
+       fichier = Value(fichier),
+       date = Value(date);
+  static Insertable<VersionDocumentRow> custom({
+    Expression<String>? id,
+    Expression<String>? documentId,
+    Expression<int>? numeroVersion,
+    Expression<String>? fichier,
+    Expression<DateTime>? date,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (documentId != null) 'document_id': documentId,
+      if (numeroVersion != null) 'numero_version': numeroVersion,
+      if (fichier != null) 'fichier': fichier,
+      if (date != null) 'date': date,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  VersionsDocumentCompanion copyWith({
+    Value<String>? id,
+    Value<String>? documentId,
+    Value<int>? numeroVersion,
+    Value<String>? fichier,
+    Value<DateTime>? date,
+    Value<int>? rowid,
+  }) {
+    return VersionsDocumentCompanion(
+      id: id ?? this.id,
+      documentId: documentId ?? this.documentId,
+      numeroVersion: numeroVersion ?? this.numeroVersion,
+      fichier: fichier ?? this.fichier,
+      date: date ?? this.date,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (documentId.present) {
+      map['document_id'] = Variable<String>(documentId.value);
+    }
+    if (numeroVersion.present) {
+      map['numero_version'] = Variable<int>(numeroVersion.value);
+    }
+    if (fichier.present) {
+      map['fichier'] = Variable<String>(fichier.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VersionsDocumentCompanion(')
+          ..write('id: $id, ')
+          ..write('documentId: $documentId, ')
+          ..write('numeroVersion: $numeroVersion, ')
+          ..write('fichier: $fichier, ')
+          ..write('date: $date, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxRow> {
   @override
@@ -15714,6 +17166,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $VotesPropositionTable votesProposition = $VotesPropositionTable(
     this,
   );
+  late final $NomenclaturesArchivageTable nomenclaturesArchivage =
+      $NomenclaturesArchivageTable(this);
+  late final $DocumentsArchiveTable documentsArchive = $DocumentsArchiveTable(
+    this,
+  );
+  late final $VersionsDocumentTable versionsDocument = $VersionsDocumentTable(
+    this,
+  );
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -15755,6 +17215,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     publicationsCulte,
     propositionsTheme,
     votesProposition,
+    nomenclaturesArchivage,
+    documentsArchive,
+    versionsDocument,
     syncOutbox,
   ];
 }
@@ -15936,6 +17399,26 @@ final class $$OrganisationNodesTableReferences
     ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_cultesRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$DocumentsArchiveTable, List<DocumentArchiveRow>>
+  _documentsArchiveRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.documentsArchive,
+    aliasName: 'organisation_nodes__id__documents_archive__noeud_id',
+  );
+
+  $$DocumentsArchiveTableProcessedTableManager get documentsArchiveRefs {
+    final manager = $$DocumentsArchiveTableTableManager(
+      $_db,
+      $_db.documentsArchive,
+    ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _documentsArchiveRefsTable($_db),
+    );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -16192,6 +17675,31 @@ class $$OrganisationNodesTableFilterComposer
           }) => $$CultesTableFilterComposer(
             $db: $db,
             $table: $db.cultes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> documentsArchiveRefs(
+    Expression<bool> Function($$DocumentsArchiveTableFilterComposer f) f,
+  ) {
+    final $$DocumentsArchiveTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.documentsArchive,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DocumentsArchiveTableFilterComposer(
+            $db: $db,
+            $table: $db.documentsArchive,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -16523,6 +18031,31 @@ class $$OrganisationNodesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> documentsArchiveRefs<T extends Object>(
+    Expression<T> Function($$DocumentsArchiveTableAnnotationComposer a) f,
+  ) {
+    final $$DocumentsArchiveTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.documentsArchive,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DocumentsArchiveTableAnnotationComposer(
+            $db: $db,
+            $table: $db.documentsArchive,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$OrganisationNodesTableTableManager
@@ -16546,6 +18079,7 @@ class $$OrganisationNodesTableTableManager
             bool membresComiteRefs,
             bool seancesComiteRefs,
             bool cultesRefs,
+            bool documentsArchiveRefs,
           })
         > {
   $$OrganisationNodesTableTableManager(
@@ -16655,6 +18189,7 @@ class $$OrganisationNodesTableTableManager
                 membresComiteRefs = false,
                 seancesComiteRefs = false,
                 cultesRefs = false,
+                documentsArchiveRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -16666,6 +18201,7 @@ class $$OrganisationNodesTableTableManager
                     if (membresComiteRefs) db.membresComite,
                     if (seancesComiteRefs) db.seancesComite,
                     if (cultesRefs) db.cultes,
+                    if (documentsArchiveRefs) db.documentsArchive,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -16817,6 +18353,27 @@ class $$OrganisationNodesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (documentsArchiveRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          DocumentArchiveRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._documentsArchiveRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).documentsArchiveRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -16845,6 +18402,7 @@ typedef $$OrganisationNodesTableProcessedTableManager =
         bool membresComiteRefs,
         bool seancesComiteRefs,
         bool cultesRefs,
+        bool documentsArchiveRefs,
       })
     >;
 typedef $$HistoriqueRattachementsTableCreateCompanionBuilder =
@@ -33880,6 +35438,1133 @@ typedef $$VotesPropositionTableProcessedTableManager =
       VotePropositionRow,
       PrefetchHooks Function({bool propositionId, bool fideleId})
     >;
+typedef $$NomenclaturesArchivageTableCreateCompanionBuilder =
+    NomenclaturesArchivageCompanion Function({
+      required String id,
+      required String typeDocument,
+      required String modeleNumerotation,
+      Value<int> rowid,
+    });
+typedef $$NomenclaturesArchivageTableUpdateCompanionBuilder =
+    NomenclaturesArchivageCompanion Function({
+      Value<String> id,
+      Value<String> typeDocument,
+      Value<String> modeleNumerotation,
+      Value<int> rowid,
+    });
+
+class $$NomenclaturesArchivageTableFilterComposer
+    extends Composer<_$AppDatabase, $NomenclaturesArchivageTable> {
+  $$NomenclaturesArchivageTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get typeDocument => $composableBuilder(
+    column: $table.typeDocument,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get modeleNumerotation => $composableBuilder(
+    column: $table.modeleNumerotation,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$NomenclaturesArchivageTableOrderingComposer
+    extends Composer<_$AppDatabase, $NomenclaturesArchivageTable> {
+  $$NomenclaturesArchivageTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get typeDocument => $composableBuilder(
+    column: $table.typeDocument,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get modeleNumerotation => $composableBuilder(
+    column: $table.modeleNumerotation,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$NomenclaturesArchivageTableAnnotationComposer
+    extends Composer<_$AppDatabase, $NomenclaturesArchivageTable> {
+  $$NomenclaturesArchivageTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get typeDocument => $composableBuilder(
+    column: $table.typeDocument,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get modeleNumerotation => $composableBuilder(
+    column: $table.modeleNumerotation,
+    builder: (column) => column,
+  );
+}
+
+class $$NomenclaturesArchivageTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $NomenclaturesArchivageTable,
+          NomenclatureArchivageRow,
+          $$NomenclaturesArchivageTableFilterComposer,
+          $$NomenclaturesArchivageTableOrderingComposer,
+          $$NomenclaturesArchivageTableAnnotationComposer,
+          $$NomenclaturesArchivageTableCreateCompanionBuilder,
+          $$NomenclaturesArchivageTableUpdateCompanionBuilder,
+          (
+            NomenclatureArchivageRow,
+            BaseReferences<
+              _$AppDatabase,
+              $NomenclaturesArchivageTable,
+              NomenclatureArchivageRow
+            >,
+          ),
+          NomenclatureArchivageRow,
+          PrefetchHooks Function()
+        > {
+  $$NomenclaturesArchivageTableTableManager(
+    _$AppDatabase db,
+    $NomenclaturesArchivageTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$NomenclaturesArchivageTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$NomenclaturesArchivageTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$NomenclaturesArchivageTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> typeDocument = const Value.absent(),
+                Value<String> modeleNumerotation = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => NomenclaturesArchivageCompanion(
+                id: id,
+                typeDocument: typeDocument,
+                modeleNumerotation: modeleNumerotation,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String typeDocument,
+                required String modeleNumerotation,
+                Value<int> rowid = const Value.absent(),
+              }) => NomenclaturesArchivageCompanion.insert(
+                id: id,
+                typeDocument: typeDocument,
+                modeleNumerotation: modeleNumerotation,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $NomenclaturesArchivageTable,
+                    NomenclatureArchivageRow
+                  >(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $NomenclaturesArchivageTable,
+                    NomenclatureArchivageRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$NomenclaturesArchivageTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $NomenclaturesArchivageTable,
+      NomenclatureArchivageRow,
+      $$NomenclaturesArchivageTableFilterComposer,
+      $$NomenclaturesArchivageTableOrderingComposer,
+      $$NomenclaturesArchivageTableAnnotationComposer,
+      $$NomenclaturesArchivageTableCreateCompanionBuilder,
+      $$NomenclaturesArchivageTableUpdateCompanionBuilder,
+      (
+        NomenclatureArchivageRow,
+        BaseReferences<
+          _$AppDatabase,
+          $NomenclaturesArchivageTable,
+          NomenclatureArchivageRow
+        >,
+      ),
+      NomenclatureArchivageRow,
+      PrefetchHooks Function()
+    >;
+typedef $$DocumentsArchiveTableCreateCompanionBuilder =
+    DocumentsArchiveCompanion Function({
+      required String id,
+      required String numeroArchive,
+      required String typeDocument,
+      required String moduleOrigine,
+      required String objetIdOrigine,
+      required String noeudId,
+      Value<String> niveauConfidentialite,
+      Value<String> statut,
+      required String fichier,
+      required DateTime dateArchivage,
+      Value<DateTime?> dateMiseCorbeille,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$DocumentsArchiveTableUpdateCompanionBuilder =
+    DocumentsArchiveCompanion Function({
+      Value<String> id,
+      Value<String> numeroArchive,
+      Value<String> typeDocument,
+      Value<String> moduleOrigine,
+      Value<String> objetIdOrigine,
+      Value<String> noeudId,
+      Value<String> niveauConfidentialite,
+      Value<String> statut,
+      Value<String> fichier,
+      Value<DateTime> dateArchivage,
+      Value<DateTime?> dateMiseCorbeille,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+final class $$DocumentsArchiveTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $DocumentsArchiveTable,
+          DocumentArchiveRow
+        > {
+  $$DocumentsArchiveTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $OrganisationNodesTable _noeudIdTable(_$AppDatabase db) => db
+      .organisationNodes
+      .createAlias('documents_archive__noeud_id__organisation_nodes__id');
+
+  $$OrganisationNodesTableProcessedTableManager get noeudId {
+    final $_column = $_itemColumn<String>('noeud_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$VersionsDocumentTable, List<VersionDocumentRow>>
+  _versionsDocumentRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.versionsDocument,
+    aliasName: 'documents_archive__id__versions_document__document_id',
+  );
+
+  $$VersionsDocumentTableProcessedTableManager get versionsDocumentRefs {
+    final manager = $$VersionsDocumentTableTableManager(
+      $_db,
+      $_db.versionsDocument,
+    ).filter((f) => f.documentId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _versionsDocumentRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$DocumentsArchiveTableFilterComposer
+    extends Composer<_$AppDatabase, $DocumentsArchiveTable> {
+  $$DocumentsArchiveTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get numeroArchive => $composableBuilder(
+    column: $table.numeroArchive,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get typeDocument => $composableBuilder(
+    column: $table.typeDocument,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get moduleOrigine => $composableBuilder(
+    column: $table.moduleOrigine,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get objetIdOrigine => $composableBuilder(
+    column: $table.objetIdOrigine,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get niveauConfidentialite => $composableBuilder(
+    column: $table.niveauConfidentialite,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fichier => $composableBuilder(
+    column: $table.fichier,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateArchivage => $composableBuilder(
+    column: $table.dateArchivage,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateMiseCorbeille => $composableBuilder(
+    column: $table.dateMiseCorbeille,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$OrganisationNodesTableFilterComposer get noeudId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> versionsDocumentRefs(
+    Expression<bool> Function($$VersionsDocumentTableFilterComposer f) f,
+  ) {
+    final $$VersionsDocumentTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.versionsDocument,
+      getReferencedColumn: (t) => t.documentId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VersionsDocumentTableFilterComposer(
+            $db: $db,
+            $table: $db.versionsDocument,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$DocumentsArchiveTableOrderingComposer
+    extends Composer<_$AppDatabase, $DocumentsArchiveTable> {
+  $$DocumentsArchiveTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get numeroArchive => $composableBuilder(
+    column: $table.numeroArchive,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get typeDocument => $composableBuilder(
+    column: $table.typeDocument,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get moduleOrigine => $composableBuilder(
+    column: $table.moduleOrigine,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get objetIdOrigine => $composableBuilder(
+    column: $table.objetIdOrigine,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get niveauConfidentialite => $composableBuilder(
+    column: $table.niveauConfidentialite,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fichier => $composableBuilder(
+    column: $table.fichier,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateArchivage => $composableBuilder(
+    column: $table.dateArchivage,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateMiseCorbeille => $composableBuilder(
+    column: $table.dateMiseCorbeille,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$OrganisationNodesTableOrderingComposer get noeudId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DocumentsArchiveTableAnnotationComposer
+    extends Composer<_$AppDatabase, $DocumentsArchiveTable> {
+  $$DocumentsArchiveTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get numeroArchive => $composableBuilder(
+    column: $table.numeroArchive,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get typeDocument => $composableBuilder(
+    column: $table.typeDocument,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get moduleOrigine => $composableBuilder(
+    column: $table.moduleOrigine,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get objetIdOrigine => $composableBuilder(
+    column: $table.objetIdOrigine,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get niveauConfidentialite => $composableBuilder(
+    column: $table.niveauConfidentialite,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  GeneratedColumn<String> get fichier =>
+      $composableBuilder(column: $table.fichier, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateArchivage => $composableBuilder(
+    column: $table.dateArchivage,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get dateMiseCorbeille => $composableBuilder(
+    column: $table.dateMiseCorbeille,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$OrganisationNodesTableAnnotationComposer get noeudId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  Expression<T> versionsDocumentRefs<T extends Object>(
+    Expression<T> Function($$VersionsDocumentTableAnnotationComposer a) f,
+  ) {
+    final $$VersionsDocumentTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.versionsDocument,
+      getReferencedColumn: (t) => t.documentId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VersionsDocumentTableAnnotationComposer(
+            $db: $db,
+            $table: $db.versionsDocument,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$DocumentsArchiveTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $DocumentsArchiveTable,
+          DocumentArchiveRow,
+          $$DocumentsArchiveTableFilterComposer,
+          $$DocumentsArchiveTableOrderingComposer,
+          $$DocumentsArchiveTableAnnotationComposer,
+          $$DocumentsArchiveTableCreateCompanionBuilder,
+          $$DocumentsArchiveTableUpdateCompanionBuilder,
+          (DocumentArchiveRow, $$DocumentsArchiveTableReferences),
+          DocumentArchiveRow,
+          PrefetchHooks Function({bool noeudId, bool versionsDocumentRefs})
+        > {
+  $$DocumentsArchiveTableTableManager(
+    _$AppDatabase db,
+    $DocumentsArchiveTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DocumentsArchiveTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$DocumentsArchiveTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$DocumentsArchiveTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> numeroArchive = const Value.absent(),
+                Value<String> typeDocument = const Value.absent(),
+                Value<String> moduleOrigine = const Value.absent(),
+                Value<String> objetIdOrigine = const Value.absent(),
+                Value<String> noeudId = const Value.absent(),
+                Value<String> niveauConfidentialite = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<String> fichier = const Value.absent(),
+                Value<DateTime> dateArchivage = const Value.absent(),
+                Value<DateTime?> dateMiseCorbeille = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DocumentsArchiveCompanion(
+                id: id,
+                numeroArchive: numeroArchive,
+                typeDocument: typeDocument,
+                moduleOrigine: moduleOrigine,
+                objetIdOrigine: objetIdOrigine,
+                noeudId: noeudId,
+                niveauConfidentialite: niveauConfidentialite,
+                statut: statut,
+                fichier: fichier,
+                dateArchivage: dateArchivage,
+                dateMiseCorbeille: dateMiseCorbeille,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String numeroArchive,
+                required String typeDocument,
+                required String moduleOrigine,
+                required String objetIdOrigine,
+                required String noeudId,
+                Value<String> niveauConfidentialite = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                required String fichier,
+                required DateTime dateArchivage,
+                Value<DateTime?> dateMiseCorbeille = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => DocumentsArchiveCompanion.insert(
+                id: id,
+                numeroArchive: numeroArchive,
+                typeDocument: typeDocument,
+                moduleOrigine: moduleOrigine,
+                objetIdOrigine: objetIdOrigine,
+                noeudId: noeudId,
+                niveauConfidentialite: niveauConfidentialite,
+                statut: statut,
+                fichier: fichier,
+                dateArchivage: dateArchivage,
+                dateMiseCorbeille: dateMiseCorbeille,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$DocumentsArchiveTable, DocumentArchiveRow>(
+                    table,
+                  ),
+                  $$DocumentsArchiveTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({noeudId = false, versionsDocumentRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (versionsDocumentRefs) db.versionsDocument,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (noeudId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.noeudId,
+                                    referencedTable:
+                                        $$DocumentsArchiveTableReferences
+                                            ._noeudIdTable(db),
+                                    referencedColumn:
+                                        $$DocumentsArchiveTableReferences
+                                            ._noeudIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (versionsDocumentRefs)
+                        await $_getPrefetchedData<
+                          DocumentArchiveRow,
+                          $DocumentsArchiveTable,
+                          VersionDocumentRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$DocumentsArchiveTableReferences
+                              ._versionsDocumentRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$DocumentsArchiveTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).versionsDocumentRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.documentId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$DocumentsArchiveTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $DocumentsArchiveTable,
+      DocumentArchiveRow,
+      $$DocumentsArchiveTableFilterComposer,
+      $$DocumentsArchiveTableOrderingComposer,
+      $$DocumentsArchiveTableAnnotationComposer,
+      $$DocumentsArchiveTableCreateCompanionBuilder,
+      $$DocumentsArchiveTableUpdateCompanionBuilder,
+      (DocumentArchiveRow, $$DocumentsArchiveTableReferences),
+      DocumentArchiveRow,
+      PrefetchHooks Function({bool noeudId, bool versionsDocumentRefs})
+    >;
+typedef $$VersionsDocumentTableCreateCompanionBuilder =
+    VersionsDocumentCompanion Function({
+      required String id,
+      required String documentId,
+      required int numeroVersion,
+      required String fichier,
+      required DateTime date,
+      Value<int> rowid,
+    });
+typedef $$VersionsDocumentTableUpdateCompanionBuilder =
+    VersionsDocumentCompanion Function({
+      Value<String> id,
+      Value<String> documentId,
+      Value<int> numeroVersion,
+      Value<String> fichier,
+      Value<DateTime> date,
+      Value<int> rowid,
+    });
+
+final class $$VersionsDocumentTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $VersionsDocumentTable,
+          VersionDocumentRow
+        > {
+  $$VersionsDocumentTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $DocumentsArchiveTable _documentIdTable(_$AppDatabase db) => db
+      .documentsArchive
+      .createAlias('versions_document__document_id__documents_archive__id');
+
+  $$DocumentsArchiveTableProcessedTableManager get documentId {
+    final $_column = $_itemColumn<String>('document_id')!;
+
+    final manager = $$DocumentsArchiveTableTableManager(
+      $_db,
+      $_db.documentsArchive,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_documentIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$VersionsDocumentTableFilterComposer
+    extends Composer<_$AppDatabase, $VersionsDocumentTable> {
+  $$VersionsDocumentTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get numeroVersion => $composableBuilder(
+    column: $table.numeroVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fichier => $composableBuilder(
+    column: $table.fichier,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$DocumentsArchiveTableFilterComposer get documentId {
+    final $$DocumentsArchiveTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.documentId,
+      referencedTable: $db.documentsArchive,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DocumentsArchiveTableFilterComposer(
+            $db: $db,
+            $table: $db.documentsArchive,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$VersionsDocumentTableOrderingComposer
+    extends Composer<_$AppDatabase, $VersionsDocumentTable> {
+  $$VersionsDocumentTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get numeroVersion => $composableBuilder(
+    column: $table.numeroVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fichier => $composableBuilder(
+    column: $table.fichier,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$DocumentsArchiveTableOrderingComposer get documentId {
+    final $$DocumentsArchiveTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.documentId,
+      referencedTable: $db.documentsArchive,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DocumentsArchiveTableOrderingComposer(
+            $db: $db,
+            $table: $db.documentsArchive,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$VersionsDocumentTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VersionsDocumentTable> {
+  $$VersionsDocumentTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get numeroVersion => $composableBuilder(
+    column: $table.numeroVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get fichier =>
+      $composableBuilder(column: $table.fichier, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  $$DocumentsArchiveTableAnnotationComposer get documentId {
+    final $$DocumentsArchiveTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.documentId,
+      referencedTable: $db.documentsArchive,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DocumentsArchiveTableAnnotationComposer(
+            $db: $db,
+            $table: $db.documentsArchive,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$VersionsDocumentTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $VersionsDocumentTable,
+          VersionDocumentRow,
+          $$VersionsDocumentTableFilterComposer,
+          $$VersionsDocumentTableOrderingComposer,
+          $$VersionsDocumentTableAnnotationComposer,
+          $$VersionsDocumentTableCreateCompanionBuilder,
+          $$VersionsDocumentTableUpdateCompanionBuilder,
+          (VersionDocumentRow, $$VersionsDocumentTableReferences),
+          VersionDocumentRow,
+          PrefetchHooks Function({bool documentId})
+        > {
+  $$VersionsDocumentTableTableManager(
+    _$AppDatabase db,
+    $VersionsDocumentTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VersionsDocumentTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VersionsDocumentTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$VersionsDocumentTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> documentId = const Value.absent(),
+                Value<int> numeroVersion = const Value.absent(),
+                Value<String> fichier = const Value.absent(),
+                Value<DateTime> date = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => VersionsDocumentCompanion(
+                id: id,
+                documentId: documentId,
+                numeroVersion: numeroVersion,
+                fichier: fichier,
+                date: date,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String documentId,
+                required int numeroVersion,
+                required String fichier,
+                required DateTime date,
+                Value<int> rowid = const Value.absent(),
+              }) => VersionsDocumentCompanion.insert(
+                id: id,
+                documentId: documentId,
+                numeroVersion: numeroVersion,
+                fichier: fichier,
+                date: date,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$VersionsDocumentTable, VersionDocumentRow>(
+                    table,
+                  ),
+                  $$VersionsDocumentTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({documentId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (documentId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.documentId,
+                                referencedTable:
+                                    $$VersionsDocumentTableReferences
+                                        ._documentIdTable(db),
+                                referencedColumn:
+                                    $$VersionsDocumentTableReferences
+                                        ._documentIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$VersionsDocumentTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $VersionsDocumentTable,
+      VersionDocumentRow,
+      $$VersionsDocumentTableFilterComposer,
+      $$VersionsDocumentTableOrderingComposer,
+      $$VersionsDocumentTableAnnotationComposer,
+      $$VersionsDocumentTableCreateCompanionBuilder,
+      $$VersionsDocumentTableUpdateCompanionBuilder,
+      (VersionDocumentRow, $$VersionsDocumentTableReferences),
+      VersionDocumentRow,
+      PrefetchHooks Function({bool documentId})
+    >;
 typedef $$SyncOutboxTableCreateCompanionBuilder =
     SyncOutboxCompanion Function({
       required String id,
@@ -34235,6 +36920,15 @@ class $AppDatabaseManager {
       $$PropositionsThemeTableTableManager(_db, _db.propositionsTheme);
   $$VotesPropositionTableTableManager get votesProposition =>
       $$VotesPropositionTableTableManager(_db, _db.votesProposition);
+  $$NomenclaturesArchivageTableTableManager get nomenclaturesArchivage =>
+      $$NomenclaturesArchivageTableTableManager(
+        _db,
+        _db.nomenclaturesArchivage,
+      );
+  $$DocumentsArchiveTableTableManager get documentsArchive =>
+      $$DocumentsArchiveTableTableManager(_db, _db.documentsArchive);
+  $$VersionsDocumentTableTableManager get versionsDocument =>
+      $$VersionsDocumentTableTableManager(_db, _db.versionsDocument);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }
