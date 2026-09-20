@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../core/constants/app_routes.dart';
 import '../../../core/theme/app_dimensions.dart';
+import '../../../l10n/app_localizations.dart';
 import '../application/organisation_controller.dart';
 import '../domain/models/statut_noeud.dart';
 
@@ -17,6 +18,7 @@ class NodeDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.watch<OrganisationController>();
     final noeud = controller.findById(nodeId);
+    final l10n = AppLocalizations.of(context)!;
 
     if (noeud == null) {
       return Scaffold(
@@ -100,6 +102,12 @@ class NodeDetailScreen extends StatelessWidget {
             icon: const Icon(Icons.church_outlined),
             label: const Text('Cultes'),
             onPressed: () => context.push(AppRoutes.cultes(noeud.id)),
+          ),
+          const SizedBox(height: AppDimensions.spacingSm),
+          OutlinedButton.icon(
+            icon: const Icon(Icons.folder_open_outlined),
+            label: Text(l10n.archivageBibliothequeTitre),
+            onPressed: () => context.push(AppRoutes.documentsArchive(noeud.id)),
           ),
           const SizedBox(height: AppDimensions.spacingSm),
           OutlinedButton.icon(

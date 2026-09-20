@@ -15,6 +15,82 @@ class AppLocalizationsFr extends AppLocalizations {
   String get homeWelcome => 'Bienvenue sur Ecclésias360';
 
   @override
+  String get archivageAucunDansCorbeille => 'Corbeille vide.';
+
+  @override
+  String get archivageAucunDocument => 'Aucun document archivé.';
+
+  @override
+  String get archivageBibliothequeTitre => 'Documents archivés';
+
+  @override
+  String get archivageChampReferenceFichier =>
+      'Référence du fichier (nom, lien...)';
+
+  @override
+  String get archivageCorbeilleTitre => 'Corbeille';
+
+  @override
+  String get archivageDetailTitre => 'Document archivé';
+
+  @override
+  String get archivageDocumentIntrouvable =>
+      'Ce document est introuvable (ou a été purgé).';
+
+  @override
+  String get archivageMettreEnCorbeilleBouton => 'Mettre en corbeille';
+
+  @override
+  String archivageMiseCorbeilleLe(String date) {
+    return 'Mis en corbeille le $date';
+  }
+
+  @override
+  String get archivageNiveauRestreint => 'Restreint';
+
+  @override
+  String get archivageNiveauStandard => 'Standard';
+
+  @override
+  String get archivageNouvelleVersionBouton => 'Nouvelle version';
+
+  @override
+  String get archivageNouvelleVersionTitre => 'Ajouter une nouvelle version';
+
+  @override
+  String get archivageOrigineLabel => 'Origine';
+
+  @override
+  String archivagePurgeableApres(String date) {
+    return 'Purgeable à partir du $date';
+  }
+
+  @override
+  String get archivagePurgerBouton => 'Purger définitivement';
+
+  @override
+  String get archivagePurgerConfirmationMessage =>
+      'Cette action est irréversible : le document et toutes ses versions seront supprimés.';
+
+  @override
+  String get archivagePurgerConfirmationTitre =>
+      'Purger définitivement ce document ?';
+
+  @override
+  String get archivageRechercheLabel => 'Rechercher un document (numéro, type)';
+
+  @override
+  String get archivageRestaurerBouton => 'Restaurer';
+
+  @override
+  String archivageVersionLabel(int numero) {
+    return 'Version $numero';
+  }
+
+  @override
+  String get archivageVersionsTitre => 'Historique des versions';
+
+  @override
   String get comiteAjouterDecisionTitre => 'Ajouter une décision';
 
   @override

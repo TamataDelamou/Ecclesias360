@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'core/router/app_router.dart';
 import 'core/sync/sync_coordinator.dart';
 import 'core/theme/design_tokens.dart';
+import 'features/archivage/application/archivage_controller.dart';
 import 'features/archivage/data/archivage_repository.dart';
 import 'features/comite/application/comite_controller.dart';
 import 'features/comite/data/comite_repository.dart';
@@ -52,6 +53,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final GroupeRepository _groupeRepository;
   late final GroupeController _groupeController;
   late final ArchivageRepository _archivageRepository;
+  late final ArchivageController _archivageController;
   late final ComiteRepository _comiteRepository;
   late final ComiteController _comiteController;
   late final CulteRepository _culteRepository;
@@ -76,6 +78,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _groupeRepository = GroupeRepository(widget.database);
     _groupeController = GroupeController(_groupeRepository);
     _archivageRepository = ArchivageRepository(widget.database);
+    _archivageController = ArchivageController(_archivageRepository);
     _comiteRepository = ComiteRepository(widget.database, archivageRepository: _archivageRepository);
     _comiteController = ComiteController(_comiteRepository);
     _culteRepository = CulteRepository(widget.database);
@@ -84,6 +87,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
 
   @override
   void dispose() {
+    _archivageController.dispose();
     _organisationController.dispose();
     _fideleController.dispose();
     _zoneGeographiqueController.dispose();
@@ -109,6 +113,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
         ChangeNotifierProvider<GroupeController>.value(value: _groupeController),
         ChangeNotifierProvider<ComiteController>.value(value: _comiteController),
         ChangeNotifierProvider<CulteController>.value(value: _culteController),
+        ChangeNotifierProvider<ArchivageController>.value(value: _archivageController),
       ],
       child: MaterialApp.router(
         onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,

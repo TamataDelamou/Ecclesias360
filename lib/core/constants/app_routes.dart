@@ -57,4 +57,8 @@ abstract final class AppRoutes {
   static String cultesNouveau(String noeudId) => '/organisation/$noeudId/cultes/nouveau';
   static String culte(String id) => '/cultes/$id';
   static const String propositionsTheme = '/propositions-theme';
+
+  static String documentsArchive(String noeudId) => '/organisation/$noeudId/documents';
+  static String documentsCorbeille(String noeudId) => '/organisation/$noeudId/documents/corbeille';
+  static String documentArchive(String id) => '/documents/$id';
 }

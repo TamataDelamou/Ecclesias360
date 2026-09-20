@@ -15,6 +15,81 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeWelcome => 'Welcome to Ecclesias360';
 
   @override
+  String get archivageAucunDansCorbeille => 'Trash is empty.';
+
+  @override
+  String get archivageAucunDocument => 'No archived document.';
+
+  @override
+  String get archivageBibliothequeTitre => 'Archived documents';
+
+  @override
+  String get archivageChampReferenceFichier => 'File reference (name, link...)';
+
+  @override
+  String get archivageCorbeilleTitre => 'Trash';
+
+  @override
+  String get archivageDetailTitre => 'Archived document';
+
+  @override
+  String get archivageDocumentIntrouvable =>
+      'This document could not be found (or was purged).';
+
+  @override
+  String get archivageMettreEnCorbeilleBouton => 'Move to trash';
+
+  @override
+  String archivageMiseCorbeilleLe(String date) {
+    return 'Moved to trash on $date';
+  }
+
+  @override
+  String get archivageNiveauRestreint => 'Restricted';
+
+  @override
+  String get archivageNiveauStandard => 'Standard';
+
+  @override
+  String get archivageNouvelleVersionBouton => 'New version';
+
+  @override
+  String get archivageNouvelleVersionTitre => 'Add a new version';
+
+  @override
+  String get archivageOrigineLabel => 'Origin';
+
+  @override
+  String archivagePurgeableApres(String date) {
+    return 'Purgeable from $date';
+  }
+
+  @override
+  String get archivagePurgerBouton => 'Purge permanently';
+
+  @override
+  String get archivagePurgerConfirmationMessage =>
+      'This action cannot be undone: the document and all its versions will be deleted.';
+
+  @override
+  String get archivagePurgerConfirmationTitre =>
+      'Permanently purge this document?';
+
+  @override
+  String get archivageRechercheLabel => 'Search a document (number, type)';
+
+  @override
+  String get archivageRestaurerBouton => 'Restore';
+
+  @override
+  String archivageVersionLabel(int numero) {
+    return 'Version $numero';
+  }
+
+  @override
+  String get archivageVersionsTitre => 'Version history';
+
+  @override
   String get comiteAjouterDecisionTitre => 'Add a decision';
 
   @override

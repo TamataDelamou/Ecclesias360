@@ -15,6 +15,82 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homeWelcome => 'Bienvenido a Ecclesias360';
 
   @override
+  String get archivageAucunDansCorbeille => 'Papelera vacía.';
+
+  @override
+  String get archivageAucunDocument => 'Ningún documento archivado.';
+
+  @override
+  String get archivageBibliothequeTitre => 'Documentos archivados';
+
+  @override
+  String get archivageChampReferenceFichier =>
+      'Referencia del archivo (nombre, enlace...)';
+
+  @override
+  String get archivageCorbeilleTitre => 'Papelera';
+
+  @override
+  String get archivageDetailTitre => 'Documento archivado';
+
+  @override
+  String get archivageDocumentIntrouvable =>
+      'Este documento no se encuentra (o fue purgado).';
+
+  @override
+  String get archivageMettreEnCorbeilleBouton => 'Enviar a la papelera';
+
+  @override
+  String archivageMiseCorbeilleLe(String date) {
+    return 'Enviado a la papelera el $date';
+  }
+
+  @override
+  String get archivageNiveauRestreint => 'Restringido';
+
+  @override
+  String get archivageNiveauStandard => 'Estándar';
+
+  @override
+  String get archivageNouvelleVersionBouton => 'Nueva versión';
+
+  @override
+  String get archivageNouvelleVersionTitre => 'Agregar una nueva versión';
+
+  @override
+  String get archivageOrigineLabel => 'Origen';
+
+  @override
+  String archivagePurgeableApres(String date) {
+    return 'Purgable a partir del $date';
+  }
+
+  @override
+  String get archivagePurgerBouton => 'Purgar definitivamente';
+
+  @override
+  String get archivagePurgerConfirmationMessage =>
+      'Esta acción es irreversible: el documento y todas sus versiones serán eliminados.';
+
+  @override
+  String get archivagePurgerConfirmationTitre =>
+      '¿Purgar definitivamente este documento?';
+
+  @override
+  String get archivageRechercheLabel => 'Buscar un documento (número, tipo)';
+
+  @override
+  String get archivageRestaurerBouton => 'Restaurar';
+
+  @override
+  String archivageVersionLabel(int numero) {
+    return 'Versión $numero';
+  }
+
+  @override
+  String get archivageVersionsTitre => 'Historial de versiones';
+
+  @override
   String get comiteAjouterDecisionTitre => 'Agregar una decisión';
 
   @override

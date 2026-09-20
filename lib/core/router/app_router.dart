@@ -1,5 +1,8 @@
 import 'package:go_router/go_router.dart';
 
+import '../../features/archivage/presentation/corbeille_documents_screen.dart';
+import '../../features/archivage/presentation/document_archive_detail_screen.dart';
+import '../../features/archivage/presentation/documents_archive_list_screen.dart';
 import '../../features/comite/presentation/membres_comite_screen.dart';
 import '../../features/comite/presentation/seance_detail_screen.dart';
 import '../../features/comite/presentation/seance_form_screen.dart';
@@ -44,6 +47,7 @@ import '../../features/professions/presentation/professions_list_screen.dart';
 import '../../features/parametres/presentation/zones_geographiques_screen.dart';
 import '../constants/app_routes.dart';
 import '../widgets/app_shell.dart';
+import 'app_transitions.dart';
 
 final GoRouter appRouter = GoRouter(
   routes: [
@@ -233,6 +237,27 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.propositionsTheme,
       builder: (context, state) => const PropositionsThemeScreen(),
+    ),
+    GoRoute(
+      path: '/organisation/:id/documents',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: DocumentsArchiveListScreen(noeudId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/organisation/:id/documents/corbeille',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: CorbeilleDocumentsScreen(noeudId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/documents/:id',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: DocumentArchiveDetailScreen(documentId: state.pathParameters['id']!),
+      ),
     ),
   ],
 );

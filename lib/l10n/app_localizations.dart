@@ -114,6 +114,138 @@ abstract class AppLocalizations {
   /// **'Bienvenue sur Ecclésias360'**
   String get homeWelcome;
 
+  /// État vide de la corbeille documentaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Corbeille vide.'**
+  String get archivageAucunDansCorbeille;
+
+  /// État vide de la bibliothèque documentaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun document archivé.'**
+  String get archivageAucunDocument;
+
+  /// Titre de l'écran bibliothèque documentaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Documents archivés'**
+  String get archivageBibliothequeTitre;
+
+  /// Libellé du champ référence de fichier lors de l'ajout d'une nouvelle version.
+  ///
+  /// In fr, this message translates to:
+  /// **'Référence du fichier (nom, lien...)'**
+  String get archivageChampReferenceFichier;
+
+  /// Titre de l'écran corbeille documentaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Corbeille'**
+  String get archivageCorbeilleTitre;
+
+  /// Titre de l'écran de consultation d'un document archivé.
+  ///
+  /// In fr, this message translates to:
+  /// **'Document archivé'**
+  String get archivageDetailTitre;
+
+  /// Message affiché quand le document demandé n'existe pas (ou a été purgé).
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce document est introuvable (ou a été purgé).'**
+  String get archivageDocumentIntrouvable;
+
+  /// Bouton de mise en corbeille d'un document archivé.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mettre en corbeille'**
+  String get archivageMettreEnCorbeilleBouton;
+
+  /// Date de mise en corbeille d'un document archivé.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mis en corbeille le {date}'**
+  String archivageMiseCorbeilleLe(String date);
+
+  /// Libellé du niveau de confidentialité restreint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Restreint'**
+  String get archivageNiveauRestreint;
+
+  /// Libellé du niveau de confidentialité standard.
+  ///
+  /// In fr, this message translates to:
+  /// **'Standard'**
+  String get archivageNiveauStandard;
+
+  /// Bouton d'ajout d'une nouvelle version d'un document archivé.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle version'**
+  String get archivageNouvelleVersionBouton;
+
+  /// Titre de la boîte de dialogue d'ajout d'une nouvelle version.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une nouvelle version'**
+  String get archivageNouvelleVersionTitre;
+
+  /// Titre de la section origine (module/objet producteur) d'un document archivé.
+  ///
+  /// In fr, this message translates to:
+  /// **'Origine'**
+  String get archivageOrigineLabel;
+
+  /// Date à partir de laquelle un document en corbeille devient purgeable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Purgeable à partir du {date}'**
+  String archivagePurgeableApres(String date);
+
+  /// Bouton de purge définitive d'un document en corbeille.
+  ///
+  /// In fr, this message translates to:
+  /// **'Purger définitivement'**
+  String get archivagePurgerBouton;
+
+  /// Message de confirmation avant la purge définitive d'un document.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette action est irréversible : le document et toutes ses versions seront supprimés.'**
+  String get archivagePurgerConfirmationMessage;
+
+  /// Titre de la boîte de dialogue de confirmation de purge définitive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Purger définitivement ce document ?'**
+  String get archivagePurgerConfirmationTitre;
+
+  /// Libellé du champ de recherche de la bibliothèque documentaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher un document (numéro, type)'**
+  String get archivageRechercheLabel;
+
+  /// Bouton de restauration d'un document depuis la corbeille.
+  ///
+  /// In fr, this message translates to:
+  /// **'Restaurer'**
+  String get archivageRestaurerBouton;
+
+  /// Libellé d'une entrée de l'historique des versions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Version {numero}'**
+  String archivageVersionLabel(int numero);
+
+  /// Titre de la section historique des versions d'un document archivé.
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique des versions'**
+  String get archivageVersionsTitre;
+
   /// Titre de la boîte de dialogue d'ajout d'une décision.
   ///
   /// In fr, this message translates to:

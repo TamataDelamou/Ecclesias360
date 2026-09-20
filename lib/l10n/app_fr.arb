@@ -8,6 +8,109 @@
   "@homeWelcome": {
     "description": "Message d'accueil de l'écran d'accueil."
   },
+  "archivageAucunDansCorbeille": "Corbeille vide.",
+  "@archivageAucunDansCorbeille": {
+    "description": "État vide de la corbeille documentaire."
+  },
+  "archivageAucunDocument": "Aucun document archivé.",
+  "@archivageAucunDocument": {
+    "description": "État vide de la bibliothèque documentaire."
+  },
+  "archivageBibliothequeTitre": "Documents archivés",
+  "@archivageBibliothequeTitre": {
+    "description": "Titre de l'écran bibliothèque documentaire."
+  },
+  "archivageChampReferenceFichier": "Référence du fichier (nom, lien...)",
+  "@archivageChampReferenceFichier": {
+    "description": "Libellé du champ référence de fichier lors de l'ajout d'une nouvelle version."
+  },
+  "archivageCorbeilleTitre": "Corbeille",
+  "@archivageCorbeilleTitre": {
+    "description": "Titre de l'écran corbeille documentaire."
+  },
+  "archivageDetailTitre": "Document archivé",
+  "@archivageDetailTitre": {
+    "description": "Titre de l'écran de consultation d'un document archivé."
+  },
+  "archivageDocumentIntrouvable": "Ce document est introuvable (ou a été purgé).",
+  "@archivageDocumentIntrouvable": {
+    "description": "Message affiché quand le document demandé n'existe pas (ou a été purgé)."
+  },
+  "archivageMettreEnCorbeilleBouton": "Mettre en corbeille",
+  "@archivageMettreEnCorbeilleBouton": {
+    "description": "Bouton de mise en corbeille d'un document archivé."
+  },
+  "archivageMiseCorbeilleLe": "Mis en corbeille le {date}",
+  "@archivageMiseCorbeilleLe": {
+    "description": "Date de mise en corbeille d'un document archivé.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "archivageNiveauRestreint": "Restreint",
+  "@archivageNiveauRestreint": {
+    "description": "Libellé du niveau de confidentialité restreint."
+  },
+  "archivageNiveauStandard": "Standard",
+  "@archivageNiveauStandard": {
+    "description": "Libellé du niveau de confidentialité standard."
+  },
+  "archivageNouvelleVersionBouton": "Nouvelle version",
+  "@archivageNouvelleVersionBouton": {
+    "description": "Bouton d'ajout d'une nouvelle version d'un document archivé."
+  },
+  "archivageNouvelleVersionTitre": "Ajouter une nouvelle version",
+  "@archivageNouvelleVersionTitre": {
+    "description": "Titre de la boîte de dialogue d'ajout d'une nouvelle version."
+  },
+  "archivageOrigineLabel": "Origine",
+  "@archivageOrigineLabel": {
+    "description": "Titre de la section origine (module/objet producteur) d'un document archivé."
+  },
+  "archivagePurgeableApres": "Purgeable à partir du {date}",
+  "@archivagePurgeableApres": {
+    "description": "Date à partir de laquelle un document en corbeille devient purgeable.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "archivagePurgerBouton": "Purger définitivement",
+  "@archivagePurgerBouton": {
+    "description": "Bouton de purge définitive d'un document en corbeille."
+  },
+  "archivagePurgerConfirmationMessage": "Cette action est irréversible : le document et toutes ses versions seront supprimés.",
+  "@archivagePurgerConfirmationMessage": {
+    "description": "Message de confirmation avant la purge définitive d'un document."
+  },
+  "archivagePurgerConfirmationTitre": "Purger définitivement ce document ?",
+  "@archivagePurgerConfirmationTitre": {
+    "description": "Titre de la boîte de dialogue de confirmation de purge définitive."
+  },
+  "archivageRechercheLabel": "Rechercher un document (numéro, type)",
+  "@archivageRechercheLabel": {
+    "description": "Libellé du champ de recherche de la bibliothèque documentaire."
+  },
+  "archivageRestaurerBouton": "Restaurer",
+  "@archivageRestaurerBouton": {
+    "description": "Bouton de restauration d'un document depuis la corbeille."
+  },
+  "archivageVersionLabel": "Version {numero}",
+  "@archivageVersionLabel": {
+    "description": "Libellé d'une entrée de l'historique des versions.",
+    "placeholders": {
+      "numero": {
+        "type": "int"
+      }
+    }
+  },
+  "archivageVersionsTitre": "Historique des versions",
+  "@archivageVersionsTitre": {
+    "description": "Titre de la section historique des versions d'un document archivé."
+  },
   "comiteAjouterDecisionTitre": "Ajouter une décision",
   "@comiteAjouterDecisionTitre": {
     "description": "Titre de la boîte de dialogue d'ajout d'une décision."
