@@ -7,5 +7,385 @@
   "homeWelcome": "Bienvenue sur Ecclésias360",
   "@homeWelcome": {
     "description": "Message d'accueil de l'écran d'accueil."
+  },
+  "comiteAjouterDecisionTitre": "Ajouter une décision",
+  "@comiteAjouterDecisionTitre": {
+    "description": "Titre de la boîte de dialogue d'ajout d'une décision."
+  },
+  "comiteAjouterErratumBouton": "Ajouter un erratum",
+  "@comiteAjouterErratumBouton": {
+    "description": "Bouton d'ajout d'un erratum."
+  },
+  "comiteAjouterTacheBouton": "Ajouter une tâche",
+  "@comiteAjouterTacheBouton": {
+    "description": "Bouton d'ajout d'une tâche de suivi."
+  },
+  "comiteAjouterTacheTitre": "Ajouter une tâche de suivi",
+  "@comiteAjouterTacheTitre": {
+    "description": "Titre de la boîte de dialogue d'ajout d'une tâche de suivi."
+  },
+  "comiteAucunMembre": "Aucun membre nommé.",
+  "@comiteAucunMembre": {
+    "description": "État vide de la liste des membres du comité."
+  },
+  "comiteAucuneDecision": "Aucune décision.",
+  "@comiteAucuneDecision": {
+    "description": "État vide de la liste des décisions d'une séance."
+  },
+  "comiteAucuneSeance": "Aucune séance enregistrée.",
+  "@comiteAucuneSeance": {
+    "description": "État vide de la liste des séances."
+  },
+  "comiteBoutonNommer": "Nommer",
+  "@comiteBoutonNommer": {
+    "description": "Bouton de confirmation de nomination."
+  },
+  "comiteChampAssigneA": "Assignée à",
+  "@comiteChampAssigneA": {
+    "description": "Libellé du champ assignation d'une tâche."
+  },
+  "comiteChampBrouillonPv": "Brouillon du procès-verbal",
+  "@comiteChampBrouillonPv": {
+    "description": "Libellé du champ brouillon d'un procès-verbal."
+  },
+  "comiteChampDate": "Date",
+  "@comiteChampDate": {
+    "description": "Libellé du champ date d'une séance."
+  },
+  "comiteChampFonction": "Fonction (ex. Pasteur, Diacre)",
+  "@comiteChampFonction": {
+    "description": "Libellé du champ fonction d'un membre du comité."
+  },
+  "comiteChampLibelle": "Libellé",
+  "@comiteChampLibelle": {
+    "description": "Libellé du champ libellé d'une décision."
+  },
+  "comiteChampNouvelErratum": "Nouvel erratum",
+  "@comiteChampNouvelErratum": {
+    "description": "Libellé du champ nouvel erratum."
+  },
+  "comiteChampOrdreDuJour": "Ordre du jour",
+  "@comiteChampOrdreDuJour": {
+    "description": "Libellé du champ ordre du jour."
+  },
+  "comiteChampPorteeDisciplinaire": "Portée disciplinaire (Module X)",
+  "@comiteChampPorteeDisciplinaire": {
+    "description": "Libellé de la case à cocher portée disciplinaire d'une décision."
+  },
+  "comiteChampResultatVote": "Résultat du vote (ex. 5 pour, 1 contre)",
+  "@comiteChampResultatVote": {
+    "description": "Libellé du champ résultat du vote d'une décision."
+  },
+  "comiteCloreMandatTooltip": "Clore le mandat",
+  "@comiteCloreMandatTooltip": {
+    "description": "Infobulle du bouton de clôture d'un mandat."
+  },
+  "comiteDecisionsTitre": "Décisions",
+  "@comiteDecisionsTitre": {
+    "description": "Titre de la section des décisions d'une séance."
+  },
+  "comiteEnregistrerBrouillon": "Enregistrer le brouillon",
+  "@comiteEnregistrerBrouillon": {
+    "description": "Bouton d'enregistrement du brouillon d'un procès-verbal."
+  },
+  "comiteEnregistrerSeance": "Enregistrer la séance",
+  "@comiteEnregistrerSeance": {
+    "description": "Bouton d'enregistrement d'une nouvelle séance."
+  },
+  "comiteErratumsTitre": "Erratums",
+  "@comiteErratumsTitre": {
+    "description": "Titre de la section des erratums d'un procès-verbal."
+  },
+  "comiteMembreActif": "{fonction} — depuis le {date}",
+  "@comiteMembreActif": {
+    "description": "Sous-titre d'un membre du comité en mandat actif, avec sa fonction et la date de début.",
+    "placeholders": {
+      "fonction": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "comiteMembreClos": "{fonction} (mandat clos)",
+  "@comiteMembreClos": {
+    "description": "Sous-titre d'un membre du comité dont le mandat est clos.",
+    "placeholders": {
+      "fonction": {
+        "type": "String"
+      }
+    }
+  },
+  "comiteMembresTitre": "Membres du comité",
+  "@comiteMembresTitre": {
+    "description": "Titre de l'écran des membres du comité."
+  },
+  "comiteNommerMembreTitre": "Nommer un membre du comité",
+  "@comiteNommerMembreTitre": {
+    "description": "Titre de la boîte de dialogue de nomination d'un membre du comité."
+  },
+  "comiteNommerMembreTooltip": "Nommer un membre",
+  "@comiteNommerMembreTooltip": {
+    "description": "Infobulle du bouton flottant de nomination d'un membre."
+  },
+  "comiteNouvelleSeanceTitre": "Nouvelle séance",
+  "@comiteNouvelleSeanceTitre": {
+    "description": "Action de création d'une nouvelle séance (infobulle et titre d'écran)."
+  },
+  "comitePresentsTitre": "Présents",
+  "@comitePresentsTitre": {
+    "description": "Titre de la section des présents à une séance."
+  },
+  "comiteProcesVerbalTitre": "Procès-verbal",
+  "@comiteProcesVerbalTitre": {
+    "description": "Titre de la section procès-verbal d'une séance."
+  },
+  "comitePvValideEtImmuable": "Ce procès-verbal est validé et immuable.",
+  "@comitePvValideEtImmuable": {
+    "description": "Note indiquant qu'un procès-verbal est validé et immuable."
+  },
+  "comiteQuorumAtteint": "Quorum atteint",
+  "@comiteQuorumAtteint": {
+    "description": "Étiquette de quorum atteint pour une séance."
+  },
+  "comiteQuorumNonAtteint": "Quorum non atteint",
+  "@comiteQuorumNonAtteint": {
+    "description": "Étiquette de quorum non atteint pour une séance."
+  },
+  "comiteQuorumNonConfigure": "Quorum non configuré",
+  "@comiteQuorumNonConfigure": {
+    "description": "Étiquette de quorum non configuré pour une séance."
+  },
+  "comiteSeanceIntrouvableCorps": "Cette séance n'existe pas (ou plus).",
+  "@comiteSeanceIntrouvableCorps": {
+    "description": "Corps du message quand la séance demandée n'existe pas."
+  },
+  "comiteSeanceTitre": "Séance",
+  "@comiteSeanceTitre": {
+    "description": "Titre de l'écran de détail d'une séance."
+  },
+  "comiteSeancesTitre": "Séances du comité",
+  "@comiteSeancesTitre": {
+    "description": "Titre de l'écran des séances du comité."
+  },
+  "comiteTachesDeSuiviTitre": "Tâches de suivi",
+  "@comiteTachesDeSuiviTitre": {
+    "description": "Titre de la section des tâches de suivi d'une décision."
+  },
+  "comiteValiderPv": "Valider (immuable)",
+  "@comiteValiderPv": {
+    "description": "Bouton de validation (immuable) d'un procès-verbal."
+  },
+  "commonAjouter": "Ajouter",
+  "@commonAjouter": {
+    "description": "Bouton Ajouter, commun aux boîtes de dialogue."
+  },
+  "commonAnnuler": "Annuler",
+  "@commonAnnuler": {
+    "description": "Bouton Annuler, commun aux boîtes de dialogue."
+  },
+  "commonCreer": "Créer",
+  "@commonCreer": {
+    "description": "Bouton Créer, commun aux formulaires de création."
+  },
+  "commonDescription": "Description",
+  "@commonDescription": {
+    "description": "Libellé de champ Description, commun aux formulaires."
+  },
+  "commonEnregistrer": "Enregistrer",
+  "@commonEnregistrer": {
+    "description": "Bouton Enregistrer, commun aux formulaires."
+  },
+  "commonFidele": "Fidèle",
+  "@commonFidele": {
+    "description": "Libellé de champ désignant un fidèle (ex. sélecteur)."
+  },
+  "commonOui": "oui",
+  "@commonOui": {
+    "description": "Valeur affichée pour un champ booléen vrai."
+  },
+  "fideleActionArchiver": "Archiver (RG-II-08)",
+  "@fideleActionArchiver": {
+    "description": "Bouton d'archivage d'un fidèle."
+  },
+  "fideleActionCompetences": "Compétences professionnelles",
+  "@fideleActionCompetences": {
+    "description": "Bouton d'accès aux compétences professionnelles d'un fidèle."
+  },
+  "fideleActionDons": "Dons spirituels",
+  "@fideleActionDons": {
+    "description": "Bouton d'accès aux dons spirituels d'un fidèle."
+  },
+  "fideleActionGroupes": "Groupes de l'Église",
+  "@fideleActionGroupes": {
+    "description": "Bouton d'accès aux groupes de l'Église d'un fidèle."
+  },
+  "fideleAjouterLienBouton": "Ajouter un lien",
+  "@fideleAjouterLienBouton": {
+    "description": "Bouton d'ajout d'un lien familial dans la liste."
+  },
+  "fideleAjouterLienTitre": "Ajouter un lien familial",
+  "@fideleAjouterLienTitre": {
+    "description": "Titre de la boîte de dialogue d'ajout d'un lien familial."
+  },
+  "fideleAjouterTuteurBouton": "Ajouter un tuteur",
+  "@fideleAjouterTuteurBouton": {
+    "description": "Bouton d'ajout d'un tuteur dans la liste."
+  },
+  "fideleAjouterTuteurTitre": "Ajouter un tuteur (tiers)",
+  "@fideleAjouterTuteurTitre": {
+    "description": "Titre de la boîte de dialogue d'ajout d'un tuteur tiers."
+  },
+  "fideleChampAdresse": "Adresse",
+  "@fideleChampAdresse": {
+    "description": "Libellé du champ adresse."
+  },
+  "fideleChampDateNaissance": "Date de naissance",
+  "@fideleChampDateNaissance": {
+    "description": "Libellé du champ date de naissance (valeur non renseignée)."
+  },
+  "fideleChampEmail": "Email",
+  "@fideleChampEmail": {
+    "description": "Libellé du champ email."
+  },
+  "fideleChampLienTuteur": "Lien (ex. père)",
+  "@fideleChampLienTuteur": {
+    "description": "Libellé du champ lien avec le tuteur."
+  },
+  "fideleChampMineur": "Mineur",
+  "@fideleChampMineur": {
+    "description": "Libellé indiquant qu'un fidèle est mineur."
+  },
+  "fideleChampNoeud": "Nœud d'appartenance",
+  "@fideleChampNoeud": {
+    "description": "Libellé du champ nœud d'appartenance."
+  },
+  "fideleChampNoeudErreur": "Choisissez un nœud d'appartenance.",
+  "@fideleChampNoeudErreur": {
+    "description": "Message de validation du champ nœud d'appartenance."
+  },
+  "fideleChampNom": "Nom",
+  "@fideleChampNom": {
+    "description": "Libellé du champ nom de famille."
+  },
+  "fideleChampNomErreur": "Le nom est requis.",
+  "@fideleChampNomErreur": {
+    "description": "Message de validation du champ nom."
+  },
+  "fideleChampNomTuteur": "Nom du tuteur",
+  "@fideleChampNomTuteur": {
+    "description": "Libellé du champ nom du tuteur."
+  },
+  "fideleChampPrenoms": "Prénoms",
+  "@fideleChampPrenoms": {
+    "description": "Libellé du champ prénoms."
+  },
+  "fideleChampPrenomsErreur": "Les prénoms sont requis.",
+  "@fideleChampPrenomsErreur": {
+    "description": "Message de validation du champ prénoms."
+  },
+  "fideleChampSexe": "Sexe",
+  "@fideleChampSexe": {
+    "description": "Libellé du champ sexe."
+  },
+  "fideleChampSexeErreur": "Choisissez un sexe.",
+  "@fideleChampSexeErreur": {
+    "description": "Message de validation du champ sexe."
+  },
+  "fideleChampStatutCivil": "Statut civil",
+  "@fideleChampStatutCivil": {
+    "description": "Libellé du champ statut civil."
+  },
+  "fideleChampStatutCivilErreur": "Choisissez un statut civil.",
+  "@fideleChampStatutCivilErreur": {
+    "description": "Message de validation du champ statut civil."
+  },
+  "fideleChampTelephone": "Téléphone",
+  "@fideleChampTelephone": {
+    "description": "Libellé du champ téléphone."
+  },
+  "fideleCheminementTitre": "Cheminement spirituel",
+  "@fideleCheminementTitre": {
+    "description": "Titre de la section cheminement spirituel."
+  },
+  "fideleDateNaissanceValeur": "Date de naissance : {date}",
+  "@fideleDateNaissanceValeur": {
+    "description": "Champ date de naissance une fois une date choisie.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "fideleHistoriqueAucune": "Aucune modification historisée.",
+  "@fideleHistoriqueAucune": {
+    "description": "État vide de l'historique d'un fidèle."
+  },
+  "fideleHistoriqueTitre": "Historique — {nom}",
+  "@fideleHistoriqueTitre": {
+    "description": "Titre de l'écran d'historique d'un fidèle, avec son nom.",
+    "placeholders": {
+      "nom": {
+        "type": "String"
+      }
+    }
+  },
+  "fideleHistoriqueTooltip": "Historique des modifications",
+  "@fideleHistoriqueTooltip": {
+    "description": "Infobulle du bouton d'accès à l'historique d'un fidèle."
+  },
+  "fideleIntrouvableCorps": "Ce fidèle n'existe pas (ou plus).",
+  "@fideleIntrouvableCorps": {
+    "description": "Corps du message quand le fidèle demandé n'existe pas."
+  },
+  "fideleIntrouvableTitre": "Fidèle introuvable",
+  "@fideleIntrouvableTitre": {
+    "description": "Titre affiché quand le fidèle demandé n'existe pas."
+  },
+  "fideleLiensFamiliauxTitre": "Liens familiaux",
+  "@fideleLiensFamiliauxTitre": {
+    "description": "Titre de la section liens familiaux."
+  },
+  "fideleModifierCoordonnees": "Modifier les coordonnées",
+  "@fideleModifierCoordonnees": {
+    "description": "Action de modification des coordonnées (infobulle et titre de boîte de dialogue)."
+  },
+  "fideleStatutActuel": "Statut actuel",
+  "@fideleStatutActuel": {
+    "description": "Libellé du statut spirituel actuel."
+  },
+  "fideleStatutDisciplineNote": "Ce statut ne peut être modifié que depuis le module Discipline (RG-II-03).",
+  "@fideleStatutDisciplineNote": {
+    "description": "Note affichée quand le statut spirituel est verrouillé par le module Discipline."
+  },
+  "fideleTransitionVers": "→ {cible}",
+  "@fideleTransitionVers": {
+    "description": "Libellé d'un bouton de transition vers un nouveau statut spirituel.",
+    "placeholders": {
+      "cible": {
+        "type": "String"
+      }
+    }
+  },
+  "fideleTuteurLegalTitre": "Tuteur légal (RG-II-06)",
+  "@fideleTuteurLegalTitre": {
+    "description": "Titre de la section tuteur légal."
+  },
+  "fidelesAucun": "Aucun fidèle enregistré.",
+  "@fidelesAucun": {
+    "description": "État vide de la liste des fidèles."
+  },
+  "fidelesCreerAction": "Créer un fidèle",
+  "@fidelesCreerAction": {
+    "description": "Action de création d'un fidèle (infobulle et titre d'écran)."
+  },
+  "fidelesRechercherIndice": "Rechercher un fidèle (nom ou prénoms)",
+  "@fidelesRechercherIndice": {
+    "description": "Indice du champ de recherche de la liste des fidèles."
+  },
+  "fidelesTitre": "Fidèles",
+  "@fidelesTitre": {
+    "description": "Titre de l'écran liste des fidèles."
   }
 }

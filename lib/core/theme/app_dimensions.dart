@@ -29,4 +29,11 @@ abstract final class AppDimensions {
   /// Décalage horizontal par niveau de profondeur dans un arbre navigable
   /// (voir `HierarchyScreen`).
   static const double treeIndentPerDepth = 16;
+
+  /// Largeur de colonne de libellé réduite, pour les fiches denses (ex.
+  /// dialogues de séance de comité) où `labelColumnWidth` est trop large.
+  static const double labelColumnWidthNarrow = 160;
+
+  /// Épaisseur d'un séparateur fin (`Divider`) sans espace additionnel.
+  static const double dividerHairline = 1;
 }

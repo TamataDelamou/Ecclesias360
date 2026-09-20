@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/constants/app_routes.dart';
+import '../../../core/theme/app_dimensions.dart';
+import '../../../l10n/app_localizations.dart';
 import '../application/fidele_controller.dart';
 import '../domain/models/lien_familial.dart';
 import '../domain/models/statut_fidele.dart';
@@ -40,11 +42,12 @@ class FideleDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.watch<FideleController>();
     final fidele = controller.findById(fideleId);
+    final l10n = AppLocalizations.of(context)!;
 
     if (fidele == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Fidèle introuvable')),
-        body: const Center(child: Text("Ce fidèle n'existe pas (ou plus).")),
+        appBar: AppBar(title: Text(l10n.fideleIntrouvableTitre)),
+        body: Center(child: Text(l10n.fideleIntrouvableCorps)),
       );
     }
 
@@ -56,35 +59,35 @@ class FideleDetailScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.edit_outlined),
-            tooltip: 'Modifier les coordonnées',
+            tooltip: l10n.fideleModifierCoordonnees,
             onPressed: () => _modifierCoordonnees(context, controller, fidele.id,
                 telephone: fidele.telephone, email: fidele.email, adresse: fidele.adresse),
           ),
           IconButton(
             icon: const Icon(Icons.history),
-            tooltip: 'Historique des modifications',
+            tooltip: l10n.fideleHistoriqueTooltip,
             onPressed: () => context.push(AppRoutes.fideleHistorique(fidele.id)),
           ),
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppDimensions.spacingLg),
         children: [
-          _LigneInfo(label: 'Sexe', valeur: fidele.sexe.code),
-          _LigneInfo(label: 'Statut civil', valeur: fidele.statutCivil.code),
+          _LigneInfo(label: l10n.fideleChampSexe, valeur: fidele.sexe.code),
+          _LigneInfo(label: l10n.fideleChampStatutCivil, valeur: fidele.statutCivil.code),
           _LigneInfo(
-            label: 'Date de naissance',
+            label: l10n.fideleChampDateNaissance,
             valeur: fidele.dateNaissance.toIso8601String().split('T').first,
           ),
-          if (estMineur) const _LigneInfo(label: 'Mineur', valeur: 'oui'),
-          if (fidele.telephone != null) _LigneInfo(label: 'Téléphone', valeur: fidele.telephone!),
-          if (fidele.email != null) _LigneInfo(label: 'Email', valeur: fidele.email!),
-          if (fidele.adresse != null) _LigneInfo(label: 'Adresse', valeur: fidele.adresse!),
-          const Divider(height: 32),
-          Text('Cheminement spirituel', style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 8),
-          _LigneInfo(label: 'Statut actuel', valeur: fidele.statutSpirituel.code),
-          const SizedBox(height: 8),
+          if (estMineur) _LigneInfo(label: l10n.fideleChampMineur, valeur: l10n.commonOui),
+          if (fidele.telephone != null) _LigneInfo(label: l10n.fideleChampTelephone, valeur: fidele.telephone!),
+          if (fidele.email != null) _LigneInfo(label: l10n.fideleChampEmail, valeur: fidele.email!),
+          if (fidele.adresse != null) _LigneInfo(label: l10n.fideleChampAdresse, valeur: fidele.adresse!),
+          const Divider(height: AppDimensions.spacingXxl),
+          Text(l10n.fideleCheminementTitre, style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: AppDimensions.spacingSm),
+          _LigneInfo(label: l10n.fideleStatutActuel, valeur: fidele.statutSpirituel.code),
+          const SizedBox(height: AppDimensions.spacingSm),
           Wrap(
             spacing: 8,
             children: _prochainesCibles(fidele.statutSpirituel)
@@ -92,50 +95,50 @@ class FideleDetailScreen extends StatelessWidget {
                   (cible) => OutlinedButton(
                     onPressed: () =>
                         controller.modifierStatutSpirituel(fideleId: fidele.id, cible: cible),
-                    child: Text('→ ${cible.code}'),
+                    child: Text(l10n.fideleTransitionVers(cible.code)),
                   ),
                 )
                 .toList(),
           ),
           if (fidele.statutSpirituel == StatutSpirituel.membreEnDiscipline)
-            const Text(
-              'Ce statut ne peut être modifié que depuis le module Discipline (RG-II-03).',
+            Text(
+              l10n.fideleStatutDisciplineNote,
             ),
           if (estMineur) ...[
-            const Divider(height: 32),
-            Text('Tuteur légal (RG-II-06)', style: Theme.of(context).textTheme.titleMedium),
+            const Divider(height: AppDimensions.spacingXxl),
+            Text(l10n.fideleTuteurLegalTitre, style: Theme.of(context).textTheme.titleMedium),
             _TuteursSection(controller: controller, mineurId: fidele.id),
           ],
-          const Divider(height: 32),
-          Text('Liens familiaux', style: Theme.of(context).textTheme.titleMedium),
+          const Divider(height: AppDimensions.spacingXxl),
+          Text(l10n.fideleLiensFamiliauxTitre, style: Theme.of(context).textTheme.titleMedium),
           _LiensFamiliauxSection(controller: controller, fideleId: fidele.id),
-          const Divider(height: 32),
+          const Divider(height: AppDimensions.spacingXxl),
           OutlinedButton.icon(
             icon: const Icon(Icons.auto_awesome_outlined),
-            label: const Text('Dons spirituels'),
+            label: Text(l10n.fideleActionDons),
             onPressed: () => context.push(AppRoutes.donsFidele(fidele.id)),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppDimensions.spacingSm),
           OutlinedButton.icon(
             icon: const Icon(Icons.work_outline),
-            label: const Text('Compétences professionnelles'),
+            label: Text(l10n.fideleActionCompetences),
             onPressed: () => context.push(AppRoutes.fideleCompetences(fidele.id)),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppDimensions.spacingSm),
           OutlinedButton.icon(
             icon: const Icon(Icons.groups_2_outlined),
-            label: const Text('Groupes de l\'Église'),
+            label: Text(l10n.fideleActionGroupes),
             onPressed: () => context.push(AppRoutes.fideleGroupes(fidele.id)),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppDimensions.spacingSm),
           if (fidele.statut != StatutFidele.inactif)
             OutlinedButton.icon(
               icon: const Icon(Icons.archive_outlined),
-              label: const Text('Archiver (RG-II-08)'),
+              label: Text(l10n.fideleActionArchiver),
               onPressed: () => controller.archiverFidele(fidele.id),
             ),
           if (controller.erreur != null) ...[
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimensions.spacingLg),
             Text(controller.erreur!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
           ],
         ],
@@ -158,21 +161,24 @@ Future<void> _modifierCoordonnees(
 
   final confirme = await showDialog<bool>(
     context: context,
-    builder: (context) => AlertDialog(
-      title: const Text('Modifier les coordonnées'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextField(controller: telephoneController, decoration: const InputDecoration(labelText: 'Téléphone')),
-          TextField(controller: emailController, decoration: const InputDecoration(labelText: 'Email')),
-          TextField(controller: adresseController, decoration: const InputDecoration(labelText: 'Adresse')),
+    builder: (context) {
+      final l10n = AppLocalizations.of(context)!;
+      return AlertDialog(
+        title: Text(l10n.fideleModifierCoordonnees),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(controller: telephoneController, decoration: InputDecoration(labelText: l10n.fideleChampTelephone)),
+            TextField(controller: emailController, decoration: InputDecoration(labelText: l10n.fideleChampEmail)),
+            TextField(controller: adresseController, decoration: InputDecoration(labelText: l10n.fideleChampAdresse)),
+          ],
+        ),
+        actions: [
+          TextButton(onPressed: () => context.pop(false), child: Text(l10n.commonAnnuler)),
+          FilledButton(onPressed: () => context.pop(true), child: Text(l10n.commonEnregistrer)),
         ],
-      ),
-      actions: [
-        TextButton(onPressed: () => context.pop(false), child: const Text('Annuler')),
-        FilledButton(onPressed: () => context.pop(true), child: const Text('Enregistrer')),
-      ],
-    ),
+      );
+    },
   );
 
   if (confirme == true) {
@@ -194,11 +200,14 @@ class _LigneInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: AppDimensions.spacingXs),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: 160, child: Text(label, style: const TextStyle(fontWeight: FontWeight.w600))),
+          SizedBox(
+            width: AppDimensions.labelColumnWidthNarrow,
+            child: Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
+          ),
           Expanded(child: Text(valeur)),
         ],
       ),
@@ -217,20 +226,23 @@ class _TuteursSection extends StatelessWidget {
     final lienController = TextEditingController();
     final confirme = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Ajouter un tuteur (tiers)'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(controller: nomController, decoration: const InputDecoration(labelText: 'Nom du tuteur')),
-            TextField(controller: lienController, decoration: const InputDecoration(labelText: 'Lien (ex. père)')),
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return AlertDialog(
+          title: Text(l10n.fideleAjouterTuteurTitre),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(controller: nomController, decoration: InputDecoration(labelText: l10n.fideleChampNomTuteur)),
+              TextField(controller: lienController, decoration: InputDecoration(labelText: l10n.fideleChampLienTuteur)),
+            ],
+          ),
+          actions: [
+            TextButton(onPressed: () => context.pop(false), child: Text(l10n.commonAnnuler)),
+            FilledButton(onPressed: () => context.pop(true), child: Text(l10n.commonAjouter)),
           ],
-        ),
-        actions: [
-          TextButton(onPressed: () => context.pop(false), child: const Text('Annuler')),
-          FilledButton(onPressed: () => context.pop(true), child: const Text('Ajouter')),
-        ],
-      ),
+        );
+      },
     );
     if (confirme == true && nomController.text.trim().isNotEmpty && lienController.text.trim().isNotEmpty) {
       await controller.ajouterTuteur(
@@ -243,6 +255,7 @@ class _TuteursSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return StreamBuilder<List<Tuteur>>(
       stream: controller.watchTuteurs(mineurId),
       builder: (context, snapshot) {
@@ -258,7 +271,7 @@ class _TuteursSection extends StatelessWidget {
               ),
             TextButton.icon(
               icon: const Icon(Icons.add),
-              label: const Text('Ajouter un tuteur'),
+              label: Text(l10n.fideleAjouterTuteurBouton),
               onPressed: () => _ajouterTuteurTiers(context),
             ),
           ],
@@ -283,34 +296,37 @@ class _LiensFamiliauxSection extends StatelessWidget {
 
     final confirme = await showDialog<bool>(
       context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setState) => AlertDialog(
-          title: const Text('Ajouter un lien familial'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DropdownButtonFormField<String>(
-                initialValue: autreId,
-                items: autresFideles
-                    .map((f) => DropdownMenuItem(value: f.id, child: Text(f.nomComplet)))
-                    .toList(),
-                onChanged: (valeur) => setState(() => autreId = valeur),
-              ),
-              DropdownButtonFormField<TypeLien>(
-                initialValue: type,
-                items: TypeLien.values
-                    .map((t) => DropdownMenuItem(value: t, child: Text(t.code)))
-                    .toList(),
-                onChanged: (valeur) => setState(() => type = valeur ?? TypeLien.conjoint),
-              ),
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return StatefulBuilder(
+          builder: (context, setState) => AlertDialog(
+            title: Text(l10n.fideleAjouterLienTitre),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                DropdownButtonFormField<String>(
+                  initialValue: autreId,
+                  items: autresFideles
+                      .map((f) => DropdownMenuItem(value: f.id, child: Text(f.nomComplet)))
+                      .toList(),
+                  onChanged: (valeur) => setState(() => autreId = valeur),
+                ),
+                DropdownButtonFormField<TypeLien>(
+                  initialValue: type,
+                  items: TypeLien.values
+                      .map((t) => DropdownMenuItem(value: t, child: Text(t.code)))
+                      .toList(),
+                  onChanged: (valeur) => setState(() => type = valeur ?? TypeLien.conjoint),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(onPressed: () => context.pop(false), child: Text(l10n.commonAnnuler)),
+              FilledButton(onPressed: () => context.pop(true), child: Text(l10n.commonAjouter)),
             ],
           ),
-          actions: [
-            TextButton(onPressed: () => context.pop(false), child: const Text('Annuler')),
-            FilledButton(onPressed: () => context.pop(true), child: const Text('Ajouter')),
-          ],
-        ),
-      ),
+        );
+      },
     );
 
     if (confirme == true && autreId != null) {
@@ -320,6 +336,7 @@ class _LiensFamiliauxSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return StreamBuilder<List<LienFamilial>>(
       stream: controller.watchLiensFamiliaux(fideleId),
       builder: (context, snapshot) {
@@ -342,7 +359,7 @@ class _LiensFamiliauxSection extends StatelessWidget {
               ),
             TextButton.icon(
               icon: const Icon(Icons.add),
-              label: const Text('Ajouter un lien'),
+              label: Text(l10n.fideleAjouterLienBouton),
               onPressed: () => _ajouterLien(context),
             ),
           ],

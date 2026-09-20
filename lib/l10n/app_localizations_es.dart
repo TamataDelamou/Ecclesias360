@@ -4,7 +4,7 @@ import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
 
-/// The translations for Spanish Castilian (`es`).
+/// The translations for Spanish (`es`).
 class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
@@ -13,4 +13,268 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get homeWelcome => 'Bienvenido a Ecclesias360';
+
+  @override
+  String get comiteAjouterDecisionTitre => 'Agregar una decisión';
+
+  @override
+  String get comiteAjouterErratumBouton => 'Agregar una errata';
+
+  @override
+  String get comiteAjouterTacheBouton => 'Agregar una tarea';
+
+  @override
+  String get comiteAjouterTacheTitre => 'Agregar una tarea de seguimiento';
+
+  @override
+  String get comiteAucunMembre => 'Ningún miembro nombrado.';
+
+  @override
+  String get comiteAucuneDecision => 'Ninguna decisión.';
+
+  @override
+  String get comiteAucuneSeance => 'Ninguna sesión registrada.';
+
+  @override
+  String get comiteBoutonNommer => 'Nombrar';
+
+  @override
+  String get comiteChampAssigneA => 'Asignada a';
+
+  @override
+  String get comiteChampBrouillonPv => 'Borrador del acta';
+
+  @override
+  String get comiteChampDate => 'Fecha';
+
+  @override
+  String get comiteChampFonction => 'Función (ej. Pastor, Diácono)';
+
+  @override
+  String get comiteChampLibelle => 'Título';
+
+  @override
+  String get comiteChampNouvelErratum => 'Nueva errata';
+
+  @override
+  String get comiteChampOrdreDuJour => 'Orden del día';
+
+  @override
+  String get comiteChampPorteeDisciplinaire => 'Alcance disciplinario (Módulo X)';
+
+  @override
+  String get comiteChampResultatVote => 'Resultado de la votación (ej. 5 a favor, 1 en contra)';
+
+  @override
+  String get comiteCloreMandatTooltip => 'Finalizar el mandato';
+
+  @override
+  String get comiteDecisionsTitre => 'Decisiones';
+
+  @override
+  String get comiteEnregistrerBrouillon => 'Guardar el borrador';
+
+  @override
+  String get comiteEnregistrerSeance => 'Guardar la sesión';
+
+  @override
+  String get comiteErratumsTitre => 'Erratas';
+
+  @override
+  String comiteMembreActif(String fonction, String date) => '$fonction — desde el $date';
+
+  @override
+  String comiteMembreClos(String fonction) => '$fonction (mandato finalizado)';
+
+  @override
+  String get comiteMembresTitre => 'Miembros del comité';
+
+  @override
+  String get comiteNommerMembreTitre => 'Nombrar un miembro del comité';
+
+  @override
+  String get comiteNommerMembreTooltip => 'Nombrar un miembro';
+
+  @override
+  String get comiteNouvelleSeanceTitre => 'Nueva sesión';
+
+  @override
+  String get comitePresentsTitre => 'Presentes';
+
+  @override
+  String get comiteProcesVerbalTitre => 'Acta';
+
+  @override
+  String get comitePvValideEtImmuable => 'Esta acta está validada y es inmutable.';
+
+  @override
+  String get comiteQuorumAtteint => 'Cuórum alcanzado';
+
+  @override
+  String get comiteQuorumNonAtteint => 'Cuórum no alcanzado';
+
+  @override
+  String get comiteQuorumNonConfigure => 'Cuórum no configurado';
+
+  @override
+  String get comiteSeanceIntrouvableCorps => 'Esta sesión no existe (ya).';
+
+  @override
+  String get comiteSeanceTitre => 'Sesión';
+
+  @override
+  String get comiteSeancesTitre => 'Sesiones del comité';
+
+  @override
+  String get comiteTachesDeSuiviTitre => 'Tareas de seguimiento';
+
+  @override
+  String get comiteValiderPv => 'Validar (inmutable)';
+
+  @override
+  String get commonAjouter => 'Añadir';
+
+  @override
+  String get commonAnnuler => 'Cancelar';
+
+  @override
+  String get commonCreer => 'Crear';
+
+  @override
+  String get commonDescription => 'Descripción';
+
+  @override
+  String get commonEnregistrer => 'Guardar';
+
+  @override
+  String get commonFidele => 'Feligrés';
+
+  @override
+  String get commonOui => 'sí';
+
+  @override
+  String get fideleActionArchiver => 'Archivar (RG-II-08)';
+
+  @override
+  String get fideleActionCompetences => 'Competencias profesionales';
+
+  @override
+  String get fideleActionDons => 'Dones espirituales';
+
+  @override
+  String get fideleActionGroupes => 'Grupos de la Iglesia';
+
+  @override
+  String get fideleAjouterLienBouton => 'Agregar un vínculo';
+
+  @override
+  String get fideleAjouterLienTitre => 'Agregar un vínculo familiar';
+
+  @override
+  String get fideleAjouterTuteurBouton => 'Agregar un tutor';
+
+  @override
+  String get fideleAjouterTuteurTitre => 'Agregar un tutor (tercero)';
+
+  @override
+  String get fideleChampAdresse => 'Dirección';
+
+  @override
+  String get fideleChampDateNaissance => 'Fecha de nacimiento';
+
+  @override
+  String get fideleChampEmail => 'Correo electrónico';
+
+  @override
+  String get fideleChampLienTuteur => 'Vínculo (ej. padre)';
+
+  @override
+  String get fideleChampMineur => 'Menor de edad';
+
+  @override
+  String get fideleChampNoeud => 'Nodo de pertenencia';
+
+  @override
+  String get fideleChampNoeudErreur => 'Elija un nodo de pertenencia.';
+
+  @override
+  String get fideleChampNom => 'Apellido';
+
+  @override
+  String get fideleChampNomErreur => 'El apellido es obligatorio.';
+
+  @override
+  String get fideleChampNomTuteur => 'Nombre del tutor';
+
+  @override
+  String get fideleChampPrenoms => 'Nombres';
+
+  @override
+  String get fideleChampPrenomsErreur => 'Los nombres son obligatorios.';
+
+  @override
+  String get fideleChampSexe => 'Sexo';
+
+  @override
+  String get fideleChampSexeErreur => 'Elija un sexo.';
+
+  @override
+  String get fideleChampStatutCivil => 'Estado civil';
+
+  @override
+  String get fideleChampStatutCivilErreur => 'Elija un estado civil.';
+
+  @override
+  String get fideleChampTelephone => 'Teléfono';
+
+  @override
+  String get fideleCheminementTitre => 'Camino espiritual';
+
+  @override
+  String fideleDateNaissanceValeur(String date) => 'Fecha de nacimiento: $date';
+
+  @override
+  String get fideleHistoriqueAucune => 'Ninguna modificación registrada.';
+
+  @override
+  String fideleHistoriqueTitre(String nom) => 'Historial — $nom';
+
+  @override
+  String get fideleHistoriqueTooltip => 'Historial de modificaciones';
+
+  @override
+  String get fideleIntrouvableCorps => 'Este feligrés no existe (ya).';
+
+  @override
+  String get fideleIntrouvableTitre => 'Feligrés no encontrado';
+
+  @override
+  String get fideleLiensFamiliauxTitre => 'Vínculos familiares';
+
+  @override
+  String get fideleModifierCoordonnees => 'Editar los datos de contacto';
+
+  @override
+  String get fideleStatutActuel => 'Estado actual';
+
+  @override
+  String get fideleStatutDisciplineNote => 'Este estado solo puede modificarse desde el módulo Disciplina (RG-II-03).';
+
+  @override
+  String fideleTransitionVers(String cible) => '→ $cible';
+
+  @override
+  String get fideleTuteurLegalTitre => 'Tutor legal (RG-II-06)';
+
+  @override
+  String get fidelesAucun => 'Ningún feligrés registrado.';
+
+  @override
+  String get fidelesCreerAction => 'Crear un feligrés';
+
+  @override
+  String get fidelesRechercherIndice => 'Buscar un feligrés (apellido o nombres)';
+
+  @override
+  String get fidelesTitre => 'Feligreses';
 }

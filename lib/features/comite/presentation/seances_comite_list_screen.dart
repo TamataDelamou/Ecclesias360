@@ -3,11 +3,12 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/constants/app_routes.dart';
+import '../../../l10n/app_localizations.dart';
 import '../application/comite_controller.dart';
 import '../domain/models/seance_comite.dart';
 
 /// Écran 6 (Historique des PV), reflété ici comme liste des séances (statut
-/// de quorum visible par ligne) — point d'entrée vers l'écran de séance qui
+/// de quorum visible par ligne) — point d\'entrée vers l\'écran de séance qui
 /// regroupe décisions, PV et tâches (RG-VII-02/03/05).
 class SeancesComiteListScreen extends StatelessWidget {
   const SeancesComiteListScreen({required this.noeudId, super.key});
@@ -17,15 +18,16 @@ class SeancesComiteListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = context.read<ComiteController>();
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Séances du comité')),
+      appBar: AppBar(title: Text(l10n.comiteSeancesTitre)),
       body: StreamBuilder<List<SeanceComite>>(
         stream: controller.watchSeances(noeudId),
         builder: (context, snapshot) {
           final seances = snapshot.data ?? const <SeanceComite>[];
           if (seances.isEmpty) {
-            return const Center(child: Text('Aucune séance enregistrée.'));
+            return Center(child: Text(l10n.comiteAucuneSeance));
           }
           return ListView.builder(
             itemCount: seances.length,
@@ -37,10 +39,10 @@ class SeancesComiteListScreen extends StatelessWidget {
                 trailing: Chip(
                   label: Text(
                     seance.quorumAtteint == null
-                        ? 'Quorum non configuré'
+                        ? l10n.comiteQuorumNonConfigure
                         : seance.quorumAtteint!
-                            ? 'Quorum atteint'
-                            : 'Quorum non atteint',
+                            ? l10n.comiteQuorumAtteint
+                            : l10n.comiteQuorumNonAtteint,
                   ),
                 ),
                 onTap: () => context.push(AppRoutes.comiteSeance(seance.id)),
@@ -51,7 +53,7 @@ class SeancesComiteListScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push(AppRoutes.comiteNouvelleSeance(noeudId)),
-        tooltip: 'Nouvelle séance',
+        tooltip: l10n.comiteNouvelleSeanceTitre,
         child: const Icon(Icons.add),
       ),
     );

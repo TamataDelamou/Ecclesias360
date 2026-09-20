@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/theme/app_dimensions.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../fideles/application/fidele_controller.dart';
 import '../application/comite_controller.dart';
 import '../domain/models/decision.dart';
@@ -26,31 +28,34 @@ class SeanceDetailScreen extends StatelessWidget {
 
     final confirme = await showDialog<bool>(
       context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setState) => AlertDialog(
-          title: const Text('Ajouter une décision'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(controller: libelleController, decoration: const InputDecoration(labelText: 'Libellé')),
-              TextField(
-                controller: resultatController,
-                decoration: const InputDecoration(labelText: 'Résultat du vote (ex. 5 pour, 1 contre)'),
-              ),
-              CheckboxListTile(
-                contentPadding: EdgeInsets.zero,
-                value: porteeDisciplinaire,
-                title: const Text('Portée disciplinaire (Module X)'),
-                onChanged: (v) => setState(() => porteeDisciplinaire = v ?? false),
-              ),
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return StatefulBuilder(
+          builder: (context, setState) => AlertDialog(
+            title: Text(l10n.comiteAjouterDecisionTitre),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(controller: libelleController, decoration: InputDecoration(labelText: l10n.comiteChampLibelle)),
+                TextField(
+                  controller: resultatController,
+                  decoration: InputDecoration(labelText: l10n.comiteChampResultatVote),
+                ),
+                CheckboxListTile(
+                  contentPadding: EdgeInsets.zero,
+                  value: porteeDisciplinaire,
+                  title: Text(l10n.comiteChampPorteeDisciplinaire),
+                  onChanged: (v) => setState(() => porteeDisciplinaire = v ?? false),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l10n.commonAnnuler)),
+              FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(l10n.commonAjouter)),
             ],
           ),
-          actions: [
-            TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Annuler')),
-            FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Ajouter')),
-          ],
-        ),
-      ),
+        );
+      },
     );
 
     if (confirme == true && libelleController.text.trim().isNotEmpty) {
@@ -66,45 +71,46 @@ class SeanceDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = context.read<ComiteController>();
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Séance')),
+      appBar: AppBar(title: Text(l10n.comiteSeanceTitre)),
       body: FutureBuilder<SeanceComite?>(
         future: controller.findSeanceById(seanceId),
         builder: (context, snapshot) {
           final seance = snapshot.data;
           if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
-          if (seance == null) return const Center(child: Text("Cette séance n'existe pas (ou plus)."));
+          if (seance == null) return Center(child: Text(l10n.comiteSeanceIntrouvableCorps));
 
           return ListView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(AppDimensions.spacingLg),
             children: [
               Text(seance.ordreDuJour, style: Theme.of(context).textTheme.titleLarge),
               Text(seance.date.toIso8601String().split('T').first),
               Chip(
                 label: Text(
                   seance.quorumAtteint == null
-                      ? 'Quorum non configuré'
+                      ? l10n.comiteQuorumNonConfigure
                       : seance.quorumAtteint!
-                          ? 'Quorum atteint'
-                          : 'Quorum non atteint',
+                          ? l10n.comiteQuorumAtteint
+                          : l10n.comiteQuorumNonAtteint,
                 ),
               ),
-              const Divider(height: 32),
+              const Divider(height: AppDimensions.spacingXxl),
               Row(
                 children: [
-                  Text('Décisions', style: Theme.of(context).textTheme.titleMedium),
+                  Text(l10n.comiteDecisionsTitre, style: Theme.of(context).textTheme.titleMedium),
                   const Spacer(),
                   TextButton.icon(
                     icon: const Icon(Icons.add),
-                    label: const Text('Ajouter'),
+                    label: Text(l10n.commonAjouter),
                     onPressed: () => _ajouterDecision(context, controller),
                   ),
                 ],
               ),
               _DecisionsSection(seanceId: seanceId, controller: controller),
-              const Divider(height: 32),
-              Text('Procès-verbal', style: Theme.of(context).textTheme.titleMedium),
+              const Divider(height: AppDimensions.spacingXxl),
+              Text(l10n.comiteProcesVerbalTitre, style: Theme.of(context).textTheme.titleMedium),
               _ProcesVerbalSection(seanceId: seanceId, controller: controller),
             ],
           );
@@ -127,7 +133,10 @@ class _DecisionsSection extends StatelessWidget {
       builder: (context, snapshot) {
         final decisions = snapshot.data ?? const <Decision>[];
         if (decisions.isEmpty) {
-          return const Padding(padding: EdgeInsets.symmetric(vertical: 8), child: Text('Aucune décision.'));
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: AppDimensions.spacingSm),
+            child: Text(AppLocalizations.of(context)!.comiteAucuneDecision),
+          );
         }
         return Column(
           children: [for (final decision in decisions) _DecisionTile(decision: decision, controller: controller)],
@@ -167,7 +176,7 @@ class _DecisionTile extends StatelessWidget {
         ),
         if (controller.erreur != null)
           Padding(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(AppDimensions.spacingSm),
             child: Text(controller.erreur!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
           ),
         _TachesSection(decisionId: decision.id, controller: controller),
@@ -191,29 +200,32 @@ class _TachesSection extends StatelessWidget {
 
     final confirme = await showDialog<bool>(
       context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setState) => AlertDialog(
-          title: const Text('Ajouter une tâche de suivi'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(controller: descriptionController, decoration: const InputDecoration(labelText: 'Description')),
-              DropdownButtonFormField<String>(
-                initialValue: assigneFideleId,
-                decoration: const InputDecoration(labelText: 'Assignée à'),
-                items: fideles
-                    .map((f) => DropdownMenuItem(value: f.id, child: Text(f.nomComplet)))
-                    .toList(),
-                onChanged: (valeur) => setState(() => assigneFideleId = valeur ?? assigneFideleId),
-              ),
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return StatefulBuilder(
+          builder: (context, setState) => AlertDialog(
+            title: Text(l10n.comiteAjouterTacheTitre),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(controller: descriptionController, decoration: InputDecoration(labelText: l10n.commonDescription)),
+                DropdownButtonFormField<String>(
+                  initialValue: assigneFideleId,
+                  decoration: InputDecoration(labelText: l10n.comiteChampAssigneA),
+                  items: fideles
+                      .map((f) => DropdownMenuItem(value: f.id, child: Text(f.nomComplet)))
+                      .toList(),
+                  onChanged: (valeur) => setState(() => assigneFideleId = valeur ?? assigneFideleId),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l10n.commonAnnuler)),
+              FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(l10n.commonAjouter)),
             ],
           ),
-          actions: [
-            TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Annuler')),
-            FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Ajouter')),
-          ],
-        ),
-      ),
+        );
+      },
     );
 
     if (confirme == true && descriptionController.text.trim().isNotEmpty) {
@@ -228,16 +240,21 @@ class _TachesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fideleController = context.watch<FideleController>();
+    final l10n = AppLocalizations.of(context)!;
     return StreamBuilder<List<TacheSuivi>>(
       stream: controller.watchTaches(decisionId),
       builder: (context, snapshot) {
         final taches = snapshot.data ?? const <TacheSuivi>[];
         return Padding(
-          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+          padding: const EdgeInsets.only(
+            left: AppDimensions.spacingLg,
+            right: AppDimensions.spacingLg,
+            bottom: AppDimensions.spacingSm,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Tâches de suivi', style: Theme.of(context).textTheme.labelLarge),
+              Text(l10n.comiteTachesDeSuiviTitre, style: Theme.of(context).textTheme.labelLarge),
               for (final tache in taches)
                 CheckboxListTile(
                   contentPadding: EdgeInsets.zero,
@@ -248,7 +265,7 @@ class _TachesSection extends StatelessWidget {
                 ),
               TextButton.icon(
                 icon: const Icon(Icons.add),
-                label: const Text('Ajouter une tâche'),
+                label: Text(l10n.comiteAjouterTacheBouton),
                 onPressed: () => _ajouterTache(context, fideleController),
               ),
             ],
@@ -282,6 +299,7 @@ class _ProcesVerbalSectionState extends State<_ProcesVerbalSection> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return StreamBuilder<ProcesVerbal?>(
       stream: widget.controller.watchProcesVerbal(widget.seanceId),
       builder: (context, snapshot) {
@@ -297,24 +315,24 @@ class _ProcesVerbalSectionState extends State<_ProcesVerbalSection> {
             children: [
               TextField(
                 controller: _contenuController,
-                decoration: const InputDecoration(labelText: 'Brouillon du procès-verbal'),
+                decoration: InputDecoration(labelText: l10n.comiteChampBrouillonPv),
                 maxLines: 6,
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppDimensions.spacingSm),
               Wrap(
-                spacing: 8,
+                spacing: AppDimensions.spacingSm,
                 children: [
                   OutlinedButton(
                     onPressed: () => widget.controller.enregistrerBrouillon(
                       seanceId: widget.seanceId,
                       contenu: _contenuController.text.trim(),
                     ),
-                    child: const Text('Enregistrer le brouillon'),
+                    child: Text(l10n.comiteEnregistrerBrouillon),
                   ),
                   if (pv != null)
                     FilledButton(
                       onPressed: () => widget.controller.validerProcesVerbal(pv.id),
-                      child: const Text('Valider (immuable)'),
+                      child: Text(l10n.comiteValiderPv),
                     ),
                 ],
               ),
@@ -325,11 +343,11 @@ class _ProcesVerbalSectionState extends State<_ProcesVerbalSection> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Ce procès-verbal est validé et immuable.'),
-            const SizedBox(height: 8),
+            Text(l10n.comitePvValideEtImmuable),
+            const SizedBox(height: AppDimensions.spacingSm),
             Text(pv!.contenu),
-            const Divider(height: 24),
-            Text('Erratums', style: Theme.of(context).textTheme.labelLarge),
+            const Divider(height: AppDimensions.spacingXl),
+            Text(l10n.comiteErratumsTitre, style: Theme.of(context).textTheme.labelLarge),
             StreamBuilder<List<ErratumPv>>(
               stream: widget.controller.watchErratums(pv.id),
               builder: (context, snapshot) {
@@ -348,11 +366,11 @@ class _ProcesVerbalSectionState extends State<_ProcesVerbalSection> {
             ),
             TextField(
               controller: _erratumController,
-              decoration: const InputDecoration(labelText: 'Nouvel erratum'),
+              decoration: InputDecoration(labelText: l10n.comiteChampNouvelErratum),
             ),
             TextButton.icon(
               icon: const Icon(Icons.add),
-              label: const Text('Ajouter un erratum'),
+              label: Text(l10n.comiteAjouterErratumBouton),
               onPressed: () async {
                 if (_erratumController.text.trim().isEmpty) return;
                 await widget.controller.ajouterErratum(procesVerbalId: pv.id, texte: _erratumController.text.trim());

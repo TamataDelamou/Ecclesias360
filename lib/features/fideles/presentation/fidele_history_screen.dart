@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/theme/app_dimensions.dart';
+import '../../../l10n/app_localizations.dart';
 import '../application/fidele_controller.dart';
 import '../domain/models/historique_fidele.dart';
 
@@ -14,19 +16,20 @@ class FideleHistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.read<FideleController>();
     final fidele = controller.findById(fideleId);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: Text('Historique — ${fidele?.nomComplet ?? fideleId}')),
+      appBar: AppBar(title: Text(l10n.fideleHistoriqueTitre(fidele?.nomComplet ?? fideleId))),
       body: StreamBuilder<List<HistoriqueFidele>>(
         stream: controller.watchHistorique(fideleId),
         builder: (context, snapshot) {
           final entrees = snapshot.data ?? const <HistoriqueFidele>[];
           if (entrees.isEmpty) {
-            return const Center(child: Text('Aucune modification historisée.'));
+            return Center(child: Text(l10n.fideleHistoriqueAucune));
           }
           return ListView.separated(
             itemCount: entrees.length,
-            separatorBuilder: (_, _) => const Divider(height: 1),
+            separatorBuilder: (_, _) => const Divider(height: AppDimensions.dividerHairline),
             itemBuilder: (context, index) {
               final entree = entrees[index];
               return ListTile(

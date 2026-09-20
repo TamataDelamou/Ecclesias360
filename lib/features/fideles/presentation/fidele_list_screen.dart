@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/constants/app_routes.dart';
+import '../../../core/theme/app_dimensions.dart';
+import '../../../l10n/app_localizations.dart';
 import '../application/fidele_controller.dart';
 import '../domain/models/fidele.dart';
 
@@ -29,26 +31,27 @@ class _FideleListScreenState extends State<FideleListScreen> {
   Widget build(BuildContext context) {
     final controller = context.watch<FideleController>();
     final resultats = controller.rechercher(_terme);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Fidèles')),
+      appBar: AppBar(title: Text(l10n.fidelesTitre)),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(AppDimensions.spacingMd),
             child: TextField(
               controller: _rechercheController,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                hintText: 'Rechercher un fidèle (nom ou prénoms)',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.search),
+                hintText: l10n.fidelesRechercherIndice,
+                border: const OutlineInputBorder(),
               ),
               onChanged: (value) => setState(() => _terme = value),
             ),
           ),
           Expanded(
             child: resultats.isEmpty
-                ? const Center(child: Text('Aucun fidèle enregistré.'))
+                ? Center(child: Text(l10n.fidelesAucun))
                 : ListView.builder(
                     itemCount: resultats.length,
                     itemBuilder: (context, index) {
@@ -61,7 +64,7 @@ class _FideleListScreenState extends State<FideleListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push(AppRoutes.fidelesNouveau),
-        tooltip: 'Créer un fidèle',
+        tooltip: l10n.fidelesCreerAction,
         child: const Icon(Icons.add),
       ),
     );

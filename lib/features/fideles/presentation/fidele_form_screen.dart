@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/theme/app_dimensions.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../organization/application/organisation_controller.dart';
 import '../application/fidele_controller.dart';
 import '../domain/models/sexe.dart';
@@ -69,78 +71,79 @@ class _FideleFormScreenState extends State<FideleFormScreen> {
   Widget build(BuildContext context) {
     final fideleController = context.watch<FideleController>();
     final noeuds = context.watch<OrganisationController>().nodes;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Créer un fidèle')),
+      appBar: AppBar(title: Text(l10n.fidelesCreerAction)),
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppDimensions.spacingLg),
           children: [
             DropdownButtonFormField<String>(
               key: const Key('champ_noeud'),
               initialValue: _noeudId,
-              decoration: const InputDecoration(
-                labelText: 'Nœud d\'appartenance',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.fideleChampNoeud,
+                border: const OutlineInputBorder(),
               ),
               items: noeuds
                   .map((noeud) => DropdownMenuItem(value: noeud.id, child: Text(noeud.nom)))
                   .toList(),
               onChanged: (valeur) => setState(() => _noeudId = valeur),
-              validator: (valeur) => valeur == null ? 'Choisissez un nœud d\'appartenance.' : null,
+              validator: (valeur) => valeur == null ? l10n.fideleChampNoeudErreur : null,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimensions.spacingLg),
             TextFormField(
               controller: _nomController,
-              decoration: const InputDecoration(labelText: 'Nom', border: OutlineInputBorder()),
-              validator: (v) => (v == null || v.trim().isEmpty) ? 'Le nom est requis.' : null,
+              decoration: InputDecoration(labelText: l10n.fideleChampNom, border: const OutlineInputBorder()),
+              validator: (v) => (v == null || v.trim().isEmpty) ? l10n.fideleChampNomErreur : null,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimensions.spacingLg),
             TextFormField(
               controller: _prenomsController,
-              decoration: const InputDecoration(labelText: 'Prénoms', border: OutlineInputBorder()),
-              validator: (v) => (v == null || v.trim().isEmpty) ? 'Les prénoms sont requis.' : null,
+              decoration: InputDecoration(labelText: l10n.fideleChampPrenoms, border: const OutlineInputBorder()),
+              validator: (v) => (v == null || v.trim().isEmpty) ? l10n.fideleChampPrenomsErreur : null,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimensions.spacingLg),
             ListTile(
               contentPadding: EdgeInsets.zero,
               title: Text(
                 _dateNaissance == null
-                    ? 'Date de naissance'
-                    : 'Date de naissance : ${_dateNaissance!.toIso8601String().split('T').first}',
+                    ? l10n.fideleChampDateNaissance
+                    : l10n.fideleDateNaissanceValeur(_dateNaissance!.toIso8601String().split('T').first),
               ),
               trailing: const Icon(Icons.calendar_today),
               onTap: _choisirDateNaissance,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimensions.spacingLg),
             DropdownButtonFormField<Sexe>(
               key: const Key('champ_sexe'),
               initialValue: _sexe,
-              decoration: const InputDecoration(labelText: 'Sexe', border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: l10n.fideleChampSexe, border: const OutlineInputBorder()),
               items: Sexe.values.map((s) => DropdownMenuItem(value: s, child: Text(s.code))).toList(),
               onChanged: (valeur) => setState(() => _sexe = valeur),
-              validator: (valeur) => valeur == null ? 'Choisissez un sexe.' : null,
+              validator: (valeur) => valeur == null ? l10n.fideleChampSexeErreur : null,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimensions.spacingLg),
             DropdownButtonFormField<StatutCivil>(
               key: const Key('champ_statut_civil'),
               initialValue: _statutCivil,
-              decoration: const InputDecoration(labelText: 'Statut civil', border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: l10n.fideleChampStatutCivil, border: const OutlineInputBorder()),
               items: StatutCivil.values
                   .map((s) => DropdownMenuItem(value: s, child: Text(s.code)))
                   .toList(),
               onChanged: (valeur) => setState(() => _statutCivil = valeur),
-              validator: (valeur) => valeur == null ? 'Choisissez un statut civil.' : null,
+              validator: (valeur) => valeur == null ? l10n.fideleChampStatutCivilErreur : null,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppDimensions.spacingXl),
             if (fideleController.erreur != null) ...[
               Text(fideleController.erreur!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppDimensions.spacingLg),
             ],
             FilledButton(
               onPressed: fideleController.enCours ? null : () => _soumettre(fideleController),
-              child: const Text('Créer'),
+              child: Text(l10n.commonCreer),
             ),
           ],
         ),

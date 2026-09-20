@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/theme/app_dimensions.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../fideles/application/fidele_controller.dart';
 import '../application/comite_controller.dart';
 
 /// Écran 3 (Convocation de séance) + écran 4 (Saisie de séance / ordre du
-/// jour), RG-VII-05 — la diffusion effective d'une convocation (Module
+/// jour), RG-VII-05 — la diffusion effective d\'une convocation (Module
 /// XVII, communication) est différée, non construite ; cet écran couvre la
-/// saisie et l'enregistrement des présents.
+/// saisie et l\'enregistrement des présents.
 class SeanceFormScreen extends StatefulWidget {
   const SeanceFormScreen({required this.noeudId, super.key});
 
@@ -55,26 +57,27 @@ class _SeanceFormScreenState extends State<SeanceFormScreen> {
     final controller = context.watch<ComiteController>();
     final fideleController = context.watch<FideleController>();
     final fideles = fideleController.fideles;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Nouvelle séance')),
+      appBar: AppBar(title: Text(l10n.comiteNouvelleSeanceTitre)),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppDimensions.spacingLg),
         children: [
           ListTile(
             contentPadding: EdgeInsets.zero,
-            title: const Text('Date'),
+            title: Text(l10n.comiteChampDate),
             subtitle: Text(_date.toIso8601String().split('T').first),
             trailing: const Icon(Icons.edit_calendar_outlined),
             onTap: _choisirDate,
           ),
           TextField(
             controller: _ordreDuJourController,
-            decoration: const InputDecoration(labelText: 'Ordre du jour'),
+            decoration: InputDecoration(labelText: l10n.comiteChampOrdreDuJour),
             maxLines: 3,
           ),
-          const SizedBox(height: 16),
-          Text('Présents', style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: AppDimensions.spacingLg),
+          Text(l10n.comitePresentsTitre, style: Theme.of(context).textTheme.titleMedium),
           for (final fidele in fideles)
             CheckboxListTile(
               contentPadding: EdgeInsets.zero,
@@ -88,13 +91,13 @@ class _SeanceFormScreenState extends State<SeanceFormScreen> {
                 }
               }),
             ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppDimensions.spacingLg),
           FilledButton(
             onPressed: () => _valider(controller),
-            child: const Text('Enregistrer la séance'),
+            child: Text(l10n.comiteEnregistrerSeance),
           ),
           if (controller.erreur != null) ...[
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimensions.spacingLg),
             Text(controller.erreur!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
           ],
         ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../fideles/application/fidele_controller.dart';
 import '../application/comite_controller.dart';
 import '../domain/models/membre_comite.dart';
@@ -21,32 +22,35 @@ class MembresComiteScreen extends StatelessWidget {
 
     final confirme = await showDialog<bool>(
       context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setState) => AlertDialog(
-          title: const Text('Nommer un membre du comité'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DropdownButtonFormField<String>(
-                initialValue: fideleId,
-                decoration: const InputDecoration(labelText: 'Fidèle'),
-                items: fideles
-                    .map((f) => DropdownMenuItem(value: f.id, child: Text(f.nomComplet)))
-                    .toList(),
-                onChanged: (valeur) => setState(() => fideleId = valeur ?? fideleId),
-              ),
-              TextField(
-                controller: fonctionController,
-                decoration: const InputDecoration(labelText: 'Fonction (ex. Pasteur, Diacre)'),
-              ),
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return StatefulBuilder(
+          builder: (context, setState) => AlertDialog(
+            title: Text(l10n.comiteNommerMembreTitre),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                DropdownButtonFormField<String>(
+                  initialValue: fideleId,
+                  decoration: InputDecoration(labelText: l10n.commonFidele),
+                  items: fideles
+                      .map((f) => DropdownMenuItem(value: f.id, child: Text(f.nomComplet)))
+                      .toList(),
+                  onChanged: (valeur) => setState(() => fideleId = valeur ?? fideleId),
+                ),
+                TextField(
+                  controller: fonctionController,
+                  decoration: InputDecoration(labelText: l10n.comiteChampFonction),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l10n.commonAnnuler)),
+              FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(l10n.comiteBoutonNommer)),
             ],
           ),
-          actions: [
-            TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Annuler')),
-            FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Nommer')),
-          ],
-        ),
-      ),
+        );
+      },
     );
 
     if (confirme == true && fonctionController.text.trim().isNotEmpty) {
@@ -58,15 +62,16 @@ class MembresComiteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.read<ComiteController>();
     final fideleController = context.watch<FideleController>();
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Membres du comité')),
+      appBar: AppBar(title: Text(l10n.comiteMembresTitre)),
       body: StreamBuilder<List<MembreComite>>(
         stream: controller.watchMembres(noeudId),
         builder: (context, snapshot) {
           final membres = snapshot.data ?? const <MembreComite>[];
           if (membres.isEmpty) {
-            return const Center(child: Text('Aucun membre nommé.'));
+            return Center(child: Text(l10n.comiteAucunMembre));
           }
           return ListView.builder(
             itemCount: membres.length,
@@ -77,12 +82,14 @@ class MembresComiteScreen extends StatelessWidget {
               return ListTile(
                 title: Text(fidele?.nomComplet ?? membre.fideleId),
                 subtitle: Text(
-                  membre.mandatActif ? '${membre.fonction} — depuis le $debut' : '${membre.fonction} (mandat clos)',
+                  membre.mandatActif
+                      ? l10n.comiteMembreActif(membre.fonction, debut)
+                      : l10n.comiteMembreClos(membre.fonction),
                 ),
                 trailing: membre.mandatActif
                     ? IconButton(
                         icon: const Icon(Icons.close),
-                        tooltip: 'Clore le mandat',
+                        tooltip: l10n.comiteCloreMandatTooltip,
                         onPressed: () => controller.clorerMandat(membre.id),
                       )
                     : null,
@@ -93,7 +100,7 @@ class MembresComiteScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _nommer(context, controller, fideleController),
-        tooltip: 'Nommer un membre',
+        tooltip: l10n.comiteNommerMembreTooltip,
         child: const Icon(Icons.person_add),
       ),
     );

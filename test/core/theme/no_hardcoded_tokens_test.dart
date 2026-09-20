@@ -37,6 +37,14 @@ void main() {
       'lib/features/organization/presentation/node_detail_screen.dart',
       'lib/features/organization/presentation/hierarchy_screen.dart',
       'lib/features/organization/presentation/church_directory_screen.dart',
+      'lib/features/fideles/presentation/fidele_detail_screen.dart',
+      'lib/features/fideles/presentation/fidele_form_screen.dart',
+      'lib/features/fideles/presentation/fidele_history_screen.dart',
+      'lib/features/fideles/presentation/fidele_list_screen.dart',
+      'lib/features/comite/presentation/membres_comite_screen.dart',
+      'lib/features/comite/presentation/seances_comite_list_screen.dart',
+      'lib/features/comite/presentation/seance_detail_screen.dart',
+      'lib/features/comite/presentation/seance_form_screen.dart',
     ];
     // EdgeInsets.only(...) legitime pour l'indentation d'arbre : dépend de
     // node.depth, pas un nombre en dur isolé — exclu explicitement du motif.
