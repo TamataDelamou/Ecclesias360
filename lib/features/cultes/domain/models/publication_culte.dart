@@ -1,7 +1,8 @@
-/// RG-XII-03 — publication post-culte, optionnelle. L'archivage
-/// automatique dans la médiathèque (Module XIII) reste différé, non
-/// construit : cette publication vit uniquement dans le Module XII pour
-/// cette itération.
+/// RG-XII-03 — publication post-culte, optionnelle. Chaque média non-nul
+/// (audio/vidéo/document) est archivé automatiquement dans la médiathèque
+/// (Module XIII, RG-XIII-02) via `MediathequeRepository`, injecté en
+/// producteur optionnel dans `CulteRepository` — voir
+/// `CulteRepository._archiverDansMediathequeSiInjecte`.
 class PublicationCulte {
   const PublicationCulte({
     required this.id,

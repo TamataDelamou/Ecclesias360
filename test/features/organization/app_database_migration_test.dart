@@ -568,4 +568,55 @@ void main() {
 
     await db.close();
   });
+
+  test('un fichier créé en schéma v16 reçoit les tables du Module XIII à l\'ouverture', () async {
+    final fichier = File(
+      path.join(Directory.systemTemp.path, 'ecclesias_migration_test_v16_${DateTime.now().microsecondsSinceEpoch}.sqlite'),
+    );
+    addTearDown(() {
+      if (fichier.existsSync()) fichier.deleteSync();
+    });
+
+    final dbInitiale = AppDatabase(NativeDatabase(fichier));
+    await dbInitiale.into(dbInitiale.organisationNodes).insert(
+          OrganisationNodesCompanion.insert(
+            id: 'siege-1',
+            typeNoeud: 'siege',
+            nom: 'GSG',
+            codeInterne: 'GSG-SIEGE',
+            path: '/siege-1/',
+            depth: 0,
+            createdAt: DateTime(2026, 1, 1),
+            updatedAt: DateTime(2026, 1, 1),
+          ),
+        );
+    await dbInitiale.close();
+
+    final connexionBrute = sqlite3.sqlite3.open(fichier.path);
+    connexionBrute.execute('''
+      DROP TABLE commentaires;
+      DROP TABLE favoris;
+      DROP TABLE contenus_mediatheque;
+      PRAGMA user_version = 16;
+    ''');
+    connexionBrute.close();
+
+    final db = AppDatabase(NativeDatabase(fichier));
+
+    final noeuds = await db.select(db.organisationNodes).get();
+    expect(noeuds, hasLength(1));
+    expect(noeuds.single.nom, 'GSG');
+
+    // Ne doit plus lever "no such table: contenus_mediatheque". Aucun seed
+    // référentiel pour ce module (pas de liste fermée comparable à
+    // TypeMinistere/TypeOffrande/ComptesComptables).
+    final contenus = await db.select(db.contenusMediatheque).get();
+    expect(contenus, isEmpty);
+    final favoris = await db.select(db.favoris).get();
+    expect(favoris, isEmpty);
+    final commentaires = await db.select(db.commentaires).get();
+    expect(commentaires, isEmpty);
+
+    await db.close();
+  });
 }

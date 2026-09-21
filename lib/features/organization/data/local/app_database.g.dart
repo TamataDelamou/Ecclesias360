@@ -28389,6 +28389,1637 @@ class BudgetsCompanion extends UpdateCompanion<BudgetRow> {
   }
 }
 
+class $ContenusMediathequeTable extends ContenusMediatheque
+    with TableInfo<$ContenusMediathequeTable, ContenuMediathequeRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ContenusMediathequeTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _typeContenuMeta = const VerificationMeta(
+    'typeContenu',
+  );
+  @override
+  late final GeneratedColumn<String> typeContenu = GeneratedColumn<String>(
+    'type_contenu',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titreMeta = const VerificationMeta('titre');
+  @override
+  late final GeneratedColumn<String> titre = GeneratedColumn<String>(
+    'titre',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sourceModuleMeta = const VerificationMeta(
+    'sourceModule',
+  );
+  @override
+  late final GeneratedColumn<String> sourceModule = GeneratedColumn<String>(
+    'source_module',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sourceIdMeta = const VerificationMeta(
+    'sourceId',
+  );
+  @override
+  late final GeneratedColumn<String> sourceId = GeneratedColumn<String>(
+    'source_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _noeudEditeurIdMeta = const VerificationMeta(
+    'noeudEditeurId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudEditeurId = GeneratedColumn<String>(
+    'noeud_editeur_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _fichierMeta = const VerificationMeta(
+    'fichier',
+  );
+  @override
+  late final GeneratedColumn<String> fichier = GeneratedColumn<String>(
+    'fichier',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _themeMeta = const VerificationMeta('theme');
+  @override
+  late final GeneratedColumn<String> theme = GeneratedColumn<String>(
+    'theme',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _motsClesMeta = const VerificationMeta(
+    'motsCles',
+  );
+  @override
+  late final GeneratedColumn<String> motsCles = GeneratedColumn<String>(
+    'mots_cles',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _intervenantMeta = const VerificationMeta(
+    'intervenant',
+  );
+  @override
+  late final GeneratedColumn<String> intervenant = GeneratedColumn<String>(
+    'intervenant',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _dateContenuMeta = const VerificationMeta(
+    'dateContenu',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateContenu = GeneratedColumn<DateTime>(
+    'date_contenu',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('brouillon'),
+  );
+  static const VerificationMeta _droitsTelechargementMeta =
+      const VerificationMeta('droitsTelechargement');
+  @override
+  late final GeneratedColumn<bool> droitsTelechargement = GeneratedColumn<bool>(
+    'droits_telechargement',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("droits_telechargement" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _moderationAPrioriMeta = const VerificationMeta(
+    'moderationAPriori',
+  );
+  @override
+  late final GeneratedColumn<bool> moderationAPriori = GeneratedColumn<bool>(
+    'moderation_a_priori',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("moderation_a_priori" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _compteurConsultationsMeta =
+      const VerificationMeta('compteurConsultations');
+  @override
+  late final GeneratedColumn<int> compteurConsultations = GeneratedColumn<int>(
+    'compteur_consultations',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    typeContenu,
+    titre,
+    sourceModule,
+    sourceId,
+    noeudEditeurId,
+    fichier,
+    theme,
+    motsCles,
+    intervenant,
+    dateContenu,
+    statut,
+    droitsTelechargement,
+    moderationAPriori,
+    compteurConsultations,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'contenus_mediatheque';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ContenuMediathequeRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('type_contenu')) {
+      context.handle(
+        _typeContenuMeta,
+        typeContenu.isAcceptableOrUnknown(
+          data['type_contenu']!,
+          _typeContenuMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_typeContenuMeta);
+    }
+    if (data.containsKey('titre')) {
+      context.handle(
+        _titreMeta,
+        titre.isAcceptableOrUnknown(data['titre']!, _titreMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titreMeta);
+    }
+    if (data.containsKey('source_module')) {
+      context.handle(
+        _sourceModuleMeta,
+        sourceModule.isAcceptableOrUnknown(
+          data['source_module']!,
+          _sourceModuleMeta,
+        ),
+      );
+    }
+    if (data.containsKey('source_id')) {
+      context.handle(
+        _sourceIdMeta,
+        sourceId.isAcceptableOrUnknown(data['source_id']!, _sourceIdMeta),
+      );
+    }
+    if (data.containsKey('noeud_editeur_id')) {
+      context.handle(
+        _noeudEditeurIdMeta,
+        noeudEditeurId.isAcceptableOrUnknown(
+          data['noeud_editeur_id']!,
+          _noeudEditeurIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudEditeurIdMeta);
+    }
+    if (data.containsKey('fichier')) {
+      context.handle(
+        _fichierMeta,
+        fichier.isAcceptableOrUnknown(data['fichier']!, _fichierMeta),
+      );
+    }
+    if (data.containsKey('theme')) {
+      context.handle(
+        _themeMeta,
+        theme.isAcceptableOrUnknown(data['theme']!, _themeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_themeMeta);
+    }
+    if (data.containsKey('mots_cles')) {
+      context.handle(
+        _motsClesMeta,
+        motsCles.isAcceptableOrUnknown(data['mots_cles']!, _motsClesMeta),
+      );
+    }
+    if (data.containsKey('intervenant')) {
+      context.handle(
+        _intervenantMeta,
+        intervenant.isAcceptableOrUnknown(
+          data['intervenant']!,
+          _intervenantMeta,
+        ),
+      );
+    }
+    if (data.containsKey('date_contenu')) {
+      context.handle(
+        _dateContenuMeta,
+        dateContenu.isAcceptableOrUnknown(
+          data['date_contenu']!,
+          _dateContenuMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_dateContenuMeta);
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    if (data.containsKey('droits_telechargement')) {
+      context.handle(
+        _droitsTelechargementMeta,
+        droitsTelechargement.isAcceptableOrUnknown(
+          data['droits_telechargement']!,
+          _droitsTelechargementMeta,
+        ),
+      );
+    }
+    if (data.containsKey('moderation_a_priori')) {
+      context.handle(
+        _moderationAPrioriMeta,
+        moderationAPriori.isAcceptableOrUnknown(
+          data['moderation_a_priori']!,
+          _moderationAPrioriMeta,
+        ),
+      );
+    }
+    if (data.containsKey('compteur_consultations')) {
+      context.handle(
+        _compteurConsultationsMeta,
+        compteurConsultations.isAcceptableOrUnknown(
+          data['compteur_consultations']!,
+          _compteurConsultationsMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ContenuMediathequeRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ContenuMediathequeRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      typeContenu: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type_contenu'],
+      )!,
+      titre: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}titre'],
+      )!,
+      sourceModule: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}source_module'],
+      ),
+      sourceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}source_id'],
+      ),
+      noeudEditeurId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_editeur_id'],
+      )!,
+      fichier: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fichier'],
+      ),
+      theme: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}theme'],
+      )!,
+      motsCles: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}mots_cles'],
+      )!,
+      intervenant: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}intervenant'],
+      ),
+      dateContenu: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_contenu'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+      droitsTelechargement: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}droits_telechargement'],
+      )!,
+      moderationAPriori: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}moderation_a_priori'],
+      )!,
+      compteurConsultations: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}compteur_consultations'],
+      )!,
+    );
+  }
+
+  @override
+  $ContenusMediathequeTable createAlias(String alias) {
+    return $ContenusMediathequeTable(attachedDatabase, alias);
+  }
+}
+
+class ContenuMediathequeRow extends DataClass
+    implements Insertable<ContenuMediathequeRow> {
+  final String id;
+  final String typeContenu;
+  final String titre;
+  final String? sourceModule;
+  final String? sourceId;
+  final String noeudEditeurId;
+  final String? fichier;
+  final String theme;
+  final String motsCles;
+  final String? intervenant;
+  final DateTime dateContenu;
+  final String statut;
+  final bool droitsTelechargement;
+  final bool moderationAPriori;
+  final int compteurConsultations;
+  const ContenuMediathequeRow({
+    required this.id,
+    required this.typeContenu,
+    required this.titre,
+    this.sourceModule,
+    this.sourceId,
+    required this.noeudEditeurId,
+    this.fichier,
+    required this.theme,
+    required this.motsCles,
+    this.intervenant,
+    required this.dateContenu,
+    required this.statut,
+    required this.droitsTelechargement,
+    required this.moderationAPriori,
+    required this.compteurConsultations,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['type_contenu'] = Variable<String>(typeContenu);
+    map['titre'] = Variable<String>(titre);
+    if (!nullToAbsent || sourceModule != null) {
+      map['source_module'] = Variable<String>(sourceModule);
+    }
+    if (!nullToAbsent || sourceId != null) {
+      map['source_id'] = Variable<String>(sourceId);
+    }
+    map['noeud_editeur_id'] = Variable<String>(noeudEditeurId);
+    if (!nullToAbsent || fichier != null) {
+      map['fichier'] = Variable<String>(fichier);
+    }
+    map['theme'] = Variable<String>(theme);
+    map['mots_cles'] = Variable<String>(motsCles);
+    if (!nullToAbsent || intervenant != null) {
+      map['intervenant'] = Variable<String>(intervenant);
+    }
+    map['date_contenu'] = Variable<DateTime>(dateContenu);
+    map['statut'] = Variable<String>(statut);
+    map['droits_telechargement'] = Variable<bool>(droitsTelechargement);
+    map['moderation_a_priori'] = Variable<bool>(moderationAPriori);
+    map['compteur_consultations'] = Variable<int>(compteurConsultations);
+    return map;
+  }
+
+  ContenusMediathequeCompanion toCompanion(bool nullToAbsent) {
+    return ContenusMediathequeCompanion(
+      id: Value(id),
+      typeContenu: Value(typeContenu),
+      titre: Value(titre),
+      sourceModule: sourceModule == null && nullToAbsent
+          ? const Value.absent()
+          : Value(sourceModule),
+      sourceId: sourceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(sourceId),
+      noeudEditeurId: Value(noeudEditeurId),
+      fichier: fichier == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fichier),
+      theme: Value(theme),
+      motsCles: Value(motsCles),
+      intervenant: intervenant == null && nullToAbsent
+          ? const Value.absent()
+          : Value(intervenant),
+      dateContenu: Value(dateContenu),
+      statut: Value(statut),
+      droitsTelechargement: Value(droitsTelechargement),
+      moderationAPriori: Value(moderationAPriori),
+      compteurConsultations: Value(compteurConsultations),
+    );
+  }
+
+  factory ContenuMediathequeRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ContenuMediathequeRow(
+      id: serializer.fromJson<String>(json['id']),
+      typeContenu: serializer.fromJson<String>(json['typeContenu']),
+      titre: serializer.fromJson<String>(json['titre']),
+      sourceModule: serializer.fromJson<String?>(json['sourceModule']),
+      sourceId: serializer.fromJson<String?>(json['sourceId']),
+      noeudEditeurId: serializer.fromJson<String>(json['noeudEditeurId']),
+      fichier: serializer.fromJson<String?>(json['fichier']),
+      theme: serializer.fromJson<String>(json['theme']),
+      motsCles: serializer.fromJson<String>(json['motsCles']),
+      intervenant: serializer.fromJson<String?>(json['intervenant']),
+      dateContenu: serializer.fromJson<DateTime>(json['dateContenu']),
+      statut: serializer.fromJson<String>(json['statut']),
+      droitsTelechargement: serializer.fromJson<bool>(
+        json['droitsTelechargement'],
+      ),
+      moderationAPriori: serializer.fromJson<bool>(json['moderationAPriori']),
+      compteurConsultations: serializer.fromJson<int>(
+        json['compteurConsultations'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'typeContenu': serializer.toJson<String>(typeContenu),
+      'titre': serializer.toJson<String>(titre),
+      'sourceModule': serializer.toJson<String?>(sourceModule),
+      'sourceId': serializer.toJson<String?>(sourceId),
+      'noeudEditeurId': serializer.toJson<String>(noeudEditeurId),
+      'fichier': serializer.toJson<String?>(fichier),
+      'theme': serializer.toJson<String>(theme),
+      'motsCles': serializer.toJson<String>(motsCles),
+      'intervenant': serializer.toJson<String?>(intervenant),
+      'dateContenu': serializer.toJson<DateTime>(dateContenu),
+      'statut': serializer.toJson<String>(statut),
+      'droitsTelechargement': serializer.toJson<bool>(droitsTelechargement),
+      'moderationAPriori': serializer.toJson<bool>(moderationAPriori),
+      'compteurConsultations': serializer.toJson<int>(compteurConsultations),
+    };
+  }
+
+  ContenuMediathequeRow copyWith({
+    String? id,
+    String? typeContenu,
+    String? titre,
+    Value<String?> sourceModule = const Value.absent(),
+    Value<String?> sourceId = const Value.absent(),
+    String? noeudEditeurId,
+    Value<String?> fichier = const Value.absent(),
+    String? theme,
+    String? motsCles,
+    Value<String?> intervenant = const Value.absent(),
+    DateTime? dateContenu,
+    String? statut,
+    bool? droitsTelechargement,
+    bool? moderationAPriori,
+    int? compteurConsultations,
+  }) => ContenuMediathequeRow(
+    id: id ?? this.id,
+    typeContenu: typeContenu ?? this.typeContenu,
+    titre: titre ?? this.titre,
+    sourceModule: sourceModule.present ? sourceModule.value : this.sourceModule,
+    sourceId: sourceId.present ? sourceId.value : this.sourceId,
+    noeudEditeurId: noeudEditeurId ?? this.noeudEditeurId,
+    fichier: fichier.present ? fichier.value : this.fichier,
+    theme: theme ?? this.theme,
+    motsCles: motsCles ?? this.motsCles,
+    intervenant: intervenant.present ? intervenant.value : this.intervenant,
+    dateContenu: dateContenu ?? this.dateContenu,
+    statut: statut ?? this.statut,
+    droitsTelechargement: droitsTelechargement ?? this.droitsTelechargement,
+    moderationAPriori: moderationAPriori ?? this.moderationAPriori,
+    compteurConsultations: compteurConsultations ?? this.compteurConsultations,
+  );
+  ContenuMediathequeRow copyWithCompanion(ContenusMediathequeCompanion data) {
+    return ContenuMediathequeRow(
+      id: data.id.present ? data.id.value : this.id,
+      typeContenu: data.typeContenu.present
+          ? data.typeContenu.value
+          : this.typeContenu,
+      titre: data.titre.present ? data.titre.value : this.titre,
+      sourceModule: data.sourceModule.present
+          ? data.sourceModule.value
+          : this.sourceModule,
+      sourceId: data.sourceId.present ? data.sourceId.value : this.sourceId,
+      noeudEditeurId: data.noeudEditeurId.present
+          ? data.noeudEditeurId.value
+          : this.noeudEditeurId,
+      fichier: data.fichier.present ? data.fichier.value : this.fichier,
+      theme: data.theme.present ? data.theme.value : this.theme,
+      motsCles: data.motsCles.present ? data.motsCles.value : this.motsCles,
+      intervenant: data.intervenant.present
+          ? data.intervenant.value
+          : this.intervenant,
+      dateContenu: data.dateContenu.present
+          ? data.dateContenu.value
+          : this.dateContenu,
+      statut: data.statut.present ? data.statut.value : this.statut,
+      droitsTelechargement: data.droitsTelechargement.present
+          ? data.droitsTelechargement.value
+          : this.droitsTelechargement,
+      moderationAPriori: data.moderationAPriori.present
+          ? data.moderationAPriori.value
+          : this.moderationAPriori,
+      compteurConsultations: data.compteurConsultations.present
+          ? data.compteurConsultations.value
+          : this.compteurConsultations,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ContenuMediathequeRow(')
+          ..write('id: $id, ')
+          ..write('typeContenu: $typeContenu, ')
+          ..write('titre: $titre, ')
+          ..write('sourceModule: $sourceModule, ')
+          ..write('sourceId: $sourceId, ')
+          ..write('noeudEditeurId: $noeudEditeurId, ')
+          ..write('fichier: $fichier, ')
+          ..write('theme: $theme, ')
+          ..write('motsCles: $motsCles, ')
+          ..write('intervenant: $intervenant, ')
+          ..write('dateContenu: $dateContenu, ')
+          ..write('statut: $statut, ')
+          ..write('droitsTelechargement: $droitsTelechargement, ')
+          ..write('moderationAPriori: $moderationAPriori, ')
+          ..write('compteurConsultations: $compteurConsultations')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    typeContenu,
+    titre,
+    sourceModule,
+    sourceId,
+    noeudEditeurId,
+    fichier,
+    theme,
+    motsCles,
+    intervenant,
+    dateContenu,
+    statut,
+    droitsTelechargement,
+    moderationAPriori,
+    compteurConsultations,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ContenuMediathequeRow &&
+          other.id == this.id &&
+          other.typeContenu == this.typeContenu &&
+          other.titre == this.titre &&
+          other.sourceModule == this.sourceModule &&
+          other.sourceId == this.sourceId &&
+          other.noeudEditeurId == this.noeudEditeurId &&
+          other.fichier == this.fichier &&
+          other.theme == this.theme &&
+          other.motsCles == this.motsCles &&
+          other.intervenant == this.intervenant &&
+          other.dateContenu == this.dateContenu &&
+          other.statut == this.statut &&
+          other.droitsTelechargement == this.droitsTelechargement &&
+          other.moderationAPriori == this.moderationAPriori &&
+          other.compteurConsultations == this.compteurConsultations);
+}
+
+class ContenusMediathequeCompanion
+    extends UpdateCompanion<ContenuMediathequeRow> {
+  final Value<String> id;
+  final Value<String> typeContenu;
+  final Value<String> titre;
+  final Value<String?> sourceModule;
+  final Value<String?> sourceId;
+  final Value<String> noeudEditeurId;
+  final Value<String?> fichier;
+  final Value<String> theme;
+  final Value<String> motsCles;
+  final Value<String?> intervenant;
+  final Value<DateTime> dateContenu;
+  final Value<String> statut;
+  final Value<bool> droitsTelechargement;
+  final Value<bool> moderationAPriori;
+  final Value<int> compteurConsultations;
+  final Value<int> rowid;
+  const ContenusMediathequeCompanion({
+    this.id = const Value.absent(),
+    this.typeContenu = const Value.absent(),
+    this.titre = const Value.absent(),
+    this.sourceModule = const Value.absent(),
+    this.sourceId = const Value.absent(),
+    this.noeudEditeurId = const Value.absent(),
+    this.fichier = const Value.absent(),
+    this.theme = const Value.absent(),
+    this.motsCles = const Value.absent(),
+    this.intervenant = const Value.absent(),
+    this.dateContenu = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.droitsTelechargement = const Value.absent(),
+    this.moderationAPriori = const Value.absent(),
+    this.compteurConsultations = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ContenusMediathequeCompanion.insert({
+    required String id,
+    required String typeContenu,
+    required String titre,
+    this.sourceModule = const Value.absent(),
+    this.sourceId = const Value.absent(),
+    required String noeudEditeurId,
+    this.fichier = const Value.absent(),
+    required String theme,
+    this.motsCles = const Value.absent(),
+    this.intervenant = const Value.absent(),
+    required DateTime dateContenu,
+    this.statut = const Value.absent(),
+    this.droitsTelechargement = const Value.absent(),
+    this.moderationAPriori = const Value.absent(),
+    this.compteurConsultations = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       typeContenu = Value(typeContenu),
+       titre = Value(titre),
+       noeudEditeurId = Value(noeudEditeurId),
+       theme = Value(theme),
+       dateContenu = Value(dateContenu);
+  static Insertable<ContenuMediathequeRow> custom({
+    Expression<String>? id,
+    Expression<String>? typeContenu,
+    Expression<String>? titre,
+    Expression<String>? sourceModule,
+    Expression<String>? sourceId,
+    Expression<String>? noeudEditeurId,
+    Expression<String>? fichier,
+    Expression<String>? theme,
+    Expression<String>? motsCles,
+    Expression<String>? intervenant,
+    Expression<DateTime>? dateContenu,
+    Expression<String>? statut,
+    Expression<bool>? droitsTelechargement,
+    Expression<bool>? moderationAPriori,
+    Expression<int>? compteurConsultations,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (typeContenu != null) 'type_contenu': typeContenu,
+      if (titre != null) 'titre': titre,
+      if (sourceModule != null) 'source_module': sourceModule,
+      if (sourceId != null) 'source_id': sourceId,
+      if (noeudEditeurId != null) 'noeud_editeur_id': noeudEditeurId,
+      if (fichier != null) 'fichier': fichier,
+      if (theme != null) 'theme': theme,
+      if (motsCles != null) 'mots_cles': motsCles,
+      if (intervenant != null) 'intervenant': intervenant,
+      if (dateContenu != null) 'date_contenu': dateContenu,
+      if (statut != null) 'statut': statut,
+      if (droitsTelechargement != null)
+        'droits_telechargement': droitsTelechargement,
+      if (moderationAPriori != null) 'moderation_a_priori': moderationAPriori,
+      if (compteurConsultations != null)
+        'compteur_consultations': compteurConsultations,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ContenusMediathequeCompanion copyWith({
+    Value<String>? id,
+    Value<String>? typeContenu,
+    Value<String>? titre,
+    Value<String?>? sourceModule,
+    Value<String?>? sourceId,
+    Value<String>? noeudEditeurId,
+    Value<String?>? fichier,
+    Value<String>? theme,
+    Value<String>? motsCles,
+    Value<String?>? intervenant,
+    Value<DateTime>? dateContenu,
+    Value<String>? statut,
+    Value<bool>? droitsTelechargement,
+    Value<bool>? moderationAPriori,
+    Value<int>? compteurConsultations,
+    Value<int>? rowid,
+  }) {
+    return ContenusMediathequeCompanion(
+      id: id ?? this.id,
+      typeContenu: typeContenu ?? this.typeContenu,
+      titre: titre ?? this.titre,
+      sourceModule: sourceModule ?? this.sourceModule,
+      sourceId: sourceId ?? this.sourceId,
+      noeudEditeurId: noeudEditeurId ?? this.noeudEditeurId,
+      fichier: fichier ?? this.fichier,
+      theme: theme ?? this.theme,
+      motsCles: motsCles ?? this.motsCles,
+      intervenant: intervenant ?? this.intervenant,
+      dateContenu: dateContenu ?? this.dateContenu,
+      statut: statut ?? this.statut,
+      droitsTelechargement: droitsTelechargement ?? this.droitsTelechargement,
+      moderationAPriori: moderationAPriori ?? this.moderationAPriori,
+      compteurConsultations:
+          compteurConsultations ?? this.compteurConsultations,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (typeContenu.present) {
+      map['type_contenu'] = Variable<String>(typeContenu.value);
+    }
+    if (titre.present) {
+      map['titre'] = Variable<String>(titre.value);
+    }
+    if (sourceModule.present) {
+      map['source_module'] = Variable<String>(sourceModule.value);
+    }
+    if (sourceId.present) {
+      map['source_id'] = Variable<String>(sourceId.value);
+    }
+    if (noeudEditeurId.present) {
+      map['noeud_editeur_id'] = Variable<String>(noeudEditeurId.value);
+    }
+    if (fichier.present) {
+      map['fichier'] = Variable<String>(fichier.value);
+    }
+    if (theme.present) {
+      map['theme'] = Variable<String>(theme.value);
+    }
+    if (motsCles.present) {
+      map['mots_cles'] = Variable<String>(motsCles.value);
+    }
+    if (intervenant.present) {
+      map['intervenant'] = Variable<String>(intervenant.value);
+    }
+    if (dateContenu.present) {
+      map['date_contenu'] = Variable<DateTime>(dateContenu.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (droitsTelechargement.present) {
+      map['droits_telechargement'] = Variable<bool>(droitsTelechargement.value);
+    }
+    if (moderationAPriori.present) {
+      map['moderation_a_priori'] = Variable<bool>(moderationAPriori.value);
+    }
+    if (compteurConsultations.present) {
+      map['compteur_consultations'] = Variable<int>(
+        compteurConsultations.value,
+      );
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ContenusMediathequeCompanion(')
+          ..write('id: $id, ')
+          ..write('typeContenu: $typeContenu, ')
+          ..write('titre: $titre, ')
+          ..write('sourceModule: $sourceModule, ')
+          ..write('sourceId: $sourceId, ')
+          ..write('noeudEditeurId: $noeudEditeurId, ')
+          ..write('fichier: $fichier, ')
+          ..write('theme: $theme, ')
+          ..write('motsCles: $motsCles, ')
+          ..write('intervenant: $intervenant, ')
+          ..write('dateContenu: $dateContenu, ')
+          ..write('statut: $statut, ')
+          ..write('droitsTelechargement: $droitsTelechargement, ')
+          ..write('moderationAPriori: $moderationAPriori, ')
+          ..write('compteurConsultations: $compteurConsultations, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $FavorisTable extends Favoris with TableInfo<$FavorisTable, FavoriRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $FavorisTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _contenuIdMeta = const VerificationMeta(
+    'contenuId',
+  );
+  @override
+  late final GeneratedColumn<String> contenuId = GeneratedColumn<String>(
+    'contenu_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES contenus_mediatheque (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, fideleId, contenuId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'favoris';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FavoriRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    if (data.containsKey('contenu_id')) {
+      context.handle(
+        _contenuIdMeta,
+        contenuId.isAcceptableOrUnknown(data['contenu_id']!, _contenuIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_contenuIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  FavoriRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FavoriRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+      contenuId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}contenu_id'],
+      )!,
+    );
+  }
+
+  @override
+  $FavorisTable createAlias(String alias) {
+    return $FavorisTable(attachedDatabase, alias);
+  }
+}
+
+class FavoriRow extends DataClass implements Insertable<FavoriRow> {
+  final String id;
+  final String fideleId;
+  final String contenuId;
+  const FavoriRow({
+    required this.id,
+    required this.fideleId,
+    required this.contenuId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['fidele_id'] = Variable<String>(fideleId);
+    map['contenu_id'] = Variable<String>(contenuId);
+    return map;
+  }
+
+  FavorisCompanion toCompanion(bool nullToAbsent) {
+    return FavorisCompanion(
+      id: Value(id),
+      fideleId: Value(fideleId),
+      contenuId: Value(contenuId),
+    );
+  }
+
+  factory FavoriRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FavoriRow(
+      id: serializer.fromJson<String>(json['id']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+      contenuId: serializer.fromJson<String>(json['contenuId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'fideleId': serializer.toJson<String>(fideleId),
+      'contenuId': serializer.toJson<String>(contenuId),
+    };
+  }
+
+  FavoriRow copyWith({String? id, String? fideleId, String? contenuId}) =>
+      FavoriRow(
+        id: id ?? this.id,
+        fideleId: fideleId ?? this.fideleId,
+        contenuId: contenuId ?? this.contenuId,
+      );
+  FavoriRow copyWithCompanion(FavorisCompanion data) {
+    return FavoriRow(
+      id: data.id.present ? data.id.value : this.id,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      contenuId: data.contenuId.present ? data.contenuId.value : this.contenuId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FavoriRow(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('contenuId: $contenuId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, fideleId, contenuId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FavoriRow &&
+          other.id == this.id &&
+          other.fideleId == this.fideleId &&
+          other.contenuId == this.contenuId);
+}
+
+class FavorisCompanion extends UpdateCompanion<FavoriRow> {
+  final Value<String> id;
+  final Value<String> fideleId;
+  final Value<String> contenuId;
+  final Value<int> rowid;
+  const FavorisCompanion({
+    this.id = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.contenuId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FavorisCompanion.insert({
+    required String id,
+    required String fideleId,
+    required String contenuId,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       fideleId = Value(fideleId),
+       contenuId = Value(contenuId);
+  static Insertable<FavoriRow> custom({
+    Expression<String>? id,
+    Expression<String>? fideleId,
+    Expression<String>? contenuId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (contenuId != null) 'contenu_id': contenuId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FavorisCompanion copyWith({
+    Value<String>? id,
+    Value<String>? fideleId,
+    Value<String>? contenuId,
+    Value<int>? rowid,
+  }) {
+    return FavorisCompanion(
+      id: id ?? this.id,
+      fideleId: fideleId ?? this.fideleId,
+      contenuId: contenuId ?? this.contenuId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (contenuId.present) {
+      map['contenu_id'] = Variable<String>(contenuId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FavorisCompanion(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('contenuId: $contenuId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CommentairesTable extends Commentaires
+    with TableInfo<$CommentairesTable, CommentaireRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CommentairesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _contenuIdMeta = const VerificationMeta(
+    'contenuId',
+  );
+  @override
+  late final GeneratedColumn<String> contenuId = GeneratedColumn<String>(
+    'contenu_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES contenus_mediatheque (id)',
+    ),
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _texteMeta = const VerificationMeta('texte');
+  @override
+  late final GeneratedColumn<String> texte = GeneratedColumn<String>(
+    'texte',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statutModerationMeta = const VerificationMeta(
+    'statutModeration',
+  );
+  @override
+  late final GeneratedColumn<String> statutModeration = GeneratedColumn<String>(
+    'statut_moderation',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('publie'),
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nombreSignalementsMeta =
+      const VerificationMeta('nombreSignalements');
+  @override
+  late final GeneratedColumn<int> nombreSignalements = GeneratedColumn<int>(
+    'nombre_signalements',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    contenuId,
+    fideleId,
+    texte,
+    statutModeration,
+    date,
+    nombreSignalements,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'commentaires';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CommentaireRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('contenu_id')) {
+      context.handle(
+        _contenuIdMeta,
+        contenuId.isAcceptableOrUnknown(data['contenu_id']!, _contenuIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_contenuIdMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    if (data.containsKey('texte')) {
+      context.handle(
+        _texteMeta,
+        texte.isAcceptableOrUnknown(data['texte']!, _texteMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_texteMeta);
+    }
+    if (data.containsKey('statut_moderation')) {
+      context.handle(
+        _statutModerationMeta,
+        statutModeration.isAcceptableOrUnknown(
+          data['statut_moderation']!,
+          _statutModerationMeta,
+        ),
+      );
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('nombre_signalements')) {
+      context.handle(
+        _nombreSignalementsMeta,
+        nombreSignalements.isAcceptableOrUnknown(
+          data['nombre_signalements']!,
+          _nombreSignalementsMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CommentaireRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CommentaireRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      contenuId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}contenu_id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+      texte: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}texte'],
+      )!,
+      statutModeration: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut_moderation'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date'],
+      )!,
+      nombreSignalements: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}nombre_signalements'],
+      )!,
+    );
+  }
+
+  @override
+  $CommentairesTable createAlias(String alias) {
+    return $CommentairesTable(attachedDatabase, alias);
+  }
+}
+
+class CommentaireRow extends DataClass implements Insertable<CommentaireRow> {
+  final String id;
+  final String contenuId;
+  final String fideleId;
+  final String texte;
+  final String statutModeration;
+  final DateTime date;
+  final int nombreSignalements;
+  const CommentaireRow({
+    required this.id,
+    required this.contenuId,
+    required this.fideleId,
+    required this.texte,
+    required this.statutModeration,
+    required this.date,
+    required this.nombreSignalements,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['contenu_id'] = Variable<String>(contenuId);
+    map['fidele_id'] = Variable<String>(fideleId);
+    map['texte'] = Variable<String>(texte);
+    map['statut_moderation'] = Variable<String>(statutModeration);
+    map['date'] = Variable<DateTime>(date);
+    map['nombre_signalements'] = Variable<int>(nombreSignalements);
+    return map;
+  }
+
+  CommentairesCompanion toCompanion(bool nullToAbsent) {
+    return CommentairesCompanion(
+      id: Value(id),
+      contenuId: Value(contenuId),
+      fideleId: Value(fideleId),
+      texte: Value(texte),
+      statutModeration: Value(statutModeration),
+      date: Value(date),
+      nombreSignalements: Value(nombreSignalements),
+    );
+  }
+
+  factory CommentaireRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CommentaireRow(
+      id: serializer.fromJson<String>(json['id']),
+      contenuId: serializer.fromJson<String>(json['contenuId']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+      texte: serializer.fromJson<String>(json['texte']),
+      statutModeration: serializer.fromJson<String>(json['statutModeration']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      nombreSignalements: serializer.fromJson<int>(json['nombreSignalements']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'contenuId': serializer.toJson<String>(contenuId),
+      'fideleId': serializer.toJson<String>(fideleId),
+      'texte': serializer.toJson<String>(texte),
+      'statutModeration': serializer.toJson<String>(statutModeration),
+      'date': serializer.toJson<DateTime>(date),
+      'nombreSignalements': serializer.toJson<int>(nombreSignalements),
+    };
+  }
+
+  CommentaireRow copyWith({
+    String? id,
+    String? contenuId,
+    String? fideleId,
+    String? texte,
+    String? statutModeration,
+    DateTime? date,
+    int? nombreSignalements,
+  }) => CommentaireRow(
+    id: id ?? this.id,
+    contenuId: contenuId ?? this.contenuId,
+    fideleId: fideleId ?? this.fideleId,
+    texte: texte ?? this.texte,
+    statutModeration: statutModeration ?? this.statutModeration,
+    date: date ?? this.date,
+    nombreSignalements: nombreSignalements ?? this.nombreSignalements,
+  );
+  CommentaireRow copyWithCompanion(CommentairesCompanion data) {
+    return CommentaireRow(
+      id: data.id.present ? data.id.value : this.id,
+      contenuId: data.contenuId.present ? data.contenuId.value : this.contenuId,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      texte: data.texte.present ? data.texte.value : this.texte,
+      statutModeration: data.statutModeration.present
+          ? data.statutModeration.value
+          : this.statutModeration,
+      date: data.date.present ? data.date.value : this.date,
+      nombreSignalements: data.nombreSignalements.present
+          ? data.nombreSignalements.value
+          : this.nombreSignalements,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommentaireRow(')
+          ..write('id: $id, ')
+          ..write('contenuId: $contenuId, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('texte: $texte, ')
+          ..write('statutModeration: $statutModeration, ')
+          ..write('date: $date, ')
+          ..write('nombreSignalements: $nombreSignalements')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    contenuId,
+    fideleId,
+    texte,
+    statutModeration,
+    date,
+    nombreSignalements,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CommentaireRow &&
+          other.id == this.id &&
+          other.contenuId == this.contenuId &&
+          other.fideleId == this.fideleId &&
+          other.texte == this.texte &&
+          other.statutModeration == this.statutModeration &&
+          other.date == this.date &&
+          other.nombreSignalements == this.nombreSignalements);
+}
+
+class CommentairesCompanion extends UpdateCompanion<CommentaireRow> {
+  final Value<String> id;
+  final Value<String> contenuId;
+  final Value<String> fideleId;
+  final Value<String> texte;
+  final Value<String> statutModeration;
+  final Value<DateTime> date;
+  final Value<int> nombreSignalements;
+  final Value<int> rowid;
+  const CommentairesCompanion({
+    this.id = const Value.absent(),
+    this.contenuId = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.texte = const Value.absent(),
+    this.statutModeration = const Value.absent(),
+    this.date = const Value.absent(),
+    this.nombreSignalements = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CommentairesCompanion.insert({
+    required String id,
+    required String contenuId,
+    required String fideleId,
+    required String texte,
+    this.statutModeration = const Value.absent(),
+    required DateTime date,
+    this.nombreSignalements = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       contenuId = Value(contenuId),
+       fideleId = Value(fideleId),
+       texte = Value(texte),
+       date = Value(date);
+  static Insertable<CommentaireRow> custom({
+    Expression<String>? id,
+    Expression<String>? contenuId,
+    Expression<String>? fideleId,
+    Expression<String>? texte,
+    Expression<String>? statutModeration,
+    Expression<DateTime>? date,
+    Expression<int>? nombreSignalements,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (contenuId != null) 'contenu_id': contenuId,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (texte != null) 'texte': texte,
+      if (statutModeration != null) 'statut_moderation': statutModeration,
+      if (date != null) 'date': date,
+      if (nombreSignalements != null) 'nombre_signalements': nombreSignalements,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CommentairesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? contenuId,
+    Value<String>? fideleId,
+    Value<String>? texte,
+    Value<String>? statutModeration,
+    Value<DateTime>? date,
+    Value<int>? nombreSignalements,
+    Value<int>? rowid,
+  }) {
+    return CommentairesCompanion(
+      id: id ?? this.id,
+      contenuId: contenuId ?? this.contenuId,
+      fideleId: fideleId ?? this.fideleId,
+      texte: texte ?? this.texte,
+      statutModeration: statutModeration ?? this.statutModeration,
+      date: date ?? this.date,
+      nombreSignalements: nombreSignalements ?? this.nombreSignalements,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (contenuId.present) {
+      map['contenu_id'] = Variable<String>(contenuId.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (texte.present) {
+      map['texte'] = Variable<String>(texte.value);
+    }
+    if (statutModeration.present) {
+      map['statut_moderation'] = Variable<String>(statutModeration.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (nombreSignalements.present) {
+      map['nombre_signalements'] = Variable<int>(nombreSignalements.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CommentairesCompanion(')
+          ..write('id: $id, ')
+          ..write('contenuId: $contenuId, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('texte: $texte, ')
+          ..write('statutModeration: $statutModeration, ')
+          ..write('date: $date, ')
+          ..write('nombreSignalements: $nombreSignalements, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxRow> {
   @override
@@ -29023,6 +30654,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $EcrituresComptablesTable ecrituresComptables =
       $EcrituresComptablesTable(this);
   late final $BudgetsTable budgets = $BudgetsTable(this);
+  late final $ContenusMediathequeTable contenusMediatheque =
+      $ContenusMediathequeTable(this);
+  late final $FavorisTable favoris = $FavorisTable(this);
+  late final $CommentairesTable commentaires = $CommentairesTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -29091,6 +30726,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     periodesComptables,
     ecrituresComptables,
     budgets,
+    contenusMediatheque,
+    favoris,
+    commentaires,
     syncOutbox,
   ];
 }
@@ -29527,6 +31165,31 @@ final class $$OrganisationNodesTableReferences
     ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_budgetsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $ContenusMediathequeTable,
+    List<ContenuMediathequeRow>
+  >
+  _contenusMediathequeRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.contenusMediatheque,
+        aliasName:
+            'organisation_nodes__id__contenus_mediatheque__noeud_editeur_id',
+      );
+
+  $$ContenusMediathequeTableProcessedTableManager get contenusMediathequeRefs {
+    final manager = $$ContenusMediathequeTableTableManager(
+      $_db,
+      $_db.contenusMediatheque,
+    ).filter((f) => f.noeudEditeurId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _contenusMediathequeRefsTable($_db),
+    );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -30086,6 +31749,31 @@ class $$OrganisationNodesTableFilterComposer
           }) => $$BudgetsTableFilterComposer(
             $db: $db,
             $table: $db.budgets,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> contenusMediathequeRefs(
+    Expression<bool> Function($$ContenusMediathequeTableFilterComposer f) f,
+  ) {
+    final $$ContenusMediathequeTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.contenusMediatheque,
+      getReferencedColumn: (t) => t.noeudEditeurId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContenusMediathequeTableFilterComposer(
+            $db: $db,
+            $table: $db.contenusMediatheque,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -30722,6 +32410,32 @@ class $$OrganisationNodesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> contenusMediathequeRefs<T extends Object>(
+    Expression<T> Function($$ContenusMediathequeTableAnnotationComposer a) f,
+  ) {
+    final $$ContenusMediathequeTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.contenusMediatheque,
+          getReferencedColumn: (t) => t.noeudEditeurId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ContenusMediathequeTableAnnotationComposer(
+                $db: $db,
+                $table: $db.contenusMediatheque,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$OrganisationNodesTableTableManager
@@ -30757,6 +32471,7 @@ class $$OrganisationNodesTableTableManager
             bool campagnesInventaireRefs,
             bool ecrituresComptablesRefs,
             bool budgetsRefs,
+            bool contenusMediathequeRefs,
           })
         > {
   $$OrganisationNodesTableTableManager(
@@ -30878,6 +32593,7 @@ class $$OrganisationNodesTableTableManager
                 campagnesInventaireRefs = false,
                 ecrituresComptablesRefs = false,
                 budgetsRefs = false,
+                contenusMediathequeRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -30902,6 +32618,7 @@ class $$OrganisationNodesTableTableManager
                     if (campagnesInventaireRefs) db.campagnesInventaire,
                     if (ecrituresComptablesRefs) db.ecrituresComptables,
                     if (budgetsRefs) db.budgets,
+                    if (contenusMediathequeRefs) db.contenusMediatheque,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -31305,6 +33022,27 @@ class $$OrganisationNodesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (contenusMediathequeRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          ContenuMediathequeRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._contenusMediathequeRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).contenusMediathequeRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudEditeurId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -31345,6 +33083,7 @@ typedef $$OrganisationNodesTableProcessedTableManager =
         bool campagnesInventaireRefs,
         bool ecrituresComptablesRefs,
         bool budgetsRefs,
+        bool contenusMediathequeRefs,
       })
     >;
 typedef $$HistoriqueRattachementsTableCreateCompanionBuilder =
@@ -32321,6 +34060,43 @@ final class $$FidelesTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$FavorisTable, List<FavoriRow>> _favorisRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.favoris,
+    aliasName: 'fideles__id__favoris__fidele_id',
+  );
+
+  $$FavorisTableProcessedTableManager get favorisRefs {
+    final manager = $$FavorisTableTableManager(
+      $_db,
+      $_db.favoris,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_favorisRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$CommentairesTable, List<CommentaireRow>>
+  _commentairesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.commentaires,
+    aliasName: 'fideles__id__commentaires__fidele_id',
+  );
+
+  $$CommentairesTableProcessedTableManager get commentairesRefs {
+    final manager = $$CommentairesTableTableManager(
+      $_db,
+      $_db.commentaires,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_commentairesRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$FidelesTableFilterComposer
@@ -33238,6 +35014,56 @@ class $$FidelesTableFilterComposer
           }) => $$BiensTableFilterComposer(
             $db: $db,
             $table: $db.biens,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> favorisRefs(
+    Expression<bool> Function($$FavorisTableFilterComposer f) f,
+  ) {
+    final $$FavorisTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.favoris,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FavorisTableFilterComposer(
+            $db: $db,
+            $table: $db.favoris,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> commentairesRefs(
+    Expression<bool> Function($$CommentairesTableFilterComposer f) f,
+  ) {
+    final $$CommentairesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.commentaires,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CommentairesTableFilterComposer(
+            $db: $db,
+            $table: $db.commentaires,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -34275,6 +36101,56 @@ class $$FidelesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> favorisRefs<T extends Object>(
+    Expression<T> Function($$FavorisTableAnnotationComposer a) f,
+  ) {
+    final $$FavorisTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.favoris,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FavorisTableAnnotationComposer(
+            $db: $db,
+            $table: $db.favoris,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> commentairesRefs<T extends Object>(
+    Expression<T> Function($$CommentairesTableAnnotationComposer a) f,
+  ) {
+    final $$CommentairesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.commentaires,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CommentairesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.commentaires,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$FidelesTableTableManager
@@ -34324,6 +36200,8 @@ class $$FidelesTableTableManager
             bool engagementsRefs,
             bool tresoriersNoeudRefs,
             bool biensRefs,
+            bool favorisRefs,
+            bool commentairesRefs,
           })
         > {
   $$FidelesTableTableManager(_$AppDatabase db, $FidelesTable table)
@@ -34464,6 +36342,8 @@ class $$FidelesTableTableManager
                 engagementsRefs = false,
                 tresoriersNoeudRefs = false,
                 biensRefs = false,
+                favorisRefs = false,
+                commentairesRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -34503,6 +36383,8 @@ class $$FidelesTableTableManager
                     if (engagementsRefs) db.engagements,
                     if (tresoriersNoeudRefs) db.tresoriersNoeud,
                     if (biensRefs) db.biens,
+                    if (favorisRefs) db.favoris,
+                    if (commentairesRefs) db.commentaires,
                   ],
                   addJoins:
                       <
@@ -35206,6 +37088,48 @@ class $$FidelesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (favorisRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          FavoriRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._favorisRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).favorisRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (commentairesRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          CommentaireRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._commentairesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).commentairesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -35260,6 +37184,8 @@ typedef $$FidelesTableProcessedTableManager =
         bool engagementsRefs,
         bool tresoriersNoeudRefs,
         bool biensRefs,
+        bool favorisRefs,
+        bool commentairesRefs,
       })
     >;
 typedef $$NodeResponsablesTableCreateCompanionBuilder =
@@ -63703,6 +65629,1563 @@ typedef $$BudgetsTableProcessedTableManager =
       BudgetRow,
       PrefetchHooks Function({bool noeudId, bool periodeId, bool compteId})
     >;
+typedef $$ContenusMediathequeTableCreateCompanionBuilder =
+    ContenusMediathequeCompanion Function({
+      required String id,
+      required String typeContenu,
+      required String titre,
+      Value<String?> sourceModule,
+      Value<String?> sourceId,
+      required String noeudEditeurId,
+      Value<String?> fichier,
+      required String theme,
+      Value<String> motsCles,
+      Value<String?> intervenant,
+      required DateTime dateContenu,
+      Value<String> statut,
+      Value<bool> droitsTelechargement,
+      Value<bool> moderationAPriori,
+      Value<int> compteurConsultations,
+      Value<int> rowid,
+    });
+typedef $$ContenusMediathequeTableUpdateCompanionBuilder =
+    ContenusMediathequeCompanion Function({
+      Value<String> id,
+      Value<String> typeContenu,
+      Value<String> titre,
+      Value<String?> sourceModule,
+      Value<String?> sourceId,
+      Value<String> noeudEditeurId,
+      Value<String?> fichier,
+      Value<String> theme,
+      Value<String> motsCles,
+      Value<String?> intervenant,
+      Value<DateTime> dateContenu,
+      Value<String> statut,
+      Value<bool> droitsTelechargement,
+      Value<bool> moderationAPriori,
+      Value<int> compteurConsultations,
+      Value<int> rowid,
+    });
+
+final class $$ContenusMediathequeTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $ContenusMediathequeTable,
+          ContenuMediathequeRow
+        > {
+  $$ContenusMediathequeTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $OrganisationNodesTable _noeudEditeurIdTable(_$AppDatabase db) =>
+      db.organisationNodes.createAlias(
+        'contenus_mediatheque__noeud_editeur_id__organisation_nodes__id',
+      );
+
+  $$OrganisationNodesTableProcessedTableManager get noeudEditeurId {
+    final $_column = $_itemColumn<String>('noeud_editeur_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudEditeurIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$FavorisTable, List<FavoriRow>> _favorisRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.favoris,
+    aliasName: 'contenus_mediatheque__id__favoris__contenu_id',
+  );
+
+  $$FavorisTableProcessedTableManager get favorisRefs {
+    final manager = $$FavorisTableTableManager(
+      $_db,
+      $_db.favoris,
+    ).filter((f) => f.contenuId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_favorisRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$CommentairesTable, List<CommentaireRow>>
+  _commentairesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.commentaires,
+    aliasName: 'contenus_mediatheque__id__commentaires__contenu_id',
+  );
+
+  $$CommentairesTableProcessedTableManager get commentairesRefs {
+    final manager = $$CommentairesTableTableManager(
+      $_db,
+      $_db.commentaires,
+    ).filter((f) => f.contenuId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_commentairesRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$ContenusMediathequeTableFilterComposer
+    extends Composer<_$AppDatabase, $ContenusMediathequeTable> {
+  $$ContenusMediathequeTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get typeContenu => $composableBuilder(
+    column: $table.typeContenu,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get titre => $composableBuilder(
+    column: $table.titre,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get sourceModule => $composableBuilder(
+    column: $table.sourceModule,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get sourceId => $composableBuilder(
+    column: $table.sourceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fichier => $composableBuilder(
+    column: $table.fichier,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get theme => $composableBuilder(
+    column: $table.theme,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get motsCles => $composableBuilder(
+    column: $table.motsCles,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get intervenant => $composableBuilder(
+    column: $table.intervenant,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateContenu => $composableBuilder(
+    column: $table.dateContenu,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get droitsTelechargement => $composableBuilder(
+    column: $table.droitsTelechargement,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get moderationAPriori => $composableBuilder(
+    column: $table.moderationAPriori,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get compteurConsultations => $composableBuilder(
+    column: $table.compteurConsultations,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$OrganisationNodesTableFilterComposer get noeudEditeurId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudEditeurId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> favorisRefs(
+    Expression<bool> Function($$FavorisTableFilterComposer f) f,
+  ) {
+    final $$FavorisTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.favoris,
+      getReferencedColumn: (t) => t.contenuId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FavorisTableFilterComposer(
+            $db: $db,
+            $table: $db.favoris,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> commentairesRefs(
+    Expression<bool> Function($$CommentairesTableFilterComposer f) f,
+  ) {
+    final $$CommentairesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.commentaires,
+      getReferencedColumn: (t) => t.contenuId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CommentairesTableFilterComposer(
+            $db: $db,
+            $table: $db.commentaires,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ContenusMediathequeTableOrderingComposer
+    extends Composer<_$AppDatabase, $ContenusMediathequeTable> {
+  $$ContenusMediathequeTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get typeContenu => $composableBuilder(
+    column: $table.typeContenu,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get titre => $composableBuilder(
+    column: $table.titre,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get sourceModule => $composableBuilder(
+    column: $table.sourceModule,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get sourceId => $composableBuilder(
+    column: $table.sourceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fichier => $composableBuilder(
+    column: $table.fichier,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get theme => $composableBuilder(
+    column: $table.theme,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get motsCles => $composableBuilder(
+    column: $table.motsCles,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get intervenant => $composableBuilder(
+    column: $table.intervenant,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateContenu => $composableBuilder(
+    column: $table.dateContenu,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get droitsTelechargement => $composableBuilder(
+    column: $table.droitsTelechargement,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get moderationAPriori => $composableBuilder(
+    column: $table.moderationAPriori,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get compteurConsultations => $composableBuilder(
+    column: $table.compteurConsultations,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$OrganisationNodesTableOrderingComposer get noeudEditeurId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudEditeurId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ContenusMediathequeTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ContenusMediathequeTable> {
+  $$ContenusMediathequeTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get typeContenu => $composableBuilder(
+    column: $table.typeContenu,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get titre =>
+      $composableBuilder(column: $table.titre, builder: (column) => column);
+
+  GeneratedColumn<String> get sourceModule => $composableBuilder(
+    column: $table.sourceModule,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get sourceId =>
+      $composableBuilder(column: $table.sourceId, builder: (column) => column);
+
+  GeneratedColumn<String> get fichier =>
+      $composableBuilder(column: $table.fichier, builder: (column) => column);
+
+  GeneratedColumn<String> get theme =>
+      $composableBuilder(column: $table.theme, builder: (column) => column);
+
+  GeneratedColumn<String> get motsCles =>
+      $composableBuilder(column: $table.motsCles, builder: (column) => column);
+
+  GeneratedColumn<String> get intervenant => $composableBuilder(
+    column: $table.intervenant,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get dateContenu => $composableBuilder(
+    column: $table.dateContenu,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  GeneratedColumn<bool> get droitsTelechargement => $composableBuilder(
+    column: $table.droitsTelechargement,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get moderationAPriori => $composableBuilder(
+    column: $table.moderationAPriori,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get compteurConsultations => $composableBuilder(
+    column: $table.compteurConsultations,
+    builder: (column) => column,
+  );
+
+  $$OrganisationNodesTableAnnotationComposer get noeudEditeurId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudEditeurId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  Expression<T> favorisRefs<T extends Object>(
+    Expression<T> Function($$FavorisTableAnnotationComposer a) f,
+  ) {
+    final $$FavorisTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.favoris,
+      getReferencedColumn: (t) => t.contenuId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FavorisTableAnnotationComposer(
+            $db: $db,
+            $table: $db.favoris,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> commentairesRefs<T extends Object>(
+    Expression<T> Function($$CommentairesTableAnnotationComposer a) f,
+  ) {
+    final $$CommentairesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.commentaires,
+      getReferencedColumn: (t) => t.contenuId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CommentairesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.commentaires,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ContenusMediathequeTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ContenusMediathequeTable,
+          ContenuMediathequeRow,
+          $$ContenusMediathequeTableFilterComposer,
+          $$ContenusMediathequeTableOrderingComposer,
+          $$ContenusMediathequeTableAnnotationComposer,
+          $$ContenusMediathequeTableCreateCompanionBuilder,
+          $$ContenusMediathequeTableUpdateCompanionBuilder,
+          (ContenuMediathequeRow, $$ContenusMediathequeTableReferences),
+          ContenuMediathequeRow,
+          PrefetchHooks Function({
+            bool noeudEditeurId,
+            bool favorisRefs,
+            bool commentairesRefs,
+          })
+        > {
+  $$ContenusMediathequeTableTableManager(
+    _$AppDatabase db,
+    $ContenusMediathequeTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ContenusMediathequeTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ContenusMediathequeTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ContenusMediathequeTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> typeContenu = const Value.absent(),
+                Value<String> titre = const Value.absent(),
+                Value<String?> sourceModule = const Value.absent(),
+                Value<String?> sourceId = const Value.absent(),
+                Value<String> noeudEditeurId = const Value.absent(),
+                Value<String?> fichier = const Value.absent(),
+                Value<String> theme = const Value.absent(),
+                Value<String> motsCles = const Value.absent(),
+                Value<String?> intervenant = const Value.absent(),
+                Value<DateTime> dateContenu = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<bool> droitsTelechargement = const Value.absent(),
+                Value<bool> moderationAPriori = const Value.absent(),
+                Value<int> compteurConsultations = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ContenusMediathequeCompanion(
+                id: id,
+                typeContenu: typeContenu,
+                titre: titre,
+                sourceModule: sourceModule,
+                sourceId: sourceId,
+                noeudEditeurId: noeudEditeurId,
+                fichier: fichier,
+                theme: theme,
+                motsCles: motsCles,
+                intervenant: intervenant,
+                dateContenu: dateContenu,
+                statut: statut,
+                droitsTelechargement: droitsTelechargement,
+                moderationAPriori: moderationAPriori,
+                compteurConsultations: compteurConsultations,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String typeContenu,
+                required String titre,
+                Value<String?> sourceModule = const Value.absent(),
+                Value<String?> sourceId = const Value.absent(),
+                required String noeudEditeurId,
+                Value<String?> fichier = const Value.absent(),
+                required String theme,
+                Value<String> motsCles = const Value.absent(),
+                Value<String?> intervenant = const Value.absent(),
+                required DateTime dateContenu,
+                Value<String> statut = const Value.absent(),
+                Value<bool> droitsTelechargement = const Value.absent(),
+                Value<bool> moderationAPriori = const Value.absent(),
+                Value<int> compteurConsultations = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ContenusMediathequeCompanion.insert(
+                id: id,
+                typeContenu: typeContenu,
+                titre: titre,
+                sourceModule: sourceModule,
+                sourceId: sourceId,
+                noeudEditeurId: noeudEditeurId,
+                fichier: fichier,
+                theme: theme,
+                motsCles: motsCles,
+                intervenant: intervenant,
+                dateContenu: dateContenu,
+                statut: statut,
+                droitsTelechargement: droitsTelechargement,
+                moderationAPriori: moderationAPriori,
+                compteurConsultations: compteurConsultations,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ContenusMediathequeTable, ContenuMediathequeRow>(
+                    table,
+                  ),
+                  $$ContenusMediathequeTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                noeudEditeurId = false,
+                favorisRefs = false,
+                commentairesRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (favorisRefs) db.favoris,
+                    if (commentairesRefs) db.commentaires,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (noeudEditeurId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.noeudEditeurId,
+                                    referencedTable:
+                                        $$ContenusMediathequeTableReferences
+                                            ._noeudEditeurIdTable(db),
+                                    referencedColumn:
+                                        $$ContenusMediathequeTableReferences
+                                            ._noeudEditeurIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (favorisRefs)
+                        await $_getPrefetchedData<
+                          ContenuMediathequeRow,
+                          $ContenusMediathequeTable,
+                          FavoriRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ContenusMediathequeTableReferences
+                              ._favorisRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$ContenusMediathequeTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).favorisRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.contenuId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (commentairesRefs)
+                        await $_getPrefetchedData<
+                          ContenuMediathequeRow,
+                          $ContenusMediathequeTable,
+                          CommentaireRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ContenusMediathequeTableReferences
+                              ._commentairesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$ContenusMediathequeTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).commentairesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.contenuId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$ContenusMediathequeTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ContenusMediathequeTable,
+      ContenuMediathequeRow,
+      $$ContenusMediathequeTableFilterComposer,
+      $$ContenusMediathequeTableOrderingComposer,
+      $$ContenusMediathequeTableAnnotationComposer,
+      $$ContenusMediathequeTableCreateCompanionBuilder,
+      $$ContenusMediathequeTableUpdateCompanionBuilder,
+      (ContenuMediathequeRow, $$ContenusMediathequeTableReferences),
+      ContenuMediathequeRow,
+      PrefetchHooks Function({
+        bool noeudEditeurId,
+        bool favorisRefs,
+        bool commentairesRefs,
+      })
+    >;
+typedef $$FavorisTableCreateCompanionBuilder =
+    FavorisCompanion Function({
+      required String id,
+      required String fideleId,
+      required String contenuId,
+      Value<int> rowid,
+    });
+typedef $$FavorisTableUpdateCompanionBuilder =
+    FavorisCompanion Function({
+      Value<String> id,
+      Value<String> fideleId,
+      Value<String> contenuId,
+      Value<int> rowid,
+    });
+
+final class $$FavorisTableReferences
+    extends BaseReferences<_$AppDatabase, $FavorisTable, FavoriRow> {
+  $$FavorisTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('favoris__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $ContenusMediathequeTable _contenuIdTable(_$AppDatabase db) => db
+      .contenusMediatheque
+      .createAlias('favoris__contenu_id__contenus_mediatheque__id');
+
+  $$ContenusMediathequeTableProcessedTableManager get contenuId {
+    final $_column = $_itemColumn<String>('contenu_id')!;
+
+    final manager = $$ContenusMediathequeTableTableManager(
+      $_db,
+      $_db.contenusMediatheque,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_contenuIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$FavorisTableFilterComposer
+    extends Composer<_$AppDatabase, $FavorisTable> {
+  $$FavorisTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ContenusMediathequeTableFilterComposer get contenuId {
+    final $$ContenusMediathequeTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.contenuId,
+      referencedTable: $db.contenusMediatheque,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContenusMediathequeTableFilterComposer(
+            $db: $db,
+            $table: $db.contenusMediatheque,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$FavorisTableOrderingComposer
+    extends Composer<_$AppDatabase, $FavorisTable> {
+  $$FavorisTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ContenusMediathequeTableOrderingComposer get contenuId {
+    final $$ContenusMediathequeTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.contenuId,
+          referencedTable: $db.contenusMediatheque,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ContenusMediathequeTableOrderingComposer(
+                $db: $db,
+                $table: $db.contenusMediatheque,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$FavorisTableAnnotationComposer
+    extends Composer<_$AppDatabase, $FavorisTable> {
+  $$FavorisTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ContenusMediathequeTableAnnotationComposer get contenuId {
+    final $$ContenusMediathequeTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.contenuId,
+          referencedTable: $db.contenusMediatheque,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ContenusMediathequeTableAnnotationComposer(
+                $db: $db,
+                $table: $db.contenusMediatheque,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$FavorisTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $FavorisTable,
+          FavoriRow,
+          $$FavorisTableFilterComposer,
+          $$FavorisTableOrderingComposer,
+          $$FavorisTableAnnotationComposer,
+          $$FavorisTableCreateCompanionBuilder,
+          $$FavorisTableUpdateCompanionBuilder,
+          (FavoriRow, $$FavorisTableReferences),
+          FavoriRow,
+          PrefetchHooks Function({bool fideleId, bool contenuId})
+        > {
+  $$FavorisTableTableManager(_$AppDatabase db, $FavorisTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$FavorisTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$FavorisTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$FavorisTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<String> contenuId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FavorisCompanion(
+                id: id,
+                fideleId: fideleId,
+                contenuId: contenuId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String fideleId,
+                required String contenuId,
+                Value<int> rowid = const Value.absent(),
+              }) => FavorisCompanion.insert(
+                id: id,
+                fideleId: fideleId,
+                contenuId: contenuId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$FavorisTable, FavoriRow>(table),
+                  $$FavorisTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({fideleId = false, contenuId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (fideleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.fideleId,
+                                referencedTable: $$FavorisTableReferences
+                                    ._fideleIdTable(db),
+                                referencedColumn: $$FavorisTableReferences
+                                    ._fideleIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+                    if (contenuId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.contenuId,
+                                referencedTable: $$FavorisTableReferences
+                                    ._contenuIdTable(db),
+                                referencedColumn: $$FavorisTableReferences
+                                    ._contenuIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$FavorisTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $FavorisTable,
+      FavoriRow,
+      $$FavorisTableFilterComposer,
+      $$FavorisTableOrderingComposer,
+      $$FavorisTableAnnotationComposer,
+      $$FavorisTableCreateCompanionBuilder,
+      $$FavorisTableUpdateCompanionBuilder,
+      (FavoriRow, $$FavorisTableReferences),
+      FavoriRow,
+      PrefetchHooks Function({bool fideleId, bool contenuId})
+    >;
+typedef $$CommentairesTableCreateCompanionBuilder =
+    CommentairesCompanion Function({
+      required String id,
+      required String contenuId,
+      required String fideleId,
+      required String texte,
+      Value<String> statutModeration,
+      required DateTime date,
+      Value<int> nombreSignalements,
+      Value<int> rowid,
+    });
+typedef $$CommentairesTableUpdateCompanionBuilder =
+    CommentairesCompanion Function({
+      Value<String> id,
+      Value<String> contenuId,
+      Value<String> fideleId,
+      Value<String> texte,
+      Value<String> statutModeration,
+      Value<DateTime> date,
+      Value<int> nombreSignalements,
+      Value<int> rowid,
+    });
+
+final class $$CommentairesTableReferences
+    extends BaseReferences<_$AppDatabase, $CommentairesTable, CommentaireRow> {
+  $$CommentairesTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $ContenusMediathequeTable _contenuIdTable(_$AppDatabase db) => db
+      .contenusMediatheque
+      .createAlias('commentaires__contenu_id__contenus_mediatheque__id');
+
+  $$ContenusMediathequeTableProcessedTableManager get contenuId {
+    final $_column = $_itemColumn<String>('contenu_id')!;
+
+    final manager = $$ContenusMediathequeTableTableManager(
+      $_db,
+      $_db.contenusMediatheque,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_contenuIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('commentaires__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$CommentairesTableFilterComposer
+    extends Composer<_$AppDatabase, $CommentairesTable> {
+  $$CommentairesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get texte => $composableBuilder(
+    column: $table.texte,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statutModeration => $composableBuilder(
+    column: $table.statutModeration,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get nombreSignalements => $composableBuilder(
+    column: $table.nombreSignalements,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$ContenusMediathequeTableFilterComposer get contenuId {
+    final $$ContenusMediathequeTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.contenuId,
+      referencedTable: $db.contenusMediatheque,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContenusMediathequeTableFilterComposer(
+            $db: $db,
+            $table: $db.contenusMediatheque,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$CommentairesTableOrderingComposer
+    extends Composer<_$AppDatabase, $CommentairesTable> {
+  $$CommentairesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get texte => $composableBuilder(
+    column: $table.texte,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statutModeration => $composableBuilder(
+    column: $table.statutModeration,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get nombreSignalements => $composableBuilder(
+    column: $table.nombreSignalements,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$ContenusMediathequeTableOrderingComposer get contenuId {
+    final $$ContenusMediathequeTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.contenuId,
+          referencedTable: $db.contenusMediatheque,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ContenusMediathequeTableOrderingComposer(
+                $db: $db,
+                $table: $db.contenusMediatheque,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$CommentairesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CommentairesTable> {
+  $$CommentairesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get texte =>
+      $composableBuilder(column: $table.texte, builder: (column) => column);
+
+  GeneratedColumn<String> get statutModeration => $composableBuilder(
+    column: $table.statutModeration,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<int> get nombreSignalements => $composableBuilder(
+    column: $table.nombreSignalements,
+    builder: (column) => column,
+  );
+
+  $$ContenusMediathequeTableAnnotationComposer get contenuId {
+    final $$ContenusMediathequeTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.contenuId,
+          referencedTable: $db.contenusMediatheque,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ContenusMediathequeTableAnnotationComposer(
+                $db: $db,
+                $table: $db.contenusMediatheque,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$CommentairesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CommentairesTable,
+          CommentaireRow,
+          $$CommentairesTableFilterComposer,
+          $$CommentairesTableOrderingComposer,
+          $$CommentairesTableAnnotationComposer,
+          $$CommentairesTableCreateCompanionBuilder,
+          $$CommentairesTableUpdateCompanionBuilder,
+          (CommentaireRow, $$CommentairesTableReferences),
+          CommentaireRow,
+          PrefetchHooks Function({bool contenuId, bool fideleId})
+        > {
+  $$CommentairesTableTableManager(_$AppDatabase db, $CommentairesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CommentairesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CommentairesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CommentairesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> contenuId = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<String> texte = const Value.absent(),
+                Value<String> statutModeration = const Value.absent(),
+                Value<DateTime> date = const Value.absent(),
+                Value<int> nombreSignalements = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CommentairesCompanion(
+                id: id,
+                contenuId: contenuId,
+                fideleId: fideleId,
+                texte: texte,
+                statutModeration: statutModeration,
+                date: date,
+                nombreSignalements: nombreSignalements,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String contenuId,
+                required String fideleId,
+                required String texte,
+                Value<String> statutModeration = const Value.absent(),
+                required DateTime date,
+                Value<int> nombreSignalements = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CommentairesCompanion.insert(
+                id: id,
+                contenuId: contenuId,
+                fideleId: fideleId,
+                texte: texte,
+                statutModeration: statutModeration,
+                date: date,
+                nombreSignalements: nombreSignalements,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$CommentairesTable, CommentaireRow>(table),
+                  $$CommentairesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({contenuId = false, fideleId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (contenuId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.contenuId,
+                                referencedTable: $$CommentairesTableReferences
+                                    ._contenuIdTable(db),
+                                referencedColumn: $$CommentairesTableReferences
+                                    ._contenuIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+                    if (fideleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.fideleId,
+                                referencedTable: $$CommentairesTableReferences
+                                    ._fideleIdTable(db),
+                                referencedColumn: $$CommentairesTableReferences
+                                    ._fideleIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$CommentairesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CommentairesTable,
+      CommentaireRow,
+      $$CommentairesTableFilterComposer,
+      $$CommentairesTableOrderingComposer,
+      $$CommentairesTableAnnotationComposer,
+      $$CommentairesTableCreateCompanionBuilder,
+      $$CommentairesTableUpdateCompanionBuilder,
+      (CommentaireRow, $$CommentairesTableReferences),
+      CommentaireRow,
+      PrefetchHooks Function({bool contenuId, bool fideleId})
+    >;
 typedef $$SyncOutboxTableCreateCompanionBuilder =
     SyncOutboxCompanion Function({
       required String id,
@@ -64125,6 +67608,12 @@ class $AppDatabaseManager {
       $$EcrituresComptablesTableTableManager(_db, _db.ecrituresComptables);
   $$BudgetsTableTableManager get budgets =>
       $$BudgetsTableTableManager(_db, _db.budgets);
+  $$ContenusMediathequeTableTableManager get contenusMediatheque =>
+      $$ContenusMediathequeTableTableManager(_db, _db.contenusMediatheque);
+  $$FavorisTableTableManager get favoris =>
+      $$FavorisTableTableManager(_db, _db.favoris);
+  $$CommentairesTableTableManager get commentaires =>
+      $$CommentairesTableTableManager(_db, _db.commentaires);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }

@@ -1073,6 +1073,73 @@ class Budgets extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Table Drift ContenuMediatheque (Module XIII, RG-XIII-01/02). `fichier`
+/// est une simple référence (URL ou texte) vers le média : aucun fichier
+/// binaire n'est téléversé ni stocké par l'application dans cette itération
+/// (décision explicite : « métadonnées seulement »). `motsCles` est stocké
+/// en texte séparé par des virgules (pas de type tableau natif en sqlite),
+/// converti en `List<String>` par `MediathequeRepository` — même
+/// simplification que documentée pour d'autres champs répétés du projet.
+/// La contrainte `UNIQUE (source_module, source_id, type_contenu)` rend
+/// idempotent l'archivage automatique déclenché par un module producteur
+/// (ex. Module XII, publication d'un culte) : republier met à jour la même
+/// ligne plutôt que d'en dupliquer une nouvelle.
+@DataClassName('ContenuMediathequeRow')
+class ContenusMediatheque extends Table {
+  TextColumn get id => text()();
+  TextColumn get typeContenu => text()();
+  TextColumn get titre => text()();
+  TextColumn get sourceModule => text().nullable()();
+  TextColumn get sourceId => text().nullable()();
+  TextColumn get noeudEditeurId => text().references(OrganisationNodes, #id)();
+  TextColumn get fichier => text().nullable()();
+  TextColumn get theme => text()();
+  TextColumn get motsCles => text().withDefault(const Constant(''))();
+  TextColumn get intervenant => text().nullable()();
+  DateTimeColumn get dateContenu => dateTime()();
+  TextColumn get statut => text().withDefault(const Constant('brouillon'))();
+  BoolColumn get droitsTelechargement => boolean().withDefault(const Constant(false))();
+  BoolColumn get moderationAPriori => boolean().withDefault(const Constant(false))();
+  IntColumn get compteurConsultations => integer().withDefault(const Constant(0))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (source_module, source_id, type_contenu)'];
+}
+
+/// Table Drift Favori (Module XIII, RG-XIII-04). `UNIQUE (fidele_id,
+/// contenu_id)` empêche un doublon de favori pour un même fidèle sur un
+/// même contenu.
+@DataClassName('FavoriRow')
+class Favoris extends Table {
+  TextColumn get id => text()();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  TextColumn get contenuId => text().references(ContenusMediatheque, #id)();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (fidele_id, contenu_id)'];
+}
+
+/// Table Drift Commentaire (Module XIII, RG-XIII-03).
+@DataClassName('CommentaireRow')
+class Commentaires extends Table {
+  TextColumn get id => text()();
+  TextColumn get contenuId => text().references(ContenusMediatheque, #id)();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  TextColumn get texte => text()();
+  TextColumn get statutModeration => text().withDefault(const Constant('publie'))();
+  DateTimeColumn get date => dateTime()();
+  IntColumn get nombreSignalements => integer().withDefault(const Constant(0))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 /// File d'attente hors ligne (RG-OFF-02) : chaque écriture locale enregistre
 /// ici l'événement à rejouer vers Supabase dès qu'une connexion est
 /// disponible, dans l'ordre chronologique, jamais purgée avant confirmation

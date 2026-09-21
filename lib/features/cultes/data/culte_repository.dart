@@ -13,14 +13,21 @@ import '../domain/models/statut_proposition.dart';
 import '../domain/models/valeur_vote.dart';
 import '../domain/models/vote_proposition.dart';
 import '../domain/rules/culte_rules.dart';
+import '../../mediatheque/data/mediatheque_repository.dart';
 
 /// Dépôt Module XII — cultes (RG-XII-01 à 06). Pas de synchronisation
 /// distante pour cette première itération, même précédent documenté que
-/// les modules précédents.
+/// les modules précédents. `mediathequeRepository` est un producteur
+/// consommé par injection optionnelle (RG-XIII-02) : quand fourni,
+/// `publier` archive automatiquement les médias de la publication dans
+/// la médiathèque — même motif d'injection optionnelle qu'`Archivage
+/// Repository`/`ComptabiliteRepository` dans les modules précédents.
 class CulteRepository {
-  CulteRepository(this._db);
+  CulteRepository(this._db, {MediathequeRepository? mediathequeRepository})
+      : _mediatheque = mediathequeRepository;
 
   final AppDatabase _db;
+  final MediathequeRepository? _mediatheque;
 
   // --- Cultes (RG-XII-01/02/05) --------------------------------------------
 
@@ -202,6 +209,12 @@ class CulteRepository {
         ),
       );
       final row = await (_db.select(_db.publicationsCulte)..where((t) => t.id.equals(existante.id))).getSingle();
+      await _archiverDansMediathequeSiInjecte(
+        culteId: culteId,
+        audioUrl: audioUrl,
+        videoUrl: videoUrl,
+        pdfUrl: pdfUrl,
+      );
       return _publicationToDomain(row);
     }
 
@@ -218,7 +231,47 @@ class CulteRepository {
           ),
         );
     final row = await (_db.select(_db.publicationsCulte)..where((t) => t.id.equals(id))).getSingle();
+    await _archiverDansMediathequeSiInjecte(
+      culteId: culteId,
+      audioUrl: audioUrl,
+      videoUrl: videoUrl,
+      pdfUrl: pdfUrl,
+    );
     return _publicationToDomain(row);
+  }
+
+  /// RG-XIII-02 — archive automatiquement, sans ressaisie manuelle, les
+  /// médias non-nuls d'une publication post-culte dans la médiathèque
+  /// (Module XIII), quand `MediathequeRepository` est injecté. Aucune
+  /// opération si aucun média n'est renseigné ou si le producteur n'est pas
+  /// injecté (même précédent que les autres producteurs optionnels).
+  Future<void> _archiverDansMediathequeSiInjecte({
+    required String culteId,
+    String? audioUrl,
+    String? videoUrl,
+    String? pdfUrl,
+  }) async {
+    final mediathequeRepository = _mediatheque;
+    if (mediathequeRepository == null) return;
+    if (audioUrl == null && videoUrl == null && pdfUrl == null) return;
+
+    final culte = await (_db.select(_db.cultes)..where((t) => t.id.equals(culteId))).getSingle();
+    final dateLabel = '${culte.dateHeure.year.toString().padLeft(4, '0')}-'
+        '${culte.dateHeure.month.toString().padLeft(2, '0')}-'
+        '${culte.dateHeure.day.toString().padLeft(2, '0')}';
+    final theme = (culte.theme != null && culte.theme!.isNotEmpty) ? culte.theme! : culte.typeCulte;
+    final titre = (culte.theme != null && culte.theme!.isNotEmpty) ? culte.theme! : 'Culte du $dateLabel';
+
+    await mediathequeRepository.archiverDepuisCulte(
+      culteId: culteId,
+      noeudEditeurId: culte.noeudId,
+      titre: titre,
+      theme: theme,
+      dateContenu: culte.dateHeure,
+      audioUrl: audioUrl,
+      videoUrl: videoUrl,
+      pdfUrl: pdfUrl,
+    );
   }
 
   // --- Propositions de thème (RG-XII-06) --------------------------------------

@@ -38,4 +38,9 @@ abstract final class AppDefaults {
   /// n'est pas renseigné. Le Cahier prévoit un seuil « paramétrable » sans
   /// imposer de valeur par défaut.
   static const int comptabiliteSeuilAlerteDepassementPourcentageParDefaut = 90;
+
+  /// RG-XIII-03 — nombre de signalements sur un commentaire publié à
+  /// partir duquel il est masqué automatiquement, en attendant une
+  /// décision de modération. Le Cahier n'impose pas cette valeur.
+  static const int mediathequeSeuilSignalementsAvantMasquage = 3;
 }

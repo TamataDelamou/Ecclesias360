@@ -223,13 +223,16 @@ const List<(String code, String libelle, String type)> comptesComptablesDeDepart
   PeriodesComptables,
   EcrituresComptables,
   Budgets,
+  ContenusMediatheque,
+  Favoris,
+  Commentaires,
   SyncOutbox,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 16;
+  int get schemaVersion => 17;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -358,6 +361,14 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(budgets);
             await _seedComptesComptablesStandards();
             await _seedPeriodeComptableCourante();
+          }
+          // v16 -> v17 : ajout du Module XIII (Médiathèque chrétienne).
+          // Aucun référentiel standard à seeder (pas de liste fermée de
+          // types comparable à TypeMinistere/TypeOffrande/ComptesComptables).
+          if (from < 17) {
+            await m.createTable(contenusMediatheque);
+            await m.createTable(favoris);
+            await m.createTable(commentaires);
           }
         },
         beforeOpen: (details) async {

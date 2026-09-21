@@ -26,6 +26,7 @@ import 'features/groupes_eglise/application/groupe_controller.dart';
 import 'features/groupes_eglise/data/groupe_repository.dart';
 import 'features/ministeres/application/ministere_controller.dart';
 import 'features/ministeres/data/ministere_repository.dart';
+import 'features/mediatheque/data/mediatheque_repository.dart';
 import 'features/organization/application/organisation_controller.dart';
 import 'features/organization/data/local/app_database.dart';
 import 'features/organization/data/organisation_node_repository.dart';
@@ -66,6 +67,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final ArchivageController _archivageController;
   late final ComiteRepository _comiteRepository;
   late final ComiteController _comiteController;
+  late final MediathequeRepository _mediathequeRepository;
   late final CulteRepository _culteRepository;
   late final CulteController _culteController;
   late final DeplacementRepository _deplacementRepository;
@@ -101,7 +103,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _archivageController = ArchivageController(_archivageRepository);
     _comiteRepository = ComiteRepository(widget.database, archivageRepository: _archivageRepository);
     _comiteController = ComiteController(_comiteRepository);
-    _culteRepository = CulteRepository(widget.database);
+    _mediathequeRepository = MediathequeRepository(widget.database);
+    _culteRepository = CulteRepository(widget.database, mediathequeRepository: _mediathequeRepository);
     _culteController = CulteController(_culteRepository);
     _deplacementRepository = DeplacementRepository(
       widget.database,
