@@ -25,4 +25,11 @@ abstract final class AppDefaults {
   /// au-delà duquel une revue périodique du dossier est signalée. Le Cahier
   /// n'impose pas cette valeur.
   static const int disciplineRevuePeriodiqueJours = 90;
+
+  /// RG-XI-01 — code devise par défaut des montants (Contribution/Projet).
+  /// Le Cahier prévoit `devise_id` référençant le référentiel Kernel « GSG
+  /// Referential », non construit (AGENTS.md §11 point 2 : à construire
+  /// avec un futur module de facturation, pas avec ce module) — simple code
+  /// texte en attendant, remplaçable sans migration lourde.
+  static const String financesDeviseParDefaut = 'GNF';
 }

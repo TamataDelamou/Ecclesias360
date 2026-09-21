@@ -19884,6 +19884,3610 @@ class PiecesDossierCompanion extends UpdateCompanion<PieceDossierRow> {
   }
 }
 
+class $TypesOffrandeTable extends TypesOffrande
+    with TableInfo<$TypesOffrandeTable, TypeOffrandeRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TypesOffrandeTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+    'code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _libelleMeta = const VerificationMeta(
+    'libelle',
+  );
+  @override
+  late final GeneratedColumn<String> libelle = GeneratedColumn<String>(
+    'libelle',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _standardMeta = const VerificationMeta(
+    'standard',
+  );
+  @override
+  late final GeneratedColumn<bool> standard = GeneratedColumn<bool>(
+    'standard',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("standard" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('actif'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, code, libelle, standard, statut];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'types_offrande';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TypeOffrandeRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+        _codeMeta,
+        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_codeMeta);
+    }
+    if (data.containsKey('libelle')) {
+      context.handle(
+        _libelleMeta,
+        libelle.isAcceptableOrUnknown(data['libelle']!, _libelleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_libelleMeta);
+    }
+    if (data.containsKey('standard')) {
+      context.handle(
+        _standardMeta,
+        standard.isAcceptableOrUnknown(data['standard']!, _standardMeta),
+      );
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TypeOffrandeRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TypeOffrandeRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      code: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code'],
+      )!,
+      libelle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}libelle'],
+      )!,
+      standard: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}standard'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+    );
+  }
+
+  @override
+  $TypesOffrandeTable createAlias(String alias) {
+    return $TypesOffrandeTable(attachedDatabase, alias);
+  }
+}
+
+class TypeOffrandeRow extends DataClass implements Insertable<TypeOffrandeRow> {
+  final String id;
+  final String code;
+  final String libelle;
+  final bool standard;
+  final String statut;
+  const TypeOffrandeRow({
+    required this.id,
+    required this.code,
+    required this.libelle,
+    required this.standard,
+    required this.statut,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['code'] = Variable<String>(code);
+    map['libelle'] = Variable<String>(libelle);
+    map['standard'] = Variable<bool>(standard);
+    map['statut'] = Variable<String>(statut);
+    return map;
+  }
+
+  TypesOffrandeCompanion toCompanion(bool nullToAbsent) {
+    return TypesOffrandeCompanion(
+      id: Value(id),
+      code: Value(code),
+      libelle: Value(libelle),
+      standard: Value(standard),
+      statut: Value(statut),
+    );
+  }
+
+  factory TypeOffrandeRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TypeOffrandeRow(
+      id: serializer.fromJson<String>(json['id']),
+      code: serializer.fromJson<String>(json['code']),
+      libelle: serializer.fromJson<String>(json['libelle']),
+      standard: serializer.fromJson<bool>(json['standard']),
+      statut: serializer.fromJson<String>(json['statut']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'code': serializer.toJson<String>(code),
+      'libelle': serializer.toJson<String>(libelle),
+      'standard': serializer.toJson<bool>(standard),
+      'statut': serializer.toJson<String>(statut),
+    };
+  }
+
+  TypeOffrandeRow copyWith({
+    String? id,
+    String? code,
+    String? libelle,
+    bool? standard,
+    String? statut,
+  }) => TypeOffrandeRow(
+    id: id ?? this.id,
+    code: code ?? this.code,
+    libelle: libelle ?? this.libelle,
+    standard: standard ?? this.standard,
+    statut: statut ?? this.statut,
+  );
+  TypeOffrandeRow copyWithCompanion(TypesOffrandeCompanion data) {
+    return TypeOffrandeRow(
+      id: data.id.present ? data.id.value : this.id,
+      code: data.code.present ? data.code.value : this.code,
+      libelle: data.libelle.present ? data.libelle.value : this.libelle,
+      standard: data.standard.present ? data.standard.value : this.standard,
+      statut: data.statut.present ? data.statut.value : this.statut,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TypeOffrandeRow(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('libelle: $libelle, ')
+          ..write('standard: $standard, ')
+          ..write('statut: $statut')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, code, libelle, standard, statut);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TypeOffrandeRow &&
+          other.id == this.id &&
+          other.code == this.code &&
+          other.libelle == this.libelle &&
+          other.standard == this.standard &&
+          other.statut == this.statut);
+}
+
+class TypesOffrandeCompanion extends UpdateCompanion<TypeOffrandeRow> {
+  final Value<String> id;
+  final Value<String> code;
+  final Value<String> libelle;
+  final Value<bool> standard;
+  final Value<String> statut;
+  final Value<int> rowid;
+  const TypesOffrandeCompanion({
+    this.id = const Value.absent(),
+    this.code = const Value.absent(),
+    this.libelle = const Value.absent(),
+    this.standard = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TypesOffrandeCompanion.insert({
+    required String id,
+    required String code,
+    required String libelle,
+    this.standard = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       code = Value(code),
+       libelle = Value(libelle);
+  static Insertable<TypeOffrandeRow> custom({
+    Expression<String>? id,
+    Expression<String>? code,
+    Expression<String>? libelle,
+    Expression<bool>? standard,
+    Expression<String>? statut,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (code != null) 'code': code,
+      if (libelle != null) 'libelle': libelle,
+      if (standard != null) 'standard': standard,
+      if (statut != null) 'statut': statut,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TypesOffrandeCompanion copyWith({
+    Value<String>? id,
+    Value<String>? code,
+    Value<String>? libelle,
+    Value<bool>? standard,
+    Value<String>? statut,
+    Value<int>? rowid,
+  }) {
+    return TypesOffrandeCompanion(
+      id: id ?? this.id,
+      code: code ?? this.code,
+      libelle: libelle ?? this.libelle,
+      standard: standard ?? this.standard,
+      statut: statut ?? this.statut,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (libelle.present) {
+      map['libelle'] = Variable<String>(libelle.value);
+    }
+    if (standard.present) {
+      map['standard'] = Variable<bool>(standard.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TypesOffrandeCompanion(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('libelle: $libelle, ')
+          ..write('standard: $standard, ')
+          ..write('statut: $statut, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ProjetsTable extends Projets with TableInfo<$ProjetsTable, ProjetRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ProjetsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _noeudIdMeta = const VerificationMeta(
+    'noeudId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudId = GeneratedColumn<String>(
+    'noeud_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _nomMeta = const VerificationMeta('nom');
+  @override
+  late final GeneratedColumn<String> nom = GeneratedColumn<String>(
+    'nom',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _budgetPrevisionnelMeta =
+      const VerificationMeta('budgetPrevisionnel');
+  @override
+  late final GeneratedColumn<int> budgetPrevisionnel = GeneratedColumn<int>(
+    'budget_previsionnel',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deviseMeta = const VerificationMeta('devise');
+  @override
+  late final GeneratedColumn<String> devise = GeneratedColumn<String>(
+    'devise',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('en_cours'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    noeudId,
+    nom,
+    budgetPrevisionnel,
+    devise,
+    statut,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'projets';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ProjetRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('noeud_id')) {
+      context.handle(
+        _noeudIdMeta,
+        noeudId.isAcceptableOrUnknown(data['noeud_id']!, _noeudIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudIdMeta);
+    }
+    if (data.containsKey('nom')) {
+      context.handle(
+        _nomMeta,
+        nom.isAcceptableOrUnknown(data['nom']!, _nomMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nomMeta);
+    }
+    if (data.containsKey('budget_previsionnel')) {
+      context.handle(
+        _budgetPrevisionnelMeta,
+        budgetPrevisionnel.isAcceptableOrUnknown(
+          data['budget_previsionnel']!,
+          _budgetPrevisionnelMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_budgetPrevisionnelMeta);
+    }
+    if (data.containsKey('devise')) {
+      context.handle(
+        _deviseMeta,
+        devise.isAcceptableOrUnknown(data['devise']!, _deviseMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_deviseMeta);
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ProjetRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ProjetRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      noeudId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_id'],
+      )!,
+      nom: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}nom'],
+      )!,
+      budgetPrevisionnel: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}budget_previsionnel'],
+      )!,
+      devise: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}devise'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+    );
+  }
+
+  @override
+  $ProjetsTable createAlias(String alias) {
+    return $ProjetsTable(attachedDatabase, alias);
+  }
+}
+
+class ProjetRow extends DataClass implements Insertable<ProjetRow> {
+  final String id;
+  final String noeudId;
+  final String nom;
+  final int budgetPrevisionnel;
+  final String devise;
+  final String statut;
+  const ProjetRow({
+    required this.id,
+    required this.noeudId,
+    required this.nom,
+    required this.budgetPrevisionnel,
+    required this.devise,
+    required this.statut,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['noeud_id'] = Variable<String>(noeudId);
+    map['nom'] = Variable<String>(nom);
+    map['budget_previsionnel'] = Variable<int>(budgetPrevisionnel);
+    map['devise'] = Variable<String>(devise);
+    map['statut'] = Variable<String>(statut);
+    return map;
+  }
+
+  ProjetsCompanion toCompanion(bool nullToAbsent) {
+    return ProjetsCompanion(
+      id: Value(id),
+      noeudId: Value(noeudId),
+      nom: Value(nom),
+      budgetPrevisionnel: Value(budgetPrevisionnel),
+      devise: Value(devise),
+      statut: Value(statut),
+    );
+  }
+
+  factory ProjetRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ProjetRow(
+      id: serializer.fromJson<String>(json['id']),
+      noeudId: serializer.fromJson<String>(json['noeudId']),
+      nom: serializer.fromJson<String>(json['nom']),
+      budgetPrevisionnel: serializer.fromJson<int>(json['budgetPrevisionnel']),
+      devise: serializer.fromJson<String>(json['devise']),
+      statut: serializer.fromJson<String>(json['statut']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'noeudId': serializer.toJson<String>(noeudId),
+      'nom': serializer.toJson<String>(nom),
+      'budgetPrevisionnel': serializer.toJson<int>(budgetPrevisionnel),
+      'devise': serializer.toJson<String>(devise),
+      'statut': serializer.toJson<String>(statut),
+    };
+  }
+
+  ProjetRow copyWith({
+    String? id,
+    String? noeudId,
+    String? nom,
+    int? budgetPrevisionnel,
+    String? devise,
+    String? statut,
+  }) => ProjetRow(
+    id: id ?? this.id,
+    noeudId: noeudId ?? this.noeudId,
+    nom: nom ?? this.nom,
+    budgetPrevisionnel: budgetPrevisionnel ?? this.budgetPrevisionnel,
+    devise: devise ?? this.devise,
+    statut: statut ?? this.statut,
+  );
+  ProjetRow copyWithCompanion(ProjetsCompanion data) {
+    return ProjetRow(
+      id: data.id.present ? data.id.value : this.id,
+      noeudId: data.noeudId.present ? data.noeudId.value : this.noeudId,
+      nom: data.nom.present ? data.nom.value : this.nom,
+      budgetPrevisionnel: data.budgetPrevisionnel.present
+          ? data.budgetPrevisionnel.value
+          : this.budgetPrevisionnel,
+      devise: data.devise.present ? data.devise.value : this.devise,
+      statut: data.statut.present ? data.statut.value : this.statut,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProjetRow(')
+          ..write('id: $id, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('nom: $nom, ')
+          ..write('budgetPrevisionnel: $budgetPrevisionnel, ')
+          ..write('devise: $devise, ')
+          ..write('statut: $statut')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, noeudId, nom, budgetPrevisionnel, devise, statut);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ProjetRow &&
+          other.id == this.id &&
+          other.noeudId == this.noeudId &&
+          other.nom == this.nom &&
+          other.budgetPrevisionnel == this.budgetPrevisionnel &&
+          other.devise == this.devise &&
+          other.statut == this.statut);
+}
+
+class ProjetsCompanion extends UpdateCompanion<ProjetRow> {
+  final Value<String> id;
+  final Value<String> noeudId;
+  final Value<String> nom;
+  final Value<int> budgetPrevisionnel;
+  final Value<String> devise;
+  final Value<String> statut;
+  final Value<int> rowid;
+  const ProjetsCompanion({
+    this.id = const Value.absent(),
+    this.noeudId = const Value.absent(),
+    this.nom = const Value.absent(),
+    this.budgetPrevisionnel = const Value.absent(),
+    this.devise = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ProjetsCompanion.insert({
+    required String id,
+    required String noeudId,
+    required String nom,
+    required int budgetPrevisionnel,
+    required String devise,
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       noeudId = Value(noeudId),
+       nom = Value(nom),
+       budgetPrevisionnel = Value(budgetPrevisionnel),
+       devise = Value(devise);
+  static Insertable<ProjetRow> custom({
+    Expression<String>? id,
+    Expression<String>? noeudId,
+    Expression<String>? nom,
+    Expression<int>? budgetPrevisionnel,
+    Expression<String>? devise,
+    Expression<String>? statut,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (noeudId != null) 'noeud_id': noeudId,
+      if (nom != null) 'nom': nom,
+      if (budgetPrevisionnel != null) 'budget_previsionnel': budgetPrevisionnel,
+      if (devise != null) 'devise': devise,
+      if (statut != null) 'statut': statut,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ProjetsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? noeudId,
+    Value<String>? nom,
+    Value<int>? budgetPrevisionnel,
+    Value<String>? devise,
+    Value<String>? statut,
+    Value<int>? rowid,
+  }) {
+    return ProjetsCompanion(
+      id: id ?? this.id,
+      noeudId: noeudId ?? this.noeudId,
+      nom: nom ?? this.nom,
+      budgetPrevisionnel: budgetPrevisionnel ?? this.budgetPrevisionnel,
+      devise: devise ?? this.devise,
+      statut: statut ?? this.statut,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (noeudId.present) {
+      map['noeud_id'] = Variable<String>(noeudId.value);
+    }
+    if (nom.present) {
+      map['nom'] = Variable<String>(nom.value);
+    }
+    if (budgetPrevisionnel.present) {
+      map['budget_previsionnel'] = Variable<int>(budgetPrevisionnel.value);
+    }
+    if (devise.present) {
+      map['devise'] = Variable<String>(devise.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProjetsCompanion(')
+          ..write('id: $id, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('nom: $nom, ')
+          ..write('budgetPrevisionnel: $budgetPrevisionnel, ')
+          ..write('devise: $devise, ')
+          ..write('statut: $statut, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ContributionsTable extends Contributions
+    with TableInfo<$ContributionsTable, ContributionRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ContributionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _libelleDonateurAnonymeMeta =
+      const VerificationMeta('libelleDonateurAnonyme');
+  @override
+  late final GeneratedColumn<String> libelleDonateurAnonyme =
+      GeneratedColumn<String>(
+        'libelle_donateur_anonyme',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _typeOffrandeIdMeta = const VerificationMeta(
+    'typeOffrandeId',
+  );
+  @override
+  late final GeneratedColumn<String> typeOffrandeId = GeneratedColumn<String>(
+    'type_offrande_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES types_offrande (id)',
+    ),
+  );
+  static const VerificationMeta _montantMeta = const VerificationMeta(
+    'montant',
+  );
+  @override
+  late final GeneratedColumn<int> montant = GeneratedColumn<int>(
+    'montant',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deviseMeta = const VerificationMeta('devise');
+  @override
+  late final GeneratedColumn<String> devise = GeneratedColumn<String>(
+    'devise',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _noeudIdMeta = const VerificationMeta(
+    'noeudId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudId = GeneratedColumn<String>(
+    'noeud_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _culteIdMeta = const VerificationMeta(
+    'culteId',
+  );
+  @override
+  late final GeneratedColumn<String> culteId = GeneratedColumn<String>(
+    'culte_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES cultes (id)',
+    ),
+  );
+  static const VerificationMeta _projetIdMeta = const VerificationMeta(
+    'projetId',
+  );
+  @override
+  late final GeneratedColumn<String> projetId = GeneratedColumn<String>(
+    'projet_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES projets (id)',
+    ),
+  );
+  static const VerificationMeta _modePaiementMeta = const VerificationMeta(
+    'modePaiement',
+  );
+  @override
+  late final GeneratedColumn<String> modePaiement = GeneratedColumn<String>(
+    'mode_paiement',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('en_attente'),
+  );
+  static const VerificationMeta _origineMeta = const VerificationMeta(
+    'origine',
+  );
+  @override
+  late final GeneratedColumn<String> origine = GeneratedColumn<String>(
+    'origine',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateSaisieMeta = const VerificationMeta(
+    'dateSaisie',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateSaisie = GeneratedColumn<DateTime>(
+    'date_saisie',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _valideParFideleIdMeta = const VerificationMeta(
+    'valideParFideleId',
+  );
+  @override
+  late final GeneratedColumn<String> valideParFideleId =
+      GeneratedColumn<String>(
+        'valide_par_fidele_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _dateValidationMeta = const VerificationMeta(
+    'dateValidation',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateValidation =
+      GeneratedColumn<DateTime>(
+        'date_validation',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _motifRejetMeta = const VerificationMeta(
+    'motifRejet',
+  );
+  @override
+  late final GeneratedColumn<String> motifRejet = GeneratedColumn<String>(
+    'motif_rejet',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _contributionOrigineIdMeta =
+      const VerificationMeta('contributionOrigineId');
+  @override
+  late final GeneratedColumn<String> contributionOrigineId =
+      GeneratedColumn<String>(
+        'contribution_origine_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES contributions (id)',
+        ),
+      );
+  static const VerificationMeta _estContrePassationMeta =
+      const VerificationMeta('estContrePassation');
+  @override
+  late final GeneratedColumn<bool> estContrePassation = GeneratedColumn<bool>(
+    'est_contre_passation',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("est_contre_passation" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    fideleId,
+    libelleDonateurAnonyme,
+    typeOffrandeId,
+    montant,
+    devise,
+    noeudId,
+    culteId,
+    projetId,
+    modePaiement,
+    statut,
+    origine,
+    dateSaisie,
+    valideParFideleId,
+    dateValidation,
+    motifRejet,
+    contributionOrigineId,
+    estContrePassation,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'contributions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ContributionRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    }
+    if (data.containsKey('libelle_donateur_anonyme')) {
+      context.handle(
+        _libelleDonateurAnonymeMeta,
+        libelleDonateurAnonyme.isAcceptableOrUnknown(
+          data['libelle_donateur_anonyme']!,
+          _libelleDonateurAnonymeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('type_offrande_id')) {
+      context.handle(
+        _typeOffrandeIdMeta,
+        typeOffrandeId.isAcceptableOrUnknown(
+          data['type_offrande_id']!,
+          _typeOffrandeIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_typeOffrandeIdMeta);
+    }
+    if (data.containsKey('montant')) {
+      context.handle(
+        _montantMeta,
+        montant.isAcceptableOrUnknown(data['montant']!, _montantMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_montantMeta);
+    }
+    if (data.containsKey('devise')) {
+      context.handle(
+        _deviseMeta,
+        devise.isAcceptableOrUnknown(data['devise']!, _deviseMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_deviseMeta);
+    }
+    if (data.containsKey('noeud_id')) {
+      context.handle(
+        _noeudIdMeta,
+        noeudId.isAcceptableOrUnknown(data['noeud_id']!, _noeudIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudIdMeta);
+    }
+    if (data.containsKey('culte_id')) {
+      context.handle(
+        _culteIdMeta,
+        culteId.isAcceptableOrUnknown(data['culte_id']!, _culteIdMeta),
+      );
+    }
+    if (data.containsKey('projet_id')) {
+      context.handle(
+        _projetIdMeta,
+        projetId.isAcceptableOrUnknown(data['projet_id']!, _projetIdMeta),
+      );
+    }
+    if (data.containsKey('mode_paiement')) {
+      context.handle(
+        _modePaiementMeta,
+        modePaiement.isAcceptableOrUnknown(
+          data['mode_paiement']!,
+          _modePaiementMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_modePaiementMeta);
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    if (data.containsKey('origine')) {
+      context.handle(
+        _origineMeta,
+        origine.isAcceptableOrUnknown(data['origine']!, _origineMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_origineMeta);
+    }
+    if (data.containsKey('date_saisie')) {
+      context.handle(
+        _dateSaisieMeta,
+        dateSaisie.isAcceptableOrUnknown(data['date_saisie']!, _dateSaisieMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateSaisieMeta);
+    }
+    if (data.containsKey('valide_par_fidele_id')) {
+      context.handle(
+        _valideParFideleIdMeta,
+        valideParFideleId.isAcceptableOrUnknown(
+          data['valide_par_fidele_id']!,
+          _valideParFideleIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('date_validation')) {
+      context.handle(
+        _dateValidationMeta,
+        dateValidation.isAcceptableOrUnknown(
+          data['date_validation']!,
+          _dateValidationMeta,
+        ),
+      );
+    }
+    if (data.containsKey('motif_rejet')) {
+      context.handle(
+        _motifRejetMeta,
+        motifRejet.isAcceptableOrUnknown(data['motif_rejet']!, _motifRejetMeta),
+      );
+    }
+    if (data.containsKey('contribution_origine_id')) {
+      context.handle(
+        _contributionOrigineIdMeta,
+        contributionOrigineId.isAcceptableOrUnknown(
+          data['contribution_origine_id']!,
+          _contributionOrigineIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('est_contre_passation')) {
+      context.handle(
+        _estContrePassationMeta,
+        estContrePassation.isAcceptableOrUnknown(
+          data['est_contre_passation']!,
+          _estContrePassationMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ContributionRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ContributionRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      ),
+      libelleDonateurAnonyme: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}libelle_donateur_anonyme'],
+      ),
+      typeOffrandeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type_offrande_id'],
+      )!,
+      montant: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}montant'],
+      )!,
+      devise: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}devise'],
+      )!,
+      noeudId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_id'],
+      )!,
+      culteId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}culte_id'],
+      ),
+      projetId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}projet_id'],
+      ),
+      modePaiement: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}mode_paiement'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+      origine: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}origine'],
+      )!,
+      dateSaisie: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_saisie'],
+      )!,
+      valideParFideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}valide_par_fidele_id'],
+      ),
+      dateValidation: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_validation'],
+      ),
+      motifRejet: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}motif_rejet'],
+      ),
+      contributionOrigineId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}contribution_origine_id'],
+      ),
+      estContrePassation: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}est_contre_passation'],
+      )!,
+    );
+  }
+
+  @override
+  $ContributionsTable createAlias(String alias) {
+    return $ContributionsTable(attachedDatabase, alias);
+  }
+}
+
+class ContributionRow extends DataClass implements Insertable<ContributionRow> {
+  final String id;
+  final String? fideleId;
+  final String? libelleDonateurAnonyme;
+  final String typeOffrandeId;
+  final int montant;
+  final String devise;
+  final String noeudId;
+  final String? culteId;
+  final String? projetId;
+  final String modePaiement;
+  final String statut;
+  final String origine;
+  final DateTime dateSaisie;
+  final String? valideParFideleId;
+  final DateTime? dateValidation;
+  final String? motifRejet;
+  final String? contributionOrigineId;
+  final bool estContrePassation;
+  const ContributionRow({
+    required this.id,
+    this.fideleId,
+    this.libelleDonateurAnonyme,
+    required this.typeOffrandeId,
+    required this.montant,
+    required this.devise,
+    required this.noeudId,
+    this.culteId,
+    this.projetId,
+    required this.modePaiement,
+    required this.statut,
+    required this.origine,
+    required this.dateSaisie,
+    this.valideParFideleId,
+    this.dateValidation,
+    this.motifRejet,
+    this.contributionOrigineId,
+    required this.estContrePassation,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    if (!nullToAbsent || fideleId != null) {
+      map['fidele_id'] = Variable<String>(fideleId);
+    }
+    if (!nullToAbsent || libelleDonateurAnonyme != null) {
+      map['libelle_donateur_anonyme'] = Variable<String>(
+        libelleDonateurAnonyme,
+      );
+    }
+    map['type_offrande_id'] = Variable<String>(typeOffrandeId);
+    map['montant'] = Variable<int>(montant);
+    map['devise'] = Variable<String>(devise);
+    map['noeud_id'] = Variable<String>(noeudId);
+    if (!nullToAbsent || culteId != null) {
+      map['culte_id'] = Variable<String>(culteId);
+    }
+    if (!nullToAbsent || projetId != null) {
+      map['projet_id'] = Variable<String>(projetId);
+    }
+    map['mode_paiement'] = Variable<String>(modePaiement);
+    map['statut'] = Variable<String>(statut);
+    map['origine'] = Variable<String>(origine);
+    map['date_saisie'] = Variable<DateTime>(dateSaisie);
+    if (!nullToAbsent || valideParFideleId != null) {
+      map['valide_par_fidele_id'] = Variable<String>(valideParFideleId);
+    }
+    if (!nullToAbsent || dateValidation != null) {
+      map['date_validation'] = Variable<DateTime>(dateValidation);
+    }
+    if (!nullToAbsent || motifRejet != null) {
+      map['motif_rejet'] = Variable<String>(motifRejet);
+    }
+    if (!nullToAbsent || contributionOrigineId != null) {
+      map['contribution_origine_id'] = Variable<String>(contributionOrigineId);
+    }
+    map['est_contre_passation'] = Variable<bool>(estContrePassation);
+    return map;
+  }
+
+  ContributionsCompanion toCompanion(bool nullToAbsent) {
+    return ContributionsCompanion(
+      id: Value(id),
+      fideleId: fideleId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fideleId),
+      libelleDonateurAnonyme: libelleDonateurAnonyme == null && nullToAbsent
+          ? const Value.absent()
+          : Value(libelleDonateurAnonyme),
+      typeOffrandeId: Value(typeOffrandeId),
+      montant: Value(montant),
+      devise: Value(devise),
+      noeudId: Value(noeudId),
+      culteId: culteId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(culteId),
+      projetId: projetId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(projetId),
+      modePaiement: Value(modePaiement),
+      statut: Value(statut),
+      origine: Value(origine),
+      dateSaisie: Value(dateSaisie),
+      valideParFideleId: valideParFideleId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(valideParFideleId),
+      dateValidation: dateValidation == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dateValidation),
+      motifRejet: motifRejet == null && nullToAbsent
+          ? const Value.absent()
+          : Value(motifRejet),
+      contributionOrigineId: contributionOrigineId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(contributionOrigineId),
+      estContrePassation: Value(estContrePassation),
+    );
+  }
+
+  factory ContributionRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ContributionRow(
+      id: serializer.fromJson<String>(json['id']),
+      fideleId: serializer.fromJson<String?>(json['fideleId']),
+      libelleDonateurAnonyme: serializer.fromJson<String?>(
+        json['libelleDonateurAnonyme'],
+      ),
+      typeOffrandeId: serializer.fromJson<String>(json['typeOffrandeId']),
+      montant: serializer.fromJson<int>(json['montant']),
+      devise: serializer.fromJson<String>(json['devise']),
+      noeudId: serializer.fromJson<String>(json['noeudId']),
+      culteId: serializer.fromJson<String?>(json['culteId']),
+      projetId: serializer.fromJson<String?>(json['projetId']),
+      modePaiement: serializer.fromJson<String>(json['modePaiement']),
+      statut: serializer.fromJson<String>(json['statut']),
+      origine: serializer.fromJson<String>(json['origine']),
+      dateSaisie: serializer.fromJson<DateTime>(json['dateSaisie']),
+      valideParFideleId: serializer.fromJson<String?>(
+        json['valideParFideleId'],
+      ),
+      dateValidation: serializer.fromJson<DateTime?>(json['dateValidation']),
+      motifRejet: serializer.fromJson<String?>(json['motifRejet']),
+      contributionOrigineId: serializer.fromJson<String?>(
+        json['contributionOrigineId'],
+      ),
+      estContrePassation: serializer.fromJson<bool>(json['estContrePassation']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'fideleId': serializer.toJson<String?>(fideleId),
+      'libelleDonateurAnonyme': serializer.toJson<String?>(
+        libelleDonateurAnonyme,
+      ),
+      'typeOffrandeId': serializer.toJson<String>(typeOffrandeId),
+      'montant': serializer.toJson<int>(montant),
+      'devise': serializer.toJson<String>(devise),
+      'noeudId': serializer.toJson<String>(noeudId),
+      'culteId': serializer.toJson<String?>(culteId),
+      'projetId': serializer.toJson<String?>(projetId),
+      'modePaiement': serializer.toJson<String>(modePaiement),
+      'statut': serializer.toJson<String>(statut),
+      'origine': serializer.toJson<String>(origine),
+      'dateSaisie': serializer.toJson<DateTime>(dateSaisie),
+      'valideParFideleId': serializer.toJson<String?>(valideParFideleId),
+      'dateValidation': serializer.toJson<DateTime?>(dateValidation),
+      'motifRejet': serializer.toJson<String?>(motifRejet),
+      'contributionOrigineId': serializer.toJson<String?>(
+        contributionOrigineId,
+      ),
+      'estContrePassation': serializer.toJson<bool>(estContrePassation),
+    };
+  }
+
+  ContributionRow copyWith({
+    String? id,
+    Value<String?> fideleId = const Value.absent(),
+    Value<String?> libelleDonateurAnonyme = const Value.absent(),
+    String? typeOffrandeId,
+    int? montant,
+    String? devise,
+    String? noeudId,
+    Value<String?> culteId = const Value.absent(),
+    Value<String?> projetId = const Value.absent(),
+    String? modePaiement,
+    String? statut,
+    String? origine,
+    DateTime? dateSaisie,
+    Value<String?> valideParFideleId = const Value.absent(),
+    Value<DateTime?> dateValidation = const Value.absent(),
+    Value<String?> motifRejet = const Value.absent(),
+    Value<String?> contributionOrigineId = const Value.absent(),
+    bool? estContrePassation,
+  }) => ContributionRow(
+    id: id ?? this.id,
+    fideleId: fideleId.present ? fideleId.value : this.fideleId,
+    libelleDonateurAnonyme: libelleDonateurAnonyme.present
+        ? libelleDonateurAnonyme.value
+        : this.libelleDonateurAnonyme,
+    typeOffrandeId: typeOffrandeId ?? this.typeOffrandeId,
+    montant: montant ?? this.montant,
+    devise: devise ?? this.devise,
+    noeudId: noeudId ?? this.noeudId,
+    culteId: culteId.present ? culteId.value : this.culteId,
+    projetId: projetId.present ? projetId.value : this.projetId,
+    modePaiement: modePaiement ?? this.modePaiement,
+    statut: statut ?? this.statut,
+    origine: origine ?? this.origine,
+    dateSaisie: dateSaisie ?? this.dateSaisie,
+    valideParFideleId: valideParFideleId.present
+        ? valideParFideleId.value
+        : this.valideParFideleId,
+    dateValidation: dateValidation.present
+        ? dateValidation.value
+        : this.dateValidation,
+    motifRejet: motifRejet.present ? motifRejet.value : this.motifRejet,
+    contributionOrigineId: contributionOrigineId.present
+        ? contributionOrigineId.value
+        : this.contributionOrigineId,
+    estContrePassation: estContrePassation ?? this.estContrePassation,
+  );
+  ContributionRow copyWithCompanion(ContributionsCompanion data) {
+    return ContributionRow(
+      id: data.id.present ? data.id.value : this.id,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      libelleDonateurAnonyme: data.libelleDonateurAnonyme.present
+          ? data.libelleDonateurAnonyme.value
+          : this.libelleDonateurAnonyme,
+      typeOffrandeId: data.typeOffrandeId.present
+          ? data.typeOffrandeId.value
+          : this.typeOffrandeId,
+      montant: data.montant.present ? data.montant.value : this.montant,
+      devise: data.devise.present ? data.devise.value : this.devise,
+      noeudId: data.noeudId.present ? data.noeudId.value : this.noeudId,
+      culteId: data.culteId.present ? data.culteId.value : this.culteId,
+      projetId: data.projetId.present ? data.projetId.value : this.projetId,
+      modePaiement: data.modePaiement.present
+          ? data.modePaiement.value
+          : this.modePaiement,
+      statut: data.statut.present ? data.statut.value : this.statut,
+      origine: data.origine.present ? data.origine.value : this.origine,
+      dateSaisie: data.dateSaisie.present
+          ? data.dateSaisie.value
+          : this.dateSaisie,
+      valideParFideleId: data.valideParFideleId.present
+          ? data.valideParFideleId.value
+          : this.valideParFideleId,
+      dateValidation: data.dateValidation.present
+          ? data.dateValidation.value
+          : this.dateValidation,
+      motifRejet: data.motifRejet.present
+          ? data.motifRejet.value
+          : this.motifRejet,
+      contributionOrigineId: data.contributionOrigineId.present
+          ? data.contributionOrigineId.value
+          : this.contributionOrigineId,
+      estContrePassation: data.estContrePassation.present
+          ? data.estContrePassation.value
+          : this.estContrePassation,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ContributionRow(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('libelleDonateurAnonyme: $libelleDonateurAnonyme, ')
+          ..write('typeOffrandeId: $typeOffrandeId, ')
+          ..write('montant: $montant, ')
+          ..write('devise: $devise, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('culteId: $culteId, ')
+          ..write('projetId: $projetId, ')
+          ..write('modePaiement: $modePaiement, ')
+          ..write('statut: $statut, ')
+          ..write('origine: $origine, ')
+          ..write('dateSaisie: $dateSaisie, ')
+          ..write('valideParFideleId: $valideParFideleId, ')
+          ..write('dateValidation: $dateValidation, ')
+          ..write('motifRejet: $motifRejet, ')
+          ..write('contributionOrigineId: $contributionOrigineId, ')
+          ..write('estContrePassation: $estContrePassation')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    fideleId,
+    libelleDonateurAnonyme,
+    typeOffrandeId,
+    montant,
+    devise,
+    noeudId,
+    culteId,
+    projetId,
+    modePaiement,
+    statut,
+    origine,
+    dateSaisie,
+    valideParFideleId,
+    dateValidation,
+    motifRejet,
+    contributionOrigineId,
+    estContrePassation,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ContributionRow &&
+          other.id == this.id &&
+          other.fideleId == this.fideleId &&
+          other.libelleDonateurAnonyme == this.libelleDonateurAnonyme &&
+          other.typeOffrandeId == this.typeOffrandeId &&
+          other.montant == this.montant &&
+          other.devise == this.devise &&
+          other.noeudId == this.noeudId &&
+          other.culteId == this.culteId &&
+          other.projetId == this.projetId &&
+          other.modePaiement == this.modePaiement &&
+          other.statut == this.statut &&
+          other.origine == this.origine &&
+          other.dateSaisie == this.dateSaisie &&
+          other.valideParFideleId == this.valideParFideleId &&
+          other.dateValidation == this.dateValidation &&
+          other.motifRejet == this.motifRejet &&
+          other.contributionOrigineId == this.contributionOrigineId &&
+          other.estContrePassation == this.estContrePassation);
+}
+
+class ContributionsCompanion extends UpdateCompanion<ContributionRow> {
+  final Value<String> id;
+  final Value<String?> fideleId;
+  final Value<String?> libelleDonateurAnonyme;
+  final Value<String> typeOffrandeId;
+  final Value<int> montant;
+  final Value<String> devise;
+  final Value<String> noeudId;
+  final Value<String?> culteId;
+  final Value<String?> projetId;
+  final Value<String> modePaiement;
+  final Value<String> statut;
+  final Value<String> origine;
+  final Value<DateTime> dateSaisie;
+  final Value<String?> valideParFideleId;
+  final Value<DateTime?> dateValidation;
+  final Value<String?> motifRejet;
+  final Value<String?> contributionOrigineId;
+  final Value<bool> estContrePassation;
+  final Value<int> rowid;
+  const ContributionsCompanion({
+    this.id = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.libelleDonateurAnonyme = const Value.absent(),
+    this.typeOffrandeId = const Value.absent(),
+    this.montant = const Value.absent(),
+    this.devise = const Value.absent(),
+    this.noeudId = const Value.absent(),
+    this.culteId = const Value.absent(),
+    this.projetId = const Value.absent(),
+    this.modePaiement = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.origine = const Value.absent(),
+    this.dateSaisie = const Value.absent(),
+    this.valideParFideleId = const Value.absent(),
+    this.dateValidation = const Value.absent(),
+    this.motifRejet = const Value.absent(),
+    this.contributionOrigineId = const Value.absent(),
+    this.estContrePassation = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ContributionsCompanion.insert({
+    required String id,
+    this.fideleId = const Value.absent(),
+    this.libelleDonateurAnonyme = const Value.absent(),
+    required String typeOffrandeId,
+    required int montant,
+    required String devise,
+    required String noeudId,
+    this.culteId = const Value.absent(),
+    this.projetId = const Value.absent(),
+    required String modePaiement,
+    this.statut = const Value.absent(),
+    required String origine,
+    required DateTime dateSaisie,
+    this.valideParFideleId = const Value.absent(),
+    this.dateValidation = const Value.absent(),
+    this.motifRejet = const Value.absent(),
+    this.contributionOrigineId = const Value.absent(),
+    this.estContrePassation = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       typeOffrandeId = Value(typeOffrandeId),
+       montant = Value(montant),
+       devise = Value(devise),
+       noeudId = Value(noeudId),
+       modePaiement = Value(modePaiement),
+       origine = Value(origine),
+       dateSaisie = Value(dateSaisie);
+  static Insertable<ContributionRow> custom({
+    Expression<String>? id,
+    Expression<String>? fideleId,
+    Expression<String>? libelleDonateurAnonyme,
+    Expression<String>? typeOffrandeId,
+    Expression<int>? montant,
+    Expression<String>? devise,
+    Expression<String>? noeudId,
+    Expression<String>? culteId,
+    Expression<String>? projetId,
+    Expression<String>? modePaiement,
+    Expression<String>? statut,
+    Expression<String>? origine,
+    Expression<DateTime>? dateSaisie,
+    Expression<String>? valideParFideleId,
+    Expression<DateTime>? dateValidation,
+    Expression<String>? motifRejet,
+    Expression<String>? contributionOrigineId,
+    Expression<bool>? estContrePassation,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (libelleDonateurAnonyme != null)
+        'libelle_donateur_anonyme': libelleDonateurAnonyme,
+      if (typeOffrandeId != null) 'type_offrande_id': typeOffrandeId,
+      if (montant != null) 'montant': montant,
+      if (devise != null) 'devise': devise,
+      if (noeudId != null) 'noeud_id': noeudId,
+      if (culteId != null) 'culte_id': culteId,
+      if (projetId != null) 'projet_id': projetId,
+      if (modePaiement != null) 'mode_paiement': modePaiement,
+      if (statut != null) 'statut': statut,
+      if (origine != null) 'origine': origine,
+      if (dateSaisie != null) 'date_saisie': dateSaisie,
+      if (valideParFideleId != null) 'valide_par_fidele_id': valideParFideleId,
+      if (dateValidation != null) 'date_validation': dateValidation,
+      if (motifRejet != null) 'motif_rejet': motifRejet,
+      if (contributionOrigineId != null)
+        'contribution_origine_id': contributionOrigineId,
+      if (estContrePassation != null)
+        'est_contre_passation': estContrePassation,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ContributionsCompanion copyWith({
+    Value<String>? id,
+    Value<String?>? fideleId,
+    Value<String?>? libelleDonateurAnonyme,
+    Value<String>? typeOffrandeId,
+    Value<int>? montant,
+    Value<String>? devise,
+    Value<String>? noeudId,
+    Value<String?>? culteId,
+    Value<String?>? projetId,
+    Value<String>? modePaiement,
+    Value<String>? statut,
+    Value<String>? origine,
+    Value<DateTime>? dateSaisie,
+    Value<String?>? valideParFideleId,
+    Value<DateTime?>? dateValidation,
+    Value<String?>? motifRejet,
+    Value<String?>? contributionOrigineId,
+    Value<bool>? estContrePassation,
+    Value<int>? rowid,
+  }) {
+    return ContributionsCompanion(
+      id: id ?? this.id,
+      fideleId: fideleId ?? this.fideleId,
+      libelleDonateurAnonyme:
+          libelleDonateurAnonyme ?? this.libelleDonateurAnonyme,
+      typeOffrandeId: typeOffrandeId ?? this.typeOffrandeId,
+      montant: montant ?? this.montant,
+      devise: devise ?? this.devise,
+      noeudId: noeudId ?? this.noeudId,
+      culteId: culteId ?? this.culteId,
+      projetId: projetId ?? this.projetId,
+      modePaiement: modePaiement ?? this.modePaiement,
+      statut: statut ?? this.statut,
+      origine: origine ?? this.origine,
+      dateSaisie: dateSaisie ?? this.dateSaisie,
+      valideParFideleId: valideParFideleId ?? this.valideParFideleId,
+      dateValidation: dateValidation ?? this.dateValidation,
+      motifRejet: motifRejet ?? this.motifRejet,
+      contributionOrigineId:
+          contributionOrigineId ?? this.contributionOrigineId,
+      estContrePassation: estContrePassation ?? this.estContrePassation,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (libelleDonateurAnonyme.present) {
+      map['libelle_donateur_anonyme'] = Variable<String>(
+        libelleDonateurAnonyme.value,
+      );
+    }
+    if (typeOffrandeId.present) {
+      map['type_offrande_id'] = Variable<String>(typeOffrandeId.value);
+    }
+    if (montant.present) {
+      map['montant'] = Variable<int>(montant.value);
+    }
+    if (devise.present) {
+      map['devise'] = Variable<String>(devise.value);
+    }
+    if (noeudId.present) {
+      map['noeud_id'] = Variable<String>(noeudId.value);
+    }
+    if (culteId.present) {
+      map['culte_id'] = Variable<String>(culteId.value);
+    }
+    if (projetId.present) {
+      map['projet_id'] = Variable<String>(projetId.value);
+    }
+    if (modePaiement.present) {
+      map['mode_paiement'] = Variable<String>(modePaiement.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (origine.present) {
+      map['origine'] = Variable<String>(origine.value);
+    }
+    if (dateSaisie.present) {
+      map['date_saisie'] = Variable<DateTime>(dateSaisie.value);
+    }
+    if (valideParFideleId.present) {
+      map['valide_par_fidele_id'] = Variable<String>(valideParFideleId.value);
+    }
+    if (dateValidation.present) {
+      map['date_validation'] = Variable<DateTime>(dateValidation.value);
+    }
+    if (motifRejet.present) {
+      map['motif_rejet'] = Variable<String>(motifRejet.value);
+    }
+    if (contributionOrigineId.present) {
+      map['contribution_origine_id'] = Variable<String>(
+        contributionOrigineId.value,
+      );
+    }
+    if (estContrePassation.present) {
+      map['est_contre_passation'] = Variable<bool>(estContrePassation.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ContributionsCompanion(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('libelleDonateurAnonyme: $libelleDonateurAnonyme, ')
+          ..write('typeOffrandeId: $typeOffrandeId, ')
+          ..write('montant: $montant, ')
+          ..write('devise: $devise, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('culteId: $culteId, ')
+          ..write('projetId: $projetId, ')
+          ..write('modePaiement: $modePaiement, ')
+          ..write('statut: $statut, ')
+          ..write('origine: $origine, ')
+          ..write('dateSaisie: $dateSaisie, ')
+          ..write('valideParFideleId: $valideParFideleId, ')
+          ..write('dateValidation: $dateValidation, ')
+          ..write('motifRejet: $motifRejet, ')
+          ..write('contributionOrigineId: $contributionOrigineId, ')
+          ..write('estContrePassation: $estContrePassation, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $DepensesProjetTable extends DepensesProjet
+    with TableInfo<$DepensesProjetTable, DepenseProjetRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DepensesProjetTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _projetIdMeta = const VerificationMeta(
+    'projetId',
+  );
+  @override
+  late final GeneratedColumn<String> projetId = GeneratedColumn<String>(
+    'projet_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES projets (id)',
+    ),
+  );
+  static const VerificationMeta _montantMeta = const VerificationMeta(
+    'montant',
+  );
+  @override
+  late final GeneratedColumn<int> montant = GeneratedColumn<int>(
+    'montant',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _libelleMeta = const VerificationMeta(
+    'libelle',
+  );
+  @override
+  late final GeneratedColumn<String> libelle = GeneratedColumn<String>(
+    'libelle',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _valideParFideleIdMeta = const VerificationMeta(
+    'valideParFideleId',
+  );
+  @override
+  late final GeneratedColumn<String> valideParFideleId =
+      GeneratedColumn<String>(
+        'valide_par_fidele_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES fideles (id)',
+        ),
+      );
+  static const VerificationMeta _derogationTraceeMeta = const VerificationMeta(
+    'derogationTracee',
+  );
+  @override
+  late final GeneratedColumn<bool> derogationTracee = GeneratedColumn<bool>(
+    'derogation_tracee',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("derogation_tracee" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _motifDerogationMeta = const VerificationMeta(
+    'motifDerogation',
+  );
+  @override
+  late final GeneratedColumn<String> motifDerogation = GeneratedColumn<String>(
+    'motif_derogation',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    projetId,
+    montant,
+    libelle,
+    date,
+    valideParFideleId,
+    derogationTracee,
+    motifDerogation,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'depenses_projet';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DepenseProjetRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('projet_id')) {
+      context.handle(
+        _projetIdMeta,
+        projetId.isAcceptableOrUnknown(data['projet_id']!, _projetIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_projetIdMeta);
+    }
+    if (data.containsKey('montant')) {
+      context.handle(
+        _montantMeta,
+        montant.isAcceptableOrUnknown(data['montant']!, _montantMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_montantMeta);
+    }
+    if (data.containsKey('libelle')) {
+      context.handle(
+        _libelleMeta,
+        libelle.isAcceptableOrUnknown(data['libelle']!, _libelleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_libelleMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('valide_par_fidele_id')) {
+      context.handle(
+        _valideParFideleIdMeta,
+        valideParFideleId.isAcceptableOrUnknown(
+          data['valide_par_fidele_id']!,
+          _valideParFideleIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_valideParFideleIdMeta);
+    }
+    if (data.containsKey('derogation_tracee')) {
+      context.handle(
+        _derogationTraceeMeta,
+        derogationTracee.isAcceptableOrUnknown(
+          data['derogation_tracee']!,
+          _derogationTraceeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('motif_derogation')) {
+      context.handle(
+        _motifDerogationMeta,
+        motifDerogation.isAcceptableOrUnknown(
+          data['motif_derogation']!,
+          _motifDerogationMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  DepenseProjetRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DepenseProjetRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      projetId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}projet_id'],
+      )!,
+      montant: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}montant'],
+      )!,
+      libelle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}libelle'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date'],
+      )!,
+      valideParFideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}valide_par_fidele_id'],
+      )!,
+      derogationTracee: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}derogation_tracee'],
+      )!,
+      motifDerogation: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}motif_derogation'],
+      ),
+    );
+  }
+
+  @override
+  $DepensesProjetTable createAlias(String alias) {
+    return $DepensesProjetTable(attachedDatabase, alias);
+  }
+}
+
+class DepenseProjetRow extends DataClass
+    implements Insertable<DepenseProjetRow> {
+  final String id;
+  final String projetId;
+  final int montant;
+  final String libelle;
+  final DateTime date;
+  final String valideParFideleId;
+  final bool derogationTracee;
+  final String? motifDerogation;
+  const DepenseProjetRow({
+    required this.id,
+    required this.projetId,
+    required this.montant,
+    required this.libelle,
+    required this.date,
+    required this.valideParFideleId,
+    required this.derogationTracee,
+    this.motifDerogation,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['projet_id'] = Variable<String>(projetId);
+    map['montant'] = Variable<int>(montant);
+    map['libelle'] = Variable<String>(libelle);
+    map['date'] = Variable<DateTime>(date);
+    map['valide_par_fidele_id'] = Variable<String>(valideParFideleId);
+    map['derogation_tracee'] = Variable<bool>(derogationTracee);
+    if (!nullToAbsent || motifDerogation != null) {
+      map['motif_derogation'] = Variable<String>(motifDerogation);
+    }
+    return map;
+  }
+
+  DepensesProjetCompanion toCompanion(bool nullToAbsent) {
+    return DepensesProjetCompanion(
+      id: Value(id),
+      projetId: Value(projetId),
+      montant: Value(montant),
+      libelle: Value(libelle),
+      date: Value(date),
+      valideParFideleId: Value(valideParFideleId),
+      derogationTracee: Value(derogationTracee),
+      motifDerogation: motifDerogation == null && nullToAbsent
+          ? const Value.absent()
+          : Value(motifDerogation),
+    );
+  }
+
+  factory DepenseProjetRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DepenseProjetRow(
+      id: serializer.fromJson<String>(json['id']),
+      projetId: serializer.fromJson<String>(json['projetId']),
+      montant: serializer.fromJson<int>(json['montant']),
+      libelle: serializer.fromJson<String>(json['libelle']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      valideParFideleId: serializer.fromJson<String>(json['valideParFideleId']),
+      derogationTracee: serializer.fromJson<bool>(json['derogationTracee']),
+      motifDerogation: serializer.fromJson<String?>(json['motifDerogation']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'projetId': serializer.toJson<String>(projetId),
+      'montant': serializer.toJson<int>(montant),
+      'libelle': serializer.toJson<String>(libelle),
+      'date': serializer.toJson<DateTime>(date),
+      'valideParFideleId': serializer.toJson<String>(valideParFideleId),
+      'derogationTracee': serializer.toJson<bool>(derogationTracee),
+      'motifDerogation': serializer.toJson<String?>(motifDerogation),
+    };
+  }
+
+  DepenseProjetRow copyWith({
+    String? id,
+    String? projetId,
+    int? montant,
+    String? libelle,
+    DateTime? date,
+    String? valideParFideleId,
+    bool? derogationTracee,
+    Value<String?> motifDerogation = const Value.absent(),
+  }) => DepenseProjetRow(
+    id: id ?? this.id,
+    projetId: projetId ?? this.projetId,
+    montant: montant ?? this.montant,
+    libelle: libelle ?? this.libelle,
+    date: date ?? this.date,
+    valideParFideleId: valideParFideleId ?? this.valideParFideleId,
+    derogationTracee: derogationTracee ?? this.derogationTracee,
+    motifDerogation: motifDerogation.present
+        ? motifDerogation.value
+        : this.motifDerogation,
+  );
+  DepenseProjetRow copyWithCompanion(DepensesProjetCompanion data) {
+    return DepenseProjetRow(
+      id: data.id.present ? data.id.value : this.id,
+      projetId: data.projetId.present ? data.projetId.value : this.projetId,
+      montant: data.montant.present ? data.montant.value : this.montant,
+      libelle: data.libelle.present ? data.libelle.value : this.libelle,
+      date: data.date.present ? data.date.value : this.date,
+      valideParFideleId: data.valideParFideleId.present
+          ? data.valideParFideleId.value
+          : this.valideParFideleId,
+      derogationTracee: data.derogationTracee.present
+          ? data.derogationTracee.value
+          : this.derogationTracee,
+      motifDerogation: data.motifDerogation.present
+          ? data.motifDerogation.value
+          : this.motifDerogation,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DepenseProjetRow(')
+          ..write('id: $id, ')
+          ..write('projetId: $projetId, ')
+          ..write('montant: $montant, ')
+          ..write('libelle: $libelle, ')
+          ..write('date: $date, ')
+          ..write('valideParFideleId: $valideParFideleId, ')
+          ..write('derogationTracee: $derogationTracee, ')
+          ..write('motifDerogation: $motifDerogation')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    projetId,
+    montant,
+    libelle,
+    date,
+    valideParFideleId,
+    derogationTracee,
+    motifDerogation,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DepenseProjetRow &&
+          other.id == this.id &&
+          other.projetId == this.projetId &&
+          other.montant == this.montant &&
+          other.libelle == this.libelle &&
+          other.date == this.date &&
+          other.valideParFideleId == this.valideParFideleId &&
+          other.derogationTracee == this.derogationTracee &&
+          other.motifDerogation == this.motifDerogation);
+}
+
+class DepensesProjetCompanion extends UpdateCompanion<DepenseProjetRow> {
+  final Value<String> id;
+  final Value<String> projetId;
+  final Value<int> montant;
+  final Value<String> libelle;
+  final Value<DateTime> date;
+  final Value<String> valideParFideleId;
+  final Value<bool> derogationTracee;
+  final Value<String?> motifDerogation;
+  final Value<int> rowid;
+  const DepensesProjetCompanion({
+    this.id = const Value.absent(),
+    this.projetId = const Value.absent(),
+    this.montant = const Value.absent(),
+    this.libelle = const Value.absent(),
+    this.date = const Value.absent(),
+    this.valideParFideleId = const Value.absent(),
+    this.derogationTracee = const Value.absent(),
+    this.motifDerogation = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DepensesProjetCompanion.insert({
+    required String id,
+    required String projetId,
+    required int montant,
+    required String libelle,
+    required DateTime date,
+    required String valideParFideleId,
+    this.derogationTracee = const Value.absent(),
+    this.motifDerogation = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       projetId = Value(projetId),
+       montant = Value(montant),
+       libelle = Value(libelle),
+       date = Value(date),
+       valideParFideleId = Value(valideParFideleId);
+  static Insertable<DepenseProjetRow> custom({
+    Expression<String>? id,
+    Expression<String>? projetId,
+    Expression<int>? montant,
+    Expression<String>? libelle,
+    Expression<DateTime>? date,
+    Expression<String>? valideParFideleId,
+    Expression<bool>? derogationTracee,
+    Expression<String>? motifDerogation,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (projetId != null) 'projet_id': projetId,
+      if (montant != null) 'montant': montant,
+      if (libelle != null) 'libelle': libelle,
+      if (date != null) 'date': date,
+      if (valideParFideleId != null) 'valide_par_fidele_id': valideParFideleId,
+      if (derogationTracee != null) 'derogation_tracee': derogationTracee,
+      if (motifDerogation != null) 'motif_derogation': motifDerogation,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DepensesProjetCompanion copyWith({
+    Value<String>? id,
+    Value<String>? projetId,
+    Value<int>? montant,
+    Value<String>? libelle,
+    Value<DateTime>? date,
+    Value<String>? valideParFideleId,
+    Value<bool>? derogationTracee,
+    Value<String?>? motifDerogation,
+    Value<int>? rowid,
+  }) {
+    return DepensesProjetCompanion(
+      id: id ?? this.id,
+      projetId: projetId ?? this.projetId,
+      montant: montant ?? this.montant,
+      libelle: libelle ?? this.libelle,
+      date: date ?? this.date,
+      valideParFideleId: valideParFideleId ?? this.valideParFideleId,
+      derogationTracee: derogationTracee ?? this.derogationTracee,
+      motifDerogation: motifDerogation ?? this.motifDerogation,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (projetId.present) {
+      map['projet_id'] = Variable<String>(projetId.value);
+    }
+    if (montant.present) {
+      map['montant'] = Variable<int>(montant.value);
+    }
+    if (libelle.present) {
+      map['libelle'] = Variable<String>(libelle.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (valideParFideleId.present) {
+      map['valide_par_fidele_id'] = Variable<String>(valideParFideleId.value);
+    }
+    if (derogationTracee.present) {
+      map['derogation_tracee'] = Variable<bool>(derogationTracee.value);
+    }
+    if (motifDerogation.present) {
+      map['motif_derogation'] = Variable<String>(motifDerogation.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DepensesProjetCompanion(')
+          ..write('id: $id, ')
+          ..write('projetId: $projetId, ')
+          ..write('montant: $montant, ')
+          ..write('libelle: $libelle, ')
+          ..write('date: $date, ')
+          ..write('valideParFideleId: $valideParFideleId, ')
+          ..write('derogationTracee: $derogationTracee, ')
+          ..write('motifDerogation: $motifDerogation, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $EngagementsTable extends Engagements
+    with TableInfo<$EngagementsTable, EngagementRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $EngagementsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+    'type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _montantPrevuMeta = const VerificationMeta(
+    'montantPrevu',
+  );
+  @override
+  late final GeneratedColumn<int> montantPrevu = GeneratedColumn<int>(
+    'montant_prevu',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _periodiciteMeta = const VerificationMeta(
+    'periodicite',
+  );
+  @override
+  late final GeneratedColumn<String> periodicite = GeneratedColumn<String>(
+    'periodicite',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateDebutMeta = const VerificationMeta(
+    'dateDebut',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateDebut = GeneratedColumn<DateTime>(
+    'date_debut',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('actif'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    fideleId,
+    type,
+    montantPrevu,
+    periodicite,
+    dateDebut,
+    statut,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'engagements';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<EngagementRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+        _typeMeta,
+        type.isAcceptableOrUnknown(data['type']!, _typeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('montant_prevu')) {
+      context.handle(
+        _montantPrevuMeta,
+        montantPrevu.isAcceptableOrUnknown(
+          data['montant_prevu']!,
+          _montantPrevuMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_montantPrevuMeta);
+    }
+    if (data.containsKey('periodicite')) {
+      context.handle(
+        _periodiciteMeta,
+        periodicite.isAcceptableOrUnknown(
+          data['periodicite']!,
+          _periodiciteMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_periodiciteMeta);
+    }
+    if (data.containsKey('date_debut')) {
+      context.handle(
+        _dateDebutMeta,
+        dateDebut.isAcceptableOrUnknown(data['date_debut']!, _dateDebutMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateDebutMeta);
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  EngagementRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return EngagementRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+      type: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type'],
+      )!,
+      montantPrevu: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}montant_prevu'],
+      )!,
+      periodicite: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}periodicite'],
+      )!,
+      dateDebut: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_debut'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+    );
+  }
+
+  @override
+  $EngagementsTable createAlias(String alias) {
+    return $EngagementsTable(attachedDatabase, alias);
+  }
+}
+
+class EngagementRow extends DataClass implements Insertable<EngagementRow> {
+  final String id;
+  final String fideleId;
+  final String type;
+  final int montantPrevu;
+  final String periodicite;
+  final DateTime dateDebut;
+  final String statut;
+  const EngagementRow({
+    required this.id,
+    required this.fideleId,
+    required this.type,
+    required this.montantPrevu,
+    required this.periodicite,
+    required this.dateDebut,
+    required this.statut,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['fidele_id'] = Variable<String>(fideleId);
+    map['type'] = Variable<String>(type);
+    map['montant_prevu'] = Variable<int>(montantPrevu);
+    map['periodicite'] = Variable<String>(periodicite);
+    map['date_debut'] = Variable<DateTime>(dateDebut);
+    map['statut'] = Variable<String>(statut);
+    return map;
+  }
+
+  EngagementsCompanion toCompanion(bool nullToAbsent) {
+    return EngagementsCompanion(
+      id: Value(id),
+      fideleId: Value(fideleId),
+      type: Value(type),
+      montantPrevu: Value(montantPrevu),
+      periodicite: Value(periodicite),
+      dateDebut: Value(dateDebut),
+      statut: Value(statut),
+    );
+  }
+
+  factory EngagementRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return EngagementRow(
+      id: serializer.fromJson<String>(json['id']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+      type: serializer.fromJson<String>(json['type']),
+      montantPrevu: serializer.fromJson<int>(json['montantPrevu']),
+      periodicite: serializer.fromJson<String>(json['periodicite']),
+      dateDebut: serializer.fromJson<DateTime>(json['dateDebut']),
+      statut: serializer.fromJson<String>(json['statut']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'fideleId': serializer.toJson<String>(fideleId),
+      'type': serializer.toJson<String>(type),
+      'montantPrevu': serializer.toJson<int>(montantPrevu),
+      'periodicite': serializer.toJson<String>(periodicite),
+      'dateDebut': serializer.toJson<DateTime>(dateDebut),
+      'statut': serializer.toJson<String>(statut),
+    };
+  }
+
+  EngagementRow copyWith({
+    String? id,
+    String? fideleId,
+    String? type,
+    int? montantPrevu,
+    String? periodicite,
+    DateTime? dateDebut,
+    String? statut,
+  }) => EngagementRow(
+    id: id ?? this.id,
+    fideleId: fideleId ?? this.fideleId,
+    type: type ?? this.type,
+    montantPrevu: montantPrevu ?? this.montantPrevu,
+    periodicite: periodicite ?? this.periodicite,
+    dateDebut: dateDebut ?? this.dateDebut,
+    statut: statut ?? this.statut,
+  );
+  EngagementRow copyWithCompanion(EngagementsCompanion data) {
+    return EngagementRow(
+      id: data.id.present ? data.id.value : this.id,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      type: data.type.present ? data.type.value : this.type,
+      montantPrevu: data.montantPrevu.present
+          ? data.montantPrevu.value
+          : this.montantPrevu,
+      periodicite: data.periodicite.present
+          ? data.periodicite.value
+          : this.periodicite,
+      dateDebut: data.dateDebut.present ? data.dateDebut.value : this.dateDebut,
+      statut: data.statut.present ? data.statut.value : this.statut,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EngagementRow(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('type: $type, ')
+          ..write('montantPrevu: $montantPrevu, ')
+          ..write('periodicite: $periodicite, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('statut: $statut')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    fideleId,
+    type,
+    montantPrevu,
+    periodicite,
+    dateDebut,
+    statut,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is EngagementRow &&
+          other.id == this.id &&
+          other.fideleId == this.fideleId &&
+          other.type == this.type &&
+          other.montantPrevu == this.montantPrevu &&
+          other.periodicite == this.periodicite &&
+          other.dateDebut == this.dateDebut &&
+          other.statut == this.statut);
+}
+
+class EngagementsCompanion extends UpdateCompanion<EngagementRow> {
+  final Value<String> id;
+  final Value<String> fideleId;
+  final Value<String> type;
+  final Value<int> montantPrevu;
+  final Value<String> periodicite;
+  final Value<DateTime> dateDebut;
+  final Value<String> statut;
+  final Value<int> rowid;
+  const EngagementsCompanion({
+    this.id = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.type = const Value.absent(),
+    this.montantPrevu = const Value.absent(),
+    this.periodicite = const Value.absent(),
+    this.dateDebut = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  EngagementsCompanion.insert({
+    required String id,
+    required String fideleId,
+    required String type,
+    required int montantPrevu,
+    required String periodicite,
+    required DateTime dateDebut,
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       fideleId = Value(fideleId),
+       type = Value(type),
+       montantPrevu = Value(montantPrevu),
+       periodicite = Value(periodicite),
+       dateDebut = Value(dateDebut);
+  static Insertable<EngagementRow> custom({
+    Expression<String>? id,
+    Expression<String>? fideleId,
+    Expression<String>? type,
+    Expression<int>? montantPrevu,
+    Expression<String>? periodicite,
+    Expression<DateTime>? dateDebut,
+    Expression<String>? statut,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (type != null) 'type': type,
+      if (montantPrevu != null) 'montant_prevu': montantPrevu,
+      if (periodicite != null) 'periodicite': periodicite,
+      if (dateDebut != null) 'date_debut': dateDebut,
+      if (statut != null) 'statut': statut,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  EngagementsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? fideleId,
+    Value<String>? type,
+    Value<int>? montantPrevu,
+    Value<String>? periodicite,
+    Value<DateTime>? dateDebut,
+    Value<String>? statut,
+    Value<int>? rowid,
+  }) {
+    return EngagementsCompanion(
+      id: id ?? this.id,
+      fideleId: fideleId ?? this.fideleId,
+      type: type ?? this.type,
+      montantPrevu: montantPrevu ?? this.montantPrevu,
+      periodicite: periodicite ?? this.periodicite,
+      dateDebut: dateDebut ?? this.dateDebut,
+      statut: statut ?? this.statut,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
+    if (montantPrevu.present) {
+      map['montant_prevu'] = Variable<int>(montantPrevu.value);
+    }
+    if (periodicite.present) {
+      map['periodicite'] = Variable<String>(periodicite.value);
+    }
+    if (dateDebut.present) {
+      map['date_debut'] = Variable<DateTime>(dateDebut.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EngagementsCompanion(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('type: $type, ')
+          ..write('montantPrevu: $montantPrevu, ')
+          ..write('periodicite: $periodicite, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('statut: $statut, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $EcheancesEngagementTable extends EcheancesEngagement
+    with TableInfo<$EcheancesEngagementTable, EcheanceEngagementRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $EcheancesEngagementTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _engagementIdMeta = const VerificationMeta(
+    'engagementId',
+  );
+  @override
+  late final GeneratedColumn<String> engagementId = GeneratedColumn<String>(
+    'engagement_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES engagements (id)',
+    ),
+  );
+  static const VerificationMeta _dateEcheanceMeta = const VerificationMeta(
+    'dateEcheance',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateEcheance = GeneratedColumn<DateTime>(
+    'date_echeance',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('en_attente'),
+  );
+  static const VerificationMeta _contributionIdMeta = const VerificationMeta(
+    'contributionId',
+  );
+  @override
+  late final GeneratedColumn<String> contributionId = GeneratedColumn<String>(
+    'contribution_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES contributions (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    engagementId,
+    dateEcheance,
+    statut,
+    contributionId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'echeances_engagement';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<EcheanceEngagementRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('engagement_id')) {
+      context.handle(
+        _engagementIdMeta,
+        engagementId.isAcceptableOrUnknown(
+          data['engagement_id']!,
+          _engagementIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_engagementIdMeta);
+    }
+    if (data.containsKey('date_echeance')) {
+      context.handle(
+        _dateEcheanceMeta,
+        dateEcheance.isAcceptableOrUnknown(
+          data['date_echeance']!,
+          _dateEcheanceMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_dateEcheanceMeta);
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    if (data.containsKey('contribution_id')) {
+      context.handle(
+        _contributionIdMeta,
+        contributionId.isAcceptableOrUnknown(
+          data['contribution_id']!,
+          _contributionIdMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  EcheanceEngagementRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return EcheanceEngagementRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      engagementId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}engagement_id'],
+      )!,
+      dateEcheance: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_echeance'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+      contributionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}contribution_id'],
+      ),
+    );
+  }
+
+  @override
+  $EcheancesEngagementTable createAlias(String alias) {
+    return $EcheancesEngagementTable(attachedDatabase, alias);
+  }
+}
+
+class EcheanceEngagementRow extends DataClass
+    implements Insertable<EcheanceEngagementRow> {
+  final String id;
+  final String engagementId;
+  final DateTime dateEcheance;
+  final String statut;
+  final String? contributionId;
+  const EcheanceEngagementRow({
+    required this.id,
+    required this.engagementId,
+    required this.dateEcheance,
+    required this.statut,
+    this.contributionId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['engagement_id'] = Variable<String>(engagementId);
+    map['date_echeance'] = Variable<DateTime>(dateEcheance);
+    map['statut'] = Variable<String>(statut);
+    if (!nullToAbsent || contributionId != null) {
+      map['contribution_id'] = Variable<String>(contributionId);
+    }
+    return map;
+  }
+
+  EcheancesEngagementCompanion toCompanion(bool nullToAbsent) {
+    return EcheancesEngagementCompanion(
+      id: Value(id),
+      engagementId: Value(engagementId),
+      dateEcheance: Value(dateEcheance),
+      statut: Value(statut),
+      contributionId: contributionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(contributionId),
+    );
+  }
+
+  factory EcheanceEngagementRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return EcheanceEngagementRow(
+      id: serializer.fromJson<String>(json['id']),
+      engagementId: serializer.fromJson<String>(json['engagementId']),
+      dateEcheance: serializer.fromJson<DateTime>(json['dateEcheance']),
+      statut: serializer.fromJson<String>(json['statut']),
+      contributionId: serializer.fromJson<String?>(json['contributionId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'engagementId': serializer.toJson<String>(engagementId),
+      'dateEcheance': serializer.toJson<DateTime>(dateEcheance),
+      'statut': serializer.toJson<String>(statut),
+      'contributionId': serializer.toJson<String?>(contributionId),
+    };
+  }
+
+  EcheanceEngagementRow copyWith({
+    String? id,
+    String? engagementId,
+    DateTime? dateEcheance,
+    String? statut,
+    Value<String?> contributionId = const Value.absent(),
+  }) => EcheanceEngagementRow(
+    id: id ?? this.id,
+    engagementId: engagementId ?? this.engagementId,
+    dateEcheance: dateEcheance ?? this.dateEcheance,
+    statut: statut ?? this.statut,
+    contributionId: contributionId.present
+        ? contributionId.value
+        : this.contributionId,
+  );
+  EcheanceEngagementRow copyWithCompanion(EcheancesEngagementCompanion data) {
+    return EcheanceEngagementRow(
+      id: data.id.present ? data.id.value : this.id,
+      engagementId: data.engagementId.present
+          ? data.engagementId.value
+          : this.engagementId,
+      dateEcheance: data.dateEcheance.present
+          ? data.dateEcheance.value
+          : this.dateEcheance,
+      statut: data.statut.present ? data.statut.value : this.statut,
+      contributionId: data.contributionId.present
+          ? data.contributionId.value
+          : this.contributionId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EcheanceEngagementRow(')
+          ..write('id: $id, ')
+          ..write('engagementId: $engagementId, ')
+          ..write('dateEcheance: $dateEcheance, ')
+          ..write('statut: $statut, ')
+          ..write('contributionId: $contributionId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, engagementId, dateEcheance, statut, contributionId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is EcheanceEngagementRow &&
+          other.id == this.id &&
+          other.engagementId == this.engagementId &&
+          other.dateEcheance == this.dateEcheance &&
+          other.statut == this.statut &&
+          other.contributionId == this.contributionId);
+}
+
+class EcheancesEngagementCompanion
+    extends UpdateCompanion<EcheanceEngagementRow> {
+  final Value<String> id;
+  final Value<String> engagementId;
+  final Value<DateTime> dateEcheance;
+  final Value<String> statut;
+  final Value<String?> contributionId;
+  final Value<int> rowid;
+  const EcheancesEngagementCompanion({
+    this.id = const Value.absent(),
+    this.engagementId = const Value.absent(),
+    this.dateEcheance = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.contributionId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  EcheancesEngagementCompanion.insert({
+    required String id,
+    required String engagementId,
+    required DateTime dateEcheance,
+    this.statut = const Value.absent(),
+    this.contributionId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       engagementId = Value(engagementId),
+       dateEcheance = Value(dateEcheance);
+  static Insertable<EcheanceEngagementRow> custom({
+    Expression<String>? id,
+    Expression<String>? engagementId,
+    Expression<DateTime>? dateEcheance,
+    Expression<String>? statut,
+    Expression<String>? contributionId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (engagementId != null) 'engagement_id': engagementId,
+      if (dateEcheance != null) 'date_echeance': dateEcheance,
+      if (statut != null) 'statut': statut,
+      if (contributionId != null) 'contribution_id': contributionId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  EcheancesEngagementCompanion copyWith({
+    Value<String>? id,
+    Value<String>? engagementId,
+    Value<DateTime>? dateEcheance,
+    Value<String>? statut,
+    Value<String?>? contributionId,
+    Value<int>? rowid,
+  }) {
+    return EcheancesEngagementCompanion(
+      id: id ?? this.id,
+      engagementId: engagementId ?? this.engagementId,
+      dateEcheance: dateEcheance ?? this.dateEcheance,
+      statut: statut ?? this.statut,
+      contributionId: contributionId ?? this.contributionId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (engagementId.present) {
+      map['engagement_id'] = Variable<String>(engagementId.value);
+    }
+    if (dateEcheance.present) {
+      map['date_echeance'] = Variable<DateTime>(dateEcheance.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (contributionId.present) {
+      map['contribution_id'] = Variable<String>(contributionId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EcheancesEngagementCompanion(')
+          ..write('id: $id, ')
+          ..write('engagementId: $engagementId, ')
+          ..write('dateEcheance: $dateEcheance, ')
+          ..write('statut: $statut, ')
+          ..write('contributionId: $contributionId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TresoriersNoeudTable extends TresoriersNoeud
+    with TableInfo<$TresoriersNoeudTable, TresorierNoeudRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TresoriersNoeudTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _noeudIdMeta = const VerificationMeta(
+    'noeudId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudId = GeneratedColumn<String>(
+    'noeud_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _dateDebutMeta = const VerificationMeta(
+    'dateDebut',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateDebut = GeneratedColumn<DateTime>(
+    'date_debut',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateFinMeta = const VerificationMeta(
+    'dateFin',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateFin = GeneratedColumn<DateTime>(
+    'date_fin',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    fideleId,
+    noeudId,
+    dateDebut,
+    dateFin,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'tresoriers_noeud';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TresorierNoeudRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    if (data.containsKey('noeud_id')) {
+      context.handle(
+        _noeudIdMeta,
+        noeudId.isAcceptableOrUnknown(data['noeud_id']!, _noeudIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudIdMeta);
+    }
+    if (data.containsKey('date_debut')) {
+      context.handle(
+        _dateDebutMeta,
+        dateDebut.isAcceptableOrUnknown(data['date_debut']!, _dateDebutMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateDebutMeta);
+    }
+    if (data.containsKey('date_fin')) {
+      context.handle(
+        _dateFinMeta,
+        dateFin.isAcceptableOrUnknown(data['date_fin']!, _dateFinMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TresorierNoeudRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TresorierNoeudRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+      noeudId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_id'],
+      )!,
+      dateDebut: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_debut'],
+      )!,
+      dateFin: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_fin'],
+      ),
+    );
+  }
+
+  @override
+  $TresoriersNoeudTable createAlias(String alias) {
+    return $TresoriersNoeudTable(attachedDatabase, alias);
+  }
+}
+
+class TresorierNoeudRow extends DataClass
+    implements Insertable<TresorierNoeudRow> {
+  final String id;
+  final String fideleId;
+  final String noeudId;
+  final DateTime dateDebut;
+  final DateTime? dateFin;
+  const TresorierNoeudRow({
+    required this.id,
+    required this.fideleId,
+    required this.noeudId,
+    required this.dateDebut,
+    this.dateFin,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['fidele_id'] = Variable<String>(fideleId);
+    map['noeud_id'] = Variable<String>(noeudId);
+    map['date_debut'] = Variable<DateTime>(dateDebut);
+    if (!nullToAbsent || dateFin != null) {
+      map['date_fin'] = Variable<DateTime>(dateFin);
+    }
+    return map;
+  }
+
+  TresoriersNoeudCompanion toCompanion(bool nullToAbsent) {
+    return TresoriersNoeudCompanion(
+      id: Value(id),
+      fideleId: Value(fideleId),
+      noeudId: Value(noeudId),
+      dateDebut: Value(dateDebut),
+      dateFin: dateFin == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dateFin),
+    );
+  }
+
+  factory TresorierNoeudRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TresorierNoeudRow(
+      id: serializer.fromJson<String>(json['id']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+      noeudId: serializer.fromJson<String>(json['noeudId']),
+      dateDebut: serializer.fromJson<DateTime>(json['dateDebut']),
+      dateFin: serializer.fromJson<DateTime?>(json['dateFin']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'fideleId': serializer.toJson<String>(fideleId),
+      'noeudId': serializer.toJson<String>(noeudId),
+      'dateDebut': serializer.toJson<DateTime>(dateDebut),
+      'dateFin': serializer.toJson<DateTime?>(dateFin),
+    };
+  }
+
+  TresorierNoeudRow copyWith({
+    String? id,
+    String? fideleId,
+    String? noeudId,
+    DateTime? dateDebut,
+    Value<DateTime?> dateFin = const Value.absent(),
+  }) => TresorierNoeudRow(
+    id: id ?? this.id,
+    fideleId: fideleId ?? this.fideleId,
+    noeudId: noeudId ?? this.noeudId,
+    dateDebut: dateDebut ?? this.dateDebut,
+    dateFin: dateFin.present ? dateFin.value : this.dateFin,
+  );
+  TresorierNoeudRow copyWithCompanion(TresoriersNoeudCompanion data) {
+    return TresorierNoeudRow(
+      id: data.id.present ? data.id.value : this.id,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      noeudId: data.noeudId.present ? data.noeudId.value : this.noeudId,
+      dateDebut: data.dateDebut.present ? data.dateDebut.value : this.dateDebut,
+      dateFin: data.dateFin.present ? data.dateFin.value : this.dateFin,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TresorierNoeudRow(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('dateFin: $dateFin')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, fideleId, noeudId, dateDebut, dateFin);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TresorierNoeudRow &&
+          other.id == this.id &&
+          other.fideleId == this.fideleId &&
+          other.noeudId == this.noeudId &&
+          other.dateDebut == this.dateDebut &&
+          other.dateFin == this.dateFin);
+}
+
+class TresoriersNoeudCompanion extends UpdateCompanion<TresorierNoeudRow> {
+  final Value<String> id;
+  final Value<String> fideleId;
+  final Value<String> noeudId;
+  final Value<DateTime> dateDebut;
+  final Value<DateTime?> dateFin;
+  final Value<int> rowid;
+  const TresoriersNoeudCompanion({
+    this.id = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.noeudId = const Value.absent(),
+    this.dateDebut = const Value.absent(),
+    this.dateFin = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TresoriersNoeudCompanion.insert({
+    required String id,
+    required String fideleId,
+    required String noeudId,
+    required DateTime dateDebut,
+    this.dateFin = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       fideleId = Value(fideleId),
+       noeudId = Value(noeudId),
+       dateDebut = Value(dateDebut);
+  static Insertable<TresorierNoeudRow> custom({
+    Expression<String>? id,
+    Expression<String>? fideleId,
+    Expression<String>? noeudId,
+    Expression<DateTime>? dateDebut,
+    Expression<DateTime>? dateFin,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (noeudId != null) 'noeud_id': noeudId,
+      if (dateDebut != null) 'date_debut': dateDebut,
+      if (dateFin != null) 'date_fin': dateFin,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TresoriersNoeudCompanion copyWith({
+    Value<String>? id,
+    Value<String>? fideleId,
+    Value<String>? noeudId,
+    Value<DateTime>? dateDebut,
+    Value<DateTime?>? dateFin,
+    Value<int>? rowid,
+  }) {
+    return TresoriersNoeudCompanion(
+      id: id ?? this.id,
+      fideleId: fideleId ?? this.fideleId,
+      noeudId: noeudId ?? this.noeudId,
+      dateDebut: dateDebut ?? this.dateDebut,
+      dateFin: dateFin ?? this.dateFin,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (noeudId.present) {
+      map['noeud_id'] = Variable<String>(noeudId.value);
+    }
+    if (dateDebut.present) {
+      map['date_debut'] = Variable<DateTime>(dateDebut.value);
+    }
+    if (dateFin.present) {
+      map['date_fin'] = Variable<DateTime>(dateFin.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TresoriersNoeudCompanion(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('dateFin: $dateFin, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxRow> {
   @override
@@ -20489,6 +24093,16 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $DossiersDisciplinairesTable dossiersDisciplinaires =
       $DossiersDisciplinairesTable(this);
   late final $PiecesDossierTable piecesDossier = $PiecesDossierTable(this);
+  late final $TypesOffrandeTable typesOffrande = $TypesOffrandeTable(this);
+  late final $ProjetsTable projets = $ProjetsTable(this);
+  late final $ContributionsTable contributions = $ContributionsTable(this);
+  late final $DepensesProjetTable depensesProjet = $DepensesProjetTable(this);
+  late final $EngagementsTable engagements = $EngagementsTable(this);
+  late final $EcheancesEngagementTable echeancesEngagement =
+      $EcheancesEngagementTable(this);
+  late final $TresoriersNoeudTable tresoriersNoeud = $TresoriersNoeudTable(
+    this,
+  );
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -20540,6 +24154,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     membresCommissionDisciplinaire,
     dossiersDisciplinaires,
     piecesDossier,
+    typesOffrande,
+    projets,
+    contributions,
+    depensesProjet,
+    engagements,
+    echeancesEngagement,
+    tresoriersNoeud,
     syncOutbox,
   ];
 }
@@ -20832,6 +24453,63 @@ final class $$OrganisationNodesTableReferences
 
     final cache = $_typedResult.readTableOrNull(
       _dossiersDisciplinairesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$ProjetsTable, List<ProjetRow>> _projetsRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.projets,
+    aliasName: 'organisation_nodes__id__projets__noeud_id',
+  );
+
+  $$ProjetsTableProcessedTableManager get projetsRefs {
+    final manager = $$ProjetsTableTableManager(
+      $_db,
+      $_db.projets,
+    ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_projetsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$ContributionsTable, List<ContributionRow>>
+  _contributionsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.contributions,
+    aliasName: 'organisation_nodes__id__contributions__noeud_id',
+  );
+
+  $$ContributionsTableProcessedTableManager get contributionsRefs {
+    final manager = $$ContributionsTableTableManager(
+      $_db,
+      $_db.contributions,
+    ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_contributionsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$TresoriersNoeudTable, List<TresorierNoeudRow>>
+  _tresoriersNoeudRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.tresoriersNoeud,
+    aliasName: 'organisation_nodes__id__tresoriers_noeud__noeud_id',
+  );
+
+  $$TresoriersNoeudTableProcessedTableManager get tresoriersNoeudRefs {
+    final manager = $$TresoriersNoeudTableTableManager(
+      $_db,
+      $_db.tresoriersNoeud,
+    ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _tresoriersNoeudRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -21223,6 +24901,81 @@ class $$OrganisationNodesTableFilterComposer
                     $removeJoinBuilderFromRootComposer,
               ),
         );
+    return f(composer);
+  }
+
+  Expression<bool> projetsRefs(
+    Expression<bool> Function($$ProjetsTableFilterComposer f) f,
+  ) {
+    final $$ProjetsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.projets,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProjetsTableFilterComposer(
+            $db: $db,
+            $table: $db.projets,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> contributionsRefs(
+    Expression<bool> Function($$ContributionsTableFilterComposer f) f,
+  ) {
+    final $$ContributionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.contributions,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContributionsTableFilterComposer(
+            $db: $db,
+            $table: $db.contributions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> tresoriersNoeudRefs(
+    Expression<bool> Function($$TresoriersNoeudTableFilterComposer f) f,
+  ) {
+    final $$TresoriersNoeudTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.tresoriersNoeud,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TresoriersNoeudTableFilterComposer(
+            $db: $db,
+            $table: $db.tresoriersNoeud,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 }
@@ -21676,6 +25429,81 @@ class $$OrganisationNodesTableAnnotationComposer
         );
     return f(composer);
   }
+
+  Expression<T> projetsRefs<T extends Object>(
+    Expression<T> Function($$ProjetsTableAnnotationComposer a) f,
+  ) {
+    final $$ProjetsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.projets,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProjetsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.projets,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> contributionsRefs<T extends Object>(
+    Expression<T> Function($$ContributionsTableAnnotationComposer a) f,
+  ) {
+    final $$ContributionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.contributions,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContributionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.contributions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> tresoriersNoeudRefs<T extends Object>(
+    Expression<T> Function($$TresoriersNoeudTableAnnotationComposer a) f,
+  ) {
+    final $$TresoriersNoeudTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.tresoriersNoeud,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TresoriersNoeudTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tresoriersNoeud,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$OrganisationNodesTableTableManager
@@ -21704,6 +25532,9 @@ class $$OrganisationNodesTableTableManager
             bool mutationsCommeDestination,
             bool commissionsDisciplinairesRefs,
             bool dossiersDisciplinairesRefs,
+            bool projetsRefs,
+            bool contributionsRefs,
+            bool tresoriersNoeudRefs,
           })
         > {
   $$OrganisationNodesTableTableManager(
@@ -21818,6 +25649,9 @@ class $$OrganisationNodesTableTableManager
                 mutationsCommeDestination = false,
                 commissionsDisciplinairesRefs = false,
                 dossiersDisciplinairesRefs = false,
+                projetsRefs = false,
+                contributionsRefs = false,
+                tresoriersNoeudRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -21835,6 +25669,9 @@ class $$OrganisationNodesTableTableManager
                     if (commissionsDisciplinairesRefs)
                       db.commissionsDisciplinaires,
                     if (dossiersDisciplinairesRefs) db.dossiersDisciplinaires,
+                    if (projetsRefs) db.projets,
+                    if (contributionsRefs) db.contributions,
+                    if (tresoriersNoeudRefs) db.tresoriersNoeud,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -22091,6 +25928,69 @@ class $$OrganisationNodesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (projetsRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          ProjetRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._projetsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).projetsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (contributionsRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          ContributionRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._contributionsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).contributionsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (tresoriersNoeudRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          TresorierNoeudRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._tresoriersNoeudRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).tresoriersNoeudRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -22124,6 +26024,9 @@ typedef $$OrganisationNodesTableProcessedTableManager =
         bool mutationsCommeDestination,
         bool commissionsDisciplinairesRefs,
         bool dossiersDisciplinairesRefs,
+        bool projetsRefs,
+        bool contributionsRefs,
+        bool tresoriersNoeudRefs,
       })
     >;
 typedef $$HistoriqueRattachementsTableCreateCompanionBuilder =
@@ -23007,6 +26910,80 @@ final class $$FidelesTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$ContributionsTable, List<ContributionRow>>
+  _contributionsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.contributions,
+    aliasName: 'fideles__id__contributions__fidele_id',
+  );
+
+  $$ContributionsTableProcessedTableManager get contributionsRefs {
+    final manager = $$ContributionsTableTableManager(
+      $_db,
+      $_db.contributions,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_contributionsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$DepensesProjetTable, List<DepenseProjetRow>>
+  _depensesProjetRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.depensesProjet,
+    aliasName: 'fideles__id__depenses_projet__valide_par_fidele_id',
+  );
+
+  $$DepensesProjetTableProcessedTableManager get depensesProjetRefs {
+    final manager = $$DepensesProjetTableTableManager($_db, $_db.depensesProjet)
+        .filter(
+          (f) => f.valideParFideleId.id.sqlEquals($_itemColumn<String>('id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(_depensesProjetRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$EngagementsTable, List<EngagementRow>>
+  _engagementsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.engagements,
+    aliasName: 'fideles__id__engagements__fidele_id',
+  );
+
+  $$EngagementsTableProcessedTableManager get engagementsRefs {
+    final manager = $$EngagementsTableTableManager(
+      $_db,
+      $_db.engagements,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_engagementsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$TresoriersNoeudTable, List<TresorierNoeudRow>>
+  _tresoriersNoeudRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.tresoriersNoeud,
+    aliasName: 'fideles__id__tresoriers_noeud__fidele_id',
+  );
+
+  $$TresoriersNoeudTableProcessedTableManager get tresoriersNoeudRefs {
+    final manager = $$TresoriersNoeudTableTableManager(
+      $_db,
+      $_db.tresoriersNoeud,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _tresoriersNoeudRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$FidelesTableFilterComposer
@@ -23805,6 +27782,106 @@ class $$FidelesTableFilterComposer
                     $removeJoinBuilderFromRootComposer,
               ),
         );
+    return f(composer);
+  }
+
+  Expression<bool> contributionsRefs(
+    Expression<bool> Function($$ContributionsTableFilterComposer f) f,
+  ) {
+    final $$ContributionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.contributions,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContributionsTableFilterComposer(
+            $db: $db,
+            $table: $db.contributions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> depensesProjetRefs(
+    Expression<bool> Function($$DepensesProjetTableFilterComposer f) f,
+  ) {
+    final $$DepensesProjetTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.depensesProjet,
+      getReferencedColumn: (t) => t.valideParFideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DepensesProjetTableFilterComposer(
+            $db: $db,
+            $table: $db.depensesProjet,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> engagementsRefs(
+    Expression<bool> Function($$EngagementsTableFilterComposer f) f,
+  ) {
+    final $$EngagementsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.engagements,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EngagementsTableFilterComposer(
+            $db: $db,
+            $table: $db.engagements,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> tresoriersNoeudRefs(
+    Expression<bool> Function($$TresoriersNoeudTableFilterComposer f) f,
+  ) {
+    final $$TresoriersNoeudTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.tresoriersNoeud,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TresoriersNoeudTableFilterComposer(
+            $db: $db,
+            $table: $db.tresoriersNoeud,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 }
@@ -24711,6 +28788,106 @@ class $$FidelesTableAnnotationComposer
         );
     return f(composer);
   }
+
+  Expression<T> contributionsRefs<T extends Object>(
+    Expression<T> Function($$ContributionsTableAnnotationComposer a) f,
+  ) {
+    final $$ContributionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.contributions,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContributionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.contributions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> depensesProjetRefs<T extends Object>(
+    Expression<T> Function($$DepensesProjetTableAnnotationComposer a) f,
+  ) {
+    final $$DepensesProjetTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.depensesProjet,
+      getReferencedColumn: (t) => t.valideParFideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DepensesProjetTableAnnotationComposer(
+            $db: $db,
+            $table: $db.depensesProjet,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> engagementsRefs<T extends Object>(
+    Expression<T> Function($$EngagementsTableAnnotationComposer a) f,
+  ) {
+    final $$EngagementsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.engagements,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EngagementsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.engagements,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> tresoriersNoeudRefs<T extends Object>(
+    Expression<T> Function($$TresoriersNoeudTableAnnotationComposer a) f,
+  ) {
+    final $$TresoriersNoeudTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.tresoriersNoeud,
+      getReferencedColumn: (t) => t.fideleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TresoriersNoeudTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tresoriersNoeud,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$FidelesTableTableManager
@@ -24755,6 +28932,10 @@ class $$FidelesTableTableManager
             bool membresCommissionDisciplinaireRefs,
             bool dossiersDisciplinairesCommeMisEnCause,
             bool dossiersDisciplinairesCommeAuteur,
+            bool contributionsRefs,
+            bool depensesProjetRefs,
+            bool engagementsRefs,
+            bool tresoriersNoeudRefs,
           })
         > {
   $$FidelesTableTableManager(_$AppDatabase db, $FidelesTable table)
@@ -24890,6 +29071,10 @@ class $$FidelesTableTableManager
                 membresCommissionDisciplinaireRefs = false,
                 dossiersDisciplinairesCommeMisEnCause = false,
                 dossiersDisciplinairesCommeAuteur = false,
+                contributionsRefs = false,
+                depensesProjetRefs = false,
+                engagementsRefs = false,
+                tresoriersNoeudRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -24924,6 +29109,10 @@ class $$FidelesTableTableManager
                       db.dossiersDisciplinaires,
                     if (dossiersDisciplinairesCommeAuteur)
                       db.dossiersDisciplinaires,
+                    if (contributionsRefs) db.contributions,
+                    if (depensesProjetRefs) db.depensesProjet,
+                    if (engagementsRefs) db.engagements,
+                    if (tresoriersNoeudRefs) db.tresoriersNoeud,
                   ],
                   addJoins:
                       <
@@ -25526,6 +29715,90 @@ class $$FidelesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (contributionsRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          ContributionRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._contributionsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).contributionsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (depensesProjetRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          DepenseProjetRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._depensesProjetRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).depensesProjetRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.valideParFideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (engagementsRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          EngagementRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._engagementsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).engagementsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (tresoriersNoeudRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          TresorierNoeudRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._tresoriersNoeudRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).tresoriersNoeudRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -25575,6 +29848,10 @@ typedef $$FidelesTableProcessedTableManager =
         bool membresCommissionDisciplinaireRefs,
         bool dossiersDisciplinairesCommeMisEnCause,
         bool dossiersDisciplinairesCommeAuteur,
+        bool contributionsRefs,
+        bool depensesProjetRefs,
+        bool engagementsRefs,
+        bool tresoriersNoeudRefs,
       })
     >;
 typedef $$NodeResponsablesTableCreateCompanionBuilder =
@@ -36922,6 +41199,24 @@ final class $$CultesTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$ContributionsTable, List<ContributionRow>>
+  _contributionsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.contributions,
+    aliasName: 'cultes__id__contributions__culte_id',
+  );
+
+  $$ContributionsTableProcessedTableManager get contributionsRefs {
+    final manager = $$ContributionsTableTableManager(
+      $_db,
+      $_db.contributions,
+    ).filter((f) => f.culteId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_contributionsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$CultesTableFilterComposer
@@ -37090,6 +41385,31 @@ class $$CultesTableFilterComposer
           }) => $$PublicationsCulteTableFilterComposer(
             $db: $db,
             $table: $db.publicationsCulte,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> contributionsRefs(
+    Expression<bool> Function($$ContributionsTableFilterComposer f) f,
+  ) {
+    final $$ContributionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.contributions,
+      getReferencedColumn: (t) => t.culteId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContributionsTableFilterComposer(
+            $db: $db,
+            $table: $db.contributions,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -37368,6 +41688,31 @@ class $$CultesTableAnnotationComposer
         );
     return f(composer);
   }
+
+  Expression<T> contributionsRefs<T extends Object>(
+    Expression<T> Function($$ContributionsTableAnnotationComposer a) f,
+  ) {
+    final $$ContributionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.contributions,
+      getReferencedColumn: (t) => t.culteId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContributionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.contributions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$CultesTableTableManager
@@ -37389,6 +41734,7 @@ class $$CultesTableTableManager
             bool sequencesLiturgiquesRefs,
             bool presencesCulteRefs,
             bool publicationsCulteRefs,
+            bool contributionsRefs,
           })
         > {
   $$CultesTableTableManager(_$AppDatabase db, $CultesTable table)
@@ -37473,6 +41819,7 @@ class $$CultesTableTableManager
                 sequencesLiturgiquesRefs = false,
                 presencesCulteRefs = false,
                 publicationsCulteRefs = false,
+                contributionsRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -37480,6 +41827,7 @@ class $$CultesTableTableManager
                     if (sequencesLiturgiquesRefs) db.sequencesLiturgiques,
                     if (presencesCulteRefs) db.presencesCulte,
                     if (publicationsCulteRefs) db.publicationsCulte,
+                    if (contributionsRefs) db.contributions,
                   ],
                   addJoins:
                       <
@@ -37591,6 +41939,27 @@ class $$CultesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (contributionsRefs)
+                        await $_getPrefetchedData<
+                          CulteRow,
+                          $CultesTable,
+                          ContributionRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CultesTableReferences
+                              ._contributionsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CultesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).contributionsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.culteId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -37617,6 +41986,7 @@ typedef $$CultesTableProcessedTableManager =
         bool sequencesLiturgiquesRefs,
         bool presencesCulteRefs,
         bool publicationsCulteRefs,
+        bool contributionsRefs,
       })
     >;
 typedef $$SequencesLiturgiquesTableCreateCompanionBuilder =
@@ -44970,6 +49340,3794 @@ typedef $$PiecesDossierTableProcessedTableManager =
       PieceDossierRow,
       PrefetchHooks Function({bool dossierId, bool documentArchiveId})
     >;
+typedef $$TypesOffrandeTableCreateCompanionBuilder =
+    TypesOffrandeCompanion Function({
+      required String id,
+      required String code,
+      required String libelle,
+      Value<bool> standard,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+typedef $$TypesOffrandeTableUpdateCompanionBuilder =
+    TypesOffrandeCompanion Function({
+      Value<String> id,
+      Value<String> code,
+      Value<String> libelle,
+      Value<bool> standard,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+
+final class $$TypesOffrandeTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $TypesOffrandeTable, TypeOffrandeRow> {
+  $$TypesOffrandeTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<$ContributionsTable, List<ContributionRow>>
+  _contributionsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.contributions,
+    aliasName: 'types_offrande__id__contributions__type_offrande_id',
+  );
+
+  $$ContributionsTableProcessedTableManager get contributionsRefs {
+    final manager = $$ContributionsTableTableManager(
+      $_db,
+      $_db.contributions,
+    ).filter((f) => f.typeOffrandeId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_contributionsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$TypesOffrandeTableFilterComposer
+    extends Composer<_$AppDatabase, $TypesOffrandeTable> {
+  $$TypesOffrandeTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get standard => $composableBuilder(
+    column: $table.standard,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> contributionsRefs(
+    Expression<bool> Function($$ContributionsTableFilterComposer f) f,
+  ) {
+    final $$ContributionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.contributions,
+      getReferencedColumn: (t) => t.typeOffrandeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContributionsTableFilterComposer(
+            $db: $db,
+            $table: $db.contributions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$TypesOffrandeTableOrderingComposer
+    extends Composer<_$AppDatabase, $TypesOffrandeTable> {
+  $$TypesOffrandeTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get standard => $composableBuilder(
+    column: $table.standard,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TypesOffrandeTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TypesOffrandeTable> {
+  $$TypesOffrandeTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<String> get libelle =>
+      $composableBuilder(column: $table.libelle, builder: (column) => column);
+
+  GeneratedColumn<bool> get standard =>
+      $composableBuilder(column: $table.standard, builder: (column) => column);
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  Expression<T> contributionsRefs<T extends Object>(
+    Expression<T> Function($$ContributionsTableAnnotationComposer a) f,
+  ) {
+    final $$ContributionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.contributions,
+      getReferencedColumn: (t) => t.typeOffrandeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContributionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.contributions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$TypesOffrandeTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $TypesOffrandeTable,
+          TypeOffrandeRow,
+          $$TypesOffrandeTableFilterComposer,
+          $$TypesOffrandeTableOrderingComposer,
+          $$TypesOffrandeTableAnnotationComposer,
+          $$TypesOffrandeTableCreateCompanionBuilder,
+          $$TypesOffrandeTableUpdateCompanionBuilder,
+          (TypeOffrandeRow, $$TypesOffrandeTableReferences),
+          TypeOffrandeRow,
+          PrefetchHooks Function({bool contributionsRefs})
+        > {
+  $$TypesOffrandeTableTableManager(_$AppDatabase db, $TypesOffrandeTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TypesOffrandeTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TypesOffrandeTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TypesOffrandeTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> code = const Value.absent(),
+                Value<String> libelle = const Value.absent(),
+                Value<bool> standard = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TypesOffrandeCompanion(
+                id: id,
+                code: code,
+                libelle: libelle,
+                standard: standard,
+                statut: statut,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String code,
+                required String libelle,
+                Value<bool> standard = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TypesOffrandeCompanion.insert(
+                id: id,
+                code: code,
+                libelle: libelle,
+                standard: standard,
+                statut: statut,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$TypesOffrandeTable, TypeOffrandeRow>(table),
+                  $$TypesOffrandeTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({contributionsRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (contributionsRefs) db.contributions,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (contributionsRefs)
+                    await $_getPrefetchedData<
+                      TypeOffrandeRow,
+                      $TypesOffrandeTable,
+                      ContributionRow
+                    >(
+                      currentTable: table,
+                      referencedTable: $$TypesOffrandeTableReferences
+                          ._contributionsRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$TypesOffrandeTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).contributionsRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where(
+                            (e) => e.typeOffrandeId == item.id,
+                          ),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$TypesOffrandeTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $TypesOffrandeTable,
+      TypeOffrandeRow,
+      $$TypesOffrandeTableFilterComposer,
+      $$TypesOffrandeTableOrderingComposer,
+      $$TypesOffrandeTableAnnotationComposer,
+      $$TypesOffrandeTableCreateCompanionBuilder,
+      $$TypesOffrandeTableUpdateCompanionBuilder,
+      (TypeOffrandeRow, $$TypesOffrandeTableReferences),
+      TypeOffrandeRow,
+      PrefetchHooks Function({bool contributionsRefs})
+    >;
+typedef $$ProjetsTableCreateCompanionBuilder =
+    ProjetsCompanion Function({
+      required String id,
+      required String noeudId,
+      required String nom,
+      required int budgetPrevisionnel,
+      required String devise,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+typedef $$ProjetsTableUpdateCompanionBuilder =
+    ProjetsCompanion Function({
+      Value<String> id,
+      Value<String> noeudId,
+      Value<String> nom,
+      Value<int> budgetPrevisionnel,
+      Value<String> devise,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+
+final class $$ProjetsTableReferences
+    extends BaseReferences<_$AppDatabase, $ProjetsTable, ProjetRow> {
+  $$ProjetsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $OrganisationNodesTable _noeudIdTable(_$AppDatabase db) => db
+      .organisationNodes
+      .createAlias('projets__noeud_id__organisation_nodes__id');
+
+  $$OrganisationNodesTableProcessedTableManager get noeudId {
+    final $_column = $_itemColumn<String>('noeud_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$ContributionsTable, List<ContributionRow>>
+  _contributionsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.contributions,
+    aliasName: 'projets__id__contributions__projet_id',
+  );
+
+  $$ContributionsTableProcessedTableManager get contributionsRefs {
+    final manager = $$ContributionsTableTableManager(
+      $_db,
+      $_db.contributions,
+    ).filter((f) => f.projetId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_contributionsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$DepensesProjetTable, List<DepenseProjetRow>>
+  _depensesProjetRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.depensesProjet,
+    aliasName: 'projets__id__depenses_projet__projet_id',
+  );
+
+  $$DepensesProjetTableProcessedTableManager get depensesProjetRefs {
+    final manager = $$DepensesProjetTableTableManager(
+      $_db,
+      $_db.depensesProjet,
+    ).filter((f) => f.projetId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_depensesProjetRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$ProjetsTableFilterComposer
+    extends Composer<_$AppDatabase, $ProjetsTable> {
+  $$ProjetsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get nom => $composableBuilder(
+    column: $table.nom,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get budgetPrevisionnel => $composableBuilder(
+    column: $table.budgetPrevisionnel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get devise => $composableBuilder(
+    column: $table.devise,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$OrganisationNodesTableFilterComposer get noeudId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> contributionsRefs(
+    Expression<bool> Function($$ContributionsTableFilterComposer f) f,
+  ) {
+    final $$ContributionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.contributions,
+      getReferencedColumn: (t) => t.projetId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContributionsTableFilterComposer(
+            $db: $db,
+            $table: $db.contributions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> depensesProjetRefs(
+    Expression<bool> Function($$DepensesProjetTableFilterComposer f) f,
+  ) {
+    final $$DepensesProjetTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.depensesProjet,
+      getReferencedColumn: (t) => t.projetId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DepensesProjetTableFilterComposer(
+            $db: $db,
+            $table: $db.depensesProjet,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ProjetsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ProjetsTable> {
+  $$ProjetsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get nom => $composableBuilder(
+    column: $table.nom,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get budgetPrevisionnel => $composableBuilder(
+    column: $table.budgetPrevisionnel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get devise => $composableBuilder(
+    column: $table.devise,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$OrganisationNodesTableOrderingComposer get noeudId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ProjetsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ProjetsTable> {
+  $$ProjetsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get nom =>
+      $composableBuilder(column: $table.nom, builder: (column) => column);
+
+  GeneratedColumn<int> get budgetPrevisionnel => $composableBuilder(
+    column: $table.budgetPrevisionnel,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get devise =>
+      $composableBuilder(column: $table.devise, builder: (column) => column);
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  $$OrganisationNodesTableAnnotationComposer get noeudId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  Expression<T> contributionsRefs<T extends Object>(
+    Expression<T> Function($$ContributionsTableAnnotationComposer a) f,
+  ) {
+    final $$ContributionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.contributions,
+      getReferencedColumn: (t) => t.projetId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContributionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.contributions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> depensesProjetRefs<T extends Object>(
+    Expression<T> Function($$DepensesProjetTableAnnotationComposer a) f,
+  ) {
+    final $$DepensesProjetTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.depensesProjet,
+      getReferencedColumn: (t) => t.projetId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DepensesProjetTableAnnotationComposer(
+            $db: $db,
+            $table: $db.depensesProjet,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ProjetsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ProjetsTable,
+          ProjetRow,
+          $$ProjetsTableFilterComposer,
+          $$ProjetsTableOrderingComposer,
+          $$ProjetsTableAnnotationComposer,
+          $$ProjetsTableCreateCompanionBuilder,
+          $$ProjetsTableUpdateCompanionBuilder,
+          (ProjetRow, $$ProjetsTableReferences),
+          ProjetRow,
+          PrefetchHooks Function({
+            bool noeudId,
+            bool contributionsRefs,
+            bool depensesProjetRefs,
+          })
+        > {
+  $$ProjetsTableTableManager(_$AppDatabase db, $ProjetsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ProjetsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ProjetsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ProjetsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> noeudId = const Value.absent(),
+                Value<String> nom = const Value.absent(),
+                Value<int> budgetPrevisionnel = const Value.absent(),
+                Value<String> devise = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ProjetsCompanion(
+                id: id,
+                noeudId: noeudId,
+                nom: nom,
+                budgetPrevisionnel: budgetPrevisionnel,
+                devise: devise,
+                statut: statut,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String noeudId,
+                required String nom,
+                required int budgetPrevisionnel,
+                required String devise,
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ProjetsCompanion.insert(
+                id: id,
+                noeudId: noeudId,
+                nom: nom,
+                budgetPrevisionnel: budgetPrevisionnel,
+                devise: devise,
+                statut: statut,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ProjetsTable, ProjetRow>(table),
+                  $$ProjetsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                noeudId = false,
+                contributionsRefs = false,
+                depensesProjetRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (contributionsRefs) db.contributions,
+                    if (depensesProjetRefs) db.depensesProjet,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (noeudId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.noeudId,
+                                    referencedTable: $$ProjetsTableReferences
+                                        ._noeudIdTable(db),
+                                    referencedColumn: $$ProjetsTableReferences
+                                        ._noeudIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (contributionsRefs)
+                        await $_getPrefetchedData<
+                          ProjetRow,
+                          $ProjetsTable,
+                          ContributionRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ProjetsTableReferences
+                              ._contributionsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$ProjetsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).contributionsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.projetId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (depensesProjetRefs)
+                        await $_getPrefetchedData<
+                          ProjetRow,
+                          $ProjetsTable,
+                          DepenseProjetRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ProjetsTableReferences
+                              ._depensesProjetRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$ProjetsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).depensesProjetRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.projetId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$ProjetsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ProjetsTable,
+      ProjetRow,
+      $$ProjetsTableFilterComposer,
+      $$ProjetsTableOrderingComposer,
+      $$ProjetsTableAnnotationComposer,
+      $$ProjetsTableCreateCompanionBuilder,
+      $$ProjetsTableUpdateCompanionBuilder,
+      (ProjetRow, $$ProjetsTableReferences),
+      ProjetRow,
+      PrefetchHooks Function({
+        bool noeudId,
+        bool contributionsRefs,
+        bool depensesProjetRefs,
+      })
+    >;
+typedef $$ContributionsTableCreateCompanionBuilder =
+    ContributionsCompanion Function({
+      required String id,
+      Value<String?> fideleId,
+      Value<String?> libelleDonateurAnonyme,
+      required String typeOffrandeId,
+      required int montant,
+      required String devise,
+      required String noeudId,
+      Value<String?> culteId,
+      Value<String?> projetId,
+      required String modePaiement,
+      Value<String> statut,
+      required String origine,
+      required DateTime dateSaisie,
+      Value<String?> valideParFideleId,
+      Value<DateTime?> dateValidation,
+      Value<String?> motifRejet,
+      Value<String?> contributionOrigineId,
+      Value<bool> estContrePassation,
+      Value<int> rowid,
+    });
+typedef $$ContributionsTableUpdateCompanionBuilder =
+    ContributionsCompanion Function({
+      Value<String> id,
+      Value<String?> fideleId,
+      Value<String?> libelleDonateurAnonyme,
+      Value<String> typeOffrandeId,
+      Value<int> montant,
+      Value<String> devise,
+      Value<String> noeudId,
+      Value<String?> culteId,
+      Value<String?> projetId,
+      Value<String> modePaiement,
+      Value<String> statut,
+      Value<String> origine,
+      Value<DateTime> dateSaisie,
+      Value<String?> valideParFideleId,
+      Value<DateTime?> dateValidation,
+      Value<String?> motifRejet,
+      Value<String?> contributionOrigineId,
+      Value<bool> estContrePassation,
+      Value<int> rowid,
+    });
+
+final class $$ContributionsTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $ContributionsTable, ContributionRow> {
+  $$ContributionsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('contributions__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager? get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id');
+    if ($_column == null) return null;
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $TypesOffrandeTable _typeOffrandeIdTable(_$AppDatabase db) => db
+      .typesOffrande
+      .createAlias('contributions__type_offrande_id__types_offrande__id');
+
+  $$TypesOffrandeTableProcessedTableManager get typeOffrandeId {
+    final $_column = $_itemColumn<String>('type_offrande_id')!;
+
+    final manager = $$TypesOffrandeTableTableManager(
+      $_db,
+      $_db.typesOffrande,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_typeOffrandeIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $OrganisationNodesTable _noeudIdTable(_$AppDatabase db) => db
+      .organisationNodes
+      .createAlias('contributions__noeud_id__organisation_nodes__id');
+
+  $$OrganisationNodesTableProcessedTableManager get noeudId {
+    final $_column = $_itemColumn<String>('noeud_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $CultesTable _culteIdTable(_$AppDatabase db) =>
+      db.cultes.createAlias('contributions__culte_id__cultes__id');
+
+  $$CultesTableProcessedTableManager? get culteId {
+    final $_column = $_itemColumn<String>('culte_id');
+    if ($_column == null) return null;
+    final manager = $$CultesTableTableManager(
+      $_db,
+      $_db.cultes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_culteIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $ProjetsTable _projetIdTable(_$AppDatabase db) =>
+      db.projets.createAlias('contributions__projet_id__projets__id');
+
+  $$ProjetsTableProcessedTableManager? get projetId {
+    final $_column = $_itemColumn<String>('projet_id');
+    if ($_column == null) return null;
+    final manager = $$ProjetsTableTableManager(
+      $_db,
+      $_db.projets,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_projetIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $ContributionsTable _contributionOrigineIdTable(_$AppDatabase db) => db
+      .contributions
+      .createAlias('contributions__contribution_origine_id__contributions__id');
+
+  $$ContributionsTableProcessedTableManager? get contributionOrigineId {
+    final $_column = $_itemColumn<String>('contribution_origine_id');
+    if ($_column == null) return null;
+    final manager = $$ContributionsTableTableManager(
+      $_db,
+      $_db.contributions,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(
+      _contributionOrigineIdTable($_db),
+    );
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $EcheancesEngagementTable,
+    List<EcheanceEngagementRow>
+  >
+  _echeancesEngagementRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.echeancesEngagement,
+        aliasName: 'contributions__id__echeances_engagement__contribution_id',
+      );
+
+  $$EcheancesEngagementTableProcessedTableManager get echeancesEngagementRefs {
+    final manager = $$EcheancesEngagementTableTableManager(
+      $_db,
+      $_db.echeancesEngagement,
+    ).filter((f) => f.contributionId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _echeancesEngagementRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$ContributionsTableFilterComposer
+    extends Composer<_$AppDatabase, $ContributionsTable> {
+  $$ContributionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get libelleDonateurAnonyme => $composableBuilder(
+    column: $table.libelleDonateurAnonyme,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get montant => $composableBuilder(
+    column: $table.montant,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get devise => $composableBuilder(
+    column: $table.devise,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get modePaiement => $composableBuilder(
+    column: $table.modePaiement,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get origine => $composableBuilder(
+    column: $table.origine,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateSaisie => $composableBuilder(
+    column: $table.dateSaisie,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get valideParFideleId => $composableBuilder(
+    column: $table.valideParFideleId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateValidation => $composableBuilder(
+    column: $table.dateValidation,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get motifRejet => $composableBuilder(
+    column: $table.motifRejet,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get estContrePassation => $composableBuilder(
+    column: $table.estContrePassation,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TypesOffrandeTableFilterComposer get typeOffrandeId {
+    final $$TypesOffrandeTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.typeOffrandeId,
+      referencedTable: $db.typesOffrande,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TypesOffrandeTableFilterComposer(
+            $db: $db,
+            $table: $db.typesOffrande,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableFilterComposer get noeudId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$CultesTableFilterComposer get culteId {
+    final $$CultesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.culteId,
+      referencedTable: $db.cultes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CultesTableFilterComposer(
+            $db: $db,
+            $table: $db.cultes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ProjetsTableFilterComposer get projetId {
+    final $$ProjetsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.projetId,
+      referencedTable: $db.projets,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProjetsTableFilterComposer(
+            $db: $db,
+            $table: $db.projets,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ContributionsTableFilterComposer get contributionOrigineId {
+    final $$ContributionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.contributionOrigineId,
+      referencedTable: $db.contributions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContributionsTableFilterComposer(
+            $db: $db,
+            $table: $db.contributions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> echeancesEngagementRefs(
+    Expression<bool> Function($$EcheancesEngagementTableFilterComposer f) f,
+  ) {
+    final $$EcheancesEngagementTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.echeancesEngagement,
+      getReferencedColumn: (t) => t.contributionId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EcheancesEngagementTableFilterComposer(
+            $db: $db,
+            $table: $db.echeancesEngagement,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ContributionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ContributionsTable> {
+  $$ContributionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get libelleDonateurAnonyme => $composableBuilder(
+    column: $table.libelleDonateurAnonyme,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get montant => $composableBuilder(
+    column: $table.montant,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get devise => $composableBuilder(
+    column: $table.devise,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get modePaiement => $composableBuilder(
+    column: $table.modePaiement,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get origine => $composableBuilder(
+    column: $table.origine,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateSaisie => $composableBuilder(
+    column: $table.dateSaisie,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get valideParFideleId => $composableBuilder(
+    column: $table.valideParFideleId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateValidation => $composableBuilder(
+    column: $table.dateValidation,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get motifRejet => $composableBuilder(
+    column: $table.motifRejet,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get estContrePassation => $composableBuilder(
+    column: $table.estContrePassation,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TypesOffrandeTableOrderingComposer get typeOffrandeId {
+    final $$TypesOffrandeTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.typeOffrandeId,
+      referencedTable: $db.typesOffrande,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TypesOffrandeTableOrderingComposer(
+            $db: $db,
+            $table: $db.typesOffrande,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableOrderingComposer get noeudId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$CultesTableOrderingComposer get culteId {
+    final $$CultesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.culteId,
+      referencedTable: $db.cultes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CultesTableOrderingComposer(
+            $db: $db,
+            $table: $db.cultes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ProjetsTableOrderingComposer get projetId {
+    final $$ProjetsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.projetId,
+      referencedTable: $db.projets,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProjetsTableOrderingComposer(
+            $db: $db,
+            $table: $db.projets,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ContributionsTableOrderingComposer get contributionOrigineId {
+    final $$ContributionsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.contributionOrigineId,
+      referencedTable: $db.contributions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContributionsTableOrderingComposer(
+            $db: $db,
+            $table: $db.contributions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ContributionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ContributionsTable> {
+  $$ContributionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get libelleDonateurAnonyme => $composableBuilder(
+    column: $table.libelleDonateurAnonyme,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get montant =>
+      $composableBuilder(column: $table.montant, builder: (column) => column);
+
+  GeneratedColumn<String> get devise =>
+      $composableBuilder(column: $table.devise, builder: (column) => column);
+
+  GeneratedColumn<String> get modePaiement => $composableBuilder(
+    column: $table.modePaiement,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  GeneratedColumn<String> get origine =>
+      $composableBuilder(column: $table.origine, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateSaisie => $composableBuilder(
+    column: $table.dateSaisie,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get valideParFideleId => $composableBuilder(
+    column: $table.valideParFideleId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get dateValidation => $composableBuilder(
+    column: $table.dateValidation,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get motifRejet => $composableBuilder(
+    column: $table.motifRejet,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get estContrePassation => $composableBuilder(
+    column: $table.estContrePassation,
+    builder: (column) => column,
+  );
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TypesOffrandeTableAnnotationComposer get typeOffrandeId {
+    final $$TypesOffrandeTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.typeOffrandeId,
+      referencedTable: $db.typesOffrande,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TypesOffrandeTableAnnotationComposer(
+            $db: $db,
+            $table: $db.typesOffrande,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableAnnotationComposer get noeudId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$CultesTableAnnotationComposer get culteId {
+    final $$CultesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.culteId,
+      referencedTable: $db.cultes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CultesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.cultes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ProjetsTableAnnotationComposer get projetId {
+    final $$ProjetsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.projetId,
+      referencedTable: $db.projets,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProjetsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.projets,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ContributionsTableAnnotationComposer get contributionOrigineId {
+    final $$ContributionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.contributionOrigineId,
+      referencedTable: $db.contributions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContributionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.contributions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> echeancesEngagementRefs<T extends Object>(
+    Expression<T> Function($$EcheancesEngagementTableAnnotationComposer a) f,
+  ) {
+    final $$EcheancesEngagementTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.echeancesEngagement,
+          getReferencedColumn: (t) => t.contributionId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$EcheancesEngagementTableAnnotationComposer(
+                $db: $db,
+                $table: $db.echeancesEngagement,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$ContributionsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ContributionsTable,
+          ContributionRow,
+          $$ContributionsTableFilterComposer,
+          $$ContributionsTableOrderingComposer,
+          $$ContributionsTableAnnotationComposer,
+          $$ContributionsTableCreateCompanionBuilder,
+          $$ContributionsTableUpdateCompanionBuilder,
+          (ContributionRow, $$ContributionsTableReferences),
+          ContributionRow,
+          PrefetchHooks Function({
+            bool fideleId,
+            bool typeOffrandeId,
+            bool noeudId,
+            bool culteId,
+            bool projetId,
+            bool contributionOrigineId,
+            bool echeancesEngagementRefs,
+          })
+        > {
+  $$ContributionsTableTableManager(_$AppDatabase db, $ContributionsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ContributionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ContributionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ContributionsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String?> fideleId = const Value.absent(),
+                Value<String?> libelleDonateurAnonyme = const Value.absent(),
+                Value<String> typeOffrandeId = const Value.absent(),
+                Value<int> montant = const Value.absent(),
+                Value<String> devise = const Value.absent(),
+                Value<String> noeudId = const Value.absent(),
+                Value<String?> culteId = const Value.absent(),
+                Value<String?> projetId = const Value.absent(),
+                Value<String> modePaiement = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<String> origine = const Value.absent(),
+                Value<DateTime> dateSaisie = const Value.absent(),
+                Value<String?> valideParFideleId = const Value.absent(),
+                Value<DateTime?> dateValidation = const Value.absent(),
+                Value<String?> motifRejet = const Value.absent(),
+                Value<String?> contributionOrigineId = const Value.absent(),
+                Value<bool> estContrePassation = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ContributionsCompanion(
+                id: id,
+                fideleId: fideleId,
+                libelleDonateurAnonyme: libelleDonateurAnonyme,
+                typeOffrandeId: typeOffrandeId,
+                montant: montant,
+                devise: devise,
+                noeudId: noeudId,
+                culteId: culteId,
+                projetId: projetId,
+                modePaiement: modePaiement,
+                statut: statut,
+                origine: origine,
+                dateSaisie: dateSaisie,
+                valideParFideleId: valideParFideleId,
+                dateValidation: dateValidation,
+                motifRejet: motifRejet,
+                contributionOrigineId: contributionOrigineId,
+                estContrePassation: estContrePassation,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                Value<String?> fideleId = const Value.absent(),
+                Value<String?> libelleDonateurAnonyme = const Value.absent(),
+                required String typeOffrandeId,
+                required int montant,
+                required String devise,
+                required String noeudId,
+                Value<String?> culteId = const Value.absent(),
+                Value<String?> projetId = const Value.absent(),
+                required String modePaiement,
+                Value<String> statut = const Value.absent(),
+                required String origine,
+                required DateTime dateSaisie,
+                Value<String?> valideParFideleId = const Value.absent(),
+                Value<DateTime?> dateValidation = const Value.absent(),
+                Value<String?> motifRejet = const Value.absent(),
+                Value<String?> contributionOrigineId = const Value.absent(),
+                Value<bool> estContrePassation = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ContributionsCompanion.insert(
+                id: id,
+                fideleId: fideleId,
+                libelleDonateurAnonyme: libelleDonateurAnonyme,
+                typeOffrandeId: typeOffrandeId,
+                montant: montant,
+                devise: devise,
+                noeudId: noeudId,
+                culteId: culteId,
+                projetId: projetId,
+                modePaiement: modePaiement,
+                statut: statut,
+                origine: origine,
+                dateSaisie: dateSaisie,
+                valideParFideleId: valideParFideleId,
+                dateValidation: dateValidation,
+                motifRejet: motifRejet,
+                contributionOrigineId: contributionOrigineId,
+                estContrePassation: estContrePassation,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ContributionsTable, ContributionRow>(table),
+                  $$ContributionsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                fideleId = false,
+                typeOffrandeId = false,
+                noeudId = false,
+                culteId = false,
+                projetId = false,
+                contributionOrigineId = false,
+                echeancesEngagementRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (echeancesEngagementRefs) db.echeancesEngagement,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (fideleId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.fideleId,
+                                    referencedTable:
+                                        $$ContributionsTableReferences
+                                            ._fideleIdTable(db),
+                                    referencedColumn:
+                                        $$ContributionsTableReferences
+                                            ._fideleIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (typeOffrandeId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.typeOffrandeId,
+                                    referencedTable:
+                                        $$ContributionsTableReferences
+                                            ._typeOffrandeIdTable(db),
+                                    referencedColumn:
+                                        $$ContributionsTableReferences
+                                            ._typeOffrandeIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (noeudId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.noeudId,
+                                    referencedTable:
+                                        $$ContributionsTableReferences
+                                            ._noeudIdTable(db),
+                                    referencedColumn:
+                                        $$ContributionsTableReferences
+                                            ._noeudIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (culteId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.culteId,
+                                    referencedTable:
+                                        $$ContributionsTableReferences
+                                            ._culteIdTable(db),
+                                    referencedColumn:
+                                        $$ContributionsTableReferences
+                                            ._culteIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (projetId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.projetId,
+                                    referencedTable:
+                                        $$ContributionsTableReferences
+                                            ._projetIdTable(db),
+                                    referencedColumn:
+                                        $$ContributionsTableReferences
+                                            ._projetIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (contributionOrigineId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.contributionOrigineId,
+                                    referencedTable:
+                                        $$ContributionsTableReferences
+                                            ._contributionOrigineIdTable(db),
+                                    referencedColumn:
+                                        $$ContributionsTableReferences
+                                            ._contributionOrigineIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (echeancesEngagementRefs)
+                        await $_getPrefetchedData<
+                          ContributionRow,
+                          $ContributionsTable,
+                          EcheanceEngagementRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ContributionsTableReferences
+                              ._echeancesEngagementRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$ContributionsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).echeancesEngagementRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.contributionId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$ContributionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ContributionsTable,
+      ContributionRow,
+      $$ContributionsTableFilterComposer,
+      $$ContributionsTableOrderingComposer,
+      $$ContributionsTableAnnotationComposer,
+      $$ContributionsTableCreateCompanionBuilder,
+      $$ContributionsTableUpdateCompanionBuilder,
+      (ContributionRow, $$ContributionsTableReferences),
+      ContributionRow,
+      PrefetchHooks Function({
+        bool fideleId,
+        bool typeOffrandeId,
+        bool noeudId,
+        bool culteId,
+        bool projetId,
+        bool contributionOrigineId,
+        bool echeancesEngagementRefs,
+      })
+    >;
+typedef $$DepensesProjetTableCreateCompanionBuilder =
+    DepensesProjetCompanion Function({
+      required String id,
+      required String projetId,
+      required int montant,
+      required String libelle,
+      required DateTime date,
+      required String valideParFideleId,
+      Value<bool> derogationTracee,
+      Value<String?> motifDerogation,
+      Value<int> rowid,
+    });
+typedef $$DepensesProjetTableUpdateCompanionBuilder =
+    DepensesProjetCompanion Function({
+      Value<String> id,
+      Value<String> projetId,
+      Value<int> montant,
+      Value<String> libelle,
+      Value<DateTime> date,
+      Value<String> valideParFideleId,
+      Value<bool> derogationTracee,
+      Value<String?> motifDerogation,
+      Value<int> rowid,
+    });
+
+final class $$DepensesProjetTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $DepensesProjetTable, DepenseProjetRow> {
+  $$DepensesProjetTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $ProjetsTable _projetIdTable(_$AppDatabase db) =>
+      db.projets.createAlias('depenses_projet__projet_id__projets__id');
+
+  $$ProjetsTableProcessedTableManager get projetId {
+    final $_column = $_itemColumn<String>('projet_id')!;
+
+    final manager = $$ProjetsTableTableManager(
+      $_db,
+      $_db.projets,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_projetIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $FidelesTable _valideParFideleIdTable(_$AppDatabase db) => db.fideles
+      .createAlias('depenses_projet__valide_par_fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get valideParFideleId {
+    final $_column = $_itemColumn<String>('valide_par_fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_valideParFideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$DepensesProjetTableFilterComposer
+    extends Composer<_$AppDatabase, $DepensesProjetTable> {
+  $$DepensesProjetTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get montant => $composableBuilder(
+    column: $table.montant,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get derogationTracee => $composableBuilder(
+    column: $table.derogationTracee,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get motifDerogation => $composableBuilder(
+    column: $table.motifDerogation,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$ProjetsTableFilterComposer get projetId {
+    final $$ProjetsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.projetId,
+      referencedTable: $db.projets,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProjetsTableFilterComposer(
+            $db: $db,
+            $table: $db.projets,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableFilterComposer get valideParFideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.valideParFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DepensesProjetTableOrderingComposer
+    extends Composer<_$AppDatabase, $DepensesProjetTable> {
+  $$DepensesProjetTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get montant => $composableBuilder(
+    column: $table.montant,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get derogationTracee => $composableBuilder(
+    column: $table.derogationTracee,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get motifDerogation => $composableBuilder(
+    column: $table.motifDerogation,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$ProjetsTableOrderingComposer get projetId {
+    final $$ProjetsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.projetId,
+      referencedTable: $db.projets,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProjetsTableOrderingComposer(
+            $db: $db,
+            $table: $db.projets,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableOrderingComposer get valideParFideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.valideParFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DepensesProjetTableAnnotationComposer
+    extends Composer<_$AppDatabase, $DepensesProjetTable> {
+  $$DepensesProjetTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get montant =>
+      $composableBuilder(column: $table.montant, builder: (column) => column);
+
+  GeneratedColumn<String> get libelle =>
+      $composableBuilder(column: $table.libelle, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<bool> get derogationTracee => $composableBuilder(
+    column: $table.derogationTracee,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get motifDerogation => $composableBuilder(
+    column: $table.motifDerogation,
+    builder: (column) => column,
+  );
+
+  $$ProjetsTableAnnotationComposer get projetId {
+    final $$ProjetsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.projetId,
+      referencedTable: $db.projets,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProjetsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.projets,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableAnnotationComposer get valideParFideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.valideParFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DepensesProjetTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $DepensesProjetTable,
+          DepenseProjetRow,
+          $$DepensesProjetTableFilterComposer,
+          $$DepensesProjetTableOrderingComposer,
+          $$DepensesProjetTableAnnotationComposer,
+          $$DepensesProjetTableCreateCompanionBuilder,
+          $$DepensesProjetTableUpdateCompanionBuilder,
+          (DepenseProjetRow, $$DepensesProjetTableReferences),
+          DepenseProjetRow,
+          PrefetchHooks Function({bool projetId, bool valideParFideleId})
+        > {
+  $$DepensesProjetTableTableManager(
+    _$AppDatabase db,
+    $DepensesProjetTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DepensesProjetTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$DepensesProjetTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$DepensesProjetTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> projetId = const Value.absent(),
+                Value<int> montant = const Value.absent(),
+                Value<String> libelle = const Value.absent(),
+                Value<DateTime> date = const Value.absent(),
+                Value<String> valideParFideleId = const Value.absent(),
+                Value<bool> derogationTracee = const Value.absent(),
+                Value<String?> motifDerogation = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DepensesProjetCompanion(
+                id: id,
+                projetId: projetId,
+                montant: montant,
+                libelle: libelle,
+                date: date,
+                valideParFideleId: valideParFideleId,
+                derogationTracee: derogationTracee,
+                motifDerogation: motifDerogation,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String projetId,
+                required int montant,
+                required String libelle,
+                required DateTime date,
+                required String valideParFideleId,
+                Value<bool> derogationTracee = const Value.absent(),
+                Value<String?> motifDerogation = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DepensesProjetCompanion.insert(
+                id: id,
+                projetId: projetId,
+                montant: montant,
+                libelle: libelle,
+                date: date,
+                valideParFideleId: valideParFideleId,
+                derogationTracee: derogationTracee,
+                motifDerogation: motifDerogation,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$DepensesProjetTable, DepenseProjetRow>(table),
+                  $$DepensesProjetTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({projetId = false, valideParFideleId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (projetId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.projetId,
+                                    referencedTable:
+                                        $$DepensesProjetTableReferences
+                                            ._projetIdTable(db),
+                                    referencedColumn:
+                                        $$DepensesProjetTableReferences
+                                            ._projetIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (valideParFideleId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.valideParFideleId,
+                                    referencedTable:
+                                        $$DepensesProjetTableReferences
+                                            ._valideParFideleIdTable(db),
+                                    referencedColumn:
+                                        $$DepensesProjetTableReferences
+                                            ._valideParFideleIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$DepensesProjetTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $DepensesProjetTable,
+      DepenseProjetRow,
+      $$DepensesProjetTableFilterComposer,
+      $$DepensesProjetTableOrderingComposer,
+      $$DepensesProjetTableAnnotationComposer,
+      $$DepensesProjetTableCreateCompanionBuilder,
+      $$DepensesProjetTableUpdateCompanionBuilder,
+      (DepenseProjetRow, $$DepensesProjetTableReferences),
+      DepenseProjetRow,
+      PrefetchHooks Function({bool projetId, bool valideParFideleId})
+    >;
+typedef $$EngagementsTableCreateCompanionBuilder =
+    EngagementsCompanion Function({
+      required String id,
+      required String fideleId,
+      required String type,
+      required int montantPrevu,
+      required String periodicite,
+      required DateTime dateDebut,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+typedef $$EngagementsTableUpdateCompanionBuilder =
+    EngagementsCompanion Function({
+      Value<String> id,
+      Value<String> fideleId,
+      Value<String> type,
+      Value<int> montantPrevu,
+      Value<String> periodicite,
+      Value<DateTime> dateDebut,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+
+final class $$EngagementsTableReferences
+    extends BaseReferences<_$AppDatabase, $EngagementsTable, EngagementRow> {
+  $$EngagementsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('engagements__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $EcheancesEngagementTable,
+    List<EcheanceEngagementRow>
+  >
+  _echeancesEngagementRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.echeancesEngagement,
+        aliasName: 'engagements__id__echeances_engagement__engagement_id',
+      );
+
+  $$EcheancesEngagementTableProcessedTableManager get echeancesEngagementRefs {
+    final manager = $$EcheancesEngagementTableTableManager(
+      $_db,
+      $_db.echeancesEngagement,
+    ).filter((f) => f.engagementId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _echeancesEngagementRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$EngagementsTableFilterComposer
+    extends Composer<_$AppDatabase, $EngagementsTable> {
+  $$EngagementsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get montantPrevu => $composableBuilder(
+    column: $table.montantPrevu,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get periodicite => $composableBuilder(
+    column: $table.periodicite,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> echeancesEngagementRefs(
+    Expression<bool> Function($$EcheancesEngagementTableFilterComposer f) f,
+  ) {
+    final $$EcheancesEngagementTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.echeancesEngagement,
+      getReferencedColumn: (t) => t.engagementId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EcheancesEngagementTableFilterComposer(
+            $db: $db,
+            $table: $db.echeancesEngagement,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$EngagementsTableOrderingComposer
+    extends Composer<_$AppDatabase, $EngagementsTable> {
+  $$EngagementsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get montantPrevu => $composableBuilder(
+    column: $table.montantPrevu,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get periodicite => $composableBuilder(
+    column: $table.periodicite,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$EngagementsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $EngagementsTable> {
+  $$EngagementsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<int> get montantPrevu => $composableBuilder(
+    column: $table.montantPrevu,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get periodicite => $composableBuilder(
+    column: $table.periodicite,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get dateDebut =>
+      $composableBuilder(column: $table.dateDebut, builder: (column) => column);
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> echeancesEngagementRefs<T extends Object>(
+    Expression<T> Function($$EcheancesEngagementTableAnnotationComposer a) f,
+  ) {
+    final $$EcheancesEngagementTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.echeancesEngagement,
+          getReferencedColumn: (t) => t.engagementId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$EcheancesEngagementTableAnnotationComposer(
+                $db: $db,
+                $table: $db.echeancesEngagement,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$EngagementsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $EngagementsTable,
+          EngagementRow,
+          $$EngagementsTableFilterComposer,
+          $$EngagementsTableOrderingComposer,
+          $$EngagementsTableAnnotationComposer,
+          $$EngagementsTableCreateCompanionBuilder,
+          $$EngagementsTableUpdateCompanionBuilder,
+          (EngagementRow, $$EngagementsTableReferences),
+          EngagementRow,
+          PrefetchHooks Function({bool fideleId, bool echeancesEngagementRefs})
+        > {
+  $$EngagementsTableTableManager(_$AppDatabase db, $EngagementsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$EngagementsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$EngagementsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$EngagementsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<String> type = const Value.absent(),
+                Value<int> montantPrevu = const Value.absent(),
+                Value<String> periodicite = const Value.absent(),
+                Value<DateTime> dateDebut = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => EngagementsCompanion(
+                id: id,
+                fideleId: fideleId,
+                type: type,
+                montantPrevu: montantPrevu,
+                periodicite: periodicite,
+                dateDebut: dateDebut,
+                statut: statut,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String fideleId,
+                required String type,
+                required int montantPrevu,
+                required String periodicite,
+                required DateTime dateDebut,
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => EngagementsCompanion.insert(
+                id: id,
+                fideleId: fideleId,
+                type: type,
+                montantPrevu: montantPrevu,
+                periodicite: periodicite,
+                dateDebut: dateDebut,
+                statut: statut,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$EngagementsTable, EngagementRow>(table),
+                  $$EngagementsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({fideleId = false, echeancesEngagementRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (echeancesEngagementRefs) db.echeancesEngagement,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (fideleId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.fideleId,
+                                    referencedTable:
+                                        $$EngagementsTableReferences
+                                            ._fideleIdTable(db),
+                                    referencedColumn:
+                                        $$EngagementsTableReferences
+                                            ._fideleIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (echeancesEngagementRefs)
+                        await $_getPrefetchedData<
+                          EngagementRow,
+                          $EngagementsTable,
+                          EcheanceEngagementRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$EngagementsTableReferences
+                              ._echeancesEngagementRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$EngagementsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).echeancesEngagementRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.engagementId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$EngagementsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $EngagementsTable,
+      EngagementRow,
+      $$EngagementsTableFilterComposer,
+      $$EngagementsTableOrderingComposer,
+      $$EngagementsTableAnnotationComposer,
+      $$EngagementsTableCreateCompanionBuilder,
+      $$EngagementsTableUpdateCompanionBuilder,
+      (EngagementRow, $$EngagementsTableReferences),
+      EngagementRow,
+      PrefetchHooks Function({bool fideleId, bool echeancesEngagementRefs})
+    >;
+typedef $$EcheancesEngagementTableCreateCompanionBuilder =
+    EcheancesEngagementCompanion Function({
+      required String id,
+      required String engagementId,
+      required DateTime dateEcheance,
+      Value<String> statut,
+      Value<String?> contributionId,
+      Value<int> rowid,
+    });
+typedef $$EcheancesEngagementTableUpdateCompanionBuilder =
+    EcheancesEngagementCompanion Function({
+      Value<String> id,
+      Value<String> engagementId,
+      Value<DateTime> dateEcheance,
+      Value<String> statut,
+      Value<String?> contributionId,
+      Value<int> rowid,
+    });
+
+final class $$EcheancesEngagementTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $EcheancesEngagementTable,
+          EcheanceEngagementRow
+        > {
+  $$EcheancesEngagementTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $EngagementsTable _engagementIdTable(_$AppDatabase db) => db
+      .engagements
+      .createAlias('echeances_engagement__engagement_id__engagements__id');
+
+  $$EngagementsTableProcessedTableManager get engagementId {
+    final $_column = $_itemColumn<String>('engagement_id')!;
+
+    final manager = $$EngagementsTableTableManager(
+      $_db,
+      $_db.engagements,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_engagementIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $ContributionsTable _contributionIdTable(_$AppDatabase db) => db
+      .contributions
+      .createAlias('echeances_engagement__contribution_id__contributions__id');
+
+  $$ContributionsTableProcessedTableManager? get contributionId {
+    final $_column = $_itemColumn<String>('contribution_id');
+    if ($_column == null) return null;
+    final manager = $$ContributionsTableTableManager(
+      $_db,
+      $_db.contributions,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_contributionIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$EcheancesEngagementTableFilterComposer
+    extends Composer<_$AppDatabase, $EcheancesEngagementTable> {
+  $$EcheancesEngagementTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateEcheance => $composableBuilder(
+    column: $table.dateEcheance,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$EngagementsTableFilterComposer get engagementId {
+    final $$EngagementsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.engagementId,
+      referencedTable: $db.engagements,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EngagementsTableFilterComposer(
+            $db: $db,
+            $table: $db.engagements,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ContributionsTableFilterComposer get contributionId {
+    final $$ContributionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.contributionId,
+      referencedTable: $db.contributions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContributionsTableFilterComposer(
+            $db: $db,
+            $table: $db.contributions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$EcheancesEngagementTableOrderingComposer
+    extends Composer<_$AppDatabase, $EcheancesEngagementTable> {
+  $$EcheancesEngagementTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateEcheance => $composableBuilder(
+    column: $table.dateEcheance,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$EngagementsTableOrderingComposer get engagementId {
+    final $$EngagementsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.engagementId,
+      referencedTable: $db.engagements,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EngagementsTableOrderingComposer(
+            $db: $db,
+            $table: $db.engagements,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ContributionsTableOrderingComposer get contributionId {
+    final $$ContributionsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.contributionId,
+      referencedTable: $db.contributions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContributionsTableOrderingComposer(
+            $db: $db,
+            $table: $db.contributions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$EcheancesEngagementTableAnnotationComposer
+    extends Composer<_$AppDatabase, $EcheancesEngagementTable> {
+  $$EcheancesEngagementTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateEcheance => $composableBuilder(
+    column: $table.dateEcheance,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  $$EngagementsTableAnnotationComposer get engagementId {
+    final $$EngagementsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.engagementId,
+      referencedTable: $db.engagements,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EngagementsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.engagements,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ContributionsTableAnnotationComposer get contributionId {
+    final $$ContributionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.contributionId,
+      referencedTable: $db.contributions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ContributionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.contributions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$EcheancesEngagementTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $EcheancesEngagementTable,
+          EcheanceEngagementRow,
+          $$EcheancesEngagementTableFilterComposer,
+          $$EcheancesEngagementTableOrderingComposer,
+          $$EcheancesEngagementTableAnnotationComposer,
+          $$EcheancesEngagementTableCreateCompanionBuilder,
+          $$EcheancesEngagementTableUpdateCompanionBuilder,
+          (EcheanceEngagementRow, $$EcheancesEngagementTableReferences),
+          EcheanceEngagementRow,
+          PrefetchHooks Function({bool engagementId, bool contributionId})
+        > {
+  $$EcheancesEngagementTableTableManager(
+    _$AppDatabase db,
+    $EcheancesEngagementTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$EcheancesEngagementTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$EcheancesEngagementTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$EcheancesEngagementTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> engagementId = const Value.absent(),
+                Value<DateTime> dateEcheance = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<String?> contributionId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => EcheancesEngagementCompanion(
+                id: id,
+                engagementId: engagementId,
+                dateEcheance: dateEcheance,
+                statut: statut,
+                contributionId: contributionId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String engagementId,
+                required DateTime dateEcheance,
+                Value<String> statut = const Value.absent(),
+                Value<String?> contributionId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => EcheancesEngagementCompanion.insert(
+                id: id,
+                engagementId: engagementId,
+                dateEcheance: dateEcheance,
+                statut: statut,
+                contributionId: contributionId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$EcheancesEngagementTable, EcheanceEngagementRow>(
+                    table,
+                  ),
+                  $$EcheancesEngagementTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({engagementId = false, contributionId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (engagementId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.engagementId,
+                                    referencedTable:
+                                        $$EcheancesEngagementTableReferences
+                                            ._engagementIdTable(db),
+                                    referencedColumn:
+                                        $$EcheancesEngagementTableReferences
+                                            ._engagementIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (contributionId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.contributionId,
+                                    referencedTable:
+                                        $$EcheancesEngagementTableReferences
+                                            ._contributionIdTable(db),
+                                    referencedColumn:
+                                        $$EcheancesEngagementTableReferences
+                                            ._contributionIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$EcheancesEngagementTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $EcheancesEngagementTable,
+      EcheanceEngagementRow,
+      $$EcheancesEngagementTableFilterComposer,
+      $$EcheancesEngagementTableOrderingComposer,
+      $$EcheancesEngagementTableAnnotationComposer,
+      $$EcheancesEngagementTableCreateCompanionBuilder,
+      $$EcheancesEngagementTableUpdateCompanionBuilder,
+      (EcheanceEngagementRow, $$EcheancesEngagementTableReferences),
+      EcheanceEngagementRow,
+      PrefetchHooks Function({bool engagementId, bool contributionId})
+    >;
+typedef $$TresoriersNoeudTableCreateCompanionBuilder =
+    TresoriersNoeudCompanion Function({
+      required String id,
+      required String fideleId,
+      required String noeudId,
+      required DateTime dateDebut,
+      Value<DateTime?> dateFin,
+      Value<int> rowid,
+    });
+typedef $$TresoriersNoeudTableUpdateCompanionBuilder =
+    TresoriersNoeudCompanion Function({
+      Value<String> id,
+      Value<String> fideleId,
+      Value<String> noeudId,
+      Value<DateTime> dateDebut,
+      Value<DateTime?> dateFin,
+      Value<int> rowid,
+    });
+
+final class $$TresoriersNoeudTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $TresoriersNoeudTable,
+          TresorierNoeudRow
+        > {
+  $$TresoriersNoeudTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('tresoriers_noeud__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $OrganisationNodesTable _noeudIdTable(_$AppDatabase db) => db
+      .organisationNodes
+      .createAlias('tresoriers_noeud__noeud_id__organisation_nodes__id');
+
+  $$OrganisationNodesTableProcessedTableManager get noeudId {
+    final $_column = $_itemColumn<String>('noeud_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$TresoriersNoeudTableFilterComposer
+    extends Composer<_$AppDatabase, $TresoriersNoeudTable> {
+  $$TresoriersNoeudTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateFin => $composableBuilder(
+    column: $table.dateFin,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableFilterComposer get noeudId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TresoriersNoeudTableOrderingComposer
+    extends Composer<_$AppDatabase, $TresoriersNoeudTable> {
+  $$TresoriersNoeudTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateFin => $composableBuilder(
+    column: $table.dateFin,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableOrderingComposer get noeudId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TresoriersNoeudTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TresoriersNoeudTable> {
+  $$TresoriersNoeudTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateDebut =>
+      $composableBuilder(column: $table.dateDebut, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateFin =>
+      $composableBuilder(column: $table.dateFin, builder: (column) => column);
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableAnnotationComposer get noeudId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$TresoriersNoeudTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $TresoriersNoeudTable,
+          TresorierNoeudRow,
+          $$TresoriersNoeudTableFilterComposer,
+          $$TresoriersNoeudTableOrderingComposer,
+          $$TresoriersNoeudTableAnnotationComposer,
+          $$TresoriersNoeudTableCreateCompanionBuilder,
+          $$TresoriersNoeudTableUpdateCompanionBuilder,
+          (TresorierNoeudRow, $$TresoriersNoeudTableReferences),
+          TresorierNoeudRow,
+          PrefetchHooks Function({bool fideleId, bool noeudId})
+        > {
+  $$TresoriersNoeudTableTableManager(
+    _$AppDatabase db,
+    $TresoriersNoeudTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TresoriersNoeudTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TresoriersNoeudTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TresoriersNoeudTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<String> noeudId = const Value.absent(),
+                Value<DateTime> dateDebut = const Value.absent(),
+                Value<DateTime?> dateFin = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TresoriersNoeudCompanion(
+                id: id,
+                fideleId: fideleId,
+                noeudId: noeudId,
+                dateDebut: dateDebut,
+                dateFin: dateFin,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String fideleId,
+                required String noeudId,
+                required DateTime dateDebut,
+                Value<DateTime?> dateFin = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TresoriersNoeudCompanion.insert(
+                id: id,
+                fideleId: fideleId,
+                noeudId: noeudId,
+                dateDebut: dateDebut,
+                dateFin: dateFin,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$TresoriersNoeudTable, TresorierNoeudRow>(table),
+                  $$TresoriersNoeudTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({fideleId = false, noeudId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (fideleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.fideleId,
+                                referencedTable:
+                                    $$TresoriersNoeudTableReferences
+                                        ._fideleIdTable(db),
+                                referencedColumn:
+                                    $$TresoriersNoeudTableReferences
+                                        ._fideleIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (noeudId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.noeudId,
+                                referencedTable:
+                                    $$TresoriersNoeudTableReferences
+                                        ._noeudIdTable(db),
+                                referencedColumn:
+                                    $$TresoriersNoeudTableReferences
+                                        ._noeudIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$TresoriersNoeudTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $TresoriersNoeudTable,
+      TresorierNoeudRow,
+      $$TresoriersNoeudTableFilterComposer,
+      $$TresoriersNoeudTableOrderingComposer,
+      $$TresoriersNoeudTableAnnotationComposer,
+      $$TresoriersNoeudTableCreateCompanionBuilder,
+      $$TresoriersNoeudTableUpdateCompanionBuilder,
+      (TresorierNoeudRow, $$TresoriersNoeudTableReferences),
+      TresorierNoeudRow,
+      PrefetchHooks Function({bool fideleId, bool noeudId})
+    >;
 typedef $$SyncOutboxTableCreateCompanionBuilder =
     SyncOutboxCompanion Function({
       required String id,
@@ -45358,6 +53516,20 @@ class $AppDatabaseManager {
       );
   $$PiecesDossierTableTableManager get piecesDossier =>
       $$PiecesDossierTableTableManager(_db, _db.piecesDossier);
+  $$TypesOffrandeTableTableManager get typesOffrande =>
+      $$TypesOffrandeTableTableManager(_db, _db.typesOffrande);
+  $$ProjetsTableTableManager get projets =>
+      $$ProjetsTableTableManager(_db, _db.projets);
+  $$ContributionsTableTableManager get contributions =>
+      $$ContributionsTableTableManager(_db, _db.contributions);
+  $$DepensesProjetTableTableManager get depensesProjet =>
+      $$DepensesProjetTableTableManager(_db, _db.depensesProjet);
+  $$EngagementsTableTableManager get engagements =>
+      $$EngagementsTableTableManager(_db, _db.engagements);
+  $$EcheancesEngagementTableTableManager get echeancesEngagement =>
+      $$EcheancesEngagementTableTableManager(_db, _db.echeancesEngagement);
+  $$TresoriersNoeudTableTableManager get tresoriersNoeud =>
+      $$TresoriersNoeudTableTableManager(_db, _db.tresoriersNoeud);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }

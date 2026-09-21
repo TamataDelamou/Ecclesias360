@@ -117,6 +117,16 @@ const List<(String code, String libelle)> naturesFauteDeDepart = [
   ('manquement_engagement_mandat', 'Manquement à un engagement ou à un mandat'),
 ];
 
+/// RG-XI-01 — types d'offrande de départ, référentiel fermé et extensible
+/// (le Cahier cite ces cinq formes dans l'objectif fonctionnel du module).
+const List<(String code, String libelle)> typesOffrandeDeDepart = [
+  ('ordinaire', 'Offrande ordinaire'),
+  ('dime', 'Dîme'),
+  ('premices', 'Prémices'),
+  ('missionnaire', 'Offrande missionnaire'),
+  ('construction', 'Offrande de construction'),
+];
+
 /// Base Drift/SQLite unique, offline-first (RG-OFF-01), partagée par tous
 /// les modules (voir AGENTS.md §4).
 @DriftDatabase(tables: [
@@ -165,13 +175,20 @@ const List<(String code, String libelle)> naturesFauteDeDepart = [
   MembresCommissionDisciplinaire,
   DossiersDisciplinaires,
   PiecesDossier,
+  TypesOffrande,
+  Projets,
+  Contributions,
+  DepensesProjet,
+  Engagements,
+  EcheancesEngagement,
+  TresoriersNoeud,
   SyncOutbox,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 13;
+  int get schemaVersion => 14;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -271,6 +288,17 @@ class AppDatabase extends _$AppDatabase {
             // insertOrIgnore) plutôt que de dupliquer l'appel de seed.
             await _seedNomenclaturesArchivageDeDepart();
           }
+          // v13 -> v14 : ajout du Module XI (Finances).
+          if (from < 14) {
+            await m.createTable(typesOffrande);
+            await m.createTable(projets);
+            await m.createTable(contributions);
+            await m.createTable(depensesProjet);
+            await m.createTable(engagements);
+            await m.createTable(echeancesEngagement);
+            await m.createTable(tresoriersNoeud);
+            await _seedTypesOffrandeStandards();
+          }
         },
         beforeOpen: (details) async {
           // SQLite n'applique pas les contraintes de clé étrangère par
@@ -284,6 +312,7 @@ class AppDatabase extends _$AppDatabase {
             await _seedGroupesEgliseDeDepart();
             await _seedNomenclaturesArchivageDeDepart();
             await _seedNaturesFauteStandards();
+            await _seedTypesOffrandeStandards();
           }
         },
       );
@@ -385,6 +414,24 @@ class AppDatabase extends _$AppDatabase {
         [
           for (final (code, libelle) in naturesFauteDeDepart)
             NaturesFauteCompanion.insert(
+              id: IdGenerator.newId(),
+              code: code,
+              libelle: libelle,
+              standard: const Value(true),
+            ),
+        ],
+        mode: InsertMode.insertOrIgnore,
+      );
+    });
+  }
+
+  Future<void> _seedTypesOffrandeStandards() async {
+    await batch((b) {
+      b.insertAll(
+        typesOffrande,
+        [
+          for (final (code, libelle) in typesOffrandeDeDepart)
+            TypesOffrandeCompanion.insert(
               id: IdGenerator.newId(),
               code: code,
               libelle: libelle,

@@ -754,6 +754,134 @@ class PiecesDossier extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Table Drift TypeOffrande (Module XI, RG-XI-01) — référentiel fermé et
+/// extensible des types d'offrande, même précédent que TypesMinisteres.
+@DataClassName('TypeOffrandeRow')
+class TypesOffrande extends Table {
+  TextColumn get id => text()();
+  TextColumn get code => text()();
+  TextColumn get libelle => text()();
+  BoolColumn get standard => boolean().withDefault(const Constant(false))();
+  TextColumn get statut => text().withDefault(const Constant('actif'))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (code)'];
+}
+
+/// Table Drift Projet (Module XI, RG-XI-03). Le solde n'est pas une colonne
+/// stockée : il se recalcule à la lecture (voir `Projet` domaine).
+@DataClassName('ProjetRow')
+class Projets extends Table {
+  TextColumn get id => text()();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  TextColumn get nom => text()();
+  IntColumn get budgetPrevisionnel => integer()();
+  TextColumn get devise => text()();
+  TextColumn get statut => text().withDefault(const Constant('en_cours'))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift Contribution (Module XI, RG-XI-01/02/05/06). `fideleId`
+/// nullable + `libelleDonateurAnonyme` couvrent le donateur anonyme identifié
+/// techniquement (RG-XI-01). `contributionOrigineId` porte la
+/// contre-passation tracée (RG-XI-05) : une contribution validée n'est
+/// jamais éditée, seulement contre-passée par une nouvelle ligne.
+@DataClassName('ContributionRow')
+class Contributions extends Table {
+  TextColumn get id => text()();
+  TextColumn get fideleId => text().nullable().references(Fideles, #id)();
+  TextColumn get libelleDonateurAnonyme => text().nullable()();
+  TextColumn get typeOffrandeId => text().references(TypesOffrande, #id)();
+  IntColumn get montant => integer()();
+  TextColumn get devise => text()();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  TextColumn get culteId => text().nullable().references(Cultes, #id)();
+  TextColumn get projetId => text().nullable().references(Projets, #id)();
+  TextColumn get modePaiement => text()();
+  TextColumn get statut => text().withDefault(const Constant('en_attente'))();
+  TextColumn get origine => text()();
+  DateTimeColumn get dateSaisie => dateTime()();
+  TextColumn get valideParFideleId => text().nullable()();
+  DateTimeColumn get dateValidation => dateTime().nullable()();
+  TextColumn get motifRejet => text().nullable()();
+  TextColumn get contributionOrigineId => text().nullable().references(Contributions, #id)();
+  BoolColumn get estContrePassation => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift DepenseProjet (Module XI, RG-XI-03). `derogationTracee` +
+/// `motifDerogation` couvrent l'engagement d'une dépense au-delà du solde
+/// disponible, exceptionnellement autorisé.
+@DataClassName('DepenseProjetRow')
+class DepensesProjet extends Table {
+  TextColumn get id => text()();
+  TextColumn get projetId => text().references(Projets, #id)();
+  IntColumn get montant => integer()();
+  TextColumn get libelle => text()();
+  DateTimeColumn get date => dateTime()();
+  TextColumn get valideParFideleId => text().references(Fideles, #id)();
+  BoolColumn get derogationTracee => boolean().withDefault(const Constant(false))();
+  TextColumn get motifDerogation => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift Engagement (Module XI, RG-XI-04) — engagement récurrent d'un
+/// fidèle (dîme d'engagement, promesse de don).
+@DataClassName('EngagementRow')
+class Engagements extends Table {
+  TextColumn get id => text()();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  TextColumn get type => text()();
+  IntColumn get montantPrevu => integer()();
+  TextColumn get periodicite => text()();
+  DateTimeColumn get dateDebut => dateTime()();
+  TextColumn get statut => text().withDefault(const Constant('actif'))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift EcheanceEngagement (Module XI, RG-XI-04). `contributionId`
+/// est renseigné si l'échéance est rapprochée manuellement d'une
+/// contribution effectivement saisie.
+@DataClassName('EcheanceEngagementRow')
+class EcheancesEngagement extends Table {
+  TextColumn get id => text()();
+  TextColumn get engagementId => text().references(Engagements, #id)();
+  DateTimeColumn get dateEcheance => dateTime()();
+  TextColumn get statut => text().withDefault(const Constant('en_attente'))();
+  TextColumn get contributionId => text().nullable().references(Contributions, #id)();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift TresorierNoeud (Module XI, RG-XI-02) — désignation d'un
+/// fidèle comme trésorier d'un nœud, habilitant la validation comptable au
+/// même titre qu'un rang de rôle (l'énum `Role`, Module XXIII, est fermée
+/// et ne porte pas de valeur « trésorier » — même motif que
+/// `MembreCommission`/`MembresComite`).
+@DataClassName('TresorierNoeudRow')
+class TresoriersNoeud extends Table {
+  TextColumn get id => text()();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  DateTimeColumn get dateDebut => dateTime()();
+  DateTimeColumn get dateFin => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 /// File d'attente hors ligne (RG-OFF-02) : chaque écriture locale enregistre
 /// ici l'événement à rejouer vers Supabase dès qu'une connexion est
 /// disponible, dans l'ordre chronologique, jamais purgée avant confirmation

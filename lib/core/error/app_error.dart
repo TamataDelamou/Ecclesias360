@@ -119,6 +119,26 @@ class AppError implements Exception {
         "Ce dossier disciplinaire ne peut être clôturé qu'après qu'une décision a été prononcée.",
       );
 
+  factory AppError.roleInsuffisantPourValidationContribution() => const AppError(
+        'role_insuffisant_pour_validation_contribution',
+        "Seul un pasteur (ou rôle supérieur) ou un trésorier désigné du nœud peut valider ou rejeter une contribution.",
+      );
+
+  factory AppError.contributionNonEnAttente() => const AppError(
+        'contribution_non_en_attente',
+        "Cette contribution a déjà été traitée (validée ou rejetée) : elle ne peut plus être validée ou rejetée.",
+      );
+
+  factory AppError.contributionNonValideePourContrePassation() => const AppError(
+        'contribution_non_validee_pour_contre_passation',
+        "Seule une contribution validée peut faire l'objet d'une contre-passation.",
+      );
+
+  factory AppError.depenseDepasseSoldeSansDerogation() => const AppError(
+        'depense_depasse_solde_sans_derogation',
+        "Cette dépense dépasse le solde disponible du projet : une dérogation tracée est requise.",
+      );
+
   @override
   String toString() => 'AppError($code): $message';
 }
