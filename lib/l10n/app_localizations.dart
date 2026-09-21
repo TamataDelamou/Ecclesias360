@@ -2429,6 +2429,78 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Clôturée le {date}'**
   String patrimoineCampagneClotureeLe(String date);
+
+  /// Titre de l'écran de consultation comptable (Module XXI) et libellé du bouton d'accès depuis la fiche nœud.
+  ///
+  /// In fr, this message translates to:
+  /// **'Comptabilité'**
+  String get comptabiliteTitre;
+
+  /// Onglet de consultation du solde de caisse du jour (écran mobile 1 du Cahier, RG-XXI-01).
+  ///
+  /// In fr, this message translates to:
+  /// **'Caisse'**
+  String get comptabiliteOngletCaisse;
+
+  /// Onglet du journal des écritures récentes (écran mobile 2 du Cahier, RG-XXI-01/02).
+  ///
+  /// In fr, this message translates to:
+  /// **'Écritures'**
+  String get comptabiliteOngletEcritures;
+
+  /// Onglet du rapport financier rapide (écran mobile 3 du Cahier, RG-XXI-06).
+  ///
+  /// In fr, this message translates to:
+  /// **'Rapport'**
+  String get comptabiliteOngletRapport;
+
+  /// Étiquette du solde de caisse affiché dans l'onglet Caisse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Solde de caisse du jour'**
+  String get comptabiliteSoldeCaisseDuJour;
+
+  /// Message affiché quand le journal des écritures d'un nœud est vide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune écriture enregistrée.'**
+  String get comptabiliteAucuneEcriture;
+
+  /// Message affiché dans le rapport financier rapide quand toutes les périodes comptables sont clôturées.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune période comptable ouverte.'**
+  String get comptabiliteAucunePeriodeOuverte;
+
+  /// Étiquette précédant le montant débité d'une ligne d'écriture comptable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Débit'**
+  String get comptabiliteDebit;
+
+  /// Étiquette précédant le montant crédité d'une ligne d'écriture comptable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Crédit'**
+  String get comptabiliteCredit;
+
+  /// Étiquette du total des recettes dans le rapport financier rapide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recettes'**
+  String get comptabiliteRapportRecettes;
+
+  /// Étiquette du total des dépenses dans le rapport financier rapide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dépenses'**
+  String get comptabiliteRapportDepenses;
+
+  /// Étiquette du solde net (recettes moins dépenses) dans le rapport financier rapide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Solde net'**
+  String get comptabiliteRapportSoldeNet;
 }
 
 class _AppLocalizationsDelegate

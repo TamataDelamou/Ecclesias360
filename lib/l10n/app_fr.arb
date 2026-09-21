@@ -1685,5 +1685,53 @@
         "type": "String"
       }
     }
+  },
+  "comptabiliteTitre": "Comptabilité",
+  "@comptabiliteTitre": {
+    "description": "Titre de l'écran de consultation comptable (Module XXI) et libellé du bouton d'accès depuis la fiche nœud."
+  },
+  "comptabiliteOngletCaisse": "Caisse",
+  "@comptabiliteOngletCaisse": {
+    "description": "Onglet de consultation du solde de caisse du jour (écran mobile 1 du Cahier, RG-XXI-01)."
+  },
+  "comptabiliteOngletEcritures": "Écritures",
+  "@comptabiliteOngletEcritures": {
+    "description": "Onglet du journal des écritures récentes (écran mobile 2 du Cahier, RG-XXI-01/02)."
+  },
+  "comptabiliteOngletRapport": "Rapport",
+  "@comptabiliteOngletRapport": {
+    "description": "Onglet du rapport financier rapide (écran mobile 3 du Cahier, RG-XXI-06)."
+  },
+  "comptabiliteSoldeCaisseDuJour": "Solde de caisse du jour",
+  "@comptabiliteSoldeCaisseDuJour": {
+    "description": "Étiquette du solde de caisse affiché dans l'onglet Caisse."
+  },
+  "comptabiliteAucuneEcriture": "Aucune écriture enregistrée.",
+  "@comptabiliteAucuneEcriture": {
+    "description": "Message affiché quand le journal des écritures d'un nœud est vide."
+  },
+  "comptabiliteAucunePeriodeOuverte": "Aucune période comptable ouverte.",
+  "@comptabiliteAucunePeriodeOuverte": {
+    "description": "Message affiché dans le rapport financier rapide quand toutes les périodes comptables sont clôturées."
+  },
+  "comptabiliteDebit": "Débit",
+  "@comptabiliteDebit": {
+    "description": "Étiquette précédant le montant débité d'une ligne d'écriture comptable."
+  },
+  "comptabiliteCredit": "Crédit",
+  "@comptabiliteCredit": {
+    "description": "Étiquette précédant le montant crédité d'une ligne d'écriture comptable."
+  },
+  "comptabiliteRapportRecettes": "Recettes",
+  "@comptabiliteRapportRecettes": {
+    "description": "Étiquette du total des recettes dans le rapport financier rapide."
+  },
+  "comptabiliteRapportDepenses": "Dépenses",
+  "@comptabiliteRapportDepenses": {
+    "description": "Étiquette du total des dépenses dans le rapport financier rapide."
+  },
+  "comptabiliteRapportSoldeNet": "Solde net",
+  "@comptabiliteRapportSoldeNet": {
+    "description": "Étiquette du solde net (recettes moins dépenses) dans le rapport financier rapide."
   }
 }

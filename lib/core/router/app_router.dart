@@ -4,6 +4,7 @@ import '../../features/archivage/presentation/corbeille_documents_screen.dart';
 import '../../features/archivage/presentation/document_archive_detail_screen.dart';
 import '../../features/archivage/presentation/documents_archive_list_screen.dart';
 import '../../features/comite/presentation/membres_comite_screen.dart';
+import '../../features/comptabilite/presentation/comptabilite_screen.dart';
 import '../../features/comite/presentation/seance_detail_screen.dart';
 import '../../features/comite/presentation/seance_form_screen.dart';
 import '../../features/comite/presentation/seances_comite_list_screen.dart';
@@ -390,6 +391,13 @@ final GoRouter appRouter = GoRouter(
       pageBuilder: (context, state) => sharedAxisPage(
         key: state.pageKey,
         child: CampagneDetailScreen(campagneId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/organisation/:id/comptabilite',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: ComptabiliteScreen(noeudId: state.pathParameters['id']!),
       ),
     ),
   ],

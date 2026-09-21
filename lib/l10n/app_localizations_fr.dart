@@ -1247,4 +1247,41 @@ class AppLocalizationsFr extends AppLocalizations {
   String patrimoineCampagneClotureeLe(String date) {
     return 'Clôturée le $date';
   }
+
+  @override
+  String get comptabiliteTitre => 'Comptabilité';
+
+  @override
+  String get comptabiliteOngletCaisse => 'Caisse';
+
+  @override
+  String get comptabiliteOngletEcritures => 'Écritures';
+
+  @override
+  String get comptabiliteOngletRapport => 'Rapport';
+
+  @override
+  String get comptabiliteSoldeCaisseDuJour => 'Solde de caisse du jour';
+
+  @override
+  String get comptabiliteAucuneEcriture => 'Aucune écriture enregistrée.';
+
+  @override
+  String get comptabiliteAucunePeriodeOuverte =>
+      'Aucune période comptable ouverte.';
+
+  @override
+  String get comptabiliteDebit => 'Débit';
+
+  @override
+  String get comptabiliteCredit => 'Crédit';
+
+  @override
+  String get comptabiliteRapportRecettes => 'Recettes';
+
+  @override
+  String get comptabiliteRapportDepenses => 'Dépenses';
+
+  @override
+  String get comptabiliteRapportSoldeNet => 'Solde net';
 }

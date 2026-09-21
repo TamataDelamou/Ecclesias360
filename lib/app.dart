@@ -9,6 +9,7 @@ import 'features/archivage/data/archivage_repository.dart';
 import 'features/comite/application/comite_controller.dart';
 import 'features/comite/data/comite_repository.dart';
 import 'features/comptabilite/data/comptabilite_repository.dart';
+import 'features/comptabilite/application/comptabilite_controller.dart';
 import 'features/cultes/application/culte_controller.dart';
 import 'features/cultes/data/culte_repository.dart';
 import 'features/deplacements/application/deplacement_controller.dart';
@@ -74,6 +75,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final FinancesRepository _financesRepository;
   late final FinancesController _financesController;
   late final ComptabiliteRepository _comptabiliteRepository;
+  late final ComptabiliteController _comptabiliteController;
   late final PatrimoineRepository _patrimoineRepository;
   late final PatrimoineController _patrimoineController;
 
@@ -119,6 +121,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _financesController = FinancesController(_financesRepository);
     _patrimoineRepository = PatrimoineRepository(widget.database, comptabiliteRepository: _comptabiliteRepository);
     _patrimoineController = PatrimoineController(_patrimoineRepository);
+    _comptabiliteController = ComptabiliteController(_comptabiliteRepository);
   }
 
   @override
@@ -137,6 +140,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _disciplineController.dispose();
     _financesController.dispose();
     _patrimoineController.dispose();
+    _comptabiliteController.dispose();
     super.dispose();
   }
 
@@ -158,6 +162,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
         ChangeNotifierProvider<DisciplineController>.value(value: _disciplineController),
         ChangeNotifierProvider<FinancesController>.value(value: _financesController),
         ChangeNotifierProvider<PatrimoineController>.value(value: _patrimoineController),
+        ChangeNotifierProvider<ComptabiliteController>.value(value: _comptabiliteController),
       ],
       child: MaterialApp.router(
         onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,

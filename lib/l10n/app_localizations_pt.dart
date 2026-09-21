@@ -1244,4 +1244,41 @@ class AppLocalizationsPt extends AppLocalizations {
   String patrimoineCampagneClotureeLe(String date) {
     return 'Encerrada em $date';
   }
+
+  @override
+  String get comptabiliteTitre => 'Contabilidade';
+
+  @override
+  String get comptabiliteOngletCaisse => 'Caixa';
+
+  @override
+  String get comptabiliteOngletEcritures => 'Lançamentos';
+
+  @override
+  String get comptabiliteOngletRapport => 'Relatório';
+
+  @override
+  String get comptabiliteSoldeCaisseDuJour => 'Saldo de caixa do dia';
+
+  @override
+  String get comptabiliteAucuneEcriture => 'Nenhum lançamento registrado.';
+
+  @override
+  String get comptabiliteAucunePeriodeOuverte =>
+      'Nenhum período contábil aberto.';
+
+  @override
+  String get comptabiliteDebit => 'Débito';
+
+  @override
+  String get comptabiliteCredit => 'Crédito';
+
+  @override
+  String get comptabiliteRapportRecettes => 'Receitas';
+
+  @override
+  String get comptabiliteRapportDepenses => 'Despesas';
+
+  @override
+  String get comptabiliteRapportSoldeNet => 'Saldo líquido';
 }

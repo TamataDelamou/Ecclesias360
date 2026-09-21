@@ -387,5 +387,17 @@
   "patrimoineQuantiteActuelle": "Quantidade atual: {quantite}",
   "patrimoineSeuilAlerte": "Limite de alerta: {seuil}",
   "patrimoineCampagneDemarreeLe": "Iniciada em {date}",
-  "patrimoineCampagneClotureeLe": "Encerrada em {date}"
+  "patrimoineCampagneClotureeLe": "Encerrada em {date}",
+  "comptabiliteTitre": "Contabilidade",
+  "comptabiliteOngletCaisse": "Caixa",
+  "comptabiliteOngletEcritures": "Lançamentos",
+  "comptabiliteOngletRapport": "Relatório",
+  "comptabiliteSoldeCaisseDuJour": "Saldo de caixa do dia",
+  "comptabiliteAucuneEcriture": "Nenhum lançamento registrado.",
+  "comptabiliteAucunePeriodeOuverte": "Nenhum período contábil aberto.",
+  "comptabiliteDebit": "Débito",
+  "comptabiliteCredit": "Crédito",
+  "comptabiliteRapportRecettes": "Receitas",
+  "comptabiliteRapportDepenses": "Despesas",
+  "comptabiliteRapportSoldeNet": "Saldo líquido"
 }

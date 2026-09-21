@@ -82,4 +82,6 @@ abstract final class AppRoutes {
   static String bien(String id) => '/biens/$id';
   static String campagnesInventaireDuNoeud(String noeudId) => '/organisation/$noeudId/campagnes-inventaire';
   static String campagneInventaire(String id) => '/campagnes-inventaire/$id';
+
+  static String comptabiliteDuNoeud(String noeudId) => '/organisation/$noeudId/comptabilite';
 }

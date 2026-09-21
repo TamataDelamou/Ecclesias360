@@ -387,5 +387,17 @@
   "patrimoineQuantiteActuelle": "Current quantity: {quantite}",
   "patrimoineSeuilAlerte": "Alert threshold: {seuil}",
   "patrimoineCampagneDemarreeLe": "Started on {date}",
-  "patrimoineCampagneClotureeLe": "Closed on {date}"
+  "patrimoineCampagneClotureeLe": "Closed on {date}",
+  "comptabiliteTitre": "Accounting",
+  "comptabiliteOngletCaisse": "Cash",
+  "comptabiliteOngletEcritures": "Entries",
+  "comptabiliteOngletRapport": "Report",
+  "comptabiliteSoldeCaisseDuJour": "Today's cash balance",
+  "comptabiliteAucuneEcriture": "No entries recorded.",
+  "comptabiliteAucunePeriodeOuverte": "No open accounting period.",
+  "comptabiliteDebit": "Debit",
+  "comptabiliteCredit": "Credit",
+  "comptabiliteRapportRecettes": "Revenue",
+  "comptabiliteRapportDepenses": "Expenses",
+  "comptabiliteRapportSoldeNet": "Net balance"
 }
