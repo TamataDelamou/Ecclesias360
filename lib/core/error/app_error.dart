@@ -139,6 +139,26 @@ class AppError implements Exception {
         "Cette dépense dépasse le solde disponible du projet : une dérogation tracée est requise.",
       );
 
+  factory AppError.roleInsuffisantPourSortieBien() => const AppError(
+    'role_insuffisant_pour_sortie_bien',
+    "Seul un pasteur (ou rôle supérieur) peut valider la sortie d'un bien du patrimoine.",
+  );
+
+  factory AppError.bienDejaSorti() => const AppError(
+    'bien_deja_sorti',
+    "Ce bien est déjà sorti du patrimoine (cédé, donné ou mis au rebut).",
+  );
+
+  factory AppError.reservationConflitDetecte() => const AppError(
+    'reservation_conflit_detecte',
+    "Ce bien est déjà réservé sur une plage qui chevauche celle demandée.",
+  );
+
+  factory AppError.campagneInventaireDejaCloturee() => const AppError(
+    'campagne_inventaire_deja_cloturee',
+    "Cette campagne d'inventaire est déjà clôturée : aucun nouveau pointage n'est possible.",
+  );
+
   @override
   String toString() => 'AppError($code): $message';
 }

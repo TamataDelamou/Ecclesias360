@@ -462,4 +462,56 @@ void main() {
 
     await db.close();
   });
+
+  test('un fichier créé en schéma v14 reçoit les tables et le seed du Module XX à l\'ouverture', () async {
+    final fichier = File(
+      path.join(Directory.systemTemp.path, 'ecclesias_migration_test_v14_${DateTime.now().microsecondsSinceEpoch}.sqlite'),
+    );
+    addTearDown(() {
+      if (fichier.existsSync()) fichier.deleteSync();
+    });
+
+    final dbInitiale = AppDatabase(NativeDatabase(fichier));
+    await dbInitiale.into(dbInitiale.organisationNodes).insert(
+          OrganisationNodesCompanion.insert(
+            id: 'siege-1',
+            typeNoeud: 'siege',
+            nom: 'GSG',
+            codeInterne: 'GSG-SIEGE',
+            path: '/siege-1/',
+            depth: 0,
+            createdAt: DateTime(2026, 1, 1),
+            updatedAt: DateTime(2026, 1, 1),
+          ),
+        );
+    await dbInitiale.close();
+
+    final connexionBrute = sqlite3.sqlite3.open(fichier.path);
+    connexionBrute.execute('''
+      DROP TABLE pointages_inventaire;
+      DROP TABLE campagnes_inventaire;
+      DROP TABLE mouvements_stock;
+      DROP TABLE reservations_bien;
+      DROP TABLE biens;
+      DROP TABLE categories_bien;
+      PRAGMA user_version = 14;
+    ''');
+    connexionBrute.close();
+
+    final db = AppDatabase(NativeDatabase(fichier));
+
+    final noeuds = await db.select(db.organisationNodes).get();
+    expect(noeuds, hasLength(1));
+    expect(noeuds.single.nom, 'GSG');
+
+    // Ne doit plus lever "no such table: biens".
+    final biens = await db.select(db.biens).get();
+    expect(biens, isEmpty);
+
+    final categoriesBien = await db.select(db.categoriesBien).get();
+    expect(categoriesBien, hasLength(9));
+    expect(categoriesBien.every((c) => c.standard), isTrue);
+
+    await db.close();
+  });
 }

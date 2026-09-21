@@ -127,6 +127,21 @@ const List<(String code, String libelle)> typesOffrandeDeDepart = [
   ('construction', 'Offrande de construction'),
 ];
 
+/// RG-XX-01 — les neuf catégories de biens de départ, référentiel fermé et
+/// extensible (le Cahier cite ces catégories dans l'objectif fonctionnel du
+/// module).
+const List<(String code, String libelle)> categoriesBienDeDepart = [
+  ('terrains', 'Terrains'),
+  ('batiments', 'Bâtiments'),
+  ('vehicules', 'Véhicules'),
+  ('instruments_musique', 'Instruments de musique'),
+  ('cameras', 'Caméras'),
+  ('sonorisation', 'Sonorisation'),
+  ('ordinateurs', 'Ordinateurs'),
+  ('mobilier', 'Mobilier'),
+  ('stocks', 'Stocks (fournitures)'),
+];
+
 /// Base Drift/SQLite unique, offline-first (RG-OFF-01), partagée par tous
 /// les modules (voir AGENTS.md §4).
 @DriftDatabase(tables: [
@@ -182,13 +197,19 @@ const List<(String code, String libelle)> typesOffrandeDeDepart = [
   Engagements,
   EcheancesEngagement,
   TresoriersNoeud,
+  CategoriesBien,
+  Biens,
+  ReservationsBien,
+  MouvementsStock,
+  CampagnesInventaire,
+  PointagesInventaire,
   SyncOutbox,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 14;
+  int get schemaVersion => 15;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -299,6 +320,16 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(tresoriersNoeud);
             await _seedTypesOffrandeStandards();
           }
+          // v14 -> v15 : ajout du Module XX (Biens / patrimoine).
+          if (from < 15) {
+            await m.createTable(categoriesBien);
+            await m.createTable(biens);
+            await m.createTable(reservationsBien);
+            await m.createTable(mouvementsStock);
+            await m.createTable(campagnesInventaire);
+            await m.createTable(pointagesInventaire);
+            await _seedCategoriesBienStandards();
+          }
         },
         beforeOpen: (details) async {
           // SQLite n'applique pas les contraintes de clé étrangère par
@@ -313,6 +344,7 @@ class AppDatabase extends _$AppDatabase {
             await _seedNomenclaturesArchivageDeDepart();
             await _seedNaturesFauteStandards();
             await _seedTypesOffrandeStandards();
+            await _seedCategoriesBienStandards();
           }
         },
       );
@@ -432,6 +464,24 @@ class AppDatabase extends _$AppDatabase {
         [
           for (final (code, libelle) in typesOffrandeDeDepart)
             TypesOffrandeCompanion.insert(
+              id: IdGenerator.newId(),
+              code: code,
+              libelle: libelle,
+              standard: const Value(true),
+            ),
+        ],
+        mode: InsertMode.insertOrIgnore,
+      );
+    });
+  }
+
+  Future<void> _seedCategoriesBienStandards() async {
+    await batch((b) {
+      b.insertAll(
+        categoriesBien,
+        [
+          for (final (code, libelle) in categoriesBienDeDepart)
+            CategoriesBienCompanion.insert(
               id: IdGenerator.newId(),
               code: code,
               libelle: libelle,

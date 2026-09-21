@@ -882,6 +882,123 @@ class TresoriersNoeud extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Table Drift CategorieBien (Module XX, RG-XX-01) — référentiel fermé et
+/// extensible des catégories de biens du patrimoine.
+@DataClassName('CategorieBienRow')
+class CategoriesBien extends Table {
+  TextColumn get id => text()();
+  TextColumn get code => text()();
+  TextColumn get libelle => text()();
+  BoolColumn get standard => boolean().withDefault(const Constant(false))();
+  TextColumn get statut => text().withDefault(const Constant('actif'))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (code)'];
+}
+
+/// Table Drift Bien (Module XX, RG-XX-01/02/05). `idInventaire` est
+/// l'identifiant d'inventaire unique exigé par le Cahier, distinct de `id`.
+/// Les colonnes `typeSortie`/`dateSortie`/`valideParFideleIdSortie`/
+/// `motifSortie` tracent la sortie définitive du patrimoine (RG-XX-02) ;
+/// `seuilAlerteStock` ne s'applique qu'aux biens à gestion de stock
+/// (RG-XX-05).
+@DataClassName('BienRow')
+class Biens extends Table {
+  TextColumn get id => text()();
+  TextColumn get idInventaire => text()();
+  TextColumn get categorieId => text().references(CategoriesBien, #id)();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  TextColumn get designation => text()();
+  TextColumn get etat => text().withDefault(const Constant('neuf'))();
+  IntColumn get valeurAcquisition => integer()();
+  IntColumn get valeurVenale => integer()();
+  TextColumn get devise => text()();
+  DateTimeColumn get dateAcquisition => dateTime()();
+  IntColumn get seuilAlerteStock => integer().nullable()();
+  TextColumn get typeSortie => text().nullable()();
+  DateTimeColumn get dateSortie => dateTime().nullable()();
+  TextColumn get valideParFideleIdSortie => text().nullable().references(Fideles, #id)();
+  TextColumn get motifSortie => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (id_inventaire)'];
+}
+
+/// Table Drift ReservationBien (Module XX, RG-XX-03). `culteId` référence un
+/// culte existant (Module XII) quand `objetReservation` vaut `culte` ;
+/// `objetLibre` porte la description libre pour `evenement`/`autre` (le
+/// Module XVIII, Événements, n'existe pas encore).
+@DataClassName('ReservationBienRow')
+class ReservationsBien extends Table {
+  TextColumn get id => text()();
+  TextColumn get bienId => text().references(Biens, #id)();
+  TextColumn get objetReservation => text()();
+  TextColumn get culteId => text().nullable().references(Cultes, #id)();
+  TextColumn get objetLibre => text().nullable()();
+  DateTimeColumn get dateDebut => dateTime()();
+  DateTimeColumn get dateFin => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift MouvementStock (Module XX, RG-XX-05). La quantité en stock
+/// n'est pas une colonne stockée : elle se recalcule à la lecture (voir
+/// `PatrimoineRules.calculerQuantiteStock`).
+@DataClassName('MouvementStockRow')
+class MouvementsStock extends Table {
+  TextColumn get id => text()();
+  TextColumn get bienId => text().references(Biens, #id)();
+  TextColumn get type => text()();
+  IntColumn get quantite => integer()();
+  DateTimeColumn get date => dateTime()();
+  TextColumn get motif => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift CampagneInventaire (Module XX, RG-XX-04) — entité ajoutée
+/// au-delà du tableau minimal du Cahier (même précédent que `ErratumPv` du
+/// Module VII) pour porter la campagne de recensement périodique.
+@DataClassName('CampagneInventaireRow')
+class CampagnesInventaire extends Table {
+  TextColumn get id => text()();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  TextColumn get libelle => text()();
+  DateTimeColumn get dateDebut => dateTime()();
+  DateTimeColumn get dateCloture => dateTime().nullable()();
+  TextColumn get statut => text().withDefault(const Constant('en_cours'))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift PointageInventaire (Module XX, RG-XX-04). `ecartDetecte` est
+/// calculé et figé au moment du pointage (enregistrement d'audit, pas un
+/// solde courant — voir `PointageInventaire` domaine).
+@DataClassName('PointageInventaireRow')
+class PointagesInventaire extends Table {
+  TextColumn get id => text()();
+  TextColumn get campagneId => text().references(CampagnesInventaire, #id)();
+  TextColumn get bienId => text().references(Biens, #id)();
+  TextColumn get etatConstate => text()();
+  IntColumn get quantiteConstatee => integer().nullable()();
+  BoolColumn get ecartDetecte => boolean().withDefault(const Constant(false))();
+  TextColumn get commentaire => text().nullable()();
+  DateTimeColumn get dateDuPointage => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+
 /// File d'attente hors ligne (RG-OFF-02) : chaque écriture locale enregistre
 /// ici l'événement à rejouer vers Supabase dès qu'une connexion est
 /// disponible, dans l'ordre chronologique, jamais purgée avant confirmation

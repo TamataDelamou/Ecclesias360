@@ -23488,6 +23488,3129 @@ class TresoriersNoeudCompanion extends UpdateCompanion<TresorierNoeudRow> {
   }
 }
 
+class $CategoriesBienTable extends CategoriesBien
+    with TableInfo<$CategoriesBienTable, CategorieBienRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CategoriesBienTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+    'code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _libelleMeta = const VerificationMeta(
+    'libelle',
+  );
+  @override
+  late final GeneratedColumn<String> libelle = GeneratedColumn<String>(
+    'libelle',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _standardMeta = const VerificationMeta(
+    'standard',
+  );
+  @override
+  late final GeneratedColumn<bool> standard = GeneratedColumn<bool>(
+    'standard',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("standard" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('actif'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, code, libelle, standard, statut];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'categories_bien';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CategorieBienRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+        _codeMeta,
+        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_codeMeta);
+    }
+    if (data.containsKey('libelle')) {
+      context.handle(
+        _libelleMeta,
+        libelle.isAcceptableOrUnknown(data['libelle']!, _libelleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_libelleMeta);
+    }
+    if (data.containsKey('standard')) {
+      context.handle(
+        _standardMeta,
+        standard.isAcceptableOrUnknown(data['standard']!, _standardMeta),
+      );
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CategorieBienRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CategorieBienRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      code: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code'],
+      )!,
+      libelle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}libelle'],
+      )!,
+      standard: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}standard'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+    );
+  }
+
+  @override
+  $CategoriesBienTable createAlias(String alias) {
+    return $CategoriesBienTable(attachedDatabase, alias);
+  }
+}
+
+class CategorieBienRow extends DataClass
+    implements Insertable<CategorieBienRow> {
+  final String id;
+  final String code;
+  final String libelle;
+  final bool standard;
+  final String statut;
+  const CategorieBienRow({
+    required this.id,
+    required this.code,
+    required this.libelle,
+    required this.standard,
+    required this.statut,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['code'] = Variable<String>(code);
+    map['libelle'] = Variable<String>(libelle);
+    map['standard'] = Variable<bool>(standard);
+    map['statut'] = Variable<String>(statut);
+    return map;
+  }
+
+  CategoriesBienCompanion toCompanion(bool nullToAbsent) {
+    return CategoriesBienCompanion(
+      id: Value(id),
+      code: Value(code),
+      libelle: Value(libelle),
+      standard: Value(standard),
+      statut: Value(statut),
+    );
+  }
+
+  factory CategorieBienRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CategorieBienRow(
+      id: serializer.fromJson<String>(json['id']),
+      code: serializer.fromJson<String>(json['code']),
+      libelle: serializer.fromJson<String>(json['libelle']),
+      standard: serializer.fromJson<bool>(json['standard']),
+      statut: serializer.fromJson<String>(json['statut']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'code': serializer.toJson<String>(code),
+      'libelle': serializer.toJson<String>(libelle),
+      'standard': serializer.toJson<bool>(standard),
+      'statut': serializer.toJson<String>(statut),
+    };
+  }
+
+  CategorieBienRow copyWith({
+    String? id,
+    String? code,
+    String? libelle,
+    bool? standard,
+    String? statut,
+  }) => CategorieBienRow(
+    id: id ?? this.id,
+    code: code ?? this.code,
+    libelle: libelle ?? this.libelle,
+    standard: standard ?? this.standard,
+    statut: statut ?? this.statut,
+  );
+  CategorieBienRow copyWithCompanion(CategoriesBienCompanion data) {
+    return CategorieBienRow(
+      id: data.id.present ? data.id.value : this.id,
+      code: data.code.present ? data.code.value : this.code,
+      libelle: data.libelle.present ? data.libelle.value : this.libelle,
+      standard: data.standard.present ? data.standard.value : this.standard,
+      statut: data.statut.present ? data.statut.value : this.statut,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CategorieBienRow(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('libelle: $libelle, ')
+          ..write('standard: $standard, ')
+          ..write('statut: $statut')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, code, libelle, standard, statut);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CategorieBienRow &&
+          other.id == this.id &&
+          other.code == this.code &&
+          other.libelle == this.libelle &&
+          other.standard == this.standard &&
+          other.statut == this.statut);
+}
+
+class CategoriesBienCompanion extends UpdateCompanion<CategorieBienRow> {
+  final Value<String> id;
+  final Value<String> code;
+  final Value<String> libelle;
+  final Value<bool> standard;
+  final Value<String> statut;
+  final Value<int> rowid;
+  const CategoriesBienCompanion({
+    this.id = const Value.absent(),
+    this.code = const Value.absent(),
+    this.libelle = const Value.absent(),
+    this.standard = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CategoriesBienCompanion.insert({
+    required String id,
+    required String code,
+    required String libelle,
+    this.standard = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       code = Value(code),
+       libelle = Value(libelle);
+  static Insertable<CategorieBienRow> custom({
+    Expression<String>? id,
+    Expression<String>? code,
+    Expression<String>? libelle,
+    Expression<bool>? standard,
+    Expression<String>? statut,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (code != null) 'code': code,
+      if (libelle != null) 'libelle': libelle,
+      if (standard != null) 'standard': standard,
+      if (statut != null) 'statut': statut,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CategoriesBienCompanion copyWith({
+    Value<String>? id,
+    Value<String>? code,
+    Value<String>? libelle,
+    Value<bool>? standard,
+    Value<String>? statut,
+    Value<int>? rowid,
+  }) {
+    return CategoriesBienCompanion(
+      id: id ?? this.id,
+      code: code ?? this.code,
+      libelle: libelle ?? this.libelle,
+      standard: standard ?? this.standard,
+      statut: statut ?? this.statut,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (libelle.present) {
+      map['libelle'] = Variable<String>(libelle.value);
+    }
+    if (standard.present) {
+      map['standard'] = Variable<bool>(standard.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CategoriesBienCompanion(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('libelle: $libelle, ')
+          ..write('standard: $standard, ')
+          ..write('statut: $statut, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $BiensTable extends Biens with TableInfo<$BiensTable, BienRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BiensTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _idInventaireMeta = const VerificationMeta(
+    'idInventaire',
+  );
+  @override
+  late final GeneratedColumn<String> idInventaire = GeneratedColumn<String>(
+    'id_inventaire',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _categorieIdMeta = const VerificationMeta(
+    'categorieId',
+  );
+  @override
+  late final GeneratedColumn<String> categorieId = GeneratedColumn<String>(
+    'categorie_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES categories_bien (id)',
+    ),
+  );
+  static const VerificationMeta _noeudIdMeta = const VerificationMeta(
+    'noeudId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudId = GeneratedColumn<String>(
+    'noeud_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _designationMeta = const VerificationMeta(
+    'designation',
+  );
+  @override
+  late final GeneratedColumn<String> designation = GeneratedColumn<String>(
+    'designation',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _etatMeta = const VerificationMeta('etat');
+  @override
+  late final GeneratedColumn<String> etat = GeneratedColumn<String>(
+    'etat',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('neuf'),
+  );
+  static const VerificationMeta _valeurAcquisitionMeta = const VerificationMeta(
+    'valeurAcquisition',
+  );
+  @override
+  late final GeneratedColumn<int> valeurAcquisition = GeneratedColumn<int>(
+    'valeur_acquisition',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _valeurVenaleMeta = const VerificationMeta(
+    'valeurVenale',
+  );
+  @override
+  late final GeneratedColumn<int> valeurVenale = GeneratedColumn<int>(
+    'valeur_venale',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deviseMeta = const VerificationMeta('devise');
+  @override
+  late final GeneratedColumn<String> devise = GeneratedColumn<String>(
+    'devise',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateAcquisitionMeta = const VerificationMeta(
+    'dateAcquisition',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateAcquisition =
+      GeneratedColumn<DateTime>(
+        'date_acquisition',
+        aliasedName,
+        false,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _seuilAlerteStockMeta = const VerificationMeta(
+    'seuilAlerteStock',
+  );
+  @override
+  late final GeneratedColumn<int> seuilAlerteStock = GeneratedColumn<int>(
+    'seuil_alerte_stock',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _typeSortieMeta = const VerificationMeta(
+    'typeSortie',
+  );
+  @override
+  late final GeneratedColumn<String> typeSortie = GeneratedColumn<String>(
+    'type_sortie',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _dateSortieMeta = const VerificationMeta(
+    'dateSortie',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateSortie = GeneratedColumn<DateTime>(
+    'date_sortie',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _valideParFideleIdSortieMeta =
+      const VerificationMeta('valideParFideleIdSortie');
+  @override
+  late final GeneratedColumn<String> valideParFideleIdSortie =
+      GeneratedColumn<String>(
+        'valide_par_fidele_id_sortie',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES fideles (id)',
+        ),
+      );
+  static const VerificationMeta _motifSortieMeta = const VerificationMeta(
+    'motifSortie',
+  );
+  @override
+  late final GeneratedColumn<String> motifSortie = GeneratedColumn<String>(
+    'motif_sortie',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    idInventaire,
+    categorieId,
+    noeudId,
+    designation,
+    etat,
+    valeurAcquisition,
+    valeurVenale,
+    devise,
+    dateAcquisition,
+    seuilAlerteStock,
+    typeSortie,
+    dateSortie,
+    valideParFideleIdSortie,
+    motifSortie,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'biens';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<BienRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('id_inventaire')) {
+      context.handle(
+        _idInventaireMeta,
+        idInventaire.isAcceptableOrUnknown(
+          data['id_inventaire']!,
+          _idInventaireMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_idInventaireMeta);
+    }
+    if (data.containsKey('categorie_id')) {
+      context.handle(
+        _categorieIdMeta,
+        categorieId.isAcceptableOrUnknown(
+          data['categorie_id']!,
+          _categorieIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_categorieIdMeta);
+    }
+    if (data.containsKey('noeud_id')) {
+      context.handle(
+        _noeudIdMeta,
+        noeudId.isAcceptableOrUnknown(data['noeud_id']!, _noeudIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudIdMeta);
+    }
+    if (data.containsKey('designation')) {
+      context.handle(
+        _designationMeta,
+        designation.isAcceptableOrUnknown(
+          data['designation']!,
+          _designationMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_designationMeta);
+    }
+    if (data.containsKey('etat')) {
+      context.handle(
+        _etatMeta,
+        etat.isAcceptableOrUnknown(data['etat']!, _etatMeta),
+      );
+    }
+    if (data.containsKey('valeur_acquisition')) {
+      context.handle(
+        _valeurAcquisitionMeta,
+        valeurAcquisition.isAcceptableOrUnknown(
+          data['valeur_acquisition']!,
+          _valeurAcquisitionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_valeurAcquisitionMeta);
+    }
+    if (data.containsKey('valeur_venale')) {
+      context.handle(
+        _valeurVenaleMeta,
+        valeurVenale.isAcceptableOrUnknown(
+          data['valeur_venale']!,
+          _valeurVenaleMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_valeurVenaleMeta);
+    }
+    if (data.containsKey('devise')) {
+      context.handle(
+        _deviseMeta,
+        devise.isAcceptableOrUnknown(data['devise']!, _deviseMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_deviseMeta);
+    }
+    if (data.containsKey('date_acquisition')) {
+      context.handle(
+        _dateAcquisitionMeta,
+        dateAcquisition.isAcceptableOrUnknown(
+          data['date_acquisition']!,
+          _dateAcquisitionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_dateAcquisitionMeta);
+    }
+    if (data.containsKey('seuil_alerte_stock')) {
+      context.handle(
+        _seuilAlerteStockMeta,
+        seuilAlerteStock.isAcceptableOrUnknown(
+          data['seuil_alerte_stock']!,
+          _seuilAlerteStockMeta,
+        ),
+      );
+    }
+    if (data.containsKey('type_sortie')) {
+      context.handle(
+        _typeSortieMeta,
+        typeSortie.isAcceptableOrUnknown(data['type_sortie']!, _typeSortieMeta),
+      );
+    }
+    if (data.containsKey('date_sortie')) {
+      context.handle(
+        _dateSortieMeta,
+        dateSortie.isAcceptableOrUnknown(data['date_sortie']!, _dateSortieMeta),
+      );
+    }
+    if (data.containsKey('valide_par_fidele_id_sortie')) {
+      context.handle(
+        _valideParFideleIdSortieMeta,
+        valideParFideleIdSortie.isAcceptableOrUnknown(
+          data['valide_par_fidele_id_sortie']!,
+          _valideParFideleIdSortieMeta,
+        ),
+      );
+    }
+    if (data.containsKey('motif_sortie')) {
+      context.handle(
+        _motifSortieMeta,
+        motifSortie.isAcceptableOrUnknown(
+          data['motif_sortie']!,
+          _motifSortieMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  BienRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BienRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      idInventaire: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id_inventaire'],
+      )!,
+      categorieId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}categorie_id'],
+      )!,
+      noeudId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_id'],
+      )!,
+      designation: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}designation'],
+      )!,
+      etat: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}etat'],
+      )!,
+      valeurAcquisition: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}valeur_acquisition'],
+      )!,
+      valeurVenale: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}valeur_venale'],
+      )!,
+      devise: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}devise'],
+      )!,
+      dateAcquisition: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_acquisition'],
+      )!,
+      seuilAlerteStock: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}seuil_alerte_stock'],
+      ),
+      typeSortie: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type_sortie'],
+      ),
+      dateSortie: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_sortie'],
+      ),
+      valideParFideleIdSortie: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}valide_par_fidele_id_sortie'],
+      ),
+      motifSortie: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}motif_sortie'],
+      ),
+    );
+  }
+
+  @override
+  $BiensTable createAlias(String alias) {
+    return $BiensTable(attachedDatabase, alias);
+  }
+}
+
+class BienRow extends DataClass implements Insertable<BienRow> {
+  final String id;
+  final String idInventaire;
+  final String categorieId;
+  final String noeudId;
+  final String designation;
+  final String etat;
+  final int valeurAcquisition;
+  final int valeurVenale;
+  final String devise;
+  final DateTime dateAcquisition;
+  final int? seuilAlerteStock;
+  final String? typeSortie;
+  final DateTime? dateSortie;
+  final String? valideParFideleIdSortie;
+  final String? motifSortie;
+  const BienRow({
+    required this.id,
+    required this.idInventaire,
+    required this.categorieId,
+    required this.noeudId,
+    required this.designation,
+    required this.etat,
+    required this.valeurAcquisition,
+    required this.valeurVenale,
+    required this.devise,
+    required this.dateAcquisition,
+    this.seuilAlerteStock,
+    this.typeSortie,
+    this.dateSortie,
+    this.valideParFideleIdSortie,
+    this.motifSortie,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['id_inventaire'] = Variable<String>(idInventaire);
+    map['categorie_id'] = Variable<String>(categorieId);
+    map['noeud_id'] = Variable<String>(noeudId);
+    map['designation'] = Variable<String>(designation);
+    map['etat'] = Variable<String>(etat);
+    map['valeur_acquisition'] = Variable<int>(valeurAcquisition);
+    map['valeur_venale'] = Variable<int>(valeurVenale);
+    map['devise'] = Variable<String>(devise);
+    map['date_acquisition'] = Variable<DateTime>(dateAcquisition);
+    if (!nullToAbsent || seuilAlerteStock != null) {
+      map['seuil_alerte_stock'] = Variable<int>(seuilAlerteStock);
+    }
+    if (!nullToAbsent || typeSortie != null) {
+      map['type_sortie'] = Variable<String>(typeSortie);
+    }
+    if (!nullToAbsent || dateSortie != null) {
+      map['date_sortie'] = Variable<DateTime>(dateSortie);
+    }
+    if (!nullToAbsent || valideParFideleIdSortie != null) {
+      map['valide_par_fidele_id_sortie'] = Variable<String>(
+        valideParFideleIdSortie,
+      );
+    }
+    if (!nullToAbsent || motifSortie != null) {
+      map['motif_sortie'] = Variable<String>(motifSortie);
+    }
+    return map;
+  }
+
+  BiensCompanion toCompanion(bool nullToAbsent) {
+    return BiensCompanion(
+      id: Value(id),
+      idInventaire: Value(idInventaire),
+      categorieId: Value(categorieId),
+      noeudId: Value(noeudId),
+      designation: Value(designation),
+      etat: Value(etat),
+      valeurAcquisition: Value(valeurAcquisition),
+      valeurVenale: Value(valeurVenale),
+      devise: Value(devise),
+      dateAcquisition: Value(dateAcquisition),
+      seuilAlerteStock: seuilAlerteStock == null && nullToAbsent
+          ? const Value.absent()
+          : Value(seuilAlerteStock),
+      typeSortie: typeSortie == null && nullToAbsent
+          ? const Value.absent()
+          : Value(typeSortie),
+      dateSortie: dateSortie == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dateSortie),
+      valideParFideleIdSortie: valideParFideleIdSortie == null && nullToAbsent
+          ? const Value.absent()
+          : Value(valideParFideleIdSortie),
+      motifSortie: motifSortie == null && nullToAbsent
+          ? const Value.absent()
+          : Value(motifSortie),
+    );
+  }
+
+  factory BienRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return BienRow(
+      id: serializer.fromJson<String>(json['id']),
+      idInventaire: serializer.fromJson<String>(json['idInventaire']),
+      categorieId: serializer.fromJson<String>(json['categorieId']),
+      noeudId: serializer.fromJson<String>(json['noeudId']),
+      designation: serializer.fromJson<String>(json['designation']),
+      etat: serializer.fromJson<String>(json['etat']),
+      valeurAcquisition: serializer.fromJson<int>(json['valeurAcquisition']),
+      valeurVenale: serializer.fromJson<int>(json['valeurVenale']),
+      devise: serializer.fromJson<String>(json['devise']),
+      dateAcquisition: serializer.fromJson<DateTime>(json['dateAcquisition']),
+      seuilAlerteStock: serializer.fromJson<int?>(json['seuilAlerteStock']),
+      typeSortie: serializer.fromJson<String?>(json['typeSortie']),
+      dateSortie: serializer.fromJson<DateTime?>(json['dateSortie']),
+      valideParFideleIdSortie: serializer.fromJson<String?>(
+        json['valideParFideleIdSortie'],
+      ),
+      motifSortie: serializer.fromJson<String?>(json['motifSortie']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'idInventaire': serializer.toJson<String>(idInventaire),
+      'categorieId': serializer.toJson<String>(categorieId),
+      'noeudId': serializer.toJson<String>(noeudId),
+      'designation': serializer.toJson<String>(designation),
+      'etat': serializer.toJson<String>(etat),
+      'valeurAcquisition': serializer.toJson<int>(valeurAcquisition),
+      'valeurVenale': serializer.toJson<int>(valeurVenale),
+      'devise': serializer.toJson<String>(devise),
+      'dateAcquisition': serializer.toJson<DateTime>(dateAcquisition),
+      'seuilAlerteStock': serializer.toJson<int?>(seuilAlerteStock),
+      'typeSortie': serializer.toJson<String?>(typeSortie),
+      'dateSortie': serializer.toJson<DateTime?>(dateSortie),
+      'valideParFideleIdSortie': serializer.toJson<String?>(
+        valideParFideleIdSortie,
+      ),
+      'motifSortie': serializer.toJson<String?>(motifSortie),
+    };
+  }
+
+  BienRow copyWith({
+    String? id,
+    String? idInventaire,
+    String? categorieId,
+    String? noeudId,
+    String? designation,
+    String? etat,
+    int? valeurAcquisition,
+    int? valeurVenale,
+    String? devise,
+    DateTime? dateAcquisition,
+    Value<int?> seuilAlerteStock = const Value.absent(),
+    Value<String?> typeSortie = const Value.absent(),
+    Value<DateTime?> dateSortie = const Value.absent(),
+    Value<String?> valideParFideleIdSortie = const Value.absent(),
+    Value<String?> motifSortie = const Value.absent(),
+  }) => BienRow(
+    id: id ?? this.id,
+    idInventaire: idInventaire ?? this.idInventaire,
+    categorieId: categorieId ?? this.categorieId,
+    noeudId: noeudId ?? this.noeudId,
+    designation: designation ?? this.designation,
+    etat: etat ?? this.etat,
+    valeurAcquisition: valeurAcquisition ?? this.valeurAcquisition,
+    valeurVenale: valeurVenale ?? this.valeurVenale,
+    devise: devise ?? this.devise,
+    dateAcquisition: dateAcquisition ?? this.dateAcquisition,
+    seuilAlerteStock: seuilAlerteStock.present
+        ? seuilAlerteStock.value
+        : this.seuilAlerteStock,
+    typeSortie: typeSortie.present ? typeSortie.value : this.typeSortie,
+    dateSortie: dateSortie.present ? dateSortie.value : this.dateSortie,
+    valideParFideleIdSortie: valideParFideleIdSortie.present
+        ? valideParFideleIdSortie.value
+        : this.valideParFideleIdSortie,
+    motifSortie: motifSortie.present ? motifSortie.value : this.motifSortie,
+  );
+  BienRow copyWithCompanion(BiensCompanion data) {
+    return BienRow(
+      id: data.id.present ? data.id.value : this.id,
+      idInventaire: data.idInventaire.present
+          ? data.idInventaire.value
+          : this.idInventaire,
+      categorieId: data.categorieId.present
+          ? data.categorieId.value
+          : this.categorieId,
+      noeudId: data.noeudId.present ? data.noeudId.value : this.noeudId,
+      designation: data.designation.present
+          ? data.designation.value
+          : this.designation,
+      etat: data.etat.present ? data.etat.value : this.etat,
+      valeurAcquisition: data.valeurAcquisition.present
+          ? data.valeurAcquisition.value
+          : this.valeurAcquisition,
+      valeurVenale: data.valeurVenale.present
+          ? data.valeurVenale.value
+          : this.valeurVenale,
+      devise: data.devise.present ? data.devise.value : this.devise,
+      dateAcquisition: data.dateAcquisition.present
+          ? data.dateAcquisition.value
+          : this.dateAcquisition,
+      seuilAlerteStock: data.seuilAlerteStock.present
+          ? data.seuilAlerteStock.value
+          : this.seuilAlerteStock,
+      typeSortie: data.typeSortie.present
+          ? data.typeSortie.value
+          : this.typeSortie,
+      dateSortie: data.dateSortie.present
+          ? data.dateSortie.value
+          : this.dateSortie,
+      valideParFideleIdSortie: data.valideParFideleIdSortie.present
+          ? data.valideParFideleIdSortie.value
+          : this.valideParFideleIdSortie,
+      motifSortie: data.motifSortie.present
+          ? data.motifSortie.value
+          : this.motifSortie,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BienRow(')
+          ..write('id: $id, ')
+          ..write('idInventaire: $idInventaire, ')
+          ..write('categorieId: $categorieId, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('designation: $designation, ')
+          ..write('etat: $etat, ')
+          ..write('valeurAcquisition: $valeurAcquisition, ')
+          ..write('valeurVenale: $valeurVenale, ')
+          ..write('devise: $devise, ')
+          ..write('dateAcquisition: $dateAcquisition, ')
+          ..write('seuilAlerteStock: $seuilAlerteStock, ')
+          ..write('typeSortie: $typeSortie, ')
+          ..write('dateSortie: $dateSortie, ')
+          ..write('valideParFideleIdSortie: $valideParFideleIdSortie, ')
+          ..write('motifSortie: $motifSortie')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    idInventaire,
+    categorieId,
+    noeudId,
+    designation,
+    etat,
+    valeurAcquisition,
+    valeurVenale,
+    devise,
+    dateAcquisition,
+    seuilAlerteStock,
+    typeSortie,
+    dateSortie,
+    valideParFideleIdSortie,
+    motifSortie,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BienRow &&
+          other.id == this.id &&
+          other.idInventaire == this.idInventaire &&
+          other.categorieId == this.categorieId &&
+          other.noeudId == this.noeudId &&
+          other.designation == this.designation &&
+          other.etat == this.etat &&
+          other.valeurAcquisition == this.valeurAcquisition &&
+          other.valeurVenale == this.valeurVenale &&
+          other.devise == this.devise &&
+          other.dateAcquisition == this.dateAcquisition &&
+          other.seuilAlerteStock == this.seuilAlerteStock &&
+          other.typeSortie == this.typeSortie &&
+          other.dateSortie == this.dateSortie &&
+          other.valideParFideleIdSortie == this.valideParFideleIdSortie &&
+          other.motifSortie == this.motifSortie);
+}
+
+class BiensCompanion extends UpdateCompanion<BienRow> {
+  final Value<String> id;
+  final Value<String> idInventaire;
+  final Value<String> categorieId;
+  final Value<String> noeudId;
+  final Value<String> designation;
+  final Value<String> etat;
+  final Value<int> valeurAcquisition;
+  final Value<int> valeurVenale;
+  final Value<String> devise;
+  final Value<DateTime> dateAcquisition;
+  final Value<int?> seuilAlerteStock;
+  final Value<String?> typeSortie;
+  final Value<DateTime?> dateSortie;
+  final Value<String?> valideParFideleIdSortie;
+  final Value<String?> motifSortie;
+  final Value<int> rowid;
+  const BiensCompanion({
+    this.id = const Value.absent(),
+    this.idInventaire = const Value.absent(),
+    this.categorieId = const Value.absent(),
+    this.noeudId = const Value.absent(),
+    this.designation = const Value.absent(),
+    this.etat = const Value.absent(),
+    this.valeurAcquisition = const Value.absent(),
+    this.valeurVenale = const Value.absent(),
+    this.devise = const Value.absent(),
+    this.dateAcquisition = const Value.absent(),
+    this.seuilAlerteStock = const Value.absent(),
+    this.typeSortie = const Value.absent(),
+    this.dateSortie = const Value.absent(),
+    this.valideParFideleIdSortie = const Value.absent(),
+    this.motifSortie = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  BiensCompanion.insert({
+    required String id,
+    required String idInventaire,
+    required String categorieId,
+    required String noeudId,
+    required String designation,
+    this.etat = const Value.absent(),
+    required int valeurAcquisition,
+    required int valeurVenale,
+    required String devise,
+    required DateTime dateAcquisition,
+    this.seuilAlerteStock = const Value.absent(),
+    this.typeSortie = const Value.absent(),
+    this.dateSortie = const Value.absent(),
+    this.valideParFideleIdSortie = const Value.absent(),
+    this.motifSortie = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       idInventaire = Value(idInventaire),
+       categorieId = Value(categorieId),
+       noeudId = Value(noeudId),
+       designation = Value(designation),
+       valeurAcquisition = Value(valeurAcquisition),
+       valeurVenale = Value(valeurVenale),
+       devise = Value(devise),
+       dateAcquisition = Value(dateAcquisition);
+  static Insertable<BienRow> custom({
+    Expression<String>? id,
+    Expression<String>? idInventaire,
+    Expression<String>? categorieId,
+    Expression<String>? noeudId,
+    Expression<String>? designation,
+    Expression<String>? etat,
+    Expression<int>? valeurAcquisition,
+    Expression<int>? valeurVenale,
+    Expression<String>? devise,
+    Expression<DateTime>? dateAcquisition,
+    Expression<int>? seuilAlerteStock,
+    Expression<String>? typeSortie,
+    Expression<DateTime>? dateSortie,
+    Expression<String>? valideParFideleIdSortie,
+    Expression<String>? motifSortie,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (idInventaire != null) 'id_inventaire': idInventaire,
+      if (categorieId != null) 'categorie_id': categorieId,
+      if (noeudId != null) 'noeud_id': noeudId,
+      if (designation != null) 'designation': designation,
+      if (etat != null) 'etat': etat,
+      if (valeurAcquisition != null) 'valeur_acquisition': valeurAcquisition,
+      if (valeurVenale != null) 'valeur_venale': valeurVenale,
+      if (devise != null) 'devise': devise,
+      if (dateAcquisition != null) 'date_acquisition': dateAcquisition,
+      if (seuilAlerteStock != null) 'seuil_alerte_stock': seuilAlerteStock,
+      if (typeSortie != null) 'type_sortie': typeSortie,
+      if (dateSortie != null) 'date_sortie': dateSortie,
+      if (valideParFideleIdSortie != null)
+        'valide_par_fidele_id_sortie': valideParFideleIdSortie,
+      if (motifSortie != null) 'motif_sortie': motifSortie,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  BiensCompanion copyWith({
+    Value<String>? id,
+    Value<String>? idInventaire,
+    Value<String>? categorieId,
+    Value<String>? noeudId,
+    Value<String>? designation,
+    Value<String>? etat,
+    Value<int>? valeurAcquisition,
+    Value<int>? valeurVenale,
+    Value<String>? devise,
+    Value<DateTime>? dateAcquisition,
+    Value<int?>? seuilAlerteStock,
+    Value<String?>? typeSortie,
+    Value<DateTime?>? dateSortie,
+    Value<String?>? valideParFideleIdSortie,
+    Value<String?>? motifSortie,
+    Value<int>? rowid,
+  }) {
+    return BiensCompanion(
+      id: id ?? this.id,
+      idInventaire: idInventaire ?? this.idInventaire,
+      categorieId: categorieId ?? this.categorieId,
+      noeudId: noeudId ?? this.noeudId,
+      designation: designation ?? this.designation,
+      etat: etat ?? this.etat,
+      valeurAcquisition: valeurAcquisition ?? this.valeurAcquisition,
+      valeurVenale: valeurVenale ?? this.valeurVenale,
+      devise: devise ?? this.devise,
+      dateAcquisition: dateAcquisition ?? this.dateAcquisition,
+      seuilAlerteStock: seuilAlerteStock ?? this.seuilAlerteStock,
+      typeSortie: typeSortie ?? this.typeSortie,
+      dateSortie: dateSortie ?? this.dateSortie,
+      valideParFideleIdSortie:
+          valideParFideleIdSortie ?? this.valideParFideleIdSortie,
+      motifSortie: motifSortie ?? this.motifSortie,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (idInventaire.present) {
+      map['id_inventaire'] = Variable<String>(idInventaire.value);
+    }
+    if (categorieId.present) {
+      map['categorie_id'] = Variable<String>(categorieId.value);
+    }
+    if (noeudId.present) {
+      map['noeud_id'] = Variable<String>(noeudId.value);
+    }
+    if (designation.present) {
+      map['designation'] = Variable<String>(designation.value);
+    }
+    if (etat.present) {
+      map['etat'] = Variable<String>(etat.value);
+    }
+    if (valeurAcquisition.present) {
+      map['valeur_acquisition'] = Variable<int>(valeurAcquisition.value);
+    }
+    if (valeurVenale.present) {
+      map['valeur_venale'] = Variable<int>(valeurVenale.value);
+    }
+    if (devise.present) {
+      map['devise'] = Variable<String>(devise.value);
+    }
+    if (dateAcquisition.present) {
+      map['date_acquisition'] = Variable<DateTime>(dateAcquisition.value);
+    }
+    if (seuilAlerteStock.present) {
+      map['seuil_alerte_stock'] = Variable<int>(seuilAlerteStock.value);
+    }
+    if (typeSortie.present) {
+      map['type_sortie'] = Variable<String>(typeSortie.value);
+    }
+    if (dateSortie.present) {
+      map['date_sortie'] = Variable<DateTime>(dateSortie.value);
+    }
+    if (valideParFideleIdSortie.present) {
+      map['valide_par_fidele_id_sortie'] = Variable<String>(
+        valideParFideleIdSortie.value,
+      );
+    }
+    if (motifSortie.present) {
+      map['motif_sortie'] = Variable<String>(motifSortie.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BiensCompanion(')
+          ..write('id: $id, ')
+          ..write('idInventaire: $idInventaire, ')
+          ..write('categorieId: $categorieId, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('designation: $designation, ')
+          ..write('etat: $etat, ')
+          ..write('valeurAcquisition: $valeurAcquisition, ')
+          ..write('valeurVenale: $valeurVenale, ')
+          ..write('devise: $devise, ')
+          ..write('dateAcquisition: $dateAcquisition, ')
+          ..write('seuilAlerteStock: $seuilAlerteStock, ')
+          ..write('typeSortie: $typeSortie, ')
+          ..write('dateSortie: $dateSortie, ')
+          ..write('valideParFideleIdSortie: $valideParFideleIdSortie, ')
+          ..write('motifSortie: $motifSortie, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ReservationsBienTable extends ReservationsBien
+    with TableInfo<$ReservationsBienTable, ReservationBienRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ReservationsBienTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _bienIdMeta = const VerificationMeta('bienId');
+  @override
+  late final GeneratedColumn<String> bienId = GeneratedColumn<String>(
+    'bien_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES biens (id)',
+    ),
+  );
+  static const VerificationMeta _objetReservationMeta = const VerificationMeta(
+    'objetReservation',
+  );
+  @override
+  late final GeneratedColumn<String> objetReservation = GeneratedColumn<String>(
+    'objet_reservation',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _culteIdMeta = const VerificationMeta(
+    'culteId',
+  );
+  @override
+  late final GeneratedColumn<String> culteId = GeneratedColumn<String>(
+    'culte_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES cultes (id)',
+    ),
+  );
+  static const VerificationMeta _objetLibreMeta = const VerificationMeta(
+    'objetLibre',
+  );
+  @override
+  late final GeneratedColumn<String> objetLibre = GeneratedColumn<String>(
+    'objet_libre',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _dateDebutMeta = const VerificationMeta(
+    'dateDebut',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateDebut = GeneratedColumn<DateTime>(
+    'date_debut',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateFinMeta = const VerificationMeta(
+    'dateFin',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateFin = GeneratedColumn<DateTime>(
+    'date_fin',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    bienId,
+    objetReservation,
+    culteId,
+    objetLibre,
+    dateDebut,
+    dateFin,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'reservations_bien';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ReservationBienRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('bien_id')) {
+      context.handle(
+        _bienIdMeta,
+        bienId.isAcceptableOrUnknown(data['bien_id']!, _bienIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_bienIdMeta);
+    }
+    if (data.containsKey('objet_reservation')) {
+      context.handle(
+        _objetReservationMeta,
+        objetReservation.isAcceptableOrUnknown(
+          data['objet_reservation']!,
+          _objetReservationMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_objetReservationMeta);
+    }
+    if (data.containsKey('culte_id')) {
+      context.handle(
+        _culteIdMeta,
+        culteId.isAcceptableOrUnknown(data['culte_id']!, _culteIdMeta),
+      );
+    }
+    if (data.containsKey('objet_libre')) {
+      context.handle(
+        _objetLibreMeta,
+        objetLibre.isAcceptableOrUnknown(data['objet_libre']!, _objetLibreMeta),
+      );
+    }
+    if (data.containsKey('date_debut')) {
+      context.handle(
+        _dateDebutMeta,
+        dateDebut.isAcceptableOrUnknown(data['date_debut']!, _dateDebutMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateDebutMeta);
+    }
+    if (data.containsKey('date_fin')) {
+      context.handle(
+        _dateFinMeta,
+        dateFin.isAcceptableOrUnknown(data['date_fin']!, _dateFinMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateFinMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ReservationBienRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ReservationBienRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      bienId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}bien_id'],
+      )!,
+      objetReservation: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}objet_reservation'],
+      )!,
+      culteId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}culte_id'],
+      ),
+      objetLibre: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}objet_libre'],
+      ),
+      dateDebut: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_debut'],
+      )!,
+      dateFin: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_fin'],
+      )!,
+    );
+  }
+
+  @override
+  $ReservationsBienTable createAlias(String alias) {
+    return $ReservationsBienTable(attachedDatabase, alias);
+  }
+}
+
+class ReservationBienRow extends DataClass
+    implements Insertable<ReservationBienRow> {
+  final String id;
+  final String bienId;
+  final String objetReservation;
+  final String? culteId;
+  final String? objetLibre;
+  final DateTime dateDebut;
+  final DateTime dateFin;
+  const ReservationBienRow({
+    required this.id,
+    required this.bienId,
+    required this.objetReservation,
+    this.culteId,
+    this.objetLibre,
+    required this.dateDebut,
+    required this.dateFin,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['bien_id'] = Variable<String>(bienId);
+    map['objet_reservation'] = Variable<String>(objetReservation);
+    if (!nullToAbsent || culteId != null) {
+      map['culte_id'] = Variable<String>(culteId);
+    }
+    if (!nullToAbsent || objetLibre != null) {
+      map['objet_libre'] = Variable<String>(objetLibre);
+    }
+    map['date_debut'] = Variable<DateTime>(dateDebut);
+    map['date_fin'] = Variable<DateTime>(dateFin);
+    return map;
+  }
+
+  ReservationsBienCompanion toCompanion(bool nullToAbsent) {
+    return ReservationsBienCompanion(
+      id: Value(id),
+      bienId: Value(bienId),
+      objetReservation: Value(objetReservation),
+      culteId: culteId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(culteId),
+      objetLibre: objetLibre == null && nullToAbsent
+          ? const Value.absent()
+          : Value(objetLibre),
+      dateDebut: Value(dateDebut),
+      dateFin: Value(dateFin),
+    );
+  }
+
+  factory ReservationBienRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ReservationBienRow(
+      id: serializer.fromJson<String>(json['id']),
+      bienId: serializer.fromJson<String>(json['bienId']),
+      objetReservation: serializer.fromJson<String>(json['objetReservation']),
+      culteId: serializer.fromJson<String?>(json['culteId']),
+      objetLibre: serializer.fromJson<String?>(json['objetLibre']),
+      dateDebut: serializer.fromJson<DateTime>(json['dateDebut']),
+      dateFin: serializer.fromJson<DateTime>(json['dateFin']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'bienId': serializer.toJson<String>(bienId),
+      'objetReservation': serializer.toJson<String>(objetReservation),
+      'culteId': serializer.toJson<String?>(culteId),
+      'objetLibre': serializer.toJson<String?>(objetLibre),
+      'dateDebut': serializer.toJson<DateTime>(dateDebut),
+      'dateFin': serializer.toJson<DateTime>(dateFin),
+    };
+  }
+
+  ReservationBienRow copyWith({
+    String? id,
+    String? bienId,
+    String? objetReservation,
+    Value<String?> culteId = const Value.absent(),
+    Value<String?> objetLibre = const Value.absent(),
+    DateTime? dateDebut,
+    DateTime? dateFin,
+  }) => ReservationBienRow(
+    id: id ?? this.id,
+    bienId: bienId ?? this.bienId,
+    objetReservation: objetReservation ?? this.objetReservation,
+    culteId: culteId.present ? culteId.value : this.culteId,
+    objetLibre: objetLibre.present ? objetLibre.value : this.objetLibre,
+    dateDebut: dateDebut ?? this.dateDebut,
+    dateFin: dateFin ?? this.dateFin,
+  );
+  ReservationBienRow copyWithCompanion(ReservationsBienCompanion data) {
+    return ReservationBienRow(
+      id: data.id.present ? data.id.value : this.id,
+      bienId: data.bienId.present ? data.bienId.value : this.bienId,
+      objetReservation: data.objetReservation.present
+          ? data.objetReservation.value
+          : this.objetReservation,
+      culteId: data.culteId.present ? data.culteId.value : this.culteId,
+      objetLibre: data.objetLibre.present
+          ? data.objetLibre.value
+          : this.objetLibre,
+      dateDebut: data.dateDebut.present ? data.dateDebut.value : this.dateDebut,
+      dateFin: data.dateFin.present ? data.dateFin.value : this.dateFin,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReservationBienRow(')
+          ..write('id: $id, ')
+          ..write('bienId: $bienId, ')
+          ..write('objetReservation: $objetReservation, ')
+          ..write('culteId: $culteId, ')
+          ..write('objetLibre: $objetLibre, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('dateFin: $dateFin')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    bienId,
+    objetReservation,
+    culteId,
+    objetLibre,
+    dateDebut,
+    dateFin,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ReservationBienRow &&
+          other.id == this.id &&
+          other.bienId == this.bienId &&
+          other.objetReservation == this.objetReservation &&
+          other.culteId == this.culteId &&
+          other.objetLibre == this.objetLibre &&
+          other.dateDebut == this.dateDebut &&
+          other.dateFin == this.dateFin);
+}
+
+class ReservationsBienCompanion extends UpdateCompanion<ReservationBienRow> {
+  final Value<String> id;
+  final Value<String> bienId;
+  final Value<String> objetReservation;
+  final Value<String?> culteId;
+  final Value<String?> objetLibre;
+  final Value<DateTime> dateDebut;
+  final Value<DateTime> dateFin;
+  final Value<int> rowid;
+  const ReservationsBienCompanion({
+    this.id = const Value.absent(),
+    this.bienId = const Value.absent(),
+    this.objetReservation = const Value.absent(),
+    this.culteId = const Value.absent(),
+    this.objetLibre = const Value.absent(),
+    this.dateDebut = const Value.absent(),
+    this.dateFin = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ReservationsBienCompanion.insert({
+    required String id,
+    required String bienId,
+    required String objetReservation,
+    this.culteId = const Value.absent(),
+    this.objetLibre = const Value.absent(),
+    required DateTime dateDebut,
+    required DateTime dateFin,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       bienId = Value(bienId),
+       objetReservation = Value(objetReservation),
+       dateDebut = Value(dateDebut),
+       dateFin = Value(dateFin);
+  static Insertable<ReservationBienRow> custom({
+    Expression<String>? id,
+    Expression<String>? bienId,
+    Expression<String>? objetReservation,
+    Expression<String>? culteId,
+    Expression<String>? objetLibre,
+    Expression<DateTime>? dateDebut,
+    Expression<DateTime>? dateFin,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (bienId != null) 'bien_id': bienId,
+      if (objetReservation != null) 'objet_reservation': objetReservation,
+      if (culteId != null) 'culte_id': culteId,
+      if (objetLibre != null) 'objet_libre': objetLibre,
+      if (dateDebut != null) 'date_debut': dateDebut,
+      if (dateFin != null) 'date_fin': dateFin,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ReservationsBienCompanion copyWith({
+    Value<String>? id,
+    Value<String>? bienId,
+    Value<String>? objetReservation,
+    Value<String?>? culteId,
+    Value<String?>? objetLibre,
+    Value<DateTime>? dateDebut,
+    Value<DateTime>? dateFin,
+    Value<int>? rowid,
+  }) {
+    return ReservationsBienCompanion(
+      id: id ?? this.id,
+      bienId: bienId ?? this.bienId,
+      objetReservation: objetReservation ?? this.objetReservation,
+      culteId: culteId ?? this.culteId,
+      objetLibre: objetLibre ?? this.objetLibre,
+      dateDebut: dateDebut ?? this.dateDebut,
+      dateFin: dateFin ?? this.dateFin,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (bienId.present) {
+      map['bien_id'] = Variable<String>(bienId.value);
+    }
+    if (objetReservation.present) {
+      map['objet_reservation'] = Variable<String>(objetReservation.value);
+    }
+    if (culteId.present) {
+      map['culte_id'] = Variable<String>(culteId.value);
+    }
+    if (objetLibre.present) {
+      map['objet_libre'] = Variable<String>(objetLibre.value);
+    }
+    if (dateDebut.present) {
+      map['date_debut'] = Variable<DateTime>(dateDebut.value);
+    }
+    if (dateFin.present) {
+      map['date_fin'] = Variable<DateTime>(dateFin.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReservationsBienCompanion(')
+          ..write('id: $id, ')
+          ..write('bienId: $bienId, ')
+          ..write('objetReservation: $objetReservation, ')
+          ..write('culteId: $culteId, ')
+          ..write('objetLibre: $objetLibre, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('dateFin: $dateFin, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MouvementsStockTable extends MouvementsStock
+    with TableInfo<$MouvementsStockTable, MouvementStockRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MouvementsStockTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _bienIdMeta = const VerificationMeta('bienId');
+  @override
+  late final GeneratedColumn<String> bienId = GeneratedColumn<String>(
+    'bien_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES biens (id)',
+    ),
+  );
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+    'type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _quantiteMeta = const VerificationMeta(
+    'quantite',
+  );
+  @override
+  late final GeneratedColumn<int> quantite = GeneratedColumn<int>(
+    'quantite',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _motifMeta = const VerificationMeta('motif');
+  @override
+  late final GeneratedColumn<String> motif = GeneratedColumn<String>(
+    'motif',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    bienId,
+    type,
+    quantite,
+    date,
+    motif,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'mouvements_stock';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MouvementStockRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('bien_id')) {
+      context.handle(
+        _bienIdMeta,
+        bienId.isAcceptableOrUnknown(data['bien_id']!, _bienIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_bienIdMeta);
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+        _typeMeta,
+        type.isAcceptableOrUnknown(data['type']!, _typeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('quantite')) {
+      context.handle(
+        _quantiteMeta,
+        quantite.isAcceptableOrUnknown(data['quantite']!, _quantiteMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_quantiteMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('motif')) {
+      context.handle(
+        _motifMeta,
+        motif.isAcceptableOrUnknown(data['motif']!, _motifMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MouvementStockRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MouvementStockRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      bienId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}bien_id'],
+      )!,
+      type: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type'],
+      )!,
+      quantite: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}quantite'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date'],
+      )!,
+      motif: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}motif'],
+      ),
+    );
+  }
+
+  @override
+  $MouvementsStockTable createAlias(String alias) {
+    return $MouvementsStockTable(attachedDatabase, alias);
+  }
+}
+
+class MouvementStockRow extends DataClass
+    implements Insertable<MouvementStockRow> {
+  final String id;
+  final String bienId;
+  final String type;
+  final int quantite;
+  final DateTime date;
+  final String? motif;
+  const MouvementStockRow({
+    required this.id,
+    required this.bienId,
+    required this.type,
+    required this.quantite,
+    required this.date,
+    this.motif,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['bien_id'] = Variable<String>(bienId);
+    map['type'] = Variable<String>(type);
+    map['quantite'] = Variable<int>(quantite);
+    map['date'] = Variable<DateTime>(date);
+    if (!nullToAbsent || motif != null) {
+      map['motif'] = Variable<String>(motif);
+    }
+    return map;
+  }
+
+  MouvementsStockCompanion toCompanion(bool nullToAbsent) {
+    return MouvementsStockCompanion(
+      id: Value(id),
+      bienId: Value(bienId),
+      type: Value(type),
+      quantite: Value(quantite),
+      date: Value(date),
+      motif: motif == null && nullToAbsent
+          ? const Value.absent()
+          : Value(motif),
+    );
+  }
+
+  factory MouvementStockRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MouvementStockRow(
+      id: serializer.fromJson<String>(json['id']),
+      bienId: serializer.fromJson<String>(json['bienId']),
+      type: serializer.fromJson<String>(json['type']),
+      quantite: serializer.fromJson<int>(json['quantite']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      motif: serializer.fromJson<String?>(json['motif']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'bienId': serializer.toJson<String>(bienId),
+      'type': serializer.toJson<String>(type),
+      'quantite': serializer.toJson<int>(quantite),
+      'date': serializer.toJson<DateTime>(date),
+      'motif': serializer.toJson<String?>(motif),
+    };
+  }
+
+  MouvementStockRow copyWith({
+    String? id,
+    String? bienId,
+    String? type,
+    int? quantite,
+    DateTime? date,
+    Value<String?> motif = const Value.absent(),
+  }) => MouvementStockRow(
+    id: id ?? this.id,
+    bienId: bienId ?? this.bienId,
+    type: type ?? this.type,
+    quantite: quantite ?? this.quantite,
+    date: date ?? this.date,
+    motif: motif.present ? motif.value : this.motif,
+  );
+  MouvementStockRow copyWithCompanion(MouvementsStockCompanion data) {
+    return MouvementStockRow(
+      id: data.id.present ? data.id.value : this.id,
+      bienId: data.bienId.present ? data.bienId.value : this.bienId,
+      type: data.type.present ? data.type.value : this.type,
+      quantite: data.quantite.present ? data.quantite.value : this.quantite,
+      date: data.date.present ? data.date.value : this.date,
+      motif: data.motif.present ? data.motif.value : this.motif,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MouvementStockRow(')
+          ..write('id: $id, ')
+          ..write('bienId: $bienId, ')
+          ..write('type: $type, ')
+          ..write('quantite: $quantite, ')
+          ..write('date: $date, ')
+          ..write('motif: $motif')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, bienId, type, quantite, date, motif);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MouvementStockRow &&
+          other.id == this.id &&
+          other.bienId == this.bienId &&
+          other.type == this.type &&
+          other.quantite == this.quantite &&
+          other.date == this.date &&
+          other.motif == this.motif);
+}
+
+class MouvementsStockCompanion extends UpdateCompanion<MouvementStockRow> {
+  final Value<String> id;
+  final Value<String> bienId;
+  final Value<String> type;
+  final Value<int> quantite;
+  final Value<DateTime> date;
+  final Value<String?> motif;
+  final Value<int> rowid;
+  const MouvementsStockCompanion({
+    this.id = const Value.absent(),
+    this.bienId = const Value.absent(),
+    this.type = const Value.absent(),
+    this.quantite = const Value.absent(),
+    this.date = const Value.absent(),
+    this.motif = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MouvementsStockCompanion.insert({
+    required String id,
+    required String bienId,
+    required String type,
+    required int quantite,
+    required DateTime date,
+    this.motif = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       bienId = Value(bienId),
+       type = Value(type),
+       quantite = Value(quantite),
+       date = Value(date);
+  static Insertable<MouvementStockRow> custom({
+    Expression<String>? id,
+    Expression<String>? bienId,
+    Expression<String>? type,
+    Expression<int>? quantite,
+    Expression<DateTime>? date,
+    Expression<String>? motif,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (bienId != null) 'bien_id': bienId,
+      if (type != null) 'type': type,
+      if (quantite != null) 'quantite': quantite,
+      if (date != null) 'date': date,
+      if (motif != null) 'motif': motif,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MouvementsStockCompanion copyWith({
+    Value<String>? id,
+    Value<String>? bienId,
+    Value<String>? type,
+    Value<int>? quantite,
+    Value<DateTime>? date,
+    Value<String?>? motif,
+    Value<int>? rowid,
+  }) {
+    return MouvementsStockCompanion(
+      id: id ?? this.id,
+      bienId: bienId ?? this.bienId,
+      type: type ?? this.type,
+      quantite: quantite ?? this.quantite,
+      date: date ?? this.date,
+      motif: motif ?? this.motif,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (bienId.present) {
+      map['bien_id'] = Variable<String>(bienId.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
+    if (quantite.present) {
+      map['quantite'] = Variable<int>(quantite.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (motif.present) {
+      map['motif'] = Variable<String>(motif.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MouvementsStockCompanion(')
+          ..write('id: $id, ')
+          ..write('bienId: $bienId, ')
+          ..write('type: $type, ')
+          ..write('quantite: $quantite, ')
+          ..write('date: $date, ')
+          ..write('motif: $motif, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CampagnesInventaireTable extends CampagnesInventaire
+    with TableInfo<$CampagnesInventaireTable, CampagneInventaireRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CampagnesInventaireTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _noeudIdMeta = const VerificationMeta(
+    'noeudId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudId = GeneratedColumn<String>(
+    'noeud_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _libelleMeta = const VerificationMeta(
+    'libelle',
+  );
+  @override
+  late final GeneratedColumn<String> libelle = GeneratedColumn<String>(
+    'libelle',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateDebutMeta = const VerificationMeta(
+    'dateDebut',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateDebut = GeneratedColumn<DateTime>(
+    'date_debut',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateClotureMeta = const VerificationMeta(
+    'dateCloture',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateCloture = GeneratedColumn<DateTime>(
+    'date_cloture',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('en_cours'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    noeudId,
+    libelle,
+    dateDebut,
+    dateCloture,
+    statut,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'campagnes_inventaire';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CampagneInventaireRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('noeud_id')) {
+      context.handle(
+        _noeudIdMeta,
+        noeudId.isAcceptableOrUnknown(data['noeud_id']!, _noeudIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudIdMeta);
+    }
+    if (data.containsKey('libelle')) {
+      context.handle(
+        _libelleMeta,
+        libelle.isAcceptableOrUnknown(data['libelle']!, _libelleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_libelleMeta);
+    }
+    if (data.containsKey('date_debut')) {
+      context.handle(
+        _dateDebutMeta,
+        dateDebut.isAcceptableOrUnknown(data['date_debut']!, _dateDebutMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateDebutMeta);
+    }
+    if (data.containsKey('date_cloture')) {
+      context.handle(
+        _dateClotureMeta,
+        dateCloture.isAcceptableOrUnknown(
+          data['date_cloture']!,
+          _dateClotureMeta,
+        ),
+      );
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CampagneInventaireRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CampagneInventaireRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      noeudId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_id'],
+      )!,
+      libelle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}libelle'],
+      )!,
+      dateDebut: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_debut'],
+      )!,
+      dateCloture: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_cloture'],
+      ),
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+    );
+  }
+
+  @override
+  $CampagnesInventaireTable createAlias(String alias) {
+    return $CampagnesInventaireTable(attachedDatabase, alias);
+  }
+}
+
+class CampagneInventaireRow extends DataClass
+    implements Insertable<CampagneInventaireRow> {
+  final String id;
+  final String noeudId;
+  final String libelle;
+  final DateTime dateDebut;
+  final DateTime? dateCloture;
+  final String statut;
+  const CampagneInventaireRow({
+    required this.id,
+    required this.noeudId,
+    required this.libelle,
+    required this.dateDebut,
+    this.dateCloture,
+    required this.statut,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['noeud_id'] = Variable<String>(noeudId);
+    map['libelle'] = Variable<String>(libelle);
+    map['date_debut'] = Variable<DateTime>(dateDebut);
+    if (!nullToAbsent || dateCloture != null) {
+      map['date_cloture'] = Variable<DateTime>(dateCloture);
+    }
+    map['statut'] = Variable<String>(statut);
+    return map;
+  }
+
+  CampagnesInventaireCompanion toCompanion(bool nullToAbsent) {
+    return CampagnesInventaireCompanion(
+      id: Value(id),
+      noeudId: Value(noeudId),
+      libelle: Value(libelle),
+      dateDebut: Value(dateDebut),
+      dateCloture: dateCloture == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dateCloture),
+      statut: Value(statut),
+    );
+  }
+
+  factory CampagneInventaireRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CampagneInventaireRow(
+      id: serializer.fromJson<String>(json['id']),
+      noeudId: serializer.fromJson<String>(json['noeudId']),
+      libelle: serializer.fromJson<String>(json['libelle']),
+      dateDebut: serializer.fromJson<DateTime>(json['dateDebut']),
+      dateCloture: serializer.fromJson<DateTime?>(json['dateCloture']),
+      statut: serializer.fromJson<String>(json['statut']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'noeudId': serializer.toJson<String>(noeudId),
+      'libelle': serializer.toJson<String>(libelle),
+      'dateDebut': serializer.toJson<DateTime>(dateDebut),
+      'dateCloture': serializer.toJson<DateTime?>(dateCloture),
+      'statut': serializer.toJson<String>(statut),
+    };
+  }
+
+  CampagneInventaireRow copyWith({
+    String? id,
+    String? noeudId,
+    String? libelle,
+    DateTime? dateDebut,
+    Value<DateTime?> dateCloture = const Value.absent(),
+    String? statut,
+  }) => CampagneInventaireRow(
+    id: id ?? this.id,
+    noeudId: noeudId ?? this.noeudId,
+    libelle: libelle ?? this.libelle,
+    dateDebut: dateDebut ?? this.dateDebut,
+    dateCloture: dateCloture.present ? dateCloture.value : this.dateCloture,
+    statut: statut ?? this.statut,
+  );
+  CampagneInventaireRow copyWithCompanion(CampagnesInventaireCompanion data) {
+    return CampagneInventaireRow(
+      id: data.id.present ? data.id.value : this.id,
+      noeudId: data.noeudId.present ? data.noeudId.value : this.noeudId,
+      libelle: data.libelle.present ? data.libelle.value : this.libelle,
+      dateDebut: data.dateDebut.present ? data.dateDebut.value : this.dateDebut,
+      dateCloture: data.dateCloture.present
+          ? data.dateCloture.value
+          : this.dateCloture,
+      statut: data.statut.present ? data.statut.value : this.statut,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CampagneInventaireRow(')
+          ..write('id: $id, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('libelle: $libelle, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('dateCloture: $dateCloture, ')
+          ..write('statut: $statut')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, noeudId, libelle, dateDebut, dateCloture, statut);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CampagneInventaireRow &&
+          other.id == this.id &&
+          other.noeudId == this.noeudId &&
+          other.libelle == this.libelle &&
+          other.dateDebut == this.dateDebut &&
+          other.dateCloture == this.dateCloture &&
+          other.statut == this.statut);
+}
+
+class CampagnesInventaireCompanion
+    extends UpdateCompanion<CampagneInventaireRow> {
+  final Value<String> id;
+  final Value<String> noeudId;
+  final Value<String> libelle;
+  final Value<DateTime> dateDebut;
+  final Value<DateTime?> dateCloture;
+  final Value<String> statut;
+  final Value<int> rowid;
+  const CampagnesInventaireCompanion({
+    this.id = const Value.absent(),
+    this.noeudId = const Value.absent(),
+    this.libelle = const Value.absent(),
+    this.dateDebut = const Value.absent(),
+    this.dateCloture = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CampagnesInventaireCompanion.insert({
+    required String id,
+    required String noeudId,
+    required String libelle,
+    required DateTime dateDebut,
+    this.dateCloture = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       noeudId = Value(noeudId),
+       libelle = Value(libelle),
+       dateDebut = Value(dateDebut);
+  static Insertable<CampagneInventaireRow> custom({
+    Expression<String>? id,
+    Expression<String>? noeudId,
+    Expression<String>? libelle,
+    Expression<DateTime>? dateDebut,
+    Expression<DateTime>? dateCloture,
+    Expression<String>? statut,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (noeudId != null) 'noeud_id': noeudId,
+      if (libelle != null) 'libelle': libelle,
+      if (dateDebut != null) 'date_debut': dateDebut,
+      if (dateCloture != null) 'date_cloture': dateCloture,
+      if (statut != null) 'statut': statut,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CampagnesInventaireCompanion copyWith({
+    Value<String>? id,
+    Value<String>? noeudId,
+    Value<String>? libelle,
+    Value<DateTime>? dateDebut,
+    Value<DateTime?>? dateCloture,
+    Value<String>? statut,
+    Value<int>? rowid,
+  }) {
+    return CampagnesInventaireCompanion(
+      id: id ?? this.id,
+      noeudId: noeudId ?? this.noeudId,
+      libelle: libelle ?? this.libelle,
+      dateDebut: dateDebut ?? this.dateDebut,
+      dateCloture: dateCloture ?? this.dateCloture,
+      statut: statut ?? this.statut,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (noeudId.present) {
+      map['noeud_id'] = Variable<String>(noeudId.value);
+    }
+    if (libelle.present) {
+      map['libelle'] = Variable<String>(libelle.value);
+    }
+    if (dateDebut.present) {
+      map['date_debut'] = Variable<DateTime>(dateDebut.value);
+    }
+    if (dateCloture.present) {
+      map['date_cloture'] = Variable<DateTime>(dateCloture.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CampagnesInventaireCompanion(')
+          ..write('id: $id, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('libelle: $libelle, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('dateCloture: $dateCloture, ')
+          ..write('statut: $statut, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PointagesInventaireTable extends PointagesInventaire
+    with TableInfo<$PointagesInventaireTable, PointageInventaireRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PointagesInventaireTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _campagneIdMeta = const VerificationMeta(
+    'campagneId',
+  );
+  @override
+  late final GeneratedColumn<String> campagneId = GeneratedColumn<String>(
+    'campagne_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES campagnes_inventaire (id)',
+    ),
+  );
+  static const VerificationMeta _bienIdMeta = const VerificationMeta('bienId');
+  @override
+  late final GeneratedColumn<String> bienId = GeneratedColumn<String>(
+    'bien_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES biens (id)',
+    ),
+  );
+  static const VerificationMeta _etatConstateMeta = const VerificationMeta(
+    'etatConstate',
+  );
+  @override
+  late final GeneratedColumn<String> etatConstate = GeneratedColumn<String>(
+    'etat_constate',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _quantiteConstateeMeta = const VerificationMeta(
+    'quantiteConstatee',
+  );
+  @override
+  late final GeneratedColumn<int> quantiteConstatee = GeneratedColumn<int>(
+    'quantite_constatee',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _ecartDetecteMeta = const VerificationMeta(
+    'ecartDetecte',
+  );
+  @override
+  late final GeneratedColumn<bool> ecartDetecte = GeneratedColumn<bool>(
+    'ecart_detecte',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("ecart_detecte" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _commentaireMeta = const VerificationMeta(
+    'commentaire',
+  );
+  @override
+  late final GeneratedColumn<String> commentaire = GeneratedColumn<String>(
+    'commentaire',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _dateDuPointageMeta = const VerificationMeta(
+    'dateDuPointage',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateDuPointage =
+      GeneratedColumn<DateTime>(
+        'date_du_pointage',
+        aliasedName,
+        false,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: true,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    campagneId,
+    bienId,
+    etatConstate,
+    quantiteConstatee,
+    ecartDetecte,
+    commentaire,
+    dateDuPointage,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pointages_inventaire';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PointageInventaireRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('campagne_id')) {
+      context.handle(
+        _campagneIdMeta,
+        campagneId.isAcceptableOrUnknown(data['campagne_id']!, _campagneIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_campagneIdMeta);
+    }
+    if (data.containsKey('bien_id')) {
+      context.handle(
+        _bienIdMeta,
+        bienId.isAcceptableOrUnknown(data['bien_id']!, _bienIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_bienIdMeta);
+    }
+    if (data.containsKey('etat_constate')) {
+      context.handle(
+        _etatConstateMeta,
+        etatConstate.isAcceptableOrUnknown(
+          data['etat_constate']!,
+          _etatConstateMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_etatConstateMeta);
+    }
+    if (data.containsKey('quantite_constatee')) {
+      context.handle(
+        _quantiteConstateeMeta,
+        quantiteConstatee.isAcceptableOrUnknown(
+          data['quantite_constatee']!,
+          _quantiteConstateeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('ecart_detecte')) {
+      context.handle(
+        _ecartDetecteMeta,
+        ecartDetecte.isAcceptableOrUnknown(
+          data['ecart_detecte']!,
+          _ecartDetecteMeta,
+        ),
+      );
+    }
+    if (data.containsKey('commentaire')) {
+      context.handle(
+        _commentaireMeta,
+        commentaire.isAcceptableOrUnknown(
+          data['commentaire']!,
+          _commentaireMeta,
+        ),
+      );
+    }
+    if (data.containsKey('date_du_pointage')) {
+      context.handle(
+        _dateDuPointageMeta,
+        dateDuPointage.isAcceptableOrUnknown(
+          data['date_du_pointage']!,
+          _dateDuPointageMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_dateDuPointageMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PointageInventaireRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PointageInventaireRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      campagneId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}campagne_id'],
+      )!,
+      bienId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}bien_id'],
+      )!,
+      etatConstate: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}etat_constate'],
+      )!,
+      quantiteConstatee: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}quantite_constatee'],
+      ),
+      ecartDetecte: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}ecart_detecte'],
+      )!,
+      commentaire: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}commentaire'],
+      ),
+      dateDuPointage: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_du_pointage'],
+      )!,
+    );
+  }
+
+  @override
+  $PointagesInventaireTable createAlias(String alias) {
+    return $PointagesInventaireTable(attachedDatabase, alias);
+  }
+}
+
+class PointageInventaireRow extends DataClass
+    implements Insertable<PointageInventaireRow> {
+  final String id;
+  final String campagneId;
+  final String bienId;
+  final String etatConstate;
+  final int? quantiteConstatee;
+  final bool ecartDetecte;
+  final String? commentaire;
+  final DateTime dateDuPointage;
+  const PointageInventaireRow({
+    required this.id,
+    required this.campagneId,
+    required this.bienId,
+    required this.etatConstate,
+    this.quantiteConstatee,
+    required this.ecartDetecte,
+    this.commentaire,
+    required this.dateDuPointage,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['campagne_id'] = Variable<String>(campagneId);
+    map['bien_id'] = Variable<String>(bienId);
+    map['etat_constate'] = Variable<String>(etatConstate);
+    if (!nullToAbsent || quantiteConstatee != null) {
+      map['quantite_constatee'] = Variable<int>(quantiteConstatee);
+    }
+    map['ecart_detecte'] = Variable<bool>(ecartDetecte);
+    if (!nullToAbsent || commentaire != null) {
+      map['commentaire'] = Variable<String>(commentaire);
+    }
+    map['date_du_pointage'] = Variable<DateTime>(dateDuPointage);
+    return map;
+  }
+
+  PointagesInventaireCompanion toCompanion(bool nullToAbsent) {
+    return PointagesInventaireCompanion(
+      id: Value(id),
+      campagneId: Value(campagneId),
+      bienId: Value(bienId),
+      etatConstate: Value(etatConstate),
+      quantiteConstatee: quantiteConstatee == null && nullToAbsent
+          ? const Value.absent()
+          : Value(quantiteConstatee),
+      ecartDetecte: Value(ecartDetecte),
+      commentaire: commentaire == null && nullToAbsent
+          ? const Value.absent()
+          : Value(commentaire),
+      dateDuPointage: Value(dateDuPointage),
+    );
+  }
+
+  factory PointageInventaireRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PointageInventaireRow(
+      id: serializer.fromJson<String>(json['id']),
+      campagneId: serializer.fromJson<String>(json['campagneId']),
+      bienId: serializer.fromJson<String>(json['bienId']),
+      etatConstate: serializer.fromJson<String>(json['etatConstate']),
+      quantiteConstatee: serializer.fromJson<int?>(json['quantiteConstatee']),
+      ecartDetecte: serializer.fromJson<bool>(json['ecartDetecte']),
+      commentaire: serializer.fromJson<String?>(json['commentaire']),
+      dateDuPointage: serializer.fromJson<DateTime>(json['dateDuPointage']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'campagneId': serializer.toJson<String>(campagneId),
+      'bienId': serializer.toJson<String>(bienId),
+      'etatConstate': serializer.toJson<String>(etatConstate),
+      'quantiteConstatee': serializer.toJson<int?>(quantiteConstatee),
+      'ecartDetecte': serializer.toJson<bool>(ecartDetecte),
+      'commentaire': serializer.toJson<String?>(commentaire),
+      'dateDuPointage': serializer.toJson<DateTime>(dateDuPointage),
+    };
+  }
+
+  PointageInventaireRow copyWith({
+    String? id,
+    String? campagneId,
+    String? bienId,
+    String? etatConstate,
+    Value<int?> quantiteConstatee = const Value.absent(),
+    bool? ecartDetecte,
+    Value<String?> commentaire = const Value.absent(),
+    DateTime? dateDuPointage,
+  }) => PointageInventaireRow(
+    id: id ?? this.id,
+    campagneId: campagneId ?? this.campagneId,
+    bienId: bienId ?? this.bienId,
+    etatConstate: etatConstate ?? this.etatConstate,
+    quantiteConstatee: quantiteConstatee.present
+        ? quantiteConstatee.value
+        : this.quantiteConstatee,
+    ecartDetecte: ecartDetecte ?? this.ecartDetecte,
+    commentaire: commentaire.present ? commentaire.value : this.commentaire,
+    dateDuPointage: dateDuPointage ?? this.dateDuPointage,
+  );
+  PointageInventaireRow copyWithCompanion(PointagesInventaireCompanion data) {
+    return PointageInventaireRow(
+      id: data.id.present ? data.id.value : this.id,
+      campagneId: data.campagneId.present
+          ? data.campagneId.value
+          : this.campagneId,
+      bienId: data.bienId.present ? data.bienId.value : this.bienId,
+      etatConstate: data.etatConstate.present
+          ? data.etatConstate.value
+          : this.etatConstate,
+      quantiteConstatee: data.quantiteConstatee.present
+          ? data.quantiteConstatee.value
+          : this.quantiteConstatee,
+      ecartDetecte: data.ecartDetecte.present
+          ? data.ecartDetecte.value
+          : this.ecartDetecte,
+      commentaire: data.commentaire.present
+          ? data.commentaire.value
+          : this.commentaire,
+      dateDuPointage: data.dateDuPointage.present
+          ? data.dateDuPointage.value
+          : this.dateDuPointage,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PointageInventaireRow(')
+          ..write('id: $id, ')
+          ..write('campagneId: $campagneId, ')
+          ..write('bienId: $bienId, ')
+          ..write('etatConstate: $etatConstate, ')
+          ..write('quantiteConstatee: $quantiteConstatee, ')
+          ..write('ecartDetecte: $ecartDetecte, ')
+          ..write('commentaire: $commentaire, ')
+          ..write('dateDuPointage: $dateDuPointage')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    campagneId,
+    bienId,
+    etatConstate,
+    quantiteConstatee,
+    ecartDetecte,
+    commentaire,
+    dateDuPointage,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PointageInventaireRow &&
+          other.id == this.id &&
+          other.campagneId == this.campagneId &&
+          other.bienId == this.bienId &&
+          other.etatConstate == this.etatConstate &&
+          other.quantiteConstatee == this.quantiteConstatee &&
+          other.ecartDetecte == this.ecartDetecte &&
+          other.commentaire == this.commentaire &&
+          other.dateDuPointage == this.dateDuPointage);
+}
+
+class PointagesInventaireCompanion
+    extends UpdateCompanion<PointageInventaireRow> {
+  final Value<String> id;
+  final Value<String> campagneId;
+  final Value<String> bienId;
+  final Value<String> etatConstate;
+  final Value<int?> quantiteConstatee;
+  final Value<bool> ecartDetecte;
+  final Value<String?> commentaire;
+  final Value<DateTime> dateDuPointage;
+  final Value<int> rowid;
+  const PointagesInventaireCompanion({
+    this.id = const Value.absent(),
+    this.campagneId = const Value.absent(),
+    this.bienId = const Value.absent(),
+    this.etatConstate = const Value.absent(),
+    this.quantiteConstatee = const Value.absent(),
+    this.ecartDetecte = const Value.absent(),
+    this.commentaire = const Value.absent(),
+    this.dateDuPointage = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PointagesInventaireCompanion.insert({
+    required String id,
+    required String campagneId,
+    required String bienId,
+    required String etatConstate,
+    this.quantiteConstatee = const Value.absent(),
+    this.ecartDetecte = const Value.absent(),
+    this.commentaire = const Value.absent(),
+    required DateTime dateDuPointage,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       campagneId = Value(campagneId),
+       bienId = Value(bienId),
+       etatConstate = Value(etatConstate),
+       dateDuPointage = Value(dateDuPointage);
+  static Insertable<PointageInventaireRow> custom({
+    Expression<String>? id,
+    Expression<String>? campagneId,
+    Expression<String>? bienId,
+    Expression<String>? etatConstate,
+    Expression<int>? quantiteConstatee,
+    Expression<bool>? ecartDetecte,
+    Expression<String>? commentaire,
+    Expression<DateTime>? dateDuPointage,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (campagneId != null) 'campagne_id': campagneId,
+      if (bienId != null) 'bien_id': bienId,
+      if (etatConstate != null) 'etat_constate': etatConstate,
+      if (quantiteConstatee != null) 'quantite_constatee': quantiteConstatee,
+      if (ecartDetecte != null) 'ecart_detecte': ecartDetecte,
+      if (commentaire != null) 'commentaire': commentaire,
+      if (dateDuPointage != null) 'date_du_pointage': dateDuPointage,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PointagesInventaireCompanion copyWith({
+    Value<String>? id,
+    Value<String>? campagneId,
+    Value<String>? bienId,
+    Value<String>? etatConstate,
+    Value<int?>? quantiteConstatee,
+    Value<bool>? ecartDetecte,
+    Value<String?>? commentaire,
+    Value<DateTime>? dateDuPointage,
+    Value<int>? rowid,
+  }) {
+    return PointagesInventaireCompanion(
+      id: id ?? this.id,
+      campagneId: campagneId ?? this.campagneId,
+      bienId: bienId ?? this.bienId,
+      etatConstate: etatConstate ?? this.etatConstate,
+      quantiteConstatee: quantiteConstatee ?? this.quantiteConstatee,
+      ecartDetecte: ecartDetecte ?? this.ecartDetecte,
+      commentaire: commentaire ?? this.commentaire,
+      dateDuPointage: dateDuPointage ?? this.dateDuPointage,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (campagneId.present) {
+      map['campagne_id'] = Variable<String>(campagneId.value);
+    }
+    if (bienId.present) {
+      map['bien_id'] = Variable<String>(bienId.value);
+    }
+    if (etatConstate.present) {
+      map['etat_constate'] = Variable<String>(etatConstate.value);
+    }
+    if (quantiteConstatee.present) {
+      map['quantite_constatee'] = Variable<int>(quantiteConstatee.value);
+    }
+    if (ecartDetecte.present) {
+      map['ecart_detecte'] = Variable<bool>(ecartDetecte.value);
+    }
+    if (commentaire.present) {
+      map['commentaire'] = Variable<String>(commentaire.value);
+    }
+    if (dateDuPointage.present) {
+      map['date_du_pointage'] = Variable<DateTime>(dateDuPointage.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PointagesInventaireCompanion(')
+          ..write('id: $id, ')
+          ..write('campagneId: $campagneId, ')
+          ..write('bienId: $bienId, ')
+          ..write('etatConstate: $etatConstate, ')
+          ..write('quantiteConstatee: $quantiteConstatee, ')
+          ..write('ecartDetecte: $ecartDetecte, ')
+          ..write('commentaire: $commentaire, ')
+          ..write('dateDuPointage: $dateDuPointage, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxRow> {
   @override
@@ -24103,6 +27226,18 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $TresoriersNoeudTable tresoriersNoeud = $TresoriersNoeudTable(
     this,
   );
+  late final $CategoriesBienTable categoriesBien = $CategoriesBienTable(this);
+  late final $BiensTable biens = $BiensTable(this);
+  late final $ReservationsBienTable reservationsBien = $ReservationsBienTable(
+    this,
+  );
+  late final $MouvementsStockTable mouvementsStock = $MouvementsStockTable(
+    this,
+  );
+  late final $CampagnesInventaireTable campagnesInventaire =
+      $CampagnesInventaireTable(this);
+  late final $PointagesInventaireTable pointagesInventaire =
+      $PointagesInventaireTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -24161,6 +27296,12 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     engagements,
     echeancesEngagement,
     tresoriersNoeud,
+    categoriesBien,
+    biens,
+    reservationsBien,
+    mouvementsStock,
+    campagnesInventaire,
+    pointagesInventaire,
     syncOutbox,
   ];
 }
@@ -24510,6 +27651,49 @@ final class $$OrganisationNodesTableReferences
 
     final cache = $_typedResult.readTableOrNull(
       _tresoriersNoeudRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$BiensTable, List<BienRow>> _biensRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.biens,
+    aliasName: 'organisation_nodes__id__biens__noeud_id',
+  );
+
+  $$BiensTableProcessedTableManager get biensRefs {
+    final manager = $$BiensTableTableManager(
+      $_db,
+      $_db.biens,
+    ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_biensRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $CampagnesInventaireTable,
+    List<CampagneInventaireRow>
+  >
+  _campagnesInventaireRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.campagnesInventaire,
+        aliasName: 'organisation_nodes__id__campagnes_inventaire__noeud_id',
+      );
+
+  $$CampagnesInventaireTableProcessedTableManager get campagnesInventaireRefs {
+    final manager = $$CampagnesInventaireTableTableManager(
+      $_db,
+      $_db.campagnesInventaire,
+    ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _campagnesInventaireRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -24970,6 +28154,56 @@ class $$OrganisationNodesTableFilterComposer
           }) => $$TresoriersNoeudTableFilterComposer(
             $db: $db,
             $table: $db.tresoriersNoeud,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> biensRefs(
+    Expression<bool> Function($$BiensTableFilterComposer f) f,
+  ) {
+    final $$BiensTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.biens,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BiensTableFilterComposer(
+            $db: $db,
+            $table: $db.biens,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> campagnesInventaireRefs(
+    Expression<bool> Function($$CampagnesInventaireTableFilterComposer f) f,
+  ) {
+    final $$CampagnesInventaireTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.campagnesInventaire,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CampagnesInventaireTableFilterComposer(
+            $db: $db,
+            $table: $db.campagnesInventaire,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -25504,6 +28738,57 @@ class $$OrganisationNodesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> biensRefs<T extends Object>(
+    Expression<T> Function($$BiensTableAnnotationComposer a) f,
+  ) {
+    final $$BiensTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.biens,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BiensTableAnnotationComposer(
+            $db: $db,
+            $table: $db.biens,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> campagnesInventaireRefs<T extends Object>(
+    Expression<T> Function($$CampagnesInventaireTableAnnotationComposer a) f,
+  ) {
+    final $$CampagnesInventaireTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.campagnesInventaire,
+          getReferencedColumn: (t) => t.noeudId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CampagnesInventaireTableAnnotationComposer(
+                $db: $db,
+                $table: $db.campagnesInventaire,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$OrganisationNodesTableTableManager
@@ -25535,6 +28820,8 @@ class $$OrganisationNodesTableTableManager
             bool projetsRefs,
             bool contributionsRefs,
             bool tresoriersNoeudRefs,
+            bool biensRefs,
+            bool campagnesInventaireRefs,
           })
         > {
   $$OrganisationNodesTableTableManager(
@@ -25652,6 +28939,8 @@ class $$OrganisationNodesTableTableManager
                 projetsRefs = false,
                 contributionsRefs = false,
                 tresoriersNoeudRefs = false,
+                biensRefs = false,
+                campagnesInventaireRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -25672,6 +28961,8 @@ class $$OrganisationNodesTableTableManager
                     if (projetsRefs) db.projets,
                     if (contributionsRefs) db.contributions,
                     if (tresoriersNoeudRefs) db.tresoriersNoeud,
+                    if (biensRefs) db.biens,
+                    if (campagnesInventaireRefs) db.campagnesInventaire,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -25991,6 +29282,48 @@ class $$OrganisationNodesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (biensRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          BienRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._biensRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).biensRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (campagnesInventaireRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          CampagneInventaireRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._campagnesInventaireRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).campagnesInventaireRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -26027,6 +29360,8 @@ typedef $$OrganisationNodesTableProcessedTableManager =
         bool projetsRefs,
         bool contributionsRefs,
         bool tresoriersNoeudRefs,
+        bool biensRefs,
+        bool campagnesInventaireRefs,
       })
     >;
 typedef $$HistoriqueRattachementsTableCreateCompanionBuilder =
@@ -26984,6 +30319,25 @@ final class $$FidelesTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$BiensTable, List<BienRow>> _biensRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.biens,
+    aliasName: 'fideles__id__biens__valide_par_fidele_id_sortie',
+  );
+
+  $$BiensTableProcessedTableManager get biensRefs {
+    final manager = $$BiensTableTableManager($_db, $_db.biens).filter(
+      (f) =>
+          f.valideParFideleIdSortie.id.sqlEquals($_itemColumn<String>('id')!),
+    );
+
+    final cache = $_typedResult.readTableOrNull(_biensRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$FidelesTableFilterComposer
@@ -27876,6 +31230,31 @@ class $$FidelesTableFilterComposer
           }) => $$TresoriersNoeudTableFilterComposer(
             $db: $db,
             $table: $db.tresoriersNoeud,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> biensRefs(
+    Expression<bool> Function($$BiensTableFilterComposer f) f,
+  ) {
+    final $$BiensTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.biens,
+      getReferencedColumn: (t) => t.valideParFideleIdSortie,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BiensTableFilterComposer(
+            $db: $db,
+            $table: $db.biens,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -28888,6 +32267,31 @@ class $$FidelesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> biensRefs<T extends Object>(
+    Expression<T> Function($$BiensTableAnnotationComposer a) f,
+  ) {
+    final $$BiensTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.biens,
+      getReferencedColumn: (t) => t.valideParFideleIdSortie,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BiensTableAnnotationComposer(
+            $db: $db,
+            $table: $db.biens,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$FidelesTableTableManager
@@ -28936,6 +32340,7 @@ class $$FidelesTableTableManager
             bool depensesProjetRefs,
             bool engagementsRefs,
             bool tresoriersNoeudRefs,
+            bool biensRefs,
           })
         > {
   $$FidelesTableTableManager(_$AppDatabase db, $FidelesTable table)
@@ -29075,6 +32480,7 @@ class $$FidelesTableTableManager
                 depensesProjetRefs = false,
                 engagementsRefs = false,
                 tresoriersNoeudRefs = false,
+                biensRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -29113,6 +32519,7 @@ class $$FidelesTableTableManager
                     if (depensesProjetRefs) db.depensesProjet,
                     if (engagementsRefs) db.engagements,
                     if (tresoriersNoeudRefs) db.tresoriersNoeud,
+                    if (biensRefs) db.biens,
                   ],
                   addJoins:
                       <
@@ -29799,6 +33206,23 @@ class $$FidelesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (biensRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          BienRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._biensRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(db, table, p0).biensRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.valideParFideleIdSortie == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -29852,6 +33276,7 @@ typedef $$FidelesTableProcessedTableManager =
         bool depensesProjetRefs,
         bool engagementsRefs,
         bool tresoriersNoeudRefs,
+        bool biensRefs,
       })
     >;
 typedef $$NodeResponsablesTableCreateCompanionBuilder =
@@ -41217,6 +44642,26 @@ final class $$CultesTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$ReservationsBienTable, List<ReservationBienRow>>
+  _reservationsBienRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.reservationsBien,
+    aliasName: 'cultes__id__reservations_bien__culte_id',
+  );
+
+  $$ReservationsBienTableProcessedTableManager get reservationsBienRefs {
+    final manager = $$ReservationsBienTableTableManager(
+      $_db,
+      $_db.reservationsBien,
+    ).filter((f) => f.culteId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _reservationsBienRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$CultesTableFilterComposer
@@ -41410,6 +44855,31 @@ class $$CultesTableFilterComposer
           }) => $$ContributionsTableFilterComposer(
             $db: $db,
             $table: $db.contributions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> reservationsBienRefs(
+    Expression<bool> Function($$ReservationsBienTableFilterComposer f) f,
+  ) {
+    final $$ReservationsBienTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.reservationsBien,
+      getReferencedColumn: (t) => t.culteId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReservationsBienTableFilterComposer(
+            $db: $db,
+            $table: $db.reservationsBien,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -41713,6 +45183,31 @@ class $$CultesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> reservationsBienRefs<T extends Object>(
+    Expression<T> Function($$ReservationsBienTableAnnotationComposer a) f,
+  ) {
+    final $$ReservationsBienTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.reservationsBien,
+      getReferencedColumn: (t) => t.culteId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReservationsBienTableAnnotationComposer(
+            $db: $db,
+            $table: $db.reservationsBien,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$CultesTableTableManager
@@ -41735,6 +45230,7 @@ class $$CultesTableTableManager
             bool presencesCulteRefs,
             bool publicationsCulteRefs,
             bool contributionsRefs,
+            bool reservationsBienRefs,
           })
         > {
   $$CultesTableTableManager(_$AppDatabase db, $CultesTable table)
@@ -41820,6 +45316,7 @@ class $$CultesTableTableManager
                 presencesCulteRefs = false,
                 publicationsCulteRefs = false,
                 contributionsRefs = false,
+                reservationsBienRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -41828,6 +45325,7 @@ class $$CultesTableTableManager
                     if (presencesCulteRefs) db.presencesCulte,
                     if (publicationsCulteRefs) db.publicationsCulte,
                     if (contributionsRefs) db.contributions,
+                    if (reservationsBienRefs) db.reservationsBien,
                   ],
                   addJoins:
                       <
@@ -41960,6 +45458,27 @@ class $$CultesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (reservationsBienRefs)
+                        await $_getPrefetchedData<
+                          CulteRow,
+                          $CultesTable,
+                          ReservationBienRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CultesTableReferences
+                              ._reservationsBienRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CultesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).reservationsBienRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.culteId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -41987,6 +45506,7 @@ typedef $$CultesTableProcessedTableManager =
         bool presencesCulteRefs,
         bool publicationsCulteRefs,
         bool contributionsRefs,
+        bool reservationsBienRefs,
       })
     >;
 typedef $$SequencesLiturgiquesTableCreateCompanionBuilder =
@@ -53128,6 +56648,3093 @@ typedef $$TresoriersNoeudTableProcessedTableManager =
       TresorierNoeudRow,
       PrefetchHooks Function({bool fideleId, bool noeudId})
     >;
+typedef $$CategoriesBienTableCreateCompanionBuilder =
+    CategoriesBienCompanion Function({
+      required String id,
+      required String code,
+      required String libelle,
+      Value<bool> standard,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+typedef $$CategoriesBienTableUpdateCompanionBuilder =
+    CategoriesBienCompanion Function({
+      Value<String> id,
+      Value<String> code,
+      Value<String> libelle,
+      Value<bool> standard,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+
+final class $$CategoriesBienTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $CategoriesBienTable, CategorieBienRow> {
+  $$CategoriesBienTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<$BiensTable, List<BienRow>> _biensRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.biens,
+    aliasName: 'categories_bien__id__biens__categorie_id',
+  );
+
+  $$BiensTableProcessedTableManager get biensRefs {
+    final manager = $$BiensTableTableManager(
+      $_db,
+      $_db.biens,
+    ).filter((f) => f.categorieId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_biensRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$CategoriesBienTableFilterComposer
+    extends Composer<_$AppDatabase, $CategoriesBienTable> {
+  $$CategoriesBienTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get standard => $composableBuilder(
+    column: $table.standard,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> biensRefs(
+    Expression<bool> Function($$BiensTableFilterComposer f) f,
+  ) {
+    final $$BiensTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.biens,
+      getReferencedColumn: (t) => t.categorieId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BiensTableFilterComposer(
+            $db: $db,
+            $table: $db.biens,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$CategoriesBienTableOrderingComposer
+    extends Composer<_$AppDatabase, $CategoriesBienTable> {
+  $$CategoriesBienTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get standard => $composableBuilder(
+    column: $table.standard,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CategoriesBienTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CategoriesBienTable> {
+  $$CategoriesBienTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<String> get libelle =>
+      $composableBuilder(column: $table.libelle, builder: (column) => column);
+
+  GeneratedColumn<bool> get standard =>
+      $composableBuilder(column: $table.standard, builder: (column) => column);
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  Expression<T> biensRefs<T extends Object>(
+    Expression<T> Function($$BiensTableAnnotationComposer a) f,
+  ) {
+    final $$BiensTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.biens,
+      getReferencedColumn: (t) => t.categorieId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BiensTableAnnotationComposer(
+            $db: $db,
+            $table: $db.biens,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$CategoriesBienTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CategoriesBienTable,
+          CategorieBienRow,
+          $$CategoriesBienTableFilterComposer,
+          $$CategoriesBienTableOrderingComposer,
+          $$CategoriesBienTableAnnotationComposer,
+          $$CategoriesBienTableCreateCompanionBuilder,
+          $$CategoriesBienTableUpdateCompanionBuilder,
+          (CategorieBienRow, $$CategoriesBienTableReferences),
+          CategorieBienRow,
+          PrefetchHooks Function({bool biensRefs})
+        > {
+  $$CategoriesBienTableTableManager(
+    _$AppDatabase db,
+    $CategoriesBienTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CategoriesBienTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CategoriesBienTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CategoriesBienTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> code = const Value.absent(),
+                Value<String> libelle = const Value.absent(),
+                Value<bool> standard = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CategoriesBienCompanion(
+                id: id,
+                code: code,
+                libelle: libelle,
+                standard: standard,
+                statut: statut,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String code,
+                required String libelle,
+                Value<bool> standard = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CategoriesBienCompanion.insert(
+                id: id,
+                code: code,
+                libelle: libelle,
+                standard: standard,
+                statut: statut,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$CategoriesBienTable, CategorieBienRow>(table),
+                  $$CategoriesBienTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({biensRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (biensRefs) db.biens],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (biensRefs)
+                    await $_getPrefetchedData<
+                      CategorieBienRow,
+                      $CategoriesBienTable,
+                      BienRow
+                    >(
+                      currentTable: table,
+                      referencedTable: $$CategoriesBienTableReferences
+                          ._biensRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$CategoriesBienTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).biensRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where(
+                            (e) => e.categorieId == item.id,
+                          ),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$CategoriesBienTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CategoriesBienTable,
+      CategorieBienRow,
+      $$CategoriesBienTableFilterComposer,
+      $$CategoriesBienTableOrderingComposer,
+      $$CategoriesBienTableAnnotationComposer,
+      $$CategoriesBienTableCreateCompanionBuilder,
+      $$CategoriesBienTableUpdateCompanionBuilder,
+      (CategorieBienRow, $$CategoriesBienTableReferences),
+      CategorieBienRow,
+      PrefetchHooks Function({bool biensRefs})
+    >;
+typedef $$BiensTableCreateCompanionBuilder =
+    BiensCompanion Function({
+      required String id,
+      required String idInventaire,
+      required String categorieId,
+      required String noeudId,
+      required String designation,
+      Value<String> etat,
+      required int valeurAcquisition,
+      required int valeurVenale,
+      required String devise,
+      required DateTime dateAcquisition,
+      Value<int?> seuilAlerteStock,
+      Value<String?> typeSortie,
+      Value<DateTime?> dateSortie,
+      Value<String?> valideParFideleIdSortie,
+      Value<String?> motifSortie,
+      Value<int> rowid,
+    });
+typedef $$BiensTableUpdateCompanionBuilder =
+    BiensCompanion Function({
+      Value<String> id,
+      Value<String> idInventaire,
+      Value<String> categorieId,
+      Value<String> noeudId,
+      Value<String> designation,
+      Value<String> etat,
+      Value<int> valeurAcquisition,
+      Value<int> valeurVenale,
+      Value<String> devise,
+      Value<DateTime> dateAcquisition,
+      Value<int?> seuilAlerteStock,
+      Value<String?> typeSortie,
+      Value<DateTime?> dateSortie,
+      Value<String?> valideParFideleIdSortie,
+      Value<String?> motifSortie,
+      Value<int> rowid,
+    });
+
+final class $$BiensTableReferences
+    extends BaseReferences<_$AppDatabase, $BiensTable, BienRow> {
+  $$BiensTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $CategoriesBienTable _categorieIdTable(_$AppDatabase db) =>
+      db.categoriesBien.createAlias('biens__categorie_id__categories_bien__id');
+
+  $$CategoriesBienTableProcessedTableManager get categorieId {
+    final $_column = $_itemColumn<String>('categorie_id')!;
+
+    final manager = $$CategoriesBienTableTableManager(
+      $_db,
+      $_db.categoriesBien,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_categorieIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $OrganisationNodesTable _noeudIdTable(_$AppDatabase db) => db
+      .organisationNodes
+      .createAlias('biens__noeud_id__organisation_nodes__id');
+
+  $$OrganisationNodesTableProcessedTableManager get noeudId {
+    final $_column = $_itemColumn<String>('noeud_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $FidelesTable _valideParFideleIdSortieTable(_$AppDatabase db) =>
+      db.fideles.createAlias('biens__valide_par_fidele_id_sortie__fideles__id');
+
+  $$FidelesTableProcessedTableManager? get valideParFideleIdSortie {
+    final $_column = $_itemColumn<String>('valide_par_fidele_id_sortie');
+    if ($_column == null) return null;
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(
+      _valideParFideleIdSortieTable($_db),
+    );
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$ReservationsBienTable, List<ReservationBienRow>>
+  _reservationsBienRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.reservationsBien,
+    aliasName: 'biens__id__reservations_bien__bien_id',
+  );
+
+  $$ReservationsBienTableProcessedTableManager get reservationsBienRefs {
+    final manager = $$ReservationsBienTableTableManager(
+      $_db,
+      $_db.reservationsBien,
+    ).filter((f) => f.bienId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _reservationsBienRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$MouvementsStockTable, List<MouvementStockRow>>
+  _mouvementsStockRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.mouvementsStock,
+    aliasName: 'biens__id__mouvements_stock__bien_id',
+  );
+
+  $$MouvementsStockTableProcessedTableManager get mouvementsStockRefs {
+    final manager = $$MouvementsStockTableTableManager(
+      $_db,
+      $_db.mouvementsStock,
+    ).filter((f) => f.bienId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _mouvementsStockRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $PointagesInventaireTable,
+    List<PointageInventaireRow>
+  >
+  _pointagesInventaireRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.pointagesInventaire,
+        aliasName: 'biens__id__pointages_inventaire__bien_id',
+      );
+
+  $$PointagesInventaireTableProcessedTableManager get pointagesInventaireRefs {
+    final manager = $$PointagesInventaireTableTableManager(
+      $_db,
+      $_db.pointagesInventaire,
+    ).filter((f) => f.bienId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _pointagesInventaireRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$BiensTableFilterComposer extends Composer<_$AppDatabase, $BiensTable> {
+  $$BiensTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get idInventaire => $composableBuilder(
+    column: $table.idInventaire,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get designation => $composableBuilder(
+    column: $table.designation,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get etat => $composableBuilder(
+    column: $table.etat,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get valeurAcquisition => $composableBuilder(
+    column: $table.valeurAcquisition,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get valeurVenale => $composableBuilder(
+    column: $table.valeurVenale,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get devise => $composableBuilder(
+    column: $table.devise,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateAcquisition => $composableBuilder(
+    column: $table.dateAcquisition,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get seuilAlerteStock => $composableBuilder(
+    column: $table.seuilAlerteStock,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get typeSortie => $composableBuilder(
+    column: $table.typeSortie,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateSortie => $composableBuilder(
+    column: $table.dateSortie,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get motifSortie => $composableBuilder(
+    column: $table.motifSortie,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$CategoriesBienTableFilterComposer get categorieId {
+    final $$CategoriesBienTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categorieId,
+      referencedTable: $db.categoriesBien,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CategoriesBienTableFilterComposer(
+            $db: $db,
+            $table: $db.categoriesBien,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableFilterComposer get noeudId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableFilterComposer get valideParFideleIdSortie {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.valideParFideleIdSortie,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> reservationsBienRefs(
+    Expression<bool> Function($$ReservationsBienTableFilterComposer f) f,
+  ) {
+    final $$ReservationsBienTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.reservationsBien,
+      getReferencedColumn: (t) => t.bienId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReservationsBienTableFilterComposer(
+            $db: $db,
+            $table: $db.reservationsBien,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> mouvementsStockRefs(
+    Expression<bool> Function($$MouvementsStockTableFilterComposer f) f,
+  ) {
+    final $$MouvementsStockTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.mouvementsStock,
+      getReferencedColumn: (t) => t.bienId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MouvementsStockTableFilterComposer(
+            $db: $db,
+            $table: $db.mouvementsStock,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> pointagesInventaireRefs(
+    Expression<bool> Function($$PointagesInventaireTableFilterComposer f) f,
+  ) {
+    final $$PointagesInventaireTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.pointagesInventaire,
+      getReferencedColumn: (t) => t.bienId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PointagesInventaireTableFilterComposer(
+            $db: $db,
+            $table: $db.pointagesInventaire,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$BiensTableOrderingComposer
+    extends Composer<_$AppDatabase, $BiensTable> {
+  $$BiensTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get idInventaire => $composableBuilder(
+    column: $table.idInventaire,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get designation => $composableBuilder(
+    column: $table.designation,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get etat => $composableBuilder(
+    column: $table.etat,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get valeurAcquisition => $composableBuilder(
+    column: $table.valeurAcquisition,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get valeurVenale => $composableBuilder(
+    column: $table.valeurVenale,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get devise => $composableBuilder(
+    column: $table.devise,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateAcquisition => $composableBuilder(
+    column: $table.dateAcquisition,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get seuilAlerteStock => $composableBuilder(
+    column: $table.seuilAlerteStock,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get typeSortie => $composableBuilder(
+    column: $table.typeSortie,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateSortie => $composableBuilder(
+    column: $table.dateSortie,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get motifSortie => $composableBuilder(
+    column: $table.motifSortie,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$CategoriesBienTableOrderingComposer get categorieId {
+    final $$CategoriesBienTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categorieId,
+      referencedTable: $db.categoriesBien,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CategoriesBienTableOrderingComposer(
+            $db: $db,
+            $table: $db.categoriesBien,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableOrderingComposer get noeudId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableOrderingComposer get valideParFideleIdSortie {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.valideParFideleIdSortie,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$BiensTableAnnotationComposer
+    extends Composer<_$AppDatabase, $BiensTable> {
+  $$BiensTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get idInventaire => $composableBuilder(
+    column: $table.idInventaire,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get designation => $composableBuilder(
+    column: $table.designation,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get etat =>
+      $composableBuilder(column: $table.etat, builder: (column) => column);
+
+  GeneratedColumn<int> get valeurAcquisition => $composableBuilder(
+    column: $table.valeurAcquisition,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get valeurVenale => $composableBuilder(
+    column: $table.valeurVenale,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get devise =>
+      $composableBuilder(column: $table.devise, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateAcquisition => $composableBuilder(
+    column: $table.dateAcquisition,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get seuilAlerteStock => $composableBuilder(
+    column: $table.seuilAlerteStock,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get typeSortie => $composableBuilder(
+    column: $table.typeSortie,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get dateSortie => $composableBuilder(
+    column: $table.dateSortie,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get motifSortie => $composableBuilder(
+    column: $table.motifSortie,
+    builder: (column) => column,
+  );
+
+  $$CategoriesBienTableAnnotationComposer get categorieId {
+    final $$CategoriesBienTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categorieId,
+      referencedTable: $db.categoriesBien,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CategoriesBienTableAnnotationComposer(
+            $db: $db,
+            $table: $db.categoriesBien,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableAnnotationComposer get noeudId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$FidelesTableAnnotationComposer get valideParFideleIdSortie {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.valideParFideleIdSortie,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> reservationsBienRefs<T extends Object>(
+    Expression<T> Function($$ReservationsBienTableAnnotationComposer a) f,
+  ) {
+    final $$ReservationsBienTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.reservationsBien,
+      getReferencedColumn: (t) => t.bienId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReservationsBienTableAnnotationComposer(
+            $db: $db,
+            $table: $db.reservationsBien,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> mouvementsStockRefs<T extends Object>(
+    Expression<T> Function($$MouvementsStockTableAnnotationComposer a) f,
+  ) {
+    final $$MouvementsStockTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.mouvementsStock,
+      getReferencedColumn: (t) => t.bienId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MouvementsStockTableAnnotationComposer(
+            $db: $db,
+            $table: $db.mouvementsStock,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> pointagesInventaireRefs<T extends Object>(
+    Expression<T> Function($$PointagesInventaireTableAnnotationComposer a) f,
+  ) {
+    final $$PointagesInventaireTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.pointagesInventaire,
+          getReferencedColumn: (t) => t.bienId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$PointagesInventaireTableAnnotationComposer(
+                $db: $db,
+                $table: $db.pointagesInventaire,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$BiensTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $BiensTable,
+          BienRow,
+          $$BiensTableFilterComposer,
+          $$BiensTableOrderingComposer,
+          $$BiensTableAnnotationComposer,
+          $$BiensTableCreateCompanionBuilder,
+          $$BiensTableUpdateCompanionBuilder,
+          (BienRow, $$BiensTableReferences),
+          BienRow,
+          PrefetchHooks Function({
+            bool categorieId,
+            bool noeudId,
+            bool valideParFideleIdSortie,
+            bool reservationsBienRefs,
+            bool mouvementsStockRefs,
+            bool pointagesInventaireRefs,
+          })
+        > {
+  $$BiensTableTableManager(_$AppDatabase db, $BiensTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$BiensTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$BiensTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$BiensTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> idInventaire = const Value.absent(),
+                Value<String> categorieId = const Value.absent(),
+                Value<String> noeudId = const Value.absent(),
+                Value<String> designation = const Value.absent(),
+                Value<String> etat = const Value.absent(),
+                Value<int> valeurAcquisition = const Value.absent(),
+                Value<int> valeurVenale = const Value.absent(),
+                Value<String> devise = const Value.absent(),
+                Value<DateTime> dateAcquisition = const Value.absent(),
+                Value<int?> seuilAlerteStock = const Value.absent(),
+                Value<String?> typeSortie = const Value.absent(),
+                Value<DateTime?> dateSortie = const Value.absent(),
+                Value<String?> valideParFideleIdSortie = const Value.absent(),
+                Value<String?> motifSortie = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => BiensCompanion(
+                id: id,
+                idInventaire: idInventaire,
+                categorieId: categorieId,
+                noeudId: noeudId,
+                designation: designation,
+                etat: etat,
+                valeurAcquisition: valeurAcquisition,
+                valeurVenale: valeurVenale,
+                devise: devise,
+                dateAcquisition: dateAcquisition,
+                seuilAlerteStock: seuilAlerteStock,
+                typeSortie: typeSortie,
+                dateSortie: dateSortie,
+                valideParFideleIdSortie: valideParFideleIdSortie,
+                motifSortie: motifSortie,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String idInventaire,
+                required String categorieId,
+                required String noeudId,
+                required String designation,
+                Value<String> etat = const Value.absent(),
+                required int valeurAcquisition,
+                required int valeurVenale,
+                required String devise,
+                required DateTime dateAcquisition,
+                Value<int?> seuilAlerteStock = const Value.absent(),
+                Value<String?> typeSortie = const Value.absent(),
+                Value<DateTime?> dateSortie = const Value.absent(),
+                Value<String?> valideParFideleIdSortie = const Value.absent(),
+                Value<String?> motifSortie = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => BiensCompanion.insert(
+                id: id,
+                idInventaire: idInventaire,
+                categorieId: categorieId,
+                noeudId: noeudId,
+                designation: designation,
+                etat: etat,
+                valeurAcquisition: valeurAcquisition,
+                valeurVenale: valeurVenale,
+                devise: devise,
+                dateAcquisition: dateAcquisition,
+                seuilAlerteStock: seuilAlerteStock,
+                typeSortie: typeSortie,
+                dateSortie: dateSortie,
+                valideParFideleIdSortie: valideParFideleIdSortie,
+                motifSortie: motifSortie,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$BiensTable, BienRow>(table),
+                  $$BiensTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                categorieId = false,
+                noeudId = false,
+                valideParFideleIdSortie = false,
+                reservationsBienRefs = false,
+                mouvementsStockRefs = false,
+                pointagesInventaireRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (reservationsBienRefs) db.reservationsBien,
+                    if (mouvementsStockRefs) db.mouvementsStock,
+                    if (pointagesInventaireRefs) db.pointagesInventaire,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (categorieId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.categorieId,
+                                    referencedTable: $$BiensTableReferences
+                                        ._categorieIdTable(db),
+                                    referencedColumn: $$BiensTableReferences
+                                        ._categorieIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
+                        if (noeudId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.noeudId,
+                                    referencedTable: $$BiensTableReferences
+                                        ._noeudIdTable(db),
+                                    referencedColumn: $$BiensTableReferences
+                                        ._noeudIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
+                        if (valideParFideleIdSortie) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn:
+                                        table.valideParFideleIdSortie,
+                                    referencedTable: $$BiensTableReferences
+                                        ._valideParFideleIdSortieTable(db),
+                                    referencedColumn: $$BiensTableReferences
+                                        ._valideParFideleIdSortieTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (reservationsBienRefs)
+                        await $_getPrefetchedData<
+                          BienRow,
+                          $BiensTable,
+                          ReservationBienRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$BiensTableReferences
+                              ._reservationsBienRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$BiensTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).reservationsBienRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.bienId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (mouvementsStockRefs)
+                        await $_getPrefetchedData<
+                          BienRow,
+                          $BiensTable,
+                          MouvementStockRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$BiensTableReferences
+                              ._mouvementsStockRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$BiensTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).mouvementsStockRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.bienId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (pointagesInventaireRefs)
+                        await $_getPrefetchedData<
+                          BienRow,
+                          $BiensTable,
+                          PointageInventaireRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$BiensTableReferences
+                              ._pointagesInventaireRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$BiensTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).pointagesInventaireRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.bienId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$BiensTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $BiensTable,
+      BienRow,
+      $$BiensTableFilterComposer,
+      $$BiensTableOrderingComposer,
+      $$BiensTableAnnotationComposer,
+      $$BiensTableCreateCompanionBuilder,
+      $$BiensTableUpdateCompanionBuilder,
+      (BienRow, $$BiensTableReferences),
+      BienRow,
+      PrefetchHooks Function({
+        bool categorieId,
+        bool noeudId,
+        bool valideParFideleIdSortie,
+        bool reservationsBienRefs,
+        bool mouvementsStockRefs,
+        bool pointagesInventaireRefs,
+      })
+    >;
+typedef $$ReservationsBienTableCreateCompanionBuilder =
+    ReservationsBienCompanion Function({
+      required String id,
+      required String bienId,
+      required String objetReservation,
+      Value<String?> culteId,
+      Value<String?> objetLibre,
+      required DateTime dateDebut,
+      required DateTime dateFin,
+      Value<int> rowid,
+    });
+typedef $$ReservationsBienTableUpdateCompanionBuilder =
+    ReservationsBienCompanion Function({
+      Value<String> id,
+      Value<String> bienId,
+      Value<String> objetReservation,
+      Value<String?> culteId,
+      Value<String?> objetLibre,
+      Value<DateTime> dateDebut,
+      Value<DateTime> dateFin,
+      Value<int> rowid,
+    });
+
+final class $$ReservationsBienTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $ReservationsBienTable,
+          ReservationBienRow
+        > {
+  $$ReservationsBienTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $BiensTable _bienIdTable(_$AppDatabase db) =>
+      db.biens.createAlias('reservations_bien__bien_id__biens__id');
+
+  $$BiensTableProcessedTableManager get bienId {
+    final $_column = $_itemColumn<String>('bien_id')!;
+
+    final manager = $$BiensTableTableManager(
+      $_db,
+      $_db.biens,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_bienIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $CultesTable _culteIdTable(_$AppDatabase db) =>
+      db.cultes.createAlias('reservations_bien__culte_id__cultes__id');
+
+  $$CultesTableProcessedTableManager? get culteId {
+    final $_column = $_itemColumn<String>('culte_id');
+    if ($_column == null) return null;
+    final manager = $$CultesTableTableManager(
+      $_db,
+      $_db.cultes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_culteIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ReservationsBienTableFilterComposer
+    extends Composer<_$AppDatabase, $ReservationsBienTable> {
+  $$ReservationsBienTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get objetReservation => $composableBuilder(
+    column: $table.objetReservation,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get objetLibre => $composableBuilder(
+    column: $table.objetLibre,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateFin => $composableBuilder(
+    column: $table.dateFin,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$BiensTableFilterComposer get bienId {
+    final $$BiensTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bienId,
+      referencedTable: $db.biens,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BiensTableFilterComposer(
+            $db: $db,
+            $table: $db.biens,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$CultesTableFilterComposer get culteId {
+    final $$CultesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.culteId,
+      referencedTable: $db.cultes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CultesTableFilterComposer(
+            $db: $db,
+            $table: $db.cultes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ReservationsBienTableOrderingComposer
+    extends Composer<_$AppDatabase, $ReservationsBienTable> {
+  $$ReservationsBienTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get objetReservation => $composableBuilder(
+    column: $table.objetReservation,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get objetLibre => $composableBuilder(
+    column: $table.objetLibre,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateFin => $composableBuilder(
+    column: $table.dateFin,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$BiensTableOrderingComposer get bienId {
+    final $$BiensTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bienId,
+      referencedTable: $db.biens,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BiensTableOrderingComposer(
+            $db: $db,
+            $table: $db.biens,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$CultesTableOrderingComposer get culteId {
+    final $$CultesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.culteId,
+      referencedTable: $db.cultes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CultesTableOrderingComposer(
+            $db: $db,
+            $table: $db.cultes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ReservationsBienTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ReservationsBienTable> {
+  $$ReservationsBienTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get objetReservation => $composableBuilder(
+    column: $table.objetReservation,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get objetLibre => $composableBuilder(
+    column: $table.objetLibre,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get dateDebut =>
+      $composableBuilder(column: $table.dateDebut, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateFin =>
+      $composableBuilder(column: $table.dateFin, builder: (column) => column);
+
+  $$BiensTableAnnotationComposer get bienId {
+    final $$BiensTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bienId,
+      referencedTable: $db.biens,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BiensTableAnnotationComposer(
+            $db: $db,
+            $table: $db.biens,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$CultesTableAnnotationComposer get culteId {
+    final $$CultesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.culteId,
+      referencedTable: $db.cultes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CultesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.cultes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ReservationsBienTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ReservationsBienTable,
+          ReservationBienRow,
+          $$ReservationsBienTableFilterComposer,
+          $$ReservationsBienTableOrderingComposer,
+          $$ReservationsBienTableAnnotationComposer,
+          $$ReservationsBienTableCreateCompanionBuilder,
+          $$ReservationsBienTableUpdateCompanionBuilder,
+          (ReservationBienRow, $$ReservationsBienTableReferences),
+          ReservationBienRow,
+          PrefetchHooks Function({bool bienId, bool culteId})
+        > {
+  $$ReservationsBienTableTableManager(
+    _$AppDatabase db,
+    $ReservationsBienTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ReservationsBienTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ReservationsBienTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ReservationsBienTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> bienId = const Value.absent(),
+                Value<String> objetReservation = const Value.absent(),
+                Value<String?> culteId = const Value.absent(),
+                Value<String?> objetLibre = const Value.absent(),
+                Value<DateTime> dateDebut = const Value.absent(),
+                Value<DateTime> dateFin = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ReservationsBienCompanion(
+                id: id,
+                bienId: bienId,
+                objetReservation: objetReservation,
+                culteId: culteId,
+                objetLibre: objetLibre,
+                dateDebut: dateDebut,
+                dateFin: dateFin,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String bienId,
+                required String objetReservation,
+                Value<String?> culteId = const Value.absent(),
+                Value<String?> objetLibre = const Value.absent(),
+                required DateTime dateDebut,
+                required DateTime dateFin,
+                Value<int> rowid = const Value.absent(),
+              }) => ReservationsBienCompanion.insert(
+                id: id,
+                bienId: bienId,
+                objetReservation: objetReservation,
+                culteId: culteId,
+                objetLibre: objetLibre,
+                dateDebut: dateDebut,
+                dateFin: dateFin,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ReservationsBienTable, ReservationBienRow>(
+                    table,
+                  ),
+                  $$ReservationsBienTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({bienId = false, culteId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (bienId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.bienId,
+                                referencedTable:
+                                    $$ReservationsBienTableReferences
+                                        ._bienIdTable(db),
+                                referencedColumn:
+                                    $$ReservationsBienTableReferences
+                                        ._bienIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (culteId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.culteId,
+                                referencedTable:
+                                    $$ReservationsBienTableReferences
+                                        ._culteIdTable(db),
+                                referencedColumn:
+                                    $$ReservationsBienTableReferences
+                                        ._culteIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ReservationsBienTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ReservationsBienTable,
+      ReservationBienRow,
+      $$ReservationsBienTableFilterComposer,
+      $$ReservationsBienTableOrderingComposer,
+      $$ReservationsBienTableAnnotationComposer,
+      $$ReservationsBienTableCreateCompanionBuilder,
+      $$ReservationsBienTableUpdateCompanionBuilder,
+      (ReservationBienRow, $$ReservationsBienTableReferences),
+      ReservationBienRow,
+      PrefetchHooks Function({bool bienId, bool culteId})
+    >;
+typedef $$MouvementsStockTableCreateCompanionBuilder =
+    MouvementsStockCompanion Function({
+      required String id,
+      required String bienId,
+      required String type,
+      required int quantite,
+      required DateTime date,
+      Value<String?> motif,
+      Value<int> rowid,
+    });
+typedef $$MouvementsStockTableUpdateCompanionBuilder =
+    MouvementsStockCompanion Function({
+      Value<String> id,
+      Value<String> bienId,
+      Value<String> type,
+      Value<int> quantite,
+      Value<DateTime> date,
+      Value<String?> motif,
+      Value<int> rowid,
+    });
+
+final class $$MouvementsStockTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $MouvementsStockTable,
+          MouvementStockRow
+        > {
+  $$MouvementsStockTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $BiensTable _bienIdTable(_$AppDatabase db) =>
+      db.biens.createAlias('mouvements_stock__bien_id__biens__id');
+
+  $$BiensTableProcessedTableManager get bienId {
+    final $_column = $_itemColumn<String>('bien_id')!;
+
+    final manager = $$BiensTableTableManager(
+      $_db,
+      $_db.biens,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_bienIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$MouvementsStockTableFilterComposer
+    extends Composer<_$AppDatabase, $MouvementsStockTable> {
+  $$MouvementsStockTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get quantite => $composableBuilder(
+    column: $table.quantite,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get motif => $composableBuilder(
+    column: $table.motif,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$BiensTableFilterComposer get bienId {
+    final $$BiensTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bienId,
+      referencedTable: $db.biens,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BiensTableFilterComposer(
+            $db: $db,
+            $table: $db.biens,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MouvementsStockTableOrderingComposer
+    extends Composer<_$AppDatabase, $MouvementsStockTable> {
+  $$MouvementsStockTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get quantite => $composableBuilder(
+    column: $table.quantite,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get motif => $composableBuilder(
+    column: $table.motif,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$BiensTableOrderingComposer get bienId {
+    final $$BiensTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bienId,
+      referencedTable: $db.biens,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BiensTableOrderingComposer(
+            $db: $db,
+            $table: $db.biens,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MouvementsStockTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MouvementsStockTable> {
+  $$MouvementsStockTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<int> get quantite =>
+      $composableBuilder(column: $table.quantite, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<String> get motif =>
+      $composableBuilder(column: $table.motif, builder: (column) => column);
+
+  $$BiensTableAnnotationComposer get bienId {
+    final $$BiensTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bienId,
+      referencedTable: $db.biens,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BiensTableAnnotationComposer(
+            $db: $db,
+            $table: $db.biens,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MouvementsStockTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MouvementsStockTable,
+          MouvementStockRow,
+          $$MouvementsStockTableFilterComposer,
+          $$MouvementsStockTableOrderingComposer,
+          $$MouvementsStockTableAnnotationComposer,
+          $$MouvementsStockTableCreateCompanionBuilder,
+          $$MouvementsStockTableUpdateCompanionBuilder,
+          (MouvementStockRow, $$MouvementsStockTableReferences),
+          MouvementStockRow,
+          PrefetchHooks Function({bool bienId})
+        > {
+  $$MouvementsStockTableTableManager(
+    _$AppDatabase db,
+    $MouvementsStockTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MouvementsStockTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MouvementsStockTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MouvementsStockTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> bienId = const Value.absent(),
+                Value<String> type = const Value.absent(),
+                Value<int> quantite = const Value.absent(),
+                Value<DateTime> date = const Value.absent(),
+                Value<String?> motif = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MouvementsStockCompanion(
+                id: id,
+                bienId: bienId,
+                type: type,
+                quantite: quantite,
+                date: date,
+                motif: motif,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String bienId,
+                required String type,
+                required int quantite,
+                required DateTime date,
+                Value<String?> motif = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MouvementsStockCompanion.insert(
+                id: id,
+                bienId: bienId,
+                type: type,
+                quantite: quantite,
+                date: date,
+                motif: motif,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$MouvementsStockTable, MouvementStockRow>(table),
+                  $$MouvementsStockTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({bienId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (bienId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.bienId,
+                                referencedTable:
+                                    $$MouvementsStockTableReferences
+                                        ._bienIdTable(db),
+                                referencedColumn:
+                                    $$MouvementsStockTableReferences
+                                        ._bienIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$MouvementsStockTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MouvementsStockTable,
+      MouvementStockRow,
+      $$MouvementsStockTableFilterComposer,
+      $$MouvementsStockTableOrderingComposer,
+      $$MouvementsStockTableAnnotationComposer,
+      $$MouvementsStockTableCreateCompanionBuilder,
+      $$MouvementsStockTableUpdateCompanionBuilder,
+      (MouvementStockRow, $$MouvementsStockTableReferences),
+      MouvementStockRow,
+      PrefetchHooks Function({bool bienId})
+    >;
+typedef $$CampagnesInventaireTableCreateCompanionBuilder =
+    CampagnesInventaireCompanion Function({
+      required String id,
+      required String noeudId,
+      required String libelle,
+      required DateTime dateDebut,
+      Value<DateTime?> dateCloture,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+typedef $$CampagnesInventaireTableUpdateCompanionBuilder =
+    CampagnesInventaireCompanion Function({
+      Value<String> id,
+      Value<String> noeudId,
+      Value<String> libelle,
+      Value<DateTime> dateDebut,
+      Value<DateTime?> dateCloture,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+
+final class $$CampagnesInventaireTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $CampagnesInventaireTable,
+          CampagneInventaireRow
+        > {
+  $$CampagnesInventaireTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $OrganisationNodesTable _noeudIdTable(_$AppDatabase db) => db
+      .organisationNodes
+      .createAlias('campagnes_inventaire__noeud_id__organisation_nodes__id');
+
+  $$OrganisationNodesTableProcessedTableManager get noeudId {
+    final $_column = $_itemColumn<String>('noeud_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $PointagesInventaireTable,
+    List<PointageInventaireRow>
+  >
+  _pointagesInventaireRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.pointagesInventaire,
+        aliasName:
+            'campagnes_inventaire__id__pointages_inventaire__campagne_id',
+      );
+
+  $$PointagesInventaireTableProcessedTableManager get pointagesInventaireRefs {
+    final manager = $$PointagesInventaireTableTableManager(
+      $_db,
+      $_db.pointagesInventaire,
+    ).filter((f) => f.campagneId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _pointagesInventaireRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$CampagnesInventaireTableFilterComposer
+    extends Composer<_$AppDatabase, $CampagnesInventaireTable> {
+  $$CampagnesInventaireTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateCloture => $composableBuilder(
+    column: $table.dateCloture,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$OrganisationNodesTableFilterComposer get noeudId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> pointagesInventaireRefs(
+    Expression<bool> Function($$PointagesInventaireTableFilterComposer f) f,
+  ) {
+    final $$PointagesInventaireTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.pointagesInventaire,
+      getReferencedColumn: (t) => t.campagneId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PointagesInventaireTableFilterComposer(
+            $db: $db,
+            $table: $db.pointagesInventaire,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$CampagnesInventaireTableOrderingComposer
+    extends Composer<_$AppDatabase, $CampagnesInventaireTable> {
+  $$CampagnesInventaireTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateCloture => $composableBuilder(
+    column: $table.dateCloture,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$OrganisationNodesTableOrderingComposer get noeudId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$CampagnesInventaireTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CampagnesInventaireTable> {
+  $$CampagnesInventaireTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get libelle =>
+      $composableBuilder(column: $table.libelle, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateDebut =>
+      $composableBuilder(column: $table.dateDebut, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateCloture => $composableBuilder(
+    column: $table.dateCloture,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  $$OrganisationNodesTableAnnotationComposer get noeudId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  Expression<T> pointagesInventaireRefs<T extends Object>(
+    Expression<T> Function($$PointagesInventaireTableAnnotationComposer a) f,
+  ) {
+    final $$PointagesInventaireTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.pointagesInventaire,
+          getReferencedColumn: (t) => t.campagneId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$PointagesInventaireTableAnnotationComposer(
+                $db: $db,
+                $table: $db.pointagesInventaire,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$CampagnesInventaireTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CampagnesInventaireTable,
+          CampagneInventaireRow,
+          $$CampagnesInventaireTableFilterComposer,
+          $$CampagnesInventaireTableOrderingComposer,
+          $$CampagnesInventaireTableAnnotationComposer,
+          $$CampagnesInventaireTableCreateCompanionBuilder,
+          $$CampagnesInventaireTableUpdateCompanionBuilder,
+          (CampagneInventaireRow, $$CampagnesInventaireTableReferences),
+          CampagneInventaireRow,
+          PrefetchHooks Function({bool noeudId, bool pointagesInventaireRefs})
+        > {
+  $$CampagnesInventaireTableTableManager(
+    _$AppDatabase db,
+    $CampagnesInventaireTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CampagnesInventaireTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CampagnesInventaireTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$CampagnesInventaireTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> noeudId = const Value.absent(),
+                Value<String> libelle = const Value.absent(),
+                Value<DateTime> dateDebut = const Value.absent(),
+                Value<DateTime?> dateCloture = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CampagnesInventaireCompanion(
+                id: id,
+                noeudId: noeudId,
+                libelle: libelle,
+                dateDebut: dateDebut,
+                dateCloture: dateCloture,
+                statut: statut,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String noeudId,
+                required String libelle,
+                required DateTime dateDebut,
+                Value<DateTime?> dateCloture = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CampagnesInventaireCompanion.insert(
+                id: id,
+                noeudId: noeudId,
+                libelle: libelle,
+                dateDebut: dateDebut,
+                dateCloture: dateCloture,
+                statut: statut,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$CampagnesInventaireTable, CampagneInventaireRow>(
+                    table,
+                  ),
+                  $$CampagnesInventaireTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({noeudId = false, pointagesInventaireRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (pointagesInventaireRefs) db.pointagesInventaire,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (noeudId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.noeudId,
+                                    referencedTable:
+                                        $$CampagnesInventaireTableReferences
+                                            ._noeudIdTable(db),
+                                    referencedColumn:
+                                        $$CampagnesInventaireTableReferences
+                                            ._noeudIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (pointagesInventaireRefs)
+                        await $_getPrefetchedData<
+                          CampagneInventaireRow,
+                          $CampagnesInventaireTable,
+                          PointageInventaireRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CampagnesInventaireTableReferences
+                              ._pointagesInventaireRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CampagnesInventaireTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).pointagesInventaireRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.campagneId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$CampagnesInventaireTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CampagnesInventaireTable,
+      CampagneInventaireRow,
+      $$CampagnesInventaireTableFilterComposer,
+      $$CampagnesInventaireTableOrderingComposer,
+      $$CampagnesInventaireTableAnnotationComposer,
+      $$CampagnesInventaireTableCreateCompanionBuilder,
+      $$CampagnesInventaireTableUpdateCompanionBuilder,
+      (CampagneInventaireRow, $$CampagnesInventaireTableReferences),
+      CampagneInventaireRow,
+      PrefetchHooks Function({bool noeudId, bool pointagesInventaireRefs})
+    >;
+typedef $$PointagesInventaireTableCreateCompanionBuilder =
+    PointagesInventaireCompanion Function({
+      required String id,
+      required String campagneId,
+      required String bienId,
+      required String etatConstate,
+      Value<int?> quantiteConstatee,
+      Value<bool> ecartDetecte,
+      Value<String?> commentaire,
+      required DateTime dateDuPointage,
+      Value<int> rowid,
+    });
+typedef $$PointagesInventaireTableUpdateCompanionBuilder =
+    PointagesInventaireCompanion Function({
+      Value<String> id,
+      Value<String> campagneId,
+      Value<String> bienId,
+      Value<String> etatConstate,
+      Value<int?> quantiteConstatee,
+      Value<bool> ecartDetecte,
+      Value<String?> commentaire,
+      Value<DateTime> dateDuPointage,
+      Value<int> rowid,
+    });
+
+final class $$PointagesInventaireTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $PointagesInventaireTable,
+          PointageInventaireRow
+        > {
+  $$PointagesInventaireTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $CampagnesInventaireTable _campagneIdTable(_$AppDatabase db) =>
+      db.campagnesInventaire.createAlias(
+        'pointages_inventaire__campagne_id__campagnes_inventaire__id',
+      );
+
+  $$CampagnesInventaireTableProcessedTableManager get campagneId {
+    final $_column = $_itemColumn<String>('campagne_id')!;
+
+    final manager = $$CampagnesInventaireTableTableManager(
+      $_db,
+      $_db.campagnesInventaire,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_campagneIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $BiensTable _bienIdTable(_$AppDatabase db) =>
+      db.biens.createAlias('pointages_inventaire__bien_id__biens__id');
+
+  $$BiensTableProcessedTableManager get bienId {
+    final $_column = $_itemColumn<String>('bien_id')!;
+
+    final manager = $$BiensTableTableManager(
+      $_db,
+      $_db.biens,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_bienIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$PointagesInventaireTableFilterComposer
+    extends Composer<_$AppDatabase, $PointagesInventaireTable> {
+  $$PointagesInventaireTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get etatConstate => $composableBuilder(
+    column: $table.etatConstate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get quantiteConstatee => $composableBuilder(
+    column: $table.quantiteConstatee,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get ecartDetecte => $composableBuilder(
+    column: $table.ecartDetecte,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get commentaire => $composableBuilder(
+    column: $table.commentaire,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateDuPointage => $composableBuilder(
+    column: $table.dateDuPointage,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$CampagnesInventaireTableFilterComposer get campagneId {
+    final $$CampagnesInventaireTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.campagneId,
+      referencedTable: $db.campagnesInventaire,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CampagnesInventaireTableFilterComposer(
+            $db: $db,
+            $table: $db.campagnesInventaire,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$BiensTableFilterComposer get bienId {
+    final $$BiensTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bienId,
+      referencedTable: $db.biens,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BiensTableFilterComposer(
+            $db: $db,
+            $table: $db.biens,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PointagesInventaireTableOrderingComposer
+    extends Composer<_$AppDatabase, $PointagesInventaireTable> {
+  $$PointagesInventaireTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get etatConstate => $composableBuilder(
+    column: $table.etatConstate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get quantiteConstatee => $composableBuilder(
+    column: $table.quantiteConstatee,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get ecartDetecte => $composableBuilder(
+    column: $table.ecartDetecte,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get commentaire => $composableBuilder(
+    column: $table.commentaire,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateDuPointage => $composableBuilder(
+    column: $table.dateDuPointage,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$CampagnesInventaireTableOrderingComposer get campagneId {
+    final $$CampagnesInventaireTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.campagneId,
+          referencedTable: $db.campagnesInventaire,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CampagnesInventaireTableOrderingComposer(
+                $db: $db,
+                $table: $db.campagnesInventaire,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$BiensTableOrderingComposer get bienId {
+    final $$BiensTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bienId,
+      referencedTable: $db.biens,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BiensTableOrderingComposer(
+            $db: $db,
+            $table: $db.biens,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PointagesInventaireTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PointagesInventaireTable> {
+  $$PointagesInventaireTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get etatConstate => $composableBuilder(
+    column: $table.etatConstate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get quantiteConstatee => $composableBuilder(
+    column: $table.quantiteConstatee,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get ecartDetecte => $composableBuilder(
+    column: $table.ecartDetecte,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get commentaire => $composableBuilder(
+    column: $table.commentaire,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get dateDuPointage => $composableBuilder(
+    column: $table.dateDuPointage,
+    builder: (column) => column,
+  );
+
+  $$CampagnesInventaireTableAnnotationComposer get campagneId {
+    final $$CampagnesInventaireTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.campagneId,
+          referencedTable: $db.campagnesInventaire,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CampagnesInventaireTableAnnotationComposer(
+                $db: $db,
+                $table: $db.campagnesInventaire,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$BiensTableAnnotationComposer get bienId {
+    final $$BiensTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bienId,
+      referencedTable: $db.biens,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BiensTableAnnotationComposer(
+            $db: $db,
+            $table: $db.biens,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PointagesInventaireTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PointagesInventaireTable,
+          PointageInventaireRow,
+          $$PointagesInventaireTableFilterComposer,
+          $$PointagesInventaireTableOrderingComposer,
+          $$PointagesInventaireTableAnnotationComposer,
+          $$PointagesInventaireTableCreateCompanionBuilder,
+          $$PointagesInventaireTableUpdateCompanionBuilder,
+          (PointageInventaireRow, $$PointagesInventaireTableReferences),
+          PointageInventaireRow,
+          PrefetchHooks Function({bool campagneId, bool bienId})
+        > {
+  $$PointagesInventaireTableTableManager(
+    _$AppDatabase db,
+    $PointagesInventaireTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PointagesInventaireTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PointagesInventaireTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$PointagesInventaireTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> campagneId = const Value.absent(),
+                Value<String> bienId = const Value.absent(),
+                Value<String> etatConstate = const Value.absent(),
+                Value<int?> quantiteConstatee = const Value.absent(),
+                Value<bool> ecartDetecte = const Value.absent(),
+                Value<String?> commentaire = const Value.absent(),
+                Value<DateTime> dateDuPointage = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PointagesInventaireCompanion(
+                id: id,
+                campagneId: campagneId,
+                bienId: bienId,
+                etatConstate: etatConstate,
+                quantiteConstatee: quantiteConstatee,
+                ecartDetecte: ecartDetecte,
+                commentaire: commentaire,
+                dateDuPointage: dateDuPointage,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String campagneId,
+                required String bienId,
+                required String etatConstate,
+                Value<int?> quantiteConstatee = const Value.absent(),
+                Value<bool> ecartDetecte = const Value.absent(),
+                Value<String?> commentaire = const Value.absent(),
+                required DateTime dateDuPointage,
+                Value<int> rowid = const Value.absent(),
+              }) => PointagesInventaireCompanion.insert(
+                id: id,
+                campagneId: campagneId,
+                bienId: bienId,
+                etatConstate: etatConstate,
+                quantiteConstatee: quantiteConstatee,
+                ecartDetecte: ecartDetecte,
+                commentaire: commentaire,
+                dateDuPointage: dateDuPointage,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$PointagesInventaireTable, PointageInventaireRow>(
+                    table,
+                  ),
+                  $$PointagesInventaireTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({campagneId = false, bienId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (campagneId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.campagneId,
+                                referencedTable:
+                                    $$PointagesInventaireTableReferences
+                                        ._campagneIdTable(db),
+                                referencedColumn:
+                                    $$PointagesInventaireTableReferences
+                                        ._campagneIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (bienId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.bienId,
+                                referencedTable:
+                                    $$PointagesInventaireTableReferences
+                                        ._bienIdTable(db),
+                                referencedColumn:
+                                    $$PointagesInventaireTableReferences
+                                        ._bienIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$PointagesInventaireTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PointagesInventaireTable,
+      PointageInventaireRow,
+      $$PointagesInventaireTableFilterComposer,
+      $$PointagesInventaireTableOrderingComposer,
+      $$PointagesInventaireTableAnnotationComposer,
+      $$PointagesInventaireTableCreateCompanionBuilder,
+      $$PointagesInventaireTableUpdateCompanionBuilder,
+      (PointageInventaireRow, $$PointagesInventaireTableReferences),
+      PointageInventaireRow,
+      PrefetchHooks Function({bool campagneId, bool bienId})
+    >;
 typedef $$SyncOutboxTableCreateCompanionBuilder =
     SyncOutboxCompanion Function({
       required String id,
@@ -53530,6 +60137,18 @@ class $AppDatabaseManager {
       $$EcheancesEngagementTableTableManager(_db, _db.echeancesEngagement);
   $$TresoriersNoeudTableTableManager get tresoriersNoeud =>
       $$TresoriersNoeudTableTableManager(_db, _db.tresoriersNoeud);
+  $$CategoriesBienTableTableManager get categoriesBien =>
+      $$CategoriesBienTableTableManager(_db, _db.categoriesBien);
+  $$BiensTableTableManager get biens =>
+      $$BiensTableTableManager(_db, _db.biens);
+  $$ReservationsBienTableTableManager get reservationsBien =>
+      $$ReservationsBienTableTableManager(_db, _db.reservationsBien);
+  $$MouvementsStockTableTableManager get mouvementsStock =>
+      $$MouvementsStockTableTableManager(_db, _db.mouvementsStock);
+  $$CampagnesInventaireTableTableManager get campagnesInventaire =>
+      $$CampagnesInventaireTableTableManager(_db, _db.campagnesInventaire);
+  $$PointagesInventaireTableTableManager get pointagesInventaire =>
+      $$PointagesInventaireTableTableManager(_db, _db.pointagesInventaire);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }
