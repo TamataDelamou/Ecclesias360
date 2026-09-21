@@ -13,6 +13,8 @@ import '../../features/cultes/presentation/cultes_list_screen.dart';
 import '../../features/cultes/presentation/propositions_theme_screen.dart';
 import '../../features/deplacements/presentation/mutation_detail_screen.dart';
 import '../../features/deplacements/presentation/mutations_list_screen.dart';
+import '../../features/discipline/presentation/dossier_disciplinaire_detail_screen.dart';
+import '../../features/discipline/presentation/dossiers_disciplinaires_list_screen.dart';
 import '../../features/dons_spirituels/presentation/don_evaluation_form_screen.dart';
 import '../../features/dons_spirituels/presentation/don_historique_screen.dart';
 import '../../features/dons_spirituels/presentation/don_ministeres_compatibles_screen.dart';
@@ -280,6 +282,27 @@ final GoRouter appRouter = GoRouter(
       pageBuilder: (context, state) => sharedAxisPage(
         key: state.pageKey,
         child: MutationDetailScreen(mutationId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/organisation/:id/discipline',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: DossiersDisciplinairesListScreen(noeudId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/fideles/:id/discipline',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: DossiersDisciplinairesListScreen(fideleId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/dossiers-disciplinaires/:id',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: DossierDisciplinaireDetailScreen(dossierId: state.pathParameters['id']!),
       ),
     ),
   ],

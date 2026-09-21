@@ -1229,6 +1229,282 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Voter/soumettre en tant que'**
   String get propositionsVoterEnTantQue;
+
+  /// Titre de l'écran de liste des dossiers disciplinaires d'un nœud.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dossiers disciplinaires'**
+  String get disciplineTitre;
+
+  /// Titre de l'écran d'historique des dossiers disciplinaires d'un fidèle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique disciplinaire confidentiel'**
+  String get disciplineHistoriqueTitre;
+
+  /// État vide de la liste des dossiers disciplinaires d'un nœud.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun dossier disciplinaire.'**
+  String get disciplineAucunDossier;
+
+  /// État vide de l'historique disciplinaire d'un fidèle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun dossier disciplinaire pour ce fidèle.'**
+  String get disciplineAucunDossierFidele;
+
+  /// Infobulle du bouton flottant d'ouverture d'un dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvrir un dossier'**
+  String get disciplineOuvrirTooltip;
+
+  /// Titre du dialogue d'ouverture d'un dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvrir un dossier disciplinaire'**
+  String get disciplineOuvrirTitre;
+
+  /// Libellé du champ fidèle lors de l'ouverture d'un dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fidèle mis en cause'**
+  String get disciplineChampFideleMisEnCause;
+
+  /// Libellé du champ nature de la faute d'un dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nature de la faute'**
+  String get disciplineChampNatureFaute;
+
+  /// Libellé du sélecteur de rôle agissant à l'ouverture d'un dossier (RG-X-01, pas de session réelle).
+  ///
+  /// In fr, this message translates to:
+  /// **'Rôle agissant'**
+  String get disciplineChampRoleActeur;
+
+  /// Libellé du sélecteur de fidèle acteur à l'ouverture d'un dossier (RG-X-01).
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvert par (optionnel — membre de commission)'**
+  String get disciplineChampActeur;
+
+  /// Valeur par défaut du sélecteur de fidèle acteur (aucun acteur désigné).
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun'**
+  String get disciplineActeurAucun;
+
+  /// Libellé du statut de dossier disciplinaire « en instruction ».
+  ///
+  /// In fr, this message translates to:
+  /// **'En instruction'**
+  String get disciplineStatutEnInstruction;
+
+  /// Libellé du statut de dossier disciplinaire « sanctionné ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Sanctionné'**
+  String get disciplineStatutSanctionne;
+
+  /// Libellé du statut de dossier disciplinaire « clos ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Clos'**
+  String get disciplineStatutClos;
+
+  /// Alerte de fin de période de sanction déterminée (RG-X-04).
+  ///
+  /// In fr, this message translates to:
+  /// **'Réintégration prévue le {date}'**
+  String disciplineAlerteFinDePeriode(String date);
+
+  /// Alerte de revue périodique pour une sanction à durée indéterminée (RG-X-04).
+  ///
+  /// In fr, this message translates to:
+  /// **'Revue périodique nécessaire'**
+  String get disciplineAlerteRevuePeriodique;
+
+  /// Titre de l'écran fiche d'un dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dossier disciplinaire'**
+  String get disciplineDetailTitre;
+
+  /// Corps de l'écran fiche quand le dossier n'existe pas (ou plus).
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce dossier disciplinaire est introuvable.'**
+  String get disciplineIntrouvable;
+
+  /// Date d'ouverture d'un dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvert le {date}'**
+  String disciplineOuvertLe(String date);
+
+  /// Titre de la section commission de la fiche d'un dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commission instructrice'**
+  String get disciplineCommissionTitre;
+
+  /// État vide de la section commission d'un dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune commission assignée.'**
+  String get disciplineCommissionAucune;
+
+  /// Bouton d'assignation d'une commission à un dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Assigner une commission'**
+  String get disciplineCommissionAssignerBouton;
+
+  /// Titre du dialogue d'assignation d'une commission.
+  ///
+  /// In fr, this message translates to:
+  /// **'Assigner une commission'**
+  String get disciplineCommissionAssignerTitre;
+
+  /// Bouton de création d'une nouvelle commission depuis le dialogue d'assignation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer une nouvelle commission'**
+  String get disciplineCommissionCreerBouton;
+
+  /// Titre du dialogue de création d'une commission disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer une commission'**
+  String get disciplineCommissionCreerTitre;
+
+  /// Libellé du champ nom lors de la création d'une commission disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom de la commission'**
+  String get disciplineChampNomCommission;
+
+  /// Titre de la section membres d'une commission disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Membres de la commission'**
+  String get disciplineCommissionMembresTitre;
+
+  /// Infobulle du bouton d'ajout d'un membre à une commission disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un membre'**
+  String get disciplineCommissionAjouterMembreTooltip;
+
+  /// Titre de la section pièces d'un dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pièces du dossier'**
+  String get disciplinePiecesTitre;
+
+  /// État vide de la section pièces d'un dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune pièce versée.'**
+  String get disciplinePiecesAucune;
+
+  /// Infobulle du bouton d'ajout d'une pièce à un dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une pièce'**
+  String get disciplinePieceAjouterTooltip;
+
+  /// Titre du dialogue d'ajout d'une pièce à un dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une pièce'**
+  String get disciplinePieceAjouterTitre;
+
+  /// Libellé du sélecteur de nature d'une pièce de dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nature de la pièce'**
+  String get disciplinePieceChampNature;
+
+  /// Libellé de la nature de pièce « témoignage ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Témoignage'**
+  String get disciplinePieceNatureTemoignage;
+
+  /// Libellé de la nature de pièce « preuve ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Preuve'**
+  String get disciplinePieceNaturePreuve;
+
+  /// Libellé du champ contenu textuel d'une pièce de dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contenu (texte)'**
+  String get disciplinePieceChampContenu;
+
+  /// Titre de la section décision d'un dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Décision'**
+  String get disciplineDecisionTitre;
+
+  /// Libellé du champ décision motivée d'un dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Décision motivée'**
+  String get disciplineChampDecision;
+
+  /// Libellé du champ durée de sanction, en jours, lors du prononcé d'une décision.
+  ///
+  /// In fr, this message translates to:
+  /// **'Durée de la sanction en jours (vide = indéterminée)'**
+  String get disciplineChampDureeSanction;
+
+  /// Libellé de la case à cocher de suspension des ministères (RG-X-03).
+  ///
+  /// In fr, this message translates to:
+  /// **'Suspendre les affectations ministérielles actives'**
+  String get disciplineChampSuspendreMinisteres;
+
+  /// Bouton de prononcé de la décision d'un dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prononcer la décision'**
+  String get disciplinePrononcerBouton;
+
+  /// Date à laquelle la décision d'un dossier disciplinaire a été rendue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Décision rendue le {date}'**
+  String disciplineDecisionRendueLe(String date);
+
+  /// Bouton de clôture et réintégration d'un dossier disciplinaire sanctionné (RG-X-04).
+  ///
+  /// In fr, this message translates to:
+  /// **'Clôturer / Réintégrer'**
+  String get disciplineCloturerBouton;
+
+  /// Note affichée sur un dossier disciplinaire clos.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dossier clos — le fidèle a retrouvé son statut antérieur.'**
+  String get disciplineDossierClosNote;
+
+  /// Libellé affiché quand une sanction n'a pas de durée déterminée.
+  ///
+  /// In fr, this message translates to:
+  /// **'Durée indéterminée'**
+  String get disciplineDureeIndeterminee;
+
+  /// Durée d'une sanction en jours.
+  ///
+  /// In fr, this message translates to:
+  /// **'{jours} jour(s)'**
+  String disciplineDureeJours(int jours);
 }
 
 class _AppLocalizationsDelegate

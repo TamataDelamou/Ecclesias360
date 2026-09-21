@@ -12,6 +12,8 @@ import 'features/cultes/application/culte_controller.dart';
 import 'features/cultes/data/culte_repository.dart';
 import 'features/deplacements/application/deplacement_controller.dart';
 import 'features/deplacements/data/deplacement_repository.dart';
+import 'features/discipline/application/discipline_controller.dart';
+import 'features/discipline/data/discipline_repository.dart';
 import 'features/dons_spirituels/application/don_spirituel_controller.dart';
 import 'features/dons_spirituels/data/don_spirituel_repository.dart';
 import 'features/fideles/application/fidele_controller.dart';
@@ -62,6 +64,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final CulteController _culteController;
   late final DeplacementRepository _deplacementRepository;
   late final DeplacementController _deplacementController;
+  late final DisciplineRepository _disciplineRepository;
+  late final DisciplineController _disciplineController;
 
   @override
   void initState() {
@@ -93,6 +97,13 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
       archivageRepository: _archivageRepository,
     );
     _deplacementController = DeplacementController(_deplacementRepository);
+    _disciplineRepository = DisciplineRepository(
+      widget.database,
+      _fideleRepository,
+      _ministereRepository,
+      archivageRepository: _archivageRepository,
+    );
+    _disciplineController = DisciplineController(_disciplineRepository);
   }
 
   @override
@@ -108,6 +119,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _comiteController.dispose();
     _culteController.dispose();
     _deplacementController.dispose();
+    _disciplineController.dispose();
     super.dispose();
   }
 
@@ -126,6 +138,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
         ChangeNotifierProvider<CulteController>.value(value: _culteController),
         ChangeNotifierProvider<ArchivageController>.value(value: _archivageController),
         ChangeNotifierProvider<DeplacementController>.value(value: _deplacementController),
+        ChangeNotifierProvider<DisciplineController>.value(value: _disciplineController),
       ],
       child: MaterialApp.router(
         onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,

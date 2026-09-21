@@ -65,4 +65,8 @@ abstract final class AppRoutes {
   static String mutationsDuNoeud(String noeudId) => '/organisation/$noeudId/mutations';
   static String mutationsDuFidele(String fideleId) => '/fideles/$fideleId/mutations';
   static String mutation(String id) => '/mutations/$id';
+
+  static String discipline(String noeudId) => '/organisation/$noeudId/discipline';
+  static String disciplineDuFidele(String fideleId) => '/fideles/$fideleId/discipline';
+  static String dossierDisciplinaire(String id) => '/dossiers-disciplinaires/$id';
 }

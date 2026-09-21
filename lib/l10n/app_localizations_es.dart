@@ -598,4 +598,157 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get propositionsVoterEnTantQue => 'Votar/enviar como';
+
+  @override
+  String get disciplineTitre => 'Expedientes disciplinarios';
+
+  @override
+  String get disciplineHistoriqueTitre =>
+      'Historial disciplinario confidencial';
+
+  @override
+  String get disciplineAucunDossier => 'Ningún expediente disciplinario.';
+
+  @override
+  String get disciplineAucunDossierFidele =>
+      'Ningún expediente disciplinario para este miembro.';
+
+  @override
+  String get disciplineOuvrirTooltip => 'Abrir un expediente';
+
+  @override
+  String get disciplineOuvrirTitre => 'Abrir un expediente disciplinario';
+
+  @override
+  String get disciplineChampFideleMisEnCause => 'Miembro implicado';
+
+  @override
+  String get disciplineChampNatureFaute => 'Naturaleza de la falta';
+
+  @override
+  String get disciplineChampRoleActeur => 'Rol actuante';
+
+  @override
+  String get disciplineChampActeur =>
+      'Abierto por (opcional — miembro de comisión)';
+
+  @override
+  String get disciplineActeurAucun => 'Ninguno';
+
+  @override
+  String get disciplineStatutEnInstruction => 'En instrucción';
+
+  @override
+  String get disciplineStatutSanctionne => 'Sancionado';
+
+  @override
+  String get disciplineStatutClos => 'Cerrado';
+
+  @override
+  String disciplineAlerteFinDePeriode(String date) {
+    return 'Reintegración prevista el $date';
+  }
+
+  @override
+  String get disciplineAlerteRevuePeriodique => 'Revisión periódica necesaria';
+
+  @override
+  String get disciplineDetailTitre => 'Expediente disciplinario';
+
+  @override
+  String get disciplineIntrouvable =>
+      'Este expediente disciplinario no se pudo encontrar.';
+
+  @override
+  String disciplineOuvertLe(String date) {
+    return 'Abierto el $date';
+  }
+
+  @override
+  String get disciplineCommissionTitre => 'Comisión instructora';
+
+  @override
+  String get disciplineCommissionAucune => 'Ninguna comisión asignada.';
+
+  @override
+  String get disciplineCommissionAssignerBouton => 'Asignar una comisión';
+
+  @override
+  String get disciplineCommissionAssignerTitre => 'Asignar una comisión';
+
+  @override
+  String get disciplineCommissionCreerBouton => 'Crear una nueva comisión';
+
+  @override
+  String get disciplineCommissionCreerTitre => 'Crear una comisión';
+
+  @override
+  String get disciplineChampNomCommission => 'Nombre de la comisión';
+
+  @override
+  String get disciplineCommissionMembresTitre => 'Miembros de la comisión';
+
+  @override
+  String get disciplineCommissionAjouterMembreTooltip => 'Añadir un miembro';
+
+  @override
+  String get disciplinePiecesTitre => 'Documentos del expediente';
+
+  @override
+  String get disciplinePiecesAucune => 'Ningún documento aportado.';
+
+  @override
+  String get disciplinePieceAjouterTooltip => 'Añadir un documento';
+
+  @override
+  String get disciplinePieceAjouterTitre => 'Añadir un documento';
+
+  @override
+  String get disciplinePieceChampNature => 'Tipo de documento';
+
+  @override
+  String get disciplinePieceNatureTemoignage => 'Testimonio';
+
+  @override
+  String get disciplinePieceNaturePreuve => 'Prueba';
+
+  @override
+  String get disciplinePieceChampContenu => 'Contenido (texto)';
+
+  @override
+  String get disciplineDecisionTitre => 'Decisión';
+
+  @override
+  String get disciplineChampDecision => 'Decisión motivada';
+
+  @override
+  String get disciplineChampDureeSanction =>
+      'Duración de la sanción en días (vacío = indeterminada)';
+
+  @override
+  String get disciplineChampSuspendreMinisteres =>
+      'Suspender las asignaciones ministeriales activas';
+
+  @override
+  String get disciplinePrononcerBouton => 'Emitir la decisión';
+
+  @override
+  String disciplineDecisionRendueLe(String date) {
+    return 'Decisión emitida el $date';
+  }
+
+  @override
+  String get disciplineCloturerBouton => 'Cerrar / Reintegrar';
+
+  @override
+  String get disciplineDossierClosNote =>
+      'Expediente cerrado — el miembro ha recuperado su estatus anterior.';
+
+  @override
+  String get disciplineDureeIndeterminee => 'Duración indeterminada';
+
+  @override
+  String disciplineDureeJours(int jours) {
+    return '$jours día(s)';
+  }
 }

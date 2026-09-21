@@ -598,4 +598,157 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get propositionsVoterEnTantQue => 'Voter/soumettre en tant que';
+
+  @override
+  String get disciplineTitre => 'Dossiers disciplinaires';
+
+  @override
+  String get disciplineHistoriqueTitre =>
+      'Historique disciplinaire confidentiel';
+
+  @override
+  String get disciplineAucunDossier => 'Aucun dossier disciplinaire.';
+
+  @override
+  String get disciplineAucunDossierFidele =>
+      'Aucun dossier disciplinaire pour ce fidèle.';
+
+  @override
+  String get disciplineOuvrirTooltip => 'Ouvrir un dossier';
+
+  @override
+  String get disciplineOuvrirTitre => 'Ouvrir un dossier disciplinaire';
+
+  @override
+  String get disciplineChampFideleMisEnCause => 'Fidèle mis en cause';
+
+  @override
+  String get disciplineChampNatureFaute => 'Nature de la faute';
+
+  @override
+  String get disciplineChampRoleActeur => 'Rôle agissant';
+
+  @override
+  String get disciplineChampActeur =>
+      'Ouvert par (optionnel — membre de commission)';
+
+  @override
+  String get disciplineActeurAucun => 'Aucun';
+
+  @override
+  String get disciplineStatutEnInstruction => 'En instruction';
+
+  @override
+  String get disciplineStatutSanctionne => 'Sanctionné';
+
+  @override
+  String get disciplineStatutClos => 'Clos';
+
+  @override
+  String disciplineAlerteFinDePeriode(String date) {
+    return 'Réintégration prévue le $date';
+  }
+
+  @override
+  String get disciplineAlerteRevuePeriodique => 'Revue périodique nécessaire';
+
+  @override
+  String get disciplineDetailTitre => 'Dossier disciplinaire';
+
+  @override
+  String get disciplineIntrouvable =>
+      'Ce dossier disciplinaire est introuvable.';
+
+  @override
+  String disciplineOuvertLe(String date) {
+    return 'Ouvert le $date';
+  }
+
+  @override
+  String get disciplineCommissionTitre => 'Commission instructrice';
+
+  @override
+  String get disciplineCommissionAucune => 'Aucune commission assignée.';
+
+  @override
+  String get disciplineCommissionAssignerBouton => 'Assigner une commission';
+
+  @override
+  String get disciplineCommissionAssignerTitre => 'Assigner une commission';
+
+  @override
+  String get disciplineCommissionCreerBouton => 'Créer une nouvelle commission';
+
+  @override
+  String get disciplineCommissionCreerTitre => 'Créer une commission';
+
+  @override
+  String get disciplineChampNomCommission => 'Nom de la commission';
+
+  @override
+  String get disciplineCommissionMembresTitre => 'Membres de la commission';
+
+  @override
+  String get disciplineCommissionAjouterMembreTooltip => 'Ajouter un membre';
+
+  @override
+  String get disciplinePiecesTitre => 'Pièces du dossier';
+
+  @override
+  String get disciplinePiecesAucune => 'Aucune pièce versée.';
+
+  @override
+  String get disciplinePieceAjouterTooltip => 'Ajouter une pièce';
+
+  @override
+  String get disciplinePieceAjouterTitre => 'Ajouter une pièce';
+
+  @override
+  String get disciplinePieceChampNature => 'Nature de la pièce';
+
+  @override
+  String get disciplinePieceNatureTemoignage => 'Témoignage';
+
+  @override
+  String get disciplinePieceNaturePreuve => 'Preuve';
+
+  @override
+  String get disciplinePieceChampContenu => 'Contenu (texte)';
+
+  @override
+  String get disciplineDecisionTitre => 'Décision';
+
+  @override
+  String get disciplineChampDecision => 'Décision motivée';
+
+  @override
+  String get disciplineChampDureeSanction =>
+      'Durée de la sanction en jours (vide = indéterminée)';
+
+  @override
+  String get disciplineChampSuspendreMinisteres =>
+      'Suspendre les affectations ministérielles actives';
+
+  @override
+  String get disciplinePrononcerBouton => 'Prononcer la décision';
+
+  @override
+  String disciplineDecisionRendueLe(String date) {
+    return 'Décision rendue le $date';
+  }
+
+  @override
+  String get disciplineCloturerBouton => 'Clôturer / Réintégrer';
+
+  @override
+  String get disciplineDossierClosNote =>
+      'Dossier clos — le fidèle a retrouvé son statut antérieur.';
+
+  @override
+  String get disciplineDureeIndeterminee => 'Durée indéterminée';
+
+  @override
+  String disciplineDureeJours(int jours) {
+    return '$jours jour(s)';
+  }
 }

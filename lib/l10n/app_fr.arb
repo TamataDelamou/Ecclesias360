@@ -799,5 +799,209 @@
   "propositionsVoterEnTantQue": "Voter/soumettre en tant que",
   "@propositionsVoterEnTantQue": {
     "description": "Libellé du sélecteur de fidèle actif pour soumettre/voter (pas de session réelle, RG-SEC-01 non construit)."
+  },
+  "disciplineTitre": "Dossiers disciplinaires",
+  "@disciplineTitre": {
+    "description": "Titre de l'écran de liste des dossiers disciplinaires d'un nœud."
+  },
+  "disciplineHistoriqueTitre": "Historique disciplinaire confidentiel",
+  "@disciplineHistoriqueTitre": {
+    "description": "Titre de l'écran d'historique des dossiers disciplinaires d'un fidèle."
+  },
+  "disciplineAucunDossier": "Aucun dossier disciplinaire.",
+  "@disciplineAucunDossier": {
+    "description": "État vide de la liste des dossiers disciplinaires d'un nœud."
+  },
+  "disciplineAucunDossierFidele": "Aucun dossier disciplinaire pour ce fidèle.",
+  "@disciplineAucunDossierFidele": {
+    "description": "État vide de l'historique disciplinaire d'un fidèle."
+  },
+  "disciplineOuvrirTooltip": "Ouvrir un dossier",
+  "@disciplineOuvrirTooltip": {
+    "description": "Infobulle du bouton flottant d'ouverture d'un dossier disciplinaire."
+  },
+  "disciplineOuvrirTitre": "Ouvrir un dossier disciplinaire",
+  "@disciplineOuvrirTitre": {
+    "description": "Titre du dialogue d'ouverture d'un dossier disciplinaire."
+  },
+  "disciplineChampFideleMisEnCause": "Fidèle mis en cause",
+  "@disciplineChampFideleMisEnCause": {
+    "description": "Libellé du champ fidèle lors de l'ouverture d'un dossier disciplinaire."
+  },
+  "disciplineChampNatureFaute": "Nature de la faute",
+  "@disciplineChampNatureFaute": {
+    "description": "Libellé du champ nature de la faute d'un dossier disciplinaire."
+  },
+  "disciplineChampRoleActeur": "Rôle agissant",
+  "@disciplineChampRoleActeur": {
+    "description": "Libellé du sélecteur de rôle agissant à l'ouverture d'un dossier (RG-X-01, pas de session réelle)."
+  },
+  "disciplineChampActeur": "Ouvert par (optionnel — membre de commission)",
+  "@disciplineChampActeur": {
+    "description": "Libellé du sélecteur de fidèle acteur à l'ouverture d'un dossier (RG-X-01)."
+  },
+  "disciplineActeurAucun": "Aucun",
+  "@disciplineActeurAucun": {
+    "description": "Valeur par défaut du sélecteur de fidèle acteur (aucun acteur désigné)."
+  },
+  "disciplineStatutEnInstruction": "En instruction",
+  "@disciplineStatutEnInstruction": {
+    "description": "Libellé du statut de dossier disciplinaire « en instruction »."
+  },
+  "disciplineStatutSanctionne": "Sanctionné",
+  "@disciplineStatutSanctionne": {
+    "description": "Libellé du statut de dossier disciplinaire « sanctionné »."
+  },
+  "disciplineStatutClos": "Clos",
+  "@disciplineStatutClos": {
+    "description": "Libellé du statut de dossier disciplinaire « clos »."
+  },
+  "disciplineAlerteFinDePeriode": "Réintégration prévue le {date}",
+  "@disciplineAlerteFinDePeriode": {
+    "description": "Alerte de fin de période de sanction déterminée (RG-X-04).",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "disciplineAlerteRevuePeriodique": "Revue périodique nécessaire",
+  "@disciplineAlerteRevuePeriodique": {
+    "description": "Alerte de revue périodique pour une sanction à durée indéterminée (RG-X-04)."
+  },
+  "disciplineDetailTitre": "Dossier disciplinaire",
+  "@disciplineDetailTitre": {
+    "description": "Titre de l'écran fiche d'un dossier disciplinaire."
+  },
+  "disciplineIntrouvable": "Ce dossier disciplinaire est introuvable.",
+  "@disciplineIntrouvable": {
+    "description": "Corps de l'écran fiche quand le dossier n'existe pas (ou plus)."
+  },
+  "disciplineOuvertLe": "Ouvert le {date}",
+  "@disciplineOuvertLe": {
+    "description": "Date d'ouverture d'un dossier disciplinaire.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "disciplineCommissionTitre": "Commission instructrice",
+  "@disciplineCommissionTitre": {
+    "description": "Titre de la section commission de la fiche d'un dossier disciplinaire."
+  },
+  "disciplineCommissionAucune": "Aucune commission assignée.",
+  "@disciplineCommissionAucune": {
+    "description": "État vide de la section commission d'un dossier disciplinaire."
+  },
+  "disciplineCommissionAssignerBouton": "Assigner une commission",
+  "@disciplineCommissionAssignerBouton": {
+    "description": "Bouton d'assignation d'une commission à un dossier disciplinaire."
+  },
+  "disciplineCommissionAssignerTitre": "Assigner une commission",
+  "@disciplineCommissionAssignerTitre": {
+    "description": "Titre du dialogue d'assignation d'une commission."
+  },
+  "disciplineCommissionCreerBouton": "Créer une nouvelle commission",
+  "@disciplineCommissionCreerBouton": {
+    "description": "Bouton de création d'une nouvelle commission depuis le dialogue d'assignation."
+  },
+  "disciplineCommissionCreerTitre": "Créer une commission",
+  "@disciplineCommissionCreerTitre": {
+    "description": "Titre du dialogue de création d'une commission disciplinaire."
+  },
+  "disciplineChampNomCommission": "Nom de la commission",
+  "@disciplineChampNomCommission": {
+    "description": "Libellé du champ nom lors de la création d'une commission disciplinaire."
+  },
+  "disciplineCommissionMembresTitre": "Membres de la commission",
+  "@disciplineCommissionMembresTitre": {
+    "description": "Titre de la section membres d'une commission disciplinaire."
+  },
+  "disciplineCommissionAjouterMembreTooltip": "Ajouter un membre",
+  "@disciplineCommissionAjouterMembreTooltip": {
+    "description": "Infobulle du bouton d'ajout d'un membre à une commission disciplinaire."
+  },
+  "disciplinePiecesTitre": "Pièces du dossier",
+  "@disciplinePiecesTitre": {
+    "description": "Titre de la section pièces d'un dossier disciplinaire."
+  },
+  "disciplinePiecesAucune": "Aucune pièce versée.",
+  "@disciplinePiecesAucune": {
+    "description": "État vide de la section pièces d'un dossier disciplinaire."
+  },
+  "disciplinePieceAjouterTooltip": "Ajouter une pièce",
+  "@disciplinePieceAjouterTooltip": {
+    "description": "Infobulle du bouton d'ajout d'une pièce à un dossier disciplinaire."
+  },
+  "disciplinePieceAjouterTitre": "Ajouter une pièce",
+  "@disciplinePieceAjouterTitre": {
+    "description": "Titre du dialogue d'ajout d'une pièce à un dossier disciplinaire."
+  },
+  "disciplinePieceChampNature": "Nature de la pièce",
+  "@disciplinePieceChampNature": {
+    "description": "Libellé du sélecteur de nature d'une pièce de dossier disciplinaire."
+  },
+  "disciplinePieceNatureTemoignage": "Témoignage",
+  "@disciplinePieceNatureTemoignage": {
+    "description": "Libellé de la nature de pièce « témoignage »."
+  },
+  "disciplinePieceNaturePreuve": "Preuve",
+  "@disciplinePieceNaturePreuve": {
+    "description": "Libellé de la nature de pièce « preuve »."
+  },
+  "disciplinePieceChampContenu": "Contenu (texte)",
+  "@disciplinePieceChampContenu": {
+    "description": "Libellé du champ contenu textuel d'une pièce de dossier disciplinaire."
+  },
+  "disciplineDecisionTitre": "Décision",
+  "@disciplineDecisionTitre": {
+    "description": "Titre de la section décision d'un dossier disciplinaire."
+  },
+  "disciplineChampDecision": "Décision motivée",
+  "@disciplineChampDecision": {
+    "description": "Libellé du champ décision motivée d'un dossier disciplinaire."
+  },
+  "disciplineChampDureeSanction": "Durée de la sanction en jours (vide = indéterminée)",
+  "@disciplineChampDureeSanction": {
+    "description": "Libellé du champ durée de sanction, en jours, lors du prononcé d'une décision."
+  },
+  "disciplineChampSuspendreMinisteres": "Suspendre les affectations ministérielles actives",
+  "@disciplineChampSuspendreMinisteres": {
+    "description": "Libellé de la case à cocher de suspension des ministères (RG-X-03)."
+  },
+  "disciplinePrononcerBouton": "Prononcer la décision",
+  "@disciplinePrononcerBouton": {
+    "description": "Bouton de prononcé de la décision d'un dossier disciplinaire."
+  },
+  "disciplineDecisionRendueLe": "Décision rendue le {date}",
+  "@disciplineDecisionRendueLe": {
+    "description": "Date à laquelle la décision d'un dossier disciplinaire a été rendue.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "disciplineCloturerBouton": "Clôturer / Réintégrer",
+  "@disciplineCloturerBouton": {
+    "description": "Bouton de clôture et réintégration d'un dossier disciplinaire sanctionné (RG-X-04)."
+  },
+  "disciplineDossierClosNote": "Dossier clos — le fidèle a retrouvé son statut antérieur.",
+  "@disciplineDossierClosNote": {
+    "description": "Note affichée sur un dossier disciplinaire clos."
+  },
+  "disciplineDureeIndeterminee": "Durée indéterminée",
+  "@disciplineDureeIndeterminee": {
+    "description": "Libellé affiché quand une sanction n'a pas de durée déterminée."
+  },
+  "disciplineDureeJours": "{jours} jour(s)",
+  "@disciplineDureeJours": {
+    "description": "Durée d'une sanction en jours.",
+    "placeholders": {
+      "jours": {
+        "type": "int"
+      }
+    }
   }
 }

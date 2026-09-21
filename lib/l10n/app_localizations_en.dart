@@ -595,4 +595,155 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get propositionsVoterEnTantQue => 'Vote/submit as';
+
+  @override
+  String get disciplineTitre => 'Disciplinary files';
+
+  @override
+  String get disciplineHistoriqueTitre => 'Confidential disciplinary history';
+
+  @override
+  String get disciplineAucunDossier => 'No disciplinary file.';
+
+  @override
+  String get disciplineAucunDossierFidele =>
+      'No disciplinary file for this member.';
+
+  @override
+  String get disciplineOuvrirTooltip => 'Open a file';
+
+  @override
+  String get disciplineOuvrirTitre => 'Open a disciplinary file';
+
+  @override
+  String get disciplineChampFideleMisEnCause => 'Member concerned';
+
+  @override
+  String get disciplineChampNatureFaute => 'Nature of the offense';
+
+  @override
+  String get disciplineChampRoleActeur => 'Acting role';
+
+  @override
+  String get disciplineChampActeur => 'Opened by (optional — committee member)';
+
+  @override
+  String get disciplineActeurAucun => 'None';
+
+  @override
+  String get disciplineStatutEnInstruction => 'Under investigation';
+
+  @override
+  String get disciplineStatutSanctionne => 'Sanctioned';
+
+  @override
+  String get disciplineStatutClos => 'Closed';
+
+  @override
+  String disciplineAlerteFinDePeriode(String date) {
+    return 'Reinstatement due on $date';
+  }
+
+  @override
+  String get disciplineAlerteRevuePeriodique => 'Periodic review required';
+
+  @override
+  String get disciplineDetailTitre => 'Disciplinary file';
+
+  @override
+  String get disciplineIntrouvable =>
+      'This disciplinary file could not be found.';
+
+  @override
+  String disciplineOuvertLe(String date) {
+    return 'Opened on $date';
+  }
+
+  @override
+  String get disciplineCommissionTitre => 'Investigating committee';
+
+  @override
+  String get disciplineCommissionAucune => 'No committee assigned.';
+
+  @override
+  String get disciplineCommissionAssignerBouton => 'Assign a committee';
+
+  @override
+  String get disciplineCommissionAssignerTitre => 'Assign a committee';
+
+  @override
+  String get disciplineCommissionCreerBouton => 'Create a new committee';
+
+  @override
+  String get disciplineCommissionCreerTitre => 'Create a committee';
+
+  @override
+  String get disciplineChampNomCommission => 'Committee name';
+
+  @override
+  String get disciplineCommissionMembresTitre => 'Committee members';
+
+  @override
+  String get disciplineCommissionAjouterMembreTooltip => 'Add a member';
+
+  @override
+  String get disciplinePiecesTitre => 'File records';
+
+  @override
+  String get disciplinePiecesAucune => 'No record submitted.';
+
+  @override
+  String get disciplinePieceAjouterTooltip => 'Add a record';
+
+  @override
+  String get disciplinePieceAjouterTitre => 'Add a record';
+
+  @override
+  String get disciplinePieceChampNature => 'Record type';
+
+  @override
+  String get disciplinePieceNatureTemoignage => 'Testimony';
+
+  @override
+  String get disciplinePieceNaturePreuve => 'Evidence';
+
+  @override
+  String get disciplinePieceChampContenu => 'Content (text)';
+
+  @override
+  String get disciplineDecisionTitre => 'Decision';
+
+  @override
+  String get disciplineChampDecision => 'Motivated decision';
+
+  @override
+  String get disciplineChampDureeSanction =>
+      'Sanction duration in days (blank = indefinite)';
+
+  @override
+  String get disciplineChampSuspendreMinisteres =>
+      'Suspend active ministry assignments';
+
+  @override
+  String get disciplinePrononcerBouton => 'Issue the decision';
+
+  @override
+  String disciplineDecisionRendueLe(String date) {
+    return 'Decision issued on $date';
+  }
+
+  @override
+  String get disciplineCloturerBouton => 'Close / Reinstate';
+
+  @override
+  String get disciplineDossierClosNote =>
+      'File closed — the member has regained their previous status.';
+
+  @override
+  String get disciplineDureeIndeterminee => 'Indefinite duration';
+
+  @override
+  String disciplineDureeJours(int jours) {
+    return '$jours day(s)';
+  }
 }

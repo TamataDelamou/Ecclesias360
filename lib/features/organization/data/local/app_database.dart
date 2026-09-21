@@ -99,6 +99,7 @@ const List<(String code, String libelle, String typeRegle, String? criteresJson)
 const List<(String typeDocument, String modeleNumerotation)> nomenclaturesArchivageDeDepart = [
   ('proces_verbal_comite', 'PV-{noeud}-{annee}-{sequence}'),
   ('lettre_recommandation', 'LR-{noeud}-{annee}-{sequence}'),
+  ('piece_dossier_disciplinaire', 'PD-{noeud}-{annee}-{sequence}'),
 ];
 
 /// RG-X-02 — natures de faute de départ, référentiel fermé et extensible.
@@ -265,6 +266,10 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(dossiersDisciplinaires);
             await m.createTable(piecesDossier);
             await _seedNaturesFauteStandards();
+            // Backfill : la nomenclature de la pièce de dossier disciplinaire
+            // (RG-X-06) s'ajoute à la liste existante (idempotent,
+            // insertOrIgnore) plutôt que de dupliquer l'appel de seed.
+            await _seedNomenclaturesArchivageDeDepart();
           }
         },
         beforeOpen: (details) async {
