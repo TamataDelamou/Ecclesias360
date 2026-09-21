@@ -992,4 +992,259 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get financesEcheanceHonorerBouton => 'Honorer';
+
+  @override
+  String get patrimoineTitre => 'Biens';
+
+  @override
+  String get patrimoineCampagnesTitre => 'Campagnes d\'inventaire';
+
+  @override
+  String get patrimoineAjouterTooltip => 'Ajouter un bien';
+
+  @override
+  String get patrimoineAucunBien => 'Aucun bien enregistré.';
+
+  @override
+  String get patrimoineAlerteSeuilTitre =>
+      'Biens sous le seuil d\'alerte de stock';
+
+  @override
+  String get patrimoineAjouterTitre => 'Ajouter un bien';
+
+  @override
+  String get patrimoineChampIdInventaire => 'Identifiant d\'inventaire';
+
+  @override
+  String get patrimoineChampCategorie => 'Catégorie';
+
+  @override
+  String get patrimoineChampDesignation => 'Désignation';
+
+  @override
+  String get patrimoineChampValeurAcquisition => 'Valeur d\'acquisition';
+
+  @override
+  String get patrimoineChampValeurVenale => 'Valeur vénale';
+
+  @override
+  String get patrimoineChampDateAcquisition => 'Date d\'acquisition';
+
+  @override
+  String get patrimoineChampSeuilAlerteStock => 'Seuil d\'alerte de stock';
+
+  @override
+  String get patrimoineEtatNeuf => 'Neuf';
+
+  @override
+  String get patrimoineEtatBon => 'Bon';
+
+  @override
+  String get patrimoineEtatAReparer => 'À réparer';
+
+  @override
+  String get patrimoineEtatHorsService => 'Hors service';
+
+  @override
+  String get patrimoineEtatCede => 'Cédé';
+
+  @override
+  String get patrimoineFicheTitre => 'Fiche du bien';
+
+  @override
+  String get patrimoineIntrouvable => 'Bien introuvable.';
+
+  @override
+  String get patrimoineSignalerEtatTitre => 'Signaler l\'état du bien';
+
+  @override
+  String get patrimoineChampEtat => 'État';
+
+  @override
+  String get patrimoineSignalerEtatBouton => 'Signaler l\'état';
+
+  @override
+  String get patrimoineSortirTitre => 'Sortir le bien du patrimoine';
+
+  @override
+  String get patrimoineChampTypeSortie => 'Type de sortie';
+
+  @override
+  String get patrimoineTypeSortieCession => 'Cession';
+
+  @override
+  String get patrimoineTypeSortieDon => 'Don';
+
+  @override
+  String get patrimoineTypeSortieMiseAuRebut => 'Mise au rebut';
+
+  @override
+  String get patrimoineChampRoleActeur => 'Rôle de l\'acteur';
+
+  @override
+  String get patrimoineChampValidePar => 'Validé par';
+
+  @override
+  String get patrimoineChampMotif => 'Motif';
+
+  @override
+  String get patrimoineSortirBouton => 'Sortir le bien';
+
+  @override
+  String get patrimoineReserverTitre => 'Réserver le bien';
+
+  @override
+  String get patrimoineChampObjetReservation => 'Objet de la réservation';
+
+  @override
+  String get patrimoineObjetCulte => 'Culte';
+
+  @override
+  String get patrimoineObjetEvenement => 'Événement';
+
+  @override
+  String get patrimoineObjetAutre => 'Autre';
+
+  @override
+  String get patrimoineAucunCultePourReservation =>
+      'Aucun culte disponible pour ce nœud.';
+
+  @override
+  String get patrimoineChampCulte => 'Culte';
+
+  @override
+  String get patrimoineChampObjetLibre => 'Description de l\'objet';
+
+  @override
+  String get patrimoineChampDateDebut => 'Date de début';
+
+  @override
+  String get patrimoineChampDateFin => 'Date de fin';
+
+  @override
+  String get patrimoineReserverBouton => 'Réserver';
+
+  @override
+  String get patrimoineMouvementAjouterTitre => 'Ajouter un mouvement de stock';
+
+  @override
+  String get patrimoineChampTypeMouvement => 'Type de mouvement';
+
+  @override
+  String get patrimoineMouvementEntree => 'Entrée';
+
+  @override
+  String get patrimoineMouvementSortie => 'Sortie';
+
+  @override
+  String get patrimoineChampQuantite => 'Quantité';
+
+  @override
+  String get patrimoineStockTitre => 'Gestion de stock';
+
+  @override
+  String get patrimoineMouvementAjouterBouton => 'Ajouter un mouvement';
+
+  @override
+  String get patrimoineReservationsTitre => 'Réservations';
+
+  @override
+  String get patrimoineReservationsAucune => 'Aucune réservation enregistrée.';
+
+  @override
+  String get patrimoineCampagneDemarrerTooltip => 'Démarrer une campagne';
+
+  @override
+  String get patrimoineCampagnesAucune =>
+      'Aucune campagne d\'inventaire enregistrée.';
+
+  @override
+  String get patrimoineCampagneEnCours => 'En cours';
+
+  @override
+  String get patrimoineCampagneCloturee => 'Clôturée';
+
+  @override
+  String get patrimoineCampagneDemarrerTitre =>
+      'Démarrer une campagne d\'inventaire';
+
+  @override
+  String get patrimoineChampLibelleCampagne => 'Libellé de la campagne';
+
+  @override
+  String get patrimoineCampagneDemarrerBouton => 'Démarrer';
+
+  @override
+  String get patrimoineCampagneFicheTitre => 'Fiche de la campagne';
+
+  @override
+  String get patrimoineCampagneIntrouvable => 'Campagne introuvable.';
+
+  @override
+  String get patrimoineCampagneCloturerTitre => 'Clôturer la campagne';
+
+  @override
+  String get patrimoineCampagneCloturerConfirmation =>
+      'Cette action est irréversible : aucun nouveau pointage ne pourra être enregistré.';
+
+  @override
+  String get patrimoineCampagneCloturerBouton => 'Clôturer la campagne';
+
+  @override
+  String get patrimoineCampagneAjouterPointageTitre => 'Ajouter un pointage';
+
+  @override
+  String get patrimoineChampBien => 'Bien';
+
+  @override
+  String get patrimoineChampEtatConstate => 'État constaté';
+
+  @override
+  String get patrimoineChampQuantiteConstatee => 'Quantité constatée';
+
+  @override
+  String get patrimoineChampCommentaire => 'Commentaire';
+
+  @override
+  String get patrimoineCampagneAjouterPointageBouton =>
+      'Enregistrer le pointage';
+
+  @override
+  String get patrimoineCampagneAjouterPointageTooltip => 'Ajouter un pointage';
+
+  @override
+  String get patrimoineCampagnePointagesTitre => 'Pointages';
+
+  @override
+  String get patrimoineCampagnePointagesAucun => 'Aucun pointage enregistré.';
+
+  @override
+  String patrimoineAcquisLe(String date) {
+    return 'Acquis le $date';
+  }
+
+  @override
+  String patrimoineSortiLe(String date) {
+    return 'Sorti le $date';
+  }
+
+  @override
+  String patrimoineQuantiteActuelle(int quantite) {
+    return 'Quantité actuelle : $quantite';
+  }
+
+  @override
+  String patrimoineSeuilAlerte(int seuil) {
+    return 'Seuil d\'alerte : $seuil';
+  }
+
+  @override
+  String patrimoineCampagneDemarreeLe(String date) {
+    return 'Démarrée le $date';
+  }
+
+  @override
+  String patrimoineCampagneClotureeLe(String date) {
+    return 'Clôturée le $date';
+  }
 }

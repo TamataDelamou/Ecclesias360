@@ -1955,6 +1955,480 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Honorer'**
   String get financesEcheanceHonorerBouton;
+
+  /// Titre de l'écran d'inventaire des biens, et libellé du bouton d'accès depuis la fiche nœud (Module XX).
+  ///
+  /// In fr, this message translates to:
+  /// **'Biens'**
+  String get patrimoineTitre;
+
+  /// Titre de l'écran de liste des campagnes d'inventaire et tooltip d'accès depuis l'écran des biens (Module XX, RG-XX-04).
+  ///
+  /// In fr, this message translates to:
+  /// **'Campagnes d\'inventaire'**
+  String get patrimoineCampagnesTitre;
+
+  /// Tooltip du bouton d'ajout d'un bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un bien'**
+  String get patrimoineAjouterTooltip;
+
+  /// Message affiché quand la liste des biens d'un nœud est vide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun bien enregistré.'**
+  String get patrimoineAucunBien;
+
+  /// Titre de la section des biens dont la quantité en stock est sous le seuil d'alerte (RG-XX-05).
+  ///
+  /// In fr, this message translates to:
+  /// **'Biens sous le seuil d\'alerte de stock'**
+  String get patrimoineAlerteSeuilTitre;
+
+  /// Titre de la boîte de dialogue d'ajout d'un bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un bien'**
+  String get patrimoineAjouterTitre;
+
+  /// Libellé du champ identifiant d'inventaire d'un bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Identifiant d\'inventaire'**
+  String get patrimoineChampIdInventaire;
+
+  /// Libellé du champ catégorie d'un bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégorie'**
+  String get patrimoineChampCategorie;
+
+  /// Libellé du champ désignation d'un bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désignation'**
+  String get patrimoineChampDesignation;
+
+  /// Libellé du champ valeur d'acquisition d'un bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valeur d\'acquisition'**
+  String get patrimoineChampValeurAcquisition;
+
+  /// Libellé du champ valeur vénale d'un bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valeur vénale'**
+  String get patrimoineChampValeurVenale;
+
+  /// Libellé du champ date d'acquisition d'un bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date d\'acquisition'**
+  String get patrimoineChampDateAcquisition;
+
+  /// Libellé du champ seuil d'alerte de stock d'un bien à gestion de stock (RG-XX-05).
+  ///
+  /// In fr, this message translates to:
+  /// **'Seuil d\'alerte de stock'**
+  String get patrimoineChampSeuilAlerteStock;
+
+  /// Libellé de l'état d'un bien « neuf ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Neuf'**
+  String get patrimoineEtatNeuf;
+
+  /// Libellé de l'état d'un bien « bon ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Bon'**
+  String get patrimoineEtatBon;
+
+  /// Libellé de l'état d'un bien « à réparer ».
+  ///
+  /// In fr, this message translates to:
+  /// **'À réparer'**
+  String get patrimoineEtatAReparer;
+
+  /// Libellé de l'état d'un bien « hors service ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Hors service'**
+  String get patrimoineEtatHorsService;
+
+  /// Libellé de l'état d'un bien sorti définitivement du patrimoine (RG-XX-02).
+  ///
+  /// In fr, this message translates to:
+  /// **'Cédé'**
+  String get patrimoineEtatCede;
+
+  /// Titre de l'écran de fiche d'un bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fiche du bien'**
+  String get patrimoineFicheTitre;
+
+  /// Message affiché quand le bien demandé n'existe pas.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bien introuvable.'**
+  String get patrimoineIntrouvable;
+
+  /// Titre de la boîte de dialogue de signalement d'état d'un bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signaler l\'état du bien'**
+  String get patrimoineSignalerEtatTitre;
+
+  /// Libellé du champ état d'un bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'État'**
+  String get patrimoineChampEtat;
+
+  /// Bouton de signalement d'état d'un bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signaler l\'état'**
+  String get patrimoineSignalerEtatBouton;
+
+  /// Titre de la boîte de dialogue de sortie définitive d'un bien (RG-XX-02).
+  ///
+  /// In fr, this message translates to:
+  /// **'Sortir le bien du patrimoine'**
+  String get patrimoineSortirTitre;
+
+  /// Libellé du champ type de sortie d'un bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type de sortie'**
+  String get patrimoineChampTypeSortie;
+
+  /// Libellé du type de sortie « cession ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Cession'**
+  String get patrimoineTypeSortieCession;
+
+  /// Libellé du type de sortie « don ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Don'**
+  String get patrimoineTypeSortieDon;
+
+  /// Libellé du type de sortie « mise au rebut ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Mise au rebut'**
+  String get patrimoineTypeSortieMiseAuRebut;
+
+  /// Libellé du champ rôle de l'acteur validant une sortie de bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rôle de l\'acteur'**
+  String get patrimoineChampRoleActeur;
+
+  /// Libellé du champ fidèle validant une sortie de bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Validé par'**
+  String get patrimoineChampValidePar;
+
+  /// Libellé du champ motif.
+  ///
+  /// In fr, this message translates to:
+  /// **'Motif'**
+  String get patrimoineChampMotif;
+
+  /// Bouton de confirmation de sortie d'un bien du patrimoine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sortir le bien'**
+  String get patrimoineSortirBouton;
+
+  /// Titre de la boîte de dialogue de réservation d'un bien (RG-XX-03).
+  ///
+  /// In fr, this message translates to:
+  /// **'Réserver le bien'**
+  String get patrimoineReserverTitre;
+
+  /// Libellé du champ objet d'une réservation de bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Objet de la réservation'**
+  String get patrimoineChampObjetReservation;
+
+  /// Libellé de l'objet de réservation « culte ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Culte'**
+  String get patrimoineObjetCulte;
+
+  /// Libellé de l'objet de réservation « événement ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Événement'**
+  String get patrimoineObjetEvenement;
+
+  /// Libellé de l'objet de réservation « autre ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Autre'**
+  String get patrimoineObjetAutre;
+
+  /// Message affiché quand aucun culte n'existe pour lier une réservation de type culte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun culte disponible pour ce nœud.'**
+  String get patrimoineAucunCultePourReservation;
+
+  /// Libellé du champ culte lié à une réservation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Culte'**
+  String get patrimoineChampCulte;
+
+  /// Libellé du champ description libre d'une réservation (événement ou autre).
+  ///
+  /// In fr, this message translates to:
+  /// **'Description de l\'objet'**
+  String get patrimoineChampObjetLibre;
+
+  /// Libellé du champ date de début d'une réservation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date de début'**
+  String get patrimoineChampDateDebut;
+
+  /// Libellé du champ date de fin d'une réservation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date de fin'**
+  String get patrimoineChampDateFin;
+
+  /// Bouton de confirmation d'une réservation de bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réserver'**
+  String get patrimoineReserverBouton;
+
+  /// Titre de la boîte de dialogue d'ajout d'un mouvement de stock (RG-XX-05).
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un mouvement de stock'**
+  String get patrimoineMouvementAjouterTitre;
+
+  /// Libellé du champ type d'un mouvement de stock.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type de mouvement'**
+  String get patrimoineChampTypeMouvement;
+
+  /// Libellé du type de mouvement de stock « entrée ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Entrée'**
+  String get patrimoineMouvementEntree;
+
+  /// Libellé du type de mouvement de stock « sortie ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Sortie'**
+  String get patrimoineMouvementSortie;
+
+  /// Libellé du champ quantité d'un mouvement de stock.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quantité'**
+  String get patrimoineChampQuantite;
+
+  /// Titre de la section de gestion de stock d'un bien (RG-XX-05).
+  ///
+  /// In fr, this message translates to:
+  /// **'Gestion de stock'**
+  String get patrimoineStockTitre;
+
+  /// Bouton d'ouverture de la boîte de dialogue d'ajout d'un mouvement de stock.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un mouvement'**
+  String get patrimoineMouvementAjouterBouton;
+
+  /// Titre de la section des réservations d'un bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réservations'**
+  String get patrimoineReservationsTitre;
+
+  /// Message affiché quand aucune réservation n'existe pour un bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune réservation enregistrée.'**
+  String get patrimoineReservationsAucune;
+
+  /// Tooltip du bouton de démarrage d'une campagne d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Démarrer une campagne'**
+  String get patrimoineCampagneDemarrerTooltip;
+
+  /// Message affiché quand la liste des campagnes d'inventaire d'un nœud est vide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune campagne d\'inventaire enregistrée.'**
+  String get patrimoineCampagnesAucune;
+
+  /// Libellé du statut d'une campagne d'inventaire en cours.
+  ///
+  /// In fr, this message translates to:
+  /// **'En cours'**
+  String get patrimoineCampagneEnCours;
+
+  /// Libellé du statut d'une campagne d'inventaire clôturée.
+  ///
+  /// In fr, this message translates to:
+  /// **'Clôturée'**
+  String get patrimoineCampagneCloturee;
+
+  /// Titre de la boîte de dialogue de démarrage d'une campagne d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Démarrer une campagne d\'inventaire'**
+  String get patrimoineCampagneDemarrerTitre;
+
+  /// Libellé du champ libellé d'une campagne d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Libellé de la campagne'**
+  String get patrimoineChampLibelleCampagne;
+
+  /// Bouton de confirmation de démarrage d'une campagne d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Démarrer'**
+  String get patrimoineCampagneDemarrerBouton;
+
+  /// Titre de l'écran de fiche d'une campagne d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fiche de la campagne'**
+  String get patrimoineCampagneFicheTitre;
+
+  /// Message affiché quand la campagne d'inventaire demandée n'existe pas.
+  ///
+  /// In fr, this message translates to:
+  /// **'Campagne introuvable.'**
+  String get patrimoineCampagneIntrouvable;
+
+  /// Titre de la boîte de dialogue de clôture d'une campagne d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Clôturer la campagne'**
+  String get patrimoineCampagneCloturerTitre;
+
+  /// Message de confirmation avant clôture d'une campagne d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette action est irréversible : aucun nouveau pointage ne pourra être enregistré.'**
+  String get patrimoineCampagneCloturerConfirmation;
+
+  /// Bouton de clôture d'une campagne d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Clôturer la campagne'**
+  String get patrimoineCampagneCloturerBouton;
+
+  /// Titre de la boîte de dialogue d'ajout d'un pointage d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un pointage'**
+  String get patrimoineCampagneAjouterPointageTitre;
+
+  /// Libellé du champ bien pointé lors d'une campagne d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bien'**
+  String get patrimoineChampBien;
+
+  /// Libellé du champ état constaté lors d'un pointage d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'État constaté'**
+  String get patrimoineChampEtatConstate;
+
+  /// Libellé du champ quantité constatée lors d'un pointage d'inventaire (biens à gestion de stock).
+  ///
+  /// In fr, this message translates to:
+  /// **'Quantité constatée'**
+  String get patrimoineChampQuantiteConstatee;
+
+  /// Libellé du champ commentaire d'un pointage d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commentaire'**
+  String get patrimoineChampCommentaire;
+
+  /// Bouton d'enregistrement d'un pointage d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer le pointage'**
+  String get patrimoineCampagneAjouterPointageBouton;
+
+  /// Tooltip du bouton d'ajout d'un pointage d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un pointage'**
+  String get patrimoineCampagneAjouterPointageTooltip;
+
+  /// Titre de la section des pointages d'une campagne d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pointages'**
+  String get patrimoineCampagnePointagesTitre;
+
+  /// Message affiché quand aucun pointage n'existe pour une campagne d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun pointage enregistré.'**
+  String get patrimoineCampagnePointagesAucun;
+
+  /// Date d'acquisition affichée sur la fiche d'un bien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Acquis le {date}'**
+  String patrimoineAcquisLe(String date);
+
+  /// Date de sortie définitive affichée sur la fiche d'un bien sorti (RG-XX-02).
+  ///
+  /// In fr, this message translates to:
+  /// **'Sorti le {date}'**
+  String patrimoineSortiLe(String date);
+
+  /// Quantité en stock actuelle d'un bien, recalculée à la lecture (RG-XX-05).
+  ///
+  /// In fr, this message translates to:
+  /// **'Quantité actuelle : {quantite}'**
+  String patrimoineQuantiteActuelle(int quantite);
+
+  /// Seuil d'alerte de stock configuré pour un bien (RG-XX-05).
+  ///
+  /// In fr, this message translates to:
+  /// **'Seuil d\'alerte : {seuil}'**
+  String patrimoineSeuilAlerte(int seuil);
+
+  /// Date de démarrage affichée sur la fiche d'une campagne d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Démarrée le {date}'**
+  String patrimoineCampagneDemarreeLe(String date);
+
+  /// Date de clôture affichée sur la fiche d'une campagne d'inventaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Clôturée le {date}'**
+  String patrimoineCampagneClotureeLe(String date);
 }
 
 class _AppLocalizationsDelegate

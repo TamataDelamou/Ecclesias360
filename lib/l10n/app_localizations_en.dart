@@ -987,4 +987,255 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get financesEcheanceHonorerBouton => 'Honor';
+
+  @override
+  String get patrimoineTitre => 'Assets';
+
+  @override
+  String get patrimoineCampagnesTitre => 'Inventory campaigns';
+
+  @override
+  String get patrimoineAjouterTooltip => 'Add an asset';
+
+  @override
+  String get patrimoineAucunBien => 'No assets recorded.';
+
+  @override
+  String get patrimoineAlerteSeuilTitre => 'Assets below stock alert threshold';
+
+  @override
+  String get patrimoineAjouterTitre => 'Add an asset';
+
+  @override
+  String get patrimoineChampIdInventaire => 'Inventory ID';
+
+  @override
+  String get patrimoineChampCategorie => 'Category';
+
+  @override
+  String get patrimoineChampDesignation => 'Description';
+
+  @override
+  String get patrimoineChampValeurAcquisition => 'Acquisition value';
+
+  @override
+  String get patrimoineChampValeurVenale => 'Market value';
+
+  @override
+  String get patrimoineChampDateAcquisition => 'Acquisition date';
+
+  @override
+  String get patrimoineChampSeuilAlerteStock => 'Stock alert threshold';
+
+  @override
+  String get patrimoineEtatNeuf => 'New';
+
+  @override
+  String get patrimoineEtatBon => 'Good';
+
+  @override
+  String get patrimoineEtatAReparer => 'Needs repair';
+
+  @override
+  String get patrimoineEtatHorsService => 'Out of service';
+
+  @override
+  String get patrimoineEtatCede => 'Disposed of';
+
+  @override
+  String get patrimoineFicheTitre => 'Asset record';
+
+  @override
+  String get patrimoineIntrouvable => 'Asset not found.';
+
+  @override
+  String get patrimoineSignalerEtatTitre => 'Report asset condition';
+
+  @override
+  String get patrimoineChampEtat => 'Condition';
+
+  @override
+  String get patrimoineSignalerEtatBouton => 'Report condition';
+
+  @override
+  String get patrimoineSortirTitre => 'Remove asset from inventory';
+
+  @override
+  String get patrimoineChampTypeSortie => 'Removal type';
+
+  @override
+  String get patrimoineTypeSortieCession => 'Transfer';
+
+  @override
+  String get patrimoineTypeSortieDon => 'Donation';
+
+  @override
+  String get patrimoineTypeSortieMiseAuRebut => 'Scrapping';
+
+  @override
+  String get patrimoineChampRoleActeur => 'Actor role';
+
+  @override
+  String get patrimoineChampValidePar => 'Validated by';
+
+  @override
+  String get patrimoineChampMotif => 'Reason';
+
+  @override
+  String get patrimoineSortirBouton => 'Remove asset';
+
+  @override
+  String get patrimoineReserverTitre => 'Reserve the asset';
+
+  @override
+  String get patrimoineChampObjetReservation => 'Reservation purpose';
+
+  @override
+  String get patrimoineObjetCulte => 'Service';
+
+  @override
+  String get patrimoineObjetEvenement => 'Event';
+
+  @override
+  String get patrimoineObjetAutre => 'Other';
+
+  @override
+  String get patrimoineAucunCultePourReservation =>
+      'No service available for this node.';
+
+  @override
+  String get patrimoineChampCulte => 'Service';
+
+  @override
+  String get patrimoineChampObjetLibre => 'Description';
+
+  @override
+  String get patrimoineChampDateDebut => 'Start date';
+
+  @override
+  String get patrimoineChampDateFin => 'End date';
+
+  @override
+  String get patrimoineReserverBouton => 'Reserve';
+
+  @override
+  String get patrimoineMouvementAjouterTitre => 'Add a stock movement';
+
+  @override
+  String get patrimoineChampTypeMouvement => 'Movement type';
+
+  @override
+  String get patrimoineMouvementEntree => 'In';
+
+  @override
+  String get patrimoineMouvementSortie => 'Out';
+
+  @override
+  String get patrimoineChampQuantite => 'Quantity';
+
+  @override
+  String get patrimoineStockTitre => 'Stock management';
+
+  @override
+  String get patrimoineMouvementAjouterBouton => 'Add a movement';
+
+  @override
+  String get patrimoineReservationsTitre => 'Reservations';
+
+  @override
+  String get patrimoineReservationsAucune => 'No reservations recorded.';
+
+  @override
+  String get patrimoineCampagneDemarrerTooltip => 'Start a campaign';
+
+  @override
+  String get patrimoineCampagnesAucune => 'No inventory campaigns recorded.';
+
+  @override
+  String get patrimoineCampagneEnCours => 'In progress';
+
+  @override
+  String get patrimoineCampagneCloturee => 'Closed';
+
+  @override
+  String get patrimoineCampagneDemarrerTitre => 'Start an inventory campaign';
+
+  @override
+  String get patrimoineChampLibelleCampagne => 'Campaign name';
+
+  @override
+  String get patrimoineCampagneDemarrerBouton => 'Start';
+
+  @override
+  String get patrimoineCampagneFicheTitre => 'Campaign record';
+
+  @override
+  String get patrimoineCampagneIntrouvable => 'Campaign not found.';
+
+  @override
+  String get patrimoineCampagneCloturerTitre => 'Close the campaign';
+
+  @override
+  String get patrimoineCampagneCloturerConfirmation =>
+      'This action is irreversible: no new count can be recorded afterwards.';
+
+  @override
+  String get patrimoineCampagneCloturerBouton => 'Close the campaign';
+
+  @override
+  String get patrimoineCampagneAjouterPointageTitre => 'Add a count';
+
+  @override
+  String get patrimoineChampBien => 'Asset';
+
+  @override
+  String get patrimoineChampEtatConstate => 'Observed condition';
+
+  @override
+  String get patrimoineChampQuantiteConstatee => 'Observed quantity';
+
+  @override
+  String get patrimoineChampCommentaire => 'Comment';
+
+  @override
+  String get patrimoineCampagneAjouterPointageBouton => 'Save the count';
+
+  @override
+  String get patrimoineCampagneAjouterPointageTooltip => 'Add a count';
+
+  @override
+  String get patrimoineCampagnePointagesTitre => 'Counts';
+
+  @override
+  String get patrimoineCampagnePointagesAucun => 'No counts recorded.';
+
+  @override
+  String patrimoineAcquisLe(String date) {
+    return 'Acquired on $date';
+  }
+
+  @override
+  String patrimoineSortiLe(String date) {
+    return 'Removed on $date';
+  }
+
+  @override
+  String patrimoineQuantiteActuelle(int quantite) {
+    return 'Current quantity: $quantite';
+  }
+
+  @override
+  String patrimoineSeuilAlerte(int seuil) {
+    return 'Alert threshold: $seuil';
+  }
+
+  @override
+  String patrimoineCampagneDemarreeLe(String date) {
+    return 'Started on $date';
+  }
+
+  @override
+  String patrimoineCampagneClotureeLe(String date) {
+    return 'Closed on $date';
+  }
 }

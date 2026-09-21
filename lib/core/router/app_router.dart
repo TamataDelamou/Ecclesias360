@@ -21,6 +21,10 @@ import '../../features/finances/presentation/engagements_list_screen.dart';
 import '../../features/finances/presentation/projet_detail_screen.dart';
 import '../../features/finances/presentation/projets_list_screen.dart';
 import '../../features/finances/presentation/tresoriers_noeud_screen.dart';
+import '../../features/patrimoine/presentation/bien_detail_screen.dart';
+import '../../features/patrimoine/presentation/biens_list_screen.dart';
+import '../../features/patrimoine/presentation/campagne_detail_screen.dart';
+import '../../features/patrimoine/presentation/campagnes_inventaire_screen.dart';
 import '../../features/dons_spirituels/presentation/don_evaluation_form_screen.dart';
 import '../../features/dons_spirituels/presentation/don_historique_screen.dart';
 import '../../features/dons_spirituels/presentation/don_ministeres_compatibles_screen.dart';
@@ -358,6 +362,34 @@ final GoRouter appRouter = GoRouter(
       pageBuilder: (context, state) => sharedAxisPage(
         key: state.pageKey,
         child: EngagementsListScreen(fideleId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/organisation/:id/biens',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: BiensListScreen(noeudId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/biens/:id',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: BienDetailScreen(bienId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/organisation/:id/campagnes-inventaire',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: CampagnesInventaireScreen(noeudId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/campagnes-inventaire/:id',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: CampagneDetailScreen(campagneId: state.pathParameters['id']!),
       ),
     ),
   ],

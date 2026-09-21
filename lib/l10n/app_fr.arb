@@ -1339,5 +1339,351 @@
   "financesEcheanceHonorerBouton": "Honorer",
   "@financesEcheanceHonorerBouton": {
     "description": "Bouton d'honoration d'une échéance (saisit la contribution correspondante et la lie)."
+  },
+  "patrimoineTitre": "Biens",
+  "@patrimoineTitre": {
+    "description": "Titre de l'écran d'inventaire des biens, et libellé du bouton d'accès depuis la fiche nœud (Module XX)."
+  },
+  "patrimoineCampagnesTitre": "Campagnes d'inventaire",
+  "@patrimoineCampagnesTitre": {
+    "description": "Titre de l'écran de liste des campagnes d'inventaire et tooltip d'accès depuis l'écran des biens (Module XX, RG-XX-04)."
+  },
+  "patrimoineAjouterTooltip": "Ajouter un bien",
+  "@patrimoineAjouterTooltip": {
+    "description": "Tooltip du bouton d'ajout d'un bien."
+  },
+  "patrimoineAucunBien": "Aucun bien enregistré.",
+  "@patrimoineAucunBien": {
+    "description": "Message affiché quand la liste des biens d'un nœud est vide."
+  },
+  "patrimoineAlerteSeuilTitre": "Biens sous le seuil d'alerte de stock",
+  "@patrimoineAlerteSeuilTitre": {
+    "description": "Titre de la section des biens dont la quantité en stock est sous le seuil d'alerte (RG-XX-05)."
+  },
+  "patrimoineAjouterTitre": "Ajouter un bien",
+  "@patrimoineAjouterTitre": {
+    "description": "Titre de la boîte de dialogue d'ajout d'un bien."
+  },
+  "patrimoineChampIdInventaire": "Identifiant d'inventaire",
+  "@patrimoineChampIdInventaire": {
+    "description": "Libellé du champ identifiant d'inventaire d'un bien."
+  },
+  "patrimoineChampCategorie": "Catégorie",
+  "@patrimoineChampCategorie": {
+    "description": "Libellé du champ catégorie d'un bien."
+  },
+  "patrimoineChampDesignation": "Désignation",
+  "@patrimoineChampDesignation": {
+    "description": "Libellé du champ désignation d'un bien."
+  },
+  "patrimoineChampValeurAcquisition": "Valeur d'acquisition",
+  "@patrimoineChampValeurAcquisition": {
+    "description": "Libellé du champ valeur d'acquisition d'un bien."
+  },
+  "patrimoineChampValeurVenale": "Valeur vénale",
+  "@patrimoineChampValeurVenale": {
+    "description": "Libellé du champ valeur vénale d'un bien."
+  },
+  "patrimoineChampDateAcquisition": "Date d'acquisition",
+  "@patrimoineChampDateAcquisition": {
+    "description": "Libellé du champ date d'acquisition d'un bien."
+  },
+  "patrimoineChampSeuilAlerteStock": "Seuil d'alerte de stock",
+  "@patrimoineChampSeuilAlerteStock": {
+    "description": "Libellé du champ seuil d'alerte de stock d'un bien à gestion de stock (RG-XX-05)."
+  },
+  "patrimoineEtatNeuf": "Neuf",
+  "@patrimoineEtatNeuf": {
+    "description": "Libellé de l'état d'un bien « neuf »."
+  },
+  "patrimoineEtatBon": "Bon",
+  "@patrimoineEtatBon": {
+    "description": "Libellé de l'état d'un bien « bon »."
+  },
+  "patrimoineEtatAReparer": "À réparer",
+  "@patrimoineEtatAReparer": {
+    "description": "Libellé de l'état d'un bien « à réparer »."
+  },
+  "patrimoineEtatHorsService": "Hors service",
+  "@patrimoineEtatHorsService": {
+    "description": "Libellé de l'état d'un bien « hors service »."
+  },
+  "patrimoineEtatCede": "Cédé",
+  "@patrimoineEtatCede": {
+    "description": "Libellé de l'état d'un bien sorti définitivement du patrimoine (RG-XX-02)."
+  },
+  "patrimoineFicheTitre": "Fiche du bien",
+  "@patrimoineFicheTitre": {
+    "description": "Titre de l'écran de fiche d'un bien."
+  },
+  "patrimoineIntrouvable": "Bien introuvable.",
+  "@patrimoineIntrouvable": {
+    "description": "Message affiché quand le bien demandé n'existe pas."
+  },
+  "patrimoineSignalerEtatTitre": "Signaler l'état du bien",
+  "@patrimoineSignalerEtatTitre": {
+    "description": "Titre de la boîte de dialogue de signalement d'état d'un bien."
+  },
+  "patrimoineChampEtat": "État",
+  "@patrimoineChampEtat": {
+    "description": "Libellé du champ état d'un bien."
+  },
+  "patrimoineSignalerEtatBouton": "Signaler l'état",
+  "@patrimoineSignalerEtatBouton": {
+    "description": "Bouton de signalement d'état d'un bien."
+  },
+  "patrimoineSortirTitre": "Sortir le bien du patrimoine",
+  "@patrimoineSortirTitre": {
+    "description": "Titre de la boîte de dialogue de sortie définitive d'un bien (RG-XX-02)."
+  },
+  "patrimoineChampTypeSortie": "Type de sortie",
+  "@patrimoineChampTypeSortie": {
+    "description": "Libellé du champ type de sortie d'un bien."
+  },
+  "patrimoineTypeSortieCession": "Cession",
+  "@patrimoineTypeSortieCession": {
+    "description": "Libellé du type de sortie « cession »."
+  },
+  "patrimoineTypeSortieDon": "Don",
+  "@patrimoineTypeSortieDon": {
+    "description": "Libellé du type de sortie « don »."
+  },
+  "patrimoineTypeSortieMiseAuRebut": "Mise au rebut",
+  "@patrimoineTypeSortieMiseAuRebut": {
+    "description": "Libellé du type de sortie « mise au rebut »."
+  },
+  "patrimoineChampRoleActeur": "Rôle de l'acteur",
+  "@patrimoineChampRoleActeur": {
+    "description": "Libellé du champ rôle de l'acteur validant une sortie de bien."
+  },
+  "patrimoineChampValidePar": "Validé par",
+  "@patrimoineChampValidePar": {
+    "description": "Libellé du champ fidèle validant une sortie de bien."
+  },
+  "patrimoineChampMotif": "Motif",
+  "@patrimoineChampMotif": {
+    "description": "Libellé du champ motif."
+  },
+  "patrimoineSortirBouton": "Sortir le bien",
+  "@patrimoineSortirBouton": {
+    "description": "Bouton de confirmation de sortie d'un bien du patrimoine."
+  },
+  "patrimoineReserverTitre": "Réserver le bien",
+  "@patrimoineReserverTitre": {
+    "description": "Titre de la boîte de dialogue de réservation d'un bien (RG-XX-03)."
+  },
+  "patrimoineChampObjetReservation": "Objet de la réservation",
+  "@patrimoineChampObjetReservation": {
+    "description": "Libellé du champ objet d'une réservation de bien."
+  },
+  "patrimoineObjetCulte": "Culte",
+  "@patrimoineObjetCulte": {
+    "description": "Libellé de l'objet de réservation « culte »."
+  },
+  "patrimoineObjetEvenement": "Événement",
+  "@patrimoineObjetEvenement": {
+    "description": "Libellé de l'objet de réservation « événement »."
+  },
+  "patrimoineObjetAutre": "Autre",
+  "@patrimoineObjetAutre": {
+    "description": "Libellé de l'objet de réservation « autre »."
+  },
+  "patrimoineAucunCultePourReservation": "Aucun culte disponible pour ce nœud.",
+  "@patrimoineAucunCultePourReservation": {
+    "description": "Message affiché quand aucun culte n'existe pour lier une réservation de type culte."
+  },
+  "patrimoineChampCulte": "Culte",
+  "@patrimoineChampCulte": {
+    "description": "Libellé du champ culte lié à une réservation."
+  },
+  "patrimoineChampObjetLibre": "Description de l'objet",
+  "@patrimoineChampObjetLibre": {
+    "description": "Libellé du champ description libre d'une réservation (événement ou autre)."
+  },
+  "patrimoineChampDateDebut": "Date de début",
+  "@patrimoineChampDateDebut": {
+    "description": "Libellé du champ date de début d'une réservation."
+  },
+  "patrimoineChampDateFin": "Date de fin",
+  "@patrimoineChampDateFin": {
+    "description": "Libellé du champ date de fin d'une réservation."
+  },
+  "patrimoineReserverBouton": "Réserver",
+  "@patrimoineReserverBouton": {
+    "description": "Bouton de confirmation d'une réservation de bien."
+  },
+  "patrimoineMouvementAjouterTitre": "Ajouter un mouvement de stock",
+  "@patrimoineMouvementAjouterTitre": {
+    "description": "Titre de la boîte de dialogue d'ajout d'un mouvement de stock (RG-XX-05)."
+  },
+  "patrimoineChampTypeMouvement": "Type de mouvement",
+  "@patrimoineChampTypeMouvement": {
+    "description": "Libellé du champ type d'un mouvement de stock."
+  },
+  "patrimoineMouvementEntree": "Entrée",
+  "@patrimoineMouvementEntree": {
+    "description": "Libellé du type de mouvement de stock « entrée »."
+  },
+  "patrimoineMouvementSortie": "Sortie",
+  "@patrimoineMouvementSortie": {
+    "description": "Libellé du type de mouvement de stock « sortie »."
+  },
+  "patrimoineChampQuantite": "Quantité",
+  "@patrimoineChampQuantite": {
+    "description": "Libellé du champ quantité d'un mouvement de stock."
+  },
+  "patrimoineStockTitre": "Gestion de stock",
+  "@patrimoineStockTitre": {
+    "description": "Titre de la section de gestion de stock d'un bien (RG-XX-05)."
+  },
+  "patrimoineMouvementAjouterBouton": "Ajouter un mouvement",
+  "@patrimoineMouvementAjouterBouton": {
+    "description": "Bouton d'ouverture de la boîte de dialogue d'ajout d'un mouvement de stock."
+  },
+  "patrimoineReservationsTitre": "Réservations",
+  "@patrimoineReservationsTitre": {
+    "description": "Titre de la section des réservations d'un bien."
+  },
+  "patrimoineReservationsAucune": "Aucune réservation enregistrée.",
+  "@patrimoineReservationsAucune": {
+    "description": "Message affiché quand aucune réservation n'existe pour un bien."
+  },
+  "patrimoineCampagneDemarrerTooltip": "Démarrer une campagne",
+  "@patrimoineCampagneDemarrerTooltip": {
+    "description": "Tooltip du bouton de démarrage d'une campagne d'inventaire."
+  },
+  "patrimoineCampagnesAucune": "Aucune campagne d'inventaire enregistrée.",
+  "@patrimoineCampagnesAucune": {
+    "description": "Message affiché quand la liste des campagnes d'inventaire d'un nœud est vide."
+  },
+  "patrimoineCampagneEnCours": "En cours",
+  "@patrimoineCampagneEnCours": {
+    "description": "Libellé du statut d'une campagne d'inventaire en cours."
+  },
+  "patrimoineCampagneCloturee": "Clôturée",
+  "@patrimoineCampagneCloturee": {
+    "description": "Libellé du statut d'une campagne d'inventaire clôturée."
+  },
+  "patrimoineCampagneDemarrerTitre": "Démarrer une campagne d'inventaire",
+  "@patrimoineCampagneDemarrerTitre": {
+    "description": "Titre de la boîte de dialogue de démarrage d'une campagne d'inventaire."
+  },
+  "patrimoineChampLibelleCampagne": "Libellé de la campagne",
+  "@patrimoineChampLibelleCampagne": {
+    "description": "Libellé du champ libellé d'une campagne d'inventaire."
+  },
+  "patrimoineCampagneDemarrerBouton": "Démarrer",
+  "@patrimoineCampagneDemarrerBouton": {
+    "description": "Bouton de confirmation de démarrage d'une campagne d'inventaire."
+  },
+  "patrimoineCampagneFicheTitre": "Fiche de la campagne",
+  "@patrimoineCampagneFicheTitre": {
+    "description": "Titre de l'écran de fiche d'une campagne d'inventaire."
+  },
+  "patrimoineCampagneIntrouvable": "Campagne introuvable.",
+  "@patrimoineCampagneIntrouvable": {
+    "description": "Message affiché quand la campagne d'inventaire demandée n'existe pas."
+  },
+  "patrimoineCampagneCloturerTitre": "Clôturer la campagne",
+  "@patrimoineCampagneCloturerTitre": {
+    "description": "Titre de la boîte de dialogue de clôture d'une campagne d'inventaire."
+  },
+  "patrimoineCampagneCloturerConfirmation": "Cette action est irréversible : aucun nouveau pointage ne pourra être enregistré.",
+  "@patrimoineCampagneCloturerConfirmation": {
+    "description": "Message de confirmation avant clôture d'une campagne d'inventaire."
+  },
+  "patrimoineCampagneCloturerBouton": "Clôturer la campagne",
+  "@patrimoineCampagneCloturerBouton": {
+    "description": "Bouton de clôture d'une campagne d'inventaire."
+  },
+  "patrimoineCampagneAjouterPointageTitre": "Ajouter un pointage",
+  "@patrimoineCampagneAjouterPointageTitre": {
+    "description": "Titre de la boîte de dialogue d'ajout d'un pointage d'inventaire."
+  },
+  "patrimoineChampBien": "Bien",
+  "@patrimoineChampBien": {
+    "description": "Libellé du champ bien pointé lors d'une campagne d'inventaire."
+  },
+  "patrimoineChampEtatConstate": "État constaté",
+  "@patrimoineChampEtatConstate": {
+    "description": "Libellé du champ état constaté lors d'un pointage d'inventaire."
+  },
+  "patrimoineChampQuantiteConstatee": "Quantité constatée",
+  "@patrimoineChampQuantiteConstatee": {
+    "description": "Libellé du champ quantité constatée lors d'un pointage d'inventaire (biens à gestion de stock)."
+  },
+  "patrimoineChampCommentaire": "Commentaire",
+  "@patrimoineChampCommentaire": {
+    "description": "Libellé du champ commentaire d'un pointage d'inventaire."
+  },
+  "patrimoineCampagneAjouterPointageBouton": "Enregistrer le pointage",
+  "@patrimoineCampagneAjouterPointageBouton": {
+    "description": "Bouton d'enregistrement d'un pointage d'inventaire."
+  },
+  "patrimoineCampagneAjouterPointageTooltip": "Ajouter un pointage",
+  "@patrimoineCampagneAjouterPointageTooltip": {
+    "description": "Tooltip du bouton d'ajout d'un pointage d'inventaire."
+  },
+  "patrimoineCampagnePointagesTitre": "Pointages",
+  "@patrimoineCampagnePointagesTitre": {
+    "description": "Titre de la section des pointages d'une campagne d'inventaire."
+  },
+  "patrimoineCampagnePointagesAucun": "Aucun pointage enregistré.",
+  "@patrimoineCampagnePointagesAucun": {
+    "description": "Message affiché quand aucun pointage n'existe pour une campagne d'inventaire."
+  },
+  "patrimoineAcquisLe": "Acquis le {date}",
+  "@patrimoineAcquisLe": {
+    "description": "Date d'acquisition affichée sur la fiche d'un bien.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "patrimoineSortiLe": "Sorti le {date}",
+  "@patrimoineSortiLe": {
+    "description": "Date de sortie définitive affichée sur la fiche d'un bien sorti (RG-XX-02).",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "patrimoineQuantiteActuelle": "Quantité actuelle : {quantite}",
+  "@patrimoineQuantiteActuelle": {
+    "description": "Quantité en stock actuelle d'un bien, recalculée à la lecture (RG-XX-05).",
+    "placeholders": {
+      "quantite": {
+        "type": "int"
+      }
+    }
+  },
+  "patrimoineSeuilAlerte": "Seuil d'alerte : {seuil}",
+  "@patrimoineSeuilAlerte": {
+    "description": "Seuil d'alerte de stock configuré pour un bien (RG-XX-05).",
+    "placeholders": {
+      "seuil": {
+        "type": "int"
+      }
+    }
+  },
+  "patrimoineCampagneDemarreeLe": "Démarrée le {date}",
+  "@patrimoineCampagneDemarreeLe": {
+    "description": "Date de démarrage affichée sur la fiche d'une campagne d'inventaire.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "patrimoineCampagneClotureeLe": "Clôturée le {date}",
+  "@patrimoineCampagneClotureeLe": {
+    "description": "Date de clôture affichée sur la fiche d'une campagne d'inventaire.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   }
 }
