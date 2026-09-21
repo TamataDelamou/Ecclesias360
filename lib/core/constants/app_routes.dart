@@ -84,4 +84,8 @@ abstract final class AppRoutes {
   static String campagneInventaire(String id) => '/campagnes-inventaire/$id';
 
   static String comptabiliteDuNoeud(String noeudId) => '/organisation/$noeudId/comptabilite';
+
+  static const String mediatheque = '/mediatheque';
+  static String mediathequeContenu(String id) => '/mediatheque/$id';
+  static String mediathequeFavorisDuFidele(String fideleId) => '/fideles/$fideleId/favoris-mediatheque';
 }

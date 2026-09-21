@@ -2501,6 +2501,150 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Solde net'**
   String get comptabiliteRapportSoldeNet;
+
+  /// Titre de l'écran Catalogue médiathèque (Module XIII) et libellé de la tuile du tableau de bord.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catalogue médiathèque'**
+  String get mediathequeCatalogueTitre;
+
+  /// Libellé du champ de recherche thématique du catalogue médiathèque (RG-XIII-01).
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher par thème'**
+  String get mediathequeRechercheTheme;
+
+  /// Message affiché quand le catalogue médiathèque est vide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun contenu publié pour le moment.'**
+  String get mediathequeAucunContenu;
+
+  /// Message affiché quand la recherche par thème (RG-XIII-01) ne retourne aucun contenu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun résultat pour cette recherche.'**
+  String get mediathequeAucunResultat;
+
+  /// Titre de l'écran de fiche détaillée d'un contenu médiathèque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fiche contenu'**
+  String get mediathequeFicheTitre;
+
+  /// Message affiché quand la fiche d'un contenu médiathèque référence un identifiant inexistant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce contenu est introuvable (ou plus disponible).'**
+  String get mediathequeContenuIntrouvable;
+
+  /// Étiquette du type d'un contenu médiathèque (audio, vidéo, podcast, e-book, magazine, document).
+  ///
+  /// In fr, this message translates to:
+  /// **'Type'**
+  String get mediathequeChampType;
+
+  /// Étiquette du thème d'un contenu médiathèque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Thème'**
+  String get mediathequeChampTheme;
+
+  /// Étiquette des mots-clés d'un contenu médiathèque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mots-clés'**
+  String get mediathequeChampMotsCles;
+
+  /// Étiquette de l'intervenant d'un contenu médiathèque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Intervenant'**
+  String get mediathequeChampIntervenant;
+
+  /// Étiquette de la date d'un contenu médiathèque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date'**
+  String get mediathequeChampDate;
+
+  /// Étiquette de la référence texte (URL) vers le fichier d'un contenu médiathèque — aucun fichier réel n'est géré dans cette itération.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lien du fichier'**
+  String get mediathequeChampFichier;
+
+  /// Étiquette du compteur de consultations d'un contenu médiathèque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Consultations'**
+  String get mediathequeChampConsultations;
+
+  /// Libellé du sélecteur de fidèle actif pour les favoris/commentaires/signalements de la médiathèque, en l'absence de session réelle (RG-SEC-01 non construit).
+  ///
+  /// In fr, this message translates to:
+  /// **'Agir en tant que'**
+  String get mediathequeEnTantQue;
+
+  /// Libellé du bouton pour ajouter un contenu médiathèque aux favoris (RG-XIII-04).
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter aux favoris'**
+  String get mediathequeAjouterFavori;
+
+  /// Libellé du bouton pour retirer un contenu médiathèque des favoris (RG-XIII-04).
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer des favoris'**
+  String get mediathequeRetirerFavori;
+
+  /// Titre de la section commentaires d'un contenu médiathèque (RG-XIII-03).
+  ///
+  /// In fr, this message translates to:
+  /// **'Commentaires'**
+  String get mediathequeCommentairesTitre;
+
+  /// Message affiché quand aucun commentaire visible n'existe encore sur un contenu médiathèque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun commentaire pour le moment.'**
+  String get mediathequeAucunCommentaire;
+
+  /// Étiquette affichée sur un commentaire dont le statut est en attente de modération a priori (RG-XIII-03).
+  ///
+  /// In fr, this message translates to:
+  /// **'En attente de modération'**
+  String get mediathequeCommentaireEnAttente;
+
+  /// Infobulle du bouton de signalement d'un commentaire de la médiathèque (RG-XIII-03).
+  ///
+  /// In fr, this message translates to:
+  /// **'Signaler'**
+  String get mediathequeSignalerCommentaire;
+
+  /// Étiquette du champ de saisie d'un nouveau commentaire sur un contenu médiathèque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre commentaire'**
+  String get mediathequeChampCommentaire;
+
+  /// Libellé du bouton de dépôt d'un commentaire sur un contenu médiathèque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier'**
+  String get mediathequeCommentaireAjouterBouton;
+
+  /// Titre de l'écran des favoris médiathèque d'un fidèle (écran mobile 4, RG-XIII-04) et libellé du bouton d'accès depuis sa fiche.
+  ///
+  /// In fr, this message translates to:
+  /// **'Favoris médiathèque'**
+  String get mediathequeFavorisTitre;
+
+  /// Message affiché quand la liste des favoris médiathèque d'un fidèle est vide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun contenu favori pour le moment.'**
+  String get mediathequeFavorisAucun;
 }
 
 class _AppLocalizationsDelegate

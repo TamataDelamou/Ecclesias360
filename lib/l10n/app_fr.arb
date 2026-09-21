@@ -1733,5 +1733,101 @@
   "comptabiliteRapportSoldeNet": "Solde net",
   "@comptabiliteRapportSoldeNet": {
     "description": "Étiquette du solde net (recettes moins dépenses) dans le rapport financier rapide."
+  },
+  "mediathequeCatalogueTitre": "Catalogue médiathèque",
+  "@mediathequeCatalogueTitre": {
+    "description": "Titre de l'écran Catalogue médiathèque (Module XIII) et libellé de la tuile du tableau de bord."
+  },
+  "mediathequeRechercheTheme": "Rechercher par thème",
+  "@mediathequeRechercheTheme": {
+    "description": "Libellé du champ de recherche thématique du catalogue médiathèque (RG-XIII-01)."
+  },
+  "mediathequeAucunContenu": "Aucun contenu publié pour le moment.",
+  "@mediathequeAucunContenu": {
+    "description": "Message affiché quand le catalogue médiathèque est vide."
+  },
+  "mediathequeAucunResultat": "Aucun résultat pour cette recherche.",
+  "@mediathequeAucunResultat": {
+    "description": "Message affiché quand la recherche par thème (RG-XIII-01) ne retourne aucun contenu."
+  },
+  "mediathequeFicheTitre": "Fiche contenu",
+  "@mediathequeFicheTitre": {
+    "description": "Titre de l'écran de fiche détaillée d'un contenu médiathèque."
+  },
+  "mediathequeContenuIntrouvable": "Ce contenu est introuvable (ou plus disponible).",
+  "@mediathequeContenuIntrouvable": {
+    "description": "Message affiché quand la fiche d'un contenu médiathèque référence un identifiant inexistant."
+  },
+  "mediathequeChampType": "Type",
+  "@mediathequeChampType": {
+    "description": "Étiquette du type d'un contenu médiathèque (audio, vidéo, podcast, e-book, magazine, document)."
+  },
+  "mediathequeChampTheme": "Thème",
+  "@mediathequeChampTheme": {
+    "description": "Étiquette du thème d'un contenu médiathèque."
+  },
+  "mediathequeChampMotsCles": "Mots-clés",
+  "@mediathequeChampMotsCles": {
+    "description": "Étiquette des mots-clés d'un contenu médiathèque."
+  },
+  "mediathequeChampIntervenant": "Intervenant",
+  "@mediathequeChampIntervenant": {
+    "description": "Étiquette de l'intervenant d'un contenu médiathèque."
+  },
+  "mediathequeChampDate": "Date",
+  "@mediathequeChampDate": {
+    "description": "Étiquette de la date d'un contenu médiathèque."
+  },
+  "mediathequeChampFichier": "Lien du fichier",
+  "@mediathequeChampFichier": {
+    "description": "Étiquette de la référence texte (URL) vers le fichier d'un contenu médiathèque — aucun fichier réel n'est géré dans cette itération."
+  },
+  "mediathequeChampConsultations": "Consultations",
+  "@mediathequeChampConsultations": {
+    "description": "Étiquette du compteur de consultations d'un contenu médiathèque."
+  },
+  "mediathequeEnTantQue": "Agir en tant que",
+  "@mediathequeEnTantQue": {
+    "description": "Libellé du sélecteur de fidèle actif pour les favoris/commentaires/signalements de la médiathèque, en l'absence de session réelle (RG-SEC-01 non construit)."
+  },
+  "mediathequeAjouterFavori": "Ajouter aux favoris",
+  "@mediathequeAjouterFavori": {
+    "description": "Libellé du bouton pour ajouter un contenu médiathèque aux favoris (RG-XIII-04)."
+  },
+  "mediathequeRetirerFavori": "Retirer des favoris",
+  "@mediathequeRetirerFavori": {
+    "description": "Libellé du bouton pour retirer un contenu médiathèque des favoris (RG-XIII-04)."
+  },
+  "mediathequeCommentairesTitre": "Commentaires",
+  "@mediathequeCommentairesTitre": {
+    "description": "Titre de la section commentaires d'un contenu médiathèque (RG-XIII-03)."
+  },
+  "mediathequeAucunCommentaire": "Aucun commentaire pour le moment.",
+  "@mediathequeAucunCommentaire": {
+    "description": "Message affiché quand aucun commentaire visible n'existe encore sur un contenu médiathèque."
+  },
+  "mediathequeCommentaireEnAttente": "En attente de modération",
+  "@mediathequeCommentaireEnAttente": {
+    "description": "Étiquette affichée sur un commentaire dont le statut est en attente de modération a priori (RG-XIII-03)."
+  },
+  "mediathequeSignalerCommentaire": "Signaler",
+  "@mediathequeSignalerCommentaire": {
+    "description": "Infobulle du bouton de signalement d'un commentaire de la médiathèque (RG-XIII-03)."
+  },
+  "mediathequeChampCommentaire": "Votre commentaire",
+  "@mediathequeChampCommentaire": {
+    "description": "Étiquette du champ de saisie d'un nouveau commentaire sur un contenu médiathèque."
+  },
+  "mediathequeCommentaireAjouterBouton": "Publier",
+  "@mediathequeCommentaireAjouterBouton": {
+    "description": "Libellé du bouton de dépôt d'un commentaire sur un contenu médiathèque."
+  },
+  "mediathequeFavorisTitre": "Favoris médiathèque",
+  "@mediathequeFavorisTitre": {
+    "description": "Titre de l'écran des favoris médiathèque d'un fidèle (écran mobile 4, RG-XIII-04) et libellé du bouton d'accès depuis sa fiche."
+  },
+  "mediathequeFavorisAucun": "Aucun contenu favori pour le moment.",
+  "@mediathequeFavorisAucun": {
+    "description": "Message affiché quand la liste des favoris médiathèque d'un fidèle est vide."
   }
 }

@@ -44,6 +44,12 @@ class MediathequeRepository {
     return query.watch().map((rows) => rows.map(_contenuToDomain).toList(growable: false));
   }
 
+  /// Fiche détaillée d'un contenu (écran mobile « Fiche contenu »).
+  Stream<ContenuMediatheque?> watchContenu(String id) {
+    final query = _db.select(_db.contenusMediatheque)..where((t) => t.id.equals(id));
+    return query.watchSingleOrNull().map((row) => row == null ? null : _contenuToDomain(row));
+  }
+
   /// RG-XIII-01 — recherche par thème (recherche partielle, insensible à la
   /// casse via `LIKE`), restreinte aux contenus publiés.
   Future<List<ContenuMediatheque>> rechercherParTheme(String motCle) async {

@@ -49,6 +49,9 @@ import '../../features/ministeres/presentation/ministere_historique_responsables
 import '../../features/ministeres/presentation/ministere_journal_screen.dart';
 import '../../features/ministeres/presentation/ministere_membres_screen.dart';
 import '../../features/ministeres/presentation/ministeres_list_screen.dart';
+import '../../features/mediatheque/presentation/contenu_mediatheque_detail_screen.dart';
+import '../../features/mediatheque/presentation/favoris_mediatheque_screen.dart';
+import '../../features/mediatheque/presentation/mediatheque_catalogue_screen.dart';
 import '../../features/organization/presentation/church_directory_screen.dart';
 import '../../features/organization/presentation/hierarchy_screen.dart';
 import '../../features/organization/presentation/node_detail_screen.dart';
@@ -398,6 +401,27 @@ final GoRouter appRouter = GoRouter(
       pageBuilder: (context, state) => sharedAxisPage(
         key: state.pageKey,
         child: ComptabiliteScreen(noeudId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: AppRoutes.mediatheque,
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: const MediathequeCatalogueScreen(),
+      ),
+    ),
+    GoRoute(
+      path: '/mediatheque/:id',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: ContenuMediathequeDetailScreen(contenuId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/fideles/:id/favoris-mediatheque',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: FavorisMediathequeScreen(fideleId: state.pathParameters['id']!),
       ),
     ),
   ],

@@ -1283,4 +1283,79 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get comptabiliteRapportSoldeNet => 'Saldo neto';
+
+  @override
+  String get mediathequeCatalogueTitre => 'Catálogo de la mediateca';
+
+  @override
+  String get mediathequeRechercheTheme => 'Buscar por tema';
+
+  @override
+  String get mediathequeAucunContenu =>
+      'Ningún contenido publicado por el momento.';
+
+  @override
+  String get mediathequeAucunResultat => 'Ningún resultado para esta búsqueda.';
+
+  @override
+  String get mediathequeFicheTitre => 'Ficha del contenido';
+
+  @override
+  String get mediathequeContenuIntrouvable =>
+      'Este contenido no se encuentra (o ya no está disponible).';
+
+  @override
+  String get mediathequeChampType => 'Tipo';
+
+  @override
+  String get mediathequeChampTheme => 'Tema';
+
+  @override
+  String get mediathequeChampMotsCles => 'Palabras clave';
+
+  @override
+  String get mediathequeChampIntervenant => 'Ponente';
+
+  @override
+  String get mediathequeChampDate => 'Fecha';
+
+  @override
+  String get mediathequeChampFichier => 'Enlace del archivo';
+
+  @override
+  String get mediathequeChampConsultations => 'Consultas';
+
+  @override
+  String get mediathequeEnTantQue => 'Actuar como';
+
+  @override
+  String get mediathequeAjouterFavori => 'Añadir a favoritos';
+
+  @override
+  String get mediathequeRetirerFavori => 'Quitar de favoritos';
+
+  @override
+  String get mediathequeCommentairesTitre => 'Comentarios';
+
+  @override
+  String get mediathequeAucunCommentaire => 'Ningún comentario por el momento.';
+
+  @override
+  String get mediathequeCommentaireEnAttente => 'Pendiente de moderación';
+
+  @override
+  String get mediathequeSignalerCommentaire => 'Reportar';
+
+  @override
+  String get mediathequeChampCommentaire => 'Tu comentario';
+
+  @override
+  String get mediathequeCommentaireAjouterBouton => 'Publicar';
+
+  @override
+  String get mediathequeFavorisTitre => 'Favoritos de la mediateca';
+
+  @override
+  String get mediathequeFavorisAucun =>
+      'Ningún contenido favorito por el momento.';
 }

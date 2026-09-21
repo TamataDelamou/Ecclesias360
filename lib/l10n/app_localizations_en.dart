@@ -1274,4 +1274,77 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get comptabiliteRapportSoldeNet => 'Net balance';
+
+  @override
+  String get mediathequeCatalogueTitre => 'Media library catalog';
+
+  @override
+  String get mediathequeRechercheTheme => 'Search by theme';
+
+  @override
+  String get mediathequeAucunContenu => 'No published content yet.';
+
+  @override
+  String get mediathequeAucunResultat => 'No results for this search.';
+
+  @override
+  String get mediathequeFicheTitre => 'Content sheet';
+
+  @override
+  String get mediathequeContenuIntrouvable =>
+      'This content could not be found (or is no longer available).';
+
+  @override
+  String get mediathequeChampType => 'Type';
+
+  @override
+  String get mediathequeChampTheme => 'Theme';
+
+  @override
+  String get mediathequeChampMotsCles => 'Keywords';
+
+  @override
+  String get mediathequeChampIntervenant => 'Speaker';
+
+  @override
+  String get mediathequeChampDate => 'Date';
+
+  @override
+  String get mediathequeChampFichier => 'File link';
+
+  @override
+  String get mediathequeChampConsultations => 'Views';
+
+  @override
+  String get mediathequeEnTantQue => 'Act as';
+
+  @override
+  String get mediathequeAjouterFavori => 'Add to favorites';
+
+  @override
+  String get mediathequeRetirerFavori => 'Remove from favorites';
+
+  @override
+  String get mediathequeCommentairesTitre => 'Comments';
+
+  @override
+  String get mediathequeAucunCommentaire => 'No comments yet.';
+
+  @override
+  String get mediathequeCommentaireEnAttente => 'Awaiting moderation';
+
+  @override
+  String get mediathequeSignalerCommentaire => 'Report';
+
+  @override
+  String get mediathequeChampCommentaire => 'Your comment';
+
+  @override
+  String get mediathequeCommentaireAjouterBouton => 'Post';
+
+  @override
+  String get mediathequeFavorisTitre => 'Media library favorites';
+
+  @override
+  String get mediathequeFavorisAucun => 'No favorite content yet.';
 }

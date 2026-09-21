@@ -27,6 +27,7 @@ class HomeScreen extends StatelessWidget {
       _Module(l10n.moduleProfessions, Icons.work_outline, AppRoutes.professions),
       _Module(l10n.moduleGroupesEglise, Icons.groups_2_outlined, AppRoutes.groupesEglise),
       _Module(l10n.propositionsThemeTitre, Icons.forum_outlined, AppRoutes.propositionsTheme),
+      _Module(l10n.mediathequeCatalogueTitre, Icons.video_library_outlined, AppRoutes.mediatheque),
     ];
 
     return Scaffold(

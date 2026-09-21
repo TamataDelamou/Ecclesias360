@@ -1284,4 +1284,77 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get comptabiliteRapportSoldeNet => 'Solde net';
+
+  @override
+  String get mediathequeCatalogueTitre => 'Catalogue médiathèque';
+
+  @override
+  String get mediathequeRechercheTheme => 'Rechercher par thème';
+
+  @override
+  String get mediathequeAucunContenu => 'Aucun contenu publié pour le moment.';
+
+  @override
+  String get mediathequeAucunResultat => 'Aucun résultat pour cette recherche.';
+
+  @override
+  String get mediathequeFicheTitre => 'Fiche contenu';
+
+  @override
+  String get mediathequeContenuIntrouvable =>
+      'Ce contenu est introuvable (ou plus disponible).';
+
+  @override
+  String get mediathequeChampType => 'Type';
+
+  @override
+  String get mediathequeChampTheme => 'Thème';
+
+  @override
+  String get mediathequeChampMotsCles => 'Mots-clés';
+
+  @override
+  String get mediathequeChampIntervenant => 'Intervenant';
+
+  @override
+  String get mediathequeChampDate => 'Date';
+
+  @override
+  String get mediathequeChampFichier => 'Lien du fichier';
+
+  @override
+  String get mediathequeChampConsultations => 'Consultations';
+
+  @override
+  String get mediathequeEnTantQue => 'Agir en tant que';
+
+  @override
+  String get mediathequeAjouterFavori => 'Ajouter aux favoris';
+
+  @override
+  String get mediathequeRetirerFavori => 'Retirer des favoris';
+
+  @override
+  String get mediathequeCommentairesTitre => 'Commentaires';
+
+  @override
+  String get mediathequeAucunCommentaire => 'Aucun commentaire pour le moment.';
+
+  @override
+  String get mediathequeCommentaireEnAttente => 'En attente de modération';
+
+  @override
+  String get mediathequeSignalerCommentaire => 'Signaler';
+
+  @override
+  String get mediathequeChampCommentaire => 'Votre commentaire';
+
+  @override
+  String get mediathequeCommentaireAjouterBouton => 'Publier';
+
+  @override
+  String get mediathequeFavorisTitre => 'Favoris médiathèque';
+
+  @override
+  String get mediathequeFavorisAucun => 'Aucun contenu favori pour le moment.';
 }

@@ -26,6 +26,7 @@ import 'features/groupes_eglise/application/groupe_controller.dart';
 import 'features/groupes_eglise/data/groupe_repository.dart';
 import 'features/ministeres/application/ministere_controller.dart';
 import 'features/ministeres/data/ministere_repository.dart';
+import 'features/mediatheque/application/mediatheque_controller.dart';
 import 'features/mediatheque/data/mediatheque_repository.dart';
 import 'features/organization/application/organisation_controller.dart';
 import 'features/organization/data/local/app_database.dart';
@@ -68,6 +69,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final ComiteRepository _comiteRepository;
   late final ComiteController _comiteController;
   late final MediathequeRepository _mediathequeRepository;
+  late final MediathequeController _mediathequeController;
   late final CulteRepository _culteRepository;
   late final CulteController _culteController;
   late final DeplacementRepository _deplacementRepository;
@@ -104,6 +106,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _comiteRepository = ComiteRepository(widget.database, archivageRepository: _archivageRepository);
     _comiteController = ComiteController(_comiteRepository);
     _mediathequeRepository = MediathequeRepository(widget.database);
+    _mediathequeController = MediathequeController(_mediathequeRepository);
     _culteRepository = CulteRepository(widget.database, mediathequeRepository: _mediathequeRepository);
     _culteController = CulteController(_culteRepository);
     _deplacementRepository = DeplacementRepository(
@@ -139,6 +142,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _groupeController.dispose();
     _comiteController.dispose();
     _culteController.dispose();
+    _mediathequeController.dispose();
     _deplacementController.dispose();
     _disciplineController.dispose();
     _financesController.dispose();
@@ -160,6 +164,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
         ChangeNotifierProvider<GroupeController>.value(value: _groupeController),
         ChangeNotifierProvider<ComiteController>.value(value: _comiteController),
         ChangeNotifierProvider<CulteController>.value(value: _culteController),
+        ChangeNotifierProvider<MediathequeController>.value(value: _mediathequeController),
         ChangeNotifierProvider<ArchivageController>.value(value: _archivageController),
         ChangeNotifierProvider<DeplacementController>.value(value: _deplacementController),
         ChangeNotifierProvider<DisciplineController>.value(value: _disciplineController),

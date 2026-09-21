@@ -1281,4 +1281,77 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get comptabiliteRapportSoldeNet => 'Saldo líquido';
+
+  @override
+  String get mediathequeCatalogueTitre => 'Catálogo da midiateca';
+
+  @override
+  String get mediathequeRechercheTheme => 'Pesquisar por tema';
+
+  @override
+  String get mediathequeAucunContenu => 'Nenhum conteúdo publicado no momento.';
+
+  @override
+  String get mediathequeAucunResultat => 'Nenhum resultado para esta pesquisa.';
+
+  @override
+  String get mediathequeFicheTitre => 'Ficha do conteúdo';
+
+  @override
+  String get mediathequeContenuIntrouvable =>
+      'Este conteúdo não foi encontrado (ou não está mais disponível).';
+
+  @override
+  String get mediathequeChampType => 'Tipo';
+
+  @override
+  String get mediathequeChampTheme => 'Tema';
+
+  @override
+  String get mediathequeChampMotsCles => 'Palavras-chave';
+
+  @override
+  String get mediathequeChampIntervenant => 'Palestrante';
+
+  @override
+  String get mediathequeChampDate => 'Data';
+
+  @override
+  String get mediathequeChampFichier => 'Link do arquivo';
+
+  @override
+  String get mediathequeChampConsultations => 'Consultas';
+
+  @override
+  String get mediathequeEnTantQue => 'Agir como';
+
+  @override
+  String get mediathequeAjouterFavori => 'Adicionar aos favoritos';
+
+  @override
+  String get mediathequeRetirerFavori => 'Remover dos favoritos';
+
+  @override
+  String get mediathequeCommentairesTitre => 'Comentários';
+
+  @override
+  String get mediathequeAucunCommentaire => 'Nenhum comentário no momento.';
+
+  @override
+  String get mediathequeCommentaireEnAttente => 'Aguardando moderação';
+
+  @override
+  String get mediathequeSignalerCommentaire => 'Denunciar';
+
+  @override
+  String get mediathequeChampCommentaire => 'Seu comentário';
+
+  @override
+  String get mediathequeCommentaireAjouterBouton => 'Publicar';
+
+  @override
+  String get mediathequeFavorisTitre => 'Favoritos da midiateca';
+
+  @override
+  String get mediathequeFavorisAucun => 'Nenhum conteúdo favorito no momento.';
 }
