@@ -1003,5 +1003,341 @@
         "type": "int"
       }
     }
+  },
+  "financesTitre": "Contributions",
+  "@financesTitre": {
+    "description": "Titre de l'écran de liste des contributions d'un nœud (Module XI)."
+  },
+  "financesHistoriqueTitre": "Historique des contributions",
+  "@financesHistoriqueTitre": {
+    "description": "Titre de l'écran d'historique des contributions d'un fidèle."
+  },
+  "financesAucuneContribution": "Aucune contribution saisie.",
+  "@financesAucuneContribution": {
+    "description": "État vide de la liste des contributions d'un nœud."
+  },
+  "financesAucuneContributionFidele": "Aucune contribution pour ce fidèle.",
+  "@financesAucuneContributionFidele": {
+    "description": "État vide de l'historique des contributions d'un fidèle."
+  },
+  "financesSaisirTooltip": "Saisir une offrande",
+  "@financesSaisirTooltip": {
+    "description": "Infobulle du bouton flottant de saisie rapide d'une offrande (RG-XI-01)."
+  },
+  "financesSaisirTitre": "Saisir une offrande",
+  "@financesSaisirTitre": {
+    "description": "Titre du dialogue de saisie rapide d'une offrande."
+  },
+  "financesChampDonateur": "Donateur",
+  "@financesChampDonateur": {
+    "description": "Libellé du sélecteur de donateur lors de la saisie d'une contribution."
+  },
+  "financesDonateurAnonyme": "Donateur anonyme",
+  "@financesDonateurAnonyme": {
+    "description": "Valeur du sélecteur de donateur pour un don anonyme identifié techniquement (RG-XI-01)."
+  },
+  "financesChampLibelleDonateurAnonyme": "Libellé du donateur anonyme (optionnel)",
+  "@financesChampLibelleDonateurAnonyme": {
+    "description": "Libellé du champ texte libre pour un donateur anonyme."
+  },
+  "financesChampTypeOffrande": "Type d'offrande",
+  "@financesChampTypeOffrande": {
+    "description": "Libellé du sélecteur de type d'offrande lors de la saisie d'une contribution."
+  },
+  "financesChampMontant": "Montant",
+  "@financesChampMontant": {
+    "description": "Libellé du champ montant d'une contribution."
+  },
+  "financesChampModePaiement": "Mode de paiement",
+  "@financesChampModePaiement": {
+    "description": "Libellé du sélecteur de mode de paiement d'une contribution."
+  },
+  "financesModePaiementEspeces": "Espèces",
+  "@financesModePaiementEspeces": {
+    "description": "Libellé du mode de paiement « espèces »."
+  },
+  "financesModePaiementMobileMoney": "Mobile money",
+  "@financesModePaiementMobileMoney": {
+    "description": "Libellé du mode de paiement « mobile money »."
+  },
+  "financesModePaiementVirement": "Virement",
+  "@financesModePaiementVirement": {
+    "description": "Libellé du mode de paiement « virement »."
+  },
+  "financesSaisirBouton": "Saisir",
+  "@financesSaisirBouton": {
+    "description": "Bouton de confirmation de la saisie d'une contribution."
+  },
+  "financesRapportParTypeTitre": "Répartition par type d'offrande",
+  "@financesRapportParTypeTitre": {
+    "description": "Titre du rapport rapide par type d'offrande (contributions validées affichées)."
+  },
+  "financesStatutEnAttente": "En attente",
+  "@financesStatutEnAttente": {
+    "description": "Libellé du statut de contribution « en attente »."
+  },
+  "financesStatutValidee": "Validée",
+  "@financesStatutValidee": {
+    "description": "Libellé du statut de contribution « validée »."
+  },
+  "financesStatutRejetee": "Rejetée",
+  "@financesStatutRejetee": {
+    "description": "Libellé du statut de contribution « rejetée »."
+  },
+  "financesTresoriersTitre": "Trésoriers désignés",
+  "@financesTresoriersTitre": {
+    "description": "Titre de l'écran de gestion des trésoriers désignés d'un nœud (RG-XI-02)."
+  },
+  "financesTresoriersAucun": "Aucun trésorier désigné.",
+  "@financesTresoriersAucun": {
+    "description": "État vide de la liste des trésoriers désignés d'un nœud."
+  },
+  "financesTresorierDesignerTitre": "Désigner un trésorier",
+  "@financesTresorierDesignerTitre": {
+    "description": "Titre du dialogue de désignation d'un trésorier."
+  },
+  "financesTresorierDesignerBouton": "Désigner",
+  "@financesTresorierDesignerBouton": {
+    "description": "Bouton de confirmation de la désignation d'un trésorier."
+  },
+  "financesTresorierDesignerTooltip": "Désigner un trésorier",
+  "@financesTresorierDesignerTooltip": {
+    "description": "Infobulle du bouton flottant de désignation d'un trésorier."
+  },
+  "financesTresorierDepuis": "Trésorier depuis le {date}",
+  "@financesTresorierDepuis": {
+    "description": "Date de début de désignation d'un trésorier.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financesTresorierRetirerTooltip": "Retirer la désignation",
+  "@financesTresorierRetirerTooltip": {
+    "description": "Infobulle du bouton de retrait de la désignation d'un trésorier."
+  },
+  "financesRecuTitre": "Reçu de contribution",
+  "@financesRecuTitre": {
+    "description": "Titre de l'écran fiche d'une contribution (sert aussi de reçu)."
+  },
+  "financesIntrouvable": "Cette contribution est introuvable.",
+  "@financesIntrouvable": {
+    "description": "Corps de l'écran fiche quand la contribution n'existe pas (ou plus)."
+  },
+  "financesValiderTitre": "Valider la contribution",
+  "@financesValiderTitre": {
+    "description": "Titre du dialogue de validation comptable d'une contribution (RG-XI-02)."
+  },
+  "financesChampRoleActeur": "Rôle agissant",
+  "@financesChampRoleActeur": {
+    "description": "Libellé du sélecteur de rôle agissant lors de la validation (pas de session réelle, RG-SEC-01 non construit)."
+  },
+  "financesChampValidePar": "Validé par",
+  "@financesChampValidePar": {
+    "description": "Libellé du sélecteur de fidèle qui valide (RG-XI-02, trace l'auteur)."
+  },
+  "financesValiderBouton": "Valider",
+  "@financesValiderBouton": {
+    "description": "Bouton de validation comptable d'une contribution."
+  },
+  "financesRejeterTitre": "Rejeter la contribution",
+  "@financesRejeterTitre": {
+    "description": "Titre du dialogue de rejet d'une contribution."
+  },
+  "financesChampMotif": "Motif",
+  "@financesChampMotif": {
+    "description": "Libellé du champ motif (rejet ou contre-passation d'une contribution, ou dérogation de dépense)."
+  },
+  "financesRejeterBouton": "Rejeter",
+  "@financesRejeterBouton": {
+    "description": "Bouton de rejet d'une contribution."
+  },
+  "financesContrePasserTitre": "Contre-passer la contribution",
+  "@financesContrePasserTitre": {
+    "description": "Titre du dialogue de contre-passation d'une contribution validée (RG-XI-05)."
+  },
+  "financesContrePasserBouton": "Contre-passer",
+  "@financesContrePasserBouton": {
+    "description": "Bouton de contre-passation d'une contribution validée."
+  },
+  "financesSaisieLe": "Saisie le {date}",
+  "@financesSaisieLe": {
+    "description": "Date de saisie d'une contribution.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financesValideeLe": "Validée le {date}",
+  "@financesValideeLe": {
+    "description": "Date de validation comptable d'une contribution.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financesEstContrePassation": "Cette contribution est une contre-passation.",
+  "@financesEstContrePassation": {
+    "description": "Note affichée sur une contribution de contre-passation (RG-XI-05)."
+  },
+  "financesProjetsTitre": "Projets",
+  "@financesProjetsTitre": {
+    "description": "Titre de l'écran de liste des projets d'un nœud (RG-XI-03)."
+  },
+  "financesProjetsAucun": "Aucun projet.",
+  "@financesProjetsAucun": {
+    "description": "État vide de la liste des projets d'un nœud."
+  },
+  "financesProjetCreerTitre": "Créer un projet",
+  "@financesProjetCreerTitre": {
+    "description": "Titre du dialogue de création d'un projet."
+  },
+  "financesProjetCreerTooltip": "Créer un projet",
+  "@financesProjetCreerTooltip": {
+    "description": "Infobulle du bouton flottant de création d'un projet."
+  },
+  "financesChampNomProjet": "Nom du projet",
+  "@financesChampNomProjet": {
+    "description": "Libellé du champ nom lors de la création d'un projet."
+  },
+  "financesChampBudgetPrevisionnel": "Budget prévisionnel",
+  "@financesChampBudgetPrevisionnel": {
+    "description": "Libellé du champ budget prévisionnel lors de la création d'un projet."
+  },
+  "financesProjetSoldeSurBudget": "Solde : {solde} {devise} / budget {budget} {devise}",
+  "@financesProjetSoldeSurBudget": {
+    "description": "Solde recalculé d'un projet rapporté à son budget prévisionnel (RG-XI-03, jamais une colonne stockée).",
+    "placeholders": {
+      "solde": {
+        "type": "int"
+      },
+      "budget": {
+        "type": "int"
+      },
+      "devise": {
+        "type": "String"
+      }
+    }
+  },
+  "financesProjetDetailTitre": "Fiche projet",
+  "@financesProjetDetailTitre": {
+    "description": "Titre de l'écran fiche d'un projet."
+  },
+  "financesProjetIntrouvable": "Ce projet est introuvable.",
+  "@financesProjetIntrouvable": {
+    "description": "Corps de l'écran fiche quand le projet n'existe pas (ou plus)."
+  },
+  "financesDepenseAjouterTitre": "Ajouter une dépense",
+  "@financesDepenseAjouterTitre": {
+    "description": "Titre du dialogue d'ajout d'une dépense à un projet (RG-XI-03)."
+  },
+  "financesDepenseAjouterBouton": "Ajouter une dépense",
+  "@financesDepenseAjouterBouton": {
+    "description": "Bouton d'ouverture du dialogue d'ajout d'une dépense."
+  },
+  "financesChampLibelleDepense": "Libellé de la dépense",
+  "@financesChampLibelleDepense": {
+    "description": "Libellé du champ libellé lors de l'ajout d'une dépense."
+  },
+  "financesChampDerogationTracee": "Dérogation tracée (dépasse le solde disponible)",
+  "@financesChampDerogationTracee": {
+    "description": "Libellé de la case à cocher de dérogation tracée lors de l'ajout d'une dépense (RG-XI-03)."
+  },
+  "financesDepensesTitre": "Dépenses",
+  "@financesDepensesTitre": {
+    "description": "Titre de la section dépenses de la fiche d'un projet."
+  },
+  "financesDepensesAucune": "Aucune dépense engagée.",
+  "@financesDepensesAucune": {
+    "description": "État vide de la section dépenses de la fiche d'un projet."
+  },
+  "financesDepenseDerogation": "{date} — dérogation tracée",
+  "@financesDepenseDerogation": {
+    "description": "Note affichée sur une dépense engagée au-delà du solde disponible avec dérogation tracée.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financesEngagementsTitre": "Engagements et échéances",
+  "@financesEngagementsTitre": {
+    "description": "Titre de l'écran des engagements et échéances d'un fidèle (RG-XI-04)."
+  },
+  "financesEngagementsAucun": "Aucun engagement.",
+  "@financesEngagementsAucun": {
+    "description": "État vide de la liste des engagements d'un fidèle."
+  },
+  "financesEngagementCreerTitre": "Créer un engagement",
+  "@financesEngagementCreerTitre": {
+    "description": "Titre du dialogue de création d'un engagement récurrent."
+  },
+  "financesEngagementCreerTooltip": "Créer un engagement",
+  "@financesEngagementCreerTooltip": {
+    "description": "Infobulle du bouton flottant de création d'un engagement."
+  },
+  "financesChampTypeEngagement": "Type d'engagement",
+  "@financesChampTypeEngagement": {
+    "description": "Libellé du sélecteur de type d'engagement."
+  },
+  "financesTypeEngagementDime": "Dîme",
+  "@financesTypeEngagementDime": {
+    "description": "Libellé du type d'engagement « dîme »."
+  },
+  "financesTypeEngagementPromesseDon": "Promesse de don",
+  "@financesTypeEngagementPromesseDon": {
+    "description": "Libellé du type d'engagement « promesse de don »."
+  },
+  "financesChampMontantPrevu": "Montant prévu",
+  "@financesChampMontantPrevu": {
+    "description": "Libellé du champ montant prévu lors de la création d'un engagement."
+  },
+  "financesChampPeriodicite": "Périodicité",
+  "@financesChampPeriodicite": {
+    "description": "Libellé du sélecteur de périodicité lors de la création d'un engagement."
+  },
+  "financesPeriodiciteHebdomadaire": "Hebdomadaire",
+  "@financesPeriodiciteHebdomadaire": {
+    "description": "Libellé de la périodicité « hebdomadaire »."
+  },
+  "financesPeriodiciteMensuelle": "Mensuelle",
+  "@financesPeriodiciteMensuelle": {
+    "description": "Libellé de la périodicité « mensuelle »."
+  },
+  "financesPeriodiciteTrimestrielle": "Trimestrielle",
+  "@financesPeriodiciteTrimestrielle": {
+    "description": "Libellé de la périodicité « trimestrielle »."
+  },
+  "financesPeriodiciteAnnuelle": "Annuelle",
+  "@financesPeriodiciteAnnuelle": {
+    "description": "Libellé de la périodicité « annuelle »."
+  },
+  "financesEngagementPeriodicite": "Périodicité : {periodicite}",
+  "@financesEngagementPeriodicite": {
+    "description": "Périodicité affichée sur la carte d'un engagement.",
+    "placeholders": {
+      "periodicite": {
+        "type": "String"
+      }
+    }
+  },
+  "financesEcheanceEnAttente": "En attente",
+  "@financesEcheanceEnAttente": {
+    "description": "Libellé du statut d'échéance « en attente »."
+  },
+  "financesEcheanceHonoree": "Honorée",
+  "@financesEcheanceHonoree": {
+    "description": "Libellé du statut d'échéance « honorée »."
+  },
+  "financesEcheanceEnRetard": "En retard",
+  "@financesEcheanceEnRetard": {
+    "description": "Libellé du statut d'échéance « en retard »."
+  },
+  "financesEcheanceHonorerBouton": "Honorer",
+  "@financesEcheanceHonorerBouton": {
+    "description": "Bouton d'honoration d'une échéance (saisit la contribution correspondante et la lie)."
   }
 }

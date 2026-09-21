@@ -123,6 +123,18 @@ class NodeDetailScreen extends StatelessWidget {
           ),
           const SizedBox(height: AppDimensions.spacingSm),
           OutlinedButton.icon(
+            icon: const Icon(Icons.volunteer_activism_outlined),
+            label: Text(l10n.financesTitre),
+            onPressed: () => context.push(AppRoutes.financesDuNoeud(noeud.id)),
+          ),
+          const SizedBox(height: AppDimensions.spacingSm),
+          OutlinedButton.icon(
+            icon: const Icon(Icons.savings_outlined),
+            label: Text(l10n.financesProjetsTitre),
+            onPressed: () => context.push(AppRoutes.projetsDuNoeud(noeud.id)),
+          ),
+          const SizedBox(height: AppDimensions.spacingSm),
+          OutlinedButton.icon(
             icon: const Icon(Icons.add),
             label: const Text('Ajouter un nœud enfant'),
             onPressed: () => context.push(AppRoutes.organisationNouveauSousNoeud(noeud.id)),

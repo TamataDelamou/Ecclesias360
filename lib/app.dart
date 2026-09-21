@@ -14,6 +14,8 @@ import 'features/deplacements/application/deplacement_controller.dart';
 import 'features/deplacements/data/deplacement_repository.dart';
 import 'features/discipline/application/discipline_controller.dart';
 import 'features/discipline/data/discipline_repository.dart';
+import 'features/finances/application/finances_controller.dart';
+import 'features/finances/data/finances_repository.dart';
 import 'features/dons_spirituels/application/don_spirituel_controller.dart';
 import 'features/dons_spirituels/data/don_spirituel_repository.dart';
 import 'features/fideles/application/fidele_controller.dart';
@@ -66,6 +68,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final DeplacementController _deplacementController;
   late final DisciplineRepository _disciplineRepository;
   late final DisciplineController _disciplineController;
+  late final FinancesRepository _financesRepository;
+  late final FinancesController _financesController;
 
   @override
   void initState() {
@@ -104,6 +108,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
       archivageRepository: _archivageRepository,
     );
     _disciplineController = DisciplineController(_disciplineRepository);
+    _financesRepository = FinancesRepository(widget.database, _fideleRepository);
+    _financesController = FinancesController(_financesRepository);
   }
 
   @override
@@ -120,6 +126,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _culteController.dispose();
     _deplacementController.dispose();
     _disciplineController.dispose();
+    _financesController.dispose();
     super.dispose();
   }
 
@@ -139,6 +146,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
         ChangeNotifierProvider<ArchivageController>.value(value: _archivageController),
         ChangeNotifierProvider<DeplacementController>.value(value: _deplacementController),
         ChangeNotifierProvider<DisciplineController>.value(value: _disciplineController),
+        ChangeNotifierProvider<FinancesController>.value(value: _financesController),
       ],
       child: MaterialApp.router(
         onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,

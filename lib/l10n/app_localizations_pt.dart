@@ -748,4 +748,244 @@ class AppLocalizationsPt extends AppLocalizations {
   String disciplineDureeJours(int jours) {
     return '$jours dia(s)';
   }
+
+  @override
+  String get financesTitre => 'Contribuições';
+
+  @override
+  String get financesHistoriqueTitre => 'Histórico de contribuições';
+
+  @override
+  String get financesAucuneContribution => 'Nenhuma contribuição registrada.';
+
+  @override
+  String get financesAucuneContributionFidele =>
+      'Nenhuma contribuição para este membro.';
+
+  @override
+  String get financesSaisirTooltip => 'Registrar uma oferta';
+
+  @override
+  String get financesSaisirTitre => 'Registrar uma oferta';
+
+  @override
+  String get financesChampDonateur => 'Doador';
+
+  @override
+  String get financesDonateurAnonyme => 'Doador anônimo';
+
+  @override
+  String get financesChampLibelleDonateurAnonyme =>
+      'Rótulo do doador anônimo (opcional)';
+
+  @override
+  String get financesChampTypeOffrande => 'Tipo de oferta';
+
+  @override
+  String get financesChampMontant => 'Valor';
+
+  @override
+  String get financesChampModePaiement => 'Forma de pagamento';
+
+  @override
+  String get financesModePaiementEspeces => 'Dinheiro';
+
+  @override
+  String get financesModePaiementMobileMoney => 'Dinheiro móvel';
+
+  @override
+  String get financesModePaiementVirement => 'Transferência bancária';
+
+  @override
+  String get financesSaisirBouton => 'Registrar';
+
+  @override
+  String get financesRapportParTypeTitre => 'Detalhamento por tipo de oferta';
+
+  @override
+  String get financesStatutEnAttente => 'Pendente';
+
+  @override
+  String get financesStatutValidee => 'Validada';
+
+  @override
+  String get financesStatutRejetee => 'Rejeitada';
+
+  @override
+  String get financesTresoriersTitre => 'Tesoureiros designados';
+
+  @override
+  String get financesTresoriersAucun => 'Nenhum tesoureiro designado.';
+
+  @override
+  String get financesTresorierDesignerTitre => 'Designar um tesoureiro';
+
+  @override
+  String get financesTresorierDesignerBouton => 'Designar';
+
+  @override
+  String get financesTresorierDesignerTooltip => 'Designar um tesoureiro';
+
+  @override
+  String financesTresorierDepuis(String date) {
+    return 'Tesoureiro desde $date';
+  }
+
+  @override
+  String get financesTresorierRetirerTooltip => 'Remover designação';
+
+  @override
+  String get financesRecuTitre => 'Recibo de contribuição';
+
+  @override
+  String get financesIntrouvable => 'Esta contribuição não foi encontrada.';
+
+  @override
+  String get financesValiderTitre => 'Validar a contribuição';
+
+  @override
+  String get financesChampRoleActeur => 'Função atuante';
+
+  @override
+  String get financesChampValidePar => 'Validado por';
+
+  @override
+  String get financesValiderBouton => 'Validar';
+
+  @override
+  String get financesRejeterTitre => 'Rejeitar a contribuição';
+
+  @override
+  String get financesChampMotif => 'Motivo';
+
+  @override
+  String get financesRejeterBouton => 'Rejeitar';
+
+  @override
+  String get financesContrePasserTitre => 'Estornar a contribuição';
+
+  @override
+  String get financesContrePasserBouton => 'Estornar';
+
+  @override
+  String financesSaisieLe(String date) {
+    return 'Registrada em $date';
+  }
+
+  @override
+  String financesValideeLe(String date) {
+    return 'Validada em $date';
+  }
+
+  @override
+  String get financesEstContrePassation => 'Esta contribuição é um estorno.';
+
+  @override
+  String get financesProjetsTitre => 'Projetos';
+
+  @override
+  String get financesProjetsAucun => 'Nenhum projeto.';
+
+  @override
+  String get financesProjetCreerTitre => 'Criar um projeto';
+
+  @override
+  String get financesProjetCreerTooltip => 'Criar um projeto';
+
+  @override
+  String get financesChampNomProjet => 'Nome do projeto';
+
+  @override
+  String get financesChampBudgetPrevisionnel => 'Orçamento previsto';
+
+  @override
+  String financesProjetSoldeSurBudget(int solde, int budget, String devise) {
+    return 'Saldo: $solde $devise / orçamento $budget $devise';
+  }
+
+  @override
+  String get financesProjetDetailTitre => 'Ficha do projeto';
+
+  @override
+  String get financesProjetIntrouvable => 'Este projeto não foi encontrado.';
+
+  @override
+  String get financesDepenseAjouterTitre => 'Adicionar uma despesa';
+
+  @override
+  String get financesDepenseAjouterBouton => 'Adicionar uma despesa';
+
+  @override
+  String get financesChampLibelleDepense => 'Rótulo da despesa';
+
+  @override
+  String get financesChampDerogationTracee =>
+      'Exceção registrada (excede o saldo disponível)';
+
+  @override
+  String get financesDepensesTitre => 'Despesas';
+
+  @override
+  String get financesDepensesAucune => 'Nenhuma despesa registrada.';
+
+  @override
+  String financesDepenseDerogation(String date) {
+    return '$date — exceção registrada';
+  }
+
+  @override
+  String get financesEngagementsTitre => 'Compromissos e vencimentos';
+
+  @override
+  String get financesEngagementsAucun => 'Nenhum compromisso.';
+
+  @override
+  String get financesEngagementCreerTitre => 'Criar um compromisso';
+
+  @override
+  String get financesEngagementCreerTooltip => 'Criar um compromisso';
+
+  @override
+  String get financesChampTypeEngagement => 'Tipo de compromisso';
+
+  @override
+  String get financesTypeEngagementDime => 'Dízimo';
+
+  @override
+  String get financesTypeEngagementPromesseDon => 'Promessa de doação';
+
+  @override
+  String get financesChampMontantPrevu => 'Valor previsto';
+
+  @override
+  String get financesChampPeriodicite => 'Periodicidade';
+
+  @override
+  String get financesPeriodiciteHebdomadaire => 'Semanal';
+
+  @override
+  String get financesPeriodiciteMensuelle => 'Mensal';
+
+  @override
+  String get financesPeriodiciteTrimestrielle => 'Trimestral';
+
+  @override
+  String get financesPeriodiciteAnnuelle => 'Anual';
+
+  @override
+  String financesEngagementPeriodicite(String periodicite) {
+    return 'Periodicidade: $periodicite';
+  }
+
+  @override
+  String get financesEcheanceEnAttente => 'Pendente';
+
+  @override
+  String get financesEcheanceHonoree => 'Cumprida';
+
+  @override
+  String get financesEcheanceEnRetard => 'Atrasada';
+
+  @override
+  String get financesEcheanceHonorerBouton => 'Cumprir';
 }

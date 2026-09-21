@@ -143,6 +143,18 @@ class FideleDetailScreen extends StatelessWidget {
             onPressed: () => context.push(AppRoutes.disciplineDuFidele(fidele.id)),
           ),
           const SizedBox(height: AppDimensions.spacingSm),
+          OutlinedButton.icon(
+            icon: const Icon(Icons.volunteer_activism_outlined),
+            label: Text(l10n.financesHistoriqueTitre),
+            onPressed: () => context.push(AppRoutes.financesDuFidele(fidele.id)),
+          ),
+          const SizedBox(height: AppDimensions.spacingSm),
+          OutlinedButton.icon(
+            icon: const Icon(Icons.event_repeat_outlined),
+            label: Text(l10n.financesEngagementsTitre),
+            onPressed: () => context.push(AppRoutes.engagementsDuFidele(fidele.id)),
+          ),
+          const SizedBox(height: AppDimensions.spacingSm),
           if (fidele.statut != StatutFidele.inactif)
             OutlinedButton.icon(
               icon: const Icon(Icons.archive_outlined),

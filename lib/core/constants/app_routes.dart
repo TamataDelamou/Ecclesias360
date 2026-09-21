@@ -69,4 +69,12 @@ abstract final class AppRoutes {
   static String discipline(String noeudId) => '/organisation/$noeudId/discipline';
   static String disciplineDuFidele(String fideleId) => '/fideles/$fideleId/discipline';
   static String dossierDisciplinaire(String id) => '/dossiers-disciplinaires/$id';
+
+  static String financesDuNoeud(String noeudId) => '/organisation/$noeudId/finances';
+  static String financesDuFidele(String fideleId) => '/fideles/$fideleId/finances';
+  static String contribution(String id) => '/contributions/$id';
+  static String tresoriersDuNoeud(String noeudId) => '/organisation/$noeudId/tresoriers';
+  static String projetsDuNoeud(String noeudId) => '/organisation/$noeudId/projets';
+  static String projet(String id) => '/projets/$id';
+  static String engagementsDuFidele(String fideleId) => '/fideles/$fideleId/engagements';
 }

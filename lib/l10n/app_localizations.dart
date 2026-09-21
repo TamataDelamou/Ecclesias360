@@ -1505,6 +1505,456 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'{jours} jour(s)'**
   String disciplineDureeJours(int jours);
+
+  /// Titre de l'écran de liste des contributions d'un nœud (Module XI).
+  ///
+  /// In fr, this message translates to:
+  /// **'Contributions'**
+  String get financesTitre;
+
+  /// Titre de l'écran d'historique des contributions d'un fidèle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique des contributions'**
+  String get financesHistoriqueTitre;
+
+  /// État vide de la liste des contributions d'un nœud.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune contribution saisie.'**
+  String get financesAucuneContribution;
+
+  /// État vide de l'historique des contributions d'un fidèle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune contribution pour ce fidèle.'**
+  String get financesAucuneContributionFidele;
+
+  /// Infobulle du bouton flottant de saisie rapide d'une offrande (RG-XI-01).
+  ///
+  /// In fr, this message translates to:
+  /// **'Saisir une offrande'**
+  String get financesSaisirTooltip;
+
+  /// Titre du dialogue de saisie rapide d'une offrande.
+  ///
+  /// In fr, this message translates to:
+  /// **'Saisir une offrande'**
+  String get financesSaisirTitre;
+
+  /// Libellé du sélecteur de donateur lors de la saisie d'une contribution.
+  ///
+  /// In fr, this message translates to:
+  /// **'Donateur'**
+  String get financesChampDonateur;
+
+  /// Valeur du sélecteur de donateur pour un don anonyme identifié techniquement (RG-XI-01).
+  ///
+  /// In fr, this message translates to:
+  /// **'Donateur anonyme'**
+  String get financesDonateurAnonyme;
+
+  /// Libellé du champ texte libre pour un donateur anonyme.
+  ///
+  /// In fr, this message translates to:
+  /// **'Libellé du donateur anonyme (optionnel)'**
+  String get financesChampLibelleDonateurAnonyme;
+
+  /// Libellé du sélecteur de type d'offrande lors de la saisie d'une contribution.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type d\'offrande'**
+  String get financesChampTypeOffrande;
+
+  /// Libellé du champ montant d'une contribution.
+  ///
+  /// In fr, this message translates to:
+  /// **'Montant'**
+  String get financesChampMontant;
+
+  /// Libellé du sélecteur de mode de paiement d'une contribution.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mode de paiement'**
+  String get financesChampModePaiement;
+
+  /// Libellé du mode de paiement « espèces ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Espèces'**
+  String get financesModePaiementEspeces;
+
+  /// Libellé du mode de paiement « mobile money ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Mobile money'**
+  String get financesModePaiementMobileMoney;
+
+  /// Libellé du mode de paiement « virement ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Virement'**
+  String get financesModePaiementVirement;
+
+  /// Bouton de confirmation de la saisie d'une contribution.
+  ///
+  /// In fr, this message translates to:
+  /// **'Saisir'**
+  String get financesSaisirBouton;
+
+  /// Titre du rapport rapide par type d'offrande (contributions validées affichées).
+  ///
+  /// In fr, this message translates to:
+  /// **'Répartition par type d\'offrande'**
+  String get financesRapportParTypeTitre;
+
+  /// Libellé du statut de contribution « en attente ».
+  ///
+  /// In fr, this message translates to:
+  /// **'En attente'**
+  String get financesStatutEnAttente;
+
+  /// Libellé du statut de contribution « validée ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Validée'**
+  String get financesStatutValidee;
+
+  /// Libellé du statut de contribution « rejetée ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Rejetée'**
+  String get financesStatutRejetee;
+
+  /// Titre de l'écran de gestion des trésoriers désignés d'un nœud (RG-XI-02).
+  ///
+  /// In fr, this message translates to:
+  /// **'Trésoriers désignés'**
+  String get financesTresoriersTitre;
+
+  /// État vide de la liste des trésoriers désignés d'un nœud.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun trésorier désigné.'**
+  String get financesTresoriersAucun;
+
+  /// Titre du dialogue de désignation d'un trésorier.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désigner un trésorier'**
+  String get financesTresorierDesignerTitre;
+
+  /// Bouton de confirmation de la désignation d'un trésorier.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désigner'**
+  String get financesTresorierDesignerBouton;
+
+  /// Infobulle du bouton flottant de désignation d'un trésorier.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désigner un trésorier'**
+  String get financesTresorierDesignerTooltip;
+
+  /// Date de début de désignation d'un trésorier.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trésorier depuis le {date}'**
+  String financesTresorierDepuis(String date);
+
+  /// Infobulle du bouton de retrait de la désignation d'un trésorier.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer la désignation'**
+  String get financesTresorierRetirerTooltip;
+
+  /// Titre de l'écran fiche d'une contribution (sert aussi de reçu).
+  ///
+  /// In fr, this message translates to:
+  /// **'Reçu de contribution'**
+  String get financesRecuTitre;
+
+  /// Corps de l'écran fiche quand la contribution n'existe pas (ou plus).
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette contribution est introuvable.'**
+  String get financesIntrouvable;
+
+  /// Titre du dialogue de validation comptable d'une contribution (RG-XI-02).
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider la contribution'**
+  String get financesValiderTitre;
+
+  /// Libellé du sélecteur de rôle agissant lors de la validation (pas de session réelle, RG-SEC-01 non construit).
+  ///
+  /// In fr, this message translates to:
+  /// **'Rôle agissant'**
+  String get financesChampRoleActeur;
+
+  /// Libellé du sélecteur de fidèle qui valide (RG-XI-02, trace l'auteur).
+  ///
+  /// In fr, this message translates to:
+  /// **'Validé par'**
+  String get financesChampValidePar;
+
+  /// Bouton de validation comptable d'une contribution.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider'**
+  String get financesValiderBouton;
+
+  /// Titre du dialogue de rejet d'une contribution.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rejeter la contribution'**
+  String get financesRejeterTitre;
+
+  /// Libellé du champ motif (rejet ou contre-passation d'une contribution, ou dérogation de dépense).
+  ///
+  /// In fr, this message translates to:
+  /// **'Motif'**
+  String get financesChampMotif;
+
+  /// Bouton de rejet d'une contribution.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rejeter'**
+  String get financesRejeterBouton;
+
+  /// Titre du dialogue de contre-passation d'une contribution validée (RG-XI-05).
+  ///
+  /// In fr, this message translates to:
+  /// **'Contre-passer la contribution'**
+  String get financesContrePasserTitre;
+
+  /// Bouton de contre-passation d'une contribution validée.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contre-passer'**
+  String get financesContrePasserBouton;
+
+  /// Date de saisie d'une contribution.
+  ///
+  /// In fr, this message translates to:
+  /// **'Saisie le {date}'**
+  String financesSaisieLe(String date);
+
+  /// Date de validation comptable d'une contribution.
+  ///
+  /// In fr, this message translates to:
+  /// **'Validée le {date}'**
+  String financesValideeLe(String date);
+
+  /// Note affichée sur une contribution de contre-passation (RG-XI-05).
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette contribution est une contre-passation.'**
+  String get financesEstContrePassation;
+
+  /// Titre de l'écran de liste des projets d'un nœud (RG-XI-03).
+  ///
+  /// In fr, this message translates to:
+  /// **'Projets'**
+  String get financesProjetsTitre;
+
+  /// État vide de la liste des projets d'un nœud.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun projet.'**
+  String get financesProjetsAucun;
+
+  /// Titre du dialogue de création d'un projet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer un projet'**
+  String get financesProjetCreerTitre;
+
+  /// Infobulle du bouton flottant de création d'un projet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer un projet'**
+  String get financesProjetCreerTooltip;
+
+  /// Libellé du champ nom lors de la création d'un projet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom du projet'**
+  String get financesChampNomProjet;
+
+  /// Libellé du champ budget prévisionnel lors de la création d'un projet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Budget prévisionnel'**
+  String get financesChampBudgetPrevisionnel;
+
+  /// Solde recalculé d'un projet rapporté à son budget prévisionnel (RG-XI-03, jamais une colonne stockée).
+  ///
+  /// In fr, this message translates to:
+  /// **'Solde : {solde} {devise} / budget {budget} {devise}'**
+  String financesProjetSoldeSurBudget(int solde, int budget, String devise);
+
+  /// Titre de l'écran fiche d'un projet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fiche projet'**
+  String get financesProjetDetailTitre;
+
+  /// Corps de l'écran fiche quand le projet n'existe pas (ou plus).
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce projet est introuvable.'**
+  String get financesProjetIntrouvable;
+
+  /// Titre du dialogue d'ajout d'une dépense à un projet (RG-XI-03).
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une dépense'**
+  String get financesDepenseAjouterTitre;
+
+  /// Bouton d'ouverture du dialogue d'ajout d'une dépense.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une dépense'**
+  String get financesDepenseAjouterBouton;
+
+  /// Libellé du champ libellé lors de l'ajout d'une dépense.
+  ///
+  /// In fr, this message translates to:
+  /// **'Libellé de la dépense'**
+  String get financesChampLibelleDepense;
+
+  /// Libellé de la case à cocher de dérogation tracée lors de l'ajout d'une dépense (RG-XI-03).
+  ///
+  /// In fr, this message translates to:
+  /// **'Dérogation tracée (dépasse le solde disponible)'**
+  String get financesChampDerogationTracee;
+
+  /// Titre de la section dépenses de la fiche d'un projet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dépenses'**
+  String get financesDepensesTitre;
+
+  /// État vide de la section dépenses de la fiche d'un projet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune dépense engagée.'**
+  String get financesDepensesAucune;
+
+  /// Note affichée sur une dépense engagée au-delà du solde disponible avec dérogation tracée.
+  ///
+  /// In fr, this message translates to:
+  /// **'{date} — dérogation tracée'**
+  String financesDepenseDerogation(String date);
+
+  /// Titre de l'écran des engagements et échéances d'un fidèle (RG-XI-04).
+  ///
+  /// In fr, this message translates to:
+  /// **'Engagements et échéances'**
+  String get financesEngagementsTitre;
+
+  /// État vide de la liste des engagements d'un fidèle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun engagement.'**
+  String get financesEngagementsAucun;
+
+  /// Titre du dialogue de création d'un engagement récurrent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer un engagement'**
+  String get financesEngagementCreerTitre;
+
+  /// Infobulle du bouton flottant de création d'un engagement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer un engagement'**
+  String get financesEngagementCreerTooltip;
+
+  /// Libellé du sélecteur de type d'engagement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type d\'engagement'**
+  String get financesChampTypeEngagement;
+
+  /// Libellé du type d'engagement « dîme ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Dîme'**
+  String get financesTypeEngagementDime;
+
+  /// Libellé du type d'engagement « promesse de don ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Promesse de don'**
+  String get financesTypeEngagementPromesseDon;
+
+  /// Libellé du champ montant prévu lors de la création d'un engagement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Montant prévu'**
+  String get financesChampMontantPrevu;
+
+  /// Libellé du sélecteur de périodicité lors de la création d'un engagement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Périodicité'**
+  String get financesChampPeriodicite;
+
+  /// Libellé de la périodicité « hebdomadaire ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Hebdomadaire'**
+  String get financesPeriodiciteHebdomadaire;
+
+  /// Libellé de la périodicité « mensuelle ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Mensuelle'**
+  String get financesPeriodiciteMensuelle;
+
+  /// Libellé de la périodicité « trimestrielle ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Trimestrielle'**
+  String get financesPeriodiciteTrimestrielle;
+
+  /// Libellé de la périodicité « annuelle ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuelle'**
+  String get financesPeriodiciteAnnuelle;
+
+  /// Périodicité affichée sur la carte d'un engagement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Périodicité : {periodicite}'**
+  String financesEngagementPeriodicite(String periodicite);
+
+  /// Libellé du statut d'échéance « en attente ».
+  ///
+  /// In fr, this message translates to:
+  /// **'En attente'**
+  String get financesEcheanceEnAttente;
+
+  /// Libellé du statut d'échéance « honorée ».
+  ///
+  /// In fr, this message translates to:
+  /// **'Honorée'**
+  String get financesEcheanceHonoree;
+
+  /// Libellé du statut d'échéance « en retard ».
+  ///
+  /// In fr, this message translates to:
+  /// **'En retard'**
+  String get financesEcheanceEnRetard;
+
+  /// Bouton d'honoration d'une échéance (saisit la contribution correspondante et la lie).
+  ///
+  /// In fr, this message translates to:
+  /// **'Honorer'**
+  String get financesEcheanceHonorerBouton;
 }
 
 class _AppLocalizationsDelegate

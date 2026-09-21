@@ -1,0 +1,220 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../core/theme/app_dimensions.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../fideles/application/fidele_controller.dart';
+import '../../parametres/domain/models/role.dart';
+import '../application/finances_controller.dart';
+import '../domain/models/contribution.dart';
+import '../domain/models/statut_contribution.dart';
+import '../domain/models/type_offrande.dart';
+
+/// Fiche d'une contribution — sert à la fois de « Reçu de contribution »
+/// (écran dédié du Cahier) et d'écran d'action pour la validation
+/// comptable (RG-XI-02), le rejet et la contre-passation (RG-XI-05).
+class ContributionDetailScreen extends StatelessWidget {
+  const ContributionDetailScreen({required this.contributionId, super.key});
+
+  final String contributionId;
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = context.read<FinancesController>();
+    final l10n = AppLocalizations.of(context)!;
+
+    return Scaffold(
+      appBar: AppBar(title: Text(l10n.financesRecuTitre)),
+      body: FutureBuilder<Contribution?>(
+        future: controller.findContributionById(contributionId),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
+          final contribution = snapshot.data;
+          if (contribution == null) {
+            return Center(child: Text(l10n.financesIntrouvable));
+          }
+          return _ContributionDetailBody(contribution: contribution, controller: controller);
+        },
+      ),
+    );
+  }
+}
+
+class _ContributionDetailBody extends StatefulWidget {
+  const _ContributionDetailBody({required this.contribution, required this.controller});
+
+  final Contribution contribution;
+  final FinancesController controller;
+
+  @override
+  State<_ContributionDetailBody> createState() => _ContributionDetailBodyState();
+}
+
+class _ContributionDetailBodyState extends State<_ContributionDetailBody> {
+  late Contribution _contribution = widget.contribution;
+
+  Future<void> _rafraichir() async {
+    final contribution = await widget.controller.findContributionById(_contribution.id);
+    if (mounted && contribution != null) setState(() => _contribution = contribution);
+  }
+
+  Future<void> _valider(BuildContext context) async {
+    final fideleController = context.read<FideleController>();
+    final fidelesDuNoeud = fideleController.fideles.where((f) => f.noeudId == _contribution.noeudId).toList();
+    if (fidelesDuNoeud.isEmpty) return;
+
+    Role roleActeur = Role.pasteur;
+    String valideParFideleId = fidelesDuNoeud.first.id;
+
+    final confirme = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return StatefulBuilder(
+          builder: (context, setState) => AlertDialog(
+            title: Text(l10n.financesValiderTitre),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                DropdownButtonFormField<Role>(
+                  isExpanded: true,
+                  initialValue: roleActeur,
+                  decoration: InputDecoration(labelText: l10n.financesChampRoleActeur),
+                  items: Role.values.map((r) => DropdownMenuItem(value: r, child: Text(r.code))).toList(),
+                  onChanged: (valeur) => setState(() => roleActeur = valeur ?? roleActeur),
+                ),
+                DropdownButtonFormField<String>(
+                  isExpanded: true,
+                  initialValue: valideParFideleId,
+                  decoration: InputDecoration(labelText: l10n.financesChampValidePar),
+                  items: fidelesDuNoeud.map((f) => DropdownMenuItem(value: f.id, child: Text(f.nomComplet))).toList(),
+                  onChanged: (valeur) => setState(() => valideParFideleId = valeur ?? valideParFideleId),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l10n.commonAnnuler)),
+              FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(l10n.financesValiderBouton)),
+            ],
+          ),
+        );
+      },
+    );
+
+    if (confirme == true) {
+      await widget.controller.validerContribution(
+        id: _contribution.id,
+        roleActeur: roleActeur,
+        valideParFideleId: valideParFideleId,
+      );
+      await _rafraichir();
+    }
+  }
+
+  Future<void> _rejeter(BuildContext context) async {
+    final motifController = TextEditingController();
+    final confirme = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return AlertDialog(
+          title: Text(l10n.financesRejeterTitre),
+          content: TextField(controller: motifController, decoration: InputDecoration(labelText: l10n.financesChampMotif)),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l10n.commonAnnuler)),
+            FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(l10n.financesRejeterBouton)),
+          ],
+        );
+      },
+    );
+    if (confirme == true) {
+      await widget.controller.rejeterContribution(
+        id: _contribution.id,
+        motifRejet: motifController.text.trim().isNotEmpty ? motifController.text.trim() : null,
+      );
+      await _rafraichir();
+    }
+  }
+
+  Future<void> _contrePasser(BuildContext context) async {
+    final motifController = TextEditingController();
+    final confirme = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return AlertDialog(
+          title: Text(l10n.financesContrePasserTitre),
+          content: TextField(controller: motifController, decoration: InputDecoration(labelText: l10n.financesChampMotif)),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l10n.commonAnnuler)),
+            FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(l10n.financesContrePasserBouton)),
+          ],
+        );
+      },
+    );
+    if (confirme == true) {
+      await widget.controller.contrePasserContribution(
+        id: _contribution.id,
+        motif: motifController.text.trim().isNotEmpty ? motifController.text.trim() : null,
+      );
+      await _rafraichir();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final fideleController = context.watch<FideleController>();
+    final donateurNom = _contribution.fideleId != null
+        ? (fideleController.findById(_contribution.fideleId!)?.nomComplet ?? '—')
+        : (_contribution.libelleDonateurAnonyme ?? l10n.financesDonateurAnonyme);
+
+    return StreamBuilder<List<TypeOffrande>>(
+      stream: widget.controller.watchTypesOffrande(),
+      builder: (context, typesSnapshot) {
+        final types = typesSnapshot.data ?? const <TypeOffrande>[];
+        var typeLibelle = '—';
+        for (final type in types) {
+          if (type.id == _contribution.typeOffrandeId) {
+            typeLibelle = type.libelle;
+            break;
+          }
+        }
+
+        return ListView(
+          padding: const EdgeInsets.all(AppDimensions.spacingLg),
+          children: [
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(AppDimensions.spacingMd),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('${_contribution.montant} ${_contribution.devise}', style: Theme.of(context).textTheme.headlineSmall),
+                    const SizedBox(height: AppDimensions.spacingSm),
+                    Text('${l10n.financesChampDonateur} : $donateurNom'),
+                    Text('${l10n.financesChampTypeOffrande} : $typeLibelle'),
+                    Text('${l10n.financesChampModePaiement} : ${_contribution.modePaiement}'),
+                    Text(l10n.financesSaisieLe(_contribution.dateSaisie.toIso8601String().split('T').first)),
+                    if (_contribution.dateValidation != null)
+                      Text(l10n.financesValideeLe(_contribution.dateValidation!.toIso8601String().split('T').first)),
+                    if (_contribution.motifRejet != null) Text('${l10n.financesChampMotif} : ${_contribution.motifRejet}'),
+                    if (_contribution.estContrePassation) Text(l10n.financesEstContrePassation),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: AppDimensions.spacingMd),
+            if (_contribution.statut == StatutContribution.enAttente) ...[
+              FilledButton(onPressed: () => _valider(context), child: Text(l10n.financesValiderBouton)),
+              const SizedBox(height: AppDimensions.spacingSm),
+              OutlinedButton(onPressed: () => _rejeter(context), child: Text(l10n.financesRejeterBouton)),
+            ],
+            if (_contribution.statut == StatutContribution.validee && !_contribution.estContrePassation)
+              OutlinedButton(onPressed: () => _contrePasser(context), child: Text(l10n.financesContrePasserBouton)),
+          ],
+        );
+      },
+    );
+  }
+}

@@ -15,6 +15,12 @@ import '../../features/deplacements/presentation/mutation_detail_screen.dart';
 import '../../features/deplacements/presentation/mutations_list_screen.dart';
 import '../../features/discipline/presentation/dossier_disciplinaire_detail_screen.dart';
 import '../../features/discipline/presentation/dossiers_disciplinaires_list_screen.dart';
+import '../../features/finances/presentation/contribution_detail_screen.dart';
+import '../../features/finances/presentation/contributions_list_screen.dart';
+import '../../features/finances/presentation/engagements_list_screen.dart';
+import '../../features/finances/presentation/projet_detail_screen.dart';
+import '../../features/finances/presentation/projets_list_screen.dart';
+import '../../features/finances/presentation/tresoriers_noeud_screen.dart';
 import '../../features/dons_spirituels/presentation/don_evaluation_form_screen.dart';
 import '../../features/dons_spirituels/presentation/don_historique_screen.dart';
 import '../../features/dons_spirituels/presentation/don_ministeres_compatibles_screen.dart';
@@ -303,6 +309,55 @@ final GoRouter appRouter = GoRouter(
       pageBuilder: (context, state) => sharedAxisPage(
         key: state.pageKey,
         child: DossierDisciplinaireDetailScreen(dossierId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/organisation/:id/finances',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: ContributionsListScreen(noeudId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/fideles/:id/finances',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: ContributionsListScreen(fideleId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/contributions/:id',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: ContributionDetailScreen(contributionId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/organisation/:id/tresoriers',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: TresoriersNoeudScreen(noeudId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/organisation/:id/projets',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: ProjetsListScreen(noeudId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/projets/:id',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: ProjetDetailScreen(projetId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/fideles/:id/engagements',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: EngagementsListScreen(fideleId: state.pathParameters['id']!),
       ),
     ),
   ],
