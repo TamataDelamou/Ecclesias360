@@ -159,6 +159,16 @@ class AppError implements Exception {
     "Cette campagne d'inventaire est déjà clôturée : aucun nouveau pointage n'est possible.",
   );
 
+  factory AppError.periodeComptableCloturee() => const AppError(
+    'periode_comptable_cloturee',
+    "Cette période comptable est clôturée et immuable : toute correction doit passer par une écriture de régularisation dans la période courante.",
+  );
+
+  factory AppError.roleInsuffisantPourClotureComptable() => const AppError(
+    'role_insuffisant_pour_cloture_comptable',
+    "Seul un pasteur (ou rôle supérieur) peut clôturer une période comptable.",
+  );
+
   @override
   String toString() => 'AppError($code): $message';
 }

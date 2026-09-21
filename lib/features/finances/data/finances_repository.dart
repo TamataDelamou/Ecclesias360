@@ -19,6 +19,7 @@ import '../domain/models/statut_projet.dart';
 import '../domain/models/tresorier_noeud.dart';
 import '../domain/models/type_engagement.dart';
 import '../domain/models/type_offrande.dart';
+import '../../comptabilite/data/comptabilite_repository.dart';
 import '../domain/rules/finances_rules.dart';
 
 /// Dépôt Module XI — Finances (RG-XI-01 à 07). `FideleRepository` n'est pas
@@ -28,11 +29,13 @@ import '../domain/rules/finances_rules.dart';
 /// Synchronisation distante différée pour ce module (même précédent
 /// documenté que les modules précédents).
 class FinancesRepository {
-  FinancesRepository(this._db, this._fideleRepository);
+  FinancesRepository(this._db, this._fideleRepository, {ComptabiliteRepository? comptabiliteRepository})
+      : _comptabilite = comptabiliteRepository;
 
   final AppDatabase _db;
   // ignore: unused_field
   final FideleRepository _fideleRepository;
+  final ComptabiliteRepository? _comptabilite;
 
   // --- Types d'offrande (référentiel, RG-XI-01) -----------------------------
 
@@ -159,6 +162,15 @@ class FinancesRepository {
         dateValidation: Value(DateTime.now()),
       ),
     );
+
+    final comptabilite = _comptabilite;
+    if (comptabilite != null) {
+      await comptabilite.genererEcecturesContributionValidee(
+        contributionId: id,
+        montant: contribution.montant,
+        noeudId: contribution.noeudId,
+      );
+    }
     return (await findContributionById(id))!;
   }
 
@@ -205,6 +217,15 @@ class FinancesRepository {
             estContrePassation: const Value(true),
           ),
         );
+
+    final comptabilite = _comptabilite;
+    if (comptabilite != null) {
+      await comptabilite.genererEcecturesContributionValidee(
+        contributionId: nouvelId,
+        montant: -origine.montant,
+        noeudId: origine.noeudId,
+      );
+    }
     return (await findContributionById(nouvelId))!;
   }
 

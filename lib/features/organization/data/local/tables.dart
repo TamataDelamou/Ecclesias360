@@ -998,6 +998,80 @@ class PointagesInventaire extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Table Drift CompteComptable (Module XXI, RG-XXI-01) — plan comptable
+/// paramétrable, référentiel fermé et extensible.
+@DataClassName('CompteComptableRow')
+class ComptesComptables extends Table {
+  TextColumn get id => text()();
+  TextColumn get codeCompte => text()();
+  TextColumn get libelle => text()();
+  TextColumn get type => text()();
+  TextColumn get statut => text().withDefault(const Constant('actif'))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (code_compte)'];
+}
+
+/// Table Drift PeriodeComptable (Module XXI, RG-XXI-03). Globale (aucune
+/// colonne `noeud_id`, le Cahier ne le prévoit pas pour cette entité).
+@DataClassName('PeriodeComptableRow')
+class PeriodesComptables extends Table {
+  TextColumn get id => text()();
+  IntColumn get exercice => integer()();
+  DateTimeColumn get dateDebut => dateTime()();
+  DateTimeColumn get dateFin => dateTime()();
+  TextColumn get statut => text().withDefault(const Constant('ouverte'))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (exercice)'];
+}
+
+/// Table Drift EcritureComptable (Module XXI, RG-XXI-01/02/03/05). Chaque
+/// opération génère deux lignes équilibrées (débit + crédit) partageant le
+/// même `piece_justificative_id` — voir `ComptabiliteRules` et
+/// `ComptabiliteRepository`. `rapproche` (RG-XXI-05) est une colonne
+/// ajoutée au-delà du tableau minimal du Cahier, même précédent que
+/// `Bien.seuilAlerteStock` du Module XX.
+@DataClassName('EcritureComptableRow')
+class EcrituresComptables extends Table {
+  TextColumn get id => text()();
+  DateTimeColumn get date => dateTime()();
+  TextColumn get compteId => text().references(ComptesComptables, #id)();
+  IntColumn get debit => integer().withDefault(const Constant(0))();
+  IntColumn get credit => integer().withDefault(const Constant(0))();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  TextColumn get pieceJustificativeId => text().nullable()();
+  TextColumn get periodeId => text().references(PeriodesComptables, #id)();
+  TextColumn get libelle => text().nullable()();
+  BoolColumn get rapproche => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift Budget (Module XXI, RG-XXI-04). `seuilAlertePourcentage` est
+/// une colonne ajoutée au-delà du tableau minimal du Cahier (seuil d'alerte
+/// « paramétrable » sans support nommé), même précédent que
+/// `Bien.seuilAlerteStock` du Module XX ; `null` retombe sur
+/// `AppDefaults.comptabiliteSeuilAlerteDepassementPourcentageParDefaut`.
+@DataClassName('BudgetRow')
+class Budgets extends Table {
+  TextColumn get id => text()();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  TextColumn get periodeId => text().references(PeriodesComptables, #id)();
+  TextColumn get compteId => text().references(ComptesComptables, #id)();
+  IntColumn get montantPrevu => integer()();
+  IntColumn get seuilAlertePourcentage => integer().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
 
 /// File d'attente hors ligne (RG-OFF-02) : chaque écriture locale enregistre
 /// ici l'événement à rejouer vers Supabase dès qu'une connexion est

@@ -142,6 +142,22 @@ const List<(String code, String libelle)> categoriesBienDeDepart = [
   ('stocks', 'Stocks (fournitures)'),
 ];
 
+/// RG-XXI-01 — plan comptable de départ, référentiel fermé et extensible.
+/// Codes génériques (le Cahier n'impose aucun plan comptable réel) : deux
+/// comptes de trésorerie (actif), un compte d'immobilisations (actif, débité
+/// à l'acquisition/crédité à la sortie d'un bien — RG-XX-02/RG-XXI-02), deux
+/// comptes de produits et deux comptes de charges dont un dédié à la valeur
+/// comptable des sorties d'actifs (RG-XXI-02).
+const List<(String code, String libelle, String type)> comptesComptablesDeDepart = [
+  ('512000', 'Banque', 'actif'),
+  ('530000', 'Caisse', 'actif'),
+  ('211000', 'Immobilisations et biens', 'actif'),
+  ('706000', 'Produits des contributions', 'produit'),
+  ('758000', 'Produits de cession de biens', 'produit'),
+  ('651000', 'Charges diverses', 'charge'),
+  ('675000', "Charges — sorties d'actifs", 'charge'),
+];
+
 /// Base Drift/SQLite unique, offline-first (RG-OFF-01), partagée par tous
 /// les modules (voir AGENTS.md §4).
 @DriftDatabase(tables: [
@@ -203,13 +219,17 @@ const List<(String code, String libelle)> categoriesBienDeDepart = [
   MouvementsStock,
   CampagnesInventaire,
   PointagesInventaire,
+  ComptesComptables,
+  PeriodesComptables,
+  EcrituresComptables,
+  Budgets,
   SyncOutbox,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 15;
+  int get schemaVersion => 16;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -330,6 +350,15 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(pointagesInventaire);
             await _seedCategoriesBienStandards();
           }
+          // v15 -> v16 : ajout du Module XXI (Comptabilité).
+          if (from < 16) {
+            await m.createTable(comptesComptables);
+            await m.createTable(periodesComptables);
+            await m.createTable(ecrituresComptables);
+            await m.createTable(budgets);
+            await _seedComptesComptablesStandards();
+            await _seedPeriodeComptableCourante();
+          }
         },
         beforeOpen: (details) async {
           // SQLite n'applique pas les contraintes de clé étrangère par
@@ -345,6 +374,8 @@ class AppDatabase extends _$AppDatabase {
             await _seedNaturesFauteStandards();
             await _seedTypesOffrandeStandards();
             await _seedCategoriesBienStandards();
+            await _seedComptesComptablesStandards();
+            await _seedPeriodeComptableCourante();
           }
         },
       );
@@ -491,6 +522,37 @@ class AppDatabase extends _$AppDatabase {
         mode: InsertMode.insertOrIgnore,
       );
     });
+  }
+
+  Future<void> _seedComptesComptablesStandards() async {
+    await batch((b) {
+      b.insertAll(
+        comptesComptables,
+        [
+          for (final (code, libelle, type) in comptesComptablesDeDepart)
+            ComptesComptablesCompanion.insert(id: IdGenerator.newId(), codeCompte: code, libelle: libelle, type: type),
+        ],
+        mode: InsertMode.insertOrIgnore,
+      );
+    });
+  }
+
+  /// RG-XXI-03 — amorce une période comptable ouverte pour l'exercice en
+  /// cours (année civile), nécessaire pour que la première écriture générée
+  /// automatiquement (RG-XXI-02) ait toujours une période où s'imputer.
+  /// `insertOrIgnore` sur la contrainte `UNIQUE (exercice)` rend l'opération
+  /// idempotente d'une exécution à l'autre.
+  Future<void> _seedPeriodeComptableCourante() async {
+    final annee = DateTime.now().year;
+    await into(periodesComptables).insert(
+      PeriodesComptablesCompanion.insert(
+        id: IdGenerator.newId(),
+        exercice: annee,
+        dateDebut: DateTime(annee, 1, 1),
+        dateFin: DateTime(annee, 12, 31),
+      ),
+      mode: InsertMode.insertOrIgnore,
+    );
   }
 
   static QueryExecutor _openConnection() {

@@ -8,6 +8,7 @@ import 'features/archivage/application/archivage_controller.dart';
 import 'features/archivage/data/archivage_repository.dart';
 import 'features/comite/application/comite_controller.dart';
 import 'features/comite/data/comite_repository.dart';
+import 'features/comptabilite/data/comptabilite_repository.dart';
 import 'features/cultes/application/culte_controller.dart';
 import 'features/cultes/data/culte_repository.dart';
 import 'features/deplacements/application/deplacement_controller.dart';
@@ -72,6 +73,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final DisciplineController _disciplineController;
   late final FinancesRepository _financesRepository;
   late final FinancesController _financesController;
+  late final ComptabiliteRepository _comptabiliteRepository;
   late final PatrimoineRepository _patrimoineRepository;
   late final PatrimoineController _patrimoineController;
 
@@ -112,9 +114,10 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
       archivageRepository: _archivageRepository,
     );
     _disciplineController = DisciplineController(_disciplineRepository);
-    _financesRepository = FinancesRepository(widget.database, _fideleRepository);
+    _comptabiliteRepository = ComptabiliteRepository(widget.database);
+    _financesRepository = FinancesRepository(widget.database, _fideleRepository, comptabiliteRepository: _comptabiliteRepository);
     _financesController = FinancesController(_financesRepository);
-    _patrimoineRepository = PatrimoineRepository(widget.database);
+    _patrimoineRepository = PatrimoineRepository(widget.database, comptabiliteRepository: _comptabiliteRepository);
     _patrimoineController = PatrimoineController(_patrimoineRepository);
   }
 

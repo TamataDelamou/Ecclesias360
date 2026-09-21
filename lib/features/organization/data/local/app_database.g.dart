@@ -26611,6 +26611,1784 @@ class PointagesInventaireCompanion
   }
 }
 
+class $ComptesComptablesTable extends ComptesComptables
+    with TableInfo<$ComptesComptablesTable, CompteComptableRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ComptesComptablesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _codeCompteMeta = const VerificationMeta(
+    'codeCompte',
+  );
+  @override
+  late final GeneratedColumn<String> codeCompte = GeneratedColumn<String>(
+    'code_compte',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _libelleMeta = const VerificationMeta(
+    'libelle',
+  );
+  @override
+  late final GeneratedColumn<String> libelle = GeneratedColumn<String>(
+    'libelle',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+    'type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('actif'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, codeCompte, libelle, type, statut];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'comptes_comptables';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CompteComptableRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('code_compte')) {
+      context.handle(
+        _codeCompteMeta,
+        codeCompte.isAcceptableOrUnknown(data['code_compte']!, _codeCompteMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_codeCompteMeta);
+    }
+    if (data.containsKey('libelle')) {
+      context.handle(
+        _libelleMeta,
+        libelle.isAcceptableOrUnknown(data['libelle']!, _libelleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_libelleMeta);
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+        _typeMeta,
+        type.isAcceptableOrUnknown(data['type']!, _typeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CompteComptableRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CompteComptableRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      codeCompte: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code_compte'],
+      )!,
+      libelle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}libelle'],
+      )!,
+      type: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+    );
+  }
+
+  @override
+  $ComptesComptablesTable createAlias(String alias) {
+    return $ComptesComptablesTable(attachedDatabase, alias);
+  }
+}
+
+class CompteComptableRow extends DataClass
+    implements Insertable<CompteComptableRow> {
+  final String id;
+  final String codeCompte;
+  final String libelle;
+  final String type;
+  final String statut;
+  const CompteComptableRow({
+    required this.id,
+    required this.codeCompte,
+    required this.libelle,
+    required this.type,
+    required this.statut,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['code_compte'] = Variable<String>(codeCompte);
+    map['libelle'] = Variable<String>(libelle);
+    map['type'] = Variable<String>(type);
+    map['statut'] = Variable<String>(statut);
+    return map;
+  }
+
+  ComptesComptablesCompanion toCompanion(bool nullToAbsent) {
+    return ComptesComptablesCompanion(
+      id: Value(id),
+      codeCompte: Value(codeCompte),
+      libelle: Value(libelle),
+      type: Value(type),
+      statut: Value(statut),
+    );
+  }
+
+  factory CompteComptableRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CompteComptableRow(
+      id: serializer.fromJson<String>(json['id']),
+      codeCompte: serializer.fromJson<String>(json['codeCompte']),
+      libelle: serializer.fromJson<String>(json['libelle']),
+      type: serializer.fromJson<String>(json['type']),
+      statut: serializer.fromJson<String>(json['statut']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'codeCompte': serializer.toJson<String>(codeCompte),
+      'libelle': serializer.toJson<String>(libelle),
+      'type': serializer.toJson<String>(type),
+      'statut': serializer.toJson<String>(statut),
+    };
+  }
+
+  CompteComptableRow copyWith({
+    String? id,
+    String? codeCompte,
+    String? libelle,
+    String? type,
+    String? statut,
+  }) => CompteComptableRow(
+    id: id ?? this.id,
+    codeCompte: codeCompte ?? this.codeCompte,
+    libelle: libelle ?? this.libelle,
+    type: type ?? this.type,
+    statut: statut ?? this.statut,
+  );
+  CompteComptableRow copyWithCompanion(ComptesComptablesCompanion data) {
+    return CompteComptableRow(
+      id: data.id.present ? data.id.value : this.id,
+      codeCompte: data.codeCompte.present
+          ? data.codeCompte.value
+          : this.codeCompte,
+      libelle: data.libelle.present ? data.libelle.value : this.libelle,
+      type: data.type.present ? data.type.value : this.type,
+      statut: data.statut.present ? data.statut.value : this.statut,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CompteComptableRow(')
+          ..write('id: $id, ')
+          ..write('codeCompte: $codeCompte, ')
+          ..write('libelle: $libelle, ')
+          ..write('type: $type, ')
+          ..write('statut: $statut')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, codeCompte, libelle, type, statut);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CompteComptableRow &&
+          other.id == this.id &&
+          other.codeCompte == this.codeCompte &&
+          other.libelle == this.libelle &&
+          other.type == this.type &&
+          other.statut == this.statut);
+}
+
+class ComptesComptablesCompanion extends UpdateCompanion<CompteComptableRow> {
+  final Value<String> id;
+  final Value<String> codeCompte;
+  final Value<String> libelle;
+  final Value<String> type;
+  final Value<String> statut;
+  final Value<int> rowid;
+  const ComptesComptablesCompanion({
+    this.id = const Value.absent(),
+    this.codeCompte = const Value.absent(),
+    this.libelle = const Value.absent(),
+    this.type = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ComptesComptablesCompanion.insert({
+    required String id,
+    required String codeCompte,
+    required String libelle,
+    required String type,
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       codeCompte = Value(codeCompte),
+       libelle = Value(libelle),
+       type = Value(type);
+  static Insertable<CompteComptableRow> custom({
+    Expression<String>? id,
+    Expression<String>? codeCompte,
+    Expression<String>? libelle,
+    Expression<String>? type,
+    Expression<String>? statut,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (codeCompte != null) 'code_compte': codeCompte,
+      if (libelle != null) 'libelle': libelle,
+      if (type != null) 'type': type,
+      if (statut != null) 'statut': statut,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ComptesComptablesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? codeCompte,
+    Value<String>? libelle,
+    Value<String>? type,
+    Value<String>? statut,
+    Value<int>? rowid,
+  }) {
+    return ComptesComptablesCompanion(
+      id: id ?? this.id,
+      codeCompte: codeCompte ?? this.codeCompte,
+      libelle: libelle ?? this.libelle,
+      type: type ?? this.type,
+      statut: statut ?? this.statut,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (codeCompte.present) {
+      map['code_compte'] = Variable<String>(codeCompte.value);
+    }
+    if (libelle.present) {
+      map['libelle'] = Variable<String>(libelle.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ComptesComptablesCompanion(')
+          ..write('id: $id, ')
+          ..write('codeCompte: $codeCompte, ')
+          ..write('libelle: $libelle, ')
+          ..write('type: $type, ')
+          ..write('statut: $statut, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PeriodesComptablesTable extends PeriodesComptables
+    with TableInfo<$PeriodesComptablesTable, PeriodeComptableRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PeriodesComptablesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _exerciceMeta = const VerificationMeta(
+    'exercice',
+  );
+  @override
+  late final GeneratedColumn<int> exercice = GeneratedColumn<int>(
+    'exercice',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateDebutMeta = const VerificationMeta(
+    'dateDebut',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateDebut = GeneratedColumn<DateTime>(
+    'date_debut',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateFinMeta = const VerificationMeta(
+    'dateFin',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateFin = GeneratedColumn<DateTime>(
+    'date_fin',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('ouverte'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    exercice,
+    dateDebut,
+    dateFin,
+    statut,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'periodes_comptables';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PeriodeComptableRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('exercice')) {
+      context.handle(
+        _exerciceMeta,
+        exercice.isAcceptableOrUnknown(data['exercice']!, _exerciceMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_exerciceMeta);
+    }
+    if (data.containsKey('date_debut')) {
+      context.handle(
+        _dateDebutMeta,
+        dateDebut.isAcceptableOrUnknown(data['date_debut']!, _dateDebutMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateDebutMeta);
+    }
+    if (data.containsKey('date_fin')) {
+      context.handle(
+        _dateFinMeta,
+        dateFin.isAcceptableOrUnknown(data['date_fin']!, _dateFinMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateFinMeta);
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PeriodeComptableRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PeriodeComptableRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      exercice: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}exercice'],
+      )!,
+      dateDebut: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_debut'],
+      )!,
+      dateFin: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_fin'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+    );
+  }
+
+  @override
+  $PeriodesComptablesTable createAlias(String alias) {
+    return $PeriodesComptablesTable(attachedDatabase, alias);
+  }
+}
+
+class PeriodeComptableRow extends DataClass
+    implements Insertable<PeriodeComptableRow> {
+  final String id;
+  final int exercice;
+  final DateTime dateDebut;
+  final DateTime dateFin;
+  final String statut;
+  const PeriodeComptableRow({
+    required this.id,
+    required this.exercice,
+    required this.dateDebut,
+    required this.dateFin,
+    required this.statut,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['exercice'] = Variable<int>(exercice);
+    map['date_debut'] = Variable<DateTime>(dateDebut);
+    map['date_fin'] = Variable<DateTime>(dateFin);
+    map['statut'] = Variable<String>(statut);
+    return map;
+  }
+
+  PeriodesComptablesCompanion toCompanion(bool nullToAbsent) {
+    return PeriodesComptablesCompanion(
+      id: Value(id),
+      exercice: Value(exercice),
+      dateDebut: Value(dateDebut),
+      dateFin: Value(dateFin),
+      statut: Value(statut),
+    );
+  }
+
+  factory PeriodeComptableRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PeriodeComptableRow(
+      id: serializer.fromJson<String>(json['id']),
+      exercice: serializer.fromJson<int>(json['exercice']),
+      dateDebut: serializer.fromJson<DateTime>(json['dateDebut']),
+      dateFin: serializer.fromJson<DateTime>(json['dateFin']),
+      statut: serializer.fromJson<String>(json['statut']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'exercice': serializer.toJson<int>(exercice),
+      'dateDebut': serializer.toJson<DateTime>(dateDebut),
+      'dateFin': serializer.toJson<DateTime>(dateFin),
+      'statut': serializer.toJson<String>(statut),
+    };
+  }
+
+  PeriodeComptableRow copyWith({
+    String? id,
+    int? exercice,
+    DateTime? dateDebut,
+    DateTime? dateFin,
+    String? statut,
+  }) => PeriodeComptableRow(
+    id: id ?? this.id,
+    exercice: exercice ?? this.exercice,
+    dateDebut: dateDebut ?? this.dateDebut,
+    dateFin: dateFin ?? this.dateFin,
+    statut: statut ?? this.statut,
+  );
+  PeriodeComptableRow copyWithCompanion(PeriodesComptablesCompanion data) {
+    return PeriodeComptableRow(
+      id: data.id.present ? data.id.value : this.id,
+      exercice: data.exercice.present ? data.exercice.value : this.exercice,
+      dateDebut: data.dateDebut.present ? data.dateDebut.value : this.dateDebut,
+      dateFin: data.dateFin.present ? data.dateFin.value : this.dateFin,
+      statut: data.statut.present ? data.statut.value : this.statut,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PeriodeComptableRow(')
+          ..write('id: $id, ')
+          ..write('exercice: $exercice, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('dateFin: $dateFin, ')
+          ..write('statut: $statut')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, exercice, dateDebut, dateFin, statut);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PeriodeComptableRow &&
+          other.id == this.id &&
+          other.exercice == this.exercice &&
+          other.dateDebut == this.dateDebut &&
+          other.dateFin == this.dateFin &&
+          other.statut == this.statut);
+}
+
+class PeriodesComptablesCompanion extends UpdateCompanion<PeriodeComptableRow> {
+  final Value<String> id;
+  final Value<int> exercice;
+  final Value<DateTime> dateDebut;
+  final Value<DateTime> dateFin;
+  final Value<String> statut;
+  final Value<int> rowid;
+  const PeriodesComptablesCompanion({
+    this.id = const Value.absent(),
+    this.exercice = const Value.absent(),
+    this.dateDebut = const Value.absent(),
+    this.dateFin = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PeriodesComptablesCompanion.insert({
+    required String id,
+    required int exercice,
+    required DateTime dateDebut,
+    required DateTime dateFin,
+    this.statut = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       exercice = Value(exercice),
+       dateDebut = Value(dateDebut),
+       dateFin = Value(dateFin);
+  static Insertable<PeriodeComptableRow> custom({
+    Expression<String>? id,
+    Expression<int>? exercice,
+    Expression<DateTime>? dateDebut,
+    Expression<DateTime>? dateFin,
+    Expression<String>? statut,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (exercice != null) 'exercice': exercice,
+      if (dateDebut != null) 'date_debut': dateDebut,
+      if (dateFin != null) 'date_fin': dateFin,
+      if (statut != null) 'statut': statut,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PeriodesComptablesCompanion copyWith({
+    Value<String>? id,
+    Value<int>? exercice,
+    Value<DateTime>? dateDebut,
+    Value<DateTime>? dateFin,
+    Value<String>? statut,
+    Value<int>? rowid,
+  }) {
+    return PeriodesComptablesCompanion(
+      id: id ?? this.id,
+      exercice: exercice ?? this.exercice,
+      dateDebut: dateDebut ?? this.dateDebut,
+      dateFin: dateFin ?? this.dateFin,
+      statut: statut ?? this.statut,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (exercice.present) {
+      map['exercice'] = Variable<int>(exercice.value);
+    }
+    if (dateDebut.present) {
+      map['date_debut'] = Variable<DateTime>(dateDebut.value);
+    }
+    if (dateFin.present) {
+      map['date_fin'] = Variable<DateTime>(dateFin.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PeriodesComptablesCompanion(')
+          ..write('id: $id, ')
+          ..write('exercice: $exercice, ')
+          ..write('dateDebut: $dateDebut, ')
+          ..write('dateFin: $dateFin, ')
+          ..write('statut: $statut, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $EcrituresComptablesTable extends EcrituresComptables
+    with TableInfo<$EcrituresComptablesTable, EcritureComptableRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $EcrituresComptablesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _compteIdMeta = const VerificationMeta(
+    'compteId',
+  );
+  @override
+  late final GeneratedColumn<String> compteId = GeneratedColumn<String>(
+    'compte_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES comptes_comptables (id)',
+    ),
+  );
+  static const VerificationMeta _debitMeta = const VerificationMeta('debit');
+  @override
+  late final GeneratedColumn<int> debit = GeneratedColumn<int>(
+    'debit',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _creditMeta = const VerificationMeta('credit');
+  @override
+  late final GeneratedColumn<int> credit = GeneratedColumn<int>(
+    'credit',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _noeudIdMeta = const VerificationMeta(
+    'noeudId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudId = GeneratedColumn<String>(
+    'noeud_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _pieceJustificativeIdMeta =
+      const VerificationMeta('pieceJustificativeId');
+  @override
+  late final GeneratedColumn<String> pieceJustificativeId =
+      GeneratedColumn<String>(
+        'piece_justificative_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _periodeIdMeta = const VerificationMeta(
+    'periodeId',
+  );
+  @override
+  late final GeneratedColumn<String> periodeId = GeneratedColumn<String>(
+    'periode_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES periodes_comptables (id)',
+    ),
+  );
+  static const VerificationMeta _libelleMeta = const VerificationMeta(
+    'libelle',
+  );
+  @override
+  late final GeneratedColumn<String> libelle = GeneratedColumn<String>(
+    'libelle',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _rapprocheMeta = const VerificationMeta(
+    'rapproche',
+  );
+  @override
+  late final GeneratedColumn<bool> rapproche = GeneratedColumn<bool>(
+    'rapproche',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("rapproche" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    date,
+    compteId,
+    debit,
+    credit,
+    noeudId,
+    pieceJustificativeId,
+    periodeId,
+    libelle,
+    rapproche,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'ecritures_comptables';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<EcritureComptableRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('compte_id')) {
+      context.handle(
+        _compteIdMeta,
+        compteId.isAcceptableOrUnknown(data['compte_id']!, _compteIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_compteIdMeta);
+    }
+    if (data.containsKey('debit')) {
+      context.handle(
+        _debitMeta,
+        debit.isAcceptableOrUnknown(data['debit']!, _debitMeta),
+      );
+    }
+    if (data.containsKey('credit')) {
+      context.handle(
+        _creditMeta,
+        credit.isAcceptableOrUnknown(data['credit']!, _creditMeta),
+      );
+    }
+    if (data.containsKey('noeud_id')) {
+      context.handle(
+        _noeudIdMeta,
+        noeudId.isAcceptableOrUnknown(data['noeud_id']!, _noeudIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudIdMeta);
+    }
+    if (data.containsKey('piece_justificative_id')) {
+      context.handle(
+        _pieceJustificativeIdMeta,
+        pieceJustificativeId.isAcceptableOrUnknown(
+          data['piece_justificative_id']!,
+          _pieceJustificativeIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('periode_id')) {
+      context.handle(
+        _periodeIdMeta,
+        periodeId.isAcceptableOrUnknown(data['periode_id']!, _periodeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_periodeIdMeta);
+    }
+    if (data.containsKey('libelle')) {
+      context.handle(
+        _libelleMeta,
+        libelle.isAcceptableOrUnknown(data['libelle']!, _libelleMeta),
+      );
+    }
+    if (data.containsKey('rapproche')) {
+      context.handle(
+        _rapprocheMeta,
+        rapproche.isAcceptableOrUnknown(data['rapproche']!, _rapprocheMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  EcritureComptableRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return EcritureComptableRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date'],
+      )!,
+      compteId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}compte_id'],
+      )!,
+      debit: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}debit'],
+      )!,
+      credit: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}credit'],
+      )!,
+      noeudId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_id'],
+      )!,
+      pieceJustificativeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}piece_justificative_id'],
+      ),
+      periodeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}periode_id'],
+      )!,
+      libelle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}libelle'],
+      ),
+      rapproche: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}rapproche'],
+      )!,
+    );
+  }
+
+  @override
+  $EcrituresComptablesTable createAlias(String alias) {
+    return $EcrituresComptablesTable(attachedDatabase, alias);
+  }
+}
+
+class EcritureComptableRow extends DataClass
+    implements Insertable<EcritureComptableRow> {
+  final String id;
+  final DateTime date;
+  final String compteId;
+  final int debit;
+  final int credit;
+  final String noeudId;
+  final String? pieceJustificativeId;
+  final String periodeId;
+  final String? libelle;
+  final bool rapproche;
+  const EcritureComptableRow({
+    required this.id,
+    required this.date,
+    required this.compteId,
+    required this.debit,
+    required this.credit,
+    required this.noeudId,
+    this.pieceJustificativeId,
+    required this.periodeId,
+    this.libelle,
+    required this.rapproche,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['date'] = Variable<DateTime>(date);
+    map['compte_id'] = Variable<String>(compteId);
+    map['debit'] = Variable<int>(debit);
+    map['credit'] = Variable<int>(credit);
+    map['noeud_id'] = Variable<String>(noeudId);
+    if (!nullToAbsent || pieceJustificativeId != null) {
+      map['piece_justificative_id'] = Variable<String>(pieceJustificativeId);
+    }
+    map['periode_id'] = Variable<String>(periodeId);
+    if (!nullToAbsent || libelle != null) {
+      map['libelle'] = Variable<String>(libelle);
+    }
+    map['rapproche'] = Variable<bool>(rapproche);
+    return map;
+  }
+
+  EcrituresComptablesCompanion toCompanion(bool nullToAbsent) {
+    return EcrituresComptablesCompanion(
+      id: Value(id),
+      date: Value(date),
+      compteId: Value(compteId),
+      debit: Value(debit),
+      credit: Value(credit),
+      noeudId: Value(noeudId),
+      pieceJustificativeId: pieceJustificativeId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(pieceJustificativeId),
+      periodeId: Value(periodeId),
+      libelle: libelle == null && nullToAbsent
+          ? const Value.absent()
+          : Value(libelle),
+      rapproche: Value(rapproche),
+    );
+  }
+
+  factory EcritureComptableRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return EcritureComptableRow(
+      id: serializer.fromJson<String>(json['id']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      compteId: serializer.fromJson<String>(json['compteId']),
+      debit: serializer.fromJson<int>(json['debit']),
+      credit: serializer.fromJson<int>(json['credit']),
+      noeudId: serializer.fromJson<String>(json['noeudId']),
+      pieceJustificativeId: serializer.fromJson<String?>(
+        json['pieceJustificativeId'],
+      ),
+      periodeId: serializer.fromJson<String>(json['periodeId']),
+      libelle: serializer.fromJson<String?>(json['libelle']),
+      rapproche: serializer.fromJson<bool>(json['rapproche']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'date': serializer.toJson<DateTime>(date),
+      'compteId': serializer.toJson<String>(compteId),
+      'debit': serializer.toJson<int>(debit),
+      'credit': serializer.toJson<int>(credit),
+      'noeudId': serializer.toJson<String>(noeudId),
+      'pieceJustificativeId': serializer.toJson<String?>(pieceJustificativeId),
+      'periodeId': serializer.toJson<String>(periodeId),
+      'libelle': serializer.toJson<String?>(libelle),
+      'rapproche': serializer.toJson<bool>(rapproche),
+    };
+  }
+
+  EcritureComptableRow copyWith({
+    String? id,
+    DateTime? date,
+    String? compteId,
+    int? debit,
+    int? credit,
+    String? noeudId,
+    Value<String?> pieceJustificativeId = const Value.absent(),
+    String? periodeId,
+    Value<String?> libelle = const Value.absent(),
+    bool? rapproche,
+  }) => EcritureComptableRow(
+    id: id ?? this.id,
+    date: date ?? this.date,
+    compteId: compteId ?? this.compteId,
+    debit: debit ?? this.debit,
+    credit: credit ?? this.credit,
+    noeudId: noeudId ?? this.noeudId,
+    pieceJustificativeId: pieceJustificativeId.present
+        ? pieceJustificativeId.value
+        : this.pieceJustificativeId,
+    periodeId: periodeId ?? this.periodeId,
+    libelle: libelle.present ? libelle.value : this.libelle,
+    rapproche: rapproche ?? this.rapproche,
+  );
+  EcritureComptableRow copyWithCompanion(EcrituresComptablesCompanion data) {
+    return EcritureComptableRow(
+      id: data.id.present ? data.id.value : this.id,
+      date: data.date.present ? data.date.value : this.date,
+      compteId: data.compteId.present ? data.compteId.value : this.compteId,
+      debit: data.debit.present ? data.debit.value : this.debit,
+      credit: data.credit.present ? data.credit.value : this.credit,
+      noeudId: data.noeudId.present ? data.noeudId.value : this.noeudId,
+      pieceJustificativeId: data.pieceJustificativeId.present
+          ? data.pieceJustificativeId.value
+          : this.pieceJustificativeId,
+      periodeId: data.periodeId.present ? data.periodeId.value : this.periodeId,
+      libelle: data.libelle.present ? data.libelle.value : this.libelle,
+      rapproche: data.rapproche.present ? data.rapproche.value : this.rapproche,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EcritureComptableRow(')
+          ..write('id: $id, ')
+          ..write('date: $date, ')
+          ..write('compteId: $compteId, ')
+          ..write('debit: $debit, ')
+          ..write('credit: $credit, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('pieceJustificativeId: $pieceJustificativeId, ')
+          ..write('periodeId: $periodeId, ')
+          ..write('libelle: $libelle, ')
+          ..write('rapproche: $rapproche')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    date,
+    compteId,
+    debit,
+    credit,
+    noeudId,
+    pieceJustificativeId,
+    periodeId,
+    libelle,
+    rapproche,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is EcritureComptableRow &&
+          other.id == this.id &&
+          other.date == this.date &&
+          other.compteId == this.compteId &&
+          other.debit == this.debit &&
+          other.credit == this.credit &&
+          other.noeudId == this.noeudId &&
+          other.pieceJustificativeId == this.pieceJustificativeId &&
+          other.periodeId == this.periodeId &&
+          other.libelle == this.libelle &&
+          other.rapproche == this.rapproche);
+}
+
+class EcrituresComptablesCompanion
+    extends UpdateCompanion<EcritureComptableRow> {
+  final Value<String> id;
+  final Value<DateTime> date;
+  final Value<String> compteId;
+  final Value<int> debit;
+  final Value<int> credit;
+  final Value<String> noeudId;
+  final Value<String?> pieceJustificativeId;
+  final Value<String> periodeId;
+  final Value<String?> libelle;
+  final Value<bool> rapproche;
+  final Value<int> rowid;
+  const EcrituresComptablesCompanion({
+    this.id = const Value.absent(),
+    this.date = const Value.absent(),
+    this.compteId = const Value.absent(),
+    this.debit = const Value.absent(),
+    this.credit = const Value.absent(),
+    this.noeudId = const Value.absent(),
+    this.pieceJustificativeId = const Value.absent(),
+    this.periodeId = const Value.absent(),
+    this.libelle = const Value.absent(),
+    this.rapproche = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  EcrituresComptablesCompanion.insert({
+    required String id,
+    required DateTime date,
+    required String compteId,
+    this.debit = const Value.absent(),
+    this.credit = const Value.absent(),
+    required String noeudId,
+    this.pieceJustificativeId = const Value.absent(),
+    required String periodeId,
+    this.libelle = const Value.absent(),
+    this.rapproche = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       date = Value(date),
+       compteId = Value(compteId),
+       noeudId = Value(noeudId),
+       periodeId = Value(periodeId);
+  static Insertable<EcritureComptableRow> custom({
+    Expression<String>? id,
+    Expression<DateTime>? date,
+    Expression<String>? compteId,
+    Expression<int>? debit,
+    Expression<int>? credit,
+    Expression<String>? noeudId,
+    Expression<String>? pieceJustificativeId,
+    Expression<String>? periodeId,
+    Expression<String>? libelle,
+    Expression<bool>? rapproche,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (date != null) 'date': date,
+      if (compteId != null) 'compte_id': compteId,
+      if (debit != null) 'debit': debit,
+      if (credit != null) 'credit': credit,
+      if (noeudId != null) 'noeud_id': noeudId,
+      if (pieceJustificativeId != null)
+        'piece_justificative_id': pieceJustificativeId,
+      if (periodeId != null) 'periode_id': periodeId,
+      if (libelle != null) 'libelle': libelle,
+      if (rapproche != null) 'rapproche': rapproche,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  EcrituresComptablesCompanion copyWith({
+    Value<String>? id,
+    Value<DateTime>? date,
+    Value<String>? compteId,
+    Value<int>? debit,
+    Value<int>? credit,
+    Value<String>? noeudId,
+    Value<String?>? pieceJustificativeId,
+    Value<String>? periodeId,
+    Value<String?>? libelle,
+    Value<bool>? rapproche,
+    Value<int>? rowid,
+  }) {
+    return EcrituresComptablesCompanion(
+      id: id ?? this.id,
+      date: date ?? this.date,
+      compteId: compteId ?? this.compteId,
+      debit: debit ?? this.debit,
+      credit: credit ?? this.credit,
+      noeudId: noeudId ?? this.noeudId,
+      pieceJustificativeId: pieceJustificativeId ?? this.pieceJustificativeId,
+      periodeId: periodeId ?? this.periodeId,
+      libelle: libelle ?? this.libelle,
+      rapproche: rapproche ?? this.rapproche,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (compteId.present) {
+      map['compte_id'] = Variable<String>(compteId.value);
+    }
+    if (debit.present) {
+      map['debit'] = Variable<int>(debit.value);
+    }
+    if (credit.present) {
+      map['credit'] = Variable<int>(credit.value);
+    }
+    if (noeudId.present) {
+      map['noeud_id'] = Variable<String>(noeudId.value);
+    }
+    if (pieceJustificativeId.present) {
+      map['piece_justificative_id'] = Variable<String>(
+        pieceJustificativeId.value,
+      );
+    }
+    if (periodeId.present) {
+      map['periode_id'] = Variable<String>(periodeId.value);
+    }
+    if (libelle.present) {
+      map['libelle'] = Variable<String>(libelle.value);
+    }
+    if (rapproche.present) {
+      map['rapproche'] = Variable<bool>(rapproche.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EcrituresComptablesCompanion(')
+          ..write('id: $id, ')
+          ..write('date: $date, ')
+          ..write('compteId: $compteId, ')
+          ..write('debit: $debit, ')
+          ..write('credit: $credit, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('pieceJustificativeId: $pieceJustificativeId, ')
+          ..write('periodeId: $periodeId, ')
+          ..write('libelle: $libelle, ')
+          ..write('rapproche: $rapproche, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $BudgetsTable extends Budgets with TableInfo<$BudgetsTable, BudgetRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BudgetsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _noeudIdMeta = const VerificationMeta(
+    'noeudId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudId = GeneratedColumn<String>(
+    'noeud_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _periodeIdMeta = const VerificationMeta(
+    'periodeId',
+  );
+  @override
+  late final GeneratedColumn<String> periodeId = GeneratedColumn<String>(
+    'periode_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES periodes_comptables (id)',
+    ),
+  );
+  static const VerificationMeta _compteIdMeta = const VerificationMeta(
+    'compteId',
+  );
+  @override
+  late final GeneratedColumn<String> compteId = GeneratedColumn<String>(
+    'compte_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES comptes_comptables (id)',
+    ),
+  );
+  static const VerificationMeta _montantPrevuMeta = const VerificationMeta(
+    'montantPrevu',
+  );
+  @override
+  late final GeneratedColumn<int> montantPrevu = GeneratedColumn<int>(
+    'montant_prevu',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _seuilAlertePourcentageMeta =
+      const VerificationMeta('seuilAlertePourcentage');
+  @override
+  late final GeneratedColumn<int> seuilAlertePourcentage = GeneratedColumn<int>(
+    'seuil_alerte_pourcentage',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    noeudId,
+    periodeId,
+    compteId,
+    montantPrevu,
+    seuilAlertePourcentage,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'budgets';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<BudgetRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('noeud_id')) {
+      context.handle(
+        _noeudIdMeta,
+        noeudId.isAcceptableOrUnknown(data['noeud_id']!, _noeudIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudIdMeta);
+    }
+    if (data.containsKey('periode_id')) {
+      context.handle(
+        _periodeIdMeta,
+        periodeId.isAcceptableOrUnknown(data['periode_id']!, _periodeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_periodeIdMeta);
+    }
+    if (data.containsKey('compte_id')) {
+      context.handle(
+        _compteIdMeta,
+        compteId.isAcceptableOrUnknown(data['compte_id']!, _compteIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_compteIdMeta);
+    }
+    if (data.containsKey('montant_prevu')) {
+      context.handle(
+        _montantPrevuMeta,
+        montantPrevu.isAcceptableOrUnknown(
+          data['montant_prevu']!,
+          _montantPrevuMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_montantPrevuMeta);
+    }
+    if (data.containsKey('seuil_alerte_pourcentage')) {
+      context.handle(
+        _seuilAlertePourcentageMeta,
+        seuilAlertePourcentage.isAcceptableOrUnknown(
+          data['seuil_alerte_pourcentage']!,
+          _seuilAlertePourcentageMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  BudgetRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BudgetRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      noeudId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_id'],
+      )!,
+      periodeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}periode_id'],
+      )!,
+      compteId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}compte_id'],
+      )!,
+      montantPrevu: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}montant_prevu'],
+      )!,
+      seuilAlertePourcentage: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}seuil_alerte_pourcentage'],
+      ),
+    );
+  }
+
+  @override
+  $BudgetsTable createAlias(String alias) {
+    return $BudgetsTable(attachedDatabase, alias);
+  }
+}
+
+class BudgetRow extends DataClass implements Insertable<BudgetRow> {
+  final String id;
+  final String noeudId;
+  final String periodeId;
+  final String compteId;
+  final int montantPrevu;
+  final int? seuilAlertePourcentage;
+  const BudgetRow({
+    required this.id,
+    required this.noeudId,
+    required this.periodeId,
+    required this.compteId,
+    required this.montantPrevu,
+    this.seuilAlertePourcentage,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['noeud_id'] = Variable<String>(noeudId);
+    map['periode_id'] = Variable<String>(periodeId);
+    map['compte_id'] = Variable<String>(compteId);
+    map['montant_prevu'] = Variable<int>(montantPrevu);
+    if (!nullToAbsent || seuilAlertePourcentage != null) {
+      map['seuil_alerte_pourcentage'] = Variable<int>(seuilAlertePourcentage);
+    }
+    return map;
+  }
+
+  BudgetsCompanion toCompanion(bool nullToAbsent) {
+    return BudgetsCompanion(
+      id: Value(id),
+      noeudId: Value(noeudId),
+      periodeId: Value(periodeId),
+      compteId: Value(compteId),
+      montantPrevu: Value(montantPrevu),
+      seuilAlertePourcentage: seuilAlertePourcentage == null && nullToAbsent
+          ? const Value.absent()
+          : Value(seuilAlertePourcentage),
+    );
+  }
+
+  factory BudgetRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return BudgetRow(
+      id: serializer.fromJson<String>(json['id']),
+      noeudId: serializer.fromJson<String>(json['noeudId']),
+      periodeId: serializer.fromJson<String>(json['periodeId']),
+      compteId: serializer.fromJson<String>(json['compteId']),
+      montantPrevu: serializer.fromJson<int>(json['montantPrevu']),
+      seuilAlertePourcentage: serializer.fromJson<int?>(
+        json['seuilAlertePourcentage'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'noeudId': serializer.toJson<String>(noeudId),
+      'periodeId': serializer.toJson<String>(periodeId),
+      'compteId': serializer.toJson<String>(compteId),
+      'montantPrevu': serializer.toJson<int>(montantPrevu),
+      'seuilAlertePourcentage': serializer.toJson<int?>(seuilAlertePourcentage),
+    };
+  }
+
+  BudgetRow copyWith({
+    String? id,
+    String? noeudId,
+    String? periodeId,
+    String? compteId,
+    int? montantPrevu,
+    Value<int?> seuilAlertePourcentage = const Value.absent(),
+  }) => BudgetRow(
+    id: id ?? this.id,
+    noeudId: noeudId ?? this.noeudId,
+    periodeId: periodeId ?? this.periodeId,
+    compteId: compteId ?? this.compteId,
+    montantPrevu: montantPrevu ?? this.montantPrevu,
+    seuilAlertePourcentage: seuilAlertePourcentage.present
+        ? seuilAlertePourcentage.value
+        : this.seuilAlertePourcentage,
+  );
+  BudgetRow copyWithCompanion(BudgetsCompanion data) {
+    return BudgetRow(
+      id: data.id.present ? data.id.value : this.id,
+      noeudId: data.noeudId.present ? data.noeudId.value : this.noeudId,
+      periodeId: data.periodeId.present ? data.periodeId.value : this.periodeId,
+      compteId: data.compteId.present ? data.compteId.value : this.compteId,
+      montantPrevu: data.montantPrevu.present
+          ? data.montantPrevu.value
+          : this.montantPrevu,
+      seuilAlertePourcentage: data.seuilAlertePourcentage.present
+          ? data.seuilAlertePourcentage.value
+          : this.seuilAlertePourcentage,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BudgetRow(')
+          ..write('id: $id, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('periodeId: $periodeId, ')
+          ..write('compteId: $compteId, ')
+          ..write('montantPrevu: $montantPrevu, ')
+          ..write('seuilAlertePourcentage: $seuilAlertePourcentage')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    noeudId,
+    periodeId,
+    compteId,
+    montantPrevu,
+    seuilAlertePourcentage,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BudgetRow &&
+          other.id == this.id &&
+          other.noeudId == this.noeudId &&
+          other.periodeId == this.periodeId &&
+          other.compteId == this.compteId &&
+          other.montantPrevu == this.montantPrevu &&
+          other.seuilAlertePourcentage == this.seuilAlertePourcentage);
+}
+
+class BudgetsCompanion extends UpdateCompanion<BudgetRow> {
+  final Value<String> id;
+  final Value<String> noeudId;
+  final Value<String> periodeId;
+  final Value<String> compteId;
+  final Value<int> montantPrevu;
+  final Value<int?> seuilAlertePourcentage;
+  final Value<int> rowid;
+  const BudgetsCompanion({
+    this.id = const Value.absent(),
+    this.noeudId = const Value.absent(),
+    this.periodeId = const Value.absent(),
+    this.compteId = const Value.absent(),
+    this.montantPrevu = const Value.absent(),
+    this.seuilAlertePourcentage = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  BudgetsCompanion.insert({
+    required String id,
+    required String noeudId,
+    required String periodeId,
+    required String compteId,
+    required int montantPrevu,
+    this.seuilAlertePourcentage = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       noeudId = Value(noeudId),
+       periodeId = Value(periodeId),
+       compteId = Value(compteId),
+       montantPrevu = Value(montantPrevu);
+  static Insertable<BudgetRow> custom({
+    Expression<String>? id,
+    Expression<String>? noeudId,
+    Expression<String>? periodeId,
+    Expression<String>? compteId,
+    Expression<int>? montantPrevu,
+    Expression<int>? seuilAlertePourcentage,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (noeudId != null) 'noeud_id': noeudId,
+      if (periodeId != null) 'periode_id': periodeId,
+      if (compteId != null) 'compte_id': compteId,
+      if (montantPrevu != null) 'montant_prevu': montantPrevu,
+      if (seuilAlertePourcentage != null)
+        'seuil_alerte_pourcentage': seuilAlertePourcentage,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  BudgetsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? noeudId,
+    Value<String>? periodeId,
+    Value<String>? compteId,
+    Value<int>? montantPrevu,
+    Value<int?>? seuilAlertePourcentage,
+    Value<int>? rowid,
+  }) {
+    return BudgetsCompanion(
+      id: id ?? this.id,
+      noeudId: noeudId ?? this.noeudId,
+      periodeId: periodeId ?? this.periodeId,
+      compteId: compteId ?? this.compteId,
+      montantPrevu: montantPrevu ?? this.montantPrevu,
+      seuilAlertePourcentage:
+          seuilAlertePourcentage ?? this.seuilAlertePourcentage,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (noeudId.present) {
+      map['noeud_id'] = Variable<String>(noeudId.value);
+    }
+    if (periodeId.present) {
+      map['periode_id'] = Variable<String>(periodeId.value);
+    }
+    if (compteId.present) {
+      map['compte_id'] = Variable<String>(compteId.value);
+    }
+    if (montantPrevu.present) {
+      map['montant_prevu'] = Variable<int>(montantPrevu.value);
+    }
+    if (seuilAlertePourcentage.present) {
+      map['seuil_alerte_pourcentage'] = Variable<int>(
+        seuilAlertePourcentage.value,
+      );
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BudgetsCompanion(')
+          ..write('id: $id, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('periodeId: $periodeId, ')
+          ..write('compteId: $compteId, ')
+          ..write('montantPrevu: $montantPrevu, ')
+          ..write('seuilAlertePourcentage: $seuilAlertePourcentage, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxRow> {
   @override
@@ -27238,6 +29016,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $CampagnesInventaireTable(this);
   late final $PointagesInventaireTable pointagesInventaire =
       $PointagesInventaireTable(this);
+  late final $ComptesComptablesTable comptesComptables =
+      $ComptesComptablesTable(this);
+  late final $PeriodesComptablesTable periodesComptables =
+      $PeriodesComptablesTable(this);
+  late final $EcrituresComptablesTable ecrituresComptables =
+      $EcrituresComptablesTable(this);
+  late final $BudgetsTable budgets = $BudgetsTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -27302,6 +29087,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     mouvementsStock,
     campagnesInventaire,
     pointagesInventaire,
+    comptesComptables,
+    periodesComptables,
+    ecrituresComptables,
+    budgets,
     syncOutbox,
   ];
 }
@@ -27695,6 +29484,49 @@ final class $$OrganisationNodesTableReferences
     final cache = $_typedResult.readTableOrNull(
       _campagnesInventaireRefsTable($_db),
     );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $EcrituresComptablesTable,
+    List<EcritureComptableRow>
+  >
+  _ecrituresComptablesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.ecrituresComptables,
+        aliasName: 'organisation_nodes__id__ecritures_comptables__noeud_id',
+      );
+
+  $$EcrituresComptablesTableProcessedTableManager get ecrituresComptablesRefs {
+    final manager = $$EcrituresComptablesTableTableManager(
+      $_db,
+      $_db.ecrituresComptables,
+    ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _ecrituresComptablesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$BudgetsTable, List<BudgetRow>> _budgetsRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.budgets,
+    aliasName: 'organisation_nodes__id__budgets__noeud_id',
+  );
+
+  $$BudgetsTableProcessedTableManager get budgetsRefs {
+    final manager = $$BudgetsTableTableManager(
+      $_db,
+      $_db.budgets,
+    ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_budgetsRefsTable($_db));
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -28204,6 +30036,56 @@ class $$OrganisationNodesTableFilterComposer
           }) => $$CampagnesInventaireTableFilterComposer(
             $db: $db,
             $table: $db.campagnesInventaire,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> ecrituresComptablesRefs(
+    Expression<bool> Function($$EcrituresComptablesTableFilterComposer f) f,
+  ) {
+    final $$EcrituresComptablesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.ecrituresComptables,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EcrituresComptablesTableFilterComposer(
+            $db: $db,
+            $table: $db.ecrituresComptables,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> budgetsRefs(
+    Expression<bool> Function($$BudgetsTableFilterComposer f) f,
+  ) {
+    final $$BudgetsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.budgets,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BudgetsTableFilterComposer(
+            $db: $db,
+            $table: $db.budgets,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -28789,6 +30671,57 @@ class $$OrganisationNodesTableAnnotationComposer
         );
     return f(composer);
   }
+
+  Expression<T> ecrituresComptablesRefs<T extends Object>(
+    Expression<T> Function($$EcrituresComptablesTableAnnotationComposer a) f,
+  ) {
+    final $$EcrituresComptablesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.ecrituresComptables,
+          getReferencedColumn: (t) => t.noeudId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$EcrituresComptablesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.ecrituresComptables,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> budgetsRefs<T extends Object>(
+    Expression<T> Function($$BudgetsTableAnnotationComposer a) f,
+  ) {
+    final $$BudgetsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.budgets,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BudgetsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.budgets,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$OrganisationNodesTableTableManager
@@ -28822,6 +30755,8 @@ class $$OrganisationNodesTableTableManager
             bool tresoriersNoeudRefs,
             bool biensRefs,
             bool campagnesInventaireRefs,
+            bool ecrituresComptablesRefs,
+            bool budgetsRefs,
           })
         > {
   $$OrganisationNodesTableTableManager(
@@ -28941,6 +30876,8 @@ class $$OrganisationNodesTableTableManager
                 tresoriersNoeudRefs = false,
                 biensRefs = false,
                 campagnesInventaireRefs = false,
+                ecrituresComptablesRefs = false,
+                budgetsRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -28963,6 +30900,8 @@ class $$OrganisationNodesTableTableManager
                     if (tresoriersNoeudRefs) db.tresoriersNoeud,
                     if (biensRefs) db.biens,
                     if (campagnesInventaireRefs) db.campagnesInventaire,
+                    if (ecrituresComptablesRefs) db.ecrituresComptables,
+                    if (budgetsRefs) db.budgets,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -29324,6 +31263,48 @@ class $$OrganisationNodesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (ecrituresComptablesRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          EcritureComptableRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._ecrituresComptablesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).ecrituresComptablesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (budgetsRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          BudgetRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._budgetsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).budgetsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -29362,6 +31343,8 @@ typedef $$OrganisationNodesTableProcessedTableManager =
         bool tresoriersNoeudRefs,
         bool biensRefs,
         bool campagnesInventaireRefs,
+        bool ecrituresComptablesRefs,
+        bool budgetsRefs,
       })
     >;
 typedef $$HistoriqueRattachementsTableCreateCompanionBuilder =
@@ -59735,6 +61718,1991 @@ typedef $$PointagesInventaireTableProcessedTableManager =
       PointageInventaireRow,
       PrefetchHooks Function({bool campagneId, bool bienId})
     >;
+typedef $$ComptesComptablesTableCreateCompanionBuilder =
+    ComptesComptablesCompanion Function({
+      required String id,
+      required String codeCompte,
+      required String libelle,
+      required String type,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+typedef $$ComptesComptablesTableUpdateCompanionBuilder =
+    ComptesComptablesCompanion Function({
+      Value<String> id,
+      Value<String> codeCompte,
+      Value<String> libelle,
+      Value<String> type,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+
+final class $$ComptesComptablesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $ComptesComptablesTable,
+          CompteComptableRow
+        > {
+  $$ComptesComptablesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<
+    $EcrituresComptablesTable,
+    List<EcritureComptableRow>
+  >
+  _ecrituresComptablesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.ecrituresComptables,
+        aliasName: 'comptes_comptables__id__ecritures_comptables__compte_id',
+      );
+
+  $$EcrituresComptablesTableProcessedTableManager get ecrituresComptablesRefs {
+    final manager = $$EcrituresComptablesTableTableManager(
+      $_db,
+      $_db.ecrituresComptables,
+    ).filter((f) => f.compteId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _ecrituresComptablesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$BudgetsTable, List<BudgetRow>> _budgetsRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.budgets,
+    aliasName: 'comptes_comptables__id__budgets__compte_id',
+  );
+
+  $$BudgetsTableProcessedTableManager get budgetsRefs {
+    final manager = $$BudgetsTableTableManager(
+      $_db,
+      $_db.budgets,
+    ).filter((f) => f.compteId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_budgetsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$ComptesComptablesTableFilterComposer
+    extends Composer<_$AppDatabase, $ComptesComptablesTable> {
+  $$ComptesComptablesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get codeCompte => $composableBuilder(
+    column: $table.codeCompte,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> ecrituresComptablesRefs(
+    Expression<bool> Function($$EcrituresComptablesTableFilterComposer f) f,
+  ) {
+    final $$EcrituresComptablesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.ecrituresComptables,
+      getReferencedColumn: (t) => t.compteId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EcrituresComptablesTableFilterComposer(
+            $db: $db,
+            $table: $db.ecrituresComptables,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> budgetsRefs(
+    Expression<bool> Function($$BudgetsTableFilterComposer f) f,
+  ) {
+    final $$BudgetsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.budgets,
+      getReferencedColumn: (t) => t.compteId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BudgetsTableFilterComposer(
+            $db: $db,
+            $table: $db.budgets,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ComptesComptablesTableOrderingComposer
+    extends Composer<_$AppDatabase, $ComptesComptablesTable> {
+  $$ComptesComptablesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get codeCompte => $composableBuilder(
+    column: $table.codeCompte,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ComptesComptablesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ComptesComptablesTable> {
+  $$ComptesComptablesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get codeCompte => $composableBuilder(
+    column: $table.codeCompte,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get libelle =>
+      $composableBuilder(column: $table.libelle, builder: (column) => column);
+
+  GeneratedColumn<String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  Expression<T> ecrituresComptablesRefs<T extends Object>(
+    Expression<T> Function($$EcrituresComptablesTableAnnotationComposer a) f,
+  ) {
+    final $$EcrituresComptablesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.ecrituresComptables,
+          getReferencedColumn: (t) => t.compteId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$EcrituresComptablesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.ecrituresComptables,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> budgetsRefs<T extends Object>(
+    Expression<T> Function($$BudgetsTableAnnotationComposer a) f,
+  ) {
+    final $$BudgetsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.budgets,
+      getReferencedColumn: (t) => t.compteId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BudgetsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.budgets,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ComptesComptablesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ComptesComptablesTable,
+          CompteComptableRow,
+          $$ComptesComptablesTableFilterComposer,
+          $$ComptesComptablesTableOrderingComposer,
+          $$ComptesComptablesTableAnnotationComposer,
+          $$ComptesComptablesTableCreateCompanionBuilder,
+          $$ComptesComptablesTableUpdateCompanionBuilder,
+          (CompteComptableRow, $$ComptesComptablesTableReferences),
+          CompteComptableRow,
+          PrefetchHooks Function({
+            bool ecrituresComptablesRefs,
+            bool budgetsRefs,
+          })
+        > {
+  $$ComptesComptablesTableTableManager(
+    _$AppDatabase db,
+    $ComptesComptablesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ComptesComptablesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ComptesComptablesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ComptesComptablesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> codeCompte = const Value.absent(),
+                Value<String> libelle = const Value.absent(),
+                Value<String> type = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ComptesComptablesCompanion(
+                id: id,
+                codeCompte: codeCompte,
+                libelle: libelle,
+                type: type,
+                statut: statut,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String codeCompte,
+                required String libelle,
+                required String type,
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ComptesComptablesCompanion.insert(
+                id: id,
+                codeCompte: codeCompte,
+                libelle: libelle,
+                type: type,
+                statut: statut,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ComptesComptablesTable, CompteComptableRow>(
+                    table,
+                  ),
+                  $$ComptesComptablesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({ecrituresComptablesRefs = false, budgetsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (ecrituresComptablesRefs) db.ecrituresComptables,
+                    if (budgetsRefs) db.budgets,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (ecrituresComptablesRefs)
+                        await $_getPrefetchedData<
+                          CompteComptableRow,
+                          $ComptesComptablesTable,
+                          EcritureComptableRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ComptesComptablesTableReferences
+                              ._ecrituresComptablesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$ComptesComptablesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).ecrituresComptablesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.compteId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (budgetsRefs)
+                        await $_getPrefetchedData<
+                          CompteComptableRow,
+                          $ComptesComptablesTable,
+                          BudgetRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ComptesComptablesTableReferences
+                              ._budgetsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$ComptesComptablesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).budgetsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.compteId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$ComptesComptablesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ComptesComptablesTable,
+      CompteComptableRow,
+      $$ComptesComptablesTableFilterComposer,
+      $$ComptesComptablesTableOrderingComposer,
+      $$ComptesComptablesTableAnnotationComposer,
+      $$ComptesComptablesTableCreateCompanionBuilder,
+      $$ComptesComptablesTableUpdateCompanionBuilder,
+      (CompteComptableRow, $$ComptesComptablesTableReferences),
+      CompteComptableRow,
+      PrefetchHooks Function({bool ecrituresComptablesRefs, bool budgetsRefs})
+    >;
+typedef $$PeriodesComptablesTableCreateCompanionBuilder =
+    PeriodesComptablesCompanion Function({
+      required String id,
+      required int exercice,
+      required DateTime dateDebut,
+      required DateTime dateFin,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+typedef $$PeriodesComptablesTableUpdateCompanionBuilder =
+    PeriodesComptablesCompanion Function({
+      Value<String> id,
+      Value<int> exercice,
+      Value<DateTime> dateDebut,
+      Value<DateTime> dateFin,
+      Value<String> statut,
+      Value<int> rowid,
+    });
+
+final class $$PeriodesComptablesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $PeriodesComptablesTable,
+          PeriodeComptableRow
+        > {
+  $$PeriodesComptablesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<
+    $EcrituresComptablesTable,
+    List<EcritureComptableRow>
+  >
+  _ecrituresComptablesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.ecrituresComptables,
+        aliasName: 'periodes_comptables__id__ecritures_comptables__periode_id',
+      );
+
+  $$EcrituresComptablesTableProcessedTableManager get ecrituresComptablesRefs {
+    final manager = $$EcrituresComptablesTableTableManager(
+      $_db,
+      $_db.ecrituresComptables,
+    ).filter((f) => f.periodeId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _ecrituresComptablesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$BudgetsTable, List<BudgetRow>> _budgetsRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.budgets,
+    aliasName: 'periodes_comptables__id__budgets__periode_id',
+  );
+
+  $$BudgetsTableProcessedTableManager get budgetsRefs {
+    final manager = $$BudgetsTableTableManager(
+      $_db,
+      $_db.budgets,
+    ).filter((f) => f.periodeId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_budgetsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$PeriodesComptablesTableFilterComposer
+    extends Composer<_$AppDatabase, $PeriodesComptablesTable> {
+  $$PeriodesComptablesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get exercice => $composableBuilder(
+    column: $table.exercice,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateFin => $composableBuilder(
+    column: $table.dateFin,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> ecrituresComptablesRefs(
+    Expression<bool> Function($$EcrituresComptablesTableFilterComposer f) f,
+  ) {
+    final $$EcrituresComptablesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.ecrituresComptables,
+      getReferencedColumn: (t) => t.periodeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EcrituresComptablesTableFilterComposer(
+            $db: $db,
+            $table: $db.ecrituresComptables,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> budgetsRefs(
+    Expression<bool> Function($$BudgetsTableFilterComposer f) f,
+  ) {
+    final $$BudgetsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.budgets,
+      getReferencedColumn: (t) => t.periodeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BudgetsTableFilterComposer(
+            $db: $db,
+            $table: $db.budgets,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$PeriodesComptablesTableOrderingComposer
+    extends Composer<_$AppDatabase, $PeriodesComptablesTable> {
+  $$PeriodesComptablesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get exercice => $composableBuilder(
+    column: $table.exercice,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateDebut => $composableBuilder(
+    column: $table.dateDebut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateFin => $composableBuilder(
+    column: $table.dateFin,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$PeriodesComptablesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PeriodesComptablesTable> {
+  $$PeriodesComptablesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get exercice =>
+      $composableBuilder(column: $table.exercice, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateDebut =>
+      $composableBuilder(column: $table.dateDebut, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateFin =>
+      $composableBuilder(column: $table.dateFin, builder: (column) => column);
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  Expression<T> ecrituresComptablesRefs<T extends Object>(
+    Expression<T> Function($$EcrituresComptablesTableAnnotationComposer a) f,
+  ) {
+    final $$EcrituresComptablesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.ecrituresComptables,
+          getReferencedColumn: (t) => t.periodeId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$EcrituresComptablesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.ecrituresComptables,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> budgetsRefs<T extends Object>(
+    Expression<T> Function($$BudgetsTableAnnotationComposer a) f,
+  ) {
+    final $$BudgetsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.budgets,
+      getReferencedColumn: (t) => t.periodeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BudgetsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.budgets,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$PeriodesComptablesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PeriodesComptablesTable,
+          PeriodeComptableRow,
+          $$PeriodesComptablesTableFilterComposer,
+          $$PeriodesComptablesTableOrderingComposer,
+          $$PeriodesComptablesTableAnnotationComposer,
+          $$PeriodesComptablesTableCreateCompanionBuilder,
+          $$PeriodesComptablesTableUpdateCompanionBuilder,
+          (PeriodeComptableRow, $$PeriodesComptablesTableReferences),
+          PeriodeComptableRow,
+          PrefetchHooks Function({
+            bool ecrituresComptablesRefs,
+            bool budgetsRefs,
+          })
+        > {
+  $$PeriodesComptablesTableTableManager(
+    _$AppDatabase db,
+    $PeriodesComptablesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PeriodesComptablesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PeriodesComptablesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PeriodesComptablesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<int> exercice = const Value.absent(),
+                Value<DateTime> dateDebut = const Value.absent(),
+                Value<DateTime> dateFin = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PeriodesComptablesCompanion(
+                id: id,
+                exercice: exercice,
+                dateDebut: dateDebut,
+                dateFin: dateFin,
+                statut: statut,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required int exercice,
+                required DateTime dateDebut,
+                required DateTime dateFin,
+                Value<String> statut = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PeriodesComptablesCompanion.insert(
+                id: id,
+                exercice: exercice,
+                dateDebut: dateDebut,
+                dateFin: dateFin,
+                statut: statut,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$PeriodesComptablesTable, PeriodeComptableRow>(
+                    table,
+                  ),
+                  $$PeriodesComptablesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({ecrituresComptablesRefs = false, budgetsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (ecrituresComptablesRefs) db.ecrituresComptables,
+                    if (budgetsRefs) db.budgets,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (ecrituresComptablesRefs)
+                        await $_getPrefetchedData<
+                          PeriodeComptableRow,
+                          $PeriodesComptablesTable,
+                          EcritureComptableRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$PeriodesComptablesTableReferences
+                              ._ecrituresComptablesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$PeriodesComptablesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).ecrituresComptablesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.periodeId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (budgetsRefs)
+                        await $_getPrefetchedData<
+                          PeriodeComptableRow,
+                          $PeriodesComptablesTable,
+                          BudgetRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$PeriodesComptablesTableReferences
+                              ._budgetsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$PeriodesComptablesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).budgetsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.periodeId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$PeriodesComptablesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PeriodesComptablesTable,
+      PeriodeComptableRow,
+      $$PeriodesComptablesTableFilterComposer,
+      $$PeriodesComptablesTableOrderingComposer,
+      $$PeriodesComptablesTableAnnotationComposer,
+      $$PeriodesComptablesTableCreateCompanionBuilder,
+      $$PeriodesComptablesTableUpdateCompanionBuilder,
+      (PeriodeComptableRow, $$PeriodesComptablesTableReferences),
+      PeriodeComptableRow,
+      PrefetchHooks Function({bool ecrituresComptablesRefs, bool budgetsRefs})
+    >;
+typedef $$EcrituresComptablesTableCreateCompanionBuilder =
+    EcrituresComptablesCompanion Function({
+      required String id,
+      required DateTime date,
+      required String compteId,
+      Value<int> debit,
+      Value<int> credit,
+      required String noeudId,
+      Value<String?> pieceJustificativeId,
+      required String periodeId,
+      Value<String?> libelle,
+      Value<bool> rapproche,
+      Value<int> rowid,
+    });
+typedef $$EcrituresComptablesTableUpdateCompanionBuilder =
+    EcrituresComptablesCompanion Function({
+      Value<String> id,
+      Value<DateTime> date,
+      Value<String> compteId,
+      Value<int> debit,
+      Value<int> credit,
+      Value<String> noeudId,
+      Value<String?> pieceJustificativeId,
+      Value<String> periodeId,
+      Value<String?> libelle,
+      Value<bool> rapproche,
+      Value<int> rowid,
+    });
+
+final class $$EcrituresComptablesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $EcrituresComptablesTable,
+          EcritureComptableRow
+        > {
+  $$EcrituresComptablesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $ComptesComptablesTable _compteIdTable(_$AppDatabase db) => db
+      .comptesComptables
+      .createAlias('ecritures_comptables__compte_id__comptes_comptables__id');
+
+  $$ComptesComptablesTableProcessedTableManager get compteId {
+    final $_column = $_itemColumn<String>('compte_id')!;
+
+    final manager = $$ComptesComptablesTableTableManager(
+      $_db,
+      $_db.comptesComptables,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_compteIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $OrganisationNodesTable _noeudIdTable(_$AppDatabase db) => db
+      .organisationNodes
+      .createAlias('ecritures_comptables__noeud_id__organisation_nodes__id');
+
+  $$OrganisationNodesTableProcessedTableManager get noeudId {
+    final $_column = $_itemColumn<String>('noeud_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $PeriodesComptablesTable _periodeIdTable(_$AppDatabase db) => db
+      .periodesComptables
+      .createAlias('ecritures_comptables__periode_id__periodes_comptables__id');
+
+  $$PeriodesComptablesTableProcessedTableManager get periodeId {
+    final $_column = $_itemColumn<String>('periode_id')!;
+
+    final manager = $$PeriodesComptablesTableTableManager(
+      $_db,
+      $_db.periodesComptables,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_periodeIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$EcrituresComptablesTableFilterComposer
+    extends Composer<_$AppDatabase, $EcrituresComptablesTable> {
+  $$EcrituresComptablesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get debit => $composableBuilder(
+    column: $table.debit,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get credit => $composableBuilder(
+    column: $table.credit,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get pieceJustificativeId => $composableBuilder(
+    column: $table.pieceJustificativeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get rapproche => $composableBuilder(
+    column: $table.rapproche,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$ComptesComptablesTableFilterComposer get compteId {
+    final $$ComptesComptablesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.compteId,
+      referencedTable: $db.comptesComptables,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ComptesComptablesTableFilterComposer(
+            $db: $db,
+            $table: $db.comptesComptables,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableFilterComposer get noeudId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$PeriodesComptablesTableFilterComposer get periodeId {
+    final $$PeriodesComptablesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.periodeId,
+      referencedTable: $db.periodesComptables,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PeriodesComptablesTableFilterComposer(
+            $db: $db,
+            $table: $db.periodesComptables,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$EcrituresComptablesTableOrderingComposer
+    extends Composer<_$AppDatabase, $EcrituresComptablesTable> {
+  $$EcrituresComptablesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get debit => $composableBuilder(
+    column: $table.debit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get credit => $composableBuilder(
+    column: $table.credit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get pieceJustificativeId => $composableBuilder(
+    column: $table.pieceJustificativeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get libelle => $composableBuilder(
+    column: $table.libelle,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get rapproche => $composableBuilder(
+    column: $table.rapproche,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$ComptesComptablesTableOrderingComposer get compteId {
+    final $$ComptesComptablesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.compteId,
+      referencedTable: $db.comptesComptables,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ComptesComptablesTableOrderingComposer(
+            $db: $db,
+            $table: $db.comptesComptables,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableOrderingComposer get noeudId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$PeriodesComptablesTableOrderingComposer get periodeId {
+    final $$PeriodesComptablesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.periodeId,
+      referencedTable: $db.periodesComptables,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PeriodesComptablesTableOrderingComposer(
+            $db: $db,
+            $table: $db.periodesComptables,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$EcrituresComptablesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $EcrituresComptablesTable> {
+  $$EcrituresComptablesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<int> get debit =>
+      $composableBuilder(column: $table.debit, builder: (column) => column);
+
+  GeneratedColumn<int> get credit =>
+      $composableBuilder(column: $table.credit, builder: (column) => column);
+
+  GeneratedColumn<String> get pieceJustificativeId => $composableBuilder(
+    column: $table.pieceJustificativeId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get libelle =>
+      $composableBuilder(column: $table.libelle, builder: (column) => column);
+
+  GeneratedColumn<bool> get rapproche =>
+      $composableBuilder(column: $table.rapproche, builder: (column) => column);
+
+  $$ComptesComptablesTableAnnotationComposer get compteId {
+    final $$ComptesComptablesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.compteId,
+          referencedTable: $db.comptesComptables,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ComptesComptablesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.comptesComptables,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$OrganisationNodesTableAnnotationComposer get noeudId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$PeriodesComptablesTableAnnotationComposer get periodeId {
+    final $$PeriodesComptablesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.periodeId,
+          referencedTable: $db.periodesComptables,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$PeriodesComptablesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.periodesComptables,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$EcrituresComptablesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $EcrituresComptablesTable,
+          EcritureComptableRow,
+          $$EcrituresComptablesTableFilterComposer,
+          $$EcrituresComptablesTableOrderingComposer,
+          $$EcrituresComptablesTableAnnotationComposer,
+          $$EcrituresComptablesTableCreateCompanionBuilder,
+          $$EcrituresComptablesTableUpdateCompanionBuilder,
+          (EcritureComptableRow, $$EcrituresComptablesTableReferences),
+          EcritureComptableRow,
+          PrefetchHooks Function({bool compteId, bool noeudId, bool periodeId})
+        > {
+  $$EcrituresComptablesTableTableManager(
+    _$AppDatabase db,
+    $EcrituresComptablesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$EcrituresComptablesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$EcrituresComptablesTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$EcrituresComptablesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<DateTime> date = const Value.absent(),
+                Value<String> compteId = const Value.absent(),
+                Value<int> debit = const Value.absent(),
+                Value<int> credit = const Value.absent(),
+                Value<String> noeudId = const Value.absent(),
+                Value<String?> pieceJustificativeId = const Value.absent(),
+                Value<String> periodeId = const Value.absent(),
+                Value<String?> libelle = const Value.absent(),
+                Value<bool> rapproche = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => EcrituresComptablesCompanion(
+                id: id,
+                date: date,
+                compteId: compteId,
+                debit: debit,
+                credit: credit,
+                noeudId: noeudId,
+                pieceJustificativeId: pieceJustificativeId,
+                periodeId: periodeId,
+                libelle: libelle,
+                rapproche: rapproche,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required DateTime date,
+                required String compteId,
+                Value<int> debit = const Value.absent(),
+                Value<int> credit = const Value.absent(),
+                required String noeudId,
+                Value<String?> pieceJustificativeId = const Value.absent(),
+                required String periodeId,
+                Value<String?> libelle = const Value.absent(),
+                Value<bool> rapproche = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => EcrituresComptablesCompanion.insert(
+                id: id,
+                date: date,
+                compteId: compteId,
+                debit: debit,
+                credit: credit,
+                noeudId: noeudId,
+                pieceJustificativeId: pieceJustificativeId,
+                periodeId: periodeId,
+                libelle: libelle,
+                rapproche: rapproche,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$EcrituresComptablesTable, EcritureComptableRow>(
+                    table,
+                  ),
+                  $$EcrituresComptablesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({compteId = false, noeudId = false, periodeId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (compteId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.compteId,
+                                    referencedTable:
+                                        $$EcrituresComptablesTableReferences
+                                            ._compteIdTable(db),
+                                    referencedColumn:
+                                        $$EcrituresComptablesTableReferences
+                                            ._compteIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (noeudId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.noeudId,
+                                    referencedTable:
+                                        $$EcrituresComptablesTableReferences
+                                            ._noeudIdTable(db),
+                                    referencedColumn:
+                                        $$EcrituresComptablesTableReferences
+                                            ._noeudIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (periodeId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.periodeId,
+                                    referencedTable:
+                                        $$EcrituresComptablesTableReferences
+                                            ._periodeIdTable(db),
+                                    referencedColumn:
+                                        $$EcrituresComptablesTableReferences
+                                            ._periodeIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$EcrituresComptablesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $EcrituresComptablesTable,
+      EcritureComptableRow,
+      $$EcrituresComptablesTableFilterComposer,
+      $$EcrituresComptablesTableOrderingComposer,
+      $$EcrituresComptablesTableAnnotationComposer,
+      $$EcrituresComptablesTableCreateCompanionBuilder,
+      $$EcrituresComptablesTableUpdateCompanionBuilder,
+      (EcritureComptableRow, $$EcrituresComptablesTableReferences),
+      EcritureComptableRow,
+      PrefetchHooks Function({bool compteId, bool noeudId, bool periodeId})
+    >;
+typedef $$BudgetsTableCreateCompanionBuilder =
+    BudgetsCompanion Function({
+      required String id,
+      required String noeudId,
+      required String periodeId,
+      required String compteId,
+      required int montantPrevu,
+      Value<int?> seuilAlertePourcentage,
+      Value<int> rowid,
+    });
+typedef $$BudgetsTableUpdateCompanionBuilder =
+    BudgetsCompanion Function({
+      Value<String> id,
+      Value<String> noeudId,
+      Value<String> periodeId,
+      Value<String> compteId,
+      Value<int> montantPrevu,
+      Value<int?> seuilAlertePourcentage,
+      Value<int> rowid,
+    });
+
+final class $$BudgetsTableReferences
+    extends BaseReferences<_$AppDatabase, $BudgetsTable, BudgetRow> {
+  $$BudgetsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $OrganisationNodesTable _noeudIdTable(_$AppDatabase db) => db
+      .organisationNodes
+      .createAlias('budgets__noeud_id__organisation_nodes__id');
+
+  $$OrganisationNodesTableProcessedTableManager get noeudId {
+    final $_column = $_itemColumn<String>('noeud_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $PeriodesComptablesTable _periodeIdTable(_$AppDatabase db) => db
+      .periodesComptables
+      .createAlias('budgets__periode_id__periodes_comptables__id');
+
+  $$PeriodesComptablesTableProcessedTableManager get periodeId {
+    final $_column = $_itemColumn<String>('periode_id')!;
+
+    final manager = $$PeriodesComptablesTableTableManager(
+      $_db,
+      $_db.periodesComptables,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_periodeIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $ComptesComptablesTable _compteIdTable(_$AppDatabase db) => db
+      .comptesComptables
+      .createAlias('budgets__compte_id__comptes_comptables__id');
+
+  $$ComptesComptablesTableProcessedTableManager get compteId {
+    final $_column = $_itemColumn<String>('compte_id')!;
+
+    final manager = $$ComptesComptablesTableTableManager(
+      $_db,
+      $_db.comptesComptables,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_compteIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$BudgetsTableFilterComposer
+    extends Composer<_$AppDatabase, $BudgetsTable> {
+  $$BudgetsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get montantPrevu => $composableBuilder(
+    column: $table.montantPrevu,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get seuilAlertePourcentage => $composableBuilder(
+    column: $table.seuilAlertePourcentage,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$OrganisationNodesTableFilterComposer get noeudId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$PeriodesComptablesTableFilterComposer get periodeId {
+    final $$PeriodesComptablesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.periodeId,
+      referencedTable: $db.periodesComptables,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PeriodesComptablesTableFilterComposer(
+            $db: $db,
+            $table: $db.periodesComptables,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ComptesComptablesTableFilterComposer get compteId {
+    final $$ComptesComptablesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.compteId,
+      referencedTable: $db.comptesComptables,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ComptesComptablesTableFilterComposer(
+            $db: $db,
+            $table: $db.comptesComptables,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$BudgetsTableOrderingComposer
+    extends Composer<_$AppDatabase, $BudgetsTable> {
+  $$BudgetsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get montantPrevu => $composableBuilder(
+    column: $table.montantPrevu,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get seuilAlertePourcentage => $composableBuilder(
+    column: $table.seuilAlertePourcentage,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$OrganisationNodesTableOrderingComposer get noeudId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$PeriodesComptablesTableOrderingComposer get periodeId {
+    final $$PeriodesComptablesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.periodeId,
+      referencedTable: $db.periodesComptables,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PeriodesComptablesTableOrderingComposer(
+            $db: $db,
+            $table: $db.periodesComptables,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ComptesComptablesTableOrderingComposer get compteId {
+    final $$ComptesComptablesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.compteId,
+      referencedTable: $db.comptesComptables,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ComptesComptablesTableOrderingComposer(
+            $db: $db,
+            $table: $db.comptesComptables,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$BudgetsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $BudgetsTable> {
+  $$BudgetsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get montantPrevu => $composableBuilder(
+    column: $table.montantPrevu,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get seuilAlertePourcentage => $composableBuilder(
+    column: $table.seuilAlertePourcentage,
+    builder: (column) => column,
+  );
+
+  $$OrganisationNodesTableAnnotationComposer get noeudId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$PeriodesComptablesTableAnnotationComposer get periodeId {
+    final $$PeriodesComptablesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.periodeId,
+          referencedTable: $db.periodesComptables,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$PeriodesComptablesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.periodesComptables,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$ComptesComptablesTableAnnotationComposer get compteId {
+    final $$ComptesComptablesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.compteId,
+          referencedTable: $db.comptesComptables,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ComptesComptablesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.comptesComptables,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$BudgetsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $BudgetsTable,
+          BudgetRow,
+          $$BudgetsTableFilterComposer,
+          $$BudgetsTableOrderingComposer,
+          $$BudgetsTableAnnotationComposer,
+          $$BudgetsTableCreateCompanionBuilder,
+          $$BudgetsTableUpdateCompanionBuilder,
+          (BudgetRow, $$BudgetsTableReferences),
+          BudgetRow,
+          PrefetchHooks Function({bool noeudId, bool periodeId, bool compteId})
+        > {
+  $$BudgetsTableTableManager(_$AppDatabase db, $BudgetsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$BudgetsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$BudgetsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$BudgetsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> noeudId = const Value.absent(),
+                Value<String> periodeId = const Value.absent(),
+                Value<String> compteId = const Value.absent(),
+                Value<int> montantPrevu = const Value.absent(),
+                Value<int?> seuilAlertePourcentage = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => BudgetsCompanion(
+                id: id,
+                noeudId: noeudId,
+                periodeId: periodeId,
+                compteId: compteId,
+                montantPrevu: montantPrevu,
+                seuilAlertePourcentage: seuilAlertePourcentage,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String noeudId,
+                required String periodeId,
+                required String compteId,
+                required int montantPrevu,
+                Value<int?> seuilAlertePourcentage = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => BudgetsCompanion.insert(
+                id: id,
+                noeudId: noeudId,
+                periodeId: periodeId,
+                compteId: compteId,
+                montantPrevu: montantPrevu,
+                seuilAlertePourcentage: seuilAlertePourcentage,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$BudgetsTable, BudgetRow>(table),
+                  $$BudgetsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({noeudId = false, periodeId = false, compteId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (noeudId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.noeudId,
+                                    referencedTable: $$BudgetsTableReferences
+                                        ._noeudIdTable(db),
+                                    referencedColumn: $$BudgetsTableReferences
+                                        ._noeudIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
+                        if (periodeId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.periodeId,
+                                    referencedTable: $$BudgetsTableReferences
+                                        ._periodeIdTable(db),
+                                    referencedColumn: $$BudgetsTableReferences
+                                        ._periodeIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
+                        if (compteId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.compteId,
+                                    referencedTable: $$BudgetsTableReferences
+                                        ._compteIdTable(db),
+                                    referencedColumn: $$BudgetsTableReferences
+                                        ._compteIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$BudgetsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $BudgetsTable,
+      BudgetRow,
+      $$BudgetsTableFilterComposer,
+      $$BudgetsTableOrderingComposer,
+      $$BudgetsTableAnnotationComposer,
+      $$BudgetsTableCreateCompanionBuilder,
+      $$BudgetsTableUpdateCompanionBuilder,
+      (BudgetRow, $$BudgetsTableReferences),
+      BudgetRow,
+      PrefetchHooks Function({bool noeudId, bool periodeId, bool compteId})
+    >;
 typedef $$SyncOutboxTableCreateCompanionBuilder =
     SyncOutboxCompanion Function({
       required String id,
@@ -60149,6 +64117,14 @@ class $AppDatabaseManager {
       $$CampagnesInventaireTableTableManager(_db, _db.campagnesInventaire);
   $$PointagesInventaireTableTableManager get pointagesInventaire =>
       $$PointagesInventaireTableTableManager(_db, _db.pointagesInventaire);
+  $$ComptesComptablesTableTableManager get comptesComptables =>
+      $$ComptesComptablesTableTableManager(_db, _db.comptesComptables);
+  $$PeriodesComptablesTableTableManager get periodesComptables =>
+      $$PeriodesComptablesTableTableManager(_db, _db.periodesComptables);
+  $$EcrituresComptablesTableTableManager get ecrituresComptables =>
+      $$EcrituresComptablesTableTableManager(_db, _db.ecrituresComptables);
+  $$BudgetsTableTableManager get budgets =>
+      $$BudgetsTableTableManager(_db, _db.budgets);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }

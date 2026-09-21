@@ -514,4 +514,58 @@ void main() {
 
     await db.close();
   });
+
+  test('un fichier créé en schéma v15 reçoit les tables et le seed du Module XXI à l\'ouverture', () async {
+    final fichier = File(
+      path.join(Directory.systemTemp.path, 'ecclesias_migration_test_v15_${DateTime.now().microsecondsSinceEpoch}.sqlite'),
+    );
+    addTearDown(() {
+      if (fichier.existsSync()) fichier.deleteSync();
+    });
+
+    final dbInitiale = AppDatabase(NativeDatabase(fichier));
+    await dbInitiale.into(dbInitiale.organisationNodes).insert(
+          OrganisationNodesCompanion.insert(
+            id: 'siege-1',
+            typeNoeud: 'siege',
+            nom: 'GSG',
+            codeInterne: 'GSG-SIEGE',
+            path: '/siege-1/',
+            depth: 0,
+            createdAt: DateTime(2026, 1, 1),
+            updatedAt: DateTime(2026, 1, 1),
+          ),
+        );
+    await dbInitiale.close();
+
+    final connexionBrute = sqlite3.sqlite3.open(fichier.path);
+    connexionBrute.execute('''
+      DROP TABLE budgets;
+      DROP TABLE ecritures_comptables;
+      DROP TABLE periodes_comptables;
+      DROP TABLE comptes_comptables;
+      PRAGMA user_version = 15;
+    ''');
+    connexionBrute.close();
+
+    final db = AppDatabase(NativeDatabase(fichier));
+
+    final noeuds = await db.select(db.organisationNodes).get();
+    expect(noeuds, hasLength(1));
+    expect(noeuds.single.nom, 'GSG');
+
+    // Ne doit plus lever "no such table: comptes_comptables".
+    final ecritures = await db.select(db.ecrituresComptables).get();
+    expect(ecritures, isEmpty);
+
+    final comptesComptables = await db.select(db.comptesComptables).get();
+    expect(comptesComptables, hasLength(7));
+
+    final periodesComptables = await db.select(db.periodesComptables).get();
+    expect(periodesComptables, hasLength(1));
+    expect(periodesComptables.single.exercice, DateTime.now().year);
+    expect(periodesComptables.single.statut, 'ouverte');
+
+    await db.close();
+  });
 }

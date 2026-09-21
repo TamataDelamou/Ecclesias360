@@ -32,4 +32,10 @@ abstract final class AppDefaults {
   /// avec un futur module de facturation, pas avec ce module) — simple code
   /// texte en attendant, remplaçable sans migration lourde.
   static const String financesDeviseParDefaut = 'GNF';
+
+  /// RG-XXI-04 — seuil d'alerte de dépassement budgétaire par défaut
+  /// (pourcentage du montant prévu), utilisé quand `Budget.seuilAlertePourcentage`
+  /// n'est pas renseigné. Le Cahier prévoit un seuil « paramétrable » sans
+  /// imposer de valeur par défaut.
+  static const int comptabiliteSeuilAlerteDepassementPourcentageParDefaut = 90;
 }

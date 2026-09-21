@@ -15,15 +15,17 @@ import '../domain/models/reservation_bien.dart';
 import '../domain/models/statut_campagne_inventaire.dart';
 import '../domain/models/type_mouvement_stock.dart';
 import '../domain/models/type_sortie_bien.dart';
+import '../../comptabilite/data/comptabilite_repository.dart';
 import '../domain/rules/patrimoine_rules.dart';
 
 /// Dépôt Module XX — Biens / patrimoine (RG-XX-01 à 05). Synchronisation
 /// distante différée pour ce module (même précédent documenté que les
 /// modules précédents).
 class PatrimoineRepository {
-  PatrimoineRepository(this._db);
+  PatrimoineRepository(this._db, {ComptabiliteRepository? comptabiliteRepository}) : _comptabilite = comptabiliteRepository;
 
   final AppDatabase _db;
+  final ComptabiliteRepository? _comptabilite;
 
   // --- Catégories de biens (référentiel, RG-XX-01) ---------------------------
 
@@ -94,8 +96,10 @@ class PatrimoineRepository {
   }
 
   /// RG-XX-02 — la sortie d'un bien (cession, don, mise au rebut) exige un
-  /// rôle habilité. Aucun mouvement comptable n'est généré dans le Module
-  /// XXI (Comptabilité, non construit) : voir AGENTS.md, entrée Module XX.
+  /// rôle habilité. Si un `ComptabiliteRepository` est fourni (Module XXI),
+  /// génère automatiquement l'écriture comptable miroir de la sortie
+  /// (RG-XXI-02), même motif d'injection optionnelle qu'`ArchivageRepository`
+  /// dans `ComiteRepository`/`DisciplineRepository`.
   Future<Bien> sortirBien({
     required String id,
     required Role roleActeur,
@@ -120,6 +124,15 @@ class PatrimoineRepository {
         motifSortie: Value(motif),
       ),
     );
+
+    final comptabilite = _comptabilite;
+    if (comptabilite != null) {
+      await comptabilite.genererEcecturesSortieBien(
+        bienId: id,
+        valeurVenale: bien.valeurVenale,
+        noeudId: bien.noeudId,
+      );
+    }
     return (await findBienById(id))!;
   }
 
