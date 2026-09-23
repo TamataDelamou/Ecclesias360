@@ -198,6 +198,44 @@ class CompteRepository {
     });
   }
 
+  /// Un administrateur sans fiche lie son compte à [fideleId] : la fiche
+  /// reçoit le compte et le rôle administrateur (sinon son rôle propre,
+  /// `membre` par défaut, le rétrograderait), et la liaison est journalisée
+  /// comme une résolution faite par lui-même.
+  Future<void> lierMonCompteAFiche({required SessionUtilisateur administrateur, required String fideleId}) {
+    return _db.transaction(() async {
+      final fiche = await (_db.select(_db.fideles)..where((t) => t.id.equals(fideleId))).getSingle();
+      final erreur = LiaisonCompteRules.raisonBlocageLiaisonAdministrateur(
+        role: administrateur.role,
+        ficheDuCompte: administrateur.fideleId,
+        fiche: FicheCandidate(
+          fideleId: fiche.id,
+          authUserId: fiche.authUserId,
+          dejaLieeUneFois: (await _fichesLieesParLePasse()).contains(fiche.id),
+        ),
+      );
+      if (erreur != null) throw erreur;
+
+      await (_db.update(_db.fideles)..where((t) => t.id.equals(fideleId))).write(
+        FidelesCompanion(authUserId: Value(administrateur.authUserId), role: Value(Role.administrateur.code)),
+      );
+      final maintenant = DateTime.now();
+      await _db.into(_db.journalLiaisonsComptes).insert(
+            JournalLiaisonsComptesCompanion.insert(
+              id: IdGenerator.newId(),
+              authUserId: administrateur.authUserId,
+              identifiant: administrateur.identifiant,
+              fideleId: Value(fideleId),
+              issue: IssueLiaison.administrateurAmorcage.code,
+              statut: StatutEntreeJournal.resoluLie.code,
+              resoluParAuthUserId: Value(administrateur.authUserId),
+              resoluLe: Value(maintenant),
+              creeLe: maintenant,
+            ),
+          );
+    });
+  }
+
   static EntreeJournalLiaison _entreeVersDomaine(JournalLiaisonCompteRow ligne) {
     return EntreeJournalLiaison(
       id: ligne.id,

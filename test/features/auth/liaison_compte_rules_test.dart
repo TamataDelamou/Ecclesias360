@@ -1,6 +1,7 @@
 import 'package:ecclesias_360/features/auth/domain/models/identifiant_connexion.dart';
 import 'package:ecclesias_360/features/auth/domain/models/issue_liaison.dart';
 import 'package:ecclesias_360/features/auth/domain/rules/liaison_compte_rules.dart';
+import 'package:ecclesias_360/features/parametres/domain/models/role.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -85,6 +86,40 @@ void main() {
     test('base vide : premier compte administrateur d\'amorçage', () {
       final decision = LiaisonCompteRules.decider(identifiant: telephone, baseVide: true, fiches: const []);
       expect(decision.issue, IssueLiaison.administrateurAmorcage);
+    });
+  });
+
+  group('LiaisonCompteRules.raisonBlocageLiaisonAdministrateur (RG-XI-02)', () {
+    const libre = FicheCandidate(fideleId: 'f1');
+
+    test('un administrateur sans fiche se lie à une fiche libre', () {
+      expect(
+        LiaisonCompteRules.raisonBlocageLiaisonAdministrateur(role: Role.administrateur, ficheDuCompte: null, fiche: libre),
+        isNull,
+      );
+    });
+
+    test('réservé à un administrateur', () {
+      final erreur =
+          LiaisonCompteRules.raisonBlocageLiaisonAdministrateur(role: Role.pasteur, ficheDuCompte: null, fiche: libre);
+      expect(erreur?.code, 'action_reservee_administrateur');
+    });
+
+    test('un compte déjà lié à une fiche ne se lie pas une seconde fois', () {
+      final erreur =
+          LiaisonCompteRules.raisonBlocageLiaisonAdministrateur(role: Role.administrateur, ficheDuCompte: 'f0', fiche: libre);
+      expect(erreur?.code, 'compte_deja_lie_a_une_fiche');
+    });
+
+    test('jamais sur une fiche liée, maintenant ou par le passé (recyclage de numéros)', () {
+      for (final fiche in const [
+        FicheCandidate(fideleId: 'f2', authUserId: 'autre'),
+        FicheCandidate(fideleId: 'f3', dejaLieeUneFois: true),
+      ]) {
+        final erreur =
+            LiaisonCompteRules.raisonBlocageLiaisonAdministrateur(role: Role.administrateur, ficheDuCompte: null, fiche: fiche);
+        expect(erreur?.code, 'fiche_deja_liee_a_un_compte');
+      }
     });
   });
 }

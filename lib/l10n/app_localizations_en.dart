@@ -1492,4 +1492,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get roleAdministrateur => 'Administrator';
+
+  @override
+  String get authLierMonCompte => 'Link my account to this record';
+
+  @override
+  String authLierMonCompteConfirmation(String nom) {
+    return 'Your administrator account will be linked to $nom\'s record, which will take the administrator role. The link is logged and can only be undone by resolving a link conflict.';
+  }
+
+  @override
+  String get authLierMonCompteFait => 'Account linked to your record.';
 }

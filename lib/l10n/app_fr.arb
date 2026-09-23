@@ -2019,5 +2019,22 @@
   "roleAdministrateur": "Administrateur",
   "@roleAdministrateur": {
     "description": "Libellé du rôle administrateur."
+  },
+  "authLierMonCompte": "Lier mon compte à cette fiche",
+  "@authLierMonCompte": {
+    "description": "Action d'un administrateur sans fiche pour lier son compte à une fiche (RG-XI-02)."
+  },
+  "authLierMonCompteConfirmation": "Votre compte administrateur sera lié à la fiche de {nom}, qui prendra le rôle administrateur. La liaison est journalisée et ne se défait que par la résolution d'un conflit de liaison.",
+  "@authLierMonCompteConfirmation": {
+    "description": "Confirmation de la liaison du compte administrateur à une fiche.",
+    "placeholders": {
+      "nom": {
+        "type": "String"
+      }
+    }
+  },
+  "authLierMonCompteFait": "Compte lié à votre fiche.",
+  "@authLierMonCompteFait": {
+    "description": "Confirmation après liaison du compte à une fiche."
   }
 }

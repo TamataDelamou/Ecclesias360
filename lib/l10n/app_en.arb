@@ -468,5 +468,8 @@
   "roleMembre": "Member",
   "roleResponsable": "Leader",
   "rolePasteur": "Pastor",
-  "roleAdministrateur": "Administrator"
+  "roleAdministrateur": "Administrator",
+  "authLierMonCompte": "Link my account to this record",
+  "authLierMonCompteConfirmation": "Your administrator account will be linked to {nom}'s record, which will take the administrator role. The link is logged and can only be undone by resolving a link conflict.",
+  "authLierMonCompteFait": "Account linked to your record."
 }

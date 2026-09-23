@@ -1499,4 +1499,15 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get roleAdministrateur => 'Administrador';
+
+  @override
+  String get authLierMonCompte => 'Vincular a minha conta a esta ficha';
+
+  @override
+  String authLierMonCompteConfirmation(String nom) {
+    return 'A sua conta de administrador será vinculada à ficha de $nom, que assumirá o papel de administrador. A vinculação é registada e só pode ser desfeita pela resolução de um conflito de vinculação.';
+  }
+
+  @override
+  String get authLierMonCompteFait => 'Conta vinculada à sua ficha.';
 }

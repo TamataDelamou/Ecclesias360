@@ -2915,6 +2915,24 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Administrateur'**
   String get roleAdministrateur;
+
+  /// Action d'un administrateur sans fiche pour lier son compte à une fiche (RG-XI-02).
+  ///
+  /// In fr, this message translates to:
+  /// **'Lier mon compte à cette fiche'**
+  String get authLierMonCompte;
+
+  /// Confirmation de la liaison du compte administrateur à une fiche.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre compte administrateur sera lié à la fiche de {nom}, qui prendra le rôle administrateur. La liaison est journalisée et ne se défait que par la résolution d\'un conflit de liaison.'**
+  String authLierMonCompteConfirmation(String nom);
+
+  /// Confirmation après liaison du compte à une fiche.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte lié à votre fiche.'**
+  String get authLierMonCompteFait;
 }
 
 class _AppLocalizationsDelegate

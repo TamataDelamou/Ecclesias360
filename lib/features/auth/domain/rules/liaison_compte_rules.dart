@@ -1,3 +1,6 @@
+import '../../../../core/error/app_error.dart';
+import '../../../parametres/domain/models/role.dart';
+import '../../../parametres/domain/rules/capacity_rules.dart';
 import '../models/identifiant_connexion.dart';
 import '../models/issue_liaison.dart';
 import 'identifiant_rules.dart';
@@ -64,6 +67,25 @@ abstract final class LiaisonCompteRules {
           : DecisionLiaison(IssueLiaison.lieAutomatiquement, fideleId: fiche.fideleId);
     }
     return DecisionLiaison(baseVide ? IssueLiaison.administrateurAmorcage : IssueLiaison.aucuneCorrespondance);
+  }
+
+  /// Un administrateur sans fiche (typiquement l'administrateur d'amorçage)
+  /// lie son propre compte à sa fiche, pour être tracé comme une personne du
+  /// registre (RG-XI-02, séparation des tâches). Jamais sur une fiche qui
+  /// est ou a été liée à un compte : même garde-fou que la liaison
+  /// automatique (recyclage de numéros) — ce cas passe par la résolution
+  /// d'un conflit. Miroir SQL : `public.lier_mon_compte_a_fiche()` (0020).
+  static AppError? raisonBlocageLiaisonAdministrateur({
+    required Role role,
+    required String? ficheDuCompte,
+    required FicheCandidate fiche,
+  }) {
+    if (!CapacityRules.possede(role: role, roleMinimalRequis: Role.administrateur)) {
+      return AppError.actionReserveeAdministrateur();
+    }
+    if (ficheDuCompte != null) return AppError.compteDejaLieAUneFiche();
+    if (fiche.estOuAEteLiee) return AppError.ficheDejaLieeAUnCompte();
+    return null;
   }
 
   /// Comparaison sur valeurs normalisées uniquement : une fiche dont le

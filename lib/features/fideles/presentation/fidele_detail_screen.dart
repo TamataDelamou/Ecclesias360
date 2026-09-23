@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
 import '../../discipline/presentation/acces_discipline.dart';
+import '../../parametres/domain/models/role.dart';
 import '../application/fidele_controller.dart';
 import '../domain/models/lien_familial.dart';
 import '../domain/models/statut_fidele.dart';
@@ -53,11 +55,21 @@ class FideleDetailScreen extends StatelessWidget {
     }
 
     final estMineur = FideleRules.estMineur(fidele.dateNaissance);
+    final session = context.watch<SessionController>();
+    // Administrateur sans fiche (amorçage) : se lie à sa fiche pour être tracé
+    // comme une personne du registre lors des validations (RG-XI-02).
+    final peutLierSonCompte = session.peut(Role.administrateur) && session.session?.fideleId == null;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(fidele.nomComplet),
         actions: [
+          if (peutLierSonCompte)
+            IconButton(
+              icon: const Icon(Icons.link),
+              tooltip: l10n.authLierMonCompte,
+              onPressed: () => _lierMonCompte(context, session, fidele.id, fidele.nomComplet),
+            ),
           IconButton(
             icon: const Icon(Icons.edit_outlined),
             tooltip: l10n.fideleModifierCoordonnees,
@@ -183,6 +195,25 @@ class FideleDetailScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> _lierMonCompte(BuildContext context, SessionController session, String fideleId, String nom) async {
+  final l10n = AppLocalizations.of(context)!;
+  final messenger = ScaffoldMessenger.of(context);
+  final confirme = await showDialog<bool>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text(l10n.authLierMonCompte),
+      content: Text(l10n.authLierMonCompteConfirmation(nom)),
+      actions: [
+        TextButton(onPressed: () => context.pop(false), child: Text(l10n.commonAnnuler)),
+        FilledButton(onPressed: () => context.pop(true), child: Text(l10n.commonOui)),
+      ],
+    ),
+  );
+  if (confirme != true) return;
+  final lie = await session.lierMonCompteAFiche(fideleId);
+  messenger.showSnackBar(SnackBar(content: Text(lie ? l10n.authLierMonCompteFait : session.erreur ?? '')));
 }
 
 Future<void> _modifierCoordonnees(

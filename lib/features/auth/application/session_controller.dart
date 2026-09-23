@@ -110,6 +110,15 @@ class SessionController extends ChangeNotifier {
         ));
   }
 
+  /// Administrateur sans fiche : se lie à sa propre fiche pour pouvoir être
+  /// tracé comme valideur (RG-XI-02). La session se met à jour par
+  /// [CompteRepository.watchSession].
+  Future<bool> lierMonCompteAFiche(String fideleId) {
+    final administrateur = _session;
+    if (administrateur == null) return Future.value(false);
+    return _executer(() => _comptes.lierMonCompteAFiche(administrateur: administrateur, fideleId: fideleId));
+  }
+
   void _onAuthChange(UtilisateurAuthentifie? utilisateur) {
     if (utilisateur == null) {
       _terminer();

@@ -194,6 +194,21 @@ class AppError implements Exception {
     "Ce conflit de liaison a déjà été résolu.",
   );
 
+  factory AppError.compteDejaLieAUneFiche() => const AppError(
+    'compte_deja_lie_a_une_fiche',
+    "Votre compte est déjà lié à une fiche fidèle.",
+  );
+
+  factory AppError.ficheDejaLieeAUnCompte() => const AppError(
+    'fiche_deja_liee_a_un_compte',
+    "Cette fiche est, ou a déjà été, liée à un compte : passez par la résolution d'un conflit de liaison.",
+  );
+
+  factory AppError.ficheLieeRequise() => const AppError(
+    'fiche_liee_requise',
+    "Cette action trace une personne du registre : liez d'abord votre compte à votre fiche fidèle.",
+  );
+
   factory AppError.actionReserveeAdministrateur() => const AppError(
     'action_reservee_administrateur',
     "Cette action est réservée à un administrateur.",

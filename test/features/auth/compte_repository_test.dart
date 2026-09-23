@@ -58,6 +58,53 @@ void main() {
 
   Future<List<EntreeJournalLiaison>> journal() => comptes.watchJournal().first;
 
+  group('lierMonCompteAFiche (RG-XI-02)', () {
+    Future<SessionUtilisateur> amorcage() => comptes.etablirSession(
+          const UtilisateurAuthentifie(id: 'amorcage', identifiant: IdentifiantEmail('admin@eglise.org')),
+        );
+
+    test("l'administrateur d'amorçage se lie à sa fiche, reste administrateur, et c'est journalisé", () async {
+      final administrateur = await amorcage();
+      final noeudId = await creerSiege();
+      final ficheId = await creerFiche(noeudId);
+
+      await comptes.lierMonCompteAFiche(administrateur: administrateur, fideleId: ficheId);
+
+      final session = await comptes.watchSession('amorcage').first;
+      expect(session!.fideleId, ficheId);
+      expect(session.role, Role.administrateur);
+      final entree = (await journal()).firstWhere((e) => e.fideleId == ficheId);
+      expect(entree.statut, StatutEntreeJournal.resoluLie);
+      expect(entree.resoluParAuthUserId, 'amorcage');
+    });
+
+    test('refusé sur une fiche liée par le passé, même si le lien a été retiré', () async {
+      final administrateur = await amorcage();
+      final noeudId = await creerSiege();
+      final ficheId = await creerFiche(noeudId, telephone: '+224620000001');
+      await comptes.etablirSession(compte('ancien', '+224620000001'));
+      await (db.update(db.fideles)..where((t) => t.id.equals(ficheId)))
+          .write(const FidelesCompanion(authUserId: Value(null)));
+
+      await expectLater(
+        comptes.lierMonCompteAFiche(administrateur: administrateur, fideleId: ficheId),
+        throwsA(isA<AppError>().having((e) => e.code, 'code', 'fiche_deja_liee_a_un_compte')),
+      );
+    });
+
+    test("refusé pour un compte qui n'est pas administrateur", () async {
+      await amorcage();
+      final noeudId = await creerSiege();
+      final ficheId = await creerFiche(noeudId);
+      final simple = await comptes.etablirSession(compte('simple', '+224620000055'));
+
+      await expectLater(
+        comptes.lierMonCompteAFiche(administrateur: simple, fideleId: ficheId),
+        throwsA(isA<AppError>().having((e) => e.code, 'code', 'action_reservee_administrateur')),
+      );
+    });
+  });
+
   test('base vide : le premier compte devient administrateur d\'amorçage, sans fiche', () async {
     final session = await comptes.etablirSession(compte('a1', '+224620000001'));
 

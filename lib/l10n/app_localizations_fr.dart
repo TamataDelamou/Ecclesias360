@@ -1501,4 +1501,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get roleAdministrateur => 'Administrateur';
+
+  @override
+  String get authLierMonCompte => 'Lier mon compte à cette fiche';
+
+  @override
+  String authLierMonCompteConfirmation(String nom) {
+    return 'Votre compte administrateur sera lié à la fiche de $nom, qui prendra le rôle administrateur. La liaison est journalisée et ne se défait que par la résolution d\'un conflit de liaison.';
+  }
+
+  @override
+  String get authLierMonCompteFait => 'Compte lié à votre fiche.';
 }
