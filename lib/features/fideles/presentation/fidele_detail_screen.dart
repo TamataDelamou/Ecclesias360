@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../discipline/presentation/acces_discipline.dart';
 import '../application/fidele_controller.dart';
 import '../domain/models/lien_familial.dart';
 import '../domain/models/statut_fidele.dart';
@@ -137,12 +138,19 @@ class FideleDetailScreen extends StatelessWidget {
             onPressed: () => context.push(AppRoutes.mutationsDuFidele(fidele.id)),
           ),
           const SizedBox(height: AppDimensions.spacingSm),
-          OutlinedButton.icon(
-            icon: const Icon(Icons.balance_outlined),
-            label: Text(l10n.disciplineHistoriqueTitre),
-            onPressed: () => context.push(AppRoutes.disciplineDuFidele(fidele.id)),
+          // RG-X-05 : historique confidentiel réservé (pasteur ou plus, ou membre d'une commission).
+          AccesDisciplineBuilder(
+            builder: (context, acces) => !acces.aAcces
+                ? const SizedBox.shrink()
+                : Padding(
+                    padding: const EdgeInsets.only(bottom: AppDimensions.spacingSm),
+                    child: OutlinedButton.icon(
+                      icon: const Icon(Icons.balance_outlined),
+                      label: Text(l10n.disciplineHistoriqueTitre),
+                      onPressed: () => context.push(AppRoutes.disciplineDuFidele(fidele.id)),
+                    ),
+                  ),
           ),
-          const SizedBox(height: AppDimensions.spacingSm),
           OutlinedButton.icon(
             icon: const Icon(Icons.volunteer_activism_outlined),
             label: Text(l10n.financesHistoriqueTitre),

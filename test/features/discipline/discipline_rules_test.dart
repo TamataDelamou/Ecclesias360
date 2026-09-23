@@ -39,6 +39,32 @@ void main() {
     });
   });
 
+  group('peutConsulterDossier (RG-X-05)', () {
+    test('un pasteur ou un administrateur consulte les dossiers', () {
+      expect(DisciplineRules.peutConsulterDossier(role: Role.pasteur, estMembreCommissionAssignee: false), isTrue);
+      expect(
+        DisciplineRules.peutConsulterDossier(role: Role.administrateur, estMembreCommissionAssignee: false),
+        isTrue,
+      );
+    });
+
+    test('un membre de la commission assignée consulte le dossier même sans rang suffisant', () {
+      expect(DisciplineRules.peutConsulterDossier(role: Role.membre, estMembreCommissionAssignee: true), isTrue);
+    });
+
+    test('un responsable ou un membre hors commission ne consulte pas le dossier', () {
+      expect(
+        DisciplineRules.peutConsulterDossier(role: Role.responsable, estMembreCommissionAssignee: false),
+        isFalse,
+      );
+      expect(DisciplineRules.peutConsulterDossier(role: Role.membre, estMembreCommissionAssignee: false), isFalse);
+      expect(
+        DisciplineRules.peutConsulterDossier(role: Role.utilisateurSimple, estMembreCommissionAssignee: false),
+        isFalse,
+      );
+    });
+  });
+
   group('raisonBlocageDecision (RG-X-02)', () {
     test('commission assignée -> décision autorisée', () {
       expect(DisciplineRules.raisonBlocageDecision(commissionRenseignee: true), isNull);

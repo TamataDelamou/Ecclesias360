@@ -36,6 +36,9 @@ class DisciplineController extends ChangeNotifier {
 
   Stream<List<CommissionDisciplinaire>> watchCommissions(String noeudId) => _repository.watchCommissions(noeudId);
 
+  Stream<List<CommissionDisciplinaire>> watchCommissionsDuFidele(String fideleId) =>
+      _repository.watchCommissionsDuFidele(fideleId);
+
   Stream<List<MembreCommission>> watchMembresCommission(String commissionId) =>
       _repository.watchMembresCommission(commissionId);
 

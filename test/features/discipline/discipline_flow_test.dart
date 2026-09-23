@@ -104,8 +104,8 @@ void main() {
       expect(find.text('Aucun dossier disciplinaire.'), findsOneWidget);
 
       // Ouvre un dossier (un seul fidèle et une seule nature de faute
-      // disponibles : les sélecteurs sont déjà pré-remplis, le rôle par
-      // défaut « pasteur » suffit à satisfaire RG-X-01).
+      // disponibles : les sélecteurs sont déjà pré-remplis). L'acteur est la
+      // session — ici l'administrateur d'amorçage, qui satisfait RG-X-01.
       await tester.tap(find.byIcon(Icons.add));
       await tester.pumpAndSettle();
       await tester.tap(find.widgetWithText(FilledButton, 'Créer'));

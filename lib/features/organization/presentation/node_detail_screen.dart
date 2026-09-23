@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../discipline/presentation/acces_discipline.dart';
 import '../application/organisation_controller.dart';
 import '../domain/models/statut_noeud.dart';
 
@@ -116,12 +117,19 @@ class NodeDetailScreen extends StatelessWidget {
             onPressed: () => context.push(AppRoutes.mutationsDuNoeud(noeud.id)),
           ),
           const SizedBox(height: AppDimensions.spacingSm),
-          OutlinedButton.icon(
-            icon: const Icon(Icons.balance_outlined),
-            label: Text(l10n.disciplineTitre),
-            onPressed: () => context.push(AppRoutes.discipline(noeud.id)),
+          // RG-X-05 : module réservé (pasteur ou plus, ou membre d'une commission).
+          AccesDisciplineBuilder(
+            builder: (context, acces) => !acces.aAcces
+                ? const SizedBox.shrink()
+                : Padding(
+                    padding: const EdgeInsets.only(bottom: AppDimensions.spacingSm),
+                    child: OutlinedButton.icon(
+                      icon: const Icon(Icons.balance_outlined),
+                      label: Text(l10n.disciplineTitre),
+                      onPressed: () => context.push(AppRoutes.discipline(noeud.id)),
+                    ),
+                  ),
           ),
-          const SizedBox(height: AppDimensions.spacingSm),
           OutlinedButton.icon(
             icon: const Icon(Icons.volunteer_activism_outlined),
             label: Text(l10n.financesTitre),

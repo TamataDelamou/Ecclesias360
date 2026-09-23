@@ -16,6 +16,17 @@ abstract final class DisciplineRules {
     return AppError.roleInsuffisantPourOuvertureDossier();
   }
 
+  /// RG-X-05 / RG-SEC-06 — un dossier n'est consulté que par un pasteur
+  /// (ou rôle supérieur) ou par un membre de la commission qui l'instruit ;
+  /// jamais par le fidèle concerné à ce seul titre. Miroir local de la
+  /// policy `dossiers_disciplinaires_lecture` (migration 0019).
+  static bool peutConsulterDossier({
+    required Role role,
+    required bool estMembreCommissionAssignee,
+  }) {
+    return CapacityRules.possede(role: role, roleMinimalRequis: Role.pasteur) || estMembreCommissionAssignee;
+  }
+
   /// RG-X-02 — une décision ne peut être prononcée qu'une fois une
   /// commission instructrice assignée (la nature de faute est, elle,
   /// obligatoire dès l'ouverture — contrainte portée par le schéma).

@@ -8,19 +8,24 @@ import '../../../core/theme/app_dimensions.dart';
 import '../../../core/theme/design_tokens.dart';
 import '../../../core/widgets/staggered_fade_in.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
 import '../../fideles/application/fidele_controller.dart';
-import '../../parametres/domain/models/role.dart';
 import '../application/discipline_controller.dart';
 import '../domain/models/dossier_disciplinaire.dart';
 import '../domain/models/nature_faute.dart';
 import '../domain/models/statut_dossier_disciplinaire.dart';
 import '../domain/rules/discipline_rules.dart';
+import 'acces_discipline.dart';
 
 /// Écrans « Liste des dossiers » (scopée par nœud, RG-X-01) et « Historique
 /// confidentiel d'un fidèle » (RG-X-05), regroupés sur un seul écran
 /// réutilisable selon le paramètre fourni — même motif que
 /// `MutationsListScreen` (module IX). Le nœud combine en outre l'écran
 /// « Ouverture d'un dossier » via le bouton d'ajout.
+///
+/// RG-X-05 : seuls les dossiers que le compte courant peut consulter sont
+/// listés (pasteur ou plus, ou membre de la commission assignée) ; jamais le
+/// fidèle concerné à ce seul titre. L'acteur d'une ouverture est la session.
 class DossiersDisciplinairesListScreen extends StatelessWidget {
   const DossiersDisciplinairesListScreen({this.noeudId, this.fideleId, super.key})
       : assert(
@@ -43,41 +48,47 @@ class DossiersDisciplinairesListScreen extends StatelessWidget {
         final natures = naturesSnapshot.data ?? const <NatureFaute>[];
         final naturesParId = {for (final nature in natures) nature.id: nature.libelle};
 
-        return Scaffold(
-          appBar: AppBar(title: Text(parNoeud ? l10n.disciplineTitre : l10n.disciplineHistoriqueTitre)),
-          floatingActionButton: parNoeud
-              ? FloatingActionButton(
-                  onPressed: () => _ouvrirDossier(context, controller, noeudId!, natures),
-                  tooltip: l10n.disciplineOuvrirTooltip,
-                  child: const Icon(Icons.add),
-                )
-              : null,
-          body: StreamBuilder<List<DossierDisciplinaire>>(
-            stream: parNoeud ? controller.watchDossiers(noeudId!) : controller.watchDossiersDuFidele(fideleId!),
-            builder: (context, snapshot) {
-              final dossiers = snapshot.data ?? const <DossierDisciplinaire>[];
-              if (dossiers.isEmpty) {
-                return Center(
-                  child: Text(parNoeud ? l10n.disciplineAucunDossier : l10n.disciplineAucunDossierFidele),
-                );
-              }
-              return ListView.separated(
-                padding: const EdgeInsets.all(AppDimensions.spacingLg),
-                itemCount: dossiers.length,
-                separatorBuilder: (context, index) => const SizedBox(height: AppDimensions.spacingSm),
-                itemBuilder: (context, index) {
-                  final dossier = dossiers[index];
-                  return StaggeredFadeIn(
-                    index: index,
-                    child: _DossierCard(
-                      dossier: dossier,
-                      natureLibelle: naturesParId[dossier.natureFauteId] ?? '—',
-                      onTap: () => context.push(AppRoutes.dossierDisciplinaire(dossier.id)),
-                    ),
-                  );
-                },
-              );
-            },
+        return AccesDisciplineBuilder(
+          builder: (context, acces) => Scaffold(
+            appBar: AppBar(title: Text(parNoeud ? l10n.disciplineTitre : l10n.disciplineHistoriqueTitre)),
+            floatingActionButton: parNoeud && acces.peutOuvrir(noeudId!)
+                ? FloatingActionButton(
+                    onPressed: () => _ouvrirDossier(context, controller, noeudId!, natures),
+                    tooltip: l10n.disciplineOuvrirTooltip,
+                    child: const Icon(Icons.add),
+                  )
+                : null,
+            body: !acces.aAcces
+                ? Center(child: Text(l10n.disciplineAccesReserve))
+                : StreamBuilder<List<DossierDisciplinaire>>(
+                    stream: parNoeud ? controller.watchDossiers(noeudId!) : controller.watchDossiersDuFidele(fideleId!),
+                    builder: (context, snapshot) {
+                      final dossiers = (snapshot.data ?? const <DossierDisciplinaire>[])
+                          .where(acces.peutConsulter)
+                          .toList();
+                      if (dossiers.isEmpty) {
+                        return Center(
+                          child: Text(parNoeud ? l10n.disciplineAucunDossier : l10n.disciplineAucunDossierFidele),
+                        );
+                      }
+                      return ListView.separated(
+                        padding: const EdgeInsets.all(AppDimensions.spacingLg),
+                        itemCount: dossiers.length,
+                        separatorBuilder: (context, index) => const SizedBox(height: AppDimensions.spacingSm),
+                        itemBuilder: (context, index) {
+                          final dossier = dossiers[index];
+                          return StaggeredFadeIn(
+                            index: index,
+                            child: _DossierCard(
+                              dossier: dossier,
+                              natureLibelle: naturesParId[dossier.natureFauteId] ?? '—',
+                              onTap: () => context.push(AppRoutes.dossierDisciplinaire(dossier.id)),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
           ),
         );
       },
@@ -91,13 +102,12 @@ class DossiersDisciplinairesListScreen extends StatelessWidget {
     List<NatureFaute> natures,
   ) async {
     final fideleController = context.read<FideleController>();
+    final session = context.read<SessionController>();
     final fidelesDuNoeud = fideleController.fideles.where((f) => f.noeudId == noeudId).toList();
     if (fidelesDuNoeud.isEmpty || natures.isEmpty) return;
 
     String? fideleMisEnCauseId = fidelesDuNoeud.first.id;
     String? natureFauteId = natures.first.id;
-    Role roleActeur = Role.pasteur;
-    String? acteurFideleId;
 
     final confirme = await showDialog<bool>(
       context: context,
@@ -126,23 +136,6 @@ class DossiersDisciplinairesListScreen extends StatelessWidget {
                     items: natures.map((n) => DropdownMenuItem(value: n.id, child: Text(n.libelle))).toList(),
                     onChanged: (valeur) => setState(() => natureFauteId = valeur),
                   ),
-                  DropdownButtonFormField<Role>(
-                    isExpanded: true,
-                    initialValue: roleActeur,
-                    decoration: InputDecoration(labelText: l10n.disciplineChampRoleActeur),
-                    items: Role.values.map((r) => DropdownMenuItem(value: r, child: Text(r.code))).toList(),
-                    onChanged: (valeur) => setState(() => roleActeur = valeur ?? roleActeur),
-                  ),
-                  DropdownButtonFormField<String?>(
-                    isExpanded: true,
-                    initialValue: acteurFideleId,
-                    decoration: InputDecoration(labelText: l10n.disciplineChampActeur),
-                    items: [
-                      DropdownMenuItem<String?>(value: null, child: Text(l10n.disciplineActeurAucun)),
-                      for (final f in fidelesDuNoeud) DropdownMenuItem<String?>(value: f.id, child: Text(f.nomComplet)),
-                    ],
-                    onChanged: (valeur) => setState(() => acteurFideleId = valeur),
-                  ),
                 ],
               ),
             ),
@@ -160,8 +153,8 @@ class DossiersDisciplinairesListScreen extends StatelessWidget {
         fideleId: fideleMisEnCauseId!,
         noeudId: noeudId,
         natureFauteId: natureFauteId!,
-        roleActeur: roleActeur,
-        ouvertParFideleId: acteurFideleId,
+        roleActeur: session.role,
+        ouvertParFideleId: session.session?.fideleId,
       );
       if (dossier != null && context.mounted) {
         context.push(AppRoutes.dossierDisciplinaire(dossier.id));

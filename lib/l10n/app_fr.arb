@@ -832,17 +832,9 @@
   "@disciplineChampNatureFaute": {
     "description": "Libellé du champ nature de la faute d'un dossier disciplinaire."
   },
-  "disciplineChampRoleActeur": "Rôle agissant",
-  "@disciplineChampRoleActeur": {
-    "description": "Libellé du sélecteur de rôle agissant à l'ouverture d'un dossier (RG-X-01, pas de session réelle)."
-  },
-  "disciplineChampActeur": "Ouvert par (optionnel — membre de commission)",
-  "@disciplineChampActeur": {
-    "description": "Libellé du sélecteur de fidèle acteur à l'ouverture d'un dossier (RG-X-01)."
-  },
-  "disciplineActeurAucun": "Aucun",
-  "@disciplineActeurAucun": {
-    "description": "Valeur par défaut du sélecteur de fidèle acteur (aucun acteur désigné)."
+  "disciplineAccesReserve": "Accès réservé à un pasteur ou à un membre de la commission disciplinaire.",
+  "@disciplineAccesReserve": {
+    "description": "Message affiché à un compte sans habilitation au Module X (RG-X-05)."
   },
   "disciplineStatutEnInstruction": "En instruction",
   "@disciplineStatutEnInstruction": {

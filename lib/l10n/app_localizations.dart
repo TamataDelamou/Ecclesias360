@@ -1278,23 +1278,11 @@ abstract class AppLocalizations {
   /// **'Nature de la faute'**
   String get disciplineChampNatureFaute;
 
-  /// Libellé du sélecteur de rôle agissant à l'ouverture d'un dossier (RG-X-01, pas de session réelle).
+  /// Message affiché à un compte sans habilitation au Module X (RG-X-05).
   ///
   /// In fr, this message translates to:
-  /// **'Rôle agissant'**
-  String get disciplineChampRoleActeur;
-
-  /// Libellé du sélecteur de fidèle acteur à l'ouverture d'un dossier (RG-X-01).
-  ///
-  /// In fr, this message translates to:
-  /// **'Ouvert par (optionnel — membre de commission)'**
-  String get disciplineChampActeur;
-
-  /// Valeur par défaut du sélecteur de fidèle acteur (aucun acteur désigné).
-  ///
-  /// In fr, this message translates to:
-  /// **'Aucun'**
-  String get disciplineActeurAucun;
+  /// **'Accès réservé à un pasteur ou à un membre de la commission disciplinaire.'**
+  String get disciplineAccesReserve;
 
   /// Libellé du statut de dossier disciplinaire « en instruction ».
   ///

@@ -74,6 +74,16 @@ void main() {
     expect(natures.every((n) => n.standard), isTrue);
   });
 
+  test('watchCommissionsDuFidele ne renvoie que les commissions dont le fidèle est membre (RG-X-05)', () async {
+    final sienne = await repository.creerCommission(noeudId: noeudId, nom: 'Commission A');
+    await repository.creerCommission(noeudId: noeudId, nom: 'Commission B');
+    await repository.ajouterMembreCommission(commissionId: sienne.id, fideleId: fideleId);
+
+    final commissions = await repository.watchCommissionsDuFidele(fideleId).first;
+    expect(commissions.map((c) => c.id), [sienne.id]);
+    expect(await repository.watchCommissionsDuFidele('inconnu').first, isEmpty);
+  });
+
   group('ouvrirDossier (RG-X-01)', () {
     test('un pasteur peut ouvrir un dossier, le fidèle bascule en discipline', () async {
       final dossier = await repository.ouvrirDossier(

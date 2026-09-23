@@ -96,6 +96,23 @@ class DisciplineRepository {
     await (_db.delete(_db.membresCommissionDisciplinaire)..where((t) => t.id.equals(id))).go();
   }
 
+  /// Commissions dont [fideleId] est membre (RG-X-05) : habilitation par
+  /// appartenance, indépendante du rang.
+  Stream<List<CommissionDisciplinaire>> watchCommissionsDuFidele(String fideleId) {
+    final query = _db.select(_db.commissionsDisciplinaires).join([
+      innerJoin(
+        _db.membresCommissionDisciplinaire,
+        _db.membresCommissionDisciplinaire.commissionId.equalsExp(_db.commissionsDisciplinaires.id),
+      ),
+    ])
+      ..where(_db.membresCommissionDisciplinaire.fideleId.equals(fideleId));
+    return query.watch().map(
+          (rows) => rows
+              .map((row) => _commissionToDomain(row.readTable(_db.commissionsDisciplinaires)))
+              .toList(growable: false),
+        );
+  }
+
   Future<bool> estMembreDuneCommissionDuNoeud({required String fideleId, required String noeudId}) async {
     final query = _db.select(_db.membresCommissionDisciplinaire).join([
       innerJoin(

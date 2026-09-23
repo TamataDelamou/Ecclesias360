@@ -17,6 +17,7 @@ import '../domain/models/nature_piece_dossier.dart';
 import '../domain/models/piece_dossier.dart';
 import '../domain/models/statut_dossier_disciplinaire.dart';
 import '../domain/rules/discipline_rules.dart';
+import 'acces_discipline.dart';
 
 /// Écrans « Instruction / commission » + « Décision et sanction » + « Suivi
 /// de réintégration » (RG-X-02/03/04) combinés en une seule fiche, même
@@ -42,7 +43,12 @@ class DossierDisciplinaireDetailScreen extends StatelessWidget {
           if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
           if (dossier == null) return Center(child: Text(l10n.disciplineIntrouvable));
 
-          return _DossierDetailBody(dossier: dossier, controller: controller);
+          // RG-X-05 : un accès direct par route ne contourne pas la restriction de la liste.
+          return AccesDisciplineBuilder(
+            builder: (context, acces) => acces.peutConsulter(dossier)
+                ? _DossierDetailBody(dossier: dossier, controller: controller)
+                : Center(child: Text(l10n.disciplineAccesReserve)),
+          );
         },
       ),
     );

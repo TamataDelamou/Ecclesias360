@@ -622,13 +622,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get disciplineChampNatureFaute => 'Nature of the offense';
 
   @override
-  String get disciplineChampRoleActeur => 'Acting role';
-
-  @override
-  String get disciplineChampActeur => 'Opened by (optional — committee member)';
-
-  @override
-  String get disciplineActeurAucun => 'None';
+  String get disciplineAccesReserve =>
+      'Access restricted to a pastor or a member of the disciplinary committee.';
 
   @override
   String get disciplineStatutEnInstruction => 'Under investigation';
