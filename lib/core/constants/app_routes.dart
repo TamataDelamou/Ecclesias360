@@ -2,6 +2,11 @@
 abstract final class AppRoutes {
   static const String home = '/';
 
+  // RG-SEC-01 — authentification (hors coquille de navigation).
+  static const String chargement = '/chargement';
+  static const String connexion = '/connexion';
+  static const String connexionVerification = '/connexion/verification';
+
   static const String organisation = '/organisation';
   static const String organisationNouveauNoeud = '/organisation/nouveau';
   static const String organisationAnnuaireEglises = '/organisation/annuaire-eglises';
@@ -22,6 +27,7 @@ abstract final class AppRoutes {
   static const String parametres = '/parametres';
   static const String zonesGeographiques = '/parametres/zones-geographiques';
   static const String roles = '/parametres/roles';
+  static const String liaisonsComptes = '/parametres/liaisons-comptes';
 
   static String ministeresDuNoeud(String noeudId) => '/organisation/$noeudId/ministeres';
   static String ministeresNouveau(String noeudId) => '/organisation/$noeudId/ministeres/nouveau';

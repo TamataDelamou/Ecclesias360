@@ -1829,5 +1829,203 @@
   "mediathequeFavorisAucun": "Aucun contenu favori pour le moment.",
   "@mediathequeFavorisAucun": {
     "description": "Message affiché quand la liste des favoris médiathèque d'un fidèle est vide."
+  },
+  "authConnexionTitre": "Connexion",
+  "@authConnexionTitre": {
+    "description": "Titre de l'écran de connexion sans mot de passe (RG-SEC-01)."
+  },
+  "authConnexionIntro": "Connectez-vous sans mot de passe : un code à usage unique vous est envoyé.",
+  "@authConnexionIntro": {
+    "description": "Texte d'introduction de l'écran de connexion (RG-SEC-01, aucun mot de passe)."
+  },
+  "authIdentifiantTelephone": "Téléphone",
+  "@authIdentifiantTelephone": {
+    "description": "Choix de l'identifiant de connexion : branche téléphone."
+  },
+  "authIdentifiantEmail": "E-mail",
+  "@authIdentifiantEmail": {
+    "description": "Choix de l'identifiant de connexion : branche e-mail."
+  },
+  "authChampTelephone": "Numéro au format international",
+  "@authChampTelephone": {
+    "description": "Libellé du champ téléphone (E.164, KER-ID-06)."
+  },
+  "authChampTelephoneAide": "Exemple : +224 620 00 00 01",
+  "@authChampTelephoneAide": {
+    "description": "Aide sous le champ téléphone : l'indicatif pays est obligatoire."
+  },
+  "authChampEmail": "Adresse e-mail",
+  "@authChampEmail": {
+    "description": "Libellé du champ e-mail de connexion."
+  },
+  "authTelephoneInvalide": "Numéro invalide : indiquez l'indicatif pays (ex. +224…).",
+  "@authTelephoneInvalide": {
+    "description": "Erreur de validation E.164 avant tout appel au serveur (KER-ID-06)."
+  },
+  "authEmailInvalide": "Adresse e-mail invalide.",
+  "@authEmailInvalide": {
+    "description": "Erreur de validation de l'adresse e-mail de connexion."
+  },
+  "authMethodeTitre": "Recevoir le code par",
+  "@authMethodeTitre": {
+    "description": "Titre du choix de la méthode de réception de l'OTP."
+  },
+  "authMethodeSms": "SMS",
+  "@authMethodeSms": {
+    "description": "Méthode de réception : SMS."
+  },
+  "authMethodeWhatsapp": "WhatsApp",
+  "@authMethodeWhatsapp": {
+    "description": "Méthode de réception : WhatsApp."
+  },
+  "authMethodeMagicLink": "Lien de connexion (Magic Link)",
+  "@authMethodeMagicLink": {
+    "description": "Méthode de réception : Magic Link (branche e-mail)."
+  },
+  "authMethodeCodeEmail": "Code par e-mail",
+  "@authMethodeCodeEmail": {
+    "description": "Méthode de réception : code OTP par e-mail."
+  },
+  "authBasculerVersEmail": "Recevoir plutôt un code par e-mail",
+  "@authBasculerVersEmail": {
+    "description": "Bascule de la branche téléphone vers la branche e-mail (code OTP e-mail)."
+  },
+  "authEnvoyerCode": "Recevoir le code",
+  "@authEnvoyerCode": {
+    "description": "Bouton d'envoi du code à usage unique (signInWithOtp)."
+  },
+  "authVerificationTitre": "Vérification",
+  "@authVerificationTitre": {
+    "description": "Titre de l'écran de saisie du code (verifyOtp)."
+  },
+  "authVerificationIntro": "Saisissez le code à 6 chiffres envoyé à {destinataire}.",
+  "@authVerificationIntro": {
+    "description": "Consigne de l'écran de vérification.",
+    "placeholders": {
+      "destinataire": {
+        "type": "String"
+      }
+    }
+  },
+  "authVerificationMagicLink": "Vous pouvez aussi ouvrir le lien du même e-mail depuis l'appareil où l'application est installée.",
+  "@authVerificationMagicLink": {
+    "description": "Précision affichée pour la méthode Magic Link : le même e-mail porte le lien et le code."
+  },
+  "authChampCode": "Code",
+  "@authChampCode": {
+    "description": "Libellé du champ de saisie du code OTP."
+  },
+  "authVerifier": "Se connecter",
+  "@authVerifier": {
+    "description": "Bouton de vérification du code OTP."
+  },
+  "authRenvoyerCode": "Renvoyer le code",
+  "@authRenvoyerCode": {
+    "description": "Bouton de renvoi du code OTP."
+  },
+  "authModifierIdentifiant": "Modifier l'identifiant",
+  "@authModifierIdentifiant": {
+    "description": "Retour à la saisie de l'identifiant depuis l'écran de vérification."
+  },
+  "authDeconnexion": "Se déconnecter",
+  "@authDeconnexion": {
+    "description": "Bouton de déconnexion (écran Paramètres)."
+  },
+  "authCompteConnecte": "Connecté : {identifiant}",
+  "@authCompteConnecte": {
+    "description": "Identité du compte connecté, écran Paramètres.",
+    "placeholders": {
+      "identifiant": {
+        "type": "String"
+      }
+    }
+  },
+  "authLiaisonsTitre": "Liaisons de comptes",
+  "@authLiaisonsTitre": {
+    "description": "Titre de l'écran administrateur du journal des liaisons compte ↔ fiche fidèle."
+  },
+  "authLiaisonsAucune": "Aucune liaison enregistrée.",
+  "@authLiaisonsAucune": {
+    "description": "Journal des liaisons vide."
+  },
+  "authLiaisonsConflits": "Conflits à résoudre",
+  "@authLiaisonsConflits": {
+    "description": "En-tête de la section des conflits de liaison en attente d'un administrateur."
+  },
+  "authLiaisonsJournal": "Journal",
+  "@authLiaisonsJournal": {
+    "description": "En-tête de la section historique du journal des liaisons."
+  },
+  "authIssueLieAutomatiquement": "Liée automatiquement",
+  "@authIssueLieAutomatiquement": {
+    "description": "Issue de liaison : une seule fiche correspondait, jamais liée auparavant."
+  },
+  "authIssueAdministrateurAmorcage": "Administrateur d'amorçage",
+  "@authIssueAdministrateurAmorcage": {
+    "description": "Issue de liaison : premier compte sur une base vide."
+  },
+  "authIssueAucuneCorrespondance": "Aucune fiche correspondante",
+  "@authIssueAucuneCorrespondance": {
+    "description": "Issue de liaison : aucune fiche, utilisateur simple (RG-SEC-06bis)."
+  },
+  "authIssueCorrespondanceMultiple": "Plusieurs fiches correspondent",
+  "@authIssueCorrespondanceMultiple": {
+    "description": "Issue de liaison : conflit, plusieurs fiches correspondent."
+  },
+  "authIssueFicheDejaLiee": "Fiche déjà liée à un autre compte",
+  "@authIssueFicheDejaLiee": {
+    "description": "Issue de liaison : conflit, garde-fou contre le recyclage de numéros."
+  },
+  "authStatutEnAttente": "En attente",
+  "@authStatutEnAttente": {
+    "description": "Statut d'un conflit de liaison non résolu."
+  },
+  "authStatutResoluLie": "Résolu : compte lié",
+  "@authStatutResoluLie": {
+    "description": "Statut : l'administrateur a lié le compte à la fiche."
+  },
+  "authStatutResoluRejete": "Résolu : utilisateur simple maintenu",
+  "@authStatutResoluRejete": {
+    "description": "Statut : l'administrateur a maintenu le compte en utilisateur simple."
+  },
+  "authLiaisonLier": "Lier le compte",
+  "@authLiaisonLier": {
+    "description": "Action administrateur : lier le compte du conflit à la fiche."
+  },
+  "authLiaisonRejeter": "Maintenir utilisateur simple",
+  "@authLiaisonRejeter": {
+    "description": "Action administrateur : rejeter la liaison."
+  },
+  "authLiaisonChoisirFiche": "Fiche à lier",
+  "@authLiaisonChoisirFiche": {
+    "description": "Sélecteur de fiche lors de la résolution d'un conflit de correspondance multiple."
+  },
+  "authLiaisonConfirmation": "Si la fiche est liée à un autre compte, ce lien sera retiré et remplacé. Confirmer ?",
+  "@authLiaisonConfirmation": {
+    "description": "Confirmation avant de lier un compte à une fiche (remplacement explicite d'un lien existant)."
+  },
+  "authConfirmer": "Confirmer",
+  "@authConfirmer": {
+    "description": "Bouton de confirmation d'un dialogue."
+  },
+  "roleUtilisateurSimple": "Utilisateur simple",
+  "@roleUtilisateurSimple": {
+    "description": "Libellé du rôle utilisateur simple (RG-SEC-06bis)."
+  },
+  "roleMembre": "Membre",
+  "@roleMembre": {
+    "description": "Libellé du rôle membre."
+  },
+  "roleResponsable": "Responsable",
+  "@roleResponsable": {
+    "description": "Libellé du rôle responsable."
+  },
+  "rolePasteur": "Pasteur",
+  "@rolePasteur": {
+    "description": "Libellé du rôle pasteur."
+  },
+  "roleAdministrateur": "Administrateur",
+  "@roleAdministrateur": {
+    "description": "Libellé du rôle administrateur."
   }
 }

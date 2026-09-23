@@ -226,13 +226,15 @@ const List<(String code, String libelle, String type)> comptesComptablesDeDepart
   ContenusMediatheque,
   Favoris,
   Commentaires,
+  ComptesUtilisateurs,
+  JournalLiaisonsComptes,
   SyncOutbox,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 17;
+  int get schemaVersion => 18;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -370,6 +372,21 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(favoris);
             await m.createTable(commentaires);
           }
+          // v17 -> v18 : authentification (RG-SEC-01). Colonnes de liaison
+          // ajoutées seulement si absentes : une base antérieure à v2 vient
+          // de créer Fideles ci-dessus avec la définition courante, qui les
+          // contient déjà.
+          if (from < 18) {
+            if (!await _colonneExiste('fideles', 'auth_user_id')) {
+              await m.addColumn(fideles, fideles.authUserId);
+            }
+            if (!await _colonneExiste('fideles', 'role')) {
+              await m.addColumn(fideles, fideles.role);
+            }
+            await customStatement('CREATE UNIQUE INDEX IF NOT EXISTS idx_fideles_auth_user_id ON fideles (auth_user_id)');
+            await m.createTable(comptesUtilisateurs);
+            await m.createTable(journalLiaisonsComptes);
+          }
         },
         beforeOpen: (details) async {
           // SQLite n'applique pas les contraintes de clé étrangère par
@@ -390,6 +407,11 @@ class AppDatabase extends _$AppDatabase {
           }
         },
       );
+
+  Future<bool> _colonneExiste(String table, String colonne) async {
+    final colonnes = await customSelect('PRAGMA table_info($table)').get();
+    return colonnes.any((ligne) => ligne.read<String>('name') == colonne);
+  }
 
   Future<void> _seedTypesMinisteresStandards() async {
     await batch((b) {

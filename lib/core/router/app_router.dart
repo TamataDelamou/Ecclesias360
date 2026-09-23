@@ -1,4 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../features/auth/application/session_controller.dart';
+import '../../features/auth/presentation/connexion_screen.dart';
+import '../../features/auth/presentation/liaisons_comptes_screen.dart';
+import '../../features/auth/presentation/verification_code_screen.dart';
+import '../../features/parametres/domain/models/role.dart';
 
 import '../../features/archivage/presentation/corbeille_documents_screen.dart';
 import '../../features/archivage/presentation/document_archive_detail_screen.dart';
@@ -67,8 +74,43 @@ import '../constants/app_routes.dart';
 import '../widgets/app_shell.dart';
 import 'app_transitions.dart';
 
-final GoRouter appRouter = GoRouter(
+/// Garde d'accès (RG-SEC-01) : aucune route applicative n'est accessible
+/// sans session ; la session restaurée hors ligne (RG-OFF) suffit.
+String? redirectionSession(SessionController session, String location) {
+  final surConnexion = location.startsWith(AppRoutes.connexion);
+  if (session.etat == EtatSession.chargement) {
+    return location == AppRoutes.chargement ? null : AppRoutes.chargement;
+  }
+  if (!session.estConnecte) return surConnexion ? null : AppRoutes.connexion;
+  if (surConnexion || location == AppRoutes.chargement) return AppRoutes.home;
+  if (location == AppRoutes.liaisonsComptes && !session.peut(Role.administrateur)) {
+    return AppRoutes.parametres;
+  }
+  return null;
+}
+
+GoRouter creerAppRouter(SessionController session) => GoRouter(
+  refreshListenable: session.garde,
+  redirect: (context, state) => redirectionSession(session, state.matchedLocation),
   routes: [
+    GoRoute(
+      path: AppRoutes.chargement,
+      builder: (context, state) => const Scaffold(body: Center(child: CircularProgressIndicator())),
+    ),
+    GoRoute(
+      path: AppRoutes.connexion,
+      builder: (context, state) => const ConnexionScreen(),
+      routes: [
+        GoRoute(
+          path: 'verification',
+          builder: (context, state) => const VerificationCodeScreen(),
+        ),
+      ],
+    ),
+    GoRoute(
+      path: AppRoutes.liaisonsComptes,
+      builder: (context, state) => const LiaisonsComptesScreen(),
+    ),
     ShellRoute(
       builder: (context, state, child) => AppShell(location: state.uri.path, child: child),
       routes: [

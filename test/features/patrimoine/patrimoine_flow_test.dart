@@ -6,6 +6,8 @@ import 'package:ecclesias_360/features/patrimoine/domain/models/objet_reservatio
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/auth_gateway_memoire.dart';
+
 void main() {
   testWidgets(
     'accueil -> créer siège -> créer un fidèle -> Biens -> ajouter un bien -> signaler état -> '
@@ -23,7 +25,7 @@ void main() {
       addTearDown(tester.platformDispatcher.clearLocaleTestValue);
       addTearDown(tester.platformDispatcher.clearLocalesTestValue);
 
-      await tester.pumpWidget(EcclesiasApp(database: database));
+      await tester.pumpWidget(EcclesiasApp(database: database, authGateway: AuthGatewayMemoire.connecte()));
       await tester.pumpAndSettle();
 
       final navOrganisation =

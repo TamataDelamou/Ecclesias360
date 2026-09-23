@@ -2645,6 +2645,288 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Aucun contenu favori pour le moment.'**
   String get mediathequeFavorisAucun;
+
+  /// Titre de l'écran de connexion sans mot de passe (RG-SEC-01).
+  ///
+  /// In fr, this message translates to:
+  /// **'Connexion'**
+  String get authConnexionTitre;
+
+  /// Texte d'introduction de l'écran de connexion (RG-SEC-01, aucun mot de passe).
+  ///
+  /// In fr, this message translates to:
+  /// **'Connectez-vous sans mot de passe : un code à usage unique vous est envoyé.'**
+  String get authConnexionIntro;
+
+  /// Choix de l'identifiant de connexion : branche téléphone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Téléphone'**
+  String get authIdentifiantTelephone;
+
+  /// Choix de l'identifiant de connexion : branche e-mail.
+  ///
+  /// In fr, this message translates to:
+  /// **'E-mail'**
+  String get authIdentifiantEmail;
+
+  /// Libellé du champ téléphone (E.164, KER-ID-06).
+  ///
+  /// In fr, this message translates to:
+  /// **'Numéro au format international'**
+  String get authChampTelephone;
+
+  /// Aide sous le champ téléphone : l'indicatif pays est obligatoire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exemple : +224 620 00 00 01'**
+  String get authChampTelephoneAide;
+
+  /// Libellé du champ e-mail de connexion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Adresse e-mail'**
+  String get authChampEmail;
+
+  /// Erreur de validation E.164 avant tout appel au serveur (KER-ID-06).
+  ///
+  /// In fr, this message translates to:
+  /// **'Numéro invalide : indiquez l\'indicatif pays (ex. +224…).'**
+  String get authTelephoneInvalide;
+
+  /// Erreur de validation de l'adresse e-mail de connexion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Adresse e-mail invalide.'**
+  String get authEmailInvalide;
+
+  /// Titre du choix de la méthode de réception de l'OTP.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recevoir le code par'**
+  String get authMethodeTitre;
+
+  /// Méthode de réception : SMS.
+  ///
+  /// In fr, this message translates to:
+  /// **'SMS'**
+  String get authMethodeSms;
+
+  /// Méthode de réception : WhatsApp.
+  ///
+  /// In fr, this message translates to:
+  /// **'WhatsApp'**
+  String get authMethodeWhatsapp;
+
+  /// Méthode de réception : Magic Link (branche e-mail).
+  ///
+  /// In fr, this message translates to:
+  /// **'Lien de connexion (Magic Link)'**
+  String get authMethodeMagicLink;
+
+  /// Méthode de réception : code OTP par e-mail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Code par e-mail'**
+  String get authMethodeCodeEmail;
+
+  /// Bascule de la branche téléphone vers la branche e-mail (code OTP e-mail).
+  ///
+  /// In fr, this message translates to:
+  /// **'Recevoir plutôt un code par e-mail'**
+  String get authBasculerVersEmail;
+
+  /// Bouton d'envoi du code à usage unique (signInWithOtp).
+  ///
+  /// In fr, this message translates to:
+  /// **'Recevoir le code'**
+  String get authEnvoyerCode;
+
+  /// Titre de l'écran de saisie du code (verifyOtp).
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérification'**
+  String get authVerificationTitre;
+
+  /// Consigne de l'écran de vérification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Saisissez le code à 6 chiffres envoyé à {destinataire}.'**
+  String authVerificationIntro(String destinataire);
+
+  /// Précision affichée pour la méthode Magic Link : le même e-mail porte le lien et le code.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous pouvez aussi ouvrir le lien du même e-mail depuis l\'appareil où l\'application est installée.'**
+  String get authVerificationMagicLink;
+
+  /// Libellé du champ de saisie du code OTP.
+  ///
+  /// In fr, this message translates to:
+  /// **'Code'**
+  String get authChampCode;
+
+  /// Bouton de vérification du code OTP.
+  ///
+  /// In fr, this message translates to:
+  /// **'Se connecter'**
+  String get authVerifier;
+
+  /// Bouton de renvoi du code OTP.
+  ///
+  /// In fr, this message translates to:
+  /// **'Renvoyer le code'**
+  String get authRenvoyerCode;
+
+  /// Retour à la saisie de l'identifiant depuis l'écran de vérification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier l\'identifiant'**
+  String get authModifierIdentifiant;
+
+  /// Bouton de déconnexion (écran Paramètres).
+  ///
+  /// In fr, this message translates to:
+  /// **'Se déconnecter'**
+  String get authDeconnexion;
+
+  /// Identité du compte connecté, écran Paramètres.
+  ///
+  /// In fr, this message translates to:
+  /// **'Connecté : {identifiant}'**
+  String authCompteConnecte(String identifiant);
+
+  /// Titre de l'écran administrateur du journal des liaisons compte ↔ fiche fidèle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Liaisons de comptes'**
+  String get authLiaisonsTitre;
+
+  /// Journal des liaisons vide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune liaison enregistrée.'**
+  String get authLiaisonsAucune;
+
+  /// En-tête de la section des conflits de liaison en attente d'un administrateur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Conflits à résoudre'**
+  String get authLiaisonsConflits;
+
+  /// En-tête de la section historique du journal des liaisons.
+  ///
+  /// In fr, this message translates to:
+  /// **'Journal'**
+  String get authLiaisonsJournal;
+
+  /// Issue de liaison : une seule fiche correspondait, jamais liée auparavant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Liée automatiquement'**
+  String get authIssueLieAutomatiquement;
+
+  /// Issue de liaison : premier compte sur une base vide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Administrateur d\'amorçage'**
+  String get authIssueAdministrateurAmorcage;
+
+  /// Issue de liaison : aucune fiche, utilisateur simple (RG-SEC-06bis).
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune fiche correspondante'**
+  String get authIssueAucuneCorrespondance;
+
+  /// Issue de liaison : conflit, plusieurs fiches correspondent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plusieurs fiches correspondent'**
+  String get authIssueCorrespondanceMultiple;
+
+  /// Issue de liaison : conflit, garde-fou contre le recyclage de numéros.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fiche déjà liée à un autre compte'**
+  String get authIssueFicheDejaLiee;
+
+  /// Statut d'un conflit de liaison non résolu.
+  ///
+  /// In fr, this message translates to:
+  /// **'En attente'**
+  String get authStatutEnAttente;
+
+  /// Statut : l'administrateur a lié le compte à la fiche.
+  ///
+  /// In fr, this message translates to:
+  /// **'Résolu : compte lié'**
+  String get authStatutResoluLie;
+
+  /// Statut : l'administrateur a maintenu le compte en utilisateur simple.
+  ///
+  /// In fr, this message translates to:
+  /// **'Résolu : utilisateur simple maintenu'**
+  String get authStatutResoluRejete;
+
+  /// Action administrateur : lier le compte du conflit à la fiche.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lier le compte'**
+  String get authLiaisonLier;
+
+  /// Action administrateur : rejeter la liaison.
+  ///
+  /// In fr, this message translates to:
+  /// **'Maintenir utilisateur simple'**
+  String get authLiaisonRejeter;
+
+  /// Sélecteur de fiche lors de la résolution d'un conflit de correspondance multiple.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fiche à lier'**
+  String get authLiaisonChoisirFiche;
+
+  /// Confirmation avant de lier un compte à une fiche (remplacement explicite d'un lien existant).
+  ///
+  /// In fr, this message translates to:
+  /// **'Si la fiche est liée à un autre compte, ce lien sera retiré et remplacé. Confirmer ?'**
+  String get authLiaisonConfirmation;
+
+  /// Bouton de confirmation d'un dialogue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer'**
+  String get authConfirmer;
+
+  /// Libellé du rôle utilisateur simple (RG-SEC-06bis).
+  ///
+  /// In fr, this message translates to:
+  /// **'Utilisateur simple'**
+  String get roleUtilisateurSimple;
+
+  /// Libellé du rôle membre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Membre'**
+  String get roleMembre;
+
+  /// Libellé du rôle responsable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Responsable'**
+  String get roleResponsable;
+
+  /// Libellé du rôle pasteur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pasteur'**
+  String get rolePasteur;
+
+  /// Libellé du rôle administrateur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Administrateur'**
+  String get roleAdministrateur;
 }
 
 class _AppLocalizationsDelegate

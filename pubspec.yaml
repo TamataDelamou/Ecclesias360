@@ -30,6 +30,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  integration_test:
+    sdk: flutter
   flutter_lints: ^6.0.0
   build_runner: ^2.4.13
   drift_dev: ^2.35.0
@@ -40,3 +42,8 @@ flutter:
 
   assets:
     - assets/config/
+    # Lu par flutter_dotenv depuis le bundle (AppConfig.load) : sans cette
+    # déclaration, la configuration Supabase reste vide et la connexion est
+    # impossible (RG-SEC-01). Créer .env depuis .env.example avant de compiler.
+    # Ne contient que des valeurs publiques par conception (URL, clé publishable).
+    - .env

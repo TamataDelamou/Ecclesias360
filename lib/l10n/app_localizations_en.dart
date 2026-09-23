@@ -1347,4 +1347,154 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mediathequeFavorisAucun => 'No favorite content yet.';
+
+  @override
+  String get authConnexionTitre => 'Sign in';
+
+  @override
+  String get authConnexionIntro =>
+      'Sign in without a password: a one-time code will be sent to you.';
+
+  @override
+  String get authIdentifiantTelephone => 'Phone';
+
+  @override
+  String get authIdentifiantEmail => 'Email';
+
+  @override
+  String get authChampTelephone => 'Number in international format';
+
+  @override
+  String get authChampTelephoneAide => 'Example: +224 620 00 00 01';
+
+  @override
+  String get authChampEmail => 'Email address';
+
+  @override
+  String get authTelephoneInvalide =>
+      'Invalid number: include the country code (e.g. +224…).';
+
+  @override
+  String get authEmailInvalide => 'Invalid email address.';
+
+  @override
+  String get authMethodeTitre => 'Receive the code by';
+
+  @override
+  String get authMethodeSms => 'SMS';
+
+  @override
+  String get authMethodeWhatsapp => 'WhatsApp';
+
+  @override
+  String get authMethodeMagicLink => 'Sign-in link (Magic Link)';
+
+  @override
+  String get authMethodeCodeEmail => 'Code by email';
+
+  @override
+  String get authBasculerVersEmail => 'Receive a code by email instead';
+
+  @override
+  String get authEnvoyerCode => 'Send me the code';
+
+  @override
+  String get authVerificationTitre => 'Verification';
+
+  @override
+  String authVerificationIntro(String destinataire) {
+    return 'Enter the 6-digit code sent to $destinataire.';
+  }
+
+  @override
+  String get authVerificationMagicLink =>
+      'You can also open the link in the same email on the device where the app is installed.';
+
+  @override
+  String get authChampCode => 'Code';
+
+  @override
+  String get authVerifier => 'Sign in';
+
+  @override
+  String get authRenvoyerCode => 'Resend code';
+
+  @override
+  String get authModifierIdentifiant => 'Change identifier';
+
+  @override
+  String get authDeconnexion => 'Sign out';
+
+  @override
+  String authCompteConnecte(String identifiant) {
+    return 'Signed in: $identifiant';
+  }
+
+  @override
+  String get authLiaisonsTitre => 'Account links';
+
+  @override
+  String get authLiaisonsAucune => 'No links recorded.';
+
+  @override
+  String get authLiaisonsConflits => 'Conflicts to resolve';
+
+  @override
+  String get authLiaisonsJournal => 'Log';
+
+  @override
+  String get authIssueLieAutomatiquement => 'Linked automatically';
+
+  @override
+  String get authIssueAdministrateurAmorcage => 'Bootstrap administrator';
+
+  @override
+  String get authIssueAucuneCorrespondance => 'No matching record';
+
+  @override
+  String get authIssueCorrespondanceMultiple => 'Several records match';
+
+  @override
+  String get authIssueFicheDejaLiee =>
+      'Record already linked to another account';
+
+  @override
+  String get authStatutEnAttente => 'Pending';
+
+  @override
+  String get authStatutResoluLie => 'Resolved: account linked';
+
+  @override
+  String get authStatutResoluRejete => 'Resolved: kept as basic user';
+
+  @override
+  String get authLiaisonLier => 'Link account';
+
+  @override
+  String get authLiaisonRejeter => 'Keep as basic user';
+
+  @override
+  String get authLiaisonChoisirFiche => 'Record to link';
+
+  @override
+  String get authLiaisonConfirmation =>
+      'If the record is linked to another account, that link will be removed and replaced. Confirm?';
+
+  @override
+  String get authConfirmer => 'Confirm';
+
+  @override
+  String get roleUtilisateurSimple => 'Basic user';
+
+  @override
+  String get roleMembre => 'Member';
+
+  @override
+  String get roleResponsable => 'Leader';
+
+  @override
+  String get rolePasteur => 'Pastor';
+
+  @override
+  String get roleAdministrateur => 'Administrator';
 }

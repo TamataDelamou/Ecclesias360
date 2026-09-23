@@ -20,9 +20,9 @@ class AppConfig {
     return config;
   }
 
-  /// `.env` n'est jamais commité (§9/§10 AGENTS.md) : absent d'un
-  /// clonage fraîchement effectué tant que le développeur ne l'a pas créé
-  /// depuis `.env.example` — chargement optionnel, valeurs vides en repli.
+  /// `.env` n'est jamais commité (§9/§10 AGENTS.md) mais est embarqué comme
+  /// asset (pubspec.yaml) : il doit être créé depuis `.env.example` avant de
+  /// compiler. Valeurs vides en repli : l'accès reste alors fermé (RG-SEC-01).
   static Future<void> load() async {
     await dotenv.load(fileName: '.env', isOptional: true);
     _instance = AppConfig._(

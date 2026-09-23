@@ -1520,6 +1520,27 @@ class $FidelesTable extends Fideles with TableInfo<$FidelesTable, FideleRow> {
     type: DriftSqlType.dateTime,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _authUserIdMeta = const VerificationMeta(
+    'authUserId',
+  );
+  @override
+  late final GeneratedColumn<String> authUserId = GeneratedColumn<String>(
+    'auth_user_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _roleMeta = const VerificationMeta('role');
+  @override
+  late final GeneratedColumn<String> role = GeneratedColumn<String>(
+    'role',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('membre'),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -1540,6 +1561,8 @@ class $FidelesTable extends Fideles with TableInfo<$FidelesTable, FideleRow> {
     adresse,
     createdAt,
     updatedAt,
+    authUserId,
+    role,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1694,6 +1717,21 @@ class $FidelesTable extends Fideles with TableInfo<$FidelesTable, FideleRow> {
     } else if (isInserting) {
       context.missing(_updatedAtMeta);
     }
+    if (data.containsKey('auth_user_id')) {
+      context.handle(
+        _authUserIdMeta,
+        authUserId.isAcceptableOrUnknown(
+          data['auth_user_id']!,
+          _authUserIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('role')) {
+      context.handle(
+        _roleMeta,
+        role.isAcceptableOrUnknown(data['role']!, _roleMeta),
+      );
+    }
     return context;
   }
 
@@ -1775,6 +1813,14 @@ class $FidelesTable extends Fideles with TableInfo<$FidelesTable, FideleRow> {
         DriftSqlType.dateTime,
         data['${effectivePrefix}updated_at'],
       )!,
+      authUserId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}auth_user_id'],
+      ),
+      role: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}role'],
+      )!,
     );
   }
 
@@ -1803,6 +1849,15 @@ class FideleRow extends DataClass implements Insertable<FideleRow> {
   final String? adresse;
   final DateTime createdAt;
   final DateTime updatedAt;
+
+  /// RG-SEC-01 — compte Supabase lié à la fiche (miroir local de
+  /// `fideles.auth_user_id`, migration 0004). Jamais écrasé
+  /// automatiquement : voir `LiaisonCompteRules`.
+  final String? authUserId;
+
+  /// RG-XXIII-02 — rôle du fidèle (miroir local de `fideles.role`), connu
+  /// hors ligne (RG-OFF).
+  final String role;
   const FideleRow({
     required this.id,
     required this.noeudId,
@@ -1822,6 +1877,8 @@ class FideleRow extends DataClass implements Insertable<FideleRow> {
     this.adresse,
     required this.createdAt,
     required this.updatedAt,
+    this.authUserId,
+    required this.role,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1858,6 +1915,10 @@ class FideleRow extends DataClass implements Insertable<FideleRow> {
     }
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || authUserId != null) {
+      map['auth_user_id'] = Variable<String>(authUserId);
+    }
+    map['role'] = Variable<String>(role);
     return map;
   }
 
@@ -1895,6 +1956,10 @@ class FideleRow extends DataClass implements Insertable<FideleRow> {
           : Value(adresse),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
+      authUserId: authUserId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(authUserId),
+      role: Value(role),
     );
   }
 
@@ -1922,6 +1987,8 @@ class FideleRow extends DataClass implements Insertable<FideleRow> {
       adresse: serializer.fromJson<String?>(json['adresse']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      authUserId: serializer.fromJson<String?>(json['authUserId']),
+      role: serializer.fromJson<String>(json['role']),
     );
   }
   @override
@@ -1946,6 +2013,8 @@ class FideleRow extends DataClass implements Insertable<FideleRow> {
       'adresse': serializer.toJson<String?>(adresse),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'authUserId': serializer.toJson<String?>(authUserId),
+      'role': serializer.toJson<String>(role),
     };
   }
 
@@ -1968,6 +2037,8 @@ class FideleRow extends DataClass implements Insertable<FideleRow> {
     Value<String?> adresse = const Value.absent(),
     DateTime? createdAt,
     DateTime? updatedAt,
+    Value<String?> authUserId = const Value.absent(),
+    String? role,
   }) => FideleRow(
     id: id ?? this.id,
     noeudId: noeudId ?? this.noeudId,
@@ -1991,6 +2062,8 @@ class FideleRow extends DataClass implements Insertable<FideleRow> {
     adresse: adresse.present ? adresse.value : this.adresse,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
+    authUserId: authUserId.present ? authUserId.value : this.authUserId,
+    role: role ?? this.role,
   );
   FideleRow copyWithCompanion(FidelesCompanion data) {
     return FideleRow(
@@ -2024,6 +2097,10 @@ class FideleRow extends DataClass implements Insertable<FideleRow> {
       adresse: data.adresse.present ? data.adresse.value : this.adresse,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      authUserId: data.authUserId.present
+          ? data.authUserId.value
+          : this.authUserId,
+      role: data.role.present ? data.role.value : this.role,
     );
   }
 
@@ -2047,7 +2124,9 @@ class FideleRow extends DataClass implements Insertable<FideleRow> {
           ..write('email: $email, ')
           ..write('adresse: $adresse, ')
           ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('authUserId: $authUserId, ')
+          ..write('role: $role')
           ..write(')'))
         .toString();
   }
@@ -2072,6 +2151,8 @@ class FideleRow extends DataClass implements Insertable<FideleRow> {
     adresse,
     createdAt,
     updatedAt,
+    authUserId,
+    role,
   );
   @override
   bool operator ==(Object other) =>
@@ -2094,7 +2175,9 @@ class FideleRow extends DataClass implements Insertable<FideleRow> {
           other.email == this.email &&
           other.adresse == this.adresse &&
           other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt);
+          other.updatedAt == this.updatedAt &&
+          other.authUserId == this.authUserId &&
+          other.role == this.role);
 }
 
 class FidelesCompanion extends UpdateCompanion<FideleRow> {
@@ -2116,6 +2199,8 @@ class FidelesCompanion extends UpdateCompanion<FideleRow> {
   final Value<String?> adresse;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
+  final Value<String?> authUserId;
+  final Value<String> role;
   final Value<int> rowid;
   const FidelesCompanion({
     this.id = const Value.absent(),
@@ -2136,6 +2221,8 @@ class FidelesCompanion extends UpdateCompanion<FideleRow> {
     this.adresse = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
+    this.authUserId = const Value.absent(),
+    this.role = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   FidelesCompanion.insert({
@@ -2157,6 +2244,8 @@ class FidelesCompanion extends UpdateCompanion<FideleRow> {
     this.adresse = const Value.absent(),
     required DateTime createdAt,
     required DateTime updatedAt,
+    this.authUserId = const Value.absent(),
+    this.role = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        noeudId = Value(noeudId),
@@ -2186,6 +2275,8 @@ class FidelesCompanion extends UpdateCompanion<FideleRow> {
     Expression<String>? adresse,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
+    Expression<String>? authUserId,
+    Expression<String>? role,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -2207,6 +2298,8 @@ class FidelesCompanion extends UpdateCompanion<FideleRow> {
       if (adresse != null) 'adresse': adresse,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
+      if (authUserId != null) 'auth_user_id': authUserId,
+      if (role != null) 'role': role,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -2230,6 +2323,8 @@ class FidelesCompanion extends UpdateCompanion<FideleRow> {
     Value<String?>? adresse,
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
+    Value<String?>? authUserId,
+    Value<String>? role,
     Value<int>? rowid,
   }) {
     return FidelesCompanion(
@@ -2251,6 +2346,8 @@ class FidelesCompanion extends UpdateCompanion<FideleRow> {
       adresse: adresse ?? this.adresse,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      authUserId: authUserId ?? this.authUserId,
+      role: role ?? this.role,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -2312,6 +2409,12 @@ class FidelesCompanion extends UpdateCompanion<FideleRow> {
     if (updatedAt.present) {
       map['updated_at'] = Variable<DateTime>(updatedAt.value);
     }
+    if (authUserId.present) {
+      map['auth_user_id'] = Variable<String>(authUserId.value);
+    }
+    if (role.present) {
+      map['role'] = Variable<String>(role.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -2339,6 +2442,8 @@ class FidelesCompanion extends UpdateCompanion<FideleRow> {
           ..write('adresse: $adresse, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
+          ..write('authUserId: $authUserId, ')
+          ..write('role: $role, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -30020,6 +30125,939 @@ class CommentairesCompanion extends UpdateCompanion<CommentaireRow> {
   }
 }
 
+class $ComptesUtilisateursTable extends ComptesUtilisateurs
+    with TableInfo<$ComptesUtilisateursTable, CompteUtilisateurRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ComptesUtilisateursTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _authUserIdMeta = const VerificationMeta(
+    'authUserId',
+  );
+  @override
+  late final GeneratedColumn<String> authUserId = GeneratedColumn<String>(
+    'auth_user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _identifiantMeta = const VerificationMeta(
+    'identifiant',
+  );
+  @override
+  late final GeneratedColumn<String> identifiant = GeneratedColumn<String>(
+    'identifiant',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _administrateurAmorcageMeta =
+      const VerificationMeta('administrateurAmorcage');
+  @override
+  late final GeneratedColumn<bool> administrateurAmorcage =
+      GeneratedColumn<bool>(
+        'administrateur_amorcage',
+        aliasedName,
+        false,
+        type: DriftSqlType.bool,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("administrateur_amorcage" IN (0, 1))',
+        ),
+        defaultValue: const Constant(false),
+      );
+  static const VerificationMeta _creeLeMeta = const VerificationMeta('creeLe');
+  @override
+  late final GeneratedColumn<DateTime> creeLe = GeneratedColumn<DateTime>(
+    'cree_le',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    authUserId,
+    identifiant,
+    administrateurAmorcage,
+    creeLe,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'comptes_utilisateurs';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CompteUtilisateurRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('auth_user_id')) {
+      context.handle(
+        _authUserIdMeta,
+        authUserId.isAcceptableOrUnknown(
+          data['auth_user_id']!,
+          _authUserIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_authUserIdMeta);
+    }
+    if (data.containsKey('identifiant')) {
+      context.handle(
+        _identifiantMeta,
+        identifiant.isAcceptableOrUnknown(
+          data['identifiant']!,
+          _identifiantMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_identifiantMeta);
+    }
+    if (data.containsKey('administrateur_amorcage')) {
+      context.handle(
+        _administrateurAmorcageMeta,
+        administrateurAmorcage.isAcceptableOrUnknown(
+          data['administrateur_amorcage']!,
+          _administrateurAmorcageMeta,
+        ),
+      );
+    }
+    if (data.containsKey('cree_le')) {
+      context.handle(
+        _creeLeMeta,
+        creeLe.isAcceptableOrUnknown(data['cree_le']!, _creeLeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_creeLeMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {authUserId};
+  @override
+  CompteUtilisateurRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CompteUtilisateurRow(
+      authUserId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}auth_user_id'],
+      )!,
+      identifiant: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}identifiant'],
+      )!,
+      administrateurAmorcage: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}administrateur_amorcage'],
+      )!,
+      creeLe: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}cree_le'],
+      )!,
+    );
+  }
+
+  @override
+  $ComptesUtilisateursTable createAlias(String alias) {
+    return $ComptesUtilisateursTable(attachedDatabase, alias);
+  }
+}
+
+class CompteUtilisateurRow extends DataClass
+    implements Insertable<CompteUtilisateurRow> {
+  final String authUserId;
+  final String identifiant;
+  final bool administrateurAmorcage;
+  final DateTime creeLe;
+  const CompteUtilisateurRow({
+    required this.authUserId,
+    required this.identifiant,
+    required this.administrateurAmorcage,
+    required this.creeLe,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['auth_user_id'] = Variable<String>(authUserId);
+    map['identifiant'] = Variable<String>(identifiant);
+    map['administrateur_amorcage'] = Variable<bool>(administrateurAmorcage);
+    map['cree_le'] = Variable<DateTime>(creeLe);
+    return map;
+  }
+
+  ComptesUtilisateursCompanion toCompanion(bool nullToAbsent) {
+    return ComptesUtilisateursCompanion(
+      authUserId: Value(authUserId),
+      identifiant: Value(identifiant),
+      administrateurAmorcage: Value(administrateurAmorcage),
+      creeLe: Value(creeLe),
+    );
+  }
+
+  factory CompteUtilisateurRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CompteUtilisateurRow(
+      authUserId: serializer.fromJson<String>(json['authUserId']),
+      identifiant: serializer.fromJson<String>(json['identifiant']),
+      administrateurAmorcage: serializer.fromJson<bool>(
+        json['administrateurAmorcage'],
+      ),
+      creeLe: serializer.fromJson<DateTime>(json['creeLe']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'authUserId': serializer.toJson<String>(authUserId),
+      'identifiant': serializer.toJson<String>(identifiant),
+      'administrateurAmorcage': serializer.toJson<bool>(administrateurAmorcage),
+      'creeLe': serializer.toJson<DateTime>(creeLe),
+    };
+  }
+
+  CompteUtilisateurRow copyWith({
+    String? authUserId,
+    String? identifiant,
+    bool? administrateurAmorcage,
+    DateTime? creeLe,
+  }) => CompteUtilisateurRow(
+    authUserId: authUserId ?? this.authUserId,
+    identifiant: identifiant ?? this.identifiant,
+    administrateurAmorcage:
+        administrateurAmorcage ?? this.administrateurAmorcage,
+    creeLe: creeLe ?? this.creeLe,
+  );
+  CompteUtilisateurRow copyWithCompanion(ComptesUtilisateursCompanion data) {
+    return CompteUtilisateurRow(
+      authUserId: data.authUserId.present
+          ? data.authUserId.value
+          : this.authUserId,
+      identifiant: data.identifiant.present
+          ? data.identifiant.value
+          : this.identifiant,
+      administrateurAmorcage: data.administrateurAmorcage.present
+          ? data.administrateurAmorcage.value
+          : this.administrateurAmorcage,
+      creeLe: data.creeLe.present ? data.creeLe.value : this.creeLe,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CompteUtilisateurRow(')
+          ..write('authUserId: $authUserId, ')
+          ..write('identifiant: $identifiant, ')
+          ..write('administrateurAmorcage: $administrateurAmorcage, ')
+          ..write('creeLe: $creeLe')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(authUserId, identifiant, administrateurAmorcage, creeLe);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CompteUtilisateurRow &&
+          other.authUserId == this.authUserId &&
+          other.identifiant == this.identifiant &&
+          other.administrateurAmorcage == this.administrateurAmorcage &&
+          other.creeLe == this.creeLe);
+}
+
+class ComptesUtilisateursCompanion
+    extends UpdateCompanion<CompteUtilisateurRow> {
+  final Value<String> authUserId;
+  final Value<String> identifiant;
+  final Value<bool> administrateurAmorcage;
+  final Value<DateTime> creeLe;
+  final Value<int> rowid;
+  const ComptesUtilisateursCompanion({
+    this.authUserId = const Value.absent(),
+    this.identifiant = const Value.absent(),
+    this.administrateurAmorcage = const Value.absent(),
+    this.creeLe = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ComptesUtilisateursCompanion.insert({
+    required String authUserId,
+    required String identifiant,
+    this.administrateurAmorcage = const Value.absent(),
+    required DateTime creeLe,
+    this.rowid = const Value.absent(),
+  }) : authUserId = Value(authUserId),
+       identifiant = Value(identifiant),
+       creeLe = Value(creeLe);
+  static Insertable<CompteUtilisateurRow> custom({
+    Expression<String>? authUserId,
+    Expression<String>? identifiant,
+    Expression<bool>? administrateurAmorcage,
+    Expression<DateTime>? creeLe,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (authUserId != null) 'auth_user_id': authUserId,
+      if (identifiant != null) 'identifiant': identifiant,
+      if (administrateurAmorcage != null)
+        'administrateur_amorcage': administrateurAmorcage,
+      if (creeLe != null) 'cree_le': creeLe,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ComptesUtilisateursCompanion copyWith({
+    Value<String>? authUserId,
+    Value<String>? identifiant,
+    Value<bool>? administrateurAmorcage,
+    Value<DateTime>? creeLe,
+    Value<int>? rowid,
+  }) {
+    return ComptesUtilisateursCompanion(
+      authUserId: authUserId ?? this.authUserId,
+      identifiant: identifiant ?? this.identifiant,
+      administrateurAmorcage:
+          administrateurAmorcage ?? this.administrateurAmorcage,
+      creeLe: creeLe ?? this.creeLe,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (authUserId.present) {
+      map['auth_user_id'] = Variable<String>(authUserId.value);
+    }
+    if (identifiant.present) {
+      map['identifiant'] = Variable<String>(identifiant.value);
+    }
+    if (administrateurAmorcage.present) {
+      map['administrateur_amorcage'] = Variable<bool>(
+        administrateurAmorcage.value,
+      );
+    }
+    if (creeLe.present) {
+      map['cree_le'] = Variable<DateTime>(creeLe.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ComptesUtilisateursCompanion(')
+          ..write('authUserId: $authUserId, ')
+          ..write('identifiant: $identifiant, ')
+          ..write('administrateurAmorcage: $administrateurAmorcage, ')
+          ..write('creeLe: $creeLe, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $JournalLiaisonsComptesTable extends JournalLiaisonsComptes
+    with TableInfo<$JournalLiaisonsComptesTable, JournalLiaisonCompteRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $JournalLiaisonsComptesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _authUserIdMeta = const VerificationMeta(
+    'authUserId',
+  );
+  @override
+  late final GeneratedColumn<String> authUserId = GeneratedColumn<String>(
+    'auth_user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _identifiantMeta = const VerificationMeta(
+    'identifiant',
+  );
+  @override
+  late final GeneratedColumn<String> identifiant = GeneratedColumn<String>(
+    'identifiant',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _issueMeta = const VerificationMeta('issue');
+  @override
+  late final GeneratedColumn<String> issue = GeneratedColumn<String>(
+    'issue',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statutMeta = const VerificationMeta('statut');
+  @override
+  late final GeneratedColumn<String> statut = GeneratedColumn<String>(
+    'statut',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _resoluParAuthUserIdMeta =
+      const VerificationMeta('resoluParAuthUserId');
+  @override
+  late final GeneratedColumn<String> resoluParAuthUserId =
+      GeneratedColumn<String>(
+        'resolu_par_auth_user_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _resoluLeMeta = const VerificationMeta(
+    'resoluLe',
+  );
+  @override
+  late final GeneratedColumn<DateTime> resoluLe = GeneratedColumn<DateTime>(
+    'resolu_le',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _creeLeMeta = const VerificationMeta('creeLe');
+  @override
+  late final GeneratedColumn<DateTime> creeLe = GeneratedColumn<DateTime>(
+    'cree_le',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    authUserId,
+    identifiant,
+    fideleId,
+    issue,
+    statut,
+    resoluParAuthUserId,
+    resoluLe,
+    creeLe,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'journal_liaisons_comptes';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<JournalLiaisonCompteRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('auth_user_id')) {
+      context.handle(
+        _authUserIdMeta,
+        authUserId.isAcceptableOrUnknown(
+          data['auth_user_id']!,
+          _authUserIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_authUserIdMeta);
+    }
+    if (data.containsKey('identifiant')) {
+      context.handle(
+        _identifiantMeta,
+        identifiant.isAcceptableOrUnknown(
+          data['identifiant']!,
+          _identifiantMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_identifiantMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    }
+    if (data.containsKey('issue')) {
+      context.handle(
+        _issueMeta,
+        issue.isAcceptableOrUnknown(data['issue']!, _issueMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_issueMeta);
+    }
+    if (data.containsKey('statut')) {
+      context.handle(
+        _statutMeta,
+        statut.isAcceptableOrUnknown(data['statut']!, _statutMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_statutMeta);
+    }
+    if (data.containsKey('resolu_par_auth_user_id')) {
+      context.handle(
+        _resoluParAuthUserIdMeta,
+        resoluParAuthUserId.isAcceptableOrUnknown(
+          data['resolu_par_auth_user_id']!,
+          _resoluParAuthUserIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('resolu_le')) {
+      context.handle(
+        _resoluLeMeta,
+        resoluLe.isAcceptableOrUnknown(data['resolu_le']!, _resoluLeMeta),
+      );
+    }
+    if (data.containsKey('cree_le')) {
+      context.handle(
+        _creeLeMeta,
+        creeLe.isAcceptableOrUnknown(data['cree_le']!, _creeLeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_creeLeMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  JournalLiaisonCompteRow map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return JournalLiaisonCompteRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      authUserId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}auth_user_id'],
+      )!,
+      identifiant: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}identifiant'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      ),
+      issue: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}issue'],
+      )!,
+      statut: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statut'],
+      )!,
+      resoluParAuthUserId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}resolu_par_auth_user_id'],
+      ),
+      resoluLe: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}resolu_le'],
+      ),
+      creeLe: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}cree_le'],
+      )!,
+    );
+  }
+
+  @override
+  $JournalLiaisonsComptesTable createAlias(String alias) {
+    return $JournalLiaisonsComptesTable(attachedDatabase, alias);
+  }
+}
+
+class JournalLiaisonCompteRow extends DataClass
+    implements Insertable<JournalLiaisonCompteRow> {
+  final String id;
+  final String authUserId;
+  final String identifiant;
+  final String? fideleId;
+  final String issue;
+  final String statut;
+  final String? resoluParAuthUserId;
+  final DateTime? resoluLe;
+  final DateTime creeLe;
+  const JournalLiaisonCompteRow({
+    required this.id,
+    required this.authUserId,
+    required this.identifiant,
+    this.fideleId,
+    required this.issue,
+    required this.statut,
+    this.resoluParAuthUserId,
+    this.resoluLe,
+    required this.creeLe,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['auth_user_id'] = Variable<String>(authUserId);
+    map['identifiant'] = Variable<String>(identifiant);
+    if (!nullToAbsent || fideleId != null) {
+      map['fidele_id'] = Variable<String>(fideleId);
+    }
+    map['issue'] = Variable<String>(issue);
+    map['statut'] = Variable<String>(statut);
+    if (!nullToAbsent || resoluParAuthUserId != null) {
+      map['resolu_par_auth_user_id'] = Variable<String>(resoluParAuthUserId);
+    }
+    if (!nullToAbsent || resoluLe != null) {
+      map['resolu_le'] = Variable<DateTime>(resoluLe);
+    }
+    map['cree_le'] = Variable<DateTime>(creeLe);
+    return map;
+  }
+
+  JournalLiaisonsComptesCompanion toCompanion(bool nullToAbsent) {
+    return JournalLiaisonsComptesCompanion(
+      id: Value(id),
+      authUserId: Value(authUserId),
+      identifiant: Value(identifiant),
+      fideleId: fideleId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fideleId),
+      issue: Value(issue),
+      statut: Value(statut),
+      resoluParAuthUserId: resoluParAuthUserId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(resoluParAuthUserId),
+      resoluLe: resoluLe == null && nullToAbsent
+          ? const Value.absent()
+          : Value(resoluLe),
+      creeLe: Value(creeLe),
+    );
+  }
+
+  factory JournalLiaisonCompteRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return JournalLiaisonCompteRow(
+      id: serializer.fromJson<String>(json['id']),
+      authUserId: serializer.fromJson<String>(json['authUserId']),
+      identifiant: serializer.fromJson<String>(json['identifiant']),
+      fideleId: serializer.fromJson<String?>(json['fideleId']),
+      issue: serializer.fromJson<String>(json['issue']),
+      statut: serializer.fromJson<String>(json['statut']),
+      resoluParAuthUserId: serializer.fromJson<String?>(
+        json['resoluParAuthUserId'],
+      ),
+      resoluLe: serializer.fromJson<DateTime?>(json['resoluLe']),
+      creeLe: serializer.fromJson<DateTime>(json['creeLe']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'authUserId': serializer.toJson<String>(authUserId),
+      'identifiant': serializer.toJson<String>(identifiant),
+      'fideleId': serializer.toJson<String?>(fideleId),
+      'issue': serializer.toJson<String>(issue),
+      'statut': serializer.toJson<String>(statut),
+      'resoluParAuthUserId': serializer.toJson<String?>(resoluParAuthUserId),
+      'resoluLe': serializer.toJson<DateTime?>(resoluLe),
+      'creeLe': serializer.toJson<DateTime>(creeLe),
+    };
+  }
+
+  JournalLiaisonCompteRow copyWith({
+    String? id,
+    String? authUserId,
+    String? identifiant,
+    Value<String?> fideleId = const Value.absent(),
+    String? issue,
+    String? statut,
+    Value<String?> resoluParAuthUserId = const Value.absent(),
+    Value<DateTime?> resoluLe = const Value.absent(),
+    DateTime? creeLe,
+  }) => JournalLiaisonCompteRow(
+    id: id ?? this.id,
+    authUserId: authUserId ?? this.authUserId,
+    identifiant: identifiant ?? this.identifiant,
+    fideleId: fideleId.present ? fideleId.value : this.fideleId,
+    issue: issue ?? this.issue,
+    statut: statut ?? this.statut,
+    resoluParAuthUserId: resoluParAuthUserId.present
+        ? resoluParAuthUserId.value
+        : this.resoluParAuthUserId,
+    resoluLe: resoluLe.present ? resoluLe.value : this.resoluLe,
+    creeLe: creeLe ?? this.creeLe,
+  );
+  JournalLiaisonCompteRow copyWithCompanion(
+    JournalLiaisonsComptesCompanion data,
+  ) {
+    return JournalLiaisonCompteRow(
+      id: data.id.present ? data.id.value : this.id,
+      authUserId: data.authUserId.present
+          ? data.authUserId.value
+          : this.authUserId,
+      identifiant: data.identifiant.present
+          ? data.identifiant.value
+          : this.identifiant,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      issue: data.issue.present ? data.issue.value : this.issue,
+      statut: data.statut.present ? data.statut.value : this.statut,
+      resoluParAuthUserId: data.resoluParAuthUserId.present
+          ? data.resoluParAuthUserId.value
+          : this.resoluParAuthUserId,
+      resoluLe: data.resoluLe.present ? data.resoluLe.value : this.resoluLe,
+      creeLe: data.creeLe.present ? data.creeLe.value : this.creeLe,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('JournalLiaisonCompteRow(')
+          ..write('id: $id, ')
+          ..write('authUserId: $authUserId, ')
+          ..write('identifiant: $identifiant, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('issue: $issue, ')
+          ..write('statut: $statut, ')
+          ..write('resoluParAuthUserId: $resoluParAuthUserId, ')
+          ..write('resoluLe: $resoluLe, ')
+          ..write('creeLe: $creeLe')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    authUserId,
+    identifiant,
+    fideleId,
+    issue,
+    statut,
+    resoluParAuthUserId,
+    resoluLe,
+    creeLe,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is JournalLiaisonCompteRow &&
+          other.id == this.id &&
+          other.authUserId == this.authUserId &&
+          other.identifiant == this.identifiant &&
+          other.fideleId == this.fideleId &&
+          other.issue == this.issue &&
+          other.statut == this.statut &&
+          other.resoluParAuthUserId == this.resoluParAuthUserId &&
+          other.resoluLe == this.resoluLe &&
+          other.creeLe == this.creeLe);
+}
+
+class JournalLiaisonsComptesCompanion
+    extends UpdateCompanion<JournalLiaisonCompteRow> {
+  final Value<String> id;
+  final Value<String> authUserId;
+  final Value<String> identifiant;
+  final Value<String?> fideleId;
+  final Value<String> issue;
+  final Value<String> statut;
+  final Value<String?> resoluParAuthUserId;
+  final Value<DateTime?> resoluLe;
+  final Value<DateTime> creeLe;
+  final Value<int> rowid;
+  const JournalLiaisonsComptesCompanion({
+    this.id = const Value.absent(),
+    this.authUserId = const Value.absent(),
+    this.identifiant = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.issue = const Value.absent(),
+    this.statut = const Value.absent(),
+    this.resoluParAuthUserId = const Value.absent(),
+    this.resoluLe = const Value.absent(),
+    this.creeLe = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  JournalLiaisonsComptesCompanion.insert({
+    required String id,
+    required String authUserId,
+    required String identifiant,
+    this.fideleId = const Value.absent(),
+    required String issue,
+    required String statut,
+    this.resoluParAuthUserId = const Value.absent(),
+    this.resoluLe = const Value.absent(),
+    required DateTime creeLe,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       authUserId = Value(authUserId),
+       identifiant = Value(identifiant),
+       issue = Value(issue),
+       statut = Value(statut),
+       creeLe = Value(creeLe);
+  static Insertable<JournalLiaisonCompteRow> custom({
+    Expression<String>? id,
+    Expression<String>? authUserId,
+    Expression<String>? identifiant,
+    Expression<String>? fideleId,
+    Expression<String>? issue,
+    Expression<String>? statut,
+    Expression<String>? resoluParAuthUserId,
+    Expression<DateTime>? resoluLe,
+    Expression<DateTime>? creeLe,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (authUserId != null) 'auth_user_id': authUserId,
+      if (identifiant != null) 'identifiant': identifiant,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (issue != null) 'issue': issue,
+      if (statut != null) 'statut': statut,
+      if (resoluParAuthUserId != null)
+        'resolu_par_auth_user_id': resoluParAuthUserId,
+      if (resoluLe != null) 'resolu_le': resoluLe,
+      if (creeLe != null) 'cree_le': creeLe,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  JournalLiaisonsComptesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? authUserId,
+    Value<String>? identifiant,
+    Value<String?>? fideleId,
+    Value<String>? issue,
+    Value<String>? statut,
+    Value<String?>? resoluParAuthUserId,
+    Value<DateTime?>? resoluLe,
+    Value<DateTime>? creeLe,
+    Value<int>? rowid,
+  }) {
+    return JournalLiaisonsComptesCompanion(
+      id: id ?? this.id,
+      authUserId: authUserId ?? this.authUserId,
+      identifiant: identifiant ?? this.identifiant,
+      fideleId: fideleId ?? this.fideleId,
+      issue: issue ?? this.issue,
+      statut: statut ?? this.statut,
+      resoluParAuthUserId: resoluParAuthUserId ?? this.resoluParAuthUserId,
+      resoluLe: resoluLe ?? this.resoluLe,
+      creeLe: creeLe ?? this.creeLe,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (authUserId.present) {
+      map['auth_user_id'] = Variable<String>(authUserId.value);
+    }
+    if (identifiant.present) {
+      map['identifiant'] = Variable<String>(identifiant.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (issue.present) {
+      map['issue'] = Variable<String>(issue.value);
+    }
+    if (statut.present) {
+      map['statut'] = Variable<String>(statut.value);
+    }
+    if (resoluParAuthUserId.present) {
+      map['resolu_par_auth_user_id'] = Variable<String>(
+        resoluParAuthUserId.value,
+      );
+    }
+    if (resoluLe.present) {
+      map['resolu_le'] = Variable<DateTime>(resoluLe.value);
+    }
+    if (creeLe.present) {
+      map['cree_le'] = Variable<DateTime>(creeLe.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('JournalLiaisonsComptesCompanion(')
+          ..write('id: $id, ')
+          ..write('authUserId: $authUserId, ')
+          ..write('identifiant: $identifiant, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('issue: $issue, ')
+          ..write('statut: $statut, ')
+          ..write('resoluParAuthUserId: $resoluParAuthUserId, ')
+          ..write('resoluLe: $resoluLe, ')
+          ..write('creeLe: $creeLe, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxRow> {
   @override
@@ -30658,7 +31696,15 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $ContenusMediathequeTable(this);
   late final $FavorisTable favoris = $FavorisTable(this);
   late final $CommentairesTable commentaires = $CommentairesTable(this);
+  late final $ComptesUtilisateursTable comptesUtilisateurs =
+      $ComptesUtilisateursTable(this);
+  late final $JournalLiaisonsComptesTable journalLiaisonsComptes =
+      $JournalLiaisonsComptesTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
+  late final Index idxFidelesAuthUserId = Index(
+    'idx_fideles_auth_user_id',
+    'CREATE UNIQUE INDEX idx_fideles_auth_user_id ON fideles (auth_user_id)',
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -30729,7 +31775,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     contenusMediatheque,
     favoris,
     commentaires,
+    comptesUtilisateurs,
+    journalLiaisonsComptes,
     syncOutbox,
+    idxFidelesAuthUserId,
   ];
 }
 
@@ -33360,6 +34409,8 @@ typedef $$FidelesTableCreateCompanionBuilder =
       Value<String?> adresse,
       required DateTime createdAt,
       required DateTime updatedAt,
+      Value<String?> authUserId,
+      Value<String> role,
       Value<int> rowid,
     });
 typedef $$FidelesTableUpdateCompanionBuilder =
@@ -33382,6 +34433,8 @@ typedef $$FidelesTableUpdateCompanionBuilder =
       Value<String?> adresse,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
+      Value<String?> authUserId,
+      Value<String> role,
       Value<int> rowid,
     });
 
@@ -34097,6 +35150,31 @@ final class $$FidelesTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<
+    $JournalLiaisonsComptesTable,
+    List<JournalLiaisonCompteRow>
+  >
+  _journalLiaisonsComptesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.journalLiaisonsComptes,
+        aliasName: 'fideles__id__journal_liaisons_comptes__fidele_id',
+      );
+
+  $$JournalLiaisonsComptesTableProcessedTableManager
+  get journalLiaisonsComptesRefs {
+    final manager = $$JournalLiaisonsComptesTableTableManager(
+      $_db,
+      $_db.journalLiaisonsComptes,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _journalLiaisonsComptesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$FidelesTableFilterComposer
@@ -34190,6 +35268,16 @@ class $$FidelesTableFilterComposer
 
   ColumnFilters<DateTime> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get authUserId => $composableBuilder(
+    column: $table.authUserId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get role => $composableBuilder(
+    column: $table.role,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -35072,6 +36160,32 @@ class $$FidelesTableFilterComposer
     );
     return f(composer);
   }
+
+  Expression<bool> journalLiaisonsComptesRefs(
+    Expression<bool> Function($$JournalLiaisonsComptesTableFilterComposer f) f,
+  ) {
+    final $$JournalLiaisonsComptesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.journalLiaisonsComptes,
+          getReferencedColumn: (t) => t.fideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$JournalLiaisonsComptesTableFilterComposer(
+                $db: $db,
+                $table: $db.journalLiaisonsComptes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$FidelesTableOrderingComposer
@@ -35165,6 +36279,16 @@ class $$FidelesTableOrderingComposer
 
   ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get authUserId => $composableBuilder(
+    column: $table.authUserId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get role => $composableBuilder(
+    column: $table.role,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -35263,6 +36387,14 @@ class $$FidelesTableAnnotationComposer
 
   GeneratedColumn<DateTime> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get authUserId => $composableBuilder(
+    column: $table.authUserId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get role =>
+      $composableBuilder(column: $table.role, builder: (column) => column);
 
   $$OrganisationNodesTableAnnotationComposer get noeudId {
     final $$OrganisationNodesTableAnnotationComposer composer =
@@ -36151,6 +37283,32 @@ class $$FidelesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> journalLiaisonsComptesRefs<T extends Object>(
+    Expression<T> Function($$JournalLiaisonsComptesTableAnnotationComposer a) f,
+  ) {
+    final $$JournalLiaisonsComptesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.journalLiaisonsComptes,
+          getReferencedColumn: (t) => t.fideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$JournalLiaisonsComptesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.journalLiaisonsComptes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$FidelesTableTableManager
@@ -36202,6 +37360,7 @@ class $$FidelesTableTableManager
             bool biensRefs,
             bool favorisRefs,
             bool commentairesRefs,
+            bool journalLiaisonsComptesRefs,
           })
         > {
   $$FidelesTableTableManager(_$AppDatabase db, $FidelesTable table)
@@ -36235,6 +37394,8 @@ class $$FidelesTableTableManager
                 Value<String?> adresse = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
+                Value<String?> authUserId = const Value.absent(),
+                Value<String> role = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FidelesCompanion(
                 id: id,
@@ -36255,6 +37416,8 @@ class $$FidelesTableTableManager
                 adresse: adresse,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
+                authUserId: authUserId,
+                role: role,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -36277,6 +37440,8 @@ class $$FidelesTableTableManager
                 Value<String?> adresse = const Value.absent(),
                 required DateTime createdAt,
                 required DateTime updatedAt,
+                Value<String?> authUserId = const Value.absent(),
+                Value<String> role = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FidelesCompanion.insert(
                 id: id,
@@ -36297,6 +37462,8 @@ class $$FidelesTableTableManager
                 adresse: adresse,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
+                authUserId: authUserId,
+                role: role,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -36344,6 +37511,7 @@ class $$FidelesTableTableManager
                 biensRefs = false,
                 favorisRefs = false,
                 commentairesRefs = false,
+                journalLiaisonsComptesRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -36385,6 +37553,7 @@ class $$FidelesTableTableManager
                     if (biensRefs) db.biens,
                     if (favorisRefs) db.favoris,
                     if (commentairesRefs) db.commentaires,
+                    if (journalLiaisonsComptesRefs) db.journalLiaisonsComptes,
                   ],
                   addJoins:
                       <
@@ -37130,6 +38299,27 @@ class $$FidelesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (journalLiaisonsComptesRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          JournalLiaisonCompteRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._journalLiaisonsComptesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).journalLiaisonsComptesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -37186,6 +38376,7 @@ typedef $$FidelesTableProcessedTableManager =
         bool biensRefs,
         bool favorisRefs,
         bool commentairesRefs,
+        bool journalLiaisonsComptesRefs,
       })
     >;
 typedef $$NodeResponsablesTableCreateCompanionBuilder =
@@ -67186,6 +68377,644 @@ typedef $$CommentairesTableProcessedTableManager =
       CommentaireRow,
       PrefetchHooks Function({bool contenuId, bool fideleId})
     >;
+typedef $$ComptesUtilisateursTableCreateCompanionBuilder =
+    ComptesUtilisateursCompanion Function({
+      required String authUserId,
+      required String identifiant,
+      Value<bool> administrateurAmorcage,
+      required DateTime creeLe,
+      Value<int> rowid,
+    });
+typedef $$ComptesUtilisateursTableUpdateCompanionBuilder =
+    ComptesUtilisateursCompanion Function({
+      Value<String> authUserId,
+      Value<String> identifiant,
+      Value<bool> administrateurAmorcage,
+      Value<DateTime> creeLe,
+      Value<int> rowid,
+    });
+
+class $$ComptesUtilisateursTableFilterComposer
+    extends Composer<_$AppDatabase, $ComptesUtilisateursTable> {
+  $$ComptesUtilisateursTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get authUserId => $composableBuilder(
+    column: $table.authUserId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get identifiant => $composableBuilder(
+    column: $table.identifiant,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get administrateurAmorcage => $composableBuilder(
+    column: $table.administrateurAmorcage,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get creeLe => $composableBuilder(
+    column: $table.creeLe,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ComptesUtilisateursTableOrderingComposer
+    extends Composer<_$AppDatabase, $ComptesUtilisateursTable> {
+  $$ComptesUtilisateursTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get authUserId => $composableBuilder(
+    column: $table.authUserId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get identifiant => $composableBuilder(
+    column: $table.identifiant,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get administrateurAmorcage => $composableBuilder(
+    column: $table.administrateurAmorcage,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get creeLe => $composableBuilder(
+    column: $table.creeLe,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ComptesUtilisateursTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ComptesUtilisateursTable> {
+  $$ComptesUtilisateursTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get authUserId => $composableBuilder(
+    column: $table.authUserId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get identifiant => $composableBuilder(
+    column: $table.identifiant,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get administrateurAmorcage => $composableBuilder(
+    column: $table.administrateurAmorcage,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get creeLe =>
+      $composableBuilder(column: $table.creeLe, builder: (column) => column);
+}
+
+class $$ComptesUtilisateursTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ComptesUtilisateursTable,
+          CompteUtilisateurRow,
+          $$ComptesUtilisateursTableFilterComposer,
+          $$ComptesUtilisateursTableOrderingComposer,
+          $$ComptesUtilisateursTableAnnotationComposer,
+          $$ComptesUtilisateursTableCreateCompanionBuilder,
+          $$ComptesUtilisateursTableUpdateCompanionBuilder,
+          (
+            CompteUtilisateurRow,
+            BaseReferences<
+              _$AppDatabase,
+              $ComptesUtilisateursTable,
+              CompteUtilisateurRow
+            >,
+          ),
+          CompteUtilisateurRow,
+          PrefetchHooks Function()
+        > {
+  $$ComptesUtilisateursTableTableManager(
+    _$AppDatabase db,
+    $ComptesUtilisateursTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ComptesUtilisateursTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ComptesUtilisateursTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ComptesUtilisateursTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> authUserId = const Value.absent(),
+                Value<String> identifiant = const Value.absent(),
+                Value<bool> administrateurAmorcage = const Value.absent(),
+                Value<DateTime> creeLe = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ComptesUtilisateursCompanion(
+                authUserId: authUserId,
+                identifiant: identifiant,
+                administrateurAmorcage: administrateurAmorcage,
+                creeLe: creeLe,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String authUserId,
+                required String identifiant,
+                Value<bool> administrateurAmorcage = const Value.absent(),
+                required DateTime creeLe,
+                Value<int> rowid = const Value.absent(),
+              }) => ComptesUtilisateursCompanion.insert(
+                authUserId: authUserId,
+                identifiant: identifiant,
+                administrateurAmorcage: administrateurAmorcage,
+                creeLe: creeLe,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ComptesUtilisateursTable, CompteUtilisateurRow>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $ComptesUtilisateursTable,
+                    CompteUtilisateurRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ComptesUtilisateursTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ComptesUtilisateursTable,
+      CompteUtilisateurRow,
+      $$ComptesUtilisateursTableFilterComposer,
+      $$ComptesUtilisateursTableOrderingComposer,
+      $$ComptesUtilisateursTableAnnotationComposer,
+      $$ComptesUtilisateursTableCreateCompanionBuilder,
+      $$ComptesUtilisateursTableUpdateCompanionBuilder,
+      (
+        CompteUtilisateurRow,
+        BaseReferences<
+          _$AppDatabase,
+          $ComptesUtilisateursTable,
+          CompteUtilisateurRow
+        >,
+      ),
+      CompteUtilisateurRow,
+      PrefetchHooks Function()
+    >;
+typedef $$JournalLiaisonsComptesTableCreateCompanionBuilder =
+    JournalLiaisonsComptesCompanion Function({
+      required String id,
+      required String authUserId,
+      required String identifiant,
+      Value<String?> fideleId,
+      required String issue,
+      required String statut,
+      Value<String?> resoluParAuthUserId,
+      Value<DateTime?> resoluLe,
+      required DateTime creeLe,
+      Value<int> rowid,
+    });
+typedef $$JournalLiaisonsComptesTableUpdateCompanionBuilder =
+    JournalLiaisonsComptesCompanion Function({
+      Value<String> id,
+      Value<String> authUserId,
+      Value<String> identifiant,
+      Value<String?> fideleId,
+      Value<String> issue,
+      Value<String> statut,
+      Value<String?> resoluParAuthUserId,
+      Value<DateTime?> resoluLe,
+      Value<DateTime> creeLe,
+      Value<int> rowid,
+    });
+
+final class $$JournalLiaisonsComptesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $JournalLiaisonsComptesTable,
+          JournalLiaisonCompteRow
+        > {
+  $$JournalLiaisonsComptesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) => db.fideles
+      .createAlias('journal_liaisons_comptes__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager? get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id');
+    if ($_column == null) return null;
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$JournalLiaisonsComptesTableFilterComposer
+    extends Composer<_$AppDatabase, $JournalLiaisonsComptesTable> {
+  $$JournalLiaisonsComptesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get authUserId => $composableBuilder(
+    column: $table.authUserId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get identifiant => $composableBuilder(
+    column: $table.identifiant,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get issue => $composableBuilder(
+    column: $table.issue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get resoluParAuthUserId => $composableBuilder(
+    column: $table.resoluParAuthUserId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get resoluLe => $composableBuilder(
+    column: $table.resoluLe,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get creeLe => $composableBuilder(
+    column: $table.creeLe,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$JournalLiaisonsComptesTableOrderingComposer
+    extends Composer<_$AppDatabase, $JournalLiaisonsComptesTable> {
+  $$JournalLiaisonsComptesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get authUserId => $composableBuilder(
+    column: $table.authUserId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get identifiant => $composableBuilder(
+    column: $table.identifiant,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get issue => $composableBuilder(
+    column: $table.issue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statut => $composableBuilder(
+    column: $table.statut,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get resoluParAuthUserId => $composableBuilder(
+    column: $table.resoluParAuthUserId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get resoluLe => $composableBuilder(
+    column: $table.resoluLe,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get creeLe => $composableBuilder(
+    column: $table.creeLe,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$JournalLiaisonsComptesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $JournalLiaisonsComptesTable> {
+  $$JournalLiaisonsComptesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get authUserId => $composableBuilder(
+    column: $table.authUserId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get identifiant => $composableBuilder(
+    column: $table.identifiant,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get issue =>
+      $composableBuilder(column: $table.issue, builder: (column) => column);
+
+  GeneratedColumn<String> get statut =>
+      $composableBuilder(column: $table.statut, builder: (column) => column);
+
+  GeneratedColumn<String> get resoluParAuthUserId => $composableBuilder(
+    column: $table.resoluParAuthUserId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get resoluLe =>
+      $composableBuilder(column: $table.resoluLe, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get creeLe =>
+      $composableBuilder(column: $table.creeLe, builder: (column) => column);
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$JournalLiaisonsComptesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $JournalLiaisonsComptesTable,
+          JournalLiaisonCompteRow,
+          $$JournalLiaisonsComptesTableFilterComposer,
+          $$JournalLiaisonsComptesTableOrderingComposer,
+          $$JournalLiaisonsComptesTableAnnotationComposer,
+          $$JournalLiaisonsComptesTableCreateCompanionBuilder,
+          $$JournalLiaisonsComptesTableUpdateCompanionBuilder,
+          (JournalLiaisonCompteRow, $$JournalLiaisonsComptesTableReferences),
+          JournalLiaisonCompteRow,
+          PrefetchHooks Function({bool fideleId})
+        > {
+  $$JournalLiaisonsComptesTableTableManager(
+    _$AppDatabase db,
+    $JournalLiaisonsComptesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$JournalLiaisonsComptesTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$JournalLiaisonsComptesTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$JournalLiaisonsComptesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> authUserId = const Value.absent(),
+                Value<String> identifiant = const Value.absent(),
+                Value<String?> fideleId = const Value.absent(),
+                Value<String> issue = const Value.absent(),
+                Value<String> statut = const Value.absent(),
+                Value<String?> resoluParAuthUserId = const Value.absent(),
+                Value<DateTime?> resoluLe = const Value.absent(),
+                Value<DateTime> creeLe = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => JournalLiaisonsComptesCompanion(
+                id: id,
+                authUserId: authUserId,
+                identifiant: identifiant,
+                fideleId: fideleId,
+                issue: issue,
+                statut: statut,
+                resoluParAuthUserId: resoluParAuthUserId,
+                resoluLe: resoluLe,
+                creeLe: creeLe,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String authUserId,
+                required String identifiant,
+                Value<String?> fideleId = const Value.absent(),
+                required String issue,
+                required String statut,
+                Value<String?> resoluParAuthUserId = const Value.absent(),
+                Value<DateTime?> resoluLe = const Value.absent(),
+                required DateTime creeLe,
+                Value<int> rowid = const Value.absent(),
+              }) => JournalLiaisonsComptesCompanion.insert(
+                id: id,
+                authUserId: authUserId,
+                identifiant: identifiant,
+                fideleId: fideleId,
+                issue: issue,
+                statut: statut,
+                resoluParAuthUserId: resoluParAuthUserId,
+                resoluLe: resoluLe,
+                creeLe: creeLe,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $JournalLiaisonsComptesTable,
+                    JournalLiaisonCompteRow
+                  >(table),
+                  $$JournalLiaisonsComptesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({fideleId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (fideleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.fideleId,
+                                referencedTable:
+                                    $$JournalLiaisonsComptesTableReferences
+                                        ._fideleIdTable(db),
+                                referencedColumn:
+                                    $$JournalLiaisonsComptesTableReferences
+                                        ._fideleIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$JournalLiaisonsComptesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $JournalLiaisonsComptesTable,
+      JournalLiaisonCompteRow,
+      $$JournalLiaisonsComptesTableFilterComposer,
+      $$JournalLiaisonsComptesTableOrderingComposer,
+      $$JournalLiaisonsComptesTableAnnotationComposer,
+      $$JournalLiaisonsComptesTableCreateCompanionBuilder,
+      $$JournalLiaisonsComptesTableUpdateCompanionBuilder,
+      (JournalLiaisonCompteRow, $$JournalLiaisonsComptesTableReferences),
+      JournalLiaisonCompteRow,
+      PrefetchHooks Function({bool fideleId})
+    >;
 typedef $$SyncOutboxTableCreateCompanionBuilder =
     SyncOutboxCompanion Function({
       required String id,
@@ -67614,6 +69443,13 @@ class $AppDatabaseManager {
       $$FavorisTableTableManager(_db, _db.favoris);
   $$CommentairesTableTableManager get commentaires =>
       $$CommentairesTableTableManager(_db, _db.commentaires);
+  $$ComptesUtilisateursTableTableManager get comptesUtilisateurs =>
+      $$ComptesUtilisateursTableTableManager(_db, _db.comptesUtilisateurs);
+  $$JournalLiaisonsComptesTableTableManager get journalLiaisonsComptes =>
+      $$JournalLiaisonsComptesTableTableManager(
+        _db,
+        _db.journalLiaisonsComptes,
+      );
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }

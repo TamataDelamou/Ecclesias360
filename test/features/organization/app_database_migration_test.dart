@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:ecclesias_360/features/organization/data/local/app_database.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -616,6 +617,89 @@ void main() {
     expect(favoris, isEmpty);
     final commentaires = await db.select(db.commentaires).get();
     expect(commentaires, isEmpty);
+
+    await db.close();
+  });
+
+  test('un fichier créé en schéma v17 reçoit les colonnes de liaison et les tables d\'authentification (RG-SEC-01)', () async {
+    final fichier = File(
+      path.join(Directory.systemTemp.path, 'ecclesias_migration_test_v17_${DateTime.now().microsecondsSinceEpoch}.sqlite'),
+    );
+    addTearDown(() {
+      if (fichier.existsSync()) fichier.deleteSync();
+    });
+
+    final dbInitiale = AppDatabase(NativeDatabase(fichier));
+    await dbInitiale.into(dbInitiale.organisationNodes).insert(
+          OrganisationNodesCompanion.insert(
+            id: 'siege-1',
+            typeNoeud: 'siege',
+            nom: 'GSG',
+            codeInterne: 'GSG-SIEGE',
+            path: '/siege-1/',
+            depth: 0,
+            createdAt: DateTime(2026, 1, 1),
+            updatedAt: DateTime(2026, 1, 1),
+          ),
+        );
+    await dbInitiale.into(dbInitiale.fideles).insert(
+          FidelesCompanion.insert(
+            id: 'fidele-1',
+            noeudId: 'siege-1',
+            nom: 'Camara',
+            prenoms: 'Aïssata',
+            dateNaissance: DateTime(1990, 1, 1),
+            sexe: 'feminin',
+            statutCivil: 'celibataire',
+            createdAt: DateTime(2026, 1, 1),
+            updatedAt: DateTime(2026, 1, 1),
+          ),
+        );
+    await dbInitiale.close();
+
+    // Ramène le fichier au schéma v17 exact : ni colonnes de liaison sur
+    // fideles, ni tables d'authentification.
+    final connexionBrute = sqlite3.sqlite3.open(fichier.path);
+    connexionBrute.execute('''
+      DROP INDEX idx_fideles_auth_user_id;
+      ALTER TABLE fideles DROP COLUMN auth_user_id;
+      ALTER TABLE fideles DROP COLUMN role;
+      DROP TABLE journal_liaisons_comptes;
+      DROP TABLE comptes_utilisateurs;
+      PRAGMA user_version = 17;
+    ''');
+    connexionBrute.close();
+
+    final db = AppDatabase(NativeDatabase(fichier));
+
+    final fidele = await db.select(db.fideles).getSingle();
+    expect(fidele.nom, 'Camara');
+    expect(fidele.authUserId, isNull);
+    expect(fidele.role, 'membre');
+    expect(await db.select(db.comptesUtilisateurs).get(), isEmpty);
+    expect(await db.select(db.journalLiaisonsComptes).get(), isEmpty);
+
+    // L'unicité du lien compte ↔ fiche est bien recréée par l'index.
+    await (db.update(db.fideles)..where((t) => t.id.equals('fidele-1')))
+        .write(const FidelesCompanion(authUserId: Value('compte-1')));
+    await db.into(db.fideles).insert(
+          FidelesCompanion.insert(
+            id: 'fidele-2',
+            noeudId: 'siege-1',
+            nom: 'Diallo',
+            prenoms: 'Mamadou',
+            dateNaissance: DateTime(1985, 1, 1),
+            sexe: 'masculin',
+            statutCivil: 'marie',
+            createdAt: DateTime(2026, 1, 1),
+            updatedAt: DateTime(2026, 1, 1),
+          ),
+        );
+    await expectLater(
+      (db.update(db.fideles)..where((t) => t.id.equals('fidele-2')))
+          .write(const FidelesCompanion(authUserId: Value('compte-1'))),
+      throwsA(anything),
+    );
 
     await db.close();
   });

@@ -4,6 +4,8 @@ import 'package:ecclesias_360/features/organization/data/local/app_database.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/auth_gateway_memoire.dart';
+
 void main() {
   testWidgets(
     'accueil -> zones géographiques -> créer une zone -> apparaît dans la liste',
@@ -19,7 +21,7 @@ void main() {
       addTearDown(tester.platformDispatcher.clearLocaleTestValue);
       addTearDown(tester.platformDispatcher.clearLocalesTestValue);
 
-      await tester.pumpWidget(EcclesiasApp(database: database));
+      await tester.pumpWidget(EcclesiasApp(database: database, authGateway: AuthGatewayMemoire.connecte()));
       await tester.pumpAndSettle();
 
       // Tuile plus bas dans la grille du tableau de bord : la faire défiler

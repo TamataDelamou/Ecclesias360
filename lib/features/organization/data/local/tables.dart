@@ -60,6 +60,9 @@ class NodeResponsables extends Table {
 
 /// Table Drift Fidèle (Module II, RG-II-*). `id` sert de matricule
 /// (RG-II-01).
+// Unicité portée par un index (SQLite refuse ADD COLUMN sur une colonne
+// UNIQUE, nécessaire à la montée de version v17 -> v18).
+@TableIndex(name: 'idx_fideles_auth_user_id', columns: {#authUserId}, unique: true)
 @DataClassName('FideleRow')
 class Fideles extends Table {
   TextColumn get id => text()();
@@ -80,6 +83,15 @@ class Fideles extends Table {
   TextColumn get adresse => text().nullable()();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();
+
+  /// RG-SEC-01 — compte Supabase lié à la fiche (miroir local de
+  /// `fideles.auth_user_id`, migration 0004). Jamais écrasé
+  /// automatiquement : voir `LiaisonCompteRules`.
+  TextColumn get authUserId => text().nullable()();
+
+  /// RG-XXIII-02 — rôle du fidèle (miroir local de `fideles.role`), connu
+  /// hors ligne (RG-OFF).
+  TextColumn get role => text().withDefault(const Constant('membre'))();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -1154,6 +1166,40 @@ class SyncOutbox extends Table {
   IntColumn get tentatives => integer().withDefault(const Constant(0))();
   DateTimeColumn get derniereTentativeLe => dateTime().nullable()();
   TextColumn get derniereErreur => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// RG-SEC-01 — compte authentifié connu de cet appareil. Porte l'état qui
+/// n'a pas sa place sur une fiche fidèle : l'administrateur d'amorçage
+/// (premier compte sur une base vide, sans fiche) et l'identifiant vérifié.
+@DataClassName('CompteUtilisateurRow')
+class ComptesUtilisateurs extends Table {
+  TextColumn get authUserId => text()();
+  TextColumn get identifiant => text()();
+  BoolColumn get administrateurAmorcage => boolean().withDefault(const Constant(false))();
+  DateTimeColumn get creeLe => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {authUserId};
+}
+
+/// RG-SEC-01 — journal de toute liaison (ou non-liaison) automatique d'un
+/// compte à une fiche fidèle, et de sa résolution par un administrateur.
+/// Jamais supprimé : sert aussi de mémoire des fiches déjà liées une fois
+/// (garde-fou contre le recyclage de numéros).
+@DataClassName('JournalLiaisonCompteRow')
+class JournalLiaisonsComptes extends Table {
+  TextColumn get id => text()();
+  TextColumn get authUserId => text()();
+  TextColumn get identifiant => text()();
+  TextColumn get fideleId => text().nullable().references(Fideles, #id)();
+  TextColumn get issue => text()();
+  TextColumn get statut => text()();
+  TextColumn get resoluParAuthUserId => text().nullable()();
+  DateTimeColumn get resoluLe => dateTime().nullable()();
+  DateTimeColumn get creeLe => dateTime()();
 
   @override
   Set<Column> get primaryKey => {id};

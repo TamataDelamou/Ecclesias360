@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'core/router/app_router.dart';
 import 'core/sync/sync_coordinator.dart';
 import 'core/theme/design_tokens.dart';
 import 'features/archivage/application/archivage_controller.dart';
+import 'features/auth/application/session_controller.dart';
+import 'features/auth/data/auth_gateway.dart';
+import 'features/auth/data/compte_repository.dart';
 import 'features/archivage/data/archivage_repository.dart';
 import 'features/comite/application/comite_controller.dart';
 import 'features/comite/data/comite_repository.dart';
@@ -40,9 +44,13 @@ import 'features/professions/data/profession_repository.dart';
 import 'l10n/app_localizations.dart';
 
 class EcclesiasApp extends StatefulWidget {
-  const EcclesiasApp({required this.database, super.key});
+  const EcclesiasApp({required this.database, required this.authGateway, super.key});
 
   final AppDatabase database;
+
+  /// RG-SEC-01 — `SupabaseAuthGateway` en production, implémentation en
+  /// mémoire dans les tests.
+  final AuthGateway authGateway;
 
   @override
   State<EcclesiasApp> createState() => _EcclesiasAppState();
@@ -50,6 +58,8 @@ class EcclesiasApp extends StatefulWidget {
 
 class _EcclesiasAppState extends State<EcclesiasApp> {
   late final SyncCoordinator _syncCoordinator;
+  late final SessionController _sessionController;
+  late final GoRouter _router;
   late final OrganisationNodeRepository _organisationRepository;
   late final OrganisationController _organisationController;
   late final FideleRepository _fideleRepository;
@@ -87,6 +97,10 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   void initState() {
     super.initState();
     _syncCoordinator = SyncCoordinator(widget.database);
+    // Session instanciée à la racine : état global consommé par tous les
+    // modules et par la garde du routeur (RG-SEC-01).
+    _sessionController = SessionController(widget.authGateway, CompteRepository(widget.database));
+    _router = creerAppRouter(_sessionController);
     _organisationRepository = OrganisationNodeRepository(widget.database, _syncCoordinator);
     _organisationController = OrganisationController(_organisationRepository);
     _fideleRepository = FideleRepository(widget.database, _syncCoordinator);
@@ -132,6 +146,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
 
   @override
   void dispose() {
+    _router.dispose();
+    _sessionController.dispose();
     _archivageController.dispose();
     _organisationController.dispose();
     _fideleController.dispose();
@@ -155,6 +171,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<SessionController>.value(value: _sessionController),
         ChangeNotifierProvider<OrganisationController>.value(value: _organisationController),
         ChangeNotifierProvider<FideleController>.value(value: _fideleController),
         ChangeNotifierProvider<ZoneGeographiqueController>.value(value: _zoneGeographiqueController),
@@ -178,7 +195,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
         darkTheme: DesignTokens.dark(),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        routerConfig: appRouter,
+        routerConfig: _router,
       ),
     );
   }

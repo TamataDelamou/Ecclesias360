@@ -1358,4 +1358,155 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get mediathequeFavorisAucun =>
       'Ningún contenido favorito por el momento.';
+
+  @override
+  String get authConnexionTitre => 'Iniciar sesión';
+
+  @override
+  String get authConnexionIntro =>
+      'Inicie sesión sin contraseña: se le enviará un código de un solo uso.';
+
+  @override
+  String get authIdentifiantTelephone => 'Teléfono';
+
+  @override
+  String get authIdentifiantEmail => 'Correo electrónico';
+
+  @override
+  String get authChampTelephone => 'Número en formato internacional';
+
+  @override
+  String get authChampTelephoneAide => 'Ejemplo: +224 620 00 00 01';
+
+  @override
+  String get authChampEmail => 'Dirección de correo';
+
+  @override
+  String get authTelephoneInvalide =>
+      'Número no válido: indique el prefijo del país (p. ej. +224…).';
+
+  @override
+  String get authEmailInvalide => 'Dirección de correo no válida.';
+
+  @override
+  String get authMethodeTitre => 'Recibir el código por';
+
+  @override
+  String get authMethodeSms => 'SMS';
+
+  @override
+  String get authMethodeWhatsapp => 'WhatsApp';
+
+  @override
+  String get authMethodeMagicLink => 'Enlace de acceso (Magic Link)';
+
+  @override
+  String get authMethodeCodeEmail => 'Código por correo';
+
+  @override
+  String get authBasculerVersEmail =>
+      'Recibir un código por correo en su lugar';
+
+  @override
+  String get authEnvoyerCode => 'Recibir el código';
+
+  @override
+  String get authVerificationTitre => 'Verificación';
+
+  @override
+  String authVerificationIntro(String destinataire) {
+    return 'Introduzca el código de 6 dígitos enviado a $destinataire.';
+  }
+
+  @override
+  String get authVerificationMagicLink =>
+      'También puede abrir el enlace del mismo correo en el dispositivo donde está instalada la aplicación.';
+
+  @override
+  String get authChampCode => 'Código';
+
+  @override
+  String get authVerifier => 'Iniciar sesión';
+
+  @override
+  String get authRenvoyerCode => 'Reenviar el código';
+
+  @override
+  String get authModifierIdentifiant => 'Cambiar el identificador';
+
+  @override
+  String get authDeconnexion => 'Cerrar sesión';
+
+  @override
+  String authCompteConnecte(String identifiant) {
+    return 'Conectado: $identifiant';
+  }
+
+  @override
+  String get authLiaisonsTitre => 'Vinculaciones de cuentas';
+
+  @override
+  String get authLiaisonsAucune => 'No hay vinculaciones registradas.';
+
+  @override
+  String get authLiaisonsConflits => 'Conflictos por resolver';
+
+  @override
+  String get authLiaisonsJournal => 'Registro';
+
+  @override
+  String get authIssueLieAutomatiquement => 'Vinculada automáticamente';
+
+  @override
+  String get authIssueAdministrateurAmorcage => 'Administrador inicial';
+
+  @override
+  String get authIssueAucuneCorrespondance => 'Ninguna ficha coincidente';
+
+  @override
+  String get authIssueCorrespondanceMultiple => 'Varias fichas coinciden';
+
+  @override
+  String get authIssueFicheDejaLiee => 'Ficha ya vinculada a otra cuenta';
+
+  @override
+  String get authStatutEnAttente => 'Pendiente';
+
+  @override
+  String get authStatutResoluLie => 'Resuelto: cuenta vinculada';
+
+  @override
+  String get authStatutResoluRejete =>
+      'Resuelto: se mantiene como usuario simple';
+
+  @override
+  String get authLiaisonLier => 'Vincular la cuenta';
+
+  @override
+  String get authLiaisonRejeter => 'Mantener como usuario simple';
+
+  @override
+  String get authLiaisonChoisirFiche => 'Ficha a vincular';
+
+  @override
+  String get authLiaisonConfirmation =>
+      'Si la ficha está vinculada a otra cuenta, ese vínculo se eliminará y se sustituirá. ¿Confirmar?';
+
+  @override
+  String get authConfirmer => 'Confirmar';
+
+  @override
+  String get roleUtilisateurSimple => 'Usuario simple';
+
+  @override
+  String get roleMembre => 'Miembro';
+
+  @override
+  String get roleResponsable => 'Responsable';
+
+  @override
+  String get rolePasteur => 'Pastor';
+
+  @override
+  String get roleAdministrateur => 'Administrador';
 }

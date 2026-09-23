@@ -4,6 +4,8 @@ import 'package:ecclesias_360/features/organization/data/local/app_database.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/auth_gateway_memoire.dart';
+
 void main() {
   testWidgets(
     'accueil -> créer siège -> créer un fidèle -> créer un culte -> publier (audio+vidéo, archivage '
@@ -21,7 +23,7 @@ void main() {
       addTearDown(tester.platformDispatcher.clearLocaleTestValue);
       addTearDown(tester.platformDispatcher.clearLocalesTestValue);
 
-      await tester.pumpWidget(EcclesiasApp(database: database));
+      await tester.pumpWidget(EcclesiasApp(database: database, authGateway: AuthGatewayMemoire.connecte()));
       await tester.pumpAndSettle();
 
       final navOrganisation =

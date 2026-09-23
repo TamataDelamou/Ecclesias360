@@ -169,6 +169,36 @@ class AppError implements Exception {
     "Seul un pasteur (ou rôle supérieur) peut clôturer une période comptable.",
   );
 
+  factory AppError.authentificationNonConfiguree() => const AppError(
+    'authentification_non_configuree',
+    "Le service de connexion n'est pas configuré sur cet appareil (fichier .env absent).",
+  );
+
+  factory AppError.authentificationIndisponible() => const AppError(
+    'authentification_indisponible',
+    "Le service de connexion est injoignable. Vérifiez votre connexion puis réessayez.",
+  );
+
+  factory AppError.codeOtpInvalide() => const AppError(
+    'code_otp_invalide',
+    "Ce code est invalide ou a expiré. Demandez un nouveau code.",
+  );
+
+  factory AppError.tropDeTentativesOtp() => const AppError(
+    'trop_de_tentatives_otp',
+    "Trop de tentatives. Patientez quelques instants avant de redemander un code.",
+  );
+
+  factory AppError.conflitLiaisonDejaResolu() => const AppError(
+    'conflit_liaison_deja_resolu',
+    "Ce conflit de liaison a déjà été résolu.",
+  );
+
+  factory AppError.actionReserveeAdministrateur() => const AppError(
+    'action_reservee_administrateur',
+    "Cette action est réservée à un administrateur.",
+  );
+
   @override
   String toString() => 'AppError($code): $message';
 }

@@ -1357,4 +1357,154 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get mediathequeFavorisAucun => 'Aucun contenu favori pour le moment.';
+
+  @override
+  String get authConnexionTitre => 'Connexion';
+
+  @override
+  String get authConnexionIntro =>
+      'Connectez-vous sans mot de passe : un code à usage unique vous est envoyé.';
+
+  @override
+  String get authIdentifiantTelephone => 'Téléphone';
+
+  @override
+  String get authIdentifiantEmail => 'E-mail';
+
+  @override
+  String get authChampTelephone => 'Numéro au format international';
+
+  @override
+  String get authChampTelephoneAide => 'Exemple : +224 620 00 00 01';
+
+  @override
+  String get authChampEmail => 'Adresse e-mail';
+
+  @override
+  String get authTelephoneInvalide =>
+      'Numéro invalide : indiquez l\'indicatif pays (ex. +224…).';
+
+  @override
+  String get authEmailInvalide => 'Adresse e-mail invalide.';
+
+  @override
+  String get authMethodeTitre => 'Recevoir le code par';
+
+  @override
+  String get authMethodeSms => 'SMS';
+
+  @override
+  String get authMethodeWhatsapp => 'WhatsApp';
+
+  @override
+  String get authMethodeMagicLink => 'Lien de connexion (Magic Link)';
+
+  @override
+  String get authMethodeCodeEmail => 'Code par e-mail';
+
+  @override
+  String get authBasculerVersEmail => 'Recevoir plutôt un code par e-mail';
+
+  @override
+  String get authEnvoyerCode => 'Recevoir le code';
+
+  @override
+  String get authVerificationTitre => 'Vérification';
+
+  @override
+  String authVerificationIntro(String destinataire) {
+    return 'Saisissez le code à 6 chiffres envoyé à $destinataire.';
+  }
+
+  @override
+  String get authVerificationMagicLink =>
+      'Vous pouvez aussi ouvrir le lien du même e-mail depuis l\'appareil où l\'application est installée.';
+
+  @override
+  String get authChampCode => 'Code';
+
+  @override
+  String get authVerifier => 'Se connecter';
+
+  @override
+  String get authRenvoyerCode => 'Renvoyer le code';
+
+  @override
+  String get authModifierIdentifiant => 'Modifier l\'identifiant';
+
+  @override
+  String get authDeconnexion => 'Se déconnecter';
+
+  @override
+  String authCompteConnecte(String identifiant) {
+    return 'Connecté : $identifiant';
+  }
+
+  @override
+  String get authLiaisonsTitre => 'Liaisons de comptes';
+
+  @override
+  String get authLiaisonsAucune => 'Aucune liaison enregistrée.';
+
+  @override
+  String get authLiaisonsConflits => 'Conflits à résoudre';
+
+  @override
+  String get authLiaisonsJournal => 'Journal';
+
+  @override
+  String get authIssueLieAutomatiquement => 'Liée automatiquement';
+
+  @override
+  String get authIssueAdministrateurAmorcage => 'Administrateur d\'amorçage';
+
+  @override
+  String get authIssueAucuneCorrespondance => 'Aucune fiche correspondante';
+
+  @override
+  String get authIssueCorrespondanceMultiple =>
+      'Plusieurs fiches correspondent';
+
+  @override
+  String get authIssueFicheDejaLiee => 'Fiche déjà liée à un autre compte';
+
+  @override
+  String get authStatutEnAttente => 'En attente';
+
+  @override
+  String get authStatutResoluLie => 'Résolu : compte lié';
+
+  @override
+  String get authStatutResoluRejete => 'Résolu : utilisateur simple maintenu';
+
+  @override
+  String get authLiaisonLier => 'Lier le compte';
+
+  @override
+  String get authLiaisonRejeter => 'Maintenir utilisateur simple';
+
+  @override
+  String get authLiaisonChoisirFiche => 'Fiche à lier';
+
+  @override
+  String get authLiaisonConfirmation =>
+      'Si la fiche est liée à un autre compte, ce lien sera retiré et remplacé. Confirmer ?';
+
+  @override
+  String get authConfirmer => 'Confirmer';
+
+  @override
+  String get roleUtilisateurSimple => 'Utilisateur simple';
+
+  @override
+  String get roleMembre => 'Membre';
+
+  @override
+  String get roleResponsable => 'Responsable';
+
+  @override
+  String get rolePasteur => 'Pasteur';
+
+  @override
+  String get roleAdministrateur => 'Administrateur';
 }
