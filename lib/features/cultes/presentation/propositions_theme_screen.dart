@@ -3,28 +3,20 @@ import 'package:provider/provider.dart';
 
 import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../fideles/application/fidele_controller.dart';
+import '../../auth/application/session_controller.dart';
 import '../application/culte_controller.dart';
 import '../domain/models/proposition_theme.dart';
 import '../domain/models/valeur_vote.dart';
 import '../domain/models/vote_proposition.dart';
 
-/// Écran « Propositions de thème » (RG-XII-06) — soumission et vote. En
-/// l'absence de session réelle (RG-SEC-01 non construit), un sélecteur de
-/// fidèle actif détermine l'auteur des soumissions et des votes, comme
-/// convention établie ailleurs dans l'application.
-class PropositionsThemeScreen extends StatefulWidget {
+/// Écran « Propositions de thème » (RG-XII-06) — soumission et vote. L'auteur
+/// d'une soumission ou d'un vote est la fiche liée à la session (un compte
+/// sans fiche consulte sans agir) ; l'auteur d'une proposition ne vote pas
+/// sur la sienne (« les autres fidèles votent »).
+class PropositionsThemeScreen extends StatelessWidget {
   const PropositionsThemeScreen({super.key});
 
-  @override
-  State<PropositionsThemeScreen> createState() => _PropositionsThemeScreenState();
-}
-
-class _PropositionsThemeScreenState extends State<PropositionsThemeScreen> {
-  String? _fideleActifId;
-
-  Future<void> _soumettreProposition(BuildContext context, CulteController controller) async {
-    if (_fideleActifId == null) return;
+  Future<void> _soumettreProposition(BuildContext context, CulteController controller, String auteurId) async {
     final titreController = TextEditingController();
     final explicationController = TextEditingController();
 
@@ -55,7 +47,7 @@ class _PropositionsThemeScreenState extends State<PropositionsThemeScreen> {
 
     if (confirme == true && titreController.text.trim().isNotEmpty) {
       await controller.soumettreProposition(
-        fideleId: _fideleActifId!,
+        fideleId: auteurId,
         titre: titreController.text.trim(),
         explication: explicationController.text.trim().isEmpty ? null : explicationController.text.trim(),
       );
@@ -65,25 +57,21 @@ class _PropositionsThemeScreenState extends State<PropositionsThemeScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<CulteController>();
-    final fideles = context.watch<FideleController>().fideles;
+    final fideleActifId = context.watch<SessionController>().session?.fideleId;
     final l10n = AppLocalizations.of(context)!;
-    _fideleActifId ??= fideles.isNotEmpty ? fideles.first.id : null;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.propositionsThemeTitre),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(AppDimensions.spacingXxl),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppDimensions.spacingLg),
-            child: DropdownButtonFormField<String>(
-              initialValue: _fideleActifId,
-              decoration: InputDecoration(labelText: l10n.propositionsVoterEnTantQue),
-              items: [for (final fidele in fideles) DropdownMenuItem(value: fidele.id, child: Text(fidele.nomComplet))],
-              onChanged: (valeur) => setState(() => _fideleActifId = valeur),
-            ),
-          ),
-        ),
+        bottom: fideleActifId != null
+            ? null
+            : PreferredSize(
+                preferredSize: const Size.fromHeight(AppDimensions.spacingXxl),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: AppDimensions.spacingLg),
+                  child: Text(l10n.propositionsFicheRequise),
+                ),
+              ),
       ),
       body: StreamBuilder<List<PropositionTheme>>(
         stream: controller.watchPropositions(),
@@ -98,13 +86,13 @@ class _PropositionsThemeScreenState extends State<PropositionsThemeScreen> {
             itemBuilder: (context, index) => _PropositionTile(
               proposition: propositions[index],
               controller: controller,
-              fideleActifId: _fideleActifId,
+              fideleActifId: fideleActifId,
             ),
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _fideleActifId == null ? null : () => _soumettreProposition(context, controller),
+        onPressed: fideleActifId == null ? null : () => _soumettreProposition(context, controller, fideleActifId),
         tooltip: l10n.propositionSoumettreTooltip,
         child: const Icon(Icons.add),
       ),
@@ -141,12 +129,14 @@ class _PropositionTile extends StatelessWidget {
                     break;
                   }
                 }
+                // RG-XII-06 : l'auteur ne vote pas sur sa propre proposition.
+                final peutVoter = fideleActifId != null && proposition.fideleId != fideleActifId;
                 return Row(
                   children: [
                     IconButton.filledTonal(
                       isSelected: voteActif == ValeurVote.jaime,
                       icon: const Icon(Icons.thumb_up_outlined),
-                      onPressed: fideleActifId == null
+                      onPressed: !peutVoter
                           ? null
                           : () => controller.voter(
                               propositionId: proposition.id,
@@ -159,7 +149,7 @@ class _PropositionTile extends StatelessWidget {
                     IconButton.filledTonal(
                       isSelected: voteActif == ValeurVote.jenaimepas,
                       icon: const Icon(Icons.thumb_down_outlined),
-                      onPressed: fideleActifId == null
+                      onPressed: !peutVoter
                           ? null
                           : () => controller.voter(
                               propositionId: proposition.id,
@@ -168,6 +158,10 @@ class _PropositionTile extends StatelessWidget {
                             ),
                     ),
                     Text('${proposition.nbDislikes}'),
+                    if (fideleActifId != null && proposition.fideleId == fideleActifId) ...[
+                      const SizedBox(width: AppDimensions.spacingMd),
+                      Text(AppLocalizations.of(context)!.propositionVotreProposition),
+                    ],
                   ],
                 );
               },

@@ -214,6 +214,11 @@ class AppError implements Exception {
     "Séparation des tâches : la personne qui a saisi cette contribution ne peut pas la valider ni la rejeter. Une autre personne habilitée doit décider.",
   );
 
+  factory AppError.voteSurSaPropreProposition() => const AppError(
+    'vote_sur_sa_propre_proposition',
+    "Les autres fidèles votent sur une proposition : son auteur ne vote pas sur la sienne.",
+  );
+
   factory AppError.actionReserveeAdministrateur() => const AppError(
     'action_reservee_administrateur',
     "Cette action est réservée à un administrateur.",

@@ -83,4 +83,14 @@ void main() {
       expect(decompte.dislikes, 1);
     });
   });
+
+  group('raisonBlocageVote (RG-XII-06)', () {
+    test("l'auteur d'une proposition ne vote pas sur la sienne", () {
+      expect(CulteRules.raisonBlocageVote(auteurPropositionId: 'f1', votantId: 'f1')?.code, 'vote_sur_sa_propre_proposition');
+    });
+
+    test('un autre fidèle vote', () {
+      expect(CulteRules.raisonBlocageVote(auteurPropositionId: 'f1', votantId: 'f2'), isNull);
+    });
+  });
 }

@@ -334,6 +334,10 @@ class CulteRepository {
   /// RG-XII-06 — un vote par fidèle et par proposition ; voter à nouveau
   /// change simplement le sens du vote (jamais un second vote compté).
   Future<void> voter({required String propositionId, required String fideleId, required ValeurVote valeur}) async {
+    final proposition =
+        await (_db.select(_db.propositionsTheme)..where((t) => t.id.equals(propositionId))).getSingle();
+    final erreur = CulteRules.raisonBlocageVote(auteurPropositionId: proposition.fideleId, votantId: fideleId);
+    if (erreur != null) throw erreur;
     final existant = await (_db.select(_db.votesProposition)
           ..where((t) => t.propositionId.equals(propositionId) & t.fideleId.equals(fideleId)))
         .getSingleOrNull();

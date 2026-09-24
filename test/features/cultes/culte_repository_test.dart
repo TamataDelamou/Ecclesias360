@@ -1,4 +1,5 @@
 import 'package:drift/native.dart';
+import 'package:ecclesias_360/core/error/app_error.dart';
 import 'package:ecclesias_360/features/cultes/data/culte_repository.dart';
 import 'package:ecclesias_360/features/cultes/domain/models/mode_presence.dart';
 import 'package:ecclesias_360/features/cultes/domain/models/statut_culte.dart';
@@ -130,13 +131,41 @@ void main() {
   });
 
   group('propositions de thème et votes (RG-XII-06)', () {
+    // « Les autres fidèles votent » : le votant n'est pas l'auteur.
+    const votantId = 'fidele-2';
+    setUp(() async {
+      await db.into(db.fideles).insert(
+            FidelesCompanion.insert(
+              id: votantId,
+              noeudId: noeudId,
+              nom: 'Diallo',
+              prenoms: 'Awa',
+              dateNaissance: DateTime(1990, 1, 1),
+              sexe: 'feminin',
+              statutCivil: 'marie',
+              createdAt: DateTime.now(),
+              updatedAt: DateTime.now(),
+            ),
+          );
+    });
+
+    test("l'auteur ne vote pas sur sa propre proposition", () async {
+      await repository.soumettreProposition(fideleId: fideleId, titre: 'La foi qui agit');
+      final proposition = (await repository.watchPropositions().first).single;
+      await expectLater(
+        repository.voter(propositionId: proposition.id, fideleId: fideleId, valeur: ValeurVote.jaime),
+        throwsA(isA<AppError>().having((e) => e.code, 'code', 'vote_sur_sa_propre_proposition')),
+      );
+      expect(await repository.watchVotes(proposition.id).first, isEmpty);
+    });
+
     test('le décompte des votes reflète toujours les votes réels en base', () async {
       await repository.soumettreProposition(fideleId: fideleId, titre: 'La foi qui agit');
       final proposition = (await repository.watchPropositions().first).single;
       expect(proposition.nbLikes, 0);
       expect(proposition.nbDislikes, 0);
 
-      await repository.voter(propositionId: proposition.id, fideleId: fideleId, valeur: ValeurVote.jaime);
+      await repository.voter(propositionId: proposition.id, fideleId: votantId, valeur: ValeurVote.jaime);
       final apresVote = (await repository.watchPropositions().first).single;
       expect(apresVote.nbLikes, 1);
       expect(apresVote.nbDislikes, 0);
@@ -146,8 +175,8 @@ void main() {
       await repository.soumettreProposition(fideleId: fideleId, titre: 'La foi qui agit');
       final proposition = (await repository.watchPropositions().first).single;
 
-      await repository.voter(propositionId: proposition.id, fideleId: fideleId, valeur: ValeurVote.jaime);
-      await repository.voter(propositionId: proposition.id, fideleId: fideleId, valeur: ValeurVote.jenaimepas);
+      await repository.voter(propositionId: proposition.id, fideleId: votantId, valeur: ValeurVote.jaime);
+      await repository.voter(propositionId: proposition.id, fideleId: votantId, valeur: ValeurVote.jenaimepas);
 
       final votes = await repository.watchVotes(proposition.id).first;
       expect(votes, hasLength(1));

@@ -1224,11 +1224,17 @@ abstract class AppLocalizations {
   /// **'Propositions de thème'**
   String get propositionsThemeTitre;
 
-  /// Libellé du sélecteur de fidèle actif pour soumettre/voter (pas de session réelle, RG-SEC-01 non construit).
+  /// Affiché à un compte sans fiche sur l'écran des propositions (RG-XII-06).
   ///
   /// In fr, this message translates to:
-  /// **'Voter/soumettre en tant que'**
-  String get propositionsVoterEnTantQue;
+  /// **'Proposer un thème et voter sont réservés aux fidèles enregistrés (fiche liée à votre compte).'**
+  String get propositionsFicheRequise;
+
+  /// Mention sur une proposition de l'utilisateur courant, sur laquelle il ne vote pas (RG-XII-06).
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre proposition'**
+  String get propositionVotreProposition;
 
   /// Titre de l'écran de liste des dossiers disciplinaires d'un nœud.
   ///

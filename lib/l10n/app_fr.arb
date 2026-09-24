@@ -796,9 +796,13 @@
   "@propositionsThemeTitre": {
     "description": "Titre de l'écran des propositions de thème de culte."
   },
-  "propositionsVoterEnTantQue": "Voter/soumettre en tant que",
-  "@propositionsVoterEnTantQue": {
-    "description": "Libellé du sélecteur de fidèle actif pour soumettre/voter (pas de session réelle, RG-SEC-01 non construit)."
+  "propositionsFicheRequise": "Proposer un thème et voter sont réservés aux fidèles enregistrés (fiche liée à votre compte).",
+  "@propositionsFicheRequise": {
+    "description": "Affiché à un compte sans fiche sur l'écran des propositions (RG-XII-06)."
+  },
+  "propositionVotreProposition": "Votre proposition",
+  "@propositionVotreProposition": {
+    "description": "Mention sur une proposition de l'utilisateur courant, sur laquelle il ne vote pas (RG-XII-06)."
   },
   "disciplineTitre": "Dossiers disciplinaires",
   "@disciplineTitre": {

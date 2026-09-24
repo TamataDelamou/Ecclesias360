@@ -13,6 +13,13 @@ abstract final class CulteRules {
     return modeDuCulte == modeDemande ? null : AppError.modePresenceIncompatible();
   }
 
+  /// RG-XII-06 — « les autres fidèles votent » : l'auteur d'une proposition
+  /// ne vote jamais sur la sienne. Miroir SQL : policies de
+  /// `votes_proposition` (migration 0022).
+  static AppError? raisonBlocageVote({required String auteurPropositionId, required String votantId}) {
+    return auteurPropositionId == votantId ? AppError.voteSurSaPropreProposition() : null;
+  }
+
   /// RG-XII-05 — génère les dates d'occurrences hebdomadaires futures d'un
   /// culte récurrent (ex. culte dominical), [nombreOccurrences] incluses.
   static List<DateTime> genererDatesRecurrentes({

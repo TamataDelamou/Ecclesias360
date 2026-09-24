@@ -597,7 +597,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get propositionsThemeTitre => 'Propuestas de tema';
 
   @override
-  String get propositionsVoterEnTantQue => 'Votar/enviar como';
+  String get propositionsFicheRequise =>
+      'Proponer un tema y votar están reservados a los fieles registrados (ficha vinculada a su cuenta).';
+
+  @override
+  String get propositionVotreProposition => 'Su propuesta';
 
   @override
   String get disciplineTitre => 'Expedientes disciplinarios';
