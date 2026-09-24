@@ -113,4 +113,18 @@ void main() {
       expect(ComptabiliteRules.ecartRapprochement(soldeSysteme: 4800, soldeReleve: 5000), -200);
     });
   });
+
+  group('peutConsulterComptabilite (RG-SEC-06, miroir de ecritures_comptables_lecture)', () {
+    test('un pasteur consulte sans être trésorier', () {
+      expect(ComptabiliteRules.peutConsulterComptabilite(role: Role.pasteur, estTresorierDuNoeud: false), isTrue);
+    });
+
+    test('un trésorier du nœud consulte quel que soit son rang', () {
+      expect(ComptabiliteRules.peutConsulterComptabilite(role: Role.membre, estTresorierDuNoeud: true), isTrue);
+    });
+
+    test('un responsable non trésorier ne consulte pas', () {
+      expect(ComptabiliteRules.peutConsulterComptabilite(role: Role.responsable, estTresorierDuNoeud: false), isFalse);
+    });
+  });
 }

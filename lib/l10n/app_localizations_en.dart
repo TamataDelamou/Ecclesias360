@@ -1246,6 +1246,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get comptabiliteTitre => 'Accounting';
 
   @override
+  String get comptabiliteAccesReserve =>
+      'Access restricted to a pastor or the node treasurer.';
+
+  @override
   String get comptabiliteOngletCaisse => 'Cash';
 
   @override

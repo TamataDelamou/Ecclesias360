@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../auth/application/session_controller.dart';
+import '../../comptabilite/domain/rules/comptabilite_rules.dart';
 import '../../parametres/domain/models/role.dart';
 import '../../parametres/domain/rules/capacity_rules.dart';
 import '../application/finances_controller.dart';
@@ -42,6 +43,12 @@ class AccesFinances {
   /// d'un mandat dans le périmètre, ou trésorier du nœud.
   bool peutGererProjets(String noeudId) =>
       CapacityRules.possede(role: role, roleMinimalRequis: Role.responsable) || noeudsDuTresorier.contains(noeudId);
+
+  /// Comptabilité d'un nœud (Module XXI, policy `ecritures_comptables_lecture`).
+  bool peutConsulterComptabilite(String noeudId) => ComptabiliteRules.peutConsulterComptabilite(
+        role: role,
+        estTresorierDuNoeud: noeudsDuTresorier.contains(noeudId),
+      );
 
   /// Désignation des trésoriers (policy `tresoriers_noeud_ecriture`).
   bool get peutDesignerTresoriers => _estPasteur;

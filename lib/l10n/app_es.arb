@@ -388,6 +388,7 @@
   "patrimoineCampagneDemarreeLe": "Iniciada el {date}",
   "patrimoineCampagneClotureeLe": "Cerrada el {date}",
   "comptabiliteTitre": "Contabilidad",
+  "comptabiliteAccesReserve": "Acceso reservado a un pastor o al tesorero del nodo.",
   "comptabiliteOngletCaisse": "Caja",
   "comptabiliteOngletEcritures": "Asientos",
   "comptabiliteOngletRapport": "Informe",

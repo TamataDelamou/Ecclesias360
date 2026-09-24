@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../core/theme/app_defaults.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../finances/presentation/acces_finances.dart';
 import '../application/comptabilite_controller.dart';
 import '../domain/models/compte_comptable.dart';
 import '../domain/models/ecriture_comptable.dart';
@@ -27,6 +28,32 @@ class ComptabiliteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = context.read<ComptabiliteController>();
+    final l10n = AppLocalizations.of(context)!;
+
+    // RG-SEC-06 : gardé aussi contre l'accès direct par la route, pas
+    // seulement par le masquage du bouton de la fiche de nœud.
+    return AccesFinancesBuilder(
+      builder: (context, acces) {
+        if (!acces.peutConsulterComptabilite(noeudId)) {
+          return Scaffold(
+            appBar: AppBar(title: Text(l10n.comptabiliteTitre)),
+            body: Center(child: Text(l10n.comptabiliteAccesReserve)),
+          );
+        }
+        return _ComptabiliteOnglets(controller: controller, noeudId: noeudId);
+      },
+    );
+  }
+}
+
+class _ComptabiliteOnglets extends StatelessWidget {
+  const _ComptabiliteOnglets({required this.controller, required this.noeudId});
+
+  final ComptabiliteController controller;
+  final String noeudId;
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
     return DefaultTabController(

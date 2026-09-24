@@ -388,6 +388,7 @@
   "patrimoineCampagneDemarreeLe": "Started on {date}",
   "patrimoineCampagneClotureeLe": "Closed on {date}",
   "comptabiliteTitre": "Accounting",
+  "comptabiliteAccesReserve": "Access restricted to a pastor or the node treasurer.",
   "comptabiliteOngletCaisse": "Cash",
   "comptabiliteOngletEcritures": "Entries",
   "comptabiliteOngletRapport": "Report",

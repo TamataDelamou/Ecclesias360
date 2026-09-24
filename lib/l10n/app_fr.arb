@@ -1686,6 +1686,10 @@
   "@comptabiliteTitre": {
     "description": "Titre de l'écran de consultation comptable (Module XXI) et libellé du bouton d'accès depuis la fiche nœud."
   },
+  "comptabiliteAccesReserve": "Accès réservé à un pasteur ou au trésorier du nœud.",
+  "@comptabiliteAccesReserve": {
+    "description": "Message affiché à un compte sans habilitation sur l'écran Comptabilité (Module XXI, RG-SEC-06)."
+  },
   "comptabiliteOngletCaisse": "Caisse",
   "@comptabiliteOngletCaisse": {
     "description": "Onglet de consultation du solde de caisse du jour (écran mobile 1 du Cahier, RG-XXI-01)."

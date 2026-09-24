@@ -2430,6 +2430,12 @@ abstract class AppLocalizations {
   /// **'Comptabilité'**
   String get comptabiliteTitre;
 
+  /// Message affiché à un compte sans habilitation sur l'écran Comptabilité (Module XXI, RG-SEC-06).
+  ///
+  /// In fr, this message translates to:
+  /// **'Accès réservé à un pasteur ou au trésorier du nœud.'**
+  String get comptabiliteAccesReserve;
+
   /// Onglet de consultation du solde de caisse du jour (écran mobile 1 du Cahier, RG-XXI-01).
   ///
   /// In fr, this message translates to:

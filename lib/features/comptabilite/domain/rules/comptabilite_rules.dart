@@ -21,6 +21,15 @@ abstract final class ComptabiliteRules {
     return AppError.roleInsuffisantPourClotureComptable();
   }
 
+  /// RG-SEC-06 — consultation de la comptabilité d'un nœud (caisse, journal,
+  /// rapport) : pasteur (ou rôle supérieur), ou trésorier désigné du nœud,
+  /// quel que soit son rang. Miroir local de la policy
+  /// `ecritures_comptables_lecture` (0019), sans le bornage par périmètre
+  /// hiérarchique (dette RG-SEC-05, inventaire du Module II).
+  static bool peutConsulterComptabilite({required Role role, required bool estTresorierDuNoeud}) {
+    return estTresorierDuNoeud || CapacityRules.possede(role: role, roleMinimalRequis: Role.pasteur);
+  }
+
   /// RG-XXI-01 — solde d'un compte : pour un compte actif/charge, le débit
   /// augmente le solde ; pour un compte passif/produit, c'est le crédit —
   /// convention comptable standard de la partie double.
