@@ -304,7 +304,9 @@ void main() {
       // Marie (membre, trésorière) ne lit pas la fiche de Jean (policy
       // `fideles` de 0019 : soi-même ou le périmètre) — la liste des fidèles
       // ne lui montre que sa fiche. Les engagements de Jean lui restent
-      // ouverts (trésorière de son nœud, AccesFinances) : ouverts par leur route.
+      // ouverts (trésorière de son nœud, AccesFinances) : ouverts ici par leur
+      // route ; le point d'entrée depuis Contributions est couvert par
+      // `finances_acces_test.dart`.
       await tester.tap(navFideles);
       await tester.pumpAndSettle();
       expect(find.text('Jean Doe'), findsNothing);

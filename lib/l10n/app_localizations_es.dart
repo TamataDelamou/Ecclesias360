@@ -1037,6 +1037,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get financesEngagementsTitre => 'Compromisos y vencimientos';
 
   @override
+  String get financesEngagementsDuNoeudTitre => 'Compromisos de los fieles';
+
+  @override
+  String get financesEngagementsDuNoeudAucunFidele =>
+      'Ningún fiel vinculado a este nodo.';
+
+  @override
   String get financesEngagementsAucun => 'Ningún compromiso.';
 
   @override

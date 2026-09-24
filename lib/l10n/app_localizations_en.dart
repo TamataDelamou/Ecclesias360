@@ -1035,6 +1035,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesEngagementsTitre => 'Pledges and due dates';
 
   @override
+  String get financesEngagementsDuNoeudTitre => 'Members\' pledges';
+
+  @override
+  String get financesEngagementsDuNoeudAucunFidele =>
+      'No member attached to this node.';
+
+  @override
   String get financesEngagementsAucun => 'No pledge.';
 
   @override

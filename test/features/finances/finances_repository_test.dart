@@ -1,4 +1,5 @@
 import 'package:drift/native.dart';
+import 'package:ecclesias_360/core/audit/acteur.dart';
 import 'package:ecclesias_360/core/error/app_error.dart';
 import 'package:ecclesias_360/core/sync/sync_coordinator.dart';
 import 'package:ecclesias_360/features/fideles/data/fidele_repository.dart';
@@ -18,6 +19,7 @@ void main() {
   // RG-XI-02 : auteur de saisie distinct du valideur des scénarios ci-dessous
   // (la séparation des tâches a ses propres tests).
   const saisissant = 'saisissant-distinct';
+  const pasteur = Acteur(authUserId: 'compte-pasteur', fideleId: 'fiche-pasteur', role: Role.pasteur);
 
   late AppDatabase db;
   late FideleRepository fideleRepository;
@@ -449,6 +451,7 @@ void main() {
   group('creerEngagement / echeancesEnRetard (RG-XI-04)', () {
     test('crée un engagement et génère ses échéances mensuelles', () async {
       final engagement = await repository.creerEngagement(
+        acteur: pasteur,
         fideleId: fideleId,
         type: TypeEngagement.dimeEngagement,
         montantPrevu: 10000,
@@ -464,6 +467,7 @@ void main() {
 
     test('une échéance passée non honorée ressort comme en retard', () async {
       final engagement = await repository.creerEngagement(
+        acteur: pasteur,
         fideleId: fideleId,
         type: TypeEngagement.promesseDon,
         montantPrevu: 5000,
@@ -486,11 +490,113 @@ void main() {
         origine: OrigineContribution.mobile,
         saisieParFideleId: saisissant,
       );
-      await repository.honorerEcheance(id: echeance.id, contributionId: contribution.id);
+      await repository.honorerEcheance(acteur: pasteur, id: echeance.id, contributionId: contribution.id);
 
       final apresHonoree = await repository.watchEcheances(engagement.id).first;
       expect(apresHonoree.single.statut, StatutEcheance.honoree);
       expect(apresHonoree.single.contributionId, contribution.id);
+    });
+  });
+
+  group('accès aux engagements vérifié dans le dépôt (RG-SEC-06)', () {
+    Acteur membre(String fideleIdActeur) =>
+        Acteur(authUserId: 'compte-$fideleIdActeur', fideleId: fideleIdActeur, role: Role.membre);
+
+    late String marieId;
+
+    setUp(() async {
+      marieId = (await fideleRepository.creerFidele(
+        noeudId: noeudId,
+        nom: 'Doe',
+        prenoms: 'Marie',
+        dateNaissance: DateTime(1985, 1, 1),
+        sexe: Sexe.feminin,
+        statutCivil: StatutCivil.celibataire,
+      ))
+          .id;
+    });
+
+    Future<String> autreNoeud() async {
+      await db.into(db.organisationNodes).insert(
+            OrganisationNodesCompanion.insert(
+              id: 'noeud-2',
+              typeNoeud: 'eglise_locale',
+              nom: 'Kaloum',
+              codeInterne: 'KAL',
+              path: '/noeud-1/noeud-2/',
+              depth: 1,
+              createdAt: DateTime.now(),
+              updatedAt: DateTime.now(),
+            ),
+          );
+      return 'noeud-2';
+    }
+
+    test('un trésorier de rang membre du nœud du fidèle lit et crée ses engagements', () async {
+      final tresoriere = membre(marieId);
+      await repository.designerTresorier(fideleId: marieId, noeudId: noeudId);
+
+      await repository.creerEngagement(
+        acteur: tresoriere,
+        fideleId: fideleId,
+        type: TypeEngagement.dimeEngagement,
+        montantPrevu: 1000,
+        periodicite: PeriodiciteEngagement.mensuelle,
+        dateDebut: DateTime(2026, 1, 1),
+        nombreEcheances: 1,
+      );
+      expect(await repository.watchEngagements(fideleId, acteur: tresoriere).first, hasLength(1));
+    });
+
+    test('un membre non trésorier ne lit ni ne crée les engagements d\'autrui', () async {
+      final simpleMembre = membre(marieId);
+      await expectLater(
+        repository.watchEngagements(fideleId, acteur: simpleMembre).first,
+        throwsA(isA<AppError>().having((e) => e.code, 'code', 'engagements_acces_reserve')),
+      );
+      await expectLater(
+        repository.creerEngagement(
+          acteur: simpleMembre,
+          fideleId: fideleId,
+          type: TypeEngagement.dimeEngagement,
+          montantPrevu: 1000,
+          periodicite: PeriodiciteEngagement.mensuelle,
+          dateDebut: DateTime(2026, 1, 1),
+        ),
+        throwsA(isA<AppError>().having((e) => e.code, 'code', 'engagements_acces_reserve')),
+      );
+    });
+
+    test('le trésorier d\'un nœud enfant n\'accède pas aux engagements d\'un fidèle du nœud parent', () async {
+      final enfant = await autreNoeud();
+      final tresoriereEnfant = membre(marieId);
+      await repository.designerTresorier(fideleId: marieId, noeudId: enfant);
+      await expectLater(
+        repository.watchEngagements(fideleId, acteur: tresoriereEnfant).first,
+        throwsA(isA<AppError>().having((e) => e.code, 'code', 'engagements_acces_reserve')),
+      );
+    });
+
+    test('honorer une échéance est refusé à qui n\'a pas accès aux engagements', () async {
+      final engagement = await repository.creerEngagement(
+        acteur: pasteur,
+        fideleId: fideleId,
+        type: TypeEngagement.promesseDon,
+        montantPrevu: 5000,
+        periodicite: PeriodiciteEngagement.mensuelle,
+        dateDebut: DateTime(2020, 1, 1),
+        nombreEcheances: 1,
+      );
+      final echeance = (await repository.watchEcheances(engagement.id).first).single;
+      await expectLater(
+        repository.honorerEcheance(acteur: membre(marieId), id: echeance.id, contributionId: 'c-1'),
+        throwsA(isA<AppError>().having((e) => e.code, 'code', 'engagements_acces_reserve')),
+      );
+      expect((await repository.watchEcheances(engagement.id).first).single.statut, StatutEcheance.enAttente);
+    });
+
+    test('le fidèle lui-même lit ses engagements', () async {
+      expect(await repository.watchEngagements(fideleId, acteur: membre(fideleId)).first, isEmpty);
     });
   });
 }

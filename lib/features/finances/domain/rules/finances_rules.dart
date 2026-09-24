@@ -43,6 +43,22 @@ abstract final class FinancesRules {
     return CapacityRules.possede(role: role, roleMinimalRequis: Role.pasteur) || estTresorierDuNoeud || estDonateur;
   }
 
+  /// RG-SEC-06 — engagements d'un fidèle (RG-XI-04) : le fidèle lui-même,
+  /// un pasteur (ou rôle supérieur), ou un trésorier désigné du nœud **de ce
+  /// fidèle** (jamais d'un autre nœud, ni d'un nœud parent). Miroir local
+  /// des policies `engagements_*` (migration 0019). N'ouvre rien d'autre de la
+  /// fiche : un trésorier de rang membre ne lit toujours pas la fiche du
+  /// fidèle (policy `fideles`).
+  static bool peutAccederEngagements({
+    required Role role,
+    required bool estLeFideleConcerne,
+    required bool estTresorierDuNoeudDuFidele,
+  }) {
+    return estLeFideleConcerne ||
+        CapacityRules.possede(role: role, roleMinimalRequis: Role.pasteur) ||
+        estTresorierDuNoeudDuFidele;
+  }
+
   /// RG-XI-03 — une dépense ne peut dépasser le solde disponible du projet
   /// sans dérogation tracée d'un rôle habilité.
   static AppError? raisonBlocageDepense({

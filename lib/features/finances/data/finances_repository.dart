@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 
+import '../../../core/audit/acteur.dart';
 import '../../../core/error/app_error.dart';
 import '../../../core/utils/id_generator.dart';
 import '../../fideles/data/fidele_repository.dart';
@@ -22,10 +23,10 @@ import '../domain/models/type_offrande.dart';
 import '../../comptabilite/data/comptabilite_repository.dart';
 import '../domain/rules/finances_rules.dart';
 
-/// Dépôt Module XI — Finances (RG-XI-01 à 07). `FideleRepository` n'est pas
-/// une dépendance directe (aucune écriture croisée requise dans ce lot,
-/// contrairement à Déplacements/Discipline) ; le rattachement au fidèle
-/// contributeur reste un simple identifiant validé côté application.
+/// Dépôt Module XI — Finances (RG-XI-01 à 07). `FideleRepository` n'est lu
+/// que pour situer le nœud d'un fidèle (habilitation aux engagements,
+/// RG-SEC-06) : aucune écriture croisée, contrairement à
+/// Déplacements/Discipline.
 /// Synchronisation distante différée pour ce module (même précédent
 /// documenté que les modules précédents).
 class FinancesRepository {
@@ -33,7 +34,6 @@ class FinancesRepository {
       : _comptabilite = comptabiliteRepository;
 
   final AppDatabase _db;
-  // ignore: unused_field
   final FideleRepository _fideleRepository;
   final ComptabiliteRepository? _comptabilite;
 
@@ -397,14 +397,37 @@ class FinancesRepository {
 
   // --- Engagements et échéances (RG-XI-04) ------------------------------------
 
-  Stream<List<Engagement>> watchEngagements(String fideleId) {
+  /// Engagements d'un fidèle, pour [acteur] seulement s'il y est habilité
+  /// (RG-SEC-06, `FinancesRules.peutAccederEngagements`) : sinon le flux
+  /// émet `AppError.engagementsAccesReserve` — un accès direct par la route
+  /// ne contourne pas l'écran.
+  Stream<List<Engagement>> watchEngagements(String fideleId, {required Acteur acteur}) {
     final query = _db.select(_db.engagements)..where((t) => t.fideleId.equals(fideleId));
-    return query.watch().map((rows) => rows.map(_engagementToDomain).toList(growable: false));
+    return Stream.fromFuture(_verifierAccesEngagements(acteur: acteur, fideleId: fideleId)).asyncExpand(
+      (_) => query.watch().map((rows) => rows.map(_engagementToDomain).toList(growable: false)),
+    );
+  }
+
+  /// RG-SEC-06 — le fidèle lui-même, un pasteur (ou plus) ou un trésorier
+  /// désigné du nœud de ce fidèle, vérifié ici et pas seulement à l'écran.
+  Future<void> _verifierAccesEngagements({required Acteur acteur, required String fideleId}) async {
+    final noeudDuFidele = (await _fideleRepository.findById(fideleId))?.noeudId;
+    final acteurFideleId = acteur.fideleId;
+    final estTresorier = acteurFideleId != null &&
+        noeudDuFidele != null &&
+        await estTresorierDuNoeud(fideleId: acteurFideleId, noeudId: noeudDuFidele);
+    final autorise = FinancesRules.peutAccederEngagements(
+      role: acteur.role,
+      estLeFideleConcerne: acteurFideleId != null && acteurFideleId == fideleId,
+      estTresorierDuNoeudDuFidele: estTresorier,
+    );
+    if (!autorise) throw AppError.engagementsAccesReserve();
   }
 
   /// RG-XI-04 — crée l'engagement et génère immédiatement ses [nombreEcheances]
   /// premières échéances (`en_attente`).
   Future<Engagement> creerEngagement({
+    required Acteur acteur,
     required String fideleId,
     required TypeEngagement type,
     required int montantPrevu,
@@ -412,6 +435,7 @@ class FinancesRepository {
     required DateTime dateDebut,
     int nombreEcheances = 12,
   }) async {
+    await _verifierAccesEngagements(acteur: acteur, fideleId: fideleId);
     final id = IdGenerator.newId();
     await _db.into(_db.engagements).insert(
           EngagementsCompanion.insert(
@@ -460,7 +484,13 @@ class FinancesRepository {
         .toList(growable: false);
   }
 
-  Future<void> honorerEcheance({required String id, required String contributionId}) async {
+  Future<void> honorerEcheance({required Acteur acteur, required String id, required String contributionId}) async {
+    final echeance =
+        await (_db.select(_db.echeancesEngagement)..where((t) => t.id.equals(id))).getSingleOrNull();
+    if (echeance == null) throw ArgumentError('Échéance introuvable : $id');
+    final engagement =
+        await (_db.select(_db.engagements)..where((t) => t.id.equals(echeance.engagementId))).getSingle();
+    await _verifierAccesEngagements(acteur: acteur, fideleId: engagement.fideleId);
     await (_db.update(_db.echeancesEngagement)..where((t) => t.id.equals(id))).write(
       EcheancesEngagementCompanion(
         statut: Value(StatutEcheance.honoree.code),

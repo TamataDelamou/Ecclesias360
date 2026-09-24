@@ -1333,6 +1333,14 @@
   "@financesEngagementsTitre": {
     "description": "Titre de l'écran des engagements et échéances d'un fidèle (RG-XI-04)."
   },
+  "financesEngagementsDuNoeudTitre": "Engagements des fidèles",
+  "@financesEngagementsDuNoeudTitre": {
+    "description": "Titre du point d'entrée trésorier vers les engagements des fidèles d'un nœud, depuis l'écran Contributions (sans ouvrir leur fiche)."
+  },
+  "financesEngagementsDuNoeudAucunFidele": "Aucun fidèle rattaché à ce nœud.",
+  "@financesEngagementsDuNoeudAucunFidele": {
+    "description": "État vide du point d'entrée « Engagements des fidèles » d'un nœud."
+  },
   "financesEngagementsAucun": "Aucun engagement.",
   "@financesEngagementsAucun": {
     "description": "État vide de la liste des engagements d'un fidèle."

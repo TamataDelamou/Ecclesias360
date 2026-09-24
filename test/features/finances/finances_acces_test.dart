@@ -1,5 +1,6 @@
 import 'package:drift/native.dart';
 import 'package:ecclesias_360/app.dart';
+import 'package:ecclesias_360/core/constants/app_routes.dart';
 import 'package:ecclesias_360/core/sync/sync_coordinator.dart';
 import 'package:ecclesias_360/features/auth/data/auth_gateway.dart';
 import 'package:ecclesias_360/features/auth/domain/models/identifiant_connexion.dart';
@@ -11,6 +12,7 @@ import 'package:ecclesias_360/features/finances/domain/models/origine_contributi
 import 'package:ecclesias_360/features/organization/data/local/app_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../helpers/auth_gateway_memoire.dart';
 import '../../helpers/capacites_pour_tests.dart';
@@ -23,7 +25,7 @@ void main() {
   const emailMembre = 'marie@ecclesias.test';
   const noeudId = 'noeud-1';
 
-  Future<({AppDatabase db, FinancesRepository finances, String marieId})> preparer() async {
+  Future<({AppDatabase db, FinancesRepository finances, String marieId, String paulId})> preparer() async {
     final db = AppDatabase(NativeDatabase.memory());
     final fideles = FideleRepository(db, SyncCoordinator(db));
     final finances = FinancesRepository(db, fideles);
@@ -64,7 +66,7 @@ void main() {
         saisieParFideleId: donateur,
       );
     }
-    return (db: db, finances: finances, marieId: marieId);
+    return (db: db, finances: finances, marieId: marieId, paulId: paulId);
   }
 
   Future<void> ouvrirFicheNoeud(WidgetTester tester, AppDatabase db) async {
@@ -148,6 +150,71 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.widgetWithText(FilledButton, 'Valider'), findsNothing);
     expect(find.textContaining('Vous avez saisi cette contribution'), findsOneWidget);
+
+    await donnees.db.close();
+  });
+
+  testWidgets(
+      'trésorière de rang membre : engagements d\'un fidèle depuis Contributions, '
+      'sans jamais ouvrir sa fiche (route directe comprise)', (tester) async {
+    final donnees = (await tester.runAsync(preparer))!;
+    await tester.runAsync(() => donnees.finances.designerTresorier(fideleId: donnees.marieId, noeudId: noeudId));
+
+    await ouvrirFicheNoeud(tester, donnees.db);
+    await tester.dragUntilVisible(
+      find.widgetWithText(OutlinedButton, 'Contributions'),
+      find.byType(ListView),
+      const Offset(0, -200),
+    );
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Contributions'));
+    await tester.pumpAndSettle();
+
+    // Point d'entrée « Engagements des fidèles » du nœud : noms seuls.
+    await tester.tap(find.byTooltip('Engagements des fidèles'));
+    await tester.pumpAndSettle();
+    expect(find.text('Engagements des fidèles'), findsOneWidget);
+    await tester.tap(find.text('Paul Doe'));
+    await tester.pumpAndSettle();
+
+    // Engagements de Paul : lus et créés par la trésorière.
+    expect(find.text('Engagements et échéances'), findsOneWidget);
+    expect(find.text('Aucun engagement.'), findsOneWidget);
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.widgetWithText(TextField, 'Montant prévu'), '2500');
+    await tester.tap(find.widgetWithText(FilledButton, 'Créer'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('2500 GNF'), findsOneWidget);
+    // Rien de la fiche n'est exposé sur ces écrans.
+    expect(find.text('Historique'), findsNothing);
+    expect(find.textContaining('Statut spirituel'), findsNothing);
+
+    // La fiche de Paul reste fermée, même par sa route directe.
+    GoRouter.of(tester.element(find.byType(Scaffold).first)).push('/fideles/${donnees.paulId}');
+    await tester.pumpAndSettle();
+    expect(find.text('Accès réservé : vous ne pouvez consulter que votre propre fiche.'), findsOneWidget);
+    expect(find.text('Paul Doe'), findsNothing);
+    // Son historique aussi.
+    GoRouter.of(tester.element(find.byType(Scaffold).first)).push('/fideles/${donnees.paulId}/historique');
+    await tester.pumpAndSettle();
+    expect(find.text('Accès réservé : vous ne pouvez consulter que votre propre fiche.'), findsOneWidget);
+
+    await donnees.db.close();
+  });
+
+  testWidgets('sans désignation, une membre n\'ouvre ni le point d\'entrée ni les engagements d\'autrui par la route',
+      (tester) async {
+    final donnees = (await tester.runAsync(preparer))!;
+
+    await ouvrirFicheNoeud(tester, donnees.db);
+    GoRouter.of(tester.element(find.byType(Scaffold).first)).push(AppRoutes.engagementsDuNoeud(noeudId));
+    await tester.pumpAndSettle();
+    expect(find.text('Accès réservé à un pasteur, au trésorier du nœud ou au fidèle concerné.'), findsOneWidget);
+    expect(find.text('Paul Doe'), findsNothing);
+
+    GoRouter.of(tester.element(find.byType(Scaffold).first)).push(AppRoutes.engagementsDuFidele(donnees.paulId));
+    await tester.pumpAndSettle();
+    expect(find.text('Accès réservé à un pasteur, au trésorier du nœud ou au fidèle concerné.'), findsOneWidget);
 
     await donnees.db.close();
   });

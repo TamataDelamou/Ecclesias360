@@ -1037,6 +1037,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get financesEngagementsTitre => 'Engagements et échéances';
 
   @override
+  String get financesEngagementsDuNoeudTitre => 'Engagements des fidèles';
+
+  @override
+  String get financesEngagementsDuNoeudAucunFidele =>
+      'Aucun fidèle rattaché à ce nœud.';
+
+  @override
   String get financesEngagementsAucun => 'Aucun engagement.';
 
   @override

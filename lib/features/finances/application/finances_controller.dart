@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+import '../../../core/audit/acteur.dart';
 import '../../../core/error/app_error.dart';
 import '../../parametres/domain/models/role.dart';
 import '../data/finances_repository.dart';
@@ -168,9 +169,13 @@ class FinancesController extends ChangeNotifier {
 
   // --- Engagements et échéances ------------------------------------------------
 
-  Stream<List<Engagement>> watchEngagements(String fideleId) => _repository.watchEngagements(fideleId);
+  /// RG-SEC-06 : vérifié dans le dépôt pour [acteur] (session), pas
+  /// seulement à l'écran.
+  Stream<List<Engagement>> watchEngagements(String fideleId, {required Acteur acteur}) =>
+      _repository.watchEngagements(fideleId, acteur: acteur);
 
   Future<Engagement?> creerEngagement({
+    required Acteur acteur,
     required String fideleId,
     required TypeEngagement type,
     required int montantPrevu,
@@ -181,6 +186,7 @@ class FinancesController extends ChangeNotifier {
     Engagement? resultat;
     final ok = await _executer(() async {
       resultat = await _repository.creerEngagement(
+        acteur: acteur,
         fideleId: fideleId,
         type: type,
         montantPrevu: montantPrevu,
@@ -194,8 +200,8 @@ class FinancesController extends ChangeNotifier {
 
   Stream<List<EcheanceEngagement>> watchEcheances(String engagementId) => _repository.watchEcheances(engagementId);
 
-  Future<bool> honorerEcheance({required String id, required String contributionId}) =>
-      _executer(() => _repository.honorerEcheance(id: id, contributionId: contributionId));
+  Future<bool> honorerEcheance({required Acteur acteur, required String id, required String contributionId}) =>
+      _executer(() => _repository.honorerEcheance(acteur: acteur, id: id, contributionId: contributionId));
 
   Future<bool> _executer(Future<void> Function() action) async {
     _enCours = true;

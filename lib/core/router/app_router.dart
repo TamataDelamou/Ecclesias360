@@ -25,6 +25,7 @@ import '../../features/discipline/presentation/dossier_disciplinaire_detail_scre
 import '../../features/discipline/presentation/dossiers_disciplinaires_list_screen.dart';
 import '../../features/finances/presentation/contribution_detail_screen.dart';
 import '../../features/finances/presentation/contributions_list_screen.dart';
+import '../../features/finances/presentation/engagements_du_noeud_screen.dart';
 import '../../features/finances/presentation/engagements_list_screen.dart';
 import '../../features/finances/presentation/projet_detail_screen.dart';
 import '../../features/finances/presentation/projets_list_screen.dart';
@@ -420,6 +421,13 @@ GoRouter creerAppRouter(SessionController session) => GoRouter(
       pageBuilder: (context, state) => sharedAxisPage(
         key: state.pageKey,
         child: EngagementsListScreen(fideleId: state.pathParameters['id']!),
+      ),
+    ),
+    GoRoute(
+      path: '/organisation/:id/engagements',
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: EngagementsDuNoeudScreen(noeudId: state.pathParameters['id']!),
       ),
     ),
     GoRoute(

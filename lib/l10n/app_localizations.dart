@@ -2016,6 +2016,18 @@ abstract class AppLocalizations {
   /// **'Engagements et échéances'**
   String get financesEngagementsTitre;
 
+  /// Titre du point d'entrée trésorier vers les engagements des fidèles d'un nœud, depuis l'écran Contributions (sans ouvrir leur fiche).
+  ///
+  /// In fr, this message translates to:
+  /// **'Engagements des fidèles'**
+  String get financesEngagementsDuNoeudTitre;
+
+  /// État vide du point d'entrée « Engagements des fidèles » d'un nœud.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun fidèle rattaché à ce nœud.'**
+  String get financesEngagementsDuNoeudAucunFidele;
+
   /// État vide de la liste des engagements d'un fidèle.
   ///
   /// In fr, this message translates to:

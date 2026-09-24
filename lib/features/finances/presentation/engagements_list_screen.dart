@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/audit/acteur.dart';
 import '../../../core/theme/app_defaults.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../../../core/theme/design_tokens.dart';
@@ -23,7 +24,7 @@ class EngagementsListScreen extends StatelessWidget {
 
   final String fideleId;
 
-  Future<void> _creerEngagement(BuildContext context, FinancesController controller) async {
+  Future<void> _creerEngagement(BuildContext context, FinancesController controller, Acteur acteur) async {
     TypeEngagement type = TypeEngagement.dimeEngagement;
     final montantController = TextEditingController();
     PeriodiciteEngagement periodicite = PeriodiciteEngagement.mensuelle;
@@ -82,6 +83,7 @@ class EngagementsListScreen extends StatelessWidget {
     final montant = int.tryParse(montantController.text.trim());
     if (confirme == true && montant != null && montant > 0) {
       await controller.creerEngagement(
+        acteur: acteur,
         fideleId: fideleId,
         type: type,
         montantPrevu: montant,
@@ -105,12 +107,13 @@ class EngagementsListScreen extends StatelessWidget {
     Engagement engagement,
     EcheanceEngagement echeance,
     String typeOffrandeId,
+    Acteur acteur,
   ) async {
     final fideleController = context.read<FideleController>();
     final noeudId = fideleController.findById(engagement.fideleId)?.noeudId;
     if (noeudId == null) return;
     // RG-XI-02 : la contribution qui honore l'échéance est une saisie, tracée.
-    final saisieParFideleId = context.read<SessionController>().session?.fideleId;
+    final saisieParFideleId = acteur.fideleId;
     if (saisieParFideleId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(AppLocalizations.of(context)!.authFicheLieeRequise)),
@@ -129,30 +132,34 @@ class EngagementsListScreen extends StatelessWidget {
       origine: OrigineContribution.mobile,
     );
     if (contribution != null) {
-      await controller.honorerEcheance(id: echeance.id, contributionId: contribution.id);
+      await controller.honorerEcheance(acteur: acteur, id: echeance.id, contributionId: contribution.id);
     }
   }
 
-  /// Accès réservé (policy `engagements_acces`, 0019) au fidèle lui-même,
-  /// à un pasteur (ou plus) et au trésorier de son nœud.
+  /// Accès réservé (policies `engagements_*`, 0019) au fidèle lui-même, à un
+  /// pasteur (ou plus) et au trésorier de son nœud — vérifié ici et, pour la
+  /// lecture comme pour l'écriture, dans le dépôt (`acteur` de la session).
+  /// L'écran n'affiche que les engagements : aucune donnée de la fiche.
   @override
   Widget build(BuildContext context) {
     final noeudDuFidele = context.watch<FideleController>().findById(fideleId)?.noeudId;
+    final acteur = context.watch<SessionController>().acteur;
     return AccesFinancesBuilder(
-      builder: (context, acces) => acces.peutConsulterFidele(fideleIdConsulte: fideleId, noeudDuFidele: noeudDuFidele)
-          ? _construire(context)
-          : EcranFinancesAccesReserve(titre: AppLocalizations.of(context)!.financesEngagementsTitre),
+      builder: (context, acces) =>
+          acteur != null && acces.peutConsulterFidele(fideleIdConsulte: fideleId, noeudDuFidele: noeudDuFidele)
+              ? _construire(context, acteur)
+              : EcranFinancesAccesReserve(titre: AppLocalizations.of(context)!.financesEngagementsTitre),
     );
   }
 
-  Widget _construire(BuildContext context) {
+  Widget _construire(BuildContext context, Acteur acteur) {
     final controller = context.read<FinancesController>();
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.financesEngagementsTitre)),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _creerEngagement(context, controller),
+        onPressed: () => _creerEngagement(context, controller, acteur),
         tooltip: l10n.financesEngagementCreerTooltip,
         child: const Icon(Icons.add),
       ),
@@ -162,7 +169,7 @@ class EngagementsListScreen extends StatelessWidget {
           final types = typesSnapshot.data ?? const <TypeOffrande>[];
 
           return StreamBuilder<List<Engagement>>(
-            stream: controller.watchEngagements(fideleId),
+            stream: controller.watchEngagements(fideleId, acteur: acteur),
             builder: (context, snapshot) {
               final engagements = snapshot.data ?? const <Engagement>[];
               if (engagements.isEmpty) {
@@ -198,7 +205,7 @@ class EngagementsListScreen extends StatelessWidget {
                                       echeance: echeance,
                                       onHonorer: types.isEmpty
                                           ? null
-                                          : () => _honorer(context, controller, engagement, echeance, types.first.id),
+                                          : () => _honorer(context, controller, engagement, echeance, types.first.id, acteur),
                                     ),
                                 ],
                               );

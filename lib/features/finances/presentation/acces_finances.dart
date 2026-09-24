@@ -37,7 +37,16 @@ class AccesFinances {
   /// Historique financier d'un fidèle (contributions, engagements) : lui-même,
   /// un pasteur (ou plus), ou un trésorier de son nœud.
   bool peutConsulterFidele({required String fideleIdConsulte, required String? noeudDuFidele}) =>
-      fideleIdConsulte == fideleId || _estPasteur || (noeudDuFidele != null && noeudsDuTresorier.contains(noeudDuFidele));
+      FinancesRules.peutAccederEngagements(
+        role: role,
+        estLeFideleConcerne: fideleIdConsulte == fideleId,
+        estTresorierDuNoeudDuFidele: noeudDuFidele != null && noeudsDuTresorier.contains(noeudDuFidele),
+      );
+
+  /// Point d'entrée « Engagements des fidèles » d'un nœud (écran
+  /// Contributions) : pasteur (ou plus) ou trésorier de **ce** nœud — même
+  /// seuil que la gestion des contributions du nœud.
+  bool peutConsulterEngagementsDuNoeud(String noeudId) => peutGererContributions(noeudId);
 
   /// Projets d'un nœud (policy `projets_acces`) : rang responsable, porteur
   /// d'un mandat dans le périmètre, ou trésorier du nœud.

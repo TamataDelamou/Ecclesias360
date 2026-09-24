@@ -149,6 +149,11 @@ class AppError implements Exception {
         "La gestion des fiches fidèles est réservée à un responsable (ou rôle supérieur).",
       );
 
+  factory AppError.engagementsAccesReserve() => const AppError(
+        'engagements_acces_reserve',
+        "Les engagements d'un fidèle sont réservés à lui-même, à un pasteur ou au trésorier de son nœud.",
+      );
+
   factory AppError.dossierDisciplinaireAccesRefuse() => const AppError(
         'dossier_disciplinaire_acces_refuse',
         "Vous n'êtes pas habilité à consulter ce dossier disciplinaire.",

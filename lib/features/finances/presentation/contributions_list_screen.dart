@@ -70,6 +70,14 @@ class ContributionsListScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text(parNoeud ? l10n.financesTitre : l10n.financesHistoriqueTitre),
             actions: [
+              // Engagements des fidèles du nœud, sans passer par leur fiche
+              // (fermée à un trésorier de rang membre).
+              if (parNoeud && acces.peutConsulterEngagementsDuNoeud(noeudId!))
+                IconButton(
+                  icon: const Icon(Icons.event_repeat_outlined),
+                  tooltip: l10n.financesEngagementsDuNoeudTitre,
+                  onPressed: () => context.push(AppRoutes.engagementsDuNoeud(noeudId!)),
+                ),
               if (parNoeud && acces.peutDesignerTresoriers)
                 IconButton(
                   icon: const Icon(Icons.badge_outlined),

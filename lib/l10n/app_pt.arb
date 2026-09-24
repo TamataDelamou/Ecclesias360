@@ -319,6 +319,8 @@
   "financesDepensesAucune": "Nenhuma despesa registrada.",
   "financesDepenseDerogation": "{date} — exceção registrada",
   "financesEngagementsTitre": "Compromissos e vencimentos",
+  "financesEngagementsDuNoeudTitre": "Compromissos dos fiéis",
+  "financesEngagementsDuNoeudAucunFidele": "Nenhum fiel vinculado a este nó.",
   "financesEngagementsAucun": "Nenhum compromisso.",
   "financesEngagementCreerTitre": "Criar um compromisso",
   "financesEngagementCreerTooltip": "Criar um compromisso",

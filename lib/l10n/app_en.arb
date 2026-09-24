@@ -319,6 +319,8 @@
   "financesDepensesAucune": "No expense recorded.",
   "financesDepenseDerogation": "{date} — traced exception",
   "financesEngagementsTitre": "Pledges and due dates",
+  "financesEngagementsDuNoeudTitre": "Members' pledges",
+  "financesEngagementsDuNoeudAucunFidele": "No member attached to this node.",
   "financesEngagementsAucun": "No pledge.",
   "financesEngagementCreerTitre": "Create a pledge",
   "financesEngagementCreerTooltip": "Create a pledge",
