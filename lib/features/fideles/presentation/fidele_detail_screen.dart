@@ -187,12 +187,15 @@ class FideleDetailScreen extends StatelessWidget {
                     ],
                   ),
           ),
-          OutlinedButton.icon(
-            icon: const Icon(Icons.favorite_border),
-            label: Text(l10n.mediathequeFavorisTitre),
-            onPressed: () => context.push(AppRoutes.mediathequeFavorisDuFidele(fidele.id)),
-          ),
-          const SizedBox(height: AppDimensions.spacingSm),
+          // Favoris : visibles du seul fidèle concerné (policy favoris_proprietaire).
+          if (session.session?.fideleId == fidele.id) ...[
+            OutlinedButton.icon(
+              icon: const Icon(Icons.favorite_border),
+              label: Text(l10n.mediathequeFavorisTitre),
+              onPressed: () => context.push(AppRoutes.mediathequeFavorisDuFidele(fidele.id)),
+            ),
+            const SizedBox(height: AppDimensions.spacingSm),
+          ],
           if (fidele.statut != StatutFidele.inactif)
             OutlinedButton.icon(
               icon: const Icon(Icons.archive_outlined),

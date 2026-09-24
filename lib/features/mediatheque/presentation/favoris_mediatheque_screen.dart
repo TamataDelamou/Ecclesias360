@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
 import '../application/mediatheque_controller.dart';
 import '../domain/models/contenu_mediatheque.dart';
 import '../domain/models/favori.dart';
@@ -22,6 +23,14 @@ class FavorisMediathequeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.watch<MediathequeController>();
     final l10n = AppLocalizations.of(context)!;
+    // Les favoris d'un fidèle ne sont visibles que de lui (policy
+    // `favoris_proprietaire`, 0019).
+    if (context.watch<SessionController>().session?.fideleId != fideleId) {
+      return Scaffold(
+        appBar: AppBar(title: Text(l10n.mediathequeFavorisTitre)),
+        body: Center(child: Text(l10n.mediathequeFavorisReserves)),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.mediathequeFavorisTitre)),

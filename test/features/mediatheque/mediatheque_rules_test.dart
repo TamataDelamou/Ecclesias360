@@ -41,4 +41,39 @@ void main() {
       );
     });
   });
+
+  group('commentaireVisible (RG-XIII-03)', () {
+    test('un commentaire publié est visible de tous', () {
+      expect(
+        MediathequeRules.commentaireVisible(
+          statut: StatutModerationCommentaire.publie,
+          estAuteur: false,
+          estModerateur: false,
+        ),
+        isTrue,
+      );
+    });
+
+    test('un commentaire en attente : son auteur et les modérateurs seulement', () {
+      bool visible({required bool auteur, required bool moderateur}) => MediathequeRules.commentaireVisible(
+            statut: StatutModerationCommentaire.enAttente,
+            estAuteur: auteur,
+            estModerateur: moderateur,
+          );
+      expect(visible(auteur: true, moderateur: false), isTrue);
+      expect(visible(auteur: false, moderateur: true), isTrue);
+      expect(visible(auteur: false, moderateur: false), isFalse);
+    });
+
+    test("un commentaire masqué n'est affiché à personne", () {
+      expect(
+        MediathequeRules.commentaireVisible(
+          statut: StatutModerationCommentaire.masque,
+          estAuteur: true,
+          estModerateur: true,
+        ),
+        isFalse,
+      );
+    });
+  });
 }

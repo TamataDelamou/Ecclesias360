@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/auth_gateway_memoire.dart';
+import '../../helpers/parcours.dart';
 
 void main() {
   testWidgets(
@@ -78,19 +79,7 @@ void main() {
       // L'administrateur d'amorçage, sans fiche, n'est pas encore un valideur
       // traçable : il lie son compte à cette fiche (RG-XI-02 — le valideur
       // tracé est toujours une personne du registre).
-      await tester.tap(find.text('Jean Doe'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byTooltip('Lier mon compte à cette fiche'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(FilledButton, 'Lier mon compte'));
-      await tester.pumpAndSettle();
-      expect(find.text('Compte lié à votre fiche.'), findsOneWidget);
-      expect(find.byTooltip('Lier mon compte à cette fiche'), findsNothing);
-      // Laisse la notification expirer : elle recouvrirait les boutons du bas.
-      await tester.pump(const Duration(seconds: 5));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byType(BackButton));
-      await tester.pumpAndSettle();
+      await lierMonCompteALaFiche(tester, 'Jean Doe');
 
       // Revient à l'accueil, va au nœud, ouvre l'écran Contributions.
       await tester.tap(find.byType(BackButton));

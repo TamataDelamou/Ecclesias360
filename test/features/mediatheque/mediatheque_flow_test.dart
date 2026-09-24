@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/auth_gateway_memoire.dart';
+import '../../helpers/parcours.dart';
 
 void main() {
   testWidgets(
@@ -75,6 +76,9 @@ void main() {
 
       await tester.tap(find.widgetWithText(FilledButton, 'Créer'));
       await tester.pumpAndSettle();
+      // Favoris et commentaires tracent une personne du registre :
+      // l'administrateur d'amorçage lie d'abord son compte à sa fiche.
+      await lierMonCompteALaFiche(tester, 'Jean Doe');
       await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();
 
@@ -156,7 +160,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Aucun commentaire pour le moment.'), findsOneWidget);
 
-      // Ajoute aux favoris (fidèle actif présélectionné, un seul fidèle).
+      // Ajoute aux favoris (au nom de la fiche liée à la session).
       await tester.tap(find.widgetWithText(OutlinedButton, 'Ajouter aux favoris'));
       await tester.pumpAndSettle();
       expect(find.widgetWithText(OutlinedButton, 'Retirer des favoris'), findsOneWidget);

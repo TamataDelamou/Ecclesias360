@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/auth_gateway_memoire.dart';
+import '../../helpers/parcours.dart';
 
 void main() {
   testWidgets(
@@ -79,17 +80,7 @@ void main() {
 
       // L'administrateur d'amorçage lie son compte à cette fiche : la sortie
       // d'un bien trace une personne du registre (RG-XX-02).
-      await tester.tap(find.text('Jean Doe'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byTooltip('Lier mon compte à cette fiche'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(FilledButton, 'Lier mon compte'));
-      await tester.pumpAndSettle();
-      // Laisse la notification expirer : elle recouvrirait les boutons du bas.
-      await tester.pump(const Duration(seconds: 5));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byType(BackButton));
-      await tester.pumpAndSettle();
+      await lierMonCompteALaFiche(tester, 'Jean Doe');
       await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();
 

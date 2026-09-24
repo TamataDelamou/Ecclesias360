@@ -2574,11 +2574,17 @@ abstract class AppLocalizations {
   /// **'Consultations'**
   String get mediathequeChampConsultations;
 
-  /// Libellé du sélecteur de fidèle actif pour les favoris/commentaires/signalements de la médiathèque, en l'absence de session réelle (RG-SEC-01 non construit).
+  /// Médiathèque, compte sans fiche (RG-SEC-06bis) : lecture sans action.
   ///
   /// In fr, this message translates to:
-  /// **'Agir en tant que'**
-  String get mediathequeEnTantQue;
+  /// **'Lecture seule : les favoris et commentaires sont réservés aux fidèles enregistrés (fiche liée à votre compte).'**
+  String get mediathequeLectureSeule;
+
+  /// Favoris consultés par un autre compte que leur propriétaire (policy favoris_proprietaire).
+  ///
+  /// In fr, this message translates to:
+  /// **'Les favoris d\'un fidèle ne sont visibles que de lui-même.'**
+  String get mediathequeFavorisReserves;
 
   /// Libellé du bouton pour ajouter un contenu médiathèque aux favoris (RG-XIII-04).
   ///

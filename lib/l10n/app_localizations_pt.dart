@@ -1325,7 +1325,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get mediathequeChampConsultations => 'Consultas';
 
   @override
-  String get mediathequeEnTantQue => 'Agir como';
+  String get mediathequeLectureSeule =>
+      'Só leitura: os favoritos e comentários estão reservados aos fiéis registados (ficha vinculada à sua conta).';
+
+  @override
+  String get mediathequeFavorisReserves =>
+      'Os favoritos de um fiel só são visíveis para ele próprio.';
 
   @override
   String get mediathequeAjouterFavori => 'Adicionar aos favoritos';

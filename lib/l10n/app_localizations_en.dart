@@ -1319,7 +1319,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mediathequeChampConsultations => 'Views';
 
   @override
-  String get mediathequeEnTantQue => 'Act as';
+  String get mediathequeLectureSeule =>
+      'Read-only: favourites and comments are reserved for registered members (a record linked to your account).';
+
+  @override
+  String get mediathequeFavorisReserves =>
+      'A member\'s favourites are visible to them alone.';
 
   @override
   String get mediathequeAjouterFavori => 'Add to favorites';

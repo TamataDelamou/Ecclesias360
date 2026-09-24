@@ -1782,9 +1782,13 @@
   "@mediathequeChampConsultations": {
     "description": "Étiquette du compteur de consultations d'un contenu médiathèque."
   },
-  "mediathequeEnTantQue": "Agir en tant que",
-  "@mediathequeEnTantQue": {
-    "description": "Libellé du sélecteur de fidèle actif pour les favoris/commentaires/signalements de la médiathèque, en l'absence de session réelle (RG-SEC-01 non construit)."
+  "mediathequeLectureSeule": "Lecture seule : les favoris et commentaires sont réservés aux fidèles enregistrés (fiche liée à votre compte).",
+  "@mediathequeLectureSeule": {
+    "description": "Médiathèque, compte sans fiche (RG-SEC-06bis) : lecture sans action."
+  },
+  "mediathequeFavorisReserves": "Les favoris d'un fidèle ne sont visibles que de lui-même.",
+  "@mediathequeFavorisReserves": {
+    "description": "Favoris consultés par un autre compte que leur propriétaire (policy favoris_proprietaire)."
   },
   "mediathequeAjouterFavori": "Ajouter aux favoris",
   "@mediathequeAjouterFavori": {
