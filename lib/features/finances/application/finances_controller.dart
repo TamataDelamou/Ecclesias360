@@ -64,6 +64,7 @@ class FinancesController extends ChangeNotifier {
     String? projetId,
     required String modePaiement,
     required OrigineContribution origine,
+    required String saisieParFideleId,
   }) async {
     Contribution? resultat;
     final ok = await _executer(() async {
@@ -78,6 +79,7 @@ class FinancesController extends ChangeNotifier {
         projetId: projetId,
         modePaiement: modePaiement,
         origine: origine,
+        saisieParFideleId: saisieParFideleId,
       );
     });
     return ok ? resultat : null;

@@ -20907,6 +20907,18 @@ class $ContributionsTable extends Contributions
     type: DriftSqlType.dateTime,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _saisieParFideleIdMeta = const VerificationMeta(
+    'saisieParFideleId',
+  );
+  @override
+  late final GeneratedColumn<String> saisieParFideleId =
+      GeneratedColumn<String>(
+        'saisie_par_fidele_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
   static const VerificationMeta _valideParFideleIdMeta = const VerificationMeta(
     'valideParFideleId',
   );
@@ -20985,6 +20997,7 @@ class $ContributionsTable extends Contributions
     statut,
     origine,
     dateSaisie,
+    saisieParFideleId,
     valideParFideleId,
     dateValidation,
     motifRejet,
@@ -21103,6 +21116,15 @@ class $ContributionsTable extends Contributions
     } else if (isInserting) {
       context.missing(_dateSaisieMeta);
     }
+    if (data.containsKey('saisie_par_fidele_id')) {
+      context.handle(
+        _saisieParFideleIdMeta,
+        saisieParFideleId.isAcceptableOrUnknown(
+          data['saisie_par_fidele_id']!,
+          _saisieParFideleIdMeta,
+        ),
+      );
+    }
     if (data.containsKey('valide_par_fidele_id')) {
       context.handle(
         _valideParFideleIdMeta,
@@ -21206,6 +21228,10 @@ class $ContributionsTable extends Contributions
         DriftSqlType.dateTime,
         data['${effectivePrefix}date_saisie'],
       )!,
+      saisieParFideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}saisie_par_fidele_id'],
+      ),
       valideParFideleId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}valide_par_fidele_id'],
@@ -21249,6 +21275,10 @@ class ContributionRow extends DataClass implements Insertable<ContributionRow> {
   final String statut;
   final String origine;
   final DateTime dateSaisie;
+
+  /// RG-XI-02 — auteur de la saisie (fiche liée à la session), distinct du
+  /// valideur. `null` seulement pour une saisie antérieure à v19.
+  final String? saisieParFideleId;
   final String? valideParFideleId;
   final DateTime? dateValidation;
   final String? motifRejet;
@@ -21268,6 +21298,7 @@ class ContributionRow extends DataClass implements Insertable<ContributionRow> {
     required this.statut,
     required this.origine,
     required this.dateSaisie,
+    this.saisieParFideleId,
     this.valideParFideleId,
     this.dateValidation,
     this.motifRejet,
@@ -21300,6 +21331,9 @@ class ContributionRow extends DataClass implements Insertable<ContributionRow> {
     map['statut'] = Variable<String>(statut);
     map['origine'] = Variable<String>(origine);
     map['date_saisie'] = Variable<DateTime>(dateSaisie);
+    if (!nullToAbsent || saisieParFideleId != null) {
+      map['saisie_par_fidele_id'] = Variable<String>(saisieParFideleId);
+    }
     if (!nullToAbsent || valideParFideleId != null) {
       map['valide_par_fidele_id'] = Variable<String>(valideParFideleId);
     }
@@ -21339,6 +21373,9 @@ class ContributionRow extends DataClass implements Insertable<ContributionRow> {
       statut: Value(statut),
       origine: Value(origine),
       dateSaisie: Value(dateSaisie),
+      saisieParFideleId: saisieParFideleId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(saisieParFideleId),
       valideParFideleId: valideParFideleId == null && nullToAbsent
           ? const Value.absent()
           : Value(valideParFideleId),
@@ -21376,6 +21413,9 @@ class ContributionRow extends DataClass implements Insertable<ContributionRow> {
       statut: serializer.fromJson<String>(json['statut']),
       origine: serializer.fromJson<String>(json['origine']),
       dateSaisie: serializer.fromJson<DateTime>(json['dateSaisie']),
+      saisieParFideleId: serializer.fromJson<String?>(
+        json['saisieParFideleId'],
+      ),
       valideParFideleId: serializer.fromJson<String?>(
         json['valideParFideleId'],
       ),
@@ -21406,6 +21446,7 @@ class ContributionRow extends DataClass implements Insertable<ContributionRow> {
       'statut': serializer.toJson<String>(statut),
       'origine': serializer.toJson<String>(origine),
       'dateSaisie': serializer.toJson<DateTime>(dateSaisie),
+      'saisieParFideleId': serializer.toJson<String?>(saisieParFideleId),
       'valideParFideleId': serializer.toJson<String?>(valideParFideleId),
       'dateValidation': serializer.toJson<DateTime?>(dateValidation),
       'motifRejet': serializer.toJson<String?>(motifRejet),
@@ -21430,6 +21471,7 @@ class ContributionRow extends DataClass implements Insertable<ContributionRow> {
     String? statut,
     String? origine,
     DateTime? dateSaisie,
+    Value<String?> saisieParFideleId = const Value.absent(),
     Value<String?> valideParFideleId = const Value.absent(),
     Value<DateTime?> dateValidation = const Value.absent(),
     Value<String?> motifRejet = const Value.absent(),
@@ -21451,6 +21493,9 @@ class ContributionRow extends DataClass implements Insertable<ContributionRow> {
     statut: statut ?? this.statut,
     origine: origine ?? this.origine,
     dateSaisie: dateSaisie ?? this.dateSaisie,
+    saisieParFideleId: saisieParFideleId.present
+        ? saisieParFideleId.value
+        : this.saisieParFideleId,
     valideParFideleId: valideParFideleId.present
         ? valideParFideleId.value
         : this.valideParFideleId,
@@ -21486,6 +21531,9 @@ class ContributionRow extends DataClass implements Insertable<ContributionRow> {
       dateSaisie: data.dateSaisie.present
           ? data.dateSaisie.value
           : this.dateSaisie,
+      saisieParFideleId: data.saisieParFideleId.present
+          ? data.saisieParFideleId.value
+          : this.saisieParFideleId,
       valideParFideleId: data.valideParFideleId.present
           ? data.valideParFideleId.value
           : this.valideParFideleId,
@@ -21520,6 +21568,7 @@ class ContributionRow extends DataClass implements Insertable<ContributionRow> {
           ..write('statut: $statut, ')
           ..write('origine: $origine, ')
           ..write('dateSaisie: $dateSaisie, ')
+          ..write('saisieParFideleId: $saisieParFideleId, ')
           ..write('valideParFideleId: $valideParFideleId, ')
           ..write('dateValidation: $dateValidation, ')
           ..write('motifRejet: $motifRejet, ')
@@ -21544,6 +21593,7 @@ class ContributionRow extends DataClass implements Insertable<ContributionRow> {
     statut,
     origine,
     dateSaisie,
+    saisieParFideleId,
     valideParFideleId,
     dateValidation,
     motifRejet,
@@ -21567,6 +21617,7 @@ class ContributionRow extends DataClass implements Insertable<ContributionRow> {
           other.statut == this.statut &&
           other.origine == this.origine &&
           other.dateSaisie == this.dateSaisie &&
+          other.saisieParFideleId == this.saisieParFideleId &&
           other.valideParFideleId == this.valideParFideleId &&
           other.dateValidation == this.dateValidation &&
           other.motifRejet == this.motifRejet &&
@@ -21588,6 +21639,7 @@ class ContributionsCompanion extends UpdateCompanion<ContributionRow> {
   final Value<String> statut;
   final Value<String> origine;
   final Value<DateTime> dateSaisie;
+  final Value<String?> saisieParFideleId;
   final Value<String?> valideParFideleId;
   final Value<DateTime?> dateValidation;
   final Value<String?> motifRejet;
@@ -21608,6 +21660,7 @@ class ContributionsCompanion extends UpdateCompanion<ContributionRow> {
     this.statut = const Value.absent(),
     this.origine = const Value.absent(),
     this.dateSaisie = const Value.absent(),
+    this.saisieParFideleId = const Value.absent(),
     this.valideParFideleId = const Value.absent(),
     this.dateValidation = const Value.absent(),
     this.motifRejet = const Value.absent(),
@@ -21629,6 +21682,7 @@ class ContributionsCompanion extends UpdateCompanion<ContributionRow> {
     this.statut = const Value.absent(),
     required String origine,
     required DateTime dateSaisie,
+    this.saisieParFideleId = const Value.absent(),
     this.valideParFideleId = const Value.absent(),
     this.dateValidation = const Value.absent(),
     this.motifRejet = const Value.absent(),
@@ -21657,6 +21711,7 @@ class ContributionsCompanion extends UpdateCompanion<ContributionRow> {
     Expression<String>? statut,
     Expression<String>? origine,
     Expression<DateTime>? dateSaisie,
+    Expression<String>? saisieParFideleId,
     Expression<String>? valideParFideleId,
     Expression<DateTime>? dateValidation,
     Expression<String>? motifRejet,
@@ -21679,6 +21734,7 @@ class ContributionsCompanion extends UpdateCompanion<ContributionRow> {
       if (statut != null) 'statut': statut,
       if (origine != null) 'origine': origine,
       if (dateSaisie != null) 'date_saisie': dateSaisie,
+      if (saisieParFideleId != null) 'saisie_par_fidele_id': saisieParFideleId,
       if (valideParFideleId != null) 'valide_par_fidele_id': valideParFideleId,
       if (dateValidation != null) 'date_validation': dateValidation,
       if (motifRejet != null) 'motif_rejet': motifRejet,
@@ -21704,6 +21760,7 @@ class ContributionsCompanion extends UpdateCompanion<ContributionRow> {
     Value<String>? statut,
     Value<String>? origine,
     Value<DateTime>? dateSaisie,
+    Value<String?>? saisieParFideleId,
     Value<String?>? valideParFideleId,
     Value<DateTime?>? dateValidation,
     Value<String?>? motifRejet,
@@ -21726,6 +21783,7 @@ class ContributionsCompanion extends UpdateCompanion<ContributionRow> {
       statut: statut ?? this.statut,
       origine: origine ?? this.origine,
       dateSaisie: dateSaisie ?? this.dateSaisie,
+      saisieParFideleId: saisieParFideleId ?? this.saisieParFideleId,
       valideParFideleId: valideParFideleId ?? this.valideParFideleId,
       dateValidation: dateValidation ?? this.dateValidation,
       motifRejet: motifRejet ?? this.motifRejet,
@@ -21780,6 +21838,9 @@ class ContributionsCompanion extends UpdateCompanion<ContributionRow> {
     if (dateSaisie.present) {
       map['date_saisie'] = Variable<DateTime>(dateSaisie.value);
     }
+    if (saisieParFideleId.present) {
+      map['saisie_par_fidele_id'] = Variable<String>(saisieParFideleId.value);
+    }
     if (valideParFideleId.present) {
       map['valide_par_fidele_id'] = Variable<String>(valideParFideleId.value);
     }
@@ -21819,6 +21880,7 @@ class ContributionsCompanion extends UpdateCompanion<ContributionRow> {
           ..write('statut: $statut, ')
           ..write('origine: $origine, ')
           ..write('dateSaisie: $dateSaisie, ')
+          ..write('saisieParFideleId: $saisieParFideleId, ')
           ..write('valideParFideleId: $valideParFideleId, ')
           ..write('dateValidation: $dateValidation, ')
           ..write('motifRejet: $motifRejet, ')
@@ -58820,6 +58882,7 @@ typedef $$ContributionsTableCreateCompanionBuilder =
       Value<String> statut,
       required String origine,
       required DateTime dateSaisie,
+      Value<String?> saisieParFideleId,
       Value<String?> valideParFideleId,
       Value<DateTime?> dateValidation,
       Value<String?> motifRejet,
@@ -58842,6 +58905,7 @@ typedef $$ContributionsTableUpdateCompanionBuilder =
       Value<String> statut,
       Value<String> origine,
       Value<DateTime> dateSaisie,
+      Value<String?> saisieParFideleId,
       Value<String?> valideParFideleId,
       Value<DateTime?> dateValidation,
       Value<String?> motifRejet,
@@ -59037,6 +59101,11 @@ class $$ContributionsTableFilterComposer
 
   ColumnFilters<DateTime> get dateSaisie => $composableBuilder(
     column: $table.dateSaisie,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get saisieParFideleId => $composableBuilder(
+    column: $table.saisieParFideleId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -59273,6 +59342,11 @@ class $$ContributionsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get saisieParFideleId => $composableBuilder(
+    column: $table.saisieParFideleId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get valideParFideleId => $composableBuilder(
     column: $table.valideParFideleId,
     builder: (column) => ColumnOrderings(column),
@@ -59468,6 +59542,11 @@ class $$ContributionsTableAnnotationComposer
 
   GeneratedColumn<DateTime> get dateSaisie => $composableBuilder(
     column: $table.dateSaisie,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get saisieParFideleId => $composableBuilder(
+    column: $table.saisieParFideleId,
     builder: (column) => column,
   );
 
@@ -59706,6 +59785,7 @@ class $$ContributionsTableTableManager
                 Value<String> statut = const Value.absent(),
                 Value<String> origine = const Value.absent(),
                 Value<DateTime> dateSaisie = const Value.absent(),
+                Value<String?> saisieParFideleId = const Value.absent(),
                 Value<String?> valideParFideleId = const Value.absent(),
                 Value<DateTime?> dateValidation = const Value.absent(),
                 Value<String?> motifRejet = const Value.absent(),
@@ -59726,6 +59806,7 @@ class $$ContributionsTableTableManager
                 statut: statut,
                 origine: origine,
                 dateSaisie: dateSaisie,
+                saisieParFideleId: saisieParFideleId,
                 valideParFideleId: valideParFideleId,
                 dateValidation: dateValidation,
                 motifRejet: motifRejet,
@@ -59748,6 +59829,7 @@ class $$ContributionsTableTableManager
                 Value<String> statut = const Value.absent(),
                 required String origine,
                 required DateTime dateSaisie,
+                Value<String?> saisieParFideleId = const Value.absent(),
                 Value<String?> valideParFideleId = const Value.absent(),
                 Value<DateTime?> dateValidation = const Value.absent(),
                 Value<String?> motifRejet = const Value.absent(),
@@ -59768,6 +59850,7 @@ class $$ContributionsTableTableManager
                 statut: statut,
                 origine: origine,
                 dateSaisie: dateSaisie,
+                saisieParFideleId: saisieParFideleId,
                 valideParFideleId: valideParFideleId,
                 dateValidation: dateValidation,
                 motifRejet: motifRejet,

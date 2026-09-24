@@ -234,7 +234,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 18;
+  int get schemaVersion => 19;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -386,6 +386,12 @@ class AppDatabase extends _$AppDatabase {
             await customStatement('CREATE UNIQUE INDEX IF NOT EXISTS idx_fideles_auth_user_id ON fideles (auth_user_id)');
             await m.createTable(comptesUtilisateurs);
             await m.createTable(journalLiaisonsComptes);
+          }
+          // v18 -> v19 : auteur de la saisie d'une contribution (RG-XI-02,
+          // séparation saisie/validation). Même garde que v18 : une base
+          // antérieure à v14 vient de créer la table avec la définition courante.
+          if (from < 19 && !await _colonneExiste('contributions', 'saisie_par_fidele_id')) {
+            await m.addColumn(contributions, contributions.saisieParFideleId);
           }
         },
         beforeOpen: (details) async {

@@ -16,6 +16,10 @@ import 'package:ecclesias_360/features/patrimoine/domain/models/type_sortie_bien
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  // RG-XI-02 : auteur de saisie distinct du valideur des scénarios ci-dessous
+  // (la séparation des tâches a ses propres tests).
+  const saisissant = 'saisissant-distinct';
+
   late AppDatabase db;
   late ComptabiliteRepository repository;
   late String noeudId;
@@ -84,6 +88,7 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
+        saisieParFideleId: saisissant,
       );
 
       await financesRepository.validerContribution(
@@ -119,6 +124,7 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
+        saisieParFideleId: saisissant,
       );
       await financesRepository.validerContribution(
         id: contribution.id,
@@ -262,6 +268,7 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
+        saisieParFideleId: saisissant,
       );
       await financesRepository.validerContribution(
         id: contributionParent.id,
@@ -277,6 +284,7 @@ void main() {
         noeudId: noeudEnfantId,
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
+        saisieParFideleId: saisissant,
       );
       await financesRepository.validerContribution(
         id: contributionEnfant.id,
@@ -331,6 +339,7 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
+        saisieParFideleId: saisissant,
       );
 
       // `genererEcecturesContributionValidee` cible toujours la période
@@ -421,6 +430,7 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
+        saisieParFideleId: saisissant,
       );
       await financesRepository.validerContribution(
         id: contribution.id,

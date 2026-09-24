@@ -60,6 +60,7 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
+        saisieParFideleId: donateur,
       );
     }
     return (db: db, finances: finances, marieId: marieId);
@@ -136,6 +137,15 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.widgetWithText(FilledButton, 'Valider'), findsOneWidget);
     expect(find.widgetWithText(OutlinedButton, 'Rejeter'), findsOneWidget);
+
+    // Sa propre saisie (1000) : aucune décision possible, elle attend une
+    // autre personne habilitée (RG-XI-02).
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    await tester.tap(find.textContaining('1000').first);
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(FilledButton, 'Valider'), findsNothing);
+    expect(find.textContaining('Vous avez saisi cette contribution'), findsOneWidget);
 
     await donnees.db.close();
   });

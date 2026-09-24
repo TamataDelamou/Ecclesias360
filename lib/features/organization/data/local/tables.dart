@@ -818,6 +818,9 @@ class Contributions extends Table {
   TextColumn get statut => text().withDefault(const Constant('en_attente'))();
   TextColumn get origine => text()();
   DateTimeColumn get dateSaisie => dateTime()();
+  /// RG-XI-02 — auteur de la saisie (fiche liée à la session), distinct du
+  /// valideur. `null` seulement pour une saisie antérieure à v19.
+  TextColumn get saisieParFideleId => text().nullable()();
   TextColumn get valideParFideleId => text().nullable()();
   DateTimeColumn get dateValidation => dateTime().nullable()();
   TextColumn get motifRejet => text().nullable()();

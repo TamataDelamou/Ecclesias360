@@ -80,7 +80,7 @@ class ContributionsListScreen extends StatelessWidget {
           ),
           floatingActionButton: parNoeud
               ? FloatingActionButton(
-                  onPressed: () => _saisirContribution(context, controller, noeudId!, types),
+                  onPressed: () => _saisirContribution(context, controller, noeudId!, types, acces.fideleId),
                   tooltip: l10n.financesSaisirTooltip,
                   child: const Icon(Icons.add),
                 )
@@ -122,8 +122,17 @@ class ContributionsListScreen extends StatelessWidget {
     FinancesController controller,
     String noeudId,
     List<TypeOffrande> types,
+    String? saisieParFideleId,
   ) async {
     if (types.isEmpty) return;
+    // RG-XI-02 : l'auteur de la saisie est tracé (fiche liée à la session),
+    // pour ne jamais pouvoir décider de sa propre saisie.
+    if (saisieParFideleId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context)!.financesFicheLieeRequise)),
+      );
+      return;
+    }
     final fideleController = context.read<FideleController>();
     final fidelesDuNoeud = fideleController.fideles.where((f) => f.noeudId == noeudId).toList();
 
@@ -200,6 +209,7 @@ class ContributionsListScreen extends StatelessWidget {
     final montant = int.tryParse(montantController.text.trim());
     if (confirme == true && montant != null && montant > 0 && context.mounted) {
       final contribution = await controller.saisirContribution(
+        saisieParFideleId: saisieParFideleId,
         fideleId: fideleId,
         libelleDonateurAnonyme: fideleId == null && donateurAnonymeController.text.trim().isNotEmpty
             ? donateurAnonymeController.text.trim()

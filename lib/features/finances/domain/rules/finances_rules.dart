@@ -16,6 +16,22 @@ abstract final class FinancesRules {
     return AppError.roleInsuffisantPourValidationContribution();
   }
 
+  /// RG-XI-02 / RG-SEC-06 — séparation stricte des tâches : la personne qui a
+  /// saisi une contribution ne décide jamais de sa validation ou de son
+  /// rejet, quel que soit son rang (administrateur compris). Un site ne
+  /// comptant qu'une seule personne habilitée voit donc ses propres saisies
+  /// attendre une seconde personne : comportement voulu, pas un défaut. Une
+  /// saisie antérieure au traçage (`saisieParFideleId` nul) n'a pas
+  /// d'auteur connu à opposer.
+  static AppError? raisonBlocageSeparationTaches({
+    required String? saisieParFideleId,
+    required String decideurFideleId,
+  }) {
+    return saisieParFideleId != null && saisieParFideleId == decideurFideleId
+        ? AppError.decisionParLeSaisissant()
+        : null;
+  }
+
   /// RG-SEC-06 — une contribution n'est consultée que par un pasteur (ou
   /// rôle supérieur), un trésorier désigné de son nœud, ou son donateur.
   /// Miroir local de la policy `contributions_lecture` (migration 0019).

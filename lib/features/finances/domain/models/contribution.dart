@@ -23,6 +23,7 @@ class Contribution {
     required this.statut,
     required this.origine,
     required this.dateSaisie,
+    this.saisieParFideleId,
     this.valideParFideleId,
     this.dateValidation,
     this.motifRejet,
@@ -43,6 +44,12 @@ class Contribution {
   final StatutContribution statut;
   final OrigineContribution origine;
   final DateTime dateSaisie;
+
+  /// RG-XI-02 — auteur de la saisie, jamais décideur de la même
+  /// contribution. `null` seulement pour une saisie antérieure au traçage.
+  final String? saisieParFideleId;
+
+  /// Auteur de la décision comptable (validation ou rejet).
   final String? valideParFideleId;
   final DateTime? dateValidation;
   final String? motifRejet;

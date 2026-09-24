@@ -66,11 +66,12 @@ insert into public.dossiers_disciplinaires (id, fidele_id, noeud_id, nature_faut
   ('00000000-0000-4000-8000-500000000002', '00000000-0000-4000-8000-300000000007', '00000000-0000-4000-8000-100000000004',
    (select id from public.natures_faute limit 1), now(), '00000000-0000-4000-8000-400000000002');
 
-insert into public.contributions (id, fidele_id, type_offrande_id, montant, devise, noeud_id, mode_paiement, origine, date_saisie, statut) values
+-- (saisie_par_fidele_id : 0021 — chaque saisie trace son auteur.)
+insert into public.contributions (id, fidele_id, type_offrande_id, montant, devise, noeud_id, mode_paiement, origine, date_saisie, statut, saisie_par_fidele_id) values
   ('00000000-0000-4000-8000-600000000001', '00000000-0000-4000-8000-300000000004', (select id from public.types_offrande limit 1),
-   1000, 'GNF', '00000000-0000-4000-8000-100000000003', 'especes', 'mobile', now(), 'en_attente'),
+   1000, 'GNF', '00000000-0000-4000-8000-100000000003', 'especes', 'mobile', now(), 'en_attente', '00000000-0000-4000-8000-300000000004'),
   ('00000000-0000-4000-8000-600000000002', '00000000-0000-4000-8000-300000000007', (select id from public.types_offrande limit 1),
-   5000, 'GNF', '00000000-0000-4000-8000-100000000004', 'especes', 'mobile', now(), 'en_attente');
+   5000, 'GNF', '00000000-0000-4000-8000-100000000004', 'especes', 'mobile', now(), 'en_attente', '00000000-0000-4000-8000-300000000007');
 
 insert into public.documents_archive (id, numero_archive, type_document, module_origine, objet_id_origine, noeud_id, fichier, date_archivage, niveau_confidentialite) values
   ('00000000-0000-4000-8000-700000000001', 'T-DOC-1', 'pv', 'comite', 'x', '00000000-0000-4000-8000-100000000003', 'f1', now(), 'standard'),
@@ -193,12 +194,12 @@ do $$ begin
   assert pg_temp.nb('types_offrande') > 0, 'membre : référentiel';
   assert pg_temp.touche($q$update public.contributions set statut = 'validee'
     where id = '00000000-0000-4000-8000-600000000001'$q$) = 0, 'membre : valide sa propre offrande';
-  assert pg_temp.refuse($q$insert into public.contributions (id, fidele_id, type_offrande_id, montant, devise, noeud_id, mode_paiement, origine, date_saisie, statut)
+  assert pg_temp.refuse($q$insert into public.contributions (id, fidele_id, type_offrande_id, montant, devise, noeud_id, mode_paiement, origine, date_saisie, statut, saisie_par_fidele_id)
     values (gen_random_uuid(), '00000000-0000-4000-8000-300000000004', (select id from public.types_offrande limit 1), 1, 'GNF',
-            '00000000-0000-4000-8000-100000000003', 'especes', 'mobile', now(), 'validee')$q$), 'membre : saisit une offrande déjà validée';
-  assert not pg_temp.refuse($q$insert into public.contributions (id, fidele_id, type_offrande_id, montant, devise, noeud_id, mode_paiement, origine, date_saisie)
+            '00000000-0000-4000-8000-100000000003', 'especes', 'mobile', now(), 'validee', '00000000-0000-4000-8000-300000000004')$q$), 'membre : saisit une offrande déjà validée';
+  assert not pg_temp.refuse($q$insert into public.contributions (id, fidele_id, type_offrande_id, montant, devise, noeud_id, mode_paiement, origine, date_saisie, saisie_par_fidele_id)
     values (gen_random_uuid(), '00000000-0000-4000-8000-300000000004', (select id from public.types_offrande limit 1), 1, 'GNF',
-            '00000000-0000-4000-8000-100000000003', 'especes', 'mobile', now())$q$), 'membre : saisie personnelle en attente';
+            '00000000-0000-4000-8000-100000000003', 'especes', 'mobile', now(), '00000000-0000-4000-8000-300000000004')$q$), 'membre : saisie personnelle en attente';
   assert pg_temp.refuse($q$update public.fideles set role = 'administrateur'
     where id = '00000000-0000-4000-8000-300000000004'$q$), 'membre : s''élève administrateur';
   assert pg_temp.refuse($q$insert into public.node_responsables (id, noeud_id, fidele_id, fonction) values
@@ -256,14 +257,17 @@ do $$ begin
   assert pg_temp.nb('documents_archive') = 2, 'pasteur E1 : standard + restreint d''E1, pas E2';
   assert pg_temp.nb('pieces_dossier') = 0, 'pasteur E1 : pièces d''un dossier d''E2';
   assert pg_temp.nb('contributions') >= 1, 'pasteur E1 : contributions d''E1';
-  assert pg_temp.touche($q$update public.contributions set statut = 'validee'
+  assert pg_temp.touche($q$update public.contributions set statut = 'validee', valide_par_fidele_id = '00000000-0000-4000-8000-300000000003'
     where id = '00000000-0000-4000-8000-600000000001'$q$) = 1, 'pasteur E1 : valide une contribution d''E1';
-  assert pg_temp.touche($q$update public.contributions set statut = 'validee'
+  assert pg_temp.touche($q$update public.contributions set statut = 'validee', valide_par_fidele_id = '00000000-0000-4000-8000-300000000003'
     where id = '00000000-0000-4000-8000-600000000002'$q$) = 0, 'pasteur E1 : valide une contribution d''E2';
   assert pg_temp.nb('journal_liaisons_comptes') = 0, 'pasteur : journal des liaisons';
   -- RG-XI-05 : une fois validée, plus aucune modification.
-  assert pg_temp.touche($q$update public.contributions set montant = 1
-    where id = '00000000-0000-4000-8000-600000000001'$q$) = 0, 'pasteur E1 : modifie une contribution validée';
+  -- (0021 : le montant n'est plus du tout modifiable, privilège de colonne.)
+  assert pg_temp.refuse($q$update public.contributions set montant = 1
+    where id = '00000000-0000-4000-8000-600000000001'$q$), 'pasteur E1 : modifie une contribution validée';
+  assert pg_temp.touche($q$update public.contributions set motif_rejet = 'x'
+    where id = '00000000-0000-4000-8000-600000000001'$q$) = 0, 'pasteur E1 : retouche une contribution validée';
   -- RG-XXI-03/05 : écriture immuable sauf rapprochement, jamais en période clôturée.
   assert pg_temp.refuse($q$update public.ecritures_comptables set noeud_id = noeud_id
     where id = '00000000-0000-4000-8000-b00000000001'$q$), 'pasteur E1 : modifie une écriture';
@@ -298,7 +302,7 @@ select pg_temp.connecter('00000000-0000-4000-8000-200000000005');
 do $$ begin
   assert pg_temp.nb('fideles') = 1, 'trésorier : sa fiche seulement (pas de périmètre)';
   assert pg_temp.nb('contributions') = 1, 'trésorier : contributions d''E2';
-  assert pg_temp.touche($q$update public.contributions set statut = 'validee'
+  assert pg_temp.touche($q$update public.contributions set statut = 'validee', valide_par_fidele_id = '00000000-0000-4000-8000-300000000005'
     where id = '00000000-0000-4000-8000-600000000002'$q$) = 1, 'trésorier : valide une contribution d''E2';
   assert pg_temp.touche($q$update public.contributions set statut = 'rejetee'
     where id = '00000000-0000-4000-8000-600000000001'$q$) = 0, 'trésorier d''E2 : touche E1';

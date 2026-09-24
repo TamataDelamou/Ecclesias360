@@ -44,6 +44,21 @@ void main() {
     });
   });
 
+  group('raisonBlocageSeparationTaches (RG-XI-02, RG-SEC-06)', () {
+    test("l'auteur de la saisie ne décide jamais de sa propre saisie", () {
+      final erreur = FinancesRules.raisonBlocageSeparationTaches(saisieParFideleId: 'f1', decideurFideleId: 'f1');
+      expect(erreur?.code, 'decision_par_le_saisissant');
+    });
+
+    test('une autre personne habilitée décide', () {
+      expect(FinancesRules.raisonBlocageSeparationTaches(saisieParFideleId: 'f1', decideurFideleId: 'f2'), isNull);
+    });
+
+    test("une saisie antérieure au traçage n'a pas d'auteur connu à opposer", () {
+      expect(FinancesRules.raisonBlocageSeparationTaches(saisieParFideleId: null, decideurFideleId: 'f2'), isNull);
+    });
+  });
+
   group('peutConsulterContribution (RG-SEC-06)', () {
     test('un pasteur ou un administrateur consulte toute contribution', () {
       for (final role in [Role.pasteur, Role.administrateur]) {

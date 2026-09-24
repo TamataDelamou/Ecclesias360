@@ -845,6 +845,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Accès réservé à un pasteur, au trésorier du nœud ou au fidèle concerné.';
 
   @override
+  String get financesDecisionParLeSaisissant =>
+      'Vous avez saisi cette contribution : une autre personne habilitée doit la valider ou la rejeter (séparation des tâches).';
+
+  @override
   String get financesFicheLieeRequise =>
       'Liez d\'abord votre compte à votre fiche fidèle (« Lier mon compte à cette fiche ») : le valideur tracé est toujours une personne du registre.';
 

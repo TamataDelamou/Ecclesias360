@@ -5,6 +5,7 @@ import '../../../core/theme/app_defaults.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../../../core/theme/design_tokens.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
 import '../../fideles/application/fidele_controller.dart';
 import '../application/finances_controller.dart';
 import '../domain/models/echeance_engagement.dart';
@@ -108,8 +109,17 @@ class EngagementsListScreen extends StatelessWidget {
     final fideleController = context.read<FideleController>();
     final noeudId = fideleController.findById(engagement.fideleId)?.noeudId;
     if (noeudId == null) return;
+    // RG-XI-02 : la contribution qui honore l'échéance est une saisie, tracée.
+    final saisieParFideleId = context.read<SessionController>().session?.fideleId;
+    if (saisieParFideleId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context)!.financesFicheLieeRequise)),
+      );
+      return;
+    }
 
     final contribution = await controller.saisirContribution(
+      saisieParFideleId: saisieParFideleId,
       fideleId: engagement.fideleId,
       typeOffrandeId: typeOffrandeId,
       montant: engagement.montantPrevu,

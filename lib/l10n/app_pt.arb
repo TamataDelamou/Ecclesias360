@@ -263,6 +263,7 @@
   "financesIntrouvable": "Esta contribuição não foi encontrada.",
   "financesValiderTitre": "Validar a contribuição",
   "financesAccesReserve": "Acesso reservado a um pastor, ao tesoureiro do nó ou ao fiel em causa.",
+  "financesDecisionParLeSaisissant": "Registou esta contribuição: outra pessoa habilitada deve validá-la ou rejeitá-la (separação de funções).",
   "financesFicheLieeRequise": "Vincule primeiro a sua conta à sua ficha (\"Vincular a minha conta a esta ficha\"): o validador registado é sempre uma pessoa do registo.",
   "financesValiderBouton": "Validar",
   "financesRejeterTitre": "Rejeitar a contribuição",

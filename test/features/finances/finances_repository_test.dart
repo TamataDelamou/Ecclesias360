@@ -15,6 +15,10 @@ import 'package:ecclesias_360/features/parametres/domain/models/role.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  // RG-XI-02 : auteur de saisie distinct du valideur des scénarios ci-dessous
+  // (la séparation des tâches a ses propres tests).
+  const saisissant = 'saisissant-distinct';
+
   late AppDatabase db;
   late FideleRepository fideleRepository;
   late FinancesRepository repository;
@@ -74,6 +78,7 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
+        saisieParFideleId: saisissant,
       );
       expect(contribution.statut, StatutContribution.enAttente);
 
@@ -106,6 +111,7 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
+        saisieParFideleId: saisissant,
       );
 
       final validee = await repository.validerContribution(
@@ -125,6 +131,7 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
+        saisieParFideleId: saisissant,
       );
 
       expect(
@@ -146,6 +153,7 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
+        saisieParFideleId: saisissant,
       );
       await repository.validerContribution(id: contribution.id, roleActeur: Role.pasteur, valideParFideleId: fideleId);
 
@@ -164,8 +172,55 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
+        saisieParFideleId: saisissant,
       ))
           .id;
+
+  group('séparation saisie/validation (RG-XI-02, RG-SEC-06)', () {
+    Future<String> saisirPar(String auteur) async => (await repository.saisirContribution(
+          fideleId: fideleId,
+          typeOffrandeId: typeOffrandeId,
+          montant: 5000,
+          devise: 'GNF',
+          noeudId: noeudId,
+          modePaiement: 'especes',
+          origine: OrigineContribution.mobile,
+          saisieParFideleId: auteur,
+        ))
+            .id;
+
+    test("la saisie trace son auteur", () async {
+      final id = await saisirPar(fideleId);
+      expect((await repository.findContributionById(id))!.saisieParFideleId, fideleId);
+    });
+
+    test("l'auteur de la saisie ne la valide pas, même administrateur", () async {
+      final id = await saisirPar(fideleId);
+      for (final role in [Role.pasteur, Role.administrateur]) {
+        await expectLater(
+          repository.validerContribution(id: id, roleActeur: role, valideParFideleId: fideleId),
+          throwsA(isA<AppError>().having((e) => e.code, 'code', 'decision_par_le_saisissant')),
+        );
+      }
+    });
+
+    test("l'auteur de la saisie ne la rejette pas non plus", () async {
+      final id = await saisirPar(fideleId);
+      await expectLater(
+        repository.rejeterContribution(id: id, roleActeur: Role.pasteur, rejeteParFideleId: fideleId),
+        throwsA(isA<AppError>().having((e) => e.code, 'code', 'decision_par_le_saisissant')),
+      );
+    });
+
+    test('la contre-passation a pour auteur son valideur (acte comptable unique)', () async {
+      final id = await saisirPar(saisissant);
+      await repository.validerContribution(id: id, roleActeur: Role.pasteur, valideParFideleId: fideleId);
+      final contrePassation =
+          await repository.contrePasserContribution(id: id, roleActeur: Role.pasteur, valideParFideleId: fideleId);
+      expect(contrePassation.saisieParFideleId, fideleId);
+      expect(contrePassation.valideParFideleId, fideleId);
+    });
+  });
 
   group('rejeterContribution (RG-XI-02)', () {
     test('un pasteur peut rejeter une contribution en attente', () async {
@@ -177,6 +232,7 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
+        saisieParFideleId: saisissant,
       );
       final rejetee = await repository.rejeterContribution(
         id: contribution.id,
@@ -217,6 +273,7 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
+        saisieParFideleId: saisissant,
       );
       await repository.validerContribution(id: contribution.id, roleActeur: Role.pasteur, valideParFideleId: fideleId);
 
@@ -242,6 +299,7 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
+        saisieParFideleId: saisissant,
       );
       expect(
         () => repository.contrePasserContribution(id: contribution.id, roleActeur: Role.pasteur, valideParFideleId: fideleId),
@@ -277,6 +335,7 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.horsLigne,
+        saisieParFideleId: saisissant,
       );
       final doublonSimule = (await repository.findContributionById(premiere.id))!;
       final candidats = await repository.detecterDoublonsPotentiels(doublonSimule);
@@ -293,6 +352,7 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.horsLigne,
+        saisieParFideleId: saisissant,
       );
       // La date de saisie réelle est `DateTime.now()` : les deux saisies du
       // test tombent nécessairement dans la même minute.
@@ -304,6 +364,7 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.horsLigne,
+        saisieParFideleId: saisissant,
       );
       final deuxiemeContribution = (await repository.findContributionById(deuxieme.id))!;
       final candidats = await repository.detecterDoublonsPotentiels(deuxiemeContribution);
@@ -330,6 +391,7 @@ void main() {
         projetId: projet.id,
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
+        saisieParFideleId: saisissant,
       );
       await repository.validerContribution(id: contribution.id, roleActeur: Role.pasteur, valideParFideleId: fideleId);
 
@@ -422,6 +484,7 @@ void main() {
         noeudId: noeudId,
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
+        saisieParFideleId: saisissant,
       );
       await repository.honorerEcheance(id: echeance.id, contributionId: contribution.id);
 

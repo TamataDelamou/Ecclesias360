@@ -209,6 +209,11 @@ class AppError implements Exception {
     "Cette action trace une personne du registre : liez d'abord votre compte à votre fiche fidèle.",
   );
 
+  factory AppError.decisionParLeSaisissant() => const AppError(
+    'decision_par_le_saisissant',
+    "Séparation des tâches : la personne qui a saisi cette contribution ne peut pas la valider ni la rejeter. Une autre personne habilitée doit décider.",
+  );
+
   factory AppError.actionReserveeAdministrateur() => const AppError(
     'action_reservee_administrateur',
     "Cette action est réservée à un administrateur.",

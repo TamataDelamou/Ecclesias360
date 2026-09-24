@@ -1,6 +1,15 @@
+import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:ecclesias_360/app.dart';
+import 'package:ecclesias_360/core/sync/sync_coordinator.dart';
+import 'package:ecclesias_360/features/fideles/data/fidele_repository.dart';
+import 'package:ecclesias_360/features/fideles/domain/models/sexe.dart';
+import 'package:ecclesias_360/features/fideles/domain/models/statut_civil.dart';
+import 'package:ecclesias_360/features/finances/data/finances_repository.dart';
+import 'package:ecclesias_360/features/finances/domain/models/origine_contribution.dart';
 import 'package:ecclesias_360/features/organization/data/local/app_database.dart';
+import 'package:ecclesias_360/features/organization/data/organisation_node_repository.dart';
+import 'package:ecclesias_360/features/organization/domain/models/type_noeud.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -8,7 +17,7 @@ import '../../helpers/auth_gateway_memoire.dart';
 
 void main() {
   testWidgets(
-    'accueil -> créer siège -> créer un fidèle -> saisir et valider une offrande -> '
+    'offrande saisie par un fidèle -> validée par l\'administrateur (autre personne, RG-XI-02) -> '
     'consulter la caisse, le journal des écritures et le rapport financier rapide (RG-XXI-01/02/06)',
     (tester) async {
       final database = AppDatabase(NativeDatabase.memory());
@@ -22,75 +31,52 @@ void main() {
       addTearDown(tester.platformDispatcher.clearLocaleTestValue);
       addTearDown(tester.platformDispatcher.clearLocalesTestValue);
 
+      // Données préalables (hors du faux temps du harnais) : l'offrande est
+      // saisie par Paul ; l'administrateur (fiche de Jean, liée
+      // automatiquement à son compte par son e-mail) la validera — jamais la
+      // personne qui a saisi (RG-XI-02, séparation stricte des tâches).
+      await tester.runAsync(() async {
+        final siege = await OrganisationNodeRepository(database, SyncCoordinator(database)).creerNoeud(
+          typeNoeud: TypeNoeud.siege,
+          noeudParentId: null,
+          nom: 'Global Service Groupe',
+          codeInterne: 'GSG-SIEGE',
+        );
+        final fideles = FideleRepository(database, SyncCoordinator(database));
+        Future<String> fiche(String prenoms, {String? email}) async => (await fideles.creerFidele(
+              noeudId: siege.id,
+              nom: 'Doe',
+              prenoms: prenoms,
+              dateNaissance: DateTime(1980, 1, 1),
+              sexe: Sexe.masculin,
+              statutCivil: StatutCivil.celibataire,
+              email: email,
+            ))
+                .id;
+        final jeanId = await fiche('Jean', email: 'admin@ecclesias.test');
+        await (database.update(database.fideles)..where((t) => t.id.equals(jeanId)))
+            .write(const FidelesCompanion(role: Value('administrateur')));
+        final paulId = await fiche('Paul');
+        await FinancesRepository(database, fideles).saisirContribution(
+          fideleId: paulId,
+          typeOffrandeId: (await database.select(database.typesOffrande).get()).first.id,
+          montant: 5000,
+          devise: 'GNF',
+          noeudId: siege.id,
+          modePaiement: 'especes',
+          origine: OrigineContribution.mobile,
+          saisieParFideleId: paulId,
+        );
+      });
+
       await tester.pumpWidget(EcclesiasApp(database: database, authGateway: AuthGatewayMemoire.connecte()));
       await tester.pumpAndSettle();
 
       final navOrganisation =
           find.descendant(of: find.byType(GridView), matching: find.text('Organisation'));
-      final navFideles = find.descendant(of: find.byType(GridView), matching: find.text('Fidèles'));
 
-      // Crée le siège.
-      await tester.tap(navOrganisation);
-      await tester.pumpAndSettle();
-      await tester.tap(find.byIcon(Icons.add));
-      await tester.pumpAndSettle();
-      await tester.enterText(find.widgetWithText(TextFormField, 'Nom'), 'Global Service Groupe');
-      await tester.enterText(find.widgetWithText(TextFormField, 'Code interne'), 'GSG-SIEGE');
-      await tester.tap(find.widgetWithText(FilledButton, 'Créer'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byType(BackButton));
-      await tester.pumpAndSettle();
-
-      // Crée un fidèle.
-      await tester.tap(navFideles);
-      await tester.pumpAndSettle();
-      await tester.tap(find.byIcon(Icons.add));
-      await tester.pumpAndSettle();
-
-      await tester.tap(find.byKey(const Key('champ_noeud')));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Global Service Groupe').last);
-      await tester.pumpAndSettle();
-
-      await tester.enterText(find.widgetWithText(TextFormField, 'Nom'), 'Doe');
-      await tester.enterText(find.widgetWithText(TextFormField, 'Prénoms'), 'Jean');
-
-      await tester.tap(find.text('Date de naissance'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('OK'));
-      await tester.pumpAndSettle();
-
-      await tester.tap(find.byKey(const Key('champ_sexe')));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('masculin').last);
-      await tester.pumpAndSettle();
-
-      await tester.tap(find.byKey(const Key('champ_statut_civil')));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('celibataire').last);
-      await tester.pumpAndSettle();
-
-      await tester.tap(find.widgetWithText(FilledButton, 'Créer'));
-      await tester.pumpAndSettle();
-
-      // L'administrateur d'amorçage lie son compte à cette fiche : le
-      // valideur tracé est toujours une personne du registre (RG-XI-02).
-      await tester.tap(find.text('Jean Doe'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byTooltip('Lier mon compte à cette fiche'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(FilledButton, 'Lier mon compte'));
-      await tester.pumpAndSettle();
-      // Laisse la notification expirer : elle recouvrirait les boutons du bas.
-      await tester.pump(const Duration(seconds: 5));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byType(BackButton));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byType(BackButton));
-      await tester.pumpAndSettle();
-
-      // Va au nœud, ouvre Contributions, saisit et valide une offrande —
-      // génère automatiquement l'écriture miroir (RG-XXI-02).
+      // Va au nœud, ouvre Contributions et valide l'offrande — génère
+      // automatiquement l'écriture miroir (RG-XXI-02).
       await tester.tap(navOrganisation);
       await tester.pumpAndSettle();
       await tester.tap(find.text('Global Service Groupe'));
@@ -103,17 +89,16 @@ void main() {
       );
       await tester.tap(find.widgetWithText(OutlinedButton, 'Contributions'));
       await tester.pumpAndSettle();
-
-      await tester.tap(find.byIcon(Icons.add));
-      await tester.pumpAndSettle();
-      await tester.enterText(find.widgetWithText(TextField, 'Montant'), '5000');
-      await tester.tap(find.widgetWithText(FilledButton, 'Saisir'));
+      await tester.tap(find.textContaining('5000').first);
       await tester.pumpAndSettle();
 
+      // Le bouton de la fiche et celui du dialogue partagent le libellé
+      // « Valider » ; `.last` cible celui du dialogue une fois ouvert.
       await tester.tap(find.widgetWithText(FilledButton, 'Valider').last);
       await tester.pumpAndSettle();
       await tester.tap(find.widgetWithText(FilledButton, 'Valider').last);
       await tester.pumpAndSettle();
+      expect(find.widgetWithText(OutlinedButton, 'Contre-passer'), findsOneWidget);
 
       // Retourne au nœud (fiche de contribution -> liste -> fiche de nœud),
       // ouvre l'écran Comptabilité.

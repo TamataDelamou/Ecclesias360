@@ -121,11 +121,13 @@ class FinancesRepository {
     String? projetId,
     required String modePaiement,
     required OrigineContribution origine,
+    required String saisieParFideleId,
   }) async {
     final id = IdGenerator.newId();
     await _db.into(_db.contributions).insert(
           ContributionsCompanion.insert(
             id: id,
+            saisieParFideleId: Value(saisieParFideleId),
             fideleId: Value(fideleId),
             libelleDonateurAnonyme: Value(libelleDonateurAnonyme),
             typeOffrandeId: typeOffrandeId,
@@ -153,7 +155,7 @@ class FinancesRepository {
     if (contribution.statut != StatutContribution.enAttente) {
       throw AppError.contributionNonEnAttente();
     }
-    await _verifierHabilitation(roleActeur: roleActeur, acteurFideleId: valideParFideleId, noeudId: contribution.noeudId);
+    await _verifierDecideur(contribution: contribution, roleActeur: roleActeur, decideurFideleId: valideParFideleId);
 
     await (_db.update(_db.contributions)..where((t) => t.id.equals(id))).write(
       ContributionsCompanion(
@@ -187,7 +189,7 @@ class FinancesRepository {
     if (contribution.statut != StatutContribution.enAttente) {
       throw AppError.contributionNonEnAttente();
     }
-    await _verifierHabilitation(roleActeur: roleActeur, acteurFideleId: rejeteParFideleId, noeudId: contribution.noeudId);
+    await _verifierDecideur(contribution: contribution, roleActeur: roleActeur, decideurFideleId: rejeteParFideleId);
     await (_db.update(_db.contributions)..where((t) => t.id.equals(id))).write(
       ContributionsCompanion(
         statut: Value(StatutContribution.rejetee.code),
@@ -232,6 +234,8 @@ class FinancesRepository {
             origine: origine.origine.code,
             dateSaisie: maintenant,
             dateValidation: Value(maintenant),
+            // Acte comptable du seul valideur (RG-XI-05) : il en est l'auteur.
+            saisieParFideleId: Value(valideParFideleId),
             valideParFideleId: Value(valideParFideleId),
             motifRejet: Value(motif),
             contributionOrigineId: Value(origine.id),
@@ -271,6 +275,21 @@ class FinancesRepository {
           ),
         )
         .toList(growable: false);
+  }
+
+  /// RG-XI-02 — décision (validation ou rejet) : habilitation, puis
+  /// séparation stricte des tâches (jamais la personne qui a saisi).
+  Future<void> _verifierDecideur({
+    required Contribution contribution,
+    required Role roleActeur,
+    required String decideurFideleId,
+  }) async {
+    await _verifierHabilitation(roleActeur: roleActeur, acteurFideleId: decideurFideleId, noeudId: contribution.noeudId);
+    final erreur = FinancesRules.raisonBlocageSeparationTaches(
+      saisieParFideleId: contribution.saisieParFideleId,
+      decideurFideleId: decideurFideleId,
+    );
+    if (erreur != null) throw erreur;
   }
 
   /// RG-XI-02 — rang pasteur (ou plus), ou trésorier désigné du nœud ; la
@@ -475,6 +494,7 @@ class FinancesRepository {
       statut: StatutContribution.fromCode(row.statut),
       origine: OrigineContribution.fromCode(row.origine),
       dateSaisie: row.dateSaisie,
+      saisieParFideleId: row.saisieParFideleId,
       valideParFideleId: row.valideParFideleId,
       dateValidation: row.dateValidation,
       motifRejet: row.motifRejet,

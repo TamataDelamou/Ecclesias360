@@ -8,7 +8,8 @@ import '../../helpers/auth_gateway_memoire.dart';
 
 void main() {
   testWidgets(
-    'accueil -> créer siège -> créer un fidèle -> saisir une offrande -> valider -> contre-passer -> '
+    'accueil -> créer siège -> créer un fidèle -> saisir une offrande -> le saisissant ne valide pas -> '
+    'une trésorière se connecte et valide -> contre-passer -> '
     'créer un projet -> ajouter une dépense -> créer un engagement -> honorer une échéance',
     (tester) async {
       final database = AppDatabase(NativeDatabase.memory());
@@ -118,12 +119,117 @@ void main() {
       await tester.tap(find.widgetWithText(FilledButton, 'Saisir'));
       await tester.pumpAndSettle();
 
-      // Navigation automatique vers le reçu.
+      // Navigation automatique vers le reçu. L'administrateur a saisi cette
+      // contribution : il ne peut ni la valider ni la rejeter (RG-XI-02,
+      // séparation stricte des tâches — l'administrateur n'y fait pas
+      // exception). Elle attend une autre personne habilitée : comportement
+      // voulu, pas un défaut.
       expect(find.text('5000 GNF'), findsOneWidget);
-      expect(find.widgetWithText(FilledButton, 'Valider'), findsOneWidget);
+      expect(find.widgetWithText(FilledButton, 'Valider'), findsNothing);
+      expect(find.widgetWithText(OutlinedButton, 'Rejeter'), findsNothing);
+      expect(find.textContaining('Vous avez saisi cette contribution'), findsOneWidget);
 
-      // Valide la contribution : l'acteur est la session (administrateur,
-      // tracé par sa fiche liée), RG-XI-02.
+      // Une seconde personne habilitée est nécessaire. Par les écrans réels :
+      // l'administrateur crée la fiche de Marie (avec son téléphone), la
+      // désigne trésorière du nœud (rang membre), puis se déconnecte ; Marie
+      // se connecte (liaison automatique à sa fiche) et valide.
+      for (var i = 0; i < 4; i++) {
+        await tester.tap(find.byType(BackButton));
+        await tester.pumpAndSettle();
+      }
+      await tester.tap(navFideles);
+      await tester.pumpAndSettle();
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('champ_noeud')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Global Service Groupe').last);
+      await tester.pumpAndSettle();
+      await tester.enterText(find.widgetWithText(TextFormField, 'Nom'), 'Sow');
+      await tester.enterText(find.widgetWithText(TextFormField, 'Prénoms'), 'Marie');
+      await tester.tap(find.text('Date de naissance'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('OK'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('champ_sexe')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('feminin').last);
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('champ_statut_civil')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('marie').last);
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(FilledButton, 'Créer'));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Marie Sow'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('Modifier les coordonnées'));
+      await tester.pumpAndSettle();
+      await tester.enterText(find.widgetWithText(TextField, 'Téléphone'), '+224620000077');
+      await tester.tap(find.widgetWithText(FilledButton, 'Enregistrer'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(BackButton));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(BackButton));
+      await tester.pumpAndSettle();
+
+      await tester.tap(navOrganisation);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Global Service Groupe'));
+      await tester.pumpAndSettle();
+      await tester.dragUntilVisible(
+        find.widgetWithText(OutlinedButton, 'Contributions'),
+        find.byType(ListView),
+        const Offset(0, -200),
+      );
+      await tester.tap(find.widgetWithText(OutlinedButton, 'Contributions'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byIcon(Icons.badge_outlined));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('Désigner un trésorier'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(DropdownButtonFormField<String>));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Marie Sow').last);
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(FilledButton, 'Désigner'));
+      await tester.pumpAndSettle();
+      expect(find.text('Marie Sow'), findsOneWidget);
+
+      // Trésoriers -> contributions -> nœud -> arbre, puis déconnexion.
+      for (var i = 0; i < 3; i++) {
+        await tester.tap(find.byType(BackButton));
+        await tester.pumpAndSettle();
+      }
+      await tester.tap(find.text('Paramètres').last);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Se déconnecter'));
+      await tester.pumpAndSettle();
+
+      await tester.enterText(find.byKey(const ValueKey('champIdentifiant')), '+224620000077');
+      await tester.tap(find.text('Recevoir le code'));
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byKey(const ValueKey('champCode')), '123456');
+      await tester.tap(find.text('Se connecter'));
+      await tester.pumpAndSettle();
+
+      await tester.tap(navOrganisation);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Global Service Groupe'));
+      await tester.pumpAndSettle();
+      await tester.dragUntilVisible(
+        find.widgetWithText(OutlinedButton, 'Contributions'),
+        find.byType(ListView),
+        const Offset(0, -200),
+      );
+      await tester.tap(find.widgetWithText(OutlinedButton, 'Contributions'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.textContaining('5000').first);
+      await tester.pumpAndSettle();
+
+      // Valide la contribution : l'acteur est la session (Marie, trésorière,
+      // tracée par sa fiche liée), RG-XI-02.
       // Le bouton de la fiche et celui du dialogue partagent le même
       // libellé « Valider » ; `.last` cible celui du dialogue une fois
       // ouvert (le premier tap n'a, lui, qu'une seule correspondance).
@@ -213,6 +319,8 @@ void main() {
         find.byType(ListView),
         const Offset(0, -200),
       );
+      await tester.ensureVisible(find.widgetWithText(OutlinedButton, 'Engagements et échéances'));
+      await tester.pumpAndSettle();
       await tester.tap(find.widgetWithText(OutlinedButton, 'Engagements et échéances'));
       await tester.pumpAndSettle();
 

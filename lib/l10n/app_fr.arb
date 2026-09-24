@@ -1125,6 +1125,10 @@
   "@financesAccesReserve": {
     "description": "Message affiché à un compte sans habilitation financière (RG-SEC-06)."
   },
+  "financesDecisionParLeSaisissant": "Vous avez saisi cette contribution : une autre personne habilitée doit la valider ou la rejeter (séparation des tâches).",
+  "@financesDecisionParLeSaisissant": {
+    "description": "Message à l'auteur de la saisie d'une contribution en attente (RG-XI-02)."
+  },
   "financesFicheLieeRequise": "Liez d'abord votre compte à votre fiche fidèle (« Lier mon compte à cette fiche ») : le valideur tracé est toujours une personne du registre.",
   "@financesFicheLieeRequise": {
     "description": "Message affiché à un compte habilité mais sans fiche liée (RG-XI-02)."

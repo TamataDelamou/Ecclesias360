@@ -1680,6 +1680,12 @@ abstract class AppLocalizations {
   /// **'Accès réservé à un pasteur, au trésorier du nœud ou au fidèle concerné.'**
   String get financesAccesReserve;
 
+  /// Message à l'auteur de la saisie d'une contribution en attente (RG-XI-02).
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous avez saisi cette contribution : une autre personne habilitée doit la valider ou la rejeter (séparation des tâches).'**
+  String get financesDecisionParLeSaisissant;
+
   /// Message affiché à un compte habilité mais sans fiche liée (RG-XI-02).
   ///
   /// In fr, this message translates to:

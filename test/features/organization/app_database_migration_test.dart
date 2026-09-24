@@ -703,4 +703,60 @@ void main() {
 
     await db.close();
   });
+
+  test('un fichier créé en schéma v18 reçoit l\'auteur de la saisie des contributions (RG-XI-02)', () async {
+    final fichier = File(
+      path.join(Directory.systemTemp.path, 'ecclesias_migration_test_v18_${DateTime.now().microsecondsSinceEpoch}.sqlite'),
+    );
+    addTearDown(() {
+      if (fichier.existsSync()) fichier.deleteSync();
+    });
+
+    final dbInitiale = AppDatabase(NativeDatabase(fichier));
+    await dbInitiale.into(dbInitiale.organisationNodes).insert(
+          OrganisationNodesCompanion.insert(
+            id: 'siege-1',
+            typeNoeud: 'siege',
+            nom: 'GSG',
+            codeInterne: 'GSG-SIEGE',
+            path: '/siege-1/',
+            depth: 0,
+            createdAt: DateTime(2026, 1, 1),
+            updatedAt: DateTime(2026, 1, 1),
+          ),
+        );
+    final typeOffrandeId = (await dbInitiale.select(dbInitiale.typesOffrande).get()).first.id;
+    await dbInitiale.into(dbInitiale.contributions).insert(
+          ContributionsCompanion.insert(
+            id: 'contribution-1',
+            typeOffrandeId: typeOffrandeId,
+            montant: 1000,
+            devise: 'GNF',
+            noeudId: 'siege-1',
+            modePaiement: 'especes',
+            origine: 'mobile',
+            dateSaisie: DateTime(2026, 1, 1),
+          ),
+        );
+    await dbInitiale.close();
+
+    // Ramène le fichier au schéma v18 exact : pas d'auteur de saisie.
+    final connexionBrute = sqlite3.sqlite3.open(fichier.path);
+    connexionBrute.execute('''
+      ALTER TABLE contributions DROP COLUMN saisie_par_fidele_id;
+      PRAGMA user_version = 18;
+    ''');
+    connexionBrute.close();
+
+    final db = AppDatabase(NativeDatabase(fichier));
+    // La contribution antérieure est conservée, sans auteur connu.
+    final existante = await db.select(db.contributions).getSingle();
+    expect(existante.montant, 1000);
+    expect(existante.saisieParFideleId, isNull);
+    await (db.update(db.contributions)..where((t) => t.id.equals('contribution-1')))
+        .write(const ContributionsCompanion(saisieParFideleId: Value('fidele-x')));
+    expect((await db.select(db.contributions).getSingle()).saisieParFideleId, 'fidele-x');
+
+    await db.close();
+  });
 }

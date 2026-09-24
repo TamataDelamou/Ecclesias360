@@ -842,6 +842,10 @@ class AppLocalizationsPt extends AppLocalizations {
       'Acesso reservado a um pastor, ao tesoureiro do nó ou ao fiel em causa.';
 
   @override
+  String get financesDecisionParLeSaisissant =>
+      'Registou esta contribuição: outra pessoa habilitada deve validá-la ou rejeitá-la (separação de funções).';
+
+  @override
   String get financesFicheLieeRequise =>
       'Vincule primeiro a sua conta à sua ficha (\"Vincular a minha conta a esta ficha\"): o validador registado é sempre uma pessoa do registo.';
 

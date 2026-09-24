@@ -841,6 +841,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Access restricted to a pastor, the node treasurer or the member concerned.';
 
   @override
+  String get financesDecisionParLeSaisissant =>
+      'You entered this contribution: another authorised person must validate or reject it (separation of duties).';
+
+  @override
   String get financesFicheLieeRequise =>
       'First link your account to your member record (\"Link my account to this record\"): the recorded validator is always a person from the register.';
 
