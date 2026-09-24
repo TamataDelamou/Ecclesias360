@@ -5,7 +5,7 @@ import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../cultes/application/culte_controller.dart';
 import '../../cultes/domain/models/culte.dart';
-import '../../fideles/application/fidele_controller.dart';
+import '../../auth/application/session_controller.dart';
 import '../../parametres/domain/models/role.dart';
 import '../application/patrimoine_controller.dart';
 import '../domain/models/bien.dart';
@@ -16,6 +16,7 @@ import '../domain/models/objet_reservation.dart';
 import '../domain/models/reservation_bien.dart';
 import '../domain/models/type_mouvement_stock.dart';
 import '../domain/models/type_sortie_bien.dart';
+import 'acces_patrimoine.dart';
 
 /// Fiche d'un bien (RG-XX-01) — sert aussi d'écran d'action pour le
 /// signalement d'état/panne (écran 4 du Cahier), la sortie du patrimoine
@@ -31,6 +32,9 @@ class BienDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.read<PatrimoineController>();
     final l10n = AppLocalizations.of(context)!;
+    if (!peutGererBiens(context.watch<SessionController>())) {
+      return EcranPatrimoineAccesReserve(titre: l10n.patrimoineFicheTitre);
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.patrimoineFicheTitre)),
@@ -98,14 +102,11 @@ class _BienDetailBodyState extends State<_BienDetailBody> {
     }
   }
 
-  Future<void> _sortir(BuildContext context) async {
-    final fideleController = context.read<FideleController>();
-    final fidelesDuNoeud = fideleController.fideles.where((f) => f.noeudId == _bien.noeudId).toList();
-    if (fidelesDuNoeud.isEmpty) return;
-
-    Role roleActeur = Role.pasteur;
+  /// RG-XX-02 : l'acteur est la session (rôle et fiche liée, tracée comme
+  /// valideur de la sortie) — jamais choisi dans une liste.
+  Future<void> _sortir(BuildContext context, String valideParFideleId) async {
+    final session = context.read<SessionController>();
     TypeSortieBien typeSortie = TypeSortieBien.cession;
-    String valideParFideleId = fidelesDuNoeud.first.id;
     final motifController = TextEditingController();
 
     final confirme = await showDialog<bool>(
@@ -133,20 +134,6 @@ class _BienDetailBodyState extends State<_BienDetailBody> {
                     ],
                     onChanged: (valeur) => setState(() => typeSortie = valeur ?? typeSortie),
                   ),
-                  DropdownButtonFormField<Role>(
-                    isExpanded: true,
-                    initialValue: roleActeur,
-                    decoration: InputDecoration(labelText: l10n.patrimoineChampRoleActeur),
-                    items: Role.values.map((r) => DropdownMenuItem(value: r, child: Text(r.code))).toList(),
-                    onChanged: (valeur) => setState(() => roleActeur = valeur ?? roleActeur),
-                  ),
-                  DropdownButtonFormField<String>(
-                    isExpanded: true,
-                    initialValue: valideParFideleId,
-                    decoration: InputDecoration(labelText: l10n.patrimoineChampValidePar),
-                    items: fidelesDuNoeud.map((f) => DropdownMenuItem(value: f.id, child: Text(f.nomComplet))).toList(),
-                    onChanged: (valeur) => setState(() => valideParFideleId = valeur ?? valideParFideleId),
-                  ),
                   TextField(
                     controller: motifController,
                     decoration: InputDecoration(labelText: l10n.patrimoineChampMotif),
@@ -166,7 +153,7 @@ class _BienDetailBodyState extends State<_BienDetailBody> {
     if (confirme == true) {
       await widget.controller.sortirBien(
         id: _bien.id,
-        roleActeur: roleActeur,
+        roleActeur: session.role,
         typeSortie: typeSortie,
         valideParFideleId: valideParFideleId,
         motif: motifController.text.trim().isNotEmpty ? motifController.text.trim() : null,
@@ -356,6 +343,7 @@ class _BienDetailBodyState extends State<_BienDetailBody> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final session = context.watch<SessionController>();
 
     return StreamBuilder<List<CategorieBien>>(
       stream: widget.controller.watchCategoriesBien(),
@@ -400,7 +388,15 @@ class _BienDetailBodyState extends State<_BienDetailBody> {
               const SizedBox(height: AppDimensions.spacingSm),
               OutlinedButton(onPressed: () => _reserver(context), child: Text(l10n.patrimoineReserverBouton)),
               const SizedBox(height: AppDimensions.spacingSm),
-              OutlinedButton(onPressed: () => _sortir(context), child: Text(l10n.patrimoineSortirBouton)),
+              // RG-XX-02 : sortie réservée à un pasteur (ou plus), tracé par sa fiche.
+              if (session.peut(Role.pasteur))
+                if (session.session?.fideleId == null)
+                  Text(l10n.authFicheLieeRequise)
+                else
+                  OutlinedButton(
+                    onPressed: () => _sortir(context, session.session!.fideleId!),
+                    child: Text(l10n.patrimoineSortirBouton),
+                  ),
               const SizedBox(height: AppDimensions.spacingMd),
             ],
             if (estGestionStock) ...[

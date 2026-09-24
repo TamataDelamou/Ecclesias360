@@ -6,9 +6,11 @@ import '../../../core/constants/app_routes.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../../../core/widgets/staggered_fade_in.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
 import '../application/patrimoine_controller.dart';
 import '../domain/models/campagne_inventaire.dart';
 import '../domain/models/statut_campagne_inventaire.dart';
+import 'acces_patrimoine.dart';
 
 /// Écran « Campagnes d'inventaire (liste) » du Cahier (RG-XX-04) — accessible
 /// depuis [BiensListScreen] par l'icône de la barre d'app, même motif que
@@ -22,6 +24,9 @@ class CampagnesInventaireScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.read<PatrimoineController>();
     final l10n = AppLocalizations.of(context)!;
+    if (!peutGererBiens(context.watch<SessionController>())) {
+      return EcranPatrimoineAccesReserve(titre: l10n.patrimoineCampagnesTitre);
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.patrimoineCampagnesTitre)),

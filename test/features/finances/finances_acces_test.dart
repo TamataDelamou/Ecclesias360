@@ -91,7 +91,8 @@ void main() {
     final donnees = (await tester.runAsync(preparer))!;
 
     await ouvrirFicheNoeud(tester, donnees.db);
-    await tester.dragUntilVisible(find.widgetWithText(OutlinedButton, 'Biens'), find.byType(ListView), const Offset(0, -200));
+    // Fait défiler la fiche jusqu'en bas : tous les boutons ont été construits.
+    await tester.drag(find.byType(ListView), const Offset(0, -3000));
     await tester.pumpAndSettle();
     expect(find.widgetWithText(OutlinedButton, 'Contributions'), findsNothing);
     expect(find.widgetWithText(OutlinedButton, 'Projets'), findsNothing);

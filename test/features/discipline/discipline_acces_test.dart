@@ -93,11 +93,8 @@ void main() {
 
     await ouvrirFicheNoeud(tester, donnees.db);
 
-    await tester.dragUntilVisible(
-      find.widgetWithText(OutlinedButton, 'Biens'),
-      find.byType(ListView),
-      const Offset(0, -200),
-    );
+    // Fait défiler la fiche jusqu'en bas : tous les boutons ont été construits.
+    await tester.drag(find.byType(ListView), const Offset(0, -3000));
     await tester.pumpAndSettle();
     expect(find.widgetWithText(OutlinedButton, 'Dossiers disciplinaires'), findsNothing);
     await donnees.db.close();

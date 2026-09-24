@@ -849,7 +849,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Usted registró esta contribución: otra persona habilitada debe validarla o rechazarla (separación de funciones).';
 
   @override
-  String get financesFicheLieeRequise =>
+  String get authFicheLieeRequise =>
       'Vincule primero su cuenta a su ficha (\"Vincular mi cuenta a esta ficha\"): el validador registrado es siempre una persona del registro.';
 
   @override
@@ -1079,10 +1079,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get patrimoineTypeSortieMiseAuRebut => 'Desecho';
 
   @override
-  String get patrimoineChampRoleActeur => 'Rol del actor';
-
-  @override
-  String get patrimoineChampValidePar => 'Validado por';
+  String get patrimoineAccesReserve =>
+      'Acceso reservado a los responsables del nodo (pastor, responsable o administrador).';
 
   @override
   String get patrimoineChampMotif => 'Motivo';

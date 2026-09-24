@@ -129,7 +129,7 @@ class ContributionsListScreen extends StatelessWidget {
     // pour ne jamais pouvoir décider de sa propre saisie.
     if (saisieParFideleId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context)!.financesFicheLieeRequise)),
+        SnackBar(content: Text(AppLocalizations.of(context)!.authFicheLieeRequise)),
       );
       return;
     }

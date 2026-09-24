@@ -113,7 +113,7 @@ class EngagementsListScreen extends StatelessWidget {
     final saisieParFideleId = context.read<SessionController>().session?.fideleId;
     if (saisieParFideleId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context)!.financesFicheLieeRequise)),
+        SnackBar(content: Text(AppLocalizations.of(context)!.authFicheLieeRequise)),
       );
       return;
     }

@@ -845,7 +845,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'You entered this contribution: another authorised person must validate or reject it (separation of duties).';
 
   @override
-  String get financesFicheLieeRequise =>
+  String get authFicheLieeRequise =>
       'First link your account to your member record (\"Link my account to this record\"): the recorded validator is always a person from the register.';
 
   @override
@@ -1074,10 +1074,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get patrimoineTypeSortieMiseAuRebut => 'Scrapping';
 
   @override
-  String get patrimoineChampRoleActeur => 'Actor role';
-
-  @override
-  String get patrimoineChampValidePar => 'Validated by';
+  String get patrimoineAccesReserve =>
+      'Access restricted to the node\'s leaders (pastor, leader or administrator).';
 
   @override
   String get patrimoineChampMotif => 'Reason';

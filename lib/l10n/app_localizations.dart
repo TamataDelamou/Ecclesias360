@@ -1686,11 +1686,11 @@ abstract class AppLocalizations {
   /// **'Vous avez saisi cette contribution : une autre personne habilitée doit la valider ou la rejeter (séparation des tâches).'**
   String get financesDecisionParLeSaisissant;
 
-  /// Message affiché à un compte habilité mais sans fiche liée (RG-XI-02).
+  /// Message affiché à un compte habilité mais sans fiche liée : le valideur tracé est une personne du registre (RG-XI-02, RG-XX-02).
   ///
   /// In fr, this message translates to:
   /// **'Liez d\'abord votre compte à votre fiche fidèle (« Lier mon compte à cette fiche ») : le valideur tracé est toujours une personne du registre.'**
-  String get financesFicheLieeRequise;
+  String get authFicheLieeRequise;
 
   /// Bouton de validation comptable d'une contribution.
   ///
@@ -2118,17 +2118,11 @@ abstract class AppLocalizations {
   /// **'Mise au rebut'**
   String get patrimoineTypeSortieMiseAuRebut;
 
-  /// Libellé du champ rôle de l'acteur validant une sortie de bien.
+  /// Message affiché à un compte sans accès au patrimoine du nœud (policy biens_acces, 0019).
   ///
   /// In fr, this message translates to:
-  /// **'Rôle de l\'acteur'**
-  String get patrimoineChampRoleActeur;
-
-  /// Libellé du champ fidèle validant une sortie de bien.
-  ///
-  /// In fr, this message translates to:
-  /// **'Validé par'**
-  String get patrimoineChampValidePar;
+  /// **'Accès réservé aux responsables du nœud (pasteur, responsable ou administrateur).'**
+  String get patrimoineAccesReserve;
 
   /// Libellé du champ motif.
   ///

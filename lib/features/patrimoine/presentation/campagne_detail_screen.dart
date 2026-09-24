@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
 import '../application/patrimoine_controller.dart';
 import '../domain/models/bien.dart';
 import '../domain/models/campagne_inventaire.dart';
@@ -10,6 +11,7 @@ import '../domain/models/categorie_bien.dart';
 import '../domain/models/etat_bien.dart';
 import '../domain/models/pointage_inventaire.dart';
 import '../domain/models/statut_campagne_inventaire.dart';
+import 'acces_patrimoine.dart';
 
 /// Fiche d'une campagne d'inventaire (RG-XX-04, écran 5 du Cahier) : liste
 /// des pointages terrain et bouton de clôture. La liste des biens du nœud,
@@ -27,6 +29,9 @@ class CampagneDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.read<PatrimoineController>();
     final l10n = AppLocalizations.of(context)!;
+    if (!peutGererBiens(context.watch<SessionController>())) {
+      return EcranPatrimoineAccesReserve(titre: l10n.patrimoineCampagneFicheTitre);
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.patrimoineCampagneFicheTitre)),

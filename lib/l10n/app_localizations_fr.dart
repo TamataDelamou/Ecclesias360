@@ -849,7 +849,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vous avez saisi cette contribution : une autre personne habilitée doit la valider ou la rejeter (séparation des tâches).';
 
   @override
-  String get financesFicheLieeRequise =>
+  String get authFicheLieeRequise =>
       'Liez d\'abord votre compte à votre fiche fidèle (« Lier mon compte à cette fiche ») : le valideur tracé est toujours une personne du registre.';
 
   @override
@@ -1079,10 +1079,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get patrimoineTypeSortieMiseAuRebut => 'Mise au rebut';
 
   @override
-  String get patrimoineChampRoleActeur => 'Rôle de l\'acteur';
-
-  @override
-  String get patrimoineChampValidePar => 'Validé par';
+  String get patrimoineAccesReserve =>
+      'Accès réservé aux responsables du nœud (pasteur, responsable ou administrateur).';
 
   @override
   String get patrimoineChampMotif => 'Motif';

@@ -130,7 +130,7 @@ class ProjetDetailScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: AppDimensions.spacingMd),
                       if (acces.fideleId == null)
-                        Text(l10n.financesFicheLieeRequise)
+                        Text(l10n.authFicheLieeRequise)
                       else
                         FilledButton(
                           onPressed: () => _ajouterDepense(context, controller, projet, acces.fideleId!),

@@ -1129,9 +1129,9 @@
   "@financesDecisionParLeSaisissant": {
     "description": "Message à l'auteur de la saisie d'une contribution en attente (RG-XI-02)."
   },
-  "financesFicheLieeRequise": "Liez d'abord votre compte à votre fiche fidèle (« Lier mon compte à cette fiche ») : le valideur tracé est toujours une personne du registre.",
-  "@financesFicheLieeRequise": {
-    "description": "Message affiché à un compte habilité mais sans fiche liée (RG-XI-02)."
+  "authFicheLieeRequise": "Liez d'abord votre compte à votre fiche fidèle (« Lier mon compte à cette fiche ») : le valideur tracé est toujours une personne du registre.",
+  "@authFicheLieeRequise": {
+    "description": "Message affiché à un compte habilité mais sans fiche liée : le valideur tracé est une personne du registre (RG-XI-02, RG-XX-02)."
   },
   "financesValiderBouton": "Valider",
   "@financesValiderBouton": {
@@ -1448,13 +1448,9 @@
   "@patrimoineTypeSortieMiseAuRebut": {
     "description": "Libellé du type de sortie « mise au rebut »."
   },
-  "patrimoineChampRoleActeur": "Rôle de l'acteur",
-  "@patrimoineChampRoleActeur": {
-    "description": "Libellé du champ rôle de l'acteur validant une sortie de bien."
-  },
-  "patrimoineChampValidePar": "Validé par",
-  "@patrimoineChampValidePar": {
-    "description": "Libellé du champ fidèle validant une sortie de bien."
+  "patrimoineAccesReserve": "Accès réservé aux responsables du nœud (pasteur, responsable ou administrateur).",
+  "@patrimoineAccesReserve": {
+    "description": "Message affiché à un compte sans accès au patrimoine du nœud (policy biens_acces, 0019)."
   },
   "patrimoineChampMotif": "Motif",
   "@patrimoineChampMotif": {

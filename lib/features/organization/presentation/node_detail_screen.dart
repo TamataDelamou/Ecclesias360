@@ -5,8 +5,10 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
 import '../../discipline/presentation/acces_discipline.dart';
 import '../../finances/presentation/acces_finances.dart';
+import '../../patrimoine/presentation/acces_patrimoine.dart';
 import '../application/organisation_controller.dart';
 import '../domain/models/statut_noeud.dart';
 
@@ -156,12 +158,15 @@ class NodeDetailScreen extends StatelessWidget {
               ],
             ),
           ),
-          OutlinedButton.icon(
-            icon: const Icon(Icons.inventory_2_outlined),
-            label: Text(l10n.patrimoineTitre),
-            onPressed: () => context.push(AppRoutes.biensDuNoeud(noeud.id)),
-          ),
-          const SizedBox(height: AppDimensions.spacingSm),
+          // Patrimoine : périmètre, approché localement par le rang responsable.
+          if (peutGererBiens(context.watch<SessionController>())) ...[
+            OutlinedButton.icon(
+              icon: const Icon(Icons.inventory_2_outlined),
+              label: Text(l10n.patrimoineTitre),
+              onPressed: () => context.push(AppRoutes.biensDuNoeud(noeud.id)),
+            ),
+            const SizedBox(height: AppDimensions.spacingSm),
+          ],
           OutlinedButton.icon(
             icon: const Icon(Icons.account_balance_outlined),
             label: Text(l10n.comptabiliteTitre),

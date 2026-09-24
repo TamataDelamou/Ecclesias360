@@ -7,10 +7,12 @@ import '../../../core/theme/app_dimensions.dart';
 import '../../../core/theme/design_tokens.dart';
 import '../../../core/widgets/staggered_fade_in.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
 import '../application/patrimoine_controller.dart';
 import '../domain/models/bien.dart';
 import '../domain/models/categorie_bien.dart';
 import '../domain/models/etat_bien.dart';
+import 'acces_patrimoine.dart';
 
 /// Écran « Inventaire des biens (liste) » du Cahier (RG-XX-01), enrichi de
 /// la section « Stocks et seuils d'alerte » (RG-XX-05) — même motif de
@@ -27,6 +29,9 @@ class BiensListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.read<PatrimoineController>();
     final l10n = AppLocalizations.of(context)!;
+    if (!peutGererBiens(context.watch<SessionController>())) {
+      return EcranPatrimoineAccesReserve(titre: l10n.patrimoineTitre);
+    }
 
     return StreamBuilder<List<CategorieBien>>(
       stream: controller.watchCategoriesBien(),

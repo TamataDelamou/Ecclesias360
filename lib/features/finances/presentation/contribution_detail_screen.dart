@@ -157,7 +157,7 @@ class _ContributionDetailBodyState extends State<_ContributionDetailBody> {
         (_contribution.statut == StatutContribution.validee && !_contribution.estContrePassation);
     if (!aDecider || !widget.acces.peutGererContributions(_contribution.noeudId)) return const [];
     final acteurFideleId = widget.acces.fideleId;
-    if (acteurFideleId == null) return [Text(l10n.financesFicheLieeRequise)];
+    if (acteurFideleId == null) return [Text(l10n.authFicheLieeRequise)];
     // RG-XI-02 : séparation stricte — la personne qui a saisi ne décide pas ;
     // la contribution attend une autre personne habilitée (comportement voulu).
     if (_contribution.statut == StatutContribution.enAttente && _contribution.saisieParFideleId == acteurFideleId) {
