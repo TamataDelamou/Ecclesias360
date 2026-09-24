@@ -321,3 +321,76 @@ prérequis de phase existent — voir tableau §7.
    comme un référentiel extensible en données (table paramétrable), jamais comme un enum Dart figé
    dans le code. À vérifier explicitement au moment de l'architecture du Module XXIV.
 
+
+---
+
+## 13. Registre — fonctionnalités actées, non encore construites
+
+> Intentions tranchées par le porteur du projet, consignées pour être reprises **après épuisement
+> de la liste de modules en cours** (câblage post-RG-SEC-01, puis Phases 4, 5, 6). Aucune ne
+> déclenche de code tant qu'elle n'est pas explicitement reprise. Chaque entrée précise ce qui est
+> décidé, ce qui reste à réconcilier au moment de la construction, et les dépendances externes.
+
+1. **Accès anonyme en lecture à la Bible (Module XXIV) et aux Cantiques.**
+   - Décidé : la lecture (livres / chapitres / versets ; recueils / cantiques) est accessible **sans
+     compte**, au même titre que la médiathèque (Module XIII) pour l'utilisateur non affilié.
+     Seules les fonctionnalités personnelles — signets, notes, plans de lecture, favoris — exigent
+     un compte.
+   - **Écart avec la règle source, à signaler et à amender formellement** : RG-SEC-06bis, tel
+     qu'écrit au Cahier, ne mentionne que la médiathèque, et pour un utilisateur *authentifié*
+     non affilié — pas un accès sans compte. Cette extension doit être inscrite **au Cahier**
+     (amendement de RG-SEC-06bis) au moment de la reconstruction de ces modules, jamais seulement
+     câblée en code sans mise à jour de la règle.
+   - Mécanisme : un motif de préfixes de routes publiques (`_publicPrefixes`) existait avant le
+     sinistre pour Bible/Cantiques ; **il n'existe plus dans le dépôt ni dans
+     `RECONSTRUCTION_ecclesias360.md`** — à reconstruire. État actuel à faire évoluer : la garde
+     `redirectionSession` (`core/router/app_router.dart`) exige une session pour toute route.
+   - Côté serveur : les policies de ces tables (déjà actives par défaut depuis `0019`, voir §10)
+     devront ouvrir la lecture au rôle `anon` pour le seul contenu biblique/cantiques public — ce
+     serait la **première policy `anon` du projet** (0019 n'en contient aucune, invariant vérifié
+     par son test) : l'exception devra être nommée et testée comme telle, jamais généralisée.
+
+2. **Page d'accueil repensée comme page de décision.**
+   - Décidé : après l'onboarding, l'utilisateur atterrit sur un accueil qui sert de hub de
+     navigation et d'action — paramètres globaux (langue, thème), accès direct à la lecture
+     Bible / Cantiques / paroles de chants — plutôt que directement sur un tableau de bord
+     personnalisé. Prolonge §12 points 1 à 3 (regroupement par axe, accueil « page de direction »,
+     langue/thème globaux influençant Bible/Cantiques), qui restent valables.
+   - **À réconcilier au moment de la construction** : RG-SEC-06ter (déjà au Cahier) décrit, pour
+     l'utilisateur authentifié, un accueil personnalisé par widgets (cultes à venir, contributions
+     récentes, contenus recommandés, puis préférences). La page de décision doit être conçue
+     **compatible** avec RG-SEC-06ter une fois connecté — par exemple hub en tête, widgets
+     personnels ensuite — et non comme un remplacement qui l'annule.
+   - Articulation avec l'entrée 1 : sans compte, la page de décision est aussi le point d'entrée
+     de la lecture anonyme Bible/Cantiques.
+
+3. **Écran d'authentification : e-mail par défaut, connexion par compte Google.**
+   - E-mail en premier (au lieu du téléphone, ordre actuel de `ConnexionScreen`) : simple choix
+     d'interface, sans incidence sur les règles.
+   - **Connexion Google : extension réelle au-delà de RG-SEC-01 tel que construit** (aujourd'hui
+     téléphone/e-mail + OTP / Magic Link uniquement, aucun fournisseur OAuth tiers). Nécessite la
+     configuration d'un fournisseur OAuth Google dans Supabase (identifiants Google Cloud : client
+     OAuth, écran de consentement, URI de redirection par plateforme) — **dépendance
+     d'infrastructure externe**, à traiter avec la même prudence que GSG ID (RG-SEC-01bis, reporté)
+     ou Twilio (non configuré) : rien n'est construit tant que ces identifiants ne sont pas fournis
+     et vérifiables de bout en bout.
+   - À décider au moment de la construction : la liaison compte ↔ fiche (`LiaisonCompteRules`)
+     s'appuie sur un identifiant **vérifié** ; l'e-mail d'un compte Google est vérifié par Google —
+     confirmer que la correspondance automatique et le garde-fou « fiche déjà liée » s'appliquent à
+     l'identique, et que ce fournisseur ne crée pas de second compte pour une même personne déjà
+     inscrite par OTP (fusion ou refus à trancher).
+
+4. **Explication contextuelle d'un passage biblique sélectionné par l'IA.**
+   - Décidé : s'inscrit dans le périmètre de l'assistant IA (Module XVI), en particulier
+     **RG-XVI-02** (toute réponse générée à partir de la Bible numérique référence sa source
+     consultée, affichée pour vérification). Fonctionnalité **opt-in**, activable dans les
+     paramètres, **jamais active par défaut**. Valeurs IA via `assets/config/ai_roles.json` (§5,
+     §6 — rôle à nommer dans le pool fermé, probablement Logos ou Charmeine, réservés au Module XVI),
+     jamais en dur.
+   - **Point à vérifier au moment de la construction** : RG-XVI-03 prévoit un mode dégradé hors
+     connexion sur un sous-ensemble embarqué (versets, définitions courantes) et la mise en file
+     d'attente des requêtes cloud. Une explication de passage étant généralement plus riche, elle
+     nécessitera probablement un appel cloud : la documenter **comme telle** (file d'attente hors
+     connexion, pas de réponse immédiate), plutôt que la présumer disponible hors ligne.
+   - Garde-fous déjà applicables (§6) : suggestion uniquement, jamais d'écriture en base ;
+     RG-XVI-01 (n'interroge que ce à quoi l'utilisateur a accès).
