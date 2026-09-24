@@ -135,7 +135,7 @@ class _ContenuMediathequeDetailScreenState extends State<ContenuMediathequeDetai
                                 : IconButton(
                                     icon: const Icon(Icons.flag_outlined),
                                     tooltip: l10n.mediathequeSignalerCommentaire,
-                                    onPressed: () => controller.signalerCommentaire(commentaire.id),
+                                    onPressed: () => controller.signalerCommentaire(commentaireId: commentaire.id, fideleId: fideleActifId),
                                   ),
                           ),
                         ),

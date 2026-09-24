@@ -228,6 +228,7 @@ const List<(String code, String libelle, String type)> comptesComptablesDeDepart
   ContenusMediatheque,
   Favoris,
   Commentaires,
+  SignalementsCommentaire,
   ComptesUtilisateurs,
   JournalLiaisonsComptes,
   SyncOutbox,
@@ -236,7 +237,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 21;
+  int get schemaVersion => 22;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -402,6 +403,16 @@ class AppDatabase extends _$AppDatabase {
           // v20 -> v21 : journal des modifications des paramètres (RG-XXIII-06).
           if (from < 21) {
             await m.createTable(journalParametres);
+          }
+          // v21 -> v22 : signalements attribués et décision de modération tracée
+          // (RG-XIII-03). Colonnes ajoutées seulement si absentes : une base
+          // antérieure à v17 vient de créer Commentaires avec la définition courante.
+          if (from < 22) {
+            if (!await _colonneExiste('commentaires', 'modere_par')) {
+              await m.addColumn(commentaires, commentaires.moderePar);
+              await m.addColumn(commentaires, commentaires.dateModeration);
+            }
+            await m.createTable(signalementsCommentaire);
           }
         },
         beforeOpen: (details) async {

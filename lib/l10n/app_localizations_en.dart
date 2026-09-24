@@ -1443,6 +1443,47 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mediathequeSignalerCommentaire => 'Report';
 
   @override
+  String get mediathequeModerationTitre => 'Comment moderation';
+
+  @override
+  String get mediathequeModerationReservee =>
+      'Moderation restricted to a pastor (or higher role).';
+
+  @override
+  String get mediathequeModerationSansFiche =>
+      'Link your account to your member record to decide: a moderation decision records a registered person.';
+
+  @override
+  String get mediathequeModerationAucun => 'No comment to moderate.';
+
+  @override
+  String get mediathequeModerationMasque => 'Hidden';
+
+  @override
+  String get mediathequeModerationPublieSignale => 'Published, reported';
+
+  @override
+  String mediathequeModerationAuteur(String auteur) {
+    return 'By $auteur';
+  }
+
+  @override
+  String mediathequeModerationSignalePar(String nom) {
+    return 'Reported by $nom';
+  }
+
+  @override
+  String mediathequeModerationSignaleParMotif(String nom, String motif) {
+    return 'Reported by $nom: $motif';
+  }
+
+  @override
+  String get mediathequeModerationApprouver => 'Approve';
+
+  @override
+  String get mediathequeModerationRejeter => 'Reject';
+
+  @override
   String get mediathequeChampCommentaire => 'Your comment';
 
   @override

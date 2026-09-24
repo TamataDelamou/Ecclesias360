@@ -1,11 +1,13 @@
 import 'package:drift/drift.dart';
 
+import '../../../core/audit/acteur.dart';
 import '../../../core/theme/app_defaults.dart';
 import '../../../core/utils/id_generator.dart';
 import '../../organization/data/local/app_database.dart';
 import '../domain/models/commentaire.dart';
 import '../domain/models/contenu_mediatheque.dart';
 import '../domain/models/favori.dart';
+import '../domain/models/signalement_commentaire.dart';
 import '../domain/models/statut_moderation_commentaire.dart';
 import '../domain/models/statut_publication_contenu.dart';
 import '../domain/models/type_contenu_mediatheque.dart';
@@ -248,30 +250,119 @@ class MediathequeRepository {
     return _commentaireToDomain(row);
   }
 
-  /// RG-XIII-03 — un signalement de plus sur un commentaire publié ; masque
-  /// automatiquement au-delà du seuil paramétrable, en attendant une
-  /// décision de modération.
-  Future<void> signalerCommentaire(String id) async {
-    final row = await (_db.select(_db.commentaires)..where((t) => t.id.equals(id))).getSingle();
-    final nouveauNombre = row.nombreSignalements + 1;
-    final doitMasquer = StatutModerationCommentaire.fromCode(row.statutModeration) ==
-            StatutModerationCommentaire.publie &&
-        MediathequeRules.doitMasquerAutomatiquement(
-          nombreSignalements: nouveauNombre,
-          seuil: AppDefaults.mediathequeSeuilSignalementsAvantMasquage,
-        );
+  /// RG-XIII-03 — signalement **attribué** : un fidèle ne signale qu'une
+  /// fois un même commentaire (contrainte unique), jamais le sien. Le
+  /// commentaire publié est masqué automatiquement quand les **signaleurs
+  /// distincts** depuis la dernière décision de modération atteignent le
+  /// seuil — trois faux signalements d'un même compte ne masquent plus rien.
+  /// Miroir du déclencheur serveur de 0025.
+  Future<void> signalerCommentaire({required String commentaireId, required String? fideleId, String? motif}) async {
+    await _db.transaction(() async {
+      final commentaire =
+          await (_db.select(_db.commentaires)..where((t) => t.id.equals(commentaireId))).getSingle();
+      final dejaSignale = fideleId != null &&
+          await (_db.select(_db.signalementsCommentaire)
+                    ..where((t) => t.commentaireId.equals(commentaireId) & t.fideleId.equals(fideleId)))
+                  .getSingleOrNull() !=
+              null;
+      final refus = MediathequeRules.raisonBlocageSignalement(
+        fideleId: fideleId,
+        auteurCommentaireId: commentaire.fideleId,
+        dejaSignale: dejaSignale,
+      );
+      if (refus != null) throw refus;
+
+      await _db.into(_db.signalementsCommentaire).insert(
+            SignalementsCommentaireCompanion.insert(
+              id: IdGenerator.newId(),
+              commentaireId: commentaireId,
+              fideleId: fideleId!,
+              motif: Value(motif),
+              createdAt: DateTime.now(),
+            ),
+          );
+
+      final signaleurs = await _signaleursDistinctsDepuisModeration(commentaire);
+      final doitMasquer =
+          StatutModerationCommentaire.fromCode(commentaire.statutModeration) == StatutModerationCommentaire.publie &&
+              MediathequeRules.doitMasquerAutomatiquement(
+                signaleursDistincts: signaleurs,
+                seuil: AppDefaults.mediathequeSeuilSignalementsAvantMasquage,
+              );
+      await (_db.update(_db.commentaires)..where((t) => t.id.equals(commentaireId))).write(
+        CommentairesCompanion(
+          nombreSignalements: Value(signaleurs),
+          statutModeration: doitMasquer ? Value(StatutModerationCommentaire.masque.code) : const Value.absent(),
+        ),
+      );
+    });
+  }
+
+  Future<int> _signaleursDistinctsDepuisModeration(CommentaireRow commentaire) async {
+    final depuis = commentaire.dateModeration;
+    final signalements = await (_db.select(_db.signalementsCommentaire)
+          ..where(
+            (t) =>
+                t.commentaireId.equals(commentaire.id) &
+                (depuis == null ? const Constant(true) : t.createdAt.isBiggerThanValue(depuis)),
+          ))
+        .get();
+    return signalements.map((s) => s.fideleId).toSet().length;
+  }
+
+  /// RG-XIII-03 — décision de modération (publier ou masquer), réservée au
+  /// modérateur et tracée (fiche de l'acteur, date) ; remet à zéro le
+  /// décompte des signaleurs, qui ne compte plus que les signalements
+  /// postérieurs à cette décision.
+  Future<void> modererCommentaire({
+    required String id,
+    required StatutModerationCommentaire nouveauStatut,
+    required Acteur acteur,
+  }) async {
+    final refus = MediathequeRules.raisonBlocageModeration(role: acteur.role, fideleId: acteur.fideleId);
+    if (refus != null) throw refus;
     await (_db.update(_db.commentaires)..where((t) => t.id.equals(id))).write(
       CommentairesCompanion(
-        nombreSignalements: Value(nouveauNombre),
-        statutModeration:
-            doitMasquer ? Value(StatutModerationCommentaire.masque.code) : const Value.absent(),
+        statutModeration: Value(nouveauStatut.code),
+        moderePar: Value(acteur.fideleId),
+        dateModeration: Value(DateTime.now()),
+        nombreSignalements: const Value(0),
       ),
     );
   }
 
-  Future<void> modererCommentaire({required String id, required StatutModerationCommentaire nouveauStatut}) async {
-    await (_db.update(_db.commentaires)..where((t) => t.id.equals(id)))
-        .write(CommentairesCompanion(statutModeration: Value(nouveauStatut.code)));
+  /// Écran de modération : commentaires en attente (modération a priori),
+  /// masqués, ou publiés mais signalés depuis la dernière décision.
+  Stream<List<Commentaire>> watchCommentairesAModerer() {
+    final query = _db.select(_db.commentaires)
+      ..where(
+        (t) =>
+            t.statutModeration.isIn([StatutModerationCommentaire.enAttente.code, StatutModerationCommentaire.masque.code]) |
+            t.nombreSignalements.isBiggerThanValue(0),
+      )
+      ..orderBy([(t) => OrderingTerm.asc(t.date)]);
+    return query.watch().map((rows) => rows.map(_commentaireToDomain).toList(growable: false));
+  }
+
+  /// Signalements d'un commentaire, avec leurs auteurs (contexte de modération).
+  Stream<List<SignalementCommentaire>> watchSignalements(String commentaireId) {
+    final query = _db.select(_db.signalementsCommentaire)
+      ..where((t) => t.commentaireId.equals(commentaireId))
+      // Départage par ordre d'insertion : Drift stocke les dates à la seconde.
+      ..orderBy([(t) => OrderingTerm.asc(t.createdAt), (t) => OrderingTerm.asc(t.rowId)]);
+    return query.watch().map(
+          (rows) => rows
+              .map(
+                (r) => SignalementCommentaire(
+                  id: r.id,
+                  commentaireId: r.commentaireId,
+                  fideleId: r.fideleId,
+                  motif: r.motif,
+                  createdAt: r.createdAt,
+                ),
+              )
+              .toList(growable: false),
+        );
   }
 
   // --- Conversions -------------------------------------------------------------
@@ -309,5 +400,7 @@ class MediathequeRepository {
         statutModeration: StatutModerationCommentaire.fromCode(row.statutModeration),
         date: row.date,
         nombreSignalements: row.nombreSignalements,
+        moderePar: row.moderePar,
+        dateModeration: row.dateModeration,
       );
 }

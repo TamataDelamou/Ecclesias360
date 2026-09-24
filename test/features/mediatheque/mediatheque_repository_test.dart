@@ -1,4 +1,6 @@
 import 'package:drift/native.dart';
+import 'package:ecclesias_360/core/audit/acteur.dart';
+import 'package:ecclesias_360/core/error/app_error.dart';
 import 'package:ecclesias_360/features/cultes/data/culte_repository.dart';
 import 'package:ecclesias_360/features/cultes/domain/models/mode_presence.dart';
 import 'package:ecclesias_360/features/fideles/data/fidele_repository.dart';
@@ -9,6 +11,7 @@ import 'package:ecclesias_360/features/mediatheque/domain/models/statut_moderati
 import 'package:ecclesias_360/features/mediatheque/domain/models/statut_publication_contenu.dart';
 import 'package:ecclesias_360/features/mediatheque/domain/models/type_contenu_mediatheque.dart';
 import 'package:ecclesias_360/features/organization/data/local/app_database.dart';
+import 'package:ecclesias_360/features/parametres/domain/models/role.dart';
 import 'package:ecclesias_360/core/sync/sync_coordinator.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -276,7 +279,17 @@ void main() {
       expect(commentaire.statutModeration, StatutModerationCommentaire.enAttente);
     });
 
-    test('signalerCommentaire masque automatiquement au-delà du seuil paramétrable', () async {
+    Future<String> autreFidele(String prenoms) async => (await fideleRepository.creerFidele(
+          noeudId: noeudId,
+          nom: 'Doe',
+          prenoms: prenoms,
+          dateNaissance: DateTime(1985, 1, 1),
+          sexe: Sexe.feminin,
+          statutCivil: StatutCivil.celibataire,
+        ))
+            .id;
+
+    Future<String> commentairePublie() async {
       final contenu = await repository.ajouterContenu(
         typeContenu: TypeContenuMediatheque.audio,
         titre: 'Prédication',
@@ -284,25 +297,101 @@ void main() {
         theme: 'Foi',
         dateContenu: DateTime(2026, 1, 1),
       );
-      final commentaire = await repository.ajouterCommentaire(
-        contenuId: contenu.id,
-        fideleId: fideleId,
-        texte: 'Commentaire déplacé',
-      );
+      return (await repository.ajouterCommentaire(contenuId: contenu.id, fideleId: fideleId, texte: 'Commentaire'))
+          .id;
+    }
 
-      await repository.signalerCommentaire(commentaire.id);
-      await repository.signalerCommentaire(commentaire.id);
-      var commentaires = await repository.watchCommentaires(contenu.id).first;
-      expect(commentaires.single.statutModeration, StatutModerationCommentaire.publie);
-      expect(commentaires.single.nombreSignalements, 2);
+    Future<StatutModerationCommentaire> statut(String id) async =>
+        (await repository.watchCommentairesAModerer().first).where((c) => c.id == id).firstOrNull?.statutModeration ??
+        StatutModerationCommentaire.publie;
 
-      await repository.signalerCommentaire(commentaire.id);
-      commentaires = await repository.watchCommentaires(contenu.id).first;
-      expect(commentaires.single.statutModeration, StatutModerationCommentaire.masque);
-      expect(commentaires.single.nombreSignalements, 3);
+    test('un même fidèle ne signale qu\'une fois : trois tentatives ne masquent rien', () async {
+      final id = await commentairePublie();
+      final paul = await autreFidele('Paul');
+
+      await repository.signalerCommentaire(commentaireId: id, fideleId: paul);
+      for (var i = 0; i < 2; i++) {
+        await expectLater(
+          repository.signalerCommentaire(commentaireId: id, fideleId: paul),
+          throwsA(isA<AppError>().having((e) => e.code, 'code', 'commentaire_deja_signale')),
+        );
+      }
+      expect(await statut(id), StatutModerationCommentaire.publie);
+      expect((await repository.watchSignalements(id).first), hasLength(1));
     });
 
-    test('modererCommentaire change explicitement le statut', () async {
+    test('ni son propre commentaire, ni sans fiche', () async {
+      final id = await commentairePublie();
+      await expectLater(
+        repository.signalerCommentaire(commentaireId: id, fideleId: fideleId),
+        throwsA(isA<AppError>().having((e) => e.code, 'code', 'signalement_propre_commentaire')),
+      );
+      await expectLater(
+        repository.signalerCommentaire(commentaireId: id, fideleId: null),
+        throwsA(isA<AppError>().having((e) => e.code, 'code', 'signalement_sans_fiche')),
+      );
+    });
+
+    test('masquage automatique au seuil de signaleurs distincts, chacun tracé', () async {
+      final id = await commentairePublie();
+      final signaleurs = [await autreFidele('Paul'), await autreFidele('Rita'), await autreFidele('Luc')];
+
+      await repository.signalerCommentaire(commentaireId: id, fideleId: signaleurs[0], motif: 'Hors sujet');
+      await repository.signalerCommentaire(commentaireId: id, fideleId: signaleurs[1]);
+      expect(await statut(id), StatutModerationCommentaire.publie);
+
+      await repository.signalerCommentaire(commentaireId: id, fideleId: signaleurs[2]);
+      expect(await statut(id), StatutModerationCommentaire.masque);
+      final traces = await repository.watchSignalements(id).first;
+      expect(traces.map((s) => s.fideleId), signaleurs);
+      expect(traces.first.motif, 'Hors sujet');
+    });
+
+    test('modération : réservée au pasteur avec fiche, tracée, et remet le décompte à zéro', () async {
+      final id = await commentairePublie();
+      final signaleurs = [await autreFidele('Paul'), await autreFidele('Rita'), await autreFidele('Luc')];
+      for (final s in signaleurs) {
+        await repository.signalerCommentaire(commentaireId: id, fideleId: s);
+      }
+      final pasteurId = await autreFidele('Pasteur');
+
+      await expectLater(
+        repository.modererCommentaire(
+          id: id,
+          nouveauStatut: StatutModerationCommentaire.publie,
+          acteur: Acteur(authUserId: 'r', fideleId: signaleurs[0], role: Role.responsable),
+        ),
+        throwsA(isA<AppError>().having((e) => e.code, 'code', 'moderation_reservee')),
+      );
+      await expectLater(
+        repository.modererCommentaire(
+          id: id,
+          nouveauStatut: StatutModerationCommentaire.publie,
+          acteur: const Acteur(authUserId: 'admin', fideleId: null, role: Role.administrateur),
+        ),
+        throwsA(isA<AppError>().having((e) => e.code, 'code', 'moderation_sans_fiche')),
+      );
+
+      await repository.modererCommentaire(
+        id: id,
+        nouveauStatut: StatutModerationCommentaire.publie,
+        acteur: Acteur(authUserId: 'p', fideleId: pasteurId, role: Role.pasteur),
+      );
+      final commentaire = (await repository.watchCommentaires((await db.select(db.commentaires).getSingle()).contenuId)
+              .first)
+          .single;
+      expect(commentaire.statutModeration, StatutModerationCommentaire.publie);
+      expect(commentaire.moderePar, pasteurId);
+      expect(commentaire.dateModeration, isNotNull);
+      expect(commentaire.nombreSignalements, 0);
+
+      // Un nouveau signaleur après l'approbation ne suffit pas à remasquer :
+      // les signalements déjà examinés ne comptent plus.
+      await repository.signalerCommentaire(commentaireId: id, fideleId: await autreFidele('Marc'));
+      expect(await statut(id), StatutModerationCommentaire.publie);
+    });
+
+    test('file de modération : en attente et signalés, pas les commentaires sans histoire', () async {
       final contenu = await repository.ajouterContenu(
         typeContenu: TypeContenuMediatheque.audio,
         titre: 'Prédication',
@@ -311,15 +400,15 @@ void main() {
         dateContenu: DateTime(2026, 1, 1),
         moderationAPriori: true,
       );
-      final commentaire = await repository.ajouterCommentaire(
-        contenuId: contenu.id,
-        fideleId: fideleId,
-        texte: 'En attente de validation',
-      );
+      final enAttente =
+          await repository.ajouterCommentaire(contenuId: contenu.id, fideleId: fideleId, texte: 'À valider');
+      final tranquille = await commentairePublie();
+      final signale = await commentairePublie();
+      await repository.signalerCommentaire(commentaireId: signale, fideleId: await autreFidele('Paul'));
 
-      await repository.modererCommentaire(id: commentaire.id, nouveauStatut: StatutModerationCommentaire.publie);
-      final commentaires = await repository.watchCommentaires(contenu.id).first;
-      expect(commentaires.single.statutModeration, StatutModerationCommentaire.publie);
+      final file = (await repository.watchCommentairesAModerer().first).map((c) => c.id).toSet();
+      expect(file, {enAttente.id, signale});
+      expect(file, isNot(contains(tranquille)));
     });
   });
 }

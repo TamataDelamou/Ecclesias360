@@ -2790,6 +2790,72 @@ abstract class AppLocalizations {
   /// **'Signaler'**
   String get mediathequeSignalerCommentaire;
 
+  /// Titre de l'écran de modération des commentaires de la médiathèque (RG-XIII-03) et infobulle de son accès depuis le catalogue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modération des commentaires'**
+  String get mediathequeModerationTitre;
+
+  /// Message affiché à un compte non modérateur sur l'écran de modération.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modération réservée à un pasteur (ou rôle supérieur).'**
+  String get mediathequeModerationReservee;
+
+  /// Explication affichée à un modérateur sans fiche liée (administrateur d'amorçage), dont les boutons de décision sont désactivés.
+  ///
+  /// In fr, this message translates to:
+  /// **'Liez votre compte à votre fiche pour décider : une décision de modération trace une personne du registre.'**
+  String get mediathequeModerationSansFiche;
+
+  /// File de modération vide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun commentaire à modérer.'**
+  String get mediathequeModerationAucun;
+
+  /// État d'un commentaire masqué (automatiquement au seuil de signaleurs, ou par décision).
+  ///
+  /// In fr, this message translates to:
+  /// **'Masqué'**
+  String get mediathequeModerationMasque;
+
+  /// État d'un commentaire publié ayant reçu des signalements depuis la dernière décision, sous le seuil de masquage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publié, signalé'**
+  String get mediathequeModerationPublieSignale;
+
+  /// Auteur d'un commentaire à modérer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Par {auteur}'**
+  String mediathequeModerationAuteur(String auteur);
+
+  /// Auteur d'un signalement, affiché pour contexte de modération.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signalé par {nom}'**
+  String mediathequeModerationSignalePar(String nom);
+
+  /// Auteur et motif d'un signalement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signalé par {nom} : {motif}'**
+  String mediathequeModerationSignaleParMotif(String nom, String motif);
+
+  /// Décision de modération : publier le commentaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Approuver'**
+  String get mediathequeModerationApprouver;
+
+  /// Décision de modération : masquer le commentaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rejeter'**
+  String get mediathequeModerationRejeter;
+
   /// Étiquette du champ de saisie d'un nouveau commentaire sur un contenu médiathèque.
   ///
   /// In fr, this message translates to:

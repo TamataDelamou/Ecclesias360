@@ -12,6 +12,8 @@ class Commentaire {
     required this.statutModeration,
     required this.date,
     this.nombreSignalements = 0,
+    this.moderePar,
+    this.dateModeration,
   });
 
   final String id;
@@ -20,7 +22,12 @@ class Commentaire {
   final String texte;
   final StatutModerationCommentaire statutModeration;
   final DateTime date;
+  /// Signaleurs distincts depuis la dernière décision de modération.
   final int nombreSignalements;
+
+  /// RG-XIII-03 — dernière décision de modération : fiche de son auteur et date.
+  final String? moderePar;
+  final DateTime? dateModeration;
 
   Commentaire copierAvec({
     String? id,
@@ -39,6 +46,8 @@ class Commentaire {
       statutModeration: statutModeration ?? this.statutModeration,
       date: date ?? this.date,
       nombreSignalements: nombreSignalements ?? this.nombreSignalements,
+      moderePar: moderePar,
+      dateModeration: dateModeration,
     );
   }
 }

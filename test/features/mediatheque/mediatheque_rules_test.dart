@@ -22,21 +22,21 @@ void main() {
   group('doitMasquerAutomatiquement (RG-XIII-03)', () {
     test('sous le seuil : pas de masquage', () {
       expect(
-        MediathequeRules.doitMasquerAutomatiquement(nombreSignalements: 2, seuil: 3),
+        MediathequeRules.doitMasquerAutomatiquement(signaleursDistincts: 2, seuil: 3),
         isFalse,
       );
     });
 
     test('au seuil exact : masquage', () {
       expect(
-        MediathequeRules.doitMasquerAutomatiquement(nombreSignalements: 3, seuil: 3),
+        MediathequeRules.doitMasquerAutomatiquement(signaleursDistincts: 3, seuil: 3),
         isTrue,
       );
     });
 
     test('au-delà du seuil : masquage', () {
       expect(
-        MediathequeRules.doitMasquerAutomatiquement(nombreSignalements: 5, seuil: 3),
+        MediathequeRules.doitMasquerAutomatiquement(signaleursDistincts: 5, seuil: 3),
         isTrue,
       );
     });

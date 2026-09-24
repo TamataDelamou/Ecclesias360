@@ -59,6 +59,7 @@ import '../../features/ministeres/presentation/ministeres_list_screen.dart';
 import '../../features/mediatheque/presentation/contenu_mediatheque_detail_screen.dart';
 import '../../features/mediatheque/presentation/favoris_mediatheque_screen.dart';
 import '../../features/mediatheque/presentation/mediatheque_catalogue_screen.dart';
+import '../../features/mediatheque/presentation/moderation_commentaires_screen.dart';
 import '../../features/organization/presentation/church_directory_screen.dart';
 import '../../features/organization/presentation/hierarchy_screen.dart';
 import '../../features/organization/presentation/node_detail_screen.dart';
@@ -461,6 +462,14 @@ GoRouter creerAppRouter(SessionController session) => GoRouter(
       pageBuilder: (context, state) => sharedAxisPage(
         key: state.pageKey,
         child: const MediathequeCatalogueScreen(),
+      ),
+    ),
+    // Avant '/mediatheque/:id', qui capturerait « moderation ».
+    GoRoute(
+      path: AppRoutes.mediathequeModeration,
+      pageBuilder: (context, state) => sharedAxisPage(
+        key: state.pageKey,
+        child: const ModerationCommentairesScreen(),
       ),
     ),
     GoRoute(

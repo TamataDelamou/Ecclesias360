@@ -829,4 +829,36 @@ void main() {
 
     await db.close();
   });
+
+  test('un fichier créé en schéma v21 reçoit les signalements attribués et la trace de modération (RG-XIII-03)', () async {
+    final fichier = File(
+      path.join(Directory.systemTemp.path, 'ecclesias_migration_test_v21_${DateTime.now().microsecondsSinceEpoch}.sqlite'),
+    );
+    addTearDown(() {
+      if (fichier.existsSync()) fichier.deleteSync();
+    });
+
+    final dbInitiale = AppDatabase(NativeDatabase(fichier));
+    await dbInitiale.into(dbInitiale.zonesGeographiques).insert(
+          ZonesGeographiquesCompanion.insert(id: 'zone-1', libelle: 'Togo', niveau: 0),
+        );
+    await dbInitiale.close();
+
+    // Ramène le fichier au schéma v21 exact : ni signalements ni trace de modération.
+    final connexionBrute = sqlite3.sqlite3.open(fichier.path);
+    connexionBrute.execute('''
+      DROP TABLE signalements_commentaire;
+      ALTER TABLE commentaires DROP COLUMN modere_par;
+      ALTER TABLE commentaires DROP COLUMN date_moderation;
+      PRAGMA user_version = 21;
+    ''');
+    connexionBrute.close();
+
+    final db = AppDatabase(NativeDatabase(fichier));
+    expect((await db.select(db.zonesGeographiques).getSingle()).libelle, 'Togo');
+    expect(await db.select(db.signalementsCommentaire).get(), isEmpty);
+    expect(await db.select(db.commentaires).get(), isEmpty);
+
+    await db.close();
+  });
 }

@@ -99,6 +99,31 @@ class AppError implements Exception {
         "La modification des paramètres de l'application est réservée à un administrateur.",
       );
 
+  factory AppError.signalementSansFiche() => const AppError(
+        'signalement_sans_fiche',
+        "Un signalement doit être rattaché à une fiche fidèle : liez d'abord votre compte.",
+      );
+
+  factory AppError.signalementPropreCommentaire() => const AppError(
+        'signalement_propre_commentaire',
+        "Vous ne pouvez pas signaler votre propre commentaire.",
+      );
+
+  factory AppError.commentaireDejaSignale() => const AppError(
+        'commentaire_deja_signale',
+        "Vous avez déjà signalé ce commentaire.",
+      );
+
+  factory AppError.moderationReservee() => const AppError(
+        'moderation_reservee',
+        "La modération des commentaires est réservée à un pasteur (ou rôle supérieur).",
+      );
+
+  factory AppError.moderationSansFiche() => const AppError(
+        'moderation_sans_fiche',
+        "Une décision de modération doit tracer une personne du registre : liez d'abord votre compte à votre fiche.",
+      );
+
   factory AppError.gestionOrganisationReservee() => const AppError(
         'gestion_organisation_reservee',
         "La gestion des nœuds de l'organisation est réservée à un responsable (ou rôle supérieur).",

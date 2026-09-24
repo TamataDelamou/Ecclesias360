@@ -5,9 +5,11 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
 import '../application/mediatheque_controller.dart';
 import '../domain/models/contenu_mediatheque.dart';
 import '../domain/models/type_contenu_mediatheque.dart';
+import '../domain/rules/mediatheque_rules.dart';
 
 IconData _iconePourType(TypeContenuMediatheque type) {
   switch (type) {
@@ -55,6 +57,15 @@ class _MediathequeCatalogueScreenState extends State<MediathequeCatalogueScreen>
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.mediathequeCatalogueTitre),
+        actions: [
+          // RG-XIII-03 : file de modération, pour le modérateur seul.
+          if (MediathequeRules.peutModerer(context.watch<SessionController>().role))
+            IconButton(
+              icon: const Icon(Icons.shield_outlined),
+              tooltip: l10n.mediathequeModerationTitre,
+              onPressed: () => context.push(AppRoutes.mediathequeModeration),
+            ),
+        ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(AppDimensions.spacingXxl),
           child: Padding(

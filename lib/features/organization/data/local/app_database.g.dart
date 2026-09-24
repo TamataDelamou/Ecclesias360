@@ -30889,6 +30889,32 @@ class $CommentairesTable extends Commentaires
     requiredDuringInsert: false,
     defaultValue: const Constant(0),
   );
+  static const VerificationMeta _modereParMeta = const VerificationMeta(
+    'moderePar',
+  );
+  @override
+  late final GeneratedColumn<String> moderePar = GeneratedColumn<String>(
+    'modere_par',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _dateModerationMeta = const VerificationMeta(
+    'dateModeration',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateModeration =
+      GeneratedColumn<DateTime>(
+        'date_moderation',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -30898,6 +30924,8 @@ class $CommentairesTable extends Commentaires
     statutModeration,
     date,
     nombreSignalements,
+    moderePar,
+    dateModeration,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -30966,6 +30994,21 @@ class $CommentairesTable extends Commentaires
         ),
       );
     }
+    if (data.containsKey('modere_par')) {
+      context.handle(
+        _modereParMeta,
+        moderePar.isAcceptableOrUnknown(data['modere_par']!, _modereParMeta),
+      );
+    }
+    if (data.containsKey('date_moderation')) {
+      context.handle(
+        _dateModerationMeta,
+        dateModeration.isAcceptableOrUnknown(
+          data['date_moderation']!,
+          _dateModerationMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -31003,6 +31046,14 @@ class $CommentairesTable extends Commentaires
         DriftSqlType.int,
         data['${effectivePrefix}nombre_signalements'],
       )!,
+      moderePar: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}modere_par'],
+      ),
+      dateModeration: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_moderation'],
+      ),
     );
   }
 
@@ -31019,7 +31070,15 @@ class CommentaireRow extends DataClass implements Insertable<CommentaireRow> {
   final String texte;
   final String statutModeration;
   final DateTime date;
+
+  /// Signaleurs distincts depuis la dernière décision de modération : valeur
+  /// dérivée de `signalements_commentaire`, recalculée à chaque signalement
+  /// (jamais incrémentée en aveugle).
   final int nombreSignalements;
+
+  /// RG-XIII-03 — dernière décision de modération : auteur (fiche) et date.
+  final String? moderePar;
+  final DateTime? dateModeration;
   const CommentaireRow({
     required this.id,
     required this.contenuId,
@@ -31028,6 +31087,8 @@ class CommentaireRow extends DataClass implements Insertable<CommentaireRow> {
     required this.statutModeration,
     required this.date,
     required this.nombreSignalements,
+    this.moderePar,
+    this.dateModeration,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -31039,6 +31100,12 @@ class CommentaireRow extends DataClass implements Insertable<CommentaireRow> {
     map['statut_moderation'] = Variable<String>(statutModeration);
     map['date'] = Variable<DateTime>(date);
     map['nombre_signalements'] = Variable<int>(nombreSignalements);
+    if (!nullToAbsent || moderePar != null) {
+      map['modere_par'] = Variable<String>(moderePar);
+    }
+    if (!nullToAbsent || dateModeration != null) {
+      map['date_moderation'] = Variable<DateTime>(dateModeration);
+    }
     return map;
   }
 
@@ -31051,6 +31118,12 @@ class CommentaireRow extends DataClass implements Insertable<CommentaireRow> {
       statutModeration: Value(statutModeration),
       date: Value(date),
       nombreSignalements: Value(nombreSignalements),
+      moderePar: moderePar == null && nullToAbsent
+          ? const Value.absent()
+          : Value(moderePar),
+      dateModeration: dateModeration == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dateModeration),
     );
   }
 
@@ -31067,6 +31140,8 @@ class CommentaireRow extends DataClass implements Insertable<CommentaireRow> {
       statutModeration: serializer.fromJson<String>(json['statutModeration']),
       date: serializer.fromJson<DateTime>(json['date']),
       nombreSignalements: serializer.fromJson<int>(json['nombreSignalements']),
+      moderePar: serializer.fromJson<String?>(json['moderePar']),
+      dateModeration: serializer.fromJson<DateTime?>(json['dateModeration']),
     );
   }
   @override
@@ -31080,6 +31155,8 @@ class CommentaireRow extends DataClass implements Insertable<CommentaireRow> {
       'statutModeration': serializer.toJson<String>(statutModeration),
       'date': serializer.toJson<DateTime>(date),
       'nombreSignalements': serializer.toJson<int>(nombreSignalements),
+      'moderePar': serializer.toJson<String?>(moderePar),
+      'dateModeration': serializer.toJson<DateTime?>(dateModeration),
     };
   }
 
@@ -31091,6 +31168,8 @@ class CommentaireRow extends DataClass implements Insertable<CommentaireRow> {
     String? statutModeration,
     DateTime? date,
     int? nombreSignalements,
+    Value<String?> moderePar = const Value.absent(),
+    Value<DateTime?> dateModeration = const Value.absent(),
   }) => CommentaireRow(
     id: id ?? this.id,
     contenuId: contenuId ?? this.contenuId,
@@ -31099,6 +31178,10 @@ class CommentaireRow extends DataClass implements Insertable<CommentaireRow> {
     statutModeration: statutModeration ?? this.statutModeration,
     date: date ?? this.date,
     nombreSignalements: nombreSignalements ?? this.nombreSignalements,
+    moderePar: moderePar.present ? moderePar.value : this.moderePar,
+    dateModeration: dateModeration.present
+        ? dateModeration.value
+        : this.dateModeration,
   );
   CommentaireRow copyWithCompanion(CommentairesCompanion data) {
     return CommentaireRow(
@@ -31113,6 +31196,10 @@ class CommentaireRow extends DataClass implements Insertable<CommentaireRow> {
       nombreSignalements: data.nombreSignalements.present
           ? data.nombreSignalements.value
           : this.nombreSignalements,
+      moderePar: data.moderePar.present ? data.moderePar.value : this.moderePar,
+      dateModeration: data.dateModeration.present
+          ? data.dateModeration.value
+          : this.dateModeration,
     );
   }
 
@@ -31125,7 +31212,9 @@ class CommentaireRow extends DataClass implements Insertable<CommentaireRow> {
           ..write('texte: $texte, ')
           ..write('statutModeration: $statutModeration, ')
           ..write('date: $date, ')
-          ..write('nombreSignalements: $nombreSignalements')
+          ..write('nombreSignalements: $nombreSignalements, ')
+          ..write('moderePar: $moderePar, ')
+          ..write('dateModeration: $dateModeration')
           ..write(')'))
         .toString();
   }
@@ -31139,6 +31228,8 @@ class CommentaireRow extends DataClass implements Insertable<CommentaireRow> {
     statutModeration,
     date,
     nombreSignalements,
+    moderePar,
+    dateModeration,
   );
   @override
   bool operator ==(Object other) =>
@@ -31150,7 +31241,9 @@ class CommentaireRow extends DataClass implements Insertable<CommentaireRow> {
           other.texte == this.texte &&
           other.statutModeration == this.statutModeration &&
           other.date == this.date &&
-          other.nombreSignalements == this.nombreSignalements);
+          other.nombreSignalements == this.nombreSignalements &&
+          other.moderePar == this.moderePar &&
+          other.dateModeration == this.dateModeration);
 }
 
 class CommentairesCompanion extends UpdateCompanion<CommentaireRow> {
@@ -31161,6 +31254,8 @@ class CommentairesCompanion extends UpdateCompanion<CommentaireRow> {
   final Value<String> statutModeration;
   final Value<DateTime> date;
   final Value<int> nombreSignalements;
+  final Value<String?> moderePar;
+  final Value<DateTime?> dateModeration;
   final Value<int> rowid;
   const CommentairesCompanion({
     this.id = const Value.absent(),
@@ -31170,6 +31265,8 @@ class CommentairesCompanion extends UpdateCompanion<CommentaireRow> {
     this.statutModeration = const Value.absent(),
     this.date = const Value.absent(),
     this.nombreSignalements = const Value.absent(),
+    this.moderePar = const Value.absent(),
+    this.dateModeration = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   CommentairesCompanion.insert({
@@ -31180,6 +31277,8 @@ class CommentairesCompanion extends UpdateCompanion<CommentaireRow> {
     this.statutModeration = const Value.absent(),
     required DateTime date,
     this.nombreSignalements = const Value.absent(),
+    this.moderePar = const Value.absent(),
+    this.dateModeration = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        contenuId = Value(contenuId),
@@ -31194,6 +31293,8 @@ class CommentairesCompanion extends UpdateCompanion<CommentaireRow> {
     Expression<String>? statutModeration,
     Expression<DateTime>? date,
     Expression<int>? nombreSignalements,
+    Expression<String>? moderePar,
+    Expression<DateTime>? dateModeration,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -31204,6 +31305,8 @@ class CommentairesCompanion extends UpdateCompanion<CommentaireRow> {
       if (statutModeration != null) 'statut_moderation': statutModeration,
       if (date != null) 'date': date,
       if (nombreSignalements != null) 'nombre_signalements': nombreSignalements,
+      if (moderePar != null) 'modere_par': moderePar,
+      if (dateModeration != null) 'date_moderation': dateModeration,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -31216,6 +31319,8 @@ class CommentairesCompanion extends UpdateCompanion<CommentaireRow> {
     Value<String>? statutModeration,
     Value<DateTime>? date,
     Value<int>? nombreSignalements,
+    Value<String?>? moderePar,
+    Value<DateTime?>? dateModeration,
     Value<int>? rowid,
   }) {
     return CommentairesCompanion(
@@ -31226,6 +31331,8 @@ class CommentairesCompanion extends UpdateCompanion<CommentaireRow> {
       statutModeration: statutModeration ?? this.statutModeration,
       date: date ?? this.date,
       nombreSignalements: nombreSignalements ?? this.nombreSignalements,
+      moderePar: moderePar ?? this.moderePar,
+      dateModeration: dateModeration ?? this.dateModeration,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -31254,6 +31361,12 @@ class CommentairesCompanion extends UpdateCompanion<CommentaireRow> {
     if (nombreSignalements.present) {
       map['nombre_signalements'] = Variable<int>(nombreSignalements.value);
     }
+    if (moderePar.present) {
+      map['modere_par'] = Variable<String>(moderePar.value);
+    }
+    if (dateModeration.present) {
+      map['date_moderation'] = Variable<DateTime>(dateModeration.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -31270,6 +31383,388 @@ class CommentairesCompanion extends UpdateCompanion<CommentaireRow> {
           ..write('statutModeration: $statutModeration, ')
           ..write('date: $date, ')
           ..write('nombreSignalements: $nombreSignalements, ')
+          ..write('moderePar: $moderePar, ')
+          ..write('dateModeration: $dateModeration, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SignalementsCommentaireTable extends SignalementsCommentaire
+    with TableInfo<$SignalementsCommentaireTable, SignalementCommentaireRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SignalementsCommentaireTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _commentaireIdMeta = const VerificationMeta(
+    'commentaireId',
+  );
+  @override
+  late final GeneratedColumn<String> commentaireId = GeneratedColumn<String>(
+    'commentaire_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES commentaires (id)',
+    ),
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _motifMeta = const VerificationMeta('motif');
+  @override
+  late final GeneratedColumn<String> motif = GeneratedColumn<String>(
+    'motif',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    commentaireId,
+    fideleId,
+    motif,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'signalements_commentaire';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SignalementCommentaireRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('commentaire_id')) {
+      context.handle(
+        _commentaireIdMeta,
+        commentaireId.isAcceptableOrUnknown(
+          data['commentaire_id']!,
+          _commentaireIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_commentaireIdMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    if (data.containsKey('motif')) {
+      context.handle(
+        _motifMeta,
+        motif.isAcceptableOrUnknown(data['motif']!, _motifMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SignalementCommentaireRow map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SignalementCommentaireRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      commentaireId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}commentaire_id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+      motif: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}motif'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $SignalementsCommentaireTable createAlias(String alias) {
+    return $SignalementsCommentaireTable(attachedDatabase, alias);
+  }
+}
+
+class SignalementCommentaireRow extends DataClass
+    implements Insertable<SignalementCommentaireRow> {
+  final String id;
+  final String commentaireId;
+  final String fideleId;
+  final String? motif;
+  final DateTime createdAt;
+  const SignalementCommentaireRow({
+    required this.id,
+    required this.commentaireId,
+    required this.fideleId,
+    this.motif,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['commentaire_id'] = Variable<String>(commentaireId);
+    map['fidele_id'] = Variable<String>(fideleId);
+    if (!nullToAbsent || motif != null) {
+      map['motif'] = Variable<String>(motif);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  SignalementsCommentaireCompanion toCompanion(bool nullToAbsent) {
+    return SignalementsCommentaireCompanion(
+      id: Value(id),
+      commentaireId: Value(commentaireId),
+      fideleId: Value(fideleId),
+      motif: motif == null && nullToAbsent
+          ? const Value.absent()
+          : Value(motif),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory SignalementCommentaireRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SignalementCommentaireRow(
+      id: serializer.fromJson<String>(json['id']),
+      commentaireId: serializer.fromJson<String>(json['commentaireId']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+      motif: serializer.fromJson<String?>(json['motif']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'commentaireId': serializer.toJson<String>(commentaireId),
+      'fideleId': serializer.toJson<String>(fideleId),
+      'motif': serializer.toJson<String?>(motif),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  SignalementCommentaireRow copyWith({
+    String? id,
+    String? commentaireId,
+    String? fideleId,
+    Value<String?> motif = const Value.absent(),
+    DateTime? createdAt,
+  }) => SignalementCommentaireRow(
+    id: id ?? this.id,
+    commentaireId: commentaireId ?? this.commentaireId,
+    fideleId: fideleId ?? this.fideleId,
+    motif: motif.present ? motif.value : this.motif,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  SignalementCommentaireRow copyWithCompanion(
+    SignalementsCommentaireCompanion data,
+  ) {
+    return SignalementCommentaireRow(
+      id: data.id.present ? data.id.value : this.id,
+      commentaireId: data.commentaireId.present
+          ? data.commentaireId.value
+          : this.commentaireId,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      motif: data.motif.present ? data.motif.value : this.motif,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SignalementCommentaireRow(')
+          ..write('id: $id, ')
+          ..write('commentaireId: $commentaireId, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('motif: $motif, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, commentaireId, fideleId, motif, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SignalementCommentaireRow &&
+          other.id == this.id &&
+          other.commentaireId == this.commentaireId &&
+          other.fideleId == this.fideleId &&
+          other.motif == this.motif &&
+          other.createdAt == this.createdAt);
+}
+
+class SignalementsCommentaireCompanion
+    extends UpdateCompanion<SignalementCommentaireRow> {
+  final Value<String> id;
+  final Value<String> commentaireId;
+  final Value<String> fideleId;
+  final Value<String?> motif;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const SignalementsCommentaireCompanion({
+    this.id = const Value.absent(),
+    this.commentaireId = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.motif = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SignalementsCommentaireCompanion.insert({
+    required String id,
+    required String commentaireId,
+    required String fideleId,
+    this.motif = const Value.absent(),
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       commentaireId = Value(commentaireId),
+       fideleId = Value(fideleId),
+       createdAt = Value(createdAt);
+  static Insertable<SignalementCommentaireRow> custom({
+    Expression<String>? id,
+    Expression<String>? commentaireId,
+    Expression<String>? fideleId,
+    Expression<String>? motif,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (commentaireId != null) 'commentaire_id': commentaireId,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (motif != null) 'motif': motif,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SignalementsCommentaireCompanion copyWith({
+    Value<String>? id,
+    Value<String>? commentaireId,
+    Value<String>? fideleId,
+    Value<String?>? motif,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return SignalementsCommentaireCompanion(
+      id: id ?? this.id,
+      commentaireId: commentaireId ?? this.commentaireId,
+      fideleId: fideleId ?? this.fideleId,
+      motif: motif ?? this.motif,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (commentaireId.present) {
+      map['commentaire_id'] = Variable<String>(commentaireId.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (motif.present) {
+      map['motif'] = Variable<String>(motif.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SignalementsCommentaireCompanion(')
+          ..write('id: $id, ')
+          ..write('commentaireId: $commentaireId, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('motif: $motif, ')
+          ..write('createdAt: $createdAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -32851,6 +33346,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $ContenusMediathequeTable(this);
   late final $FavorisTable favoris = $FavorisTable(this);
   late final $CommentairesTable commentaires = $CommentairesTable(this);
+  late final $SignalementsCommentaireTable signalementsCommentaire =
+      $SignalementsCommentaireTable(this);
   late final $ComptesUtilisateursTable comptesUtilisateurs =
       $ComptesUtilisateursTable(this);
   late final $JournalLiaisonsComptesTable journalLiaisonsComptes =
@@ -32932,6 +33429,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     contenusMediatheque,
     favoris,
     commentaires,
+    signalementsCommentaire,
     comptesUtilisateurs,
     journalLiaisonsComptes,
     syncOutbox,
@@ -36333,6 +36831,51 @@ final class $$FidelesTableReferences
     );
   }
 
+  static MultiTypedResultKey<$CommentairesTable, List<CommentaireRow>>
+  _commentairesModeresTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.commentaires,
+    aliasName: 'fideles__id__commentaires__modere_par',
+  );
+
+  $$CommentairesTableProcessedTableManager get commentairesModeres {
+    final manager = $$CommentairesTableTableManager(
+      $_db,
+      $_db.commentaires,
+    ).filter((f) => f.moderePar.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _commentairesModeresTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $SignalementsCommentaireTable,
+    List<SignalementCommentaireRow>
+  >
+  _signalementsCommentaireRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.signalementsCommentaire,
+        aliasName: 'fideles__id__signalements_commentaire__fidele_id',
+      );
+
+  $$SignalementsCommentaireTableProcessedTableManager
+  get signalementsCommentaireRefs {
+    final manager = $$SignalementsCommentaireTableTableManager(
+      $_db,
+      $_db.signalementsCommentaire,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _signalementsCommentaireRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
   static MultiTypedResultKey<
     $JournalLiaisonsComptesTable,
     List<JournalLiaisonCompteRow>
@@ -37369,6 +37912,57 @@ class $$FidelesTableFilterComposer
                 $removeJoinBuilderFromRootComposer,
           ),
     );
+    return f(composer);
+  }
+
+  Expression<bool> commentairesModeres(
+    Expression<bool> Function($$CommentairesTableFilterComposer f) f,
+  ) {
+    final $$CommentairesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.commentaires,
+      getReferencedColumn: (t) => t.moderePar,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CommentairesTableFilterComposer(
+            $db: $db,
+            $table: $db.commentaires,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> signalementsCommentaireRefs(
+    Expression<bool> Function($$SignalementsCommentaireTableFilterComposer f) f,
+  ) {
+    final $$SignalementsCommentaireTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.signalementsCommentaire,
+          getReferencedColumn: (t) => t.fideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$SignalementsCommentaireTableFilterComposer(
+                $db: $db,
+                $table: $db.signalementsCommentaire,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
     return f(composer);
   }
 
@@ -38524,6 +39118,58 @@ class $$FidelesTableAnnotationComposer
     return f(composer);
   }
 
+  Expression<T> commentairesModeres<T extends Object>(
+    Expression<T> Function($$CommentairesTableAnnotationComposer a) f,
+  ) {
+    final $$CommentairesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.commentaires,
+      getReferencedColumn: (t) => t.moderePar,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CommentairesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.commentaires,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> signalementsCommentaireRefs<T extends Object>(
+    Expression<T> Function($$SignalementsCommentaireTableAnnotationComposer a)
+    f,
+  ) {
+    final $$SignalementsCommentaireTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.signalementsCommentaire,
+          getReferencedColumn: (t) => t.fideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$SignalementsCommentaireTableAnnotationComposer(
+                $db: $db,
+                $table: $db.signalementsCommentaire,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
   Expression<T> journalLiaisonsComptesRefs<T extends Object>(
     Expression<T> Function($$JournalLiaisonsComptesTableAnnotationComposer a) f,
   ) {
@@ -38601,6 +39247,8 @@ class $$FidelesTableTableManager
             bool biensRefs,
             bool favorisRefs,
             bool commentairesRefs,
+            bool commentairesModeres,
+            bool signalementsCommentaireRefs,
             bool journalLiaisonsComptesRefs,
           })
         > {
@@ -38753,6 +39401,8 @@ class $$FidelesTableTableManager
                 biensRefs = false,
                 favorisRefs = false,
                 commentairesRefs = false,
+                commentairesModeres = false,
+                signalementsCommentaireRefs = false,
                 journalLiaisonsComptesRefs = false,
               }) {
                 return PrefetchHooks(
@@ -38797,6 +39447,8 @@ class $$FidelesTableTableManager
                     if (biensRefs) db.biens,
                     if (favorisRefs) db.favoris,
                     if (commentairesRefs) db.commentaires,
+                    if (commentairesModeres) db.commentaires,
+                    if (signalementsCommentaireRefs) db.signalementsCommentaire,
                     if (journalLiaisonsComptesRefs) db.journalLiaisonsComptes,
                   ],
                   addJoins:
@@ -39564,6 +40216,48 @@ class $$FidelesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (commentairesModeres)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          CommentaireRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._commentairesModeresTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).commentairesModeres,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.moderePar == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (signalementsCommentaireRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          SignalementCommentaireRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._signalementsCommentaireRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).signalementsCommentaireRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                       if (journalLiaisonsComptesRefs)
                         await $_getPrefetchedData<
                           FideleRow,
@@ -39642,6 +40336,8 @@ typedef $$FidelesTableProcessedTableManager =
         bool biensRefs,
         bool favorisRefs,
         bool commentairesRefs,
+        bool commentairesModeres,
+        bool signalementsCommentaireRefs,
         bool journalLiaisonsComptesRefs,
       })
     >;
@@ -70132,6 +70828,8 @@ typedef $$CommentairesTableCreateCompanionBuilder =
       Value<String> statutModeration,
       required DateTime date,
       Value<int> nombreSignalements,
+      Value<String?> moderePar,
+      Value<DateTime?> dateModeration,
       Value<int> rowid,
     });
 typedef $$CommentairesTableUpdateCompanionBuilder =
@@ -70143,6 +70841,8 @@ typedef $$CommentairesTableUpdateCompanionBuilder =
       Value<String> statutModeration,
       Value<DateTime> date,
       Value<int> nombreSignalements,
+      Value<String?> moderePar,
+      Value<DateTime?> dateModeration,
       Value<int> rowid,
     });
 
@@ -70184,6 +70884,48 @@ final class $$CommentairesTableReferences
       manager.$state.copyWith(prefetchedData: [item]),
     );
   }
+
+  static $FidelesTable _modereParTable(_$AppDatabase db) =>
+      db.fideles.createAlias('commentaires__modere_par__fideles__id');
+
+  $$FidelesTableProcessedTableManager? get moderePar {
+    final $_column = $_itemColumn<String>('modere_par');
+    if ($_column == null) return null;
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_modereParTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $SignalementsCommentaireTable,
+    List<SignalementCommentaireRow>
+  >
+  _signalementsCommentaireRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.signalementsCommentaire,
+        aliasName: 'commentaires__id__signalements_commentaire__commentaire_id',
+      );
+
+  $$SignalementsCommentaireTableProcessedTableManager
+  get signalementsCommentaireRefs {
+    final manager = $$SignalementsCommentaireTableTableManager(
+      $_db,
+      $_db.signalementsCommentaire,
+    ).filter((f) => f.commentaireId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _signalementsCommentaireRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$CommentairesTableFilterComposer
@@ -70217,6 +70959,11 @@ class $$CommentairesTableFilterComposer
 
   ColumnFilters<int> get nombreSignalements => $composableBuilder(
     column: $table.nombreSignalements,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateModeration => $composableBuilder(
+    column: $table.dateModeration,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -70265,6 +71012,55 @@ class $$CommentairesTableFilterComposer
     );
     return composer;
   }
+
+  $$FidelesTableFilterComposer get moderePar {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.moderePar,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> signalementsCommentaireRefs(
+    Expression<bool> Function($$SignalementsCommentaireTableFilterComposer f) f,
+  ) {
+    final $$SignalementsCommentaireTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.signalementsCommentaire,
+          getReferencedColumn: (t) => t.commentaireId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$SignalementsCommentaireTableFilterComposer(
+                $db: $db,
+                $table: $db.signalementsCommentaire,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$CommentairesTableOrderingComposer
@@ -70298,6 +71094,11 @@ class $$CommentairesTableOrderingComposer
 
   ColumnOrderings<int> get nombreSignalements => $composableBuilder(
     column: $table.nombreSignalements,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateModeration => $composableBuilder(
+    column: $table.dateModeration,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -70347,6 +71148,29 @@ class $$CommentairesTableOrderingComposer
     );
     return composer;
   }
+
+  $$FidelesTableOrderingComposer get moderePar {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.moderePar,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$CommentairesTableAnnotationComposer
@@ -70374,6 +71198,11 @@ class $$CommentairesTableAnnotationComposer
 
   GeneratedColumn<int> get nombreSignalements => $composableBuilder(
     column: $table.nombreSignalements,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get dateModeration => $composableBuilder(
+    column: $table.dateModeration,
     builder: (column) => column,
   );
 
@@ -70423,6 +71252,56 @@ class $$CommentairesTableAnnotationComposer
     );
     return composer;
   }
+
+  $$FidelesTableAnnotationComposer get moderePar {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.moderePar,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> signalementsCommentaireRefs<T extends Object>(
+    Expression<T> Function($$SignalementsCommentaireTableAnnotationComposer a)
+    f,
+  ) {
+    final $$SignalementsCommentaireTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.signalementsCommentaire,
+          getReferencedColumn: (t) => t.commentaireId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$SignalementsCommentaireTableAnnotationComposer(
+                $db: $db,
+                $table: $db.signalementsCommentaire,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$CommentairesTableTableManager
@@ -70438,7 +71317,12 @@ class $$CommentairesTableTableManager
           $$CommentairesTableUpdateCompanionBuilder,
           (CommentaireRow, $$CommentairesTableReferences),
           CommentaireRow,
-          PrefetchHooks Function({bool contenuId, bool fideleId})
+          PrefetchHooks Function({
+            bool contenuId,
+            bool fideleId,
+            bool moderePar,
+            bool signalementsCommentaireRefs,
+          })
         > {
   $$CommentairesTableTableManager(_$AppDatabase db, $CommentairesTable table)
     : super(
@@ -70460,6 +71344,8 @@ class $$CommentairesTableTableManager
                 Value<String> statutModeration = const Value.absent(),
                 Value<DateTime> date = const Value.absent(),
                 Value<int> nombreSignalements = const Value.absent(),
+                Value<String?> moderePar = const Value.absent(),
+                Value<DateTime?> dateModeration = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => CommentairesCompanion(
                 id: id,
@@ -70469,6 +71355,8 @@ class $$CommentairesTableTableManager
                 statutModeration: statutModeration,
                 date: date,
                 nombreSignalements: nombreSignalements,
+                moderePar: moderePar,
+                dateModeration: dateModeration,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -70480,6 +71368,8 @@ class $$CommentairesTableTableManager
                 Value<String> statutModeration = const Value.absent(),
                 required DateTime date,
                 Value<int> nombreSignalements = const Value.absent(),
+                Value<String?> moderePar = const Value.absent(),
+                Value<DateTime?> dateModeration = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => CommentairesCompanion.insert(
                 id: id,
@@ -70489,6 +71379,8 @@ class $$CommentairesTableTableManager
                 statutModeration: statutModeration,
                 date: date,
                 nombreSignalements: nombreSignalements,
+                moderePar: moderePar,
+                dateModeration: dateModeration,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -70499,7 +71391,489 @@ class $$CommentairesTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({contenuId = false, fideleId = false}) {
+          prefetchHooksCallback:
+              ({
+                contenuId = false,
+                fideleId = false,
+                moderePar = false,
+                signalementsCommentaireRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (signalementsCommentaireRefs) db.signalementsCommentaire,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (contenuId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.contenuId,
+                                    referencedTable:
+                                        $$CommentairesTableReferences
+                                            ._contenuIdTable(db),
+                                    referencedColumn:
+                                        $$CommentairesTableReferences
+                                            ._contenuIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (fideleId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.fideleId,
+                                    referencedTable:
+                                        $$CommentairesTableReferences
+                                            ._fideleIdTable(db),
+                                    referencedColumn:
+                                        $$CommentairesTableReferences
+                                            ._fideleIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (moderePar) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.moderePar,
+                                    referencedTable:
+                                        $$CommentairesTableReferences
+                                            ._modereParTable(db),
+                                    referencedColumn:
+                                        $$CommentairesTableReferences
+                                            ._modereParTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (signalementsCommentaireRefs)
+                        await $_getPrefetchedData<
+                          CommentaireRow,
+                          $CommentairesTable,
+                          SignalementCommentaireRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CommentairesTableReferences
+                              ._signalementsCommentaireRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CommentairesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).signalementsCommentaireRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.commentaireId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$CommentairesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CommentairesTable,
+      CommentaireRow,
+      $$CommentairesTableFilterComposer,
+      $$CommentairesTableOrderingComposer,
+      $$CommentairesTableAnnotationComposer,
+      $$CommentairesTableCreateCompanionBuilder,
+      $$CommentairesTableUpdateCompanionBuilder,
+      (CommentaireRow, $$CommentairesTableReferences),
+      CommentaireRow,
+      PrefetchHooks Function({
+        bool contenuId,
+        bool fideleId,
+        bool moderePar,
+        bool signalementsCommentaireRefs,
+      })
+    >;
+typedef $$SignalementsCommentaireTableCreateCompanionBuilder =
+    SignalementsCommentaireCompanion Function({
+      required String id,
+      required String commentaireId,
+      required String fideleId,
+      Value<String?> motif,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$SignalementsCommentaireTableUpdateCompanionBuilder =
+    SignalementsCommentaireCompanion Function({
+      Value<String> id,
+      Value<String> commentaireId,
+      Value<String> fideleId,
+      Value<String?> motif,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+final class $$SignalementsCommentaireTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $SignalementsCommentaireTable,
+          SignalementCommentaireRow
+        > {
+  $$SignalementsCommentaireTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $CommentairesTable _commentaireIdTable(_$AppDatabase db) =>
+      db.commentaires.createAlias(
+        'signalements_commentaire__commentaire_id__commentaires__id',
+      );
+
+  $$CommentairesTableProcessedTableManager get commentaireId {
+    final $_column = $_itemColumn<String>('commentaire_id')!;
+
+    final manager = $$CommentairesTableTableManager(
+      $_db,
+      $_db.commentaires,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_commentaireIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) => db.fideles
+      .createAlias('signalements_commentaire__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$SignalementsCommentaireTableFilterComposer
+    extends Composer<_$AppDatabase, $SignalementsCommentaireTable> {
+  $$SignalementsCommentaireTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get motif => $composableBuilder(
+    column: $table.motif,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$CommentairesTableFilterComposer get commentaireId {
+    final $$CommentairesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.commentaireId,
+      referencedTable: $db.commentaires,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CommentairesTableFilterComposer(
+            $db: $db,
+            $table: $db.commentaires,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SignalementsCommentaireTableOrderingComposer
+    extends Composer<_$AppDatabase, $SignalementsCommentaireTable> {
+  $$SignalementsCommentaireTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get motif => $composableBuilder(
+    column: $table.motif,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$CommentairesTableOrderingComposer get commentaireId {
+    final $$CommentairesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.commentaireId,
+      referencedTable: $db.commentaires,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CommentairesTableOrderingComposer(
+            $db: $db,
+            $table: $db.commentaires,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SignalementsCommentaireTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SignalementsCommentaireTable> {
+  $$SignalementsCommentaireTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get motif =>
+      $composableBuilder(column: $table.motif, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  $$CommentairesTableAnnotationComposer get commentaireId {
+    final $$CommentairesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.commentaireId,
+      referencedTable: $db.commentaires,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CommentairesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.commentaires,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SignalementsCommentaireTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SignalementsCommentaireTable,
+          SignalementCommentaireRow,
+          $$SignalementsCommentaireTableFilterComposer,
+          $$SignalementsCommentaireTableOrderingComposer,
+          $$SignalementsCommentaireTableAnnotationComposer,
+          $$SignalementsCommentaireTableCreateCompanionBuilder,
+          $$SignalementsCommentaireTableUpdateCompanionBuilder,
+          (SignalementCommentaireRow, $$SignalementsCommentaireTableReferences),
+          SignalementCommentaireRow,
+          PrefetchHooks Function({bool commentaireId, bool fideleId})
+        > {
+  $$SignalementsCommentaireTableTableManager(
+    _$AppDatabase db,
+    $SignalementsCommentaireTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SignalementsCommentaireTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$SignalementsCommentaireTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$SignalementsCommentaireTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> commentaireId = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<String?> motif = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SignalementsCommentaireCompanion(
+                id: id,
+                commentaireId: commentaireId,
+                fideleId: fideleId,
+                motif: motif,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String commentaireId,
+                required String fideleId,
+                Value<String?> motif = const Value.absent(),
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => SignalementsCommentaireCompanion.insert(
+                id: id,
+                commentaireId: commentaireId,
+                fideleId: fideleId,
+                motif: motif,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $SignalementsCommentaireTable,
+                    SignalementCommentaireRow
+                  >(table),
+                  $$SignalementsCommentaireTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({commentaireId = false, fideleId = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
@@ -70519,16 +71893,18 @@ class $$CommentairesTableTableManager
                       dynamic
                     >
                   >(state) {
-                    if (contenuId) {
+                    if (commentaireId) {
                       state =
                           state.withJoin(
                                 currentTable: table,
-                                currentColumn: table.contenuId,
-                                referencedTable: $$CommentairesTableReferences
-                                    ._contenuIdTable(db),
-                                referencedColumn: $$CommentairesTableReferences
-                                    ._contenuIdTable(db)
-                                    .id,
+                                currentColumn: table.commentaireId,
+                                referencedTable:
+                                    $$SignalementsCommentaireTableReferences
+                                        ._commentaireIdTable(db),
+                                referencedColumn:
+                                    $$SignalementsCommentaireTableReferences
+                                        ._commentaireIdTable(db)
+                                        .id,
                               )
                               as T;
                     }
@@ -70537,11 +71913,13 @@ class $$CommentairesTableTableManager
                           state.withJoin(
                                 currentTable: table,
                                 currentColumn: table.fideleId,
-                                referencedTable: $$CommentairesTableReferences
-                                    ._fideleIdTable(db),
-                                referencedColumn: $$CommentairesTableReferences
-                                    ._fideleIdTable(db)
-                                    .id,
+                                referencedTable:
+                                    $$SignalementsCommentaireTableReferences
+                                        ._fideleIdTable(db),
+                                referencedColumn:
+                                    $$SignalementsCommentaireTableReferences
+                                        ._fideleIdTable(db)
+                                        .id,
                               )
                               as T;
                     }
@@ -70557,19 +71935,19 @@ class $$CommentairesTableTableManager
       );
 }
 
-typedef $$CommentairesTableProcessedTableManager =
+typedef $$SignalementsCommentaireTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
-      $CommentairesTable,
-      CommentaireRow,
-      $$CommentairesTableFilterComposer,
-      $$CommentairesTableOrderingComposer,
-      $$CommentairesTableAnnotationComposer,
-      $$CommentairesTableCreateCompanionBuilder,
-      $$CommentairesTableUpdateCompanionBuilder,
-      (CommentaireRow, $$CommentairesTableReferences),
-      CommentaireRow,
-      PrefetchHooks Function({bool contenuId, bool fideleId})
+      $SignalementsCommentaireTable,
+      SignalementCommentaireRow,
+      $$SignalementsCommentaireTableFilterComposer,
+      $$SignalementsCommentaireTableOrderingComposer,
+      $$SignalementsCommentaireTableAnnotationComposer,
+      $$SignalementsCommentaireTableCreateCompanionBuilder,
+      $$SignalementsCommentaireTableUpdateCompanionBuilder,
+      (SignalementCommentaireRow, $$SignalementsCommentaireTableReferences),
+      SignalementCommentaireRow,
+      PrefetchHooks Function({bool commentaireId, bool fideleId})
     >;
 typedef $$ComptesUtilisateursTableCreateCompanionBuilder =
     ComptesUtilisateursCompanion Function({
@@ -71645,6 +73023,11 @@ class $AppDatabaseManager {
       $$FavorisTableTableManager(_db, _db.favoris);
   $$CommentairesTableTableManager get commentaires =>
       $$CommentairesTableTableManager(_db, _db.commentaires);
+  $$SignalementsCommentaireTableTableManager get signalementsCommentaire =>
+      $$SignalementsCommentaireTableTableManager(
+        _db,
+        _db.signalementsCommentaire,
+      );
   $$ComptesUtilisateursTableTableManager get comptesUtilisateurs =>
       $$ComptesUtilisateursTableTableManager(_db, _db.comptesUtilisateurs);
   $$JournalLiaisonsComptesTableTableManager get journalLiaisonsComptes =>

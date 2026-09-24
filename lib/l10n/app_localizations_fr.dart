@@ -1450,6 +1450,47 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mediathequeSignalerCommentaire => 'Signaler';
 
   @override
+  String get mediathequeModerationTitre => 'Modération des commentaires';
+
+  @override
+  String get mediathequeModerationReservee =>
+      'Modération réservée à un pasteur (ou rôle supérieur).';
+
+  @override
+  String get mediathequeModerationSansFiche =>
+      'Liez votre compte à votre fiche pour décider : une décision de modération trace une personne du registre.';
+
+  @override
+  String get mediathequeModerationAucun => 'Aucun commentaire à modérer.';
+
+  @override
+  String get mediathequeModerationMasque => 'Masqué';
+
+  @override
+  String get mediathequeModerationPublieSignale => 'Publié, signalé';
+
+  @override
+  String mediathequeModerationAuteur(String auteur) {
+    return 'Par $auteur';
+  }
+
+  @override
+  String mediathequeModerationSignalePar(String nom) {
+    return 'Signalé par $nom';
+  }
+
+  @override
+  String mediathequeModerationSignaleParMotif(String nom, String motif) {
+    return 'Signalé par $nom : $motif';
+  }
+
+  @override
+  String get mediathequeModerationApprouver => 'Approuver';
+
+  @override
+  String get mediathequeModerationRejeter => 'Rejeter';
+
+  @override
   String get mediathequeChampCommentaire => 'Votre commentaire';
 
   @override

@@ -1188,10 +1188,37 @@ class Commentaires extends Table {
   TextColumn get texte => text()();
   TextColumn get statutModeration => text().withDefault(const Constant('publie'))();
   DateTimeColumn get date => dateTime()();
+
+  /// Signaleurs distincts depuis la dernière décision de modération : valeur
+  /// dérivée de `signalements_commentaire`, recalculée à chaque signalement
+  /// (jamais incrémentée en aveugle).
   IntColumn get nombreSignalements => integer().withDefault(const Constant(0))();
+
+  /// RG-XIII-03 — dernière décision de modération : auteur (fiche) et date.
+  @ReferenceName('commentairesModeres')
+  TextColumn get moderePar => text().nullable().references(Fideles, #id)();
+  DateTimeColumn get dateModeration => dateTime().nullable()();
 
   @override
   Set<Column> get primaryKey => {id};
+}
+
+/// RG-XIII-03 — un signalement attribué : un fidèle ne signale qu'une fois
+/// un même commentaire. Ajout seul. Le masquage automatique compte les
+/// signaleurs distincts, jamais des signalements bruts.
+@DataClassName('SignalementCommentaireRow')
+class SignalementsCommentaire extends Table {
+  TextColumn get id => text()();
+  TextColumn get commentaireId => text().references(Commentaires, #id)();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  TextColumn get motif => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (commentaire_id, fidele_id)'];
 }
 
 /// File d'attente hors ligne (RG-OFF-02) : chaque écriture locale enregistre
