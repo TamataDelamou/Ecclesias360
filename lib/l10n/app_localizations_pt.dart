@@ -1670,4 +1670,52 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get authLierMonCompteFait => 'Conta vinculada à sua ficha.';
+
+  @override
+  String get notesPastoralesTitre => 'Notas pastorais privadas';
+
+  @override
+  String get notesPastoralesAucune => 'Nenhuma nota pastoral.';
+
+  @override
+  String get notesPastoralesAccesReserve =>
+      'Acesso restrito: as notas pastorais só podem ser lidas pelo autor e pelos pastores, nunca pelo fiel em causa.';
+
+  @override
+  String get notesPastoralesConfidentialite =>
+      'O conteúdo só aparece ao abrir uma nota; cada abertura é registada.';
+
+  @override
+  String get notesPastoralesRediger => 'Redigir uma nota';
+
+  @override
+  String get notesPastoralesModifier => 'Modificar a nota';
+
+  @override
+  String get notesPastoralesChampContenu => 'Conteúdo da nota';
+
+  @override
+  String notesPastoralesAuteurDate(String auteur, String date) {
+    return 'Por $auteur · $date';
+  }
+
+  @override
+  String notesPastoralesModifieeLe(String date) {
+    return 'Modificada em $date';
+  }
+
+  @override
+  String get notesPastoralesDetailTitre => 'Nota pastoral';
+
+  @override
+  String get notesPastoralesIntrouvable => 'Nota pastoral não encontrada.';
+
+  @override
+  String get notesPastoralesJournalTitre => 'Registo de consultas';
+
+  @override
+  String get notesPastoralesJournalAucune => 'Nenhuma consulta registada.';
+
+  @override
+  String get notesPastoralesCompteSansFiche => 'Conta sem ficha';
 }

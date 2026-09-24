@@ -154,6 +154,26 @@ class AppError implements Exception {
         "Les engagements d'un fidèle sont réservés à lui-même, à un pasteur ou au trésorier de son nœud.",
       );
 
+  factory AppError.notePastoraleAccesRefuse() => const AppError(
+        'note_pastorale_acces_refuse',
+        "Les notes pastorales privées sont réservées à leur auteur et aux pasteurs ; jamais au fidèle concerné.",
+      );
+
+  factory AppError.notePastoraleRedactionReservee() => const AppError(
+        'note_pastorale_redaction_reservee',
+        "La rédaction d'une note pastorale est réservée à un pasteur lié à sa fiche, jamais sur sa propre fiche.",
+      );
+
+  factory AppError.notePastoraleModificationReservee() => const AppError(
+        'note_pastorale_modification_reservee',
+        "Seul l'auteur d'une note pastorale peut la modifier.",
+      );
+
+  factory AppError.notePastoraleContenuVide() => const AppError(
+        'note_pastorale_contenu_vide',
+        "Une note pastorale ne peut pas être vide.",
+      );
+
   factory AppError.dossierDisciplinaireAccesRefuse() => const AppError(
         'dossier_disciplinaire_acces_refuse',
         "Vous n'êtes pas habilité à consulter ce dossier disciplinaire.",

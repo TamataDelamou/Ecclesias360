@@ -1665,4 +1665,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authLierMonCompteFait => 'Account linked to your record.';
+
+  @override
+  String get notesPastoralesTitre => 'Private pastoral notes';
+
+  @override
+  String get notesPastoralesAucune => 'No pastoral note.';
+
+  @override
+  String get notesPastoralesAccesReserve =>
+      'Restricted access: pastoral notes can only be read by their author and pastors, never by the member concerned.';
+
+  @override
+  String get notesPastoralesConfidentialite =>
+      'Content only appears when a note is opened; each opening is logged.';
+
+  @override
+  String get notesPastoralesRediger => 'Write a note';
+
+  @override
+  String get notesPastoralesModifier => 'Edit the note';
+
+  @override
+  String get notesPastoralesChampContenu => 'Note content';
+
+  @override
+  String notesPastoralesAuteurDate(String auteur, String date) {
+    return 'By $auteur · $date';
+  }
+
+  @override
+  String notesPastoralesModifieeLe(String date) {
+    return 'Edited on $date';
+  }
+
+  @override
+  String get notesPastoralesDetailTitre => 'Pastoral note';
+
+  @override
+  String get notesPastoralesIntrouvable => 'Pastoral note not found.';
+
+  @override
+  String get notesPastoralesJournalTitre => 'Access log';
+
+  @override
+  String get notesPastoralesJournalAucune => 'No access recorded.';
+
+  @override
+  String get notesPastoralesCompteSansFiche => 'Account without record';
 }

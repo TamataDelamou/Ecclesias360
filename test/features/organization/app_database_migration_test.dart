@@ -861,4 +861,35 @@ void main() {
 
     await db.close();
   });
+
+  test('un fichier créé en schéma v22 reçoit les notes pastorales et leur journal (RG-II-11)', () async {
+    final fichier = File(
+      path.join(Directory.systemTemp.path, 'ecclesias_migration_test_v22_${DateTime.now().microsecondsSinceEpoch}.sqlite'),
+    );
+    addTearDown(() {
+      if (fichier.existsSync()) fichier.deleteSync();
+    });
+
+    final dbInitiale = AppDatabase(NativeDatabase(fichier));
+    await dbInitiale.into(dbInitiale.zonesGeographiques).insert(
+          ZonesGeographiquesCompanion.insert(id: 'zone-1', libelle: 'Togo', niveau: 0),
+        );
+    await dbInitiale.close();
+
+    // Ramène le fichier au schéma v22 exact : ni notes pastorales ni journal.
+    final connexionBrute = sqlite3.sqlite3.open(fichier.path);
+    connexionBrute.execute('''
+      DROP TABLE consultations_notes_pastorales;
+      DROP TABLE notes_pastorales;
+      PRAGMA user_version = 22;
+    ''');
+    connexionBrute.close();
+
+    final db = AppDatabase(NativeDatabase(fichier));
+    expect((await db.select(db.zonesGeographiques).getSingle()).libelle, 'Togo');
+    expect(await db.select(db.notesPastorales).get(), isEmpty);
+    expect(await db.select(db.consultationsNotesPastorales).get(), isEmpty);
+
+    await db.close();
+  });
 }

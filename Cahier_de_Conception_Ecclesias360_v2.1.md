@@ -613,7 +613,9 @@ Constituer la fiche fidèle comme entité relationnelle centrale : identité civ
 
 - **RG-II-09 —** L'import de masse (migration depuis une base papier ou un tableur) exige une phase de dédoublonnage assistée (nom, date de naissance, téléphone) avant validation définitive.
 
-- **RG-II-10 —** Le fidèle authentifié accède, en écriture sur ses champs non sensibles et en lecture sur le reste, à sa propre fiche depuis l'écran « Profil et préférences utilisateur » du module XXIII, où il peut compléter ses informations personnelles, consulter son nœud d'appartenance (module I) et son historique complet (RG-II-05).
+- **RG-II-10 —** Le fidèle authentifié accède, en écriture sur ses champs non sensibles et en lecture sur le reste — à l'exception des notes pastorales privées écrites sur lui (RG-II-11) —, à sa propre fiche depuis l'écran « Profil et préférences utilisateur » du module XXIII, où il peut compléter ses informations personnelles, consulter son nœud d'appartenance (module I) et son historique complet (RG-II-05).
+
+- **RG-II-11 — Notes pastorales privées —** un pasteur peut consigner sur un fidèle des notes pastorales privées, portées par une entité dédiée (jamais un champ de la fiche ni de son historique). Une note est lisible de son seul auteur et des pasteurs (ou rôle supérieur, administrateur compris) du périmètre du nœud auquel elle est rattachée, **jamais du fidèle concerné**, même s'il détient lui-même le rang de pasteur, jamais d'un responsable, d'un trésorier ou d'un membre de commission à ce titre. Elle est rédigée par un pasteur du périmètre, en son nom propre (personne du registre), jamais sur sa propre fiche ; elle reste rattachée au nœud du fidèle au moment de sa rédaction et ne suit pas une mutation (module IX) — elle n'est donc jamais transmise automatiquement aux pasteurs d'une autre église. Seul son auteur en modifie le contenu, sans historique ; aucune suppression n'est offerte à l'utilisateur. Les listes de notes n'exposent que l'auteur et la date ; le contenu n'est affiché qu'à l'ouverture d'une note, et **chaque ouverture est journalisée** (compte, fiche, rôle, date), journal lisible de qui peut lire la note — extension explicite, par analogie, de la journalisation que RG-SEC-06 impose aux dossiers disciplinaires. Les notes sont exclues de l'agrégation de la fiche (RG-II-07), de la fiche synthèse imprimable et de tout rôle d'assistant IA (module XVI). **Droit d'accès légal —** le refus d'affichage au fidèle concerné est une règle applicative ; il n'éteint pas le droit d'accès que lui reconnaît la réglementation sur les données personnelles (RGPD, législation nationale applicable). L'exercice de ce droit relève d'une procédure administrative encadrée (export sur demande, par l'administrateur), à définir séparément.
 
 ### **Modèle de données (entités clés)**
 
@@ -623,6 +625,8 @@ Constituer la fiche fidèle comme entité relationnelle centrale : identité civ
 | LienFamilial          | id · fidele_id_1 · fidele_id_2 · type_lien                                                                                                                                                                            |
 | HistoriqueFidele      | id · fidele_id · champ_modifie · ancienne_valeur · nouvelle_valeur · auteur · date                                                                                                                                    |
 | Tuteur                | id · mineur_id · tuteur_fidele_id_ou_tiers · lien                                                                                                                                                                     |
+| NotePastorale         | id · fidele_id · auteur_fidele_id · noeud_id (nœud du fidèle à la rédaction, figé) · contenu · created_at · updated_at (RG-II-11)                                                                                     |
+| ConsultationNotePastorale | id · note_id · auth_user_id · fidele_id · role · consulte_le (journal des ouvertures, ajout seul, RG-II-11)                                                                                                       |
 
 ### **Relations avec les autres modules**
 
@@ -1942,7 +1946,7 @@ La richesse relationnelle de la plateforme et la sensibilité de certaines donn�
 
 - **RG-SEC-05 — Cloisonnement hiérarchique —** un utilisateur n'accède qu'aux données de son nœud organisationnel et, le cas échéant, des nœuds descendants, jamais des nœuds pairs ou parents sans habilitation explicite.
 
-- **RG-SEC-06 — Confidentialité renforcée pour les modules II (données spirituelles sensibles), X (discipline) et XI/XV/XXI (finances) —** accès restreint aux rôles nommément habilités, journalisation systématique de toute consultation d'un dossier disciplinaire, séparation stricte des tâches saisie/validation en matière financière (RG-XI-02).
+- **RG-SEC-06 — Confidentialité renforcée pour les modules II (données spirituelles sensibles), X (discipline) et XI/XV/XXI (finances) —** accès restreint aux rôles nommément habilités, journalisation systématique de toute consultation d'un dossier disciplinaire (étendue, par analogie, à toute ouverture d'une note pastorale privée — RG-II-11), séparation stricte des tâches saisie/validation en matière financière (RG-XI-02).
 
 - **RG-SEC-06bis — Rôle « utilisateur simple » —** tout utilisateur non rattaché à une église comme fidèle enregistré accède uniquement au module XIII (médiathèque chrétienne) en lecture seule, sans aucun autre droit de consultation ou de saisie, jusqu'à ce qu'il complète une affiliation à une église pour devenir fidèle enregistré.
 

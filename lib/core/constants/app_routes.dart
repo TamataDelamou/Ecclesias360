@@ -23,6 +23,8 @@ abstract final class AppRoutes {
 
   static String fidele(String id) => '/fideles/$id';
   static String fideleHistorique(String id) => '/fideles/$id/historique';
+  static String notesPastoralesDuFidele(String fideleId) => '/fideles/$fideleId/notes-pastorales';
+  static String notePastorale(String id) => '/notes-pastorales/$id';
 
   static const String parametres = '/parametres';
   static const String zonesGeographiques = '/parametres/zones-geographiques';

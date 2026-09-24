@@ -515,5 +515,19 @@
   "authLierMonCompte": "Link my account to this record",
   "authLierMonCompteConfirmation": "Your administrator account will be linked to {nom}'s record, which will take the administrator role. The link is logged and can only be undone by resolving a link conflict.",
   "authLierMonCompteBouton": "Link my account",
-  "authLierMonCompteFait": "Account linked to your record."
+  "authLierMonCompteFait": "Account linked to your record.",
+  "notesPastoralesTitre": "Private pastoral notes",
+  "notesPastoralesAucune": "No pastoral note.",
+  "notesPastoralesAccesReserve": "Restricted access: pastoral notes can only be read by their author and pastors, never by the member concerned.",
+  "notesPastoralesConfidentialite": "Content only appears when a note is opened; each opening is logged.",
+  "notesPastoralesRediger": "Write a note",
+  "notesPastoralesModifier": "Edit the note",
+  "notesPastoralesChampContenu": "Note content",
+  "notesPastoralesAuteurDate": "By {auteur} · {date}",
+  "notesPastoralesModifieeLe": "Edited on {date}",
+  "notesPastoralesDetailTitre": "Pastoral note",
+  "notesPastoralesIntrouvable": "Pastoral note not found.",
+  "notesPastoralesJournalTitre": "Access log",
+  "notesPastoralesJournalAucune": "No access recorded.",
+  "notesPastoralesCompteSansFiche": "Account without record"
 }

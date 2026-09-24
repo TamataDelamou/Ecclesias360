@@ -25,7 +25,9 @@ import 'features/finances/data/finances_repository.dart';
 import 'features/dons_spirituels/application/don_spirituel_controller.dart';
 import 'features/dons_spirituels/data/don_spirituel_repository.dart';
 import 'features/fideles/application/fidele_controller.dart';
+import 'features/fideles/application/notes_pastorales_controller.dart';
 import 'features/fideles/data/fidele_repository.dart';
+import 'features/fideles/data/notes_pastorales_repository.dart';
 import 'features/groupes_eglise/application/groupe_controller.dart';
 import 'features/groupes_eglise/data/groupe_repository.dart';
 import 'features/ministeres/application/ministere_controller.dart';
@@ -72,6 +74,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final OrganisationController _organisationController;
   late final FideleRepository _fideleRepository;
   late final FideleController _fideleController;
+  late final NotesPastoralesController _notesPastoralesController;
   late final ZoneGeographiqueRepository _zoneGeographiqueRepository;
   late final ZoneGeographiqueController _zoneGeographiqueController;
   late final MinistereRepository _ministereRepository;
@@ -115,6 +118,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _organisationController = OrganisationController(_organisationRepository, _capacitesController);
     _fideleRepository = FideleRepository(widget.database, _syncCoordinator);
     _fideleController = FideleController(_fideleRepository);
+    _notesPastoralesController = NotesPastoralesController(NotesPastoralesRepository(widget.database));
     _zoneGeographiqueRepository = ZoneGeographiqueRepository(widget.database);
     _zoneGeographiqueController = ZoneGeographiqueController(
       _zoneGeographiqueRepository,
@@ -165,6 +169,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _archivageController.dispose();
     _organisationController.dispose();
     _fideleController.dispose();
+    _notesPastoralesController.dispose();
     _zoneGeographiqueController.dispose();
     _ministereController.dispose();
     _donSpirituelController.dispose();
@@ -189,6 +194,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
         ChangeNotifierProvider<CapacitesController>.value(value: _capacitesController),
         ChangeNotifierProvider<OrganisationController>.value(value: _organisationController),
         ChangeNotifierProvider<FideleController>.value(value: _fideleController),
+        ChangeNotifierProvider<NotesPastoralesController>.value(value: _notesPastoralesController),
         ChangeNotifierProvider<ZoneGeographiqueController>.value(value: _zoneGeographiqueController),
         ChangeNotifierProvider<MinistereController>.value(value: _ministereController),
         ChangeNotifierProvider<DonSpirituelController>.value(value: _donSpirituelController),

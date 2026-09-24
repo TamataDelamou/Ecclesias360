@@ -208,6 +208,8 @@ const List<(String code, String libelle, String type)> comptesComptablesDeDepart
   DossiersDisciplinaires,
   PiecesDossier,
   ConsultationsDisciplinaires,
+  NotesPastorales,
+  ConsultationsNotesPastorales,
   TypesOffrande,
   Projets,
   Contributions,
@@ -237,7 +239,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 22;
+  int get schemaVersion => 23;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -413,6 +415,12 @@ class AppDatabase extends _$AppDatabase {
               await m.addColumn(commentaires, commentaires.dateModeration);
             }
             await m.createTable(signalementsCommentaire);
+          }
+          // v22 -> v23 : notes pastorales privées et journal de leurs
+          // consultations (Module II, écran 13, RG-II-11).
+          if (from < 23) {
+            await m.createTable(notesPastorales);
+            await m.createTable(consultationsNotesPastorales);
           }
         },
         beforeOpen: (details) async {

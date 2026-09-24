@@ -515,5 +515,19 @@
   "authLierMonCompte": "Vincular a minha conta a esta ficha",
   "authLierMonCompteConfirmation": "A sua conta de administrador será vinculada à ficha de {nom}, que assumirá o papel de administrador. A vinculação é registada e só pode ser desfeita pela resolução de um conflito de vinculação.",
   "authLierMonCompteBouton": "Vincular a minha conta",
-  "authLierMonCompteFait": "Conta vinculada à sua ficha."
+  "authLierMonCompteFait": "Conta vinculada à sua ficha.",
+  "notesPastoralesTitre": "Notas pastorais privadas",
+  "notesPastoralesAucune": "Nenhuma nota pastoral.",
+  "notesPastoralesAccesReserve": "Acesso restrito: as notas pastorais só podem ser lidas pelo autor e pelos pastores, nunca pelo fiel em causa.",
+  "notesPastoralesConfidentialite": "O conteúdo só aparece ao abrir uma nota; cada abertura é registada.",
+  "notesPastoralesRediger": "Redigir uma nota",
+  "notesPastoralesModifier": "Modificar a nota",
+  "notesPastoralesChampContenu": "Conteúdo da nota",
+  "notesPastoralesAuteurDate": "Por {auteur} · {date}",
+  "notesPastoralesModifieeLe": "Modificada em {date}",
+  "notesPastoralesDetailTitre": "Nota pastoral",
+  "notesPastoralesIntrouvable": "Nota pastoral não encontrada.",
+  "notesPastoralesJournalTitre": "Registo de consultas",
+  "notesPastoralesJournalAucune": "Nenhuma consulta registada.",
+  "notesPastoralesCompteSansFiche": "Conta sem ficha"
 }

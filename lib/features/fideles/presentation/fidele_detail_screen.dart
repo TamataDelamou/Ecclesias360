@@ -18,6 +18,7 @@ import '../domain/models/tuteur.dart';
 import '../domain/models/type_lien.dart';
 import '../domain/rules/fidele_acces_rules.dart';
 import '../domain/rules/fidele_rules.dart';
+import '../domain/rules/note_pastorale_rules.dart';
 
 const List<StatutSpirituel> _chaineProgression = [
   StatutSpirituel.visiteur,
@@ -208,6 +209,20 @@ class FideleDetailScreen extends StatelessWidget {
                     ],
                   ),
           ),
+          // RG-II-11 : notes pastorales privées — pasteur (ou plus), jamais sur
+          // sa propre fiche.
+          if (NotePastoraleRules.peutOuvrirNotesDuFidele(
+            role: session.role,
+            acteurFideleId: session.session?.fideleId,
+            fideleConcerneId: fidele.id,
+          )) ...[
+            OutlinedButton.icon(
+              icon: const Icon(Icons.lock_outline),
+              label: Text(l10n.notesPastoralesTitre),
+              onPressed: () => context.push(AppRoutes.notesPastoralesDuFidele(fidele.id)),
+            ),
+            const SizedBox(height: AppDimensions.spacingSm),
+          ],
           // Favoris : visibles du seul fidèle concerné (policy favoris_proprietaire).
           if (session.session?.fideleId == fidele.id) ...[
             OutlinedButton.icon(

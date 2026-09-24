@@ -21078,6 +21078,916 @@ class ConsultationsDisciplinairesCompanion
   }
 }
 
+class $NotesPastoralesTable extends NotesPastorales
+    with TableInfo<$NotesPastoralesTable, NotePastoraleRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NotesPastoralesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _auteurFideleIdMeta = const VerificationMeta(
+    'auteurFideleId',
+  );
+  @override
+  late final GeneratedColumn<String> auteurFideleId = GeneratedColumn<String>(
+    'auteur_fidele_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _noeudIdMeta = const VerificationMeta(
+    'noeudId',
+  );
+  @override
+  late final GeneratedColumn<String> noeudId = GeneratedColumn<String>(
+    'noeud_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES organisation_nodes (id)',
+    ),
+  );
+  static const VerificationMeta _contenuMeta = const VerificationMeta(
+    'contenu',
+  );
+  @override
+  late final GeneratedColumn<String> contenu = GeneratedColumn<String>(
+    'contenu',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    fideleId,
+    auteurFideleId,
+    noeudId,
+    contenu,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'notes_pastorales';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<NotePastoraleRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fideleIdMeta);
+    }
+    if (data.containsKey('auteur_fidele_id')) {
+      context.handle(
+        _auteurFideleIdMeta,
+        auteurFideleId.isAcceptableOrUnknown(
+          data['auteur_fidele_id']!,
+          _auteurFideleIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_auteurFideleIdMeta);
+    }
+    if (data.containsKey('noeud_id')) {
+      context.handle(
+        _noeudIdMeta,
+        noeudId.isAcceptableOrUnknown(data['noeud_id']!, _noeudIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noeudIdMeta);
+    }
+    if (data.containsKey('contenu')) {
+      context.handle(
+        _contenuMeta,
+        contenu.isAcceptableOrUnknown(data['contenu']!, _contenuMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_contenuMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  NotePastoraleRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NotePastoraleRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      )!,
+      auteurFideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}auteur_fidele_id'],
+      )!,
+      noeudId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}noeud_id'],
+      )!,
+      contenu: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}contenu'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $NotesPastoralesTable createAlias(String alias) {
+    return $NotesPastoralesTable(attachedDatabase, alias);
+  }
+}
+
+class NotePastoraleRow extends DataClass
+    implements Insertable<NotePastoraleRow> {
+  final String id;
+  final String fideleId;
+  final String auteurFideleId;
+  final String noeudId;
+  final String contenu;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const NotePastoraleRow({
+    required this.id,
+    required this.fideleId,
+    required this.auteurFideleId,
+    required this.noeudId,
+    required this.contenu,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['fidele_id'] = Variable<String>(fideleId);
+    map['auteur_fidele_id'] = Variable<String>(auteurFideleId);
+    map['noeud_id'] = Variable<String>(noeudId);
+    map['contenu'] = Variable<String>(contenu);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  NotesPastoralesCompanion toCompanion(bool nullToAbsent) {
+    return NotesPastoralesCompanion(
+      id: Value(id),
+      fideleId: Value(fideleId),
+      auteurFideleId: Value(auteurFideleId),
+      noeudId: Value(noeudId),
+      contenu: Value(contenu),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory NotePastoraleRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return NotePastoraleRow(
+      id: serializer.fromJson<String>(json['id']),
+      fideleId: serializer.fromJson<String>(json['fideleId']),
+      auteurFideleId: serializer.fromJson<String>(json['auteurFideleId']),
+      noeudId: serializer.fromJson<String>(json['noeudId']),
+      contenu: serializer.fromJson<String>(json['contenu']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'fideleId': serializer.toJson<String>(fideleId),
+      'auteurFideleId': serializer.toJson<String>(auteurFideleId),
+      'noeudId': serializer.toJson<String>(noeudId),
+      'contenu': serializer.toJson<String>(contenu),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  NotePastoraleRow copyWith({
+    String? id,
+    String? fideleId,
+    String? auteurFideleId,
+    String? noeudId,
+    String? contenu,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => NotePastoraleRow(
+    id: id ?? this.id,
+    fideleId: fideleId ?? this.fideleId,
+    auteurFideleId: auteurFideleId ?? this.auteurFideleId,
+    noeudId: noeudId ?? this.noeudId,
+    contenu: contenu ?? this.contenu,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  NotePastoraleRow copyWithCompanion(NotesPastoralesCompanion data) {
+    return NotePastoraleRow(
+      id: data.id.present ? data.id.value : this.id,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      auteurFideleId: data.auteurFideleId.present
+          ? data.auteurFideleId.value
+          : this.auteurFideleId,
+      noeudId: data.noeudId.present ? data.noeudId.value : this.noeudId,
+      contenu: data.contenu.present ? data.contenu.value : this.contenu,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NotePastoraleRow(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('auteurFideleId: $auteurFideleId, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('contenu: $contenu, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    fideleId,
+    auteurFideleId,
+    noeudId,
+    contenu,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is NotePastoraleRow &&
+          other.id == this.id &&
+          other.fideleId == this.fideleId &&
+          other.auteurFideleId == this.auteurFideleId &&
+          other.noeudId == this.noeudId &&
+          other.contenu == this.contenu &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class NotesPastoralesCompanion extends UpdateCompanion<NotePastoraleRow> {
+  final Value<String> id;
+  final Value<String> fideleId;
+  final Value<String> auteurFideleId;
+  final Value<String> noeudId;
+  final Value<String> contenu;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const NotesPastoralesCompanion({
+    this.id = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.auteurFideleId = const Value.absent(),
+    this.noeudId = const Value.absent(),
+    this.contenu = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  NotesPastoralesCompanion.insert({
+    required String id,
+    required String fideleId,
+    required String auteurFideleId,
+    required String noeudId,
+    required String contenu,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       fideleId = Value(fideleId),
+       auteurFideleId = Value(auteurFideleId),
+       noeudId = Value(noeudId),
+       contenu = Value(contenu),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<NotePastoraleRow> custom({
+    Expression<String>? id,
+    Expression<String>? fideleId,
+    Expression<String>? auteurFideleId,
+    Expression<String>? noeudId,
+    Expression<String>? contenu,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (auteurFideleId != null) 'auteur_fidele_id': auteurFideleId,
+      if (noeudId != null) 'noeud_id': noeudId,
+      if (contenu != null) 'contenu': contenu,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  NotesPastoralesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? fideleId,
+    Value<String>? auteurFideleId,
+    Value<String>? noeudId,
+    Value<String>? contenu,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return NotesPastoralesCompanion(
+      id: id ?? this.id,
+      fideleId: fideleId ?? this.fideleId,
+      auteurFideleId: auteurFideleId ?? this.auteurFideleId,
+      noeudId: noeudId ?? this.noeudId,
+      contenu: contenu ?? this.contenu,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (auteurFideleId.present) {
+      map['auteur_fidele_id'] = Variable<String>(auteurFideleId.value);
+    }
+    if (noeudId.present) {
+      map['noeud_id'] = Variable<String>(noeudId.value);
+    }
+    if (contenu.present) {
+      map['contenu'] = Variable<String>(contenu.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NotesPastoralesCompanion(')
+          ..write('id: $id, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('auteurFideleId: $auteurFideleId, ')
+          ..write('noeudId: $noeudId, ')
+          ..write('contenu: $contenu, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ConsultationsNotesPastoralesTable extends ConsultationsNotesPastorales
+    with
+        TableInfo<
+          $ConsultationsNotesPastoralesTable,
+          ConsultationNotePastoraleRow
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ConsultationsNotesPastoralesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _noteIdMeta = const VerificationMeta('noteId');
+  @override
+  late final GeneratedColumn<String> noteId = GeneratedColumn<String>(
+    'note_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES notes_pastorales (id)',
+    ),
+  );
+  static const VerificationMeta _authUserIdMeta = const VerificationMeta(
+    'authUserId',
+  );
+  @override
+  late final GeneratedColumn<String> authUserId = GeneratedColumn<String>(
+    'auth_user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _roleMeta = const VerificationMeta('role');
+  @override
+  late final GeneratedColumn<String> role = GeneratedColumn<String>(
+    'role',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _consulteLeMeta = const VerificationMeta(
+    'consulteLe',
+  );
+  @override
+  late final GeneratedColumn<DateTime> consulteLe = GeneratedColumn<DateTime>(
+    'consulte_le',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    noteId,
+    authUserId,
+    fideleId,
+    role,
+    consulteLe,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'consultations_notes_pastorales';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ConsultationNotePastoraleRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('note_id')) {
+      context.handle(
+        _noteIdMeta,
+        noteId.isAcceptableOrUnknown(data['note_id']!, _noteIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noteIdMeta);
+    }
+    if (data.containsKey('auth_user_id')) {
+      context.handle(
+        _authUserIdMeta,
+        authUserId.isAcceptableOrUnknown(
+          data['auth_user_id']!,
+          _authUserIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_authUserIdMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    }
+    if (data.containsKey('role')) {
+      context.handle(
+        _roleMeta,
+        role.isAcceptableOrUnknown(data['role']!, _roleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_roleMeta);
+    }
+    if (data.containsKey('consulte_le')) {
+      context.handle(
+        _consulteLeMeta,
+        consulteLe.isAcceptableOrUnknown(data['consulte_le']!, _consulteLeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_consulteLeMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ConsultationNotePastoraleRow map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ConsultationNotePastoraleRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      noteId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note_id'],
+      )!,
+      authUserId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}auth_user_id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      ),
+      role: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}role'],
+      )!,
+      consulteLe: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}consulte_le'],
+      )!,
+    );
+  }
+
+  @override
+  $ConsultationsNotesPastoralesTable createAlias(String alias) {
+    return $ConsultationsNotesPastoralesTable(attachedDatabase, alias);
+  }
+}
+
+class ConsultationNotePastoraleRow extends DataClass
+    implements Insertable<ConsultationNotePastoraleRow> {
+  final String id;
+  final String noteId;
+  final String authUserId;
+  final String? fideleId;
+  final String role;
+  final DateTime consulteLe;
+  const ConsultationNotePastoraleRow({
+    required this.id,
+    required this.noteId,
+    required this.authUserId,
+    this.fideleId,
+    required this.role,
+    required this.consulteLe,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['note_id'] = Variable<String>(noteId);
+    map['auth_user_id'] = Variable<String>(authUserId);
+    if (!nullToAbsent || fideleId != null) {
+      map['fidele_id'] = Variable<String>(fideleId);
+    }
+    map['role'] = Variable<String>(role);
+    map['consulte_le'] = Variable<DateTime>(consulteLe);
+    return map;
+  }
+
+  ConsultationsNotesPastoralesCompanion toCompanion(bool nullToAbsent) {
+    return ConsultationsNotesPastoralesCompanion(
+      id: Value(id),
+      noteId: Value(noteId),
+      authUserId: Value(authUserId),
+      fideleId: fideleId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fideleId),
+      role: Value(role),
+      consulteLe: Value(consulteLe),
+    );
+  }
+
+  factory ConsultationNotePastoraleRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ConsultationNotePastoraleRow(
+      id: serializer.fromJson<String>(json['id']),
+      noteId: serializer.fromJson<String>(json['noteId']),
+      authUserId: serializer.fromJson<String>(json['authUserId']),
+      fideleId: serializer.fromJson<String?>(json['fideleId']),
+      role: serializer.fromJson<String>(json['role']),
+      consulteLe: serializer.fromJson<DateTime>(json['consulteLe']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'noteId': serializer.toJson<String>(noteId),
+      'authUserId': serializer.toJson<String>(authUserId),
+      'fideleId': serializer.toJson<String?>(fideleId),
+      'role': serializer.toJson<String>(role),
+      'consulteLe': serializer.toJson<DateTime>(consulteLe),
+    };
+  }
+
+  ConsultationNotePastoraleRow copyWith({
+    String? id,
+    String? noteId,
+    String? authUserId,
+    Value<String?> fideleId = const Value.absent(),
+    String? role,
+    DateTime? consulteLe,
+  }) => ConsultationNotePastoraleRow(
+    id: id ?? this.id,
+    noteId: noteId ?? this.noteId,
+    authUserId: authUserId ?? this.authUserId,
+    fideleId: fideleId.present ? fideleId.value : this.fideleId,
+    role: role ?? this.role,
+    consulteLe: consulteLe ?? this.consulteLe,
+  );
+  ConsultationNotePastoraleRow copyWithCompanion(
+    ConsultationsNotesPastoralesCompanion data,
+  ) {
+    return ConsultationNotePastoraleRow(
+      id: data.id.present ? data.id.value : this.id,
+      noteId: data.noteId.present ? data.noteId.value : this.noteId,
+      authUserId: data.authUserId.present
+          ? data.authUserId.value
+          : this.authUserId,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      role: data.role.present ? data.role.value : this.role,
+      consulteLe: data.consulteLe.present
+          ? data.consulteLe.value
+          : this.consulteLe,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ConsultationNotePastoraleRow(')
+          ..write('id: $id, ')
+          ..write('noteId: $noteId, ')
+          ..write('authUserId: $authUserId, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('role: $role, ')
+          ..write('consulteLe: $consulteLe')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, noteId, authUserId, fideleId, role, consulteLe);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ConsultationNotePastoraleRow &&
+          other.id == this.id &&
+          other.noteId == this.noteId &&
+          other.authUserId == this.authUserId &&
+          other.fideleId == this.fideleId &&
+          other.role == this.role &&
+          other.consulteLe == this.consulteLe);
+}
+
+class ConsultationsNotesPastoralesCompanion
+    extends UpdateCompanion<ConsultationNotePastoraleRow> {
+  final Value<String> id;
+  final Value<String> noteId;
+  final Value<String> authUserId;
+  final Value<String?> fideleId;
+  final Value<String> role;
+  final Value<DateTime> consulteLe;
+  final Value<int> rowid;
+  const ConsultationsNotesPastoralesCompanion({
+    this.id = const Value.absent(),
+    this.noteId = const Value.absent(),
+    this.authUserId = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.role = const Value.absent(),
+    this.consulteLe = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ConsultationsNotesPastoralesCompanion.insert({
+    required String id,
+    required String noteId,
+    required String authUserId,
+    this.fideleId = const Value.absent(),
+    required String role,
+    required DateTime consulteLe,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       noteId = Value(noteId),
+       authUserId = Value(authUserId),
+       role = Value(role),
+       consulteLe = Value(consulteLe);
+  static Insertable<ConsultationNotePastoraleRow> custom({
+    Expression<String>? id,
+    Expression<String>? noteId,
+    Expression<String>? authUserId,
+    Expression<String>? fideleId,
+    Expression<String>? role,
+    Expression<DateTime>? consulteLe,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (noteId != null) 'note_id': noteId,
+      if (authUserId != null) 'auth_user_id': authUserId,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (role != null) 'role': role,
+      if (consulteLe != null) 'consulte_le': consulteLe,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ConsultationsNotesPastoralesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? noteId,
+    Value<String>? authUserId,
+    Value<String?>? fideleId,
+    Value<String>? role,
+    Value<DateTime>? consulteLe,
+    Value<int>? rowid,
+  }) {
+    return ConsultationsNotesPastoralesCompanion(
+      id: id ?? this.id,
+      noteId: noteId ?? this.noteId,
+      authUserId: authUserId ?? this.authUserId,
+      fideleId: fideleId ?? this.fideleId,
+      role: role ?? this.role,
+      consulteLe: consulteLe ?? this.consulteLe,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (noteId.present) {
+      map['note_id'] = Variable<String>(noteId.value);
+    }
+    if (authUserId.present) {
+      map['auth_user_id'] = Variable<String>(authUserId.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (role.present) {
+      map['role'] = Variable<String>(role.value);
+    }
+    if (consulteLe.present) {
+      map['consulte_le'] = Variable<DateTime>(consulteLe.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ConsultationsNotesPastoralesCompanion(')
+          ..write('id: $id, ')
+          ..write('noteId: $noteId, ')
+          ..write('authUserId: $authUserId, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('role: $role, ')
+          ..write('consulteLe: $consulteLe, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $TypesOffrandeTable extends TypesOffrande
     with TableInfo<$TypesOffrandeTable, TypeOffrandeRow> {
   @override
@@ -33313,6 +34223,11 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $PiecesDossierTable piecesDossier = $PiecesDossierTable(this);
   late final $ConsultationsDisciplinairesTable consultationsDisciplinaires =
       $ConsultationsDisciplinairesTable(this);
+  late final $NotesPastoralesTable notesPastorales = $NotesPastoralesTable(
+    this,
+  );
+  late final $ConsultationsNotesPastoralesTable consultationsNotesPastorales =
+      $ConsultationsNotesPastoralesTable(this);
   late final $TypesOffrandeTable typesOffrande = $TypesOffrandeTable(this);
   late final $ProjetsTable projets = $ProjetsTable(this);
   late final $ContributionsTable contributions = $ContributionsTable(this);
@@ -33409,6 +34324,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     dossiersDisciplinaires,
     piecesDossier,
     consultationsDisciplinaires,
+    notesPastorales,
+    consultationsNotesPastorales,
     typesOffrande,
     projets,
     contributions,
@@ -33725,6 +34642,26 @@ final class $$OrganisationNodesTableReferences
 
     final cache = $_typedResult.readTableOrNull(
       _dossiersDisciplinairesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$NotesPastoralesTable, List<NotePastoraleRow>>
+  _notesPastoralesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.notesPastorales,
+    aliasName: 'organisation_nodes__id__notes_pastorales__noeud_id',
+  );
+
+  $$NotesPastoralesTableProcessedTableManager get notesPastoralesRefs {
+    final manager = $$NotesPastoralesTableTableManager(
+      $_db,
+      $_db.notesPastorales,
+    ).filter((f) => f.noeudId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _notesPastoralesRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -34284,6 +35221,31 @@ class $$OrganisationNodesTableFilterComposer
                     $removeJoinBuilderFromRootComposer,
               ),
         );
+    return f(composer);
+  }
+
+  Expression<bool> notesPastoralesRefs(
+    Expression<bool> Function($$NotesPastoralesTableFilterComposer f) f,
+  ) {
+    final $$NotesPastoralesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.notesPastorales,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$NotesPastoralesTableFilterComposer(
+            $db: $db,
+            $table: $db.notesPastorales,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 
@@ -34938,6 +35900,31 @@ class $$OrganisationNodesTableAnnotationComposer
     return f(composer);
   }
 
+  Expression<T> notesPastoralesRefs<T extends Object>(
+    Expression<T> Function($$NotesPastoralesTableAnnotationComposer a) f,
+  ) {
+    final $$NotesPastoralesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.notesPastorales,
+      getReferencedColumn: (t) => t.noeudId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$NotesPastoralesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.notesPastorales,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
   Expression<T> projetsRefs<T extends Object>(
     Expression<T> Function($$ProjetsTableAnnotationComposer a) f,
   ) {
@@ -35168,6 +36155,7 @@ class $$OrganisationNodesTableTableManager
             bool mutationsCommeDestination,
             bool commissionsDisciplinairesRefs,
             bool dossiersDisciplinairesRefs,
+            bool notesPastoralesRefs,
             bool projetsRefs,
             bool contributionsRefs,
             bool tresoriersNoeudRefs,
@@ -35290,6 +36278,7 @@ class $$OrganisationNodesTableTableManager
                 mutationsCommeDestination = false,
                 commissionsDisciplinairesRefs = false,
                 dossiersDisciplinairesRefs = false,
+                notesPastoralesRefs = false,
                 projetsRefs = false,
                 contributionsRefs = false,
                 tresoriersNoeudRefs = false,
@@ -35315,6 +36304,7 @@ class $$OrganisationNodesTableTableManager
                     if (commissionsDisciplinairesRefs)
                       db.commissionsDisciplinaires,
                     if (dossiersDisciplinairesRefs) db.dossiersDisciplinaires,
+                    if (notesPastoralesRefs) db.notesPastorales,
                     if (projetsRefs) db.projets,
                     if (contributionsRefs) db.contributions,
                     if (tresoriersNoeudRefs) db.tresoriersNoeud,
@@ -35579,6 +36569,27 @@ class $$OrganisationNodesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (notesPastoralesRefs)
+                        await $_getPrefetchedData<
+                          OrganisationNodeRow,
+                          $OrganisationNodesTable,
+                          NotePastoraleRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$OrganisationNodesTableReferences
+                              ._notesPastoralesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$OrganisationNodesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).notesPastoralesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noeudId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                       if (projetsRefs)
                         await $_getPrefetchedData<
                           OrganisationNodeRow,
@@ -35780,6 +36791,7 @@ typedef $$OrganisationNodesTableProcessedTableManager =
         bool mutationsCommeDestination,
         bool commissionsDisciplinairesRefs,
         bool dossiersDisciplinairesRefs,
+        bool notesPastoralesRefs,
         bool projetsRefs,
         bool contributionsRefs,
         bool tresoriersNoeudRefs,
@@ -36695,6 +37707,31 @@ final class $$FidelesTableReferences
 
     final cache = $_typedResult.readTableOrNull(
       _consultationsDisciplinairesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $ConsultationsNotesPastoralesTable,
+    List<ConsultationNotePastoraleRow>
+  >
+  _consultationsNotesPastoralesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.consultationsNotesPastorales,
+        aliasName: 'fideles__id__consultations_notes_pastorales__fidele_id',
+      );
+
+  $$ConsultationsNotesPastoralesTableProcessedTableManager
+  get consultationsNotesPastoralesRefs {
+    final manager = $$ConsultationsNotesPastoralesTableTableManager(
+      $_db,
+      $_db.consultationsNotesPastorales,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _consultationsNotesPastoralesRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -37731,6 +38768,35 @@ class $$FidelesTableFilterComposer
               }) => $$ConsultationsDisciplinairesTableFilterComposer(
                 $db: $db,
                 $table: $db.consultationsDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> consultationsNotesPastoralesRefs(
+    Expression<bool> Function(
+      $$ConsultationsNotesPastoralesTableFilterComposer f,
+    )
+    f,
+  ) {
+    final $$ConsultationsNotesPastoralesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.consultationsNotesPastorales,
+          getReferencedColumn: (t) => t.fideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ConsultationsNotesPastoralesTableFilterComposer(
+                $db: $db,
+                $table: $db.consultationsNotesPastorales,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -38943,6 +40009,35 @@ class $$FidelesTableAnnotationComposer
     return f(composer);
   }
 
+  Expression<T> consultationsNotesPastoralesRefs<T extends Object>(
+    Expression<T> Function(
+      $$ConsultationsNotesPastoralesTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$ConsultationsNotesPastoralesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.consultationsNotesPastorales,
+          getReferencedColumn: (t) => t.fideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ConsultationsNotesPastoralesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.consultationsNotesPastorales,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
   Expression<T> contributionsRefs<T extends Object>(
     Expression<T> Function($$ContributionsTableAnnotationComposer a) f,
   ) {
@@ -39240,6 +40335,7 @@ class $$FidelesTableTableManager
             bool dossiersDisciplinairesCommeMisEnCause,
             bool dossiersDisciplinairesCommeAuteur,
             bool consultationsDisciplinairesRefs,
+            bool consultationsNotesPastoralesRefs,
             bool contributionsRefs,
             bool depensesProjetRefs,
             bool engagementsRefs,
@@ -39394,6 +40490,7 @@ class $$FidelesTableTableManager
                 dossiersDisciplinairesCommeMisEnCause = false,
                 dossiersDisciplinairesCommeAuteur = false,
                 consultationsDisciplinairesRefs = false,
+                consultationsNotesPastoralesRefs = false,
                 contributionsRefs = false,
                 depensesProjetRefs = false,
                 engagementsRefs = false,
@@ -39440,6 +40537,8 @@ class $$FidelesTableTableManager
                       db.dossiersDisciplinaires,
                     if (consultationsDisciplinairesRefs)
                       db.consultationsDisciplinaires,
+                    if (consultationsNotesPastoralesRefs)
+                      db.consultationsNotesPastorales,
                     if (contributionsRefs) db.contributions,
                     if (depensesProjetRefs) db.depensesProjet,
                     if (engagementsRefs) db.engagements,
@@ -40073,6 +41172,27 @@ class $$FidelesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (consultationsNotesPastoralesRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          ConsultationNotePastoraleRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._consultationsNotesPastoralesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).consultationsNotesPastoralesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                       if (contributionsRefs)
                         await $_getPrefetchedData<
                           FideleRow,
@@ -40329,6 +41449,7 @@ typedef $$FidelesTableProcessedTableManager =
         bool dossiersDisciplinairesCommeMisEnCause,
         bool dossiersDisciplinairesCommeAuteur,
         bool consultationsDisciplinairesRefs,
+        bool consultationsNotesPastoralesRefs,
         bool contributionsRefs,
         bool depensesProjetRefs,
         bool engagementsRefs,
@@ -60829,6 +61950,1134 @@ typedef $$ConsultationsDisciplinairesTableProcessedTableManager =
       ConsultationDisciplinaireRow,
       PrefetchHooks Function({bool dossierId, bool fideleId})
     >;
+typedef $$NotesPastoralesTableCreateCompanionBuilder =
+    NotesPastoralesCompanion Function({
+      required String id,
+      required String fideleId,
+      required String auteurFideleId,
+      required String noeudId,
+      required String contenu,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$NotesPastoralesTableUpdateCompanionBuilder =
+    NotesPastoralesCompanion Function({
+      Value<String> id,
+      Value<String> fideleId,
+      Value<String> auteurFideleId,
+      Value<String> noeudId,
+      Value<String> contenu,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+final class $$NotesPastoralesTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $NotesPastoralesTable, NotePastoraleRow> {
+  $$NotesPastoralesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('notes_pastorales__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $FidelesTable _auteurFideleIdTable(_$AppDatabase db) =>
+      db.fideles.createAlias('notes_pastorales__auteur_fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager get auteurFideleId {
+    final $_column = $_itemColumn<String>('auteur_fidele_id')!;
+
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_auteurFideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $OrganisationNodesTable _noeudIdTable(_$AppDatabase db) => db
+      .organisationNodes
+      .createAlias('notes_pastorales__noeud_id__organisation_nodes__id');
+
+  $$OrganisationNodesTableProcessedTableManager get noeudId {
+    final $_column = $_itemColumn<String>('noeud_id')!;
+
+    final manager = $$OrganisationNodesTableTableManager(
+      $_db,
+      $_db.organisationNodes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noeudIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $ConsultationsNotesPastoralesTable,
+    List<ConsultationNotePastoraleRow>
+  >
+  _consultationsNotesPastoralesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.consultationsNotesPastorales,
+        aliasName:
+            'notes_pastorales__id__consultations_notes_pastorales__note_id',
+      );
+
+  $$ConsultationsNotesPastoralesTableProcessedTableManager
+  get consultationsNotesPastoralesRefs {
+    final manager = $$ConsultationsNotesPastoralesTableTableManager(
+      $_db,
+      $_db.consultationsNotesPastorales,
+    ).filter((f) => f.noteId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _consultationsNotesPastoralesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$NotesPastoralesTableFilterComposer
+    extends Composer<_$AppDatabase, $NotesPastoralesTable> {
+  $$NotesPastoralesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get contenu => $composableBuilder(
+    column: $table.contenu,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableFilterComposer get auteurFideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.auteurFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableFilterComposer get noeudId {
+    final $$OrganisationNodesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableFilterComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> consultationsNotesPastoralesRefs(
+    Expression<bool> Function(
+      $$ConsultationsNotesPastoralesTableFilterComposer f,
+    )
+    f,
+  ) {
+    final $$ConsultationsNotesPastoralesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.consultationsNotesPastorales,
+          getReferencedColumn: (t) => t.noteId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ConsultationsNotesPastoralesTableFilterComposer(
+                $db: $db,
+                $table: $db.consultationsNotesPastorales,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$NotesPastoralesTableOrderingComposer
+    extends Composer<_$AppDatabase, $NotesPastoralesTable> {
+  $$NotesPastoralesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get contenu => $composableBuilder(
+    column: $table.contenu,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableOrderingComposer get auteurFideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.auteurFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableOrderingComposer get noeudId {
+    final $$OrganisationNodesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noeudId,
+      referencedTable: $db.organisationNodes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrganisationNodesTableOrderingComposer(
+            $db: $db,
+            $table: $db.organisationNodes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$NotesPastoralesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $NotesPastoralesTable> {
+  $$NotesPastoralesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get contenu =>
+      $composableBuilder(column: $table.contenu, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableAnnotationComposer get auteurFideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.auteurFideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$OrganisationNodesTableAnnotationComposer get noeudId {
+    final $$OrganisationNodesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.noeudId,
+          referencedTable: $db.organisationNodes,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$OrganisationNodesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.organisationNodes,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  Expression<T> consultationsNotesPastoralesRefs<T extends Object>(
+    Expression<T> Function(
+      $$ConsultationsNotesPastoralesTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$ConsultationsNotesPastoralesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.consultationsNotesPastorales,
+          getReferencedColumn: (t) => t.noteId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ConsultationsNotesPastoralesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.consultationsNotesPastorales,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$NotesPastoralesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $NotesPastoralesTable,
+          NotePastoraleRow,
+          $$NotesPastoralesTableFilterComposer,
+          $$NotesPastoralesTableOrderingComposer,
+          $$NotesPastoralesTableAnnotationComposer,
+          $$NotesPastoralesTableCreateCompanionBuilder,
+          $$NotesPastoralesTableUpdateCompanionBuilder,
+          (NotePastoraleRow, $$NotesPastoralesTableReferences),
+          NotePastoraleRow,
+          PrefetchHooks Function({
+            bool fideleId,
+            bool auteurFideleId,
+            bool noeudId,
+            bool consultationsNotesPastoralesRefs,
+          })
+        > {
+  $$NotesPastoralesTableTableManager(
+    _$AppDatabase db,
+    $NotesPastoralesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$NotesPastoralesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$NotesPastoralesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$NotesPastoralesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> fideleId = const Value.absent(),
+                Value<String> auteurFideleId = const Value.absent(),
+                Value<String> noeudId = const Value.absent(),
+                Value<String> contenu = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => NotesPastoralesCompanion(
+                id: id,
+                fideleId: fideleId,
+                auteurFideleId: auteurFideleId,
+                noeudId: noeudId,
+                contenu: contenu,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String fideleId,
+                required String auteurFideleId,
+                required String noeudId,
+                required String contenu,
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => NotesPastoralesCompanion.insert(
+                id: id,
+                fideleId: fideleId,
+                auteurFideleId: auteurFideleId,
+                noeudId: noeudId,
+                contenu: contenu,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$NotesPastoralesTable, NotePastoraleRow>(table),
+                  $$NotesPastoralesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                fideleId = false,
+                auteurFideleId = false,
+                noeudId = false,
+                consultationsNotesPastoralesRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (consultationsNotesPastoralesRefs)
+                      db.consultationsNotesPastorales,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (fideleId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.fideleId,
+                                    referencedTable:
+                                        $$NotesPastoralesTableReferences
+                                            ._fideleIdTable(db),
+                                    referencedColumn:
+                                        $$NotesPastoralesTableReferences
+                                            ._fideleIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (auteurFideleId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.auteurFideleId,
+                                    referencedTable:
+                                        $$NotesPastoralesTableReferences
+                                            ._auteurFideleIdTable(db),
+                                    referencedColumn:
+                                        $$NotesPastoralesTableReferences
+                                            ._auteurFideleIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (noeudId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.noeudId,
+                                    referencedTable:
+                                        $$NotesPastoralesTableReferences
+                                            ._noeudIdTable(db),
+                                    referencedColumn:
+                                        $$NotesPastoralesTableReferences
+                                            ._noeudIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (consultationsNotesPastoralesRefs)
+                        await $_getPrefetchedData<
+                          NotePastoraleRow,
+                          $NotesPastoralesTable,
+                          ConsultationNotePastoraleRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$NotesPastoralesTableReferences
+                              ._consultationsNotesPastoralesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$NotesPastoralesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).consultationsNotesPastoralesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.noteId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$NotesPastoralesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $NotesPastoralesTable,
+      NotePastoraleRow,
+      $$NotesPastoralesTableFilterComposer,
+      $$NotesPastoralesTableOrderingComposer,
+      $$NotesPastoralesTableAnnotationComposer,
+      $$NotesPastoralesTableCreateCompanionBuilder,
+      $$NotesPastoralesTableUpdateCompanionBuilder,
+      (NotePastoraleRow, $$NotesPastoralesTableReferences),
+      NotePastoraleRow,
+      PrefetchHooks Function({
+        bool fideleId,
+        bool auteurFideleId,
+        bool noeudId,
+        bool consultationsNotesPastoralesRefs,
+      })
+    >;
+typedef $$ConsultationsNotesPastoralesTableCreateCompanionBuilder =
+    ConsultationsNotesPastoralesCompanion Function({
+      required String id,
+      required String noteId,
+      required String authUserId,
+      Value<String?> fideleId,
+      required String role,
+      required DateTime consulteLe,
+      Value<int> rowid,
+    });
+typedef $$ConsultationsNotesPastoralesTableUpdateCompanionBuilder =
+    ConsultationsNotesPastoralesCompanion Function({
+      Value<String> id,
+      Value<String> noteId,
+      Value<String> authUserId,
+      Value<String?> fideleId,
+      Value<String> role,
+      Value<DateTime> consulteLe,
+      Value<int> rowid,
+    });
+
+final class $$ConsultationsNotesPastoralesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $ConsultationsNotesPastoralesTable,
+          ConsultationNotePastoraleRow
+        > {
+  $$ConsultationsNotesPastoralesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $NotesPastoralesTable _noteIdTable(_$AppDatabase db) =>
+      db.notesPastorales.createAlias(
+        'consultations_notes_pastorales__note_id__notes_pastorales__id',
+      );
+
+  $$NotesPastoralesTableProcessedTableManager get noteId {
+    final $_column = $_itemColumn<String>('note_id')!;
+
+    final manager = $$NotesPastoralesTableTableManager(
+      $_db,
+      $_db.notesPastorales,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_noteIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) => db.fideles
+      .createAlias('consultations_notes_pastorales__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager? get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id');
+    if ($_column == null) return null;
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ConsultationsNotesPastoralesTableFilterComposer
+    extends Composer<_$AppDatabase, $ConsultationsNotesPastoralesTable> {
+  $$ConsultationsNotesPastoralesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get authUserId => $composableBuilder(
+    column: $table.authUserId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get role => $composableBuilder(
+    column: $table.role,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get consulteLe => $composableBuilder(
+    column: $table.consulteLe,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$NotesPastoralesTableFilterComposer get noteId {
+    final $$NotesPastoralesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noteId,
+      referencedTable: $db.notesPastorales,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$NotesPastoralesTableFilterComposer(
+            $db: $db,
+            $table: $db.notesPastorales,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ConsultationsNotesPastoralesTableOrderingComposer
+    extends Composer<_$AppDatabase, $ConsultationsNotesPastoralesTable> {
+  $$ConsultationsNotesPastoralesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get authUserId => $composableBuilder(
+    column: $table.authUserId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get role => $composableBuilder(
+    column: $table.role,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get consulteLe => $composableBuilder(
+    column: $table.consulteLe,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$NotesPastoralesTableOrderingComposer get noteId {
+    final $$NotesPastoralesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noteId,
+      referencedTable: $db.notesPastorales,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$NotesPastoralesTableOrderingComposer(
+            $db: $db,
+            $table: $db.notesPastorales,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ConsultationsNotesPastoralesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ConsultationsNotesPastoralesTable> {
+  $$ConsultationsNotesPastoralesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get authUserId => $composableBuilder(
+    column: $table.authUserId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get role =>
+      $composableBuilder(column: $table.role, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get consulteLe => $composableBuilder(
+    column: $table.consulteLe,
+    builder: (column) => column,
+  );
+
+  $$NotesPastoralesTableAnnotationComposer get noteId {
+    final $$NotesPastoralesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.noteId,
+      referencedTable: $db.notesPastorales,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$NotesPastoralesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.notesPastorales,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ConsultationsNotesPastoralesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ConsultationsNotesPastoralesTable,
+          ConsultationNotePastoraleRow,
+          $$ConsultationsNotesPastoralesTableFilterComposer,
+          $$ConsultationsNotesPastoralesTableOrderingComposer,
+          $$ConsultationsNotesPastoralesTableAnnotationComposer,
+          $$ConsultationsNotesPastoralesTableCreateCompanionBuilder,
+          $$ConsultationsNotesPastoralesTableUpdateCompanionBuilder,
+          (
+            ConsultationNotePastoraleRow,
+            $$ConsultationsNotesPastoralesTableReferences,
+          ),
+          ConsultationNotePastoraleRow,
+          PrefetchHooks Function({bool noteId, bool fideleId})
+        > {
+  $$ConsultationsNotesPastoralesTableTableManager(
+    _$AppDatabase db,
+    $ConsultationsNotesPastoralesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ConsultationsNotesPastoralesTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ConsultationsNotesPastoralesTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ConsultationsNotesPastoralesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> noteId = const Value.absent(),
+                Value<String> authUserId = const Value.absent(),
+                Value<String?> fideleId = const Value.absent(),
+                Value<String> role = const Value.absent(),
+                Value<DateTime> consulteLe = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ConsultationsNotesPastoralesCompanion(
+                id: id,
+                noteId: noteId,
+                authUserId: authUserId,
+                fideleId: fideleId,
+                role: role,
+                consulteLe: consulteLe,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String noteId,
+                required String authUserId,
+                Value<String?> fideleId = const Value.absent(),
+                required String role,
+                required DateTime consulteLe,
+                Value<int> rowid = const Value.absent(),
+              }) => ConsultationsNotesPastoralesCompanion.insert(
+                id: id,
+                noteId: noteId,
+                authUserId: authUserId,
+                fideleId: fideleId,
+                role: role,
+                consulteLe: consulteLe,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $ConsultationsNotesPastoralesTable,
+                    ConsultationNotePastoraleRow
+                  >(table),
+                  $$ConsultationsNotesPastoralesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({noteId = false, fideleId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (noteId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.noteId,
+                                referencedTable:
+                                    $$ConsultationsNotesPastoralesTableReferences
+                                        ._noteIdTable(db),
+                                referencedColumn:
+                                    $$ConsultationsNotesPastoralesTableReferences
+                                        ._noteIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (fideleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.fideleId,
+                                referencedTable:
+                                    $$ConsultationsNotesPastoralesTableReferences
+                                        ._fideleIdTable(db),
+                                referencedColumn:
+                                    $$ConsultationsNotesPastoralesTableReferences
+                                        ._fideleIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ConsultationsNotesPastoralesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ConsultationsNotesPastoralesTable,
+      ConsultationNotePastoraleRow,
+      $$ConsultationsNotesPastoralesTableFilterComposer,
+      $$ConsultationsNotesPastoralesTableOrderingComposer,
+      $$ConsultationsNotesPastoralesTableAnnotationComposer,
+      $$ConsultationsNotesPastoralesTableCreateCompanionBuilder,
+      $$ConsultationsNotesPastoralesTableUpdateCompanionBuilder,
+      (
+        ConsultationNotePastoraleRow,
+        $$ConsultationsNotesPastoralesTableReferences,
+      ),
+      ConsultationNotePastoraleRow,
+      PrefetchHooks Function({bool noteId, bool fideleId})
+    >;
 typedef $$TypesOffrandeTableCreateCompanionBuilder =
     TypesOffrandeCompanion Function({
       required String id,
@@ -72982,6 +75231,14 @@ class $AppDatabaseManager {
       $$ConsultationsDisciplinairesTableTableManager(
         _db,
         _db.consultationsDisciplinaires,
+      );
+  $$NotesPastoralesTableTableManager get notesPastorales =>
+      $$NotesPastoralesTableTableManager(_db, _db.notesPastorales);
+  $$ConsultationsNotesPastoralesTableTableManager
+  get consultationsNotesPastorales =>
+      $$ConsultationsNotesPastoralesTableTableManager(
+        _db,
+        _db.consultationsNotesPastorales,
       );
   $$TypesOffrandeTableTableManager get typesOffrande =>
       $$TypesOffrandeTableTableManager(_db, _db.typesOffrande);

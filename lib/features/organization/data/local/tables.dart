@@ -805,6 +805,38 @@ class ConsultationsDisciplinaires extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Table Drift NotePastorale (Module II, écran 13, RG-II-11) — table dédiée,
+/// jamais un champ de `Fideles` ou de `HistoriqueFideles`. `noeudId` fige le
+/// nœud du fidèle à la rédaction (la note ne suit pas une mutation).
+@DataClassName('NotePastoraleRow')
+class NotesPastorales extends Table {
+  TextColumn get id => text()();
+  TextColumn get fideleId => text().references(Fideles, #id)();
+  TextColumn get auteurFideleId => text().references(Fideles, #id)();
+  TextColumn get noeudId => text().references(OrganisationNodes, #id)();
+  TextColumn get contenu => text()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Table Drift ConsultationNotePastorale (RG-II-11, RG-SEC-06 par
+/// analogie) — journal des ouvertures de notes, ajout seul.
+@DataClassName('ConsultationNotePastoraleRow')
+class ConsultationsNotesPastorales extends Table {
+  TextColumn get id => text()();
+  TextColumn get noteId => text().references(NotesPastorales, #id)();
+  TextColumn get authUserId => text()();
+  TextColumn get fideleId => text().nullable().references(Fideles, #id)();
+  TextColumn get role => text()();
+  DateTimeColumn get consulteLe => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 /// Table Drift TypeOffrande (Module XI, RG-XI-01) — référentiel fermé et
 /// extensible des types d'offrande, même précédent que TypesMinisteres.
 @DataClassName('TypeOffrandeRow')

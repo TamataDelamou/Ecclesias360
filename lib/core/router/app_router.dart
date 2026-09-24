@@ -44,6 +44,8 @@ import '../../features/fideles/presentation/fidele_detail_screen.dart';
 import '../../features/fideles/presentation/fidele_form_screen.dart';
 import '../../features/fideles/presentation/fidele_history_screen.dart';
 import '../../features/fideles/presentation/fidele_list_screen.dart';
+import '../../features/fideles/presentation/note_pastorale_detail_screen.dart';
+import '../../features/fideles/presentation/notes_pastorales_screen.dart';
 import '../../features/groupes_eglise/presentation/fidele_groupes_screen.dart';
 import '../../features/groupes_eglise/presentation/groupe_membres_screen.dart';
 import '../../features/groupes_eglise/presentation/groupe_regles_screen.dart';
@@ -172,6 +174,14 @@ GoRouter creerAppRouter(SessionController session) => GoRouter(
     GoRoute(
       path: '/fideles/:id',
       builder: (context, state) => FideleDetailScreen(fideleId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: '/fideles/:id/notes-pastorales',
+      builder: (context, state) => NotesPastoralesScreen(fideleId: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      path: '/notes-pastorales/:id',
+      builder: (context, state) => NotePastoraleDetailScreen(noteId: state.pathParameters['id']!),
     ),
     GoRoute(
       path: '/fideles/:id/historique',

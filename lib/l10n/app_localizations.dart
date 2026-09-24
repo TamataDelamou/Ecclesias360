@@ -3197,6 +3197,90 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Compte lié à votre fiche.'**
   String get authLierMonCompteFait;
+
+  /// Titre de l'écran 13 du Module II et du bouton de la fiche fidèle (RG-II-11).
+  ///
+  /// In fr, this message translates to:
+  /// **'Notes pastorales privées'**
+  String get notesPastoralesTitre;
+
+  /// État vide de la liste des notes pastorales d'un fidèle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune note pastorale.'**
+  String get notesPastoralesAucune;
+
+  /// Message affiché à un compte non habilité, y compris par accès direct à la route (RG-II-11).
+  ///
+  /// In fr, this message translates to:
+  /// **'Accès réservé : les notes pastorales ne sont lisibles que par leur auteur et les pasteurs, jamais par le fidèle concerné.'**
+  String get notesPastoralesAccesReserve;
+
+  /// Rappel en tête de la liste des notes pastorales (RG-II-11, RG-SEC-06).
+  ///
+  /// In fr, this message translates to:
+  /// **'Le contenu n\'apparaît qu\'à l\'ouverture d\'une note ; chaque ouverture est journalisée.'**
+  String get notesPastoralesConfidentialite;
+
+  /// Bouton et titre du dialogue de rédaction d'une note pastorale.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rédiger une note'**
+  String get notesPastoralesRediger;
+
+  /// Bouton et titre du dialogue de modification d'une note pastorale (auteur seul).
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier la note'**
+  String get notesPastoralesModifier;
+
+  /// Libellé du champ de saisie d'une note pastorale.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contenu de la note'**
+  String get notesPastoralesChampContenu;
+
+  /// Auteur et date de rédaction d'une note pastorale.
+  ///
+  /// In fr, this message translates to:
+  /// **'Par {auteur} · {date}'**
+  String notesPastoralesAuteurDate(String auteur, String date);
+
+  /// Date de dernière modification d'une note pastorale.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifiée le {date}'**
+  String notesPastoralesModifieeLe(String date);
+
+  /// Titre de l'écran d'une note pastorale ouverte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note pastorale'**
+  String get notesPastoralesDetailTitre;
+
+  /// Note pastorale inexistante.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note pastorale introuvable.'**
+  String get notesPastoralesIntrouvable;
+
+  /// Section listant chaque ouverture de la note (RG-SEC-06 par analogie).
+  ///
+  /// In fr, this message translates to:
+  /// **'Journal des consultations'**
+  String get notesPastoralesJournalTitre;
+
+  /// Journal des consultations d'une note vide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune consultation enregistrée.'**
+  String get notesPastoralesJournalAucune;
+
+  /// Consultation par un compte sans fiche liée (administrateur d'amorçage).
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte sans fiche'**
+  String get notesPastoralesCompteSansFiche;
 }
 
 class _AppLocalizationsDelegate
