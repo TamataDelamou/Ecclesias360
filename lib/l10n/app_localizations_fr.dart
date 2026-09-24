@@ -28,6 +28,25 @@ class AppLocalizationsFr extends AppLocalizations {
       'Référence du fichier (nom, lien...)';
 
   @override
+  String get archivageAccesReserve =>
+      'Accès réservé : vous n\'êtes pas habilité à consulter ce document ou ces archives.';
+
+  @override
+  String get disciplineJournalTitre => 'Journal des consultations';
+
+  @override
+  String get disciplineJournalAucune => 'Aucune consultation enregistrée.';
+
+  @override
+  String get disciplineJournalCompteSansFiche => 'Compte sans fiche';
+
+  @override
+  String get disciplineJournalObjetDossier => 'Fiche du dossier';
+
+  @override
+  String get disciplineJournalObjetPiece => 'Pièce archivée';
+
+  @override
   String get archivageCorbeilleTitre => 'Corbeille';
 
   @override

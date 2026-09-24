@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/audit/consultation_disciplinaire.dart';
 import '../../../core/constants/app_routes.dart';
+import '../../../core/error/app_error.dart';
 import '../../../core/theme/app_defaults.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../../../core/theme/design_tokens.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
 import '../../fideles/application/fidele_controller.dart';
+import '../../parametres/domain/models/role.dart';
+import '../../parametres/presentation/role_libelle.dart';
 import '../application/discipline_controller.dart';
 import '../domain/models/commission_disciplinaire.dart';
 import '../domain/models/dossier_disciplinaire.dart';
@@ -17,17 +22,42 @@ import '../domain/models/nature_piece_dossier.dart';
 import '../domain/models/piece_dossier.dart';
 import '../domain/models/statut_dossier_disciplinaire.dart';
 import '../domain/rules/discipline_rules.dart';
-import 'acces_discipline.dart';
 
 /// Écrans « Instruction / commission » + « Décision et sanction » + « Suivi
 /// de réintégration » (RG-X-02/03/04) combinés en une seule fiche, même
 /// convention que les autres modules (ex. Comité, Déplacements) : un dossier
 /// disciplinaire se construit progressivement sur un même écran plutôt que
 /// trois écrans miroirs.
-class DossierDisciplinaireDetailScreen extends StatelessWidget {
+///
+/// RG-X-05 / RG-SEC-06 : l'ouverture passe par `DisciplineController.consulterDossier`,
+/// qui refuse un compte non habilité (y compris par accès direct à la route)
+/// et journalise la consultation. Lancée une seule fois (`initState`) : une
+/// reconstruction de l'écran n'est pas une nouvelle consultation.
+class DossierDisciplinaireDetailScreen extends StatefulWidget {
   const DossierDisciplinaireDetailScreen({required this.dossierId, super.key});
 
   final String dossierId;
+
+  @override
+  State<DossierDisciplinaireDetailScreen> createState() => _DossierDisciplinaireDetailScreenState();
+}
+
+class _DossierDisciplinaireDetailScreenState extends State<DossierDisciplinaireDetailScreen> {
+  late final Future<DossierDisciplinaire?> _consultation;
+
+  @override
+  void initState() {
+    super.initState();
+    final session = context.read<SessionController>().session;
+    _consultation = session == null
+        ? Future.error(AppError.dossierDisciplinaireAccesRefuse())
+        : context.read<DisciplineController>().consulterDossier(
+            dossierId: widget.dossierId,
+            authUserId: session.authUserId,
+            fideleId: session.fideleId,
+            role: session.role,
+          );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,20 +67,59 @@ class DossierDisciplinaireDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(l10n.disciplineDetailTitre)),
       body: FutureBuilder<DossierDisciplinaire?>(
-        future: controller.findDossierById(dossierId),
+        future: _consultation,
         builder: (context, snapshot) {
+          if (snapshot.hasError) return Center(child: Text(l10n.disciplineAccesReserve));
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const Center(child: CircularProgressIndicator());
+          }
           final dossier = snapshot.data;
-          if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
           if (dossier == null) return Center(child: Text(l10n.disciplineIntrouvable));
-
-          // RG-X-05 : un accès direct par route ne contourne pas la restriction de la liste.
-          return AccesDisciplineBuilder(
-            builder: (context, acces) => acces.peutConsulter(dossier)
-                ? _DossierDetailBody(dossier: dossier, controller: controller)
-                : Center(child: Text(l10n.disciplineAccesReserve)),
-          );
+          return _DossierDetailBody(dossier: dossier, controller: controller);
         },
       ),
+    );
+  }
+}
+
+/// RG-SEC-06 — journal des consultations du dossier (fiche et pièces
+/// archivées), visible d'un pasteur ou plus.
+class _JournalConsultations extends StatelessWidget {
+  const _JournalConsultations({required this.dossierId, required this.controller});
+
+  final String dossierId;
+  final DisciplineController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final fideles = context.watch<FideleController>();
+    return StreamBuilder<List<ConsultationDisciplinaire>>(
+      stream: controller.watchConsultations(dossierId),
+      builder: (context, snapshot) {
+        final consultations = snapshot.data ?? const <ConsultationDisciplinaire>[];
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(l10n.disciplineJournalTitre, style: Theme.of(context).textTheme.titleMedium),
+            if (consultations.isEmpty) Text(l10n.disciplineJournalAucune),
+            for (final c in consultations)
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                dense: true,
+                leading: Icon(c.documentArchiveId == null ? Icons.visibility_outlined : Icons.description_outlined),
+                title: Text(
+                  '${c.fideleId == null ? l10n.disciplineJournalCompteSansFiche : fideles.findById(c.fideleId!)?.nomComplet ?? '—'}'
+                  ' · ${libelleRole(l10n, c.role)}',
+                ),
+                subtitle: Text(
+                  '${c.documentArchiveId == null ? l10n.disciplineJournalObjetDossier : l10n.disciplineJournalObjetPiece}'
+                  ' · ${c.consulteLe.toString().split('.').first}',
+                ),
+              ),
+          ],
+        );
+      },
     );
   }
 }
@@ -123,6 +192,10 @@ class _DossierDetailBodyState extends State<_DossierDetailBody> {
             if (widget.controller.erreur != null) ...[
               const SizedBox(height: AppDimensions.spacingLg),
               Text(widget.controller.erreur!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
+            ],
+            if (context.watch<SessionController>().peut(Role.pasteur)) ...[
+              const Divider(height: AppDimensions.spacingXxl),
+              _JournalConsultations(dossierId: _dossier.id, controller: widget.controller),
             ],
           ],
         );

@@ -4,6 +4,7 @@ import 'package:ecclesias_360/features/archivage/data/archivage_repository.dart'
 import 'package:ecclesias_360/features/archivage/domain/models/niveau_confidentialite.dart';
 import 'package:ecclesias_360/features/archivage/domain/models/statut_document_archive.dart';
 import 'package:ecclesias_360/features/organization/data/local/app_database.dart';
+import 'package:ecclesias_360/features/parametres/domain/models/role.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -156,7 +157,7 @@ void main() {
         fichier: 'contenu',
       );
       expect(
-        () => repository.purgerDefinitivement(document.id, delaiPurgeJours: 365),
+        () => repository.purgerDefinitivement(document.id, delaiPurgeJours: 365, roleActeur: Role.pasteur),
         throwsA(isA<AppError>().having((e) => e.code, 'code', 'document_archive_non_purgeable')),
       );
     });
@@ -171,7 +172,7 @@ void main() {
       );
       await repository.mettreEnCorbeille(document.id);
       expect(
-        () => repository.purgerDefinitivement(document.id, delaiPurgeJours: 365),
+        () => repository.purgerDefinitivement(document.id, delaiPurgeJours: 365, roleActeur: Role.pasteur),
         throwsA(isA<AppError>().having((e) => e.code, 'code', 'document_archive_non_purgeable')),
       );
     });
@@ -186,7 +187,7 @@ void main() {
       );
       await repository.mettreEnCorbeille(document.id);
 
-      await repository.purgerDefinitivement(document.id, delaiPurgeJours: 0);
+      await repository.purgerDefinitivement(document.id, delaiPurgeJours: 0, roleActeur: Role.pasteur);
 
       expect(await repository.findById(document.id), isNull);
       expect(await repository.watchVersions(document.id).first, isEmpty);

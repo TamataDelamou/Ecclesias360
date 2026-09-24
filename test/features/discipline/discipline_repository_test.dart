@@ -1,6 +1,7 @@
 import 'package:drift/native.dart';
 import 'package:ecclesias_360/core/error/app_error.dart';
 import 'package:ecclesias_360/core/sync/sync_coordinator.dart';
+import 'package:ecclesias_360/features/archivage/data/archivage_repository.dart';
 import 'package:ecclesias_360/features/discipline/data/discipline_repository.dart';
 import 'package:ecclesias_360/features/discipline/domain/models/nature_piece_dossier.dart';
 import 'package:ecclesias_360/features/discipline/domain/models/statut_dossier_disciplinaire.dart';
@@ -282,6 +283,108 @@ void main() {
 
       final pasEncore = await repository.dossiersEnRevuePeriodique(seuilJours: 90, maintenant: DateTime.now());
       expect(pasEncore.map((d) => d.id), isNot(contains(dossier.id)));
+    });
+  });
+
+  group('consultation et journal (RG-X-05, RG-VIII-03, RG-SEC-06)', () {
+    late ArchivageRepository archivage;
+    late DisciplineRepository disciplineAvecArchives;
+    late String dossierId;
+    late String documentId;
+    late String membreCommissionId;
+
+    setUp(() async {
+      archivage = ArchivageRepository(db);
+      disciplineAvecArchives =
+          DisciplineRepository(db, fideleRepository, ministereRepository, archivageRepository: archivage);
+      final membre = await fideleRepository.creerFidele(
+        noeudId: noeudId,
+        nom: 'Commission',
+        prenoms: 'Claire',
+        dateNaissance: DateTime(1985, 1, 1),
+        sexe: Sexe.feminin,
+        statutCivil: StatutCivil.celibataire,
+      );
+      membreCommissionId = membre.id;
+      final commission = await disciplineAvecArchives.creerCommission(noeudId: noeudId, nom: 'Commission K');
+      await disciplineAvecArchives.ajouterMembreCommission(commissionId: commission.id, fideleId: membreCommissionId);
+      final dossier = await disciplineAvecArchives.ouvrirDossier(
+        fideleId: fideleId,
+        noeudId: noeudId,
+        natureFauteId: natureFauteId,
+        roleActeur: Role.pasteur,
+      );
+      dossierId = dossier.id;
+      await disciplineAvecArchives.assignerCommission(dossierId: dossierId, commissionId: commission.id);
+      final piece = await disciplineAvecArchives.ajouterPiece(
+        dossierId: dossierId,
+        nature: NaturePieceDossier.temoignage,
+        contenu: 'Témoignage écrit',
+        noeudId: noeudId,
+      );
+      documentId = piece.documentArchiveId!;
+    });
+
+    Future<int> lignesDuJournal() async => (await db.select(db.consultationsDisciplinaires).get()).length;
+
+    test('la pièce archivée connaît son dossier et sa commission', () async {
+      final documents = await archivage.watchBibliotheque(noeudId: noeudId).first;
+      final rattaches = documents.single.dossiersRattaches;
+      expect(rattaches.map((d) => d.dossierId), [dossierId]);
+      expect(rattaches.single.commissionId, isNotNull);
+    });
+
+    test('un responsable hors commission ne lit ni le dossier ni la pièce, et rien n\'est journalisé', () async {
+      await expectLater(
+        disciplineAvecArchives.consulterDossier(
+          dossierId: dossierId,
+          authUserId: 'compte-r',
+          fideleId: fideleId,
+          role: Role.responsable,
+        ),
+        throwsA(isA<AppError>().having((e) => e.code, 'code', 'dossier_disciplinaire_acces_refuse')),
+      );
+      await expectLater(
+        archivage.consulter(documentId: documentId, authUserId: 'compte-r', fideleId: fideleId, role: Role.responsable),
+        throwsA(isA<AppError>().having((e) => e.code, 'code', 'document_archive_acces_refuse')),
+      );
+      expect(await lignesDuJournal(), 0);
+    });
+
+    test('la commission lit le dossier puis la pièce : deux consultations journalisées', () async {
+      await disciplineAvecArchives.consulterDossier(
+        dossierId: dossierId,
+        authUserId: 'compte-c',
+        fideleId: membreCommissionId,
+        role: Role.membre,
+      );
+      await archivage.consulter(
+        documentId: documentId,
+        authUserId: 'compte-c',
+        fideleId: membreCommissionId,
+        role: Role.membre,
+      );
+
+      final journal = await disciplineAvecArchives.watchConsultations(dossierId).first;
+      expect(journal, hasLength(2));
+      expect(journal.every((c) => c.authUserId == 'compte-c' && c.fideleId == membreCommissionId), isTrue);
+      expect(journal.where((c) => c.documentArchiveId == documentId), hasLength(1));
+      expect(journal.where((c) => c.documentArchiveId == null), hasLength(1));
+    });
+
+    test('un document ordinaire n\'est pas journalisé', () async {
+      await db.into(db.nomenclaturesArchivage).insertOnConflictUpdate(
+            NomenclaturesArchivageCompanion.insert(id: 'nom-pv', typeDocument: 'pv_test', modeleNumerotation: 'PV-{sequence}'),
+          );
+      final pv = await archivage.archiver(
+        typeDocument: 'pv_test',
+        moduleOrigine: 'comite',
+        objetIdOrigine: 'seance-1',
+        noeudId: noeudId,
+        fichier: 'pv.pdf',
+      );
+      await archivage.consulter(documentId: pv.id, authUserId: 'compte-r', fideleId: null, role: Role.responsable);
+      expect(await lignesDuJournal(), 0);
     });
   });
 }

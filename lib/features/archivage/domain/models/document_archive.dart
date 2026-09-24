@@ -1,3 +1,4 @@
+import 'dossier_rattache.dart';
 import 'niveau_confidentialite.dart';
 import 'statut_document_archive.dart';
 
@@ -24,6 +25,7 @@ class DocumentArchive {
     required this.fichier,
     required this.dateArchivage,
     this.dateMiseCorbeille,
+    this.dossiersRattaches = const [],
   });
 
   final String id;
@@ -37,4 +39,11 @@ class DocumentArchive {
   final String fichier;
   final DateTime dateArchivage;
   final DateTime? dateMiseCorbeille;
+
+  /// Dossiers disciplinaires dont ce document est l'origine ou une pièce
+  /// (vide pour tout autre document) : leur règle d'accès prime sur le
+  /// niveau stocké (RG-VIII-03, voir `ArchivageRules.peutConsulterDocument`).
+  final List<DossierRattache> dossiersRattaches;
+
+  bool get estDisciplinaire => dossiersRattaches.isNotEmpty;
 }

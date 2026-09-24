@@ -73,10 +73,12 @@ insert into public.contributions (id, fidele_id, type_offrande_id, montant, devi
   ('00000000-0000-4000-8000-600000000002', '00000000-0000-4000-8000-300000000007', (select id from public.types_offrande limit 1),
    5000, 'GNF', '00000000-0000-4000-8000-100000000004', 'especes', 'mobile', now(), 'en_attente', '00000000-0000-4000-8000-300000000007');
 
+-- Une pièce disciplinaire porte l'identifiant de son dossier en objet d'origine
+-- (DisciplineRepository.ajouterPiece) ; 0023 refuse une origine introuvable.
 insert into public.documents_archive (id, numero_archive, type_document, module_origine, objet_id_origine, noeud_id, fichier, date_archivage, niveau_confidentialite) values
   ('00000000-0000-4000-8000-700000000001', 'T-DOC-1', 'pv', 'comite', 'x', '00000000-0000-4000-8000-100000000003', 'f1', now(), 'standard'),
-  ('00000000-0000-4000-8000-700000000002', 'T-DOC-2', 'piece', 'discipline', 'x', '00000000-0000-4000-8000-100000000003', 'f2', now(), 'restreint'),
-  ('00000000-0000-4000-8000-700000000003', 'T-DOC-3', 'piece', 'discipline', 'x', '00000000-0000-4000-8000-100000000004', 'f3', now(), 'restreint');
+  ('00000000-0000-4000-8000-700000000002', 'T-DOC-2', 'piece', 'discipline', '00000000-0000-4000-8000-500000000001', '00000000-0000-4000-8000-100000000003', 'f2', now(), 'restreint'),
+  ('00000000-0000-4000-8000-700000000003', 'T-DOC-3', 'piece', 'discipline', '00000000-0000-4000-8000-500000000002', '00000000-0000-4000-8000-100000000004', 'f3', now(), 'restreint');
 insert into public.pieces_dossier (id, dossier_id, nature, ajoute_le, document_archive_id) values
   (gen_random_uuid(), '00000000-0000-4000-8000-500000000002', 'temoignage', now(), '00000000-0000-4000-8000-700000000003');
 

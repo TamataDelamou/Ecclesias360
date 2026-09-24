@@ -1,5 +1,7 @@
+import 'package:ecclesias_360/features/archivage/domain/models/dossier_rattache.dart';
 import 'package:ecclesias_360/features/archivage/domain/models/niveau_confidentialite.dart';
 import 'package:ecclesias_360/features/archivage/domain/rules/archivage_rules.dart';
+import 'package:ecclesias_360/features/parametres/domain/models/role.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -80,6 +82,61 @@ void main() {
         ),
         isTrue,
       );
+    });
+  });
+
+  group('peutConsulterDocument (RG-VIII-03, RG-X-05, miroir de document_archive_accessible)', () {
+    const dossierInstruit = DossierRattache(dossierId: 'd1', commissionId: 'k1', trouve: true);
+    const dossierSansCommission = DossierRattache(dossierId: 'd2', commissionId: null, trouve: true);
+
+    bool peut(Role role, NiveauConfidentialite niveau, List<DossierRattache> dossiers, {Set<String> commissions = const {}}) =>
+        ArchivageRules.peutConsulterDocument(
+          role: role,
+          niveau: niveau,
+          dossiersRattaches: dossiers,
+          commissionsDuConsultant: commissions,
+        );
+
+    test('document standard : à partir du rang responsable', () {
+      expect(peut(Role.responsable, NiveauConfidentialite.standard, const []), isTrue);
+      expect(peut(Role.membre, NiveauConfidentialite.standard, const []), isFalse);
+    });
+
+    test('document restreint : à partir du rang pasteur', () {
+      expect(peut(Role.pasteur, NiveauConfidentialite.restreint, const []), isTrue);
+      expect(peut(Role.responsable, NiveauConfidentialite.restreint, const []), isFalse);
+    });
+
+    test('pièce disciplinaire abaissée à standard : un responsable ne la lit toujours pas', () {
+      expect(peut(Role.responsable, NiveauConfidentialite.standard, const [dossierInstruit]), isFalse);
+    });
+
+    test('pièce disciplinaire : la commission assignée la lit, quel que soit son rang', () {
+      expect(peut(Role.membre, NiveauConfidentialite.restreint, const [dossierInstruit], commissions: {'k1'}), isTrue);
+      expect(peut(Role.membre, NiveauConfidentialite.restreint, const [dossierInstruit], commissions: {'k2'}), isFalse);
+    });
+
+    test('pièce rattachée à plusieurs dossiers : chacun doit être accessible', () {
+      expect(
+        peut(Role.membre, NiveauConfidentialite.restreint, const [dossierInstruit, dossierSansCommission], commissions: {'k1'}),
+        isFalse,
+      );
+      expect(peut(Role.pasteur, NiveauConfidentialite.restreint, const [dossierInstruit, dossierSansCommission]), isTrue);
+    });
+
+    test('origine disciplinaire introuvable : refus, même pour un pasteur', () {
+      expect(
+        peut(Role.pasteur, NiveauConfidentialite.restreint, const [DossierRattache(dossierId: 'x', commissionId: null, trouve: false)]),
+        isFalse,
+      );
+    });
+  });
+
+  group('raisonBlocagePurge (RG-VIII-05)', () {
+    test('un pasteur purge', () => expect(ArchivageRules.raisonBlocagePurge(roleActeur: Role.pasteur), isNull));
+
+    test('un responsable ne purge pas', () {
+      expect(ArchivageRules.raisonBlocagePurge(roleActeur: Role.responsable)?.code, 'role_insuffisant_pour_purge_document');
     });
   });
 }

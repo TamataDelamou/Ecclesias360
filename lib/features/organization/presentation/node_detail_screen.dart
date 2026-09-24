@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../archivage/presentation/acces_archivage.dart';
 import '../../auth/application/session_controller.dart';
 import '../../discipline/presentation/acces_discipline.dart';
 import '../../finances/presentation/acces_finances.dart';
@@ -108,12 +109,15 @@ class NodeDetailScreen extends StatelessWidget {
             onPressed: () => context.push(AppRoutes.cultes(noeud.id)),
           ),
           const SizedBox(height: AppDimensions.spacingSm),
-          OutlinedButton.icon(
-            icon: const Icon(Icons.folder_open_outlined),
-            label: Text(l10n.archivageBibliothequeTitre),
-            onPressed: () => context.push(AppRoutes.documentsArchive(noeud.id)),
-          ),
-          const SizedBox(height: AppDimensions.spacingSm),
+          // Archives : périmètre, approché localement par le rang responsable.
+          if (peutOuvrirArchives(context.watch<SessionController>())) ...[
+            OutlinedButton.icon(
+              icon: const Icon(Icons.folder_open_outlined),
+              label: Text(l10n.archivageBibliothequeTitre),
+              onPressed: () => context.push(AppRoutes.documentsArchive(noeud.id)),
+            ),
+            const SizedBox(height: AppDimensions.spacingSm),
+          ],
           OutlinedButton.icon(
             icon: const Icon(Icons.swap_horiz_outlined),
             label: Text(l10n.deplacementsTitre),

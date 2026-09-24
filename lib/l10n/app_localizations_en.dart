@@ -27,6 +27,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get archivageChampReferenceFichier => 'File reference (name, link...)';
 
   @override
+  String get archivageAccesReserve =>
+      'Access restricted: you are not authorized to view this document or these archives.';
+
+  @override
+  String get disciplineJournalTitre => 'Consultation log';
+
+  @override
+  String get disciplineJournalAucune => 'No consultation recorded.';
+
+  @override
+  String get disciplineJournalCompteSansFiche =>
+      'Account without a member record';
+
+  @override
+  String get disciplineJournalObjetDossier => 'File record';
+
+  @override
+  String get disciplineJournalObjetPiece => 'Archived document';
+
+  @override
   String get archivageCorbeilleTitre => 'Trash';
 
   @override

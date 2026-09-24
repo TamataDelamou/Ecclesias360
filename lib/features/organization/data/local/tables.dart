@@ -766,6 +766,25 @@ class PiecesDossier extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// RG-SEC-06 — journal systématique de toute consultation d'un dossier
+/// disciplinaire (Module X), y compris d'une de ses pièces archivées
+/// (Module VIII, `documentArchiveId` renseigné). Ajout seul, jamais modifié
+/// ni supprimé. `documentArchiveId` sans clé étrangère : la purge d'un
+/// document (RG-VIII-05) ne doit ni échouer ni effacer la trace d'audit.
+@DataClassName('ConsultationDisciplinaireRow')
+class ConsultationsDisciplinaires extends Table {
+  TextColumn get id => text()();
+  TextColumn get dossierId => text().references(DossiersDisciplinaires, #id)();
+  TextColumn get documentArchiveId => text().nullable()();
+  TextColumn get authUserId => text()();
+  TextColumn get fideleId => text().nullable().references(Fideles, #id)();
+  TextColumn get role => text()();
+  DateTimeColumn get consulteLe => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 /// Table Drift TypeOffrande (Module XI, RG-XI-01) — référentiel fermé et
 /// extensible des types d'offrande, même précédent que TypesMinisteres.
 @DataClassName('TypeOffrandeRow')

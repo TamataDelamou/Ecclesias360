@@ -24,6 +24,30 @@
   "@archivageChampReferenceFichier": {
     "description": "Libellé du champ référence de fichier lors de l'ajout d'une nouvelle version."
   },
+  "archivageAccesReserve": "Accès réservé : vous n'êtes pas habilité à consulter ce document ou ces archives.",
+  "@archivageAccesReserve": {
+    "description": "Message affiché à un compte sans habilitation sur la bibliothèque, la corbeille ou la fiche d'un document archivé (RG-VIII-03, RG-SEC-06)."
+  },
+  "disciplineJournalTitre": "Journal des consultations",
+  "@disciplineJournalTitre": {
+    "description": "Titre de la section listant les consultations d'un dossier disciplinaire (RG-SEC-06), visible d'un pasteur ou plus."
+  },
+  "disciplineJournalAucune": "Aucune consultation enregistrée.",
+  "@disciplineJournalAucune": {
+    "description": "Journal des consultations d'un dossier disciplinaire vide."
+  },
+  "disciplineJournalCompteSansFiche": "Compte sans fiche",
+  "@disciplineJournalCompteSansFiche": {
+    "description": "Auteur d'une consultation dont le compte n'est lié à aucune fiche fidèle (administrateur d'amorçage)."
+  },
+  "disciplineJournalObjetDossier": "Fiche du dossier",
+  "@disciplineJournalObjetDossier": {
+    "description": "Objet d'une consultation : ouverture de la fiche du dossier disciplinaire."
+  },
+  "disciplineJournalObjetPiece": "Pièce archivée",
+  "@disciplineJournalObjetPiece": {
+    "description": "Objet d'une consultation : lecture d'une pièce du dossier archivée au Module VIII."
+  },
   "archivageCorbeilleTitre": "Corbeille",
   "@archivageCorbeilleTitre": {
     "description": "Titre de l'écran corbeille documentaire."

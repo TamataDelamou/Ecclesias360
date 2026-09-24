@@ -1,5 +1,8 @@
 import 'package:drift/drift.dart';
 
+import '../../../core/audit/consultation_disciplinaire.dart';
+import '../../../core/audit/journal_consultations_repository.dart';
+import '../../../core/error/app_error.dart';
 import '../../../core/utils/id_generator.dart';
 import '../../archivage/data/archivage_repository.dart';
 import '../../fideles/data/fidele_repository.dart';
@@ -31,12 +34,14 @@ class DisciplineRepository {
     this._fideleRepository,
     this._ministereRepository, {
     ArchivageRepository? archivageRepository,
-  }) : _archivage = archivageRepository;
+  }) : _archivage = archivageRepository,
+       _journal = JournalConsultationsRepository(_db);
 
   final AppDatabase _db;
   final FideleRepository _fideleRepository;
   final MinistereRepository _ministereRepository;
   final ArchivageRepository? _archivage;
+  final JournalConsultationsRepository _journal;
 
   // --- Natures de faute (référentiel, RG-X-02) ------------------------------
 
@@ -152,6 +157,35 @@ class DisciplineRepository {
         await (_db.select(_db.dossiersDisciplinaires)..where((t) => t.id.equals(id))).getSingleOrNull();
     return row == null ? null : _dossierToDomain(row);
   }
+
+  /// RG-X-05 / RG-SEC-06 — ouverture de la fiche d'un dossier par le compte
+  /// courant : refusée (`AppError.dossierDisciplinaireAccesRefuse`) sans
+  /// habilitation — vérifiée ici, pas seulement par l'écran —, sinon
+  /// journalisée (journal systématique de toute consultation).
+  Future<DossierDisciplinaire?> consulterDossier({
+    required String dossierId,
+    required String authUserId,
+    required String? fideleId,
+    required Role role,
+  }) async {
+    final dossier = await findDossierById(dossierId);
+    if (dossier == null) return null;
+    final estMembre = fideleId != null &&
+        dossier.commissionId != null &&
+        await (_db.select(_db.membresCommissionDisciplinaire)
+                  ..where((t) => t.fideleId.equals(fideleId) & t.commissionId.equals(dossier.commissionId!)))
+                .getSingleOrNull() !=
+            null;
+    if (!DisciplineRules.peutConsulterDossier(role: role, estMembreCommissionAssignee: estMembre)) {
+      throw AppError.dossierDisciplinaireAccesRefuse();
+    }
+    await _journal.journaliser(dossierId: dossierId, authUserId: authUserId, fideleId: fideleId, role: role);
+    return dossier;
+  }
+
+  /// RG-SEC-06 — journal des consultations d'un dossier (fiche et pièces).
+  Stream<List<ConsultationDisciplinaire>> watchConsultations(String dossierId) =>
+      _journal.watchConsultations(dossierId);
 
   /// RG-X-01 — ouverture d'un dossier : bascule immédiatement le statut
   /// spirituel du fidèle (module II) vers `membreEnDiscipline`, en

@@ -206,6 +206,7 @@ const List<(String code, String libelle, String type)> comptesComptablesDeDepart
   MembresCommissionDisciplinaire,
   DossiersDisciplinaires,
   PiecesDossier,
+  ConsultationsDisciplinaires,
   TypesOffrande,
   Projets,
   Contributions,
@@ -234,7 +235,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 19;
+  int get schemaVersion => 20;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -392,6 +393,10 @@ class AppDatabase extends _$AppDatabase {
           // antérieure à v14 vient de créer la table avec la définition courante.
           if (from < 19 && !await _colonneExiste('contributions', 'saisie_par_fidele_id')) {
             await m.addColumn(contributions, contributions.saisieParFideleId);
+          }
+          // v19 -> v20 : journal des consultations disciplinaires (RG-SEC-06).
+          if (from < 20) {
+            await m.createTable(consultationsDisciplinaires);
           }
         },
         beforeOpen: (details) async {

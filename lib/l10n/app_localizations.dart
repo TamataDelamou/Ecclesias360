@@ -138,6 +138,42 @@ abstract class AppLocalizations {
   /// **'Référence du fichier (nom, lien...)'**
   String get archivageChampReferenceFichier;
 
+  /// Message affiché à un compte sans habilitation sur la bibliothèque, la corbeille ou la fiche d'un document archivé (RG-VIII-03, RG-SEC-06).
+  ///
+  /// In fr, this message translates to:
+  /// **'Accès réservé : vous n\'êtes pas habilité à consulter ce document ou ces archives.'**
+  String get archivageAccesReserve;
+
+  /// Titre de la section listant les consultations d'un dossier disciplinaire (RG-SEC-06), visible d'un pasteur ou plus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Journal des consultations'**
+  String get disciplineJournalTitre;
+
+  /// Journal des consultations d'un dossier disciplinaire vide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune consultation enregistrée.'**
+  String get disciplineJournalAucune;
+
+  /// Auteur d'une consultation dont le compte n'est lié à aucune fiche fidèle (administrateur d'amorçage).
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte sans fiche'**
+  String get disciplineJournalCompteSansFiche;
+
+  /// Objet d'une consultation : ouverture de la fiche du dossier disciplinaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fiche du dossier'**
+  String get disciplineJournalObjetDossier;
+
+  /// Objet d'une consultation : lecture d'une pièce du dossier archivée au Module VIII.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pièce archivée'**
+  String get disciplineJournalObjetPiece;
+
   /// Titre de l'écran corbeille documentaire.
   ///
   /// In fr, this message translates to:

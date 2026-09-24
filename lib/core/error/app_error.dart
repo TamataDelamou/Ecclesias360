@@ -89,6 +89,21 @@ class AppError implements Exception {
         "Ce document ne peut pas être purgé : le délai de corbeille n'est pas écoulé (ou le document n'est pas en corbeille).",
       );
 
+  factory AppError.roleInsuffisantPourPurgeDocument() => const AppError(
+        'role_insuffisant_pour_purge_document',
+        "Seul un pasteur (ou rôle supérieur) peut purger définitivement un document archivé.",
+      );
+
+  factory AppError.dossierDisciplinaireAccesRefuse() => const AppError(
+        'dossier_disciplinaire_acces_refuse',
+        "Vous n'êtes pas habilité à consulter ce dossier disciplinaire.",
+      );
+
+  factory AppError.documentArchiveAccesRefuse() => const AppError(
+        'document_archive_acces_refuse',
+        "Vous n'êtes pas habilité à consulter ce document archivé.",
+      );
+
   factory AppError.noeudOrigineEtDestinationIdentiques() => const AppError(
         'noeud_origine_et_destination_identiques',
         "Le nœud d'origine et le nœud de destination d'une mutation doivent être différents.",

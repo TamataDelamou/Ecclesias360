@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../../../core/error/app_error.dart';
+import '../../parametres/domain/models/role.dart';
 import '../data/archivage_repository.dart';
 import '../domain/models/document_archive.dart';
 import '../domain/models/version_document.dart';
@@ -27,6 +28,16 @@ class ArchivageController extends ChangeNotifier {
 
   Future<DocumentArchive?> findById(String id) => _repository.findById(id);
 
+  /// RG-VIII-03 / RG-SEC-06 — lecture contrôlée et journalisée (voir
+  /// `ArchivageRepository.consulter`) ; lève `AppError` sans habilitation.
+  Future<DocumentArchive?> consulter({
+    required String documentId,
+    required String authUserId,
+    required String? fideleId,
+    required Role role,
+  }) =>
+      _repository.consulter(documentId: documentId, authUserId: authUserId, fideleId: fideleId, role: role);
+
   Stream<List<VersionDocument>> watchVersions(String documentId) => _repository.watchVersions(documentId);
 
   Future<bool> nouvelleVersion({required String documentId, required String fichier}) =>
@@ -36,8 +47,9 @@ class ArchivageController extends ChangeNotifier {
 
   Future<bool> restaurerDeCorbeille(String id) => _executer(() => _repository.restaurerDeCorbeille(id));
 
-  Future<bool> purgerDefinitivement(String id, {required int delaiPurgeJours}) =>
-      _executer(() => _repository.purgerDefinitivement(id, delaiPurgeJours: delaiPurgeJours));
+  Future<bool> purgerDefinitivement(String id, {required int delaiPurgeJours, required Role roleActeur}) => _executer(
+        () => _repository.purgerDefinitivement(id, delaiPurgeJours: delaiPurgeJours, roleActeur: roleActeur),
+      );
 
   Future<bool> _executer(Future<void> Function() action) async {
     _enCours = true;

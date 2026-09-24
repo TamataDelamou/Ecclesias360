@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+import '../../../core/audit/consultation_disciplinaire.dart';
 import '../../../core/error/app_error.dart';
 import '../../parametres/domain/models/role.dart';
 import '../data/discipline_repository.dart';
@@ -33,6 +34,19 @@ class DisciplineController extends ChangeNotifier {
       _repository.watchDossiersDuFidele(fideleId);
 
   Future<DossierDisciplinaire?> findDossierById(String id) => _repository.findDossierById(id);
+
+  /// RG-X-05 / RG-SEC-06 — ouverture contrôlée et journalisée d'une fiche
+  /// (voir `DisciplineRepository.consulterDossier`).
+  Future<DossierDisciplinaire?> consulterDossier({
+    required String dossierId,
+    required String authUserId,
+    required String? fideleId,
+    required Role role,
+  }) =>
+      _repository.consulterDossier(dossierId: dossierId, authUserId: authUserId, fideleId: fideleId, role: role);
+
+  Stream<List<ConsultationDisciplinaire>> watchConsultations(String dossierId) =>
+      _repository.watchConsultations(dossierId);
 
   Stream<List<CommissionDisciplinaire>> watchCommissions(String noeudId) => _repository.watchCommissions(noeudId);
 

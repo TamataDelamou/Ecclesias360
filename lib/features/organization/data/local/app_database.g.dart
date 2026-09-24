@@ -19989,6 +19989,504 @@ class PiecesDossierCompanion extends UpdateCompanion<PieceDossierRow> {
   }
 }
 
+class $ConsultationsDisciplinairesTable extends ConsultationsDisciplinaires
+    with
+        TableInfo<
+          $ConsultationsDisciplinairesTable,
+          ConsultationDisciplinaireRow
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ConsultationsDisciplinairesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dossierIdMeta = const VerificationMeta(
+    'dossierId',
+  );
+  @override
+  late final GeneratedColumn<String> dossierId = GeneratedColumn<String>(
+    'dossier_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES dossiers_disciplinaires (id)',
+    ),
+  );
+  static const VerificationMeta _documentArchiveIdMeta = const VerificationMeta(
+    'documentArchiveId',
+  );
+  @override
+  late final GeneratedColumn<String> documentArchiveId =
+      GeneratedColumn<String>(
+        'document_archive_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _authUserIdMeta = const VerificationMeta(
+    'authUserId',
+  );
+  @override
+  late final GeneratedColumn<String> authUserId = GeneratedColumn<String>(
+    'auth_user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fideleIdMeta = const VerificationMeta(
+    'fideleId',
+  );
+  @override
+  late final GeneratedColumn<String> fideleId = GeneratedColumn<String>(
+    'fidele_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES fideles (id)',
+    ),
+  );
+  static const VerificationMeta _roleMeta = const VerificationMeta('role');
+  @override
+  late final GeneratedColumn<String> role = GeneratedColumn<String>(
+    'role',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _consulteLeMeta = const VerificationMeta(
+    'consulteLe',
+  );
+  @override
+  late final GeneratedColumn<DateTime> consulteLe = GeneratedColumn<DateTime>(
+    'consulte_le',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    dossierId,
+    documentArchiveId,
+    authUserId,
+    fideleId,
+    role,
+    consulteLe,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'consultations_disciplinaires';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ConsultationDisciplinaireRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('dossier_id')) {
+      context.handle(
+        _dossierIdMeta,
+        dossierId.isAcceptableOrUnknown(data['dossier_id']!, _dossierIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dossierIdMeta);
+    }
+    if (data.containsKey('document_archive_id')) {
+      context.handle(
+        _documentArchiveIdMeta,
+        documentArchiveId.isAcceptableOrUnknown(
+          data['document_archive_id']!,
+          _documentArchiveIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('auth_user_id')) {
+      context.handle(
+        _authUserIdMeta,
+        authUserId.isAcceptableOrUnknown(
+          data['auth_user_id']!,
+          _authUserIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_authUserIdMeta);
+    }
+    if (data.containsKey('fidele_id')) {
+      context.handle(
+        _fideleIdMeta,
+        fideleId.isAcceptableOrUnknown(data['fidele_id']!, _fideleIdMeta),
+      );
+    }
+    if (data.containsKey('role')) {
+      context.handle(
+        _roleMeta,
+        role.isAcceptableOrUnknown(data['role']!, _roleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_roleMeta);
+    }
+    if (data.containsKey('consulte_le')) {
+      context.handle(
+        _consulteLeMeta,
+        consulteLe.isAcceptableOrUnknown(data['consulte_le']!, _consulteLeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_consulteLeMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ConsultationDisciplinaireRow map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ConsultationDisciplinaireRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      dossierId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}dossier_id'],
+      )!,
+      documentArchiveId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}document_archive_id'],
+      ),
+      authUserId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}auth_user_id'],
+      )!,
+      fideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fidele_id'],
+      ),
+      role: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}role'],
+      )!,
+      consulteLe: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}consulte_le'],
+      )!,
+    );
+  }
+
+  @override
+  $ConsultationsDisciplinairesTable createAlias(String alias) {
+    return $ConsultationsDisciplinairesTable(attachedDatabase, alias);
+  }
+}
+
+class ConsultationDisciplinaireRow extends DataClass
+    implements Insertable<ConsultationDisciplinaireRow> {
+  final String id;
+  final String dossierId;
+  final String? documentArchiveId;
+  final String authUserId;
+  final String? fideleId;
+  final String role;
+  final DateTime consulteLe;
+  const ConsultationDisciplinaireRow({
+    required this.id,
+    required this.dossierId,
+    this.documentArchiveId,
+    required this.authUserId,
+    this.fideleId,
+    required this.role,
+    required this.consulteLe,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['dossier_id'] = Variable<String>(dossierId);
+    if (!nullToAbsent || documentArchiveId != null) {
+      map['document_archive_id'] = Variable<String>(documentArchiveId);
+    }
+    map['auth_user_id'] = Variable<String>(authUserId);
+    if (!nullToAbsent || fideleId != null) {
+      map['fidele_id'] = Variable<String>(fideleId);
+    }
+    map['role'] = Variable<String>(role);
+    map['consulte_le'] = Variable<DateTime>(consulteLe);
+    return map;
+  }
+
+  ConsultationsDisciplinairesCompanion toCompanion(bool nullToAbsent) {
+    return ConsultationsDisciplinairesCompanion(
+      id: Value(id),
+      dossierId: Value(dossierId),
+      documentArchiveId: documentArchiveId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(documentArchiveId),
+      authUserId: Value(authUserId),
+      fideleId: fideleId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fideleId),
+      role: Value(role),
+      consulteLe: Value(consulteLe),
+    );
+  }
+
+  factory ConsultationDisciplinaireRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ConsultationDisciplinaireRow(
+      id: serializer.fromJson<String>(json['id']),
+      dossierId: serializer.fromJson<String>(json['dossierId']),
+      documentArchiveId: serializer.fromJson<String?>(
+        json['documentArchiveId'],
+      ),
+      authUserId: serializer.fromJson<String>(json['authUserId']),
+      fideleId: serializer.fromJson<String?>(json['fideleId']),
+      role: serializer.fromJson<String>(json['role']),
+      consulteLe: serializer.fromJson<DateTime>(json['consulteLe']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'dossierId': serializer.toJson<String>(dossierId),
+      'documentArchiveId': serializer.toJson<String?>(documentArchiveId),
+      'authUserId': serializer.toJson<String>(authUserId),
+      'fideleId': serializer.toJson<String?>(fideleId),
+      'role': serializer.toJson<String>(role),
+      'consulteLe': serializer.toJson<DateTime>(consulteLe),
+    };
+  }
+
+  ConsultationDisciplinaireRow copyWith({
+    String? id,
+    String? dossierId,
+    Value<String?> documentArchiveId = const Value.absent(),
+    String? authUserId,
+    Value<String?> fideleId = const Value.absent(),
+    String? role,
+    DateTime? consulteLe,
+  }) => ConsultationDisciplinaireRow(
+    id: id ?? this.id,
+    dossierId: dossierId ?? this.dossierId,
+    documentArchiveId: documentArchiveId.present
+        ? documentArchiveId.value
+        : this.documentArchiveId,
+    authUserId: authUserId ?? this.authUserId,
+    fideleId: fideleId.present ? fideleId.value : this.fideleId,
+    role: role ?? this.role,
+    consulteLe: consulteLe ?? this.consulteLe,
+  );
+  ConsultationDisciplinaireRow copyWithCompanion(
+    ConsultationsDisciplinairesCompanion data,
+  ) {
+    return ConsultationDisciplinaireRow(
+      id: data.id.present ? data.id.value : this.id,
+      dossierId: data.dossierId.present ? data.dossierId.value : this.dossierId,
+      documentArchiveId: data.documentArchiveId.present
+          ? data.documentArchiveId.value
+          : this.documentArchiveId,
+      authUserId: data.authUserId.present
+          ? data.authUserId.value
+          : this.authUserId,
+      fideleId: data.fideleId.present ? data.fideleId.value : this.fideleId,
+      role: data.role.present ? data.role.value : this.role,
+      consulteLe: data.consulteLe.present
+          ? data.consulteLe.value
+          : this.consulteLe,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ConsultationDisciplinaireRow(')
+          ..write('id: $id, ')
+          ..write('dossierId: $dossierId, ')
+          ..write('documentArchiveId: $documentArchiveId, ')
+          ..write('authUserId: $authUserId, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('role: $role, ')
+          ..write('consulteLe: $consulteLe')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    dossierId,
+    documentArchiveId,
+    authUserId,
+    fideleId,
+    role,
+    consulteLe,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ConsultationDisciplinaireRow &&
+          other.id == this.id &&
+          other.dossierId == this.dossierId &&
+          other.documentArchiveId == this.documentArchiveId &&
+          other.authUserId == this.authUserId &&
+          other.fideleId == this.fideleId &&
+          other.role == this.role &&
+          other.consulteLe == this.consulteLe);
+}
+
+class ConsultationsDisciplinairesCompanion
+    extends UpdateCompanion<ConsultationDisciplinaireRow> {
+  final Value<String> id;
+  final Value<String> dossierId;
+  final Value<String?> documentArchiveId;
+  final Value<String> authUserId;
+  final Value<String?> fideleId;
+  final Value<String> role;
+  final Value<DateTime> consulteLe;
+  final Value<int> rowid;
+  const ConsultationsDisciplinairesCompanion({
+    this.id = const Value.absent(),
+    this.dossierId = const Value.absent(),
+    this.documentArchiveId = const Value.absent(),
+    this.authUserId = const Value.absent(),
+    this.fideleId = const Value.absent(),
+    this.role = const Value.absent(),
+    this.consulteLe = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ConsultationsDisciplinairesCompanion.insert({
+    required String id,
+    required String dossierId,
+    this.documentArchiveId = const Value.absent(),
+    required String authUserId,
+    this.fideleId = const Value.absent(),
+    required String role,
+    required DateTime consulteLe,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       dossierId = Value(dossierId),
+       authUserId = Value(authUserId),
+       role = Value(role),
+       consulteLe = Value(consulteLe);
+  static Insertable<ConsultationDisciplinaireRow> custom({
+    Expression<String>? id,
+    Expression<String>? dossierId,
+    Expression<String>? documentArchiveId,
+    Expression<String>? authUserId,
+    Expression<String>? fideleId,
+    Expression<String>? role,
+    Expression<DateTime>? consulteLe,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (dossierId != null) 'dossier_id': dossierId,
+      if (documentArchiveId != null) 'document_archive_id': documentArchiveId,
+      if (authUserId != null) 'auth_user_id': authUserId,
+      if (fideleId != null) 'fidele_id': fideleId,
+      if (role != null) 'role': role,
+      if (consulteLe != null) 'consulte_le': consulteLe,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ConsultationsDisciplinairesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? dossierId,
+    Value<String?>? documentArchiveId,
+    Value<String>? authUserId,
+    Value<String?>? fideleId,
+    Value<String>? role,
+    Value<DateTime>? consulteLe,
+    Value<int>? rowid,
+  }) {
+    return ConsultationsDisciplinairesCompanion(
+      id: id ?? this.id,
+      dossierId: dossierId ?? this.dossierId,
+      documentArchiveId: documentArchiveId ?? this.documentArchiveId,
+      authUserId: authUserId ?? this.authUserId,
+      fideleId: fideleId ?? this.fideleId,
+      role: role ?? this.role,
+      consulteLe: consulteLe ?? this.consulteLe,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (dossierId.present) {
+      map['dossier_id'] = Variable<String>(dossierId.value);
+    }
+    if (documentArchiveId.present) {
+      map['document_archive_id'] = Variable<String>(documentArchiveId.value);
+    }
+    if (authUserId.present) {
+      map['auth_user_id'] = Variable<String>(authUserId.value);
+    }
+    if (fideleId.present) {
+      map['fidele_id'] = Variable<String>(fideleId.value);
+    }
+    if (role.present) {
+      map['role'] = Variable<String>(role.value);
+    }
+    if (consulteLe.present) {
+      map['consulte_le'] = Variable<DateTime>(consulteLe.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ConsultationsDisciplinairesCompanion(')
+          ..write('id: $id, ')
+          ..write('dossierId: $dossierId, ')
+          ..write('documentArchiveId: $documentArchiveId, ')
+          ..write('authUserId: $authUserId, ')
+          ..write('fideleId: $fideleId, ')
+          ..write('role: $role, ')
+          ..write('consulteLe: $consulteLe, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $TypesOffrandeTable extends TypesOffrande
     with TableInfo<$TypesOffrandeTable, TypeOffrandeRow> {
   @override
@@ -31725,6 +32223,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $DossiersDisciplinairesTable dossiersDisciplinaires =
       $DossiersDisciplinairesTable(this);
   late final $PiecesDossierTable piecesDossier = $PiecesDossierTable(this);
+  late final $ConsultationsDisciplinairesTable consultationsDisciplinaires =
+      $ConsultationsDisciplinairesTable(this);
   late final $TypesOffrandeTable typesOffrande = $TypesOffrandeTable(this);
   late final $ProjetsTable projets = $ProjetsTable(this);
   late final $ContributionsTable contributions = $ContributionsTable(this);
@@ -31817,6 +32317,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     membresCommissionDisciplinaire,
     dossiersDisciplinaires,
     piecesDossier,
+    consultationsDisciplinaires,
     typesOffrande,
     projets,
     contributions,
@@ -35083,6 +35584,31 @@ final class $$FidelesTableReferences
     );
   }
 
+  static MultiTypedResultKey<
+    $ConsultationsDisciplinairesTable,
+    List<ConsultationDisciplinaireRow>
+  >
+  _consultationsDisciplinairesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.consultationsDisciplinaires,
+        aliasName: 'fideles__id__consultations_disciplinaires__fidele_id',
+      );
+
+  $$ConsultationsDisciplinairesTableProcessedTableManager
+  get consultationsDisciplinairesRefs {
+    final manager = $$ConsultationsDisciplinairesTableTableManager(
+      $_db,
+      $_db.consultationsDisciplinaires,
+    ).filter((f) => f.fideleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _consultationsDisciplinairesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
   static MultiTypedResultKey<$ContributionsTable, List<ContributionRow>>
   _contributionsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.contributions,
@@ -36039,6 +36565,35 @@ class $$FidelesTableFilterComposer
               }) => $$DossiersDisciplinairesTableFilterComposer(
                 $db: $db,
                 $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> consultationsDisciplinairesRefs(
+    Expression<bool> Function(
+      $$ConsultationsDisciplinairesTableFilterComposer f,
+    )
+    f,
+  ) {
+    final $$ConsultationsDisciplinairesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.consultationsDisciplinaires,
+          getReferencedColumn: (t) => t.fideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ConsultationsDisciplinairesTableFilterComposer(
+                $db: $db,
+                $table: $db.consultationsDisciplinaires,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -37171,6 +37726,35 @@ class $$FidelesTableAnnotationComposer
     return f(composer);
   }
 
+  Expression<T> consultationsDisciplinairesRefs<T extends Object>(
+    Expression<T> Function(
+      $$ConsultationsDisciplinairesTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$ConsultationsDisciplinairesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.consultationsDisciplinaires,
+          getReferencedColumn: (t) => t.fideleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ConsultationsDisciplinairesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.consultationsDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
   Expression<T> contributionsRefs<T extends Object>(
     Expression<T> Function($$ContributionsTableAnnotationComposer a) f,
   ) {
@@ -37415,6 +37999,7 @@ class $$FidelesTableTableManager
             bool membresCommissionDisciplinaireRefs,
             bool dossiersDisciplinairesCommeMisEnCause,
             bool dossiersDisciplinairesCommeAuteur,
+            bool consultationsDisciplinairesRefs,
             bool contributionsRefs,
             bool depensesProjetRefs,
             bool engagementsRefs,
@@ -37566,6 +38151,7 @@ class $$FidelesTableTableManager
                 membresCommissionDisciplinaireRefs = false,
                 dossiersDisciplinairesCommeMisEnCause = false,
                 dossiersDisciplinairesCommeAuteur = false,
+                consultationsDisciplinairesRefs = false,
                 contributionsRefs = false,
                 depensesProjetRefs = false,
                 engagementsRefs = false,
@@ -37608,6 +38194,8 @@ class $$FidelesTableTableManager
                       db.dossiersDisciplinaires,
                     if (dossiersDisciplinairesCommeAuteur)
                       db.dossiersDisciplinaires,
+                    if (consultationsDisciplinairesRefs)
+                      db.consultationsDisciplinaires,
                     if (contributionsRefs) db.contributions,
                     if (depensesProjetRefs) db.depensesProjet,
                     if (engagementsRefs) db.engagements,
@@ -38218,6 +38806,27 @@ class $$FidelesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (consultationsDisciplinairesRefs)
+                        await $_getPrefetchedData<
+                          FideleRow,
+                          $FidelesTable,
+                          ConsultationDisciplinaireRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FidelesTableReferences
+                              ._consultationsDisciplinairesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FidelesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).consultationsDisciplinairesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fideleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                       if (contributionsRefs)
                         await $_getPrefetchedData<
                           FideleRow,
@@ -38431,6 +39040,7 @@ typedef $$FidelesTableProcessedTableManager =
         bool membresCommissionDisciplinaireRefs,
         bool dossiersDisciplinairesCommeMisEnCause,
         bool dossiersDisciplinairesCommeAuteur,
+        bool consultationsDisciplinairesRefs,
         bool contributionsRefs,
         bool depensesProjetRefs,
         bool engagementsRefs,
@@ -56665,6 +57275,33 @@ final class $$DossiersDisciplinairesTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<
+    $ConsultationsDisciplinairesTable,
+    List<ConsultationDisciplinaireRow>
+  >
+  _consultationsDisciplinairesRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.consultationsDisciplinaires,
+    aliasName:
+        'dossiers_disciplinaires__id__consultations_disciplinaires__dossier_id',
+  );
+
+  $$ConsultationsDisciplinairesTableProcessedTableManager
+  get consultationsDisciplinairesRefs {
+    final manager = $$ConsultationsDisciplinairesTableTableManager(
+      $_db,
+      $_db.consultationsDisciplinaires,
+    ).filter((f) => f.dossierId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _consultationsDisciplinairesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$DossiersDisciplinairesTableFilterComposer
@@ -56882,6 +57519,35 @@ class $$DossiersDisciplinairesTableFilterComposer
                 $removeJoinBuilderFromRootComposer,
           ),
     );
+    return f(composer);
+  }
+
+  Expression<bool> consultationsDisciplinairesRefs(
+    Expression<bool> Function(
+      $$ConsultationsDisciplinairesTableFilterComposer f,
+    )
+    f,
+  ) {
+    final $$ConsultationsDisciplinairesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.consultationsDisciplinaires,
+          getReferencedColumn: (t) => t.dossierId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ConsultationsDisciplinairesTableFilterComposer(
+                $db: $db,
+                $table: $db.consultationsDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
     return f(composer);
   }
 }
@@ -57292,6 +57958,35 @@ class $$DossiersDisciplinairesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> consultationsDisciplinairesRefs<T extends Object>(
+    Expression<T> Function(
+      $$ConsultationsDisciplinairesTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$ConsultationsDisciplinairesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.consultationsDisciplinaires,
+          getReferencedColumn: (t) => t.dossierId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ConsultationsDisciplinairesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.consultationsDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$DossiersDisciplinairesTableTableManager
@@ -57315,6 +58010,7 @@ class $$DossiersDisciplinairesTableTableManager
             bool commissionId,
             bool decisionComiteOrigineId,
             bool piecesDossierRefs,
+            bool consultationsDisciplinairesRefs,
           })
         > {
   $$DossiersDisciplinairesTableTableManager(
@@ -57433,11 +58129,14 @@ class $$DossiersDisciplinairesTableTableManager
                 commissionId = false,
                 decisionComiteOrigineId = false,
                 piecesDossierRefs = false,
+                consultationsDisciplinairesRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
                     if (piecesDossierRefs) db.piecesDossier,
+                    if (consultationsDisciplinairesRefs)
+                      db.consultationsDisciplinaires,
                   ],
                   addJoins:
                       <
@@ -57573,6 +58272,28 @@ class $$DossiersDisciplinairesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (consultationsDisciplinairesRefs)
+                        await $_getPrefetchedData<
+                          DossierDisciplinaireRow,
+                          $DossiersDisciplinairesTable,
+                          ConsultationDisciplinaireRow
+                        >(
+                          currentTable: table,
+                          referencedTable:
+                              $$DossiersDisciplinairesTableReferences
+                                  ._consultationsDisciplinairesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$DossiersDisciplinairesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).consultationsDisciplinairesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.dossierId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -57601,6 +58322,7 @@ typedef $$DossiersDisciplinairesTableProcessedTableManager =
         bool commissionId,
         bool decisionComiteOrigineId,
         bool piecesDossierRefs,
+        bool consultationsDisciplinairesRefs,
       })
     >;
 typedef $$PiecesDossierTableCreateCompanionBuilder =
@@ -58021,6 +58743,491 @@ typedef $$PiecesDossierTableProcessedTableManager =
       (PieceDossierRow, $$PiecesDossierTableReferences),
       PieceDossierRow,
       PrefetchHooks Function({bool dossierId, bool documentArchiveId})
+    >;
+typedef $$ConsultationsDisciplinairesTableCreateCompanionBuilder =
+    ConsultationsDisciplinairesCompanion Function({
+      required String id,
+      required String dossierId,
+      Value<String?> documentArchiveId,
+      required String authUserId,
+      Value<String?> fideleId,
+      required String role,
+      required DateTime consulteLe,
+      Value<int> rowid,
+    });
+typedef $$ConsultationsDisciplinairesTableUpdateCompanionBuilder =
+    ConsultationsDisciplinairesCompanion Function({
+      Value<String> id,
+      Value<String> dossierId,
+      Value<String?> documentArchiveId,
+      Value<String> authUserId,
+      Value<String?> fideleId,
+      Value<String> role,
+      Value<DateTime> consulteLe,
+      Value<int> rowid,
+    });
+
+final class $$ConsultationsDisciplinairesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $ConsultationsDisciplinairesTable,
+          ConsultationDisciplinaireRow
+        > {
+  $$ConsultationsDisciplinairesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $DossiersDisciplinairesTable _dossierIdTable(_$AppDatabase db) =>
+      db.dossiersDisciplinaires.createAlias(
+        'consultations_disciplinaires__dossier_id__dossiers_disciplinaires__id',
+      );
+
+  $$DossiersDisciplinairesTableProcessedTableManager get dossierId {
+    final $_column = $_itemColumn<String>('dossier_id')!;
+
+    final manager = $$DossiersDisciplinairesTableTableManager(
+      $_db,
+      $_db.dossiersDisciplinaires,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_dossierIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $FidelesTable _fideleIdTable(_$AppDatabase db) => db.fideles
+      .createAlias('consultations_disciplinaires__fidele_id__fideles__id');
+
+  $$FidelesTableProcessedTableManager? get fideleId {
+    final $_column = $_itemColumn<String>('fidele_id');
+    if ($_column == null) return null;
+    final manager = $$FidelesTableTableManager(
+      $_db,
+      $_db.fideles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fideleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ConsultationsDisciplinairesTableFilterComposer
+    extends Composer<_$AppDatabase, $ConsultationsDisciplinairesTable> {
+  $$ConsultationsDisciplinairesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get documentArchiveId => $composableBuilder(
+    column: $table.documentArchiveId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get authUserId => $composableBuilder(
+    column: $table.authUserId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get role => $composableBuilder(
+    column: $table.role,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get consulteLe => $composableBuilder(
+    column: $table.consulteLe,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$DossiersDisciplinairesTableFilterComposer get dossierId {
+    final $$DossiersDisciplinairesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.dossierId,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableFilterComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$FidelesTableFilterComposer get fideleId {
+    final $$FidelesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableFilterComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ConsultationsDisciplinairesTableOrderingComposer
+    extends Composer<_$AppDatabase, $ConsultationsDisciplinairesTable> {
+  $$ConsultationsDisciplinairesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get documentArchiveId => $composableBuilder(
+    column: $table.documentArchiveId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get authUserId => $composableBuilder(
+    column: $table.authUserId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get role => $composableBuilder(
+    column: $table.role,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get consulteLe => $composableBuilder(
+    column: $table.consulteLe,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$DossiersDisciplinairesTableOrderingComposer get dossierId {
+    final $$DossiersDisciplinairesTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.dossierId,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableOrderingComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$FidelesTableOrderingComposer get fideleId {
+    final $$FidelesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableOrderingComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ConsultationsDisciplinairesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ConsultationsDisciplinairesTable> {
+  $$ConsultationsDisciplinairesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get documentArchiveId => $composableBuilder(
+    column: $table.documentArchiveId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get authUserId => $composableBuilder(
+    column: $table.authUserId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get role =>
+      $composableBuilder(column: $table.role, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get consulteLe => $composableBuilder(
+    column: $table.consulteLe,
+    builder: (column) => column,
+  );
+
+  $$DossiersDisciplinairesTableAnnotationComposer get dossierId {
+    final $$DossiersDisciplinairesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.dossierId,
+          referencedTable: $db.dossiersDisciplinaires,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$DossiersDisciplinairesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.dossiersDisciplinaires,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$FidelesTableAnnotationComposer get fideleId {
+    final $$FidelesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fideleId,
+      referencedTable: $db.fideles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FidelesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.fideles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ConsultationsDisciplinairesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ConsultationsDisciplinairesTable,
+          ConsultationDisciplinaireRow,
+          $$ConsultationsDisciplinairesTableFilterComposer,
+          $$ConsultationsDisciplinairesTableOrderingComposer,
+          $$ConsultationsDisciplinairesTableAnnotationComposer,
+          $$ConsultationsDisciplinairesTableCreateCompanionBuilder,
+          $$ConsultationsDisciplinairesTableUpdateCompanionBuilder,
+          (
+            ConsultationDisciplinaireRow,
+            $$ConsultationsDisciplinairesTableReferences,
+          ),
+          ConsultationDisciplinaireRow,
+          PrefetchHooks Function({bool dossierId, bool fideleId})
+        > {
+  $$ConsultationsDisciplinairesTableTableManager(
+    _$AppDatabase db,
+    $ConsultationsDisciplinairesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ConsultationsDisciplinairesTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ConsultationsDisciplinairesTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ConsultationsDisciplinairesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> dossierId = const Value.absent(),
+                Value<String?> documentArchiveId = const Value.absent(),
+                Value<String> authUserId = const Value.absent(),
+                Value<String?> fideleId = const Value.absent(),
+                Value<String> role = const Value.absent(),
+                Value<DateTime> consulteLe = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ConsultationsDisciplinairesCompanion(
+                id: id,
+                dossierId: dossierId,
+                documentArchiveId: documentArchiveId,
+                authUserId: authUserId,
+                fideleId: fideleId,
+                role: role,
+                consulteLe: consulteLe,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String dossierId,
+                Value<String?> documentArchiveId = const Value.absent(),
+                required String authUserId,
+                Value<String?> fideleId = const Value.absent(),
+                required String role,
+                required DateTime consulteLe,
+                Value<int> rowid = const Value.absent(),
+              }) => ConsultationsDisciplinairesCompanion.insert(
+                id: id,
+                dossierId: dossierId,
+                documentArchiveId: documentArchiveId,
+                authUserId: authUserId,
+                fideleId: fideleId,
+                role: role,
+                consulteLe: consulteLe,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $ConsultationsDisciplinairesTable,
+                    ConsultationDisciplinaireRow
+                  >(table),
+                  $$ConsultationsDisciplinairesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({dossierId = false, fideleId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (dossierId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.dossierId,
+                                referencedTable:
+                                    $$ConsultationsDisciplinairesTableReferences
+                                        ._dossierIdTable(db),
+                                referencedColumn:
+                                    $$ConsultationsDisciplinairesTableReferences
+                                        ._dossierIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (fideleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.fideleId,
+                                referencedTable:
+                                    $$ConsultationsDisciplinairesTableReferences
+                                        ._fideleIdTable(db),
+                                referencedColumn:
+                                    $$ConsultationsDisciplinairesTableReferences
+                                        ._fideleIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ConsultationsDisciplinairesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ConsultationsDisciplinairesTable,
+      ConsultationDisciplinaireRow,
+      $$ConsultationsDisciplinairesTableFilterComposer,
+      $$ConsultationsDisciplinairesTableOrderingComposer,
+      $$ConsultationsDisciplinairesTableAnnotationComposer,
+      $$ConsultationsDisciplinairesTableCreateCompanionBuilder,
+      $$ConsultationsDisciplinairesTableUpdateCompanionBuilder,
+      (
+        ConsultationDisciplinaireRow,
+        $$ConsultationsDisciplinairesTableReferences,
+      ),
+      ConsultationDisciplinaireRow,
+      PrefetchHooks Function({bool dossierId, bool fideleId})
     >;
 typedef $$TypesOffrandeTableCreateCompanionBuilder =
     TypesOffrandeCompanion Function({
@@ -69486,6 +70693,12 @@ class $AppDatabaseManager {
       );
   $$PiecesDossierTableTableManager get piecesDossier =>
       $$PiecesDossierTableTableManager(_db, _db.piecesDossier);
+  $$ConsultationsDisciplinairesTableTableManager
+  get consultationsDisciplinaires =>
+      $$ConsultationsDisciplinairesTableTableManager(
+        _db,
+        _db.consultationsDisciplinaires,
+      );
   $$TypesOffrandeTableTableManager get typesOffrande =>
       $$TypesOffrandeTableTableManager(_db, _db.typesOffrande);
   $$ProjetsTableTableManager get projets =>

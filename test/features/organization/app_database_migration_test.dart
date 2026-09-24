@@ -759,4 +759,42 @@ void main() {
 
     await db.close();
   });
+
+  test('un fichier créé en schéma v19 reçoit le journal des consultations disciplinaires (RG-SEC-06)', () async {
+    final fichier = File(
+      path.join(Directory.systemTemp.path, 'ecclesias_migration_test_v19_${DateTime.now().microsecondsSinceEpoch}.sqlite'),
+    );
+    addTearDown(() {
+      if (fichier.existsSync()) fichier.deleteSync();
+    });
+
+    final dbInitiale = AppDatabase(NativeDatabase(fichier));
+    await dbInitiale.into(dbInitiale.organisationNodes).insert(
+          OrganisationNodesCompanion.insert(
+            id: 'siege-1',
+            typeNoeud: 'siege',
+            nom: 'GSG',
+            codeInterne: 'GSG-SIEGE',
+            path: '/siege-1/',
+            depth: 0,
+            createdAt: DateTime(2026, 1, 1),
+            updatedAt: DateTime(2026, 1, 1),
+          ),
+        );
+    await dbInitiale.close();
+
+    // Ramène le fichier au schéma v19 exact : pas de journal.
+    final connexionBrute = sqlite3.sqlite3.open(fichier.path);
+    connexionBrute.execute('''
+      DROP TABLE consultations_disciplinaires;
+      PRAGMA user_version = 19;
+    ''');
+    connexionBrute.close();
+
+    final db = AppDatabase(NativeDatabase(fichier));
+    expect((await db.select(db.organisationNodes).getSingle()).nom, 'GSG');
+    expect(await db.select(db.consultationsDisciplinaires).get(), isEmpty);
+
+    await db.close();
+  });
 }

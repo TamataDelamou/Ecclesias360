@@ -6,9 +6,12 @@ import '../../../core/constants/app_routes.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../../../core/widgets/staggered_fade_in.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
+import '../../discipline/presentation/acces_discipline.dart';
 import '../application/archivage_controller.dart';
 import '../domain/models/document_archive.dart';
 import '../domain/models/niveau_confidentialite.dart';
+import 'acces_archivage.dart';
 
 /// Écrans « Bibliothèque documentaire » + « Recherche documentaire » (RG-VIII-04),
 /// scopés par nœud — point d'entrée vers la fiche détaillée d'un document.
@@ -38,6 +41,11 @@ class _DocumentsArchiveListScreenState extends State<DocumentsArchiveListScreen>
     final controller = context.read<ArchivageController>();
     final l10n = AppLocalizations.of(context)!;
 
+    // Gardé aussi contre l'accès direct par la route (RG-SEC-06).
+    if (!peutOuvrirArchives(context.watch<SessionController>())) {
+      return EcranArchivesAccesReserve(titre: l10n.archivageBibliothequeTitre);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.archivageBibliothequeTitre),
@@ -64,47 +72,52 @@ class _DocumentsArchiveListScreenState extends State<DocumentsArchiveListScreen>
             ),
           ),
           Expanded(
-            child: StreamBuilder<List<DocumentArchive>>(
-              stream: controller.watchBibliotheque(noeudId: widget.noeudId),
-              builder: (context, snapshot) {
-                var documents = snapshot.data ?? const <DocumentArchive>[];
-                if (_requete.isNotEmpty) {
-                  documents = documents
-                      .where(
-                        (d) =>
-                            d.numeroArchive.toLowerCase().contains(_requete) ||
-                            d.typeDocument.toLowerCase().contains(_requete),
-                      )
+            child: AccesDisciplineBuilder(
+              builder: (context, acces) => StreamBuilder<List<DocumentArchive>>(
+                stream: controller.watchBibliotheque(noeudId: widget.noeudId),
+                builder: (context, snapshot) {
+                  // RG-VIII-03 / RG-X-05 : un document non consultable n'est pas listé.
+                  var documents = (snapshot.data ?? const <DocumentArchive>[])
+                      .where((d) => documentVisible(acces, d))
                       .toList(growable: false);
-                }
-                if (documents.isEmpty) {
-                  return Center(child: Text(l10n.archivageAucunDocument));
-                }
-                return ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: AppDimensions.spacingLg),
-                  itemCount: documents.length,
-                  separatorBuilder: (context, index) => const SizedBox(height: AppDimensions.spacingSm),
-                  itemBuilder: (context, index) {
-                    final document = documents[index];
-                    return StaggeredFadeIn(
-                      index: index,
-                      child: Card(
-                        child: ListTile(
-                          leading: Icon(
-                            document.niveauConfidentialite == NiveauConfidentialite.restreint
-                                ? Icons.lock_outline
-                                : Icons.description_outlined,
+                  if (_requete.isNotEmpty) {
+                    documents = documents
+                        .where(
+                          (d) =>
+                              d.numeroArchive.toLowerCase().contains(_requete) ||
+                              d.typeDocument.toLowerCase().contains(_requete),
+                        )
+                        .toList(growable: false);
+                  }
+                  if (documents.isEmpty) {
+                    return Center(child: Text(l10n.archivageAucunDocument));
+                  }
+                  return ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: AppDimensions.spacingLg),
+                    itemCount: documents.length,
+                    separatorBuilder: (context, index) => const SizedBox(height: AppDimensions.spacingSm),
+                    itemBuilder: (context, index) {
+                      final document = documents[index];
+                      return StaggeredFadeIn(
+                        index: index,
+                        child: Card(
+                          child: ListTile(
+                            leading: Icon(
+                              document.niveauConfidentialite == NiveauConfidentialite.restreint
+                                  ? Icons.lock_outline
+                                  : Icons.description_outlined,
+                            ),
+                            title: Text(document.numeroArchive),
+                            subtitle: Text(document.typeDocument),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: () => context.push(AppRoutes.documentArchive(document.id)),
                           ),
-                          title: Text(document.numeroArchive),
-                          subtitle: Text(document.typeDocument),
-                          trailing: const Icon(Icons.chevron_right),
-                          onTap: () => context.push(AppRoutes.documentArchive(document.id)),
                         ),
-                      ),
-                    );
-                  },
-                );
-              },
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ),
         ],

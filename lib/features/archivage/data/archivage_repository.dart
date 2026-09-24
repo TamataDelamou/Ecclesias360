@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:drift/drift.dart';
 
+import '../../../core/audit/journal_consultations_repository.dart';
 import '../../../core/error/app_error.dart';
 import '../../../core/theme/app_defaults.dart';
 import '../../../core/utils/id_generator.dart';
 import '../../organization/data/local/app_database.dart';
+import '../../parametres/domain/models/role.dart';
 import '../domain/models/document_archive.dart';
+import '../domain/models/dossier_rattache.dart';
 import '../domain/models/niveau_confidentialite.dart';
 import '../domain/models/nomenclature_archivage.dart';
 import '../domain/models/statut_document_archive.dart';
@@ -23,9 +28,10 @@ import '../domain/rules/archivage_rules.dart';
 /// précédent documenté que la synchronisation distante différée sur tous les
 /// autres modules du dépôt.
 class ArchivageRepository {
-  ArchivageRepository(this._db);
+  ArchivageRepository(this._db) : _journal = JournalConsultationsRepository(_db);
 
   final AppDatabase _db;
+  final JournalConsultationsRepository _journal;
 
   // --- Nomenclature (RG-VIII-01) -------------------------------------------
 
@@ -185,7 +191,113 @@ class ArchivageRepository {
     if (moduleOrigine != null) {
       query.where((t) => t.moduleOrigine.equals(moduleOrigine));
     }
-    return query.watch().map((rows) => rows.map(_documentToDomain).toList(growable: false));
+    return _watchAvecDossiers(query);
+  }
+
+  /// Réémet aussi quand un rattachement disciplinaire change (pièce ajoutée,
+  /// commission assignée) : la visibilité d'un document en dépend.
+  /// `tableUpdates` plutôt qu'une requête observée : Drift ne réémet pas un
+  /// résultat identique au précédent, un déclencheur constant manquerait
+  /// donc des changements. Rechargements sérialisés pour conserver l'ordre.
+  Stream<List<DocumentArchive>> _watchAvecDossiers(SimpleSelectStatement<$DocumentsArchiveTable, DocumentArchiveRow> query) {
+    late final StreamController<List<DocumentArchive>> sortie;
+    StreamSubscription<Set<TableUpdate>>? abonnement;
+    var file = Future<void>.value();
+    void recharger() {
+      file = file.then((_) async {
+        final documents = await _versDomaine(await query.get());
+        if (!sortie.isClosed) sortie.add(documents);
+      });
+    }
+
+    sortie = StreamController<List<DocumentArchive>>(
+      onListen: () {
+        abonnement = _db
+            .tableUpdates(
+              TableUpdateQuery.onAllTables([_db.documentsArchive, _db.piecesDossier, _db.dossiersDisciplinaires]),
+            )
+            .listen((_) => recharger());
+        recharger();
+      },
+      onCancel: () => abonnement?.cancel(),
+    );
+    return sortie.stream;
+  }
+
+  /// RG-VIII-03 / RG-X-05 — rattache à chaque document les dossiers
+  /// disciplinaires dont il est l'origine ou une pièce.
+  Future<List<DocumentArchive>> _versDomaine(List<DocumentArchiveRow> rows) async {
+    if (rows.isEmpty) return const [];
+    final ids = rows.map((r) => r.id).toList();
+    final pieces = await (_db.select(_db.piecesDossier)..where((t) => t.documentArchiveId.isIn(ids))).get();
+    final dossierIdsParDocument = <String, Set<String>>{
+      for (final row in rows) row.id: {if (row.moduleOrigine == moduleOrigineDiscipline) row.objetIdOrigine},
+    };
+    for (final piece in pieces) {
+      dossierIdsParDocument[piece.documentArchiveId!]!.add(piece.dossierId);
+    }
+    final tousLesDossierIds = dossierIdsParDocument.values.expand((ids) => ids).toSet();
+    final dossiers = tousLesDossierIds.isEmpty
+        ? const <DossierDisciplinaireRow>[]
+        : await (_db.select(_db.dossiersDisciplinaires)..where((t) => t.id.isIn(tousLesDossierIds))).get();
+    final commissionParDossier = {for (final d in dossiers) d.id: d.commissionId};
+
+    return rows
+        .map(
+          (row) => _documentToDomain(
+            row,
+            dossiersRattaches: [
+              for (final dossierId in dossierIdsParDocument[row.id]!)
+                DossierRattache(
+                  dossierId: dossierId,
+                  commissionId: commissionParDossier[dossierId],
+                  trouve: commissionParDossier.containsKey(dossierId),
+                ),
+            ],
+          ),
+        )
+        .toList(growable: false);
+  }
+
+  /// Valeur de `moduleOrigine` des pièces archivées par le Module X
+  /// (`DisciplineRepository.ajouterPiece`).
+  static const moduleOrigineDiscipline = 'discipline';
+
+  /// RG-VIII-03 / RG-SEC-06 — consultation d'un document par le compte
+  /// courant : refusée (`AppError.documentArchiveAccesRefuse`) sans
+  /// habilitation, vérifiée ici et non seulement par l'écran. La lecture
+  /// d'un document rattaché à un dossier disciplinaire est journalisée,
+  /// une ligne par dossier (journal systématique, RG-SEC-06).
+  Future<DocumentArchive?> consulter({
+    required String documentId,
+    required String authUserId,
+    required String? fideleId,
+    required Role role,
+  }) async {
+    final document = await findById(documentId);
+    if (document == null) return null;
+    final commissions = fideleId == null
+        ? const <String>{}
+        : (await (_db.select(_db.membresCommissionDisciplinaire)..where((t) => t.fideleId.equals(fideleId))).get())
+            .map((m) => m.commissionId)
+            .toSet();
+    final autorise = ArchivageRules.peutConsulterDocument(
+      role: role,
+      niveau: document.niveauConfidentialite,
+      dossiersRattaches: document.dossiersRattaches,
+      commissionsDuConsultant: commissions,
+    );
+    if (!autorise) throw AppError.documentArchiveAccesRefuse();
+    for (final dossier in document.dossiersRattaches) {
+      await _journal.journaliser(
+        dossierId: dossier.dossierId,
+        documentArchiveId: document.id,
+        authUserId: authUserId,
+        fideleId: fideleId,
+        role: role,
+      );
+    }
+    return document;
   }
 
   /// RG-VIII-04 — navigation croisée depuis l'objet métier d'origine (ex.
@@ -197,12 +309,12 @@ class ArchivageRepository {
     final rows = await (_db.select(_db.documentsArchive)
           ..where((t) => t.moduleOrigine.equals(moduleOrigine) & t.objetIdOrigine.equals(objetIdOrigine)))
         .get();
-    return rows.map(_documentToDomain).toList(growable: false);
+    return _versDomaine(rows);
   }
 
   Future<DocumentArchive?> findById(String id) async {
     final row = await (_db.select(_db.documentsArchive)..where((t) => t.id.equals(id))).getSingleOrNull();
-    return row == null ? null : _documentToDomain(row);
+    return row == null ? null : (await _versDomaine([row])).single;
   }
 
   // --- Corbeille (RG-VIII-05) ---------------------------------------------------
@@ -213,7 +325,7 @@ class ArchivageRepository {
     if (noeudId != null) {
       query.where((t) => t.noeudId.equals(noeudId));
     }
-    return query.watch().map((rows) => rows.map(_documentToDomain).toList(growable: false));
+    return _watchAvecDossiers(query);
   }
 
   Future<void> mettreEnCorbeille(String id) {
@@ -234,7 +346,9 @@ class ArchivageRepository {
   /// RG-VIII-05 — purge définitive, uniquement une fois le délai paramétré
   /// écoulé depuis la mise en corbeille ; jamais automatique. Lève
   /// `AppError.documentArchiveNonPurgeable` sinon.
-  Future<void> purgerDefinitivement(String id, {required int delaiPurgeJours}) async {
+  Future<void> purgerDefinitivement(String id, {required int delaiPurgeJours, required Role roleActeur}) async {
+    final refus = ArchivageRules.raisonBlocagePurge(roleActeur: roleActeur);
+    if (refus != null) throw refus;
     final document = await (_db.select(_db.documentsArchive)..where((t) => t.id.equals(id))).getSingle();
     final purgeable = document.statut == StatutDocumentArchive.enCorbeille.code &&
         document.dateMiseCorbeille != null &&
@@ -254,8 +368,9 @@ class ArchivageRepository {
 
   // --- Mapping ---------------------------------------------------------------
 
-  DocumentArchive _documentToDomain(DocumentArchiveRow row) {
+  DocumentArchive _documentToDomain(DocumentArchiveRow row, {List<DossierRattache> dossiersRattaches = const []}) {
     return DocumentArchive(
+      dossiersRattaches: dossiersRattaches,
       id: row.id,
       numeroArchive: row.numeroArchive,
       typeDocument: row.typeDocument,
