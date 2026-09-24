@@ -91,7 +91,7 @@ class NodeDetailScreen extends StatelessWidget {
             FilledButton.icon(
               icon: const Icon(Icons.check_circle_outline),
               label: const Text('Valider ce nœud (le faire passer au statut actif)'),
-              onPressed: () => controller.validerNoeud(noeud.id),
+              onPressed: session.acteur == null ? null : () => controller.validerNoeud(noeud.id, acteur: session.acteur!),
             ),
           const SizedBox(height: AppDimensions.spacingSm),
           if (gestion) ...[
@@ -215,7 +215,7 @@ class NodeDetailScreen extends StatelessWidget {
             OutlinedButton.icon(
               icon: const Icon(Icons.archive_outlined),
               label: const Text('Archiver'),
-              onPressed: () => controller.archiverNoeud(noeud.id),
+              onPressed: session.acteur == null ? null : () => controller.archiverNoeud(noeud.id, acteur: session.acteur!),
             ),
           if (controller.erreur != null) ...[
             const SizedBox(height: AppDimensions.spacingLg),

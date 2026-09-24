@@ -58,14 +58,18 @@ class _NodeFormScreenState extends State<NodeFormScreen> {
 
   Future<void> _soumettre(OrganisationController controller) async {
     if (!_formKey.currentState!.validate()) return;
+    final acteur = context.read<SessionController>().acteur;
+    if (acteur == null) return;
 
     final succes = _estEdition
         ? await controller.modifierInfosNoeud(
             id: widget.nodeId!,
+            acteur: acteur,
             nom: _nomController.text.trim(),
             codeInterne: _codeInterneController.text.trim(),
           )
         : await controller.creerNoeud(
+            acteur: acteur,
             typeNoeud: widget.parentId == null ? TypeNoeud.siege : _typeChoisi!,
             noeudParentId: widget.parentId,
             nom: _nomController.text.trim(),

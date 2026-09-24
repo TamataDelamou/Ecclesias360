@@ -112,7 +112,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _capacitesController = CapacitesController(referentiel: widget.capacites);
     _router = creerAppRouter(_sessionController);
     _organisationRepository = OrganisationNodeRepository(widget.database, _syncCoordinator);
-    _organisationController = OrganisationController(_organisationRepository);
+    _organisationController = OrganisationController(_organisationRepository, _capacitesController);
     _fideleRepository = FideleRepository(widget.database, _syncCoordinator);
     _fideleController = FideleController(_fideleRepository);
     _zoneGeographiqueRepository = ZoneGeographiqueRepository(widget.database);

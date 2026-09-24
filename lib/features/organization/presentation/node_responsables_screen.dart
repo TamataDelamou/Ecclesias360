@@ -52,8 +52,10 @@ class NodeResponsablesScreen extends StatelessWidget {
       ),
     );
 
-    if (confirme == true && fonctionController.text.trim().isNotEmpty) {
+    final acteur = context.mounted ? context.read<SessionController>().acteur : null;
+    if (confirme == true && acteur != null && fonctionController.text.trim().isNotEmpty) {
       await controller.affecterResponsable(
+        acteur: acteur,
         noeudId: nodeId,
         fideleId: fideleId,
         fonction: fonctionController.text.trim(),
@@ -101,7 +103,10 @@ class NodeResponsablesScreen extends StatelessWidget {
                     ? IconButton(
                         icon: const Icon(Icons.close),
                         tooltip: 'Mettre fin au mandat',
-                        onPressed: () => controller.retirerResponsable(responsable.id),
+                        onPressed: () {
+                          final acteur = context.read<SessionController>().acteur;
+                          if (acteur != null) controller.retirerResponsable(responsable.id, acteur: acteur);
+                        },
                       )
                     : null,
               );

@@ -20,8 +20,10 @@ bool capaciteAccordee(BuildContext context, String capacite) =>
     context.watch<CapacitesController>().accorde(capacite: capacite, role: context.watch<SessionController>().role);
 
 /// RG-I-03 — créer (ou valider) un nœud de ce type : l'église locale au rang
-/// de gestion, tout niveau supérieur avec la capacité dédiée.
-bool peutCreerOuValiderType(BuildContext context, TypeNoeud type) =>
-    OrganisationAccesRules.exigeCapaciteNiveauSuperieur(type)
-    ? capaciteAccordee(context, Capacites.creerNoeudNiveauSuperieur)
-    : OrganisationAccesRules.peutGererNoeuds(context.watch<SessionController>().role);
+/// de gestion, tout niveau supérieur avec la capacité dédiée. Même règle que
+/// `OrganisationController` (qui, lui, bloque à la source).
+bool peutCreerOuValiderType(BuildContext context, TypeNoeud type) => OrganisationAccesRules.peutCreerOuValider(
+  type: type,
+  role: context.watch<SessionController>().role,
+  capaciteNiveauSuperieur: capaciteAccordee(context, Capacites.creerNoeudNiveauSuperieur),
+);

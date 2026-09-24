@@ -99,6 +99,26 @@ class AppError implements Exception {
         "La modification des paramètres de l'application est réservée à un administrateur.",
       );
 
+  factory AppError.gestionOrganisationReservee() => const AppError(
+        'gestion_organisation_reservee',
+        "La gestion des nœuds de l'organisation est réservée à un responsable (ou rôle supérieur).",
+      );
+
+  factory AppError.capaciteNiveauSuperieurRequise() => const AppError(
+        'capacite_niveau_superieur_requise',
+        "Créer ou valider un nœud de niveau supérieur exige la capacité dédiée (RG-I-03).",
+      );
+
+  factory AppError.designationResponsablesReservee() => const AppError(
+        'designation_responsables_reservee',
+        "La désignation des responsables d'un nœud est réservée à un pasteur (ou rôle supérieur).",
+      );
+
+  factory AppError.suppressionNoeudReservee() => const AppError(
+        'suppression_noeud_reservee',
+        "La suppression d'un nœud est réservée à un administrateur.",
+      );
+
   factory AppError.gestionFidelesReservee() => const AppError(
         'gestion_fideles_reservee',
         "La gestion des fiches fidèles est réservée à un responsable (ou rôle supérieur).",
