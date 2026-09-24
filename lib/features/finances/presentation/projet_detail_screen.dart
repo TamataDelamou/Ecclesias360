@@ -3,26 +3,28 @@ import 'package:provider/provider.dart';
 
 import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../fideles/application/fidele_controller.dart';
 import '../application/finances_controller.dart';
 import '../domain/models/depense_projet.dart';
 import '../domain/models/projet.dart';
+import 'acces_finances.dart';
 
 /// Fiche projet (RG-XI-03) : solde recalculé (jamais stocké), dépenses avec
-/// dérogation tracée au besoin.
+/// dérogation tracée au besoin. Le valideur d'une dépense est la fiche liée
+/// à la session, jamais choisi dans une liste ; accès réservé (policy
+/// `projets_acces`, 0019) au rang responsable et au trésorier du nœud.
 class ProjetDetailScreen extends StatelessWidget {
   const ProjetDetailScreen({required this.projetId, super.key});
 
   final String projetId;
 
-  Future<void> _ajouterDepense(BuildContext context, FinancesController controller, Projet projet, int solde) async {
-    final fideleController = context.read<FideleController>();
-    final fidelesDuNoeud = fideleController.fideles.where((f) => f.noeudId == projet.noeudId).toList();
-    if (fidelesDuNoeud.isEmpty) return;
-
+  Future<void> _ajouterDepense(
+    BuildContext context,
+    FinancesController controller,
+    Projet projet,
+    String valideParFideleId,
+  ) async {
     final libelleController = TextEditingController();
     final montantController = TextEditingController();
-    String valideParFideleId = fidelesDuNoeud.first.id;
     bool derogationTracee = false;
     final motifDerogationController = TextEditingController();
 
@@ -42,13 +44,6 @@ class ProjetDetailScreen extends StatelessWidget {
                     controller: montantController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(labelText: l10n.financesChampMontant, suffixText: projet.devise),
-                  ),
-                  DropdownButtonFormField<String>(
-                    isExpanded: true,
-                    initialValue: valideParFideleId,
-                    decoration: InputDecoration(labelText: l10n.financesChampValidePar),
-                    items: fidelesDuNoeud.map((f) => DropdownMenuItem(value: f.id, child: Text(f.nomComplet))).toList(),
-                    onChanged: (valeur) => setState(() => valideParFideleId = valeur ?? valideParFideleId),
                   ),
                   CheckboxListTile(
                     value: derogationTracee,
@@ -102,7 +97,10 @@ class ProjetDetailScreen extends StatelessWidget {
           if (!projetSnapshot.hasData) return const SizedBox.shrink();
           if (projet == null) return Center(child: Text(l10n.financesProjetIntrouvable));
 
-          return StreamBuilder<List<DepenseProjet>>(
+          return AccesFinancesBuilder(
+            builder: (context, acces) => !acces.peutGererProjets(projet.noeudId)
+                ? Center(child: Text(l10n.financesAccesReserve))
+                : StreamBuilder<List<DepenseProjet>>(
             stream: controller.watchDepensesProjet(projetId),
             builder: (context, depensesSnapshot) {
               final depenses = depensesSnapshot.data ?? const <DepenseProjet>[];
@@ -131,10 +129,13 @@ class ProjetDetailScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: AppDimensions.spacingMd),
-                      FilledButton(
-                        onPressed: () => _ajouterDepense(context, controller, projet, solde),
-                        child: Text(l10n.financesDepenseAjouterBouton),
-                      ),
+                      if (acces.fideleId == null)
+                        Text(l10n.financesFicheLieeRequise)
+                      else
+                        FilledButton(
+                          onPressed: () => _ajouterDepense(context, controller, projet, acces.fideleId!),
+                          child: Text(l10n.financesDepenseAjouterBouton),
+                        ),
                       const SizedBox(height: AppDimensions.spacingMd),
                       Text(l10n.financesDepensesTitre, style: Theme.of(context).textTheme.titleMedium),
                       if (depenses.isEmpty)
@@ -161,6 +162,7 @@ class ProjetDetailScreen extends StatelessWidget {
                 },
               );
             },
+          ),
           );
         },
       ),

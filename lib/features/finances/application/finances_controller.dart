@@ -37,6 +37,8 @@ class FinancesController extends ChangeNotifier {
 
   Stream<List<TresorierNoeud>> watchTresoriers(String noeudId) => _repository.watchTresoriers(noeudId);
 
+  Stream<Set<String>> watchNoeudsDuTresorier(String fideleId) => _repository.watchNoeudsDuTresorier(fideleId);
+
   Future<bool> designerTresorier({required String fideleId, required String noeudId}) =>
       _executer(() => _repository.designerTresorier(fideleId: fideleId, noeudId: noeudId));
 
@@ -86,11 +88,35 @@ class FinancesController extends ChangeNotifier {
         () => _repository.validerContribution(id: id, roleActeur: roleActeur, valideParFideleId: valideParFideleId),
       );
 
-  Future<bool> rejeterContribution({required String id, String? motifRejet}) =>
-      _executer(() => _repository.rejeterContribution(id: id, motifRejet: motifRejet));
+  Future<bool> rejeterContribution({
+    required String id,
+    required Role roleActeur,
+    required String rejeteParFideleId,
+    String? motifRejet,
+  }) =>
+      _executer(
+        () => _repository.rejeterContribution(
+          id: id,
+          roleActeur: roleActeur,
+          rejeteParFideleId: rejeteParFideleId,
+          motifRejet: motifRejet,
+        ),
+      );
 
-  Future<bool> contrePasserContribution({required String id, String? motif}) =>
-      _executer(() => _repository.contrePasserContribution(id: id, motif: motif));
+  Future<bool> contrePasserContribution({
+    required String id,
+    required Role roleActeur,
+    required String valideParFideleId,
+    String? motif,
+  }) =>
+      _executer(
+        () => _repository.contrePasserContribution(
+          id: id,
+          roleActeur: roleActeur,
+          valideParFideleId: valideParFideleId,
+          motif: motif,
+        ),
+      );
 
   Future<List<Contribution>> detecterDoublonsPotentiels(Contribution nouvelle) =>
       _repository.detecterDoublonsPotentiels(nouvelle);

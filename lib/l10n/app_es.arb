@@ -262,8 +262,8 @@
   "financesRecuTitre": "Recibo de contribución",
   "financesIntrouvable": "Esta contribución no se encuentra.",
   "financesValiderTitre": "Validar la contribución",
-  "financesChampRoleActeur": "Rol actuante",
-  "financesChampValidePar": "Validado por",
+  "financesAccesReserve": "Acceso reservado a un pastor, al tesorero del nodo o al fiel interesado.",
+  "financesFicheLieeRequise": "Vincule primero su cuenta a su ficha (\"Vincular mi cuenta a esta ficha\"): el validador registrado es siempre una persona del registro.",
   "financesValiderBouton": "Validar",
   "financesRejeterTitre": "Rechazar la contribución",
   "financesChampMotif": "Motivo",
@@ -471,5 +471,6 @@
   "roleAdministrateur": "Administrador",
   "authLierMonCompte": "Vincular mi cuenta a esta ficha",
   "authLierMonCompteConfirmation": "Su cuenta de administrador se vinculará a la ficha de {nom}, que tomará el rol de administrador. La vinculación queda registrada y solo se deshace resolviendo un conflicto de vinculación.",
+  "authLierMonCompteBouton": "Vincular mi cuenta",
   "authLierMonCompteFait": "Cuenta vinculada a su ficha."
 }

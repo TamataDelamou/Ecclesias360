@@ -156,7 +156,18 @@ void main() {
     });
   });
 
-  group('rejeterContribution', () {
+  Future<String> saisir() async => (await repository.saisirContribution(
+        fideleId: fideleId,
+        typeOffrandeId: typeOffrandeId,
+        montant: 5000,
+        devise: 'GNF',
+        noeudId: noeudId,
+        modePaiement: 'especes',
+        origine: OrigineContribution.mobile,
+      ))
+          .id;
+
+  group('rejeterContribution (RG-XI-02)', () {
     test('un pasteur peut rejeter une contribution en attente', () async {
       final contribution = await repository.saisirContribution(
         fideleId: fideleId,
@@ -167,9 +178,32 @@ void main() {
         modePaiement: 'especes',
         origine: OrigineContribution.mobile,
       );
-      final rejetee = await repository.rejeterContribution(id: contribution.id, motifRejet: 'Doublon suspecté');
+      final rejetee = await repository.rejeterContribution(
+        id: contribution.id,
+        roleActeur: Role.pasteur,
+        rejeteParFideleId: fideleId,
+        motifRejet: 'Doublon suspecté',
+      );
       expect(rejetee.statut, StatutContribution.rejetee);
       expect(rejetee.motifRejet, 'Doublon suspecté');
+      // Auteur de la décision tracé ; la date de validation reste vide.
+      expect(rejetee.valideParFideleId, fideleId);
+      expect(rejetee.dateValidation, isNull);
+    });
+
+    test('un simple membre, non trésorier du nœud, ne peut pas rejeter', () async {
+      final id = await saisir();
+      await expectLater(
+        repository.rejeterContribution(id: id, roleActeur: Role.membre, rejeteParFideleId: fideleId),
+        throwsA(isA<AppError>().having((e) => e.code, 'code', 'role_insuffisant_pour_validation_contribution')),
+      );
+    });
+
+    test('un trésorier désigné du nœud peut rejeter même au rang membre', () async {
+      final id = await saisir();
+      await repository.designerTresorier(fideleId: fideleId, noeudId: noeudId);
+      final rejetee = await repository.rejeterContribution(id: id, roleActeur: Role.membre, rejeteParFideleId: fideleId);
+      expect(rejetee.statut, StatutContribution.rejetee);
     });
   });
 
@@ -186,8 +220,14 @@ void main() {
       );
       await repository.validerContribution(id: contribution.id, roleActeur: Role.pasteur, valideParFideleId: fideleId);
 
-      final contrePassation = await repository.contrePasserContribution(id: contribution.id, motif: 'Erreur de saisie');
+      final contrePassation = await repository.contrePasserContribution(
+        id: contribution.id,
+        roleActeur: Role.pasteur,
+        valideParFideleId: fideleId,
+        motif: 'Erreur de saisie',
+      );
       expect(contrePassation.montant, -5000);
+      expect(contrePassation.valideParFideleId, fideleId);
       expect(contrePassation.estContrePassation, isTrue);
       expect(contrePassation.contributionOrigineId, contribution.id);
       expect(contrePassation.statut, StatutContribution.validee);
@@ -204,10 +244,27 @@ void main() {
         origine: OrigineContribution.mobile,
       );
       expect(
-        () => repository.contrePasserContribution(id: contribution.id),
+        () => repository.contrePasserContribution(id: contribution.id, roleActeur: Role.pasteur, valideParFideleId: fideleId),
         throwsA(isA<AppError>().having((e) => e.code, 'code', 'contribution_non_validee_pour_contre_passation')),
       );
     });
+
+    test('un simple membre, non trésorier du nœud, ne peut pas contre-passer (RG-XI-02)', () async {
+      final id = await saisir();
+      await repository.validerContribution(id: id, roleActeur: Role.pasteur, valideParFideleId: fideleId);
+      await expectLater(
+        repository.contrePasserContribution(id: id, roleActeur: Role.membre, valideParFideleId: fideleId),
+        throwsA(isA<AppError>().having((e) => e.code, 'code', 'role_insuffisant_pour_validation_contribution')),
+      );
+    });
+  });
+
+  test('watchNoeudsDuTresorier suit les désignations en fonction seulement', () async {
+    expect(await repository.watchNoeudsDuTresorier(fideleId).first, isEmpty);
+    final designation = await repository.designerTresorier(fideleId: fideleId, noeudId: noeudId);
+    expect(await repository.watchNoeudsDuTresorier(fideleId).first, {noeudId});
+    await repository.retirerTresorier(designation.id);
+    expect(await repository.watchNoeudsDuTresorier(fideleId).first, isEmpty);
   });
 
   group('detecterDoublonsPotentiels (RG-XI-06)', () {

@@ -44,6 +44,37 @@ void main() {
     });
   });
 
+  group('peutConsulterContribution (RG-SEC-06)', () {
+    test('un pasteur ou un administrateur consulte toute contribution', () {
+      for (final role in [Role.pasteur, Role.administrateur]) {
+        expect(
+          FinancesRules.peutConsulterContribution(role: role, estTresorierDuNoeud: false, estDonateur: false),
+          isTrue,
+        );
+      }
+    });
+
+    test('le trésorier du nœud ou le donateur consulte, même au rang membre', () {
+      expect(
+        FinancesRules.peutConsulterContribution(role: Role.membre, estTresorierDuNoeud: true, estDonateur: false),
+        isTrue,
+      );
+      expect(
+        FinancesRules.peutConsulterContribution(role: Role.membre, estTresorierDuNoeud: false, estDonateur: true),
+        isTrue,
+      );
+    });
+
+    test('un responsable ou un membre sans lien avec la contribution ne consulte pas', () {
+      for (final role in [Role.responsable, Role.membre, Role.utilisateurSimple]) {
+        expect(
+          FinancesRules.peutConsulterContribution(role: role, estTresorierDuNoeud: false, estDonateur: false),
+          isFalse,
+        );
+      }
+    });
+  });
+
   group('raisonBlocageDepense (RG-XI-03)', () {
     test('une dépense inférieure ou égale au solde disponible est autorisée', () {
       expect(

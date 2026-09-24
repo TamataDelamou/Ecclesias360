@@ -14,6 +14,7 @@ import '../domain/models/periodicite_engagement.dart';
 import '../domain/models/statut_echeance.dart';
 import '../domain/models/type_engagement.dart';
 import '../domain/models/type_offrande.dart';
+import 'acces_finances.dart';
 
 /// Écran « Engagements et échéances » (RG-XI-04), scopé à un fidèle.
 class EngagementsListScreen extends StatelessWidget {
@@ -122,8 +123,19 @@ class EngagementsListScreen extends StatelessWidget {
     }
   }
 
+  /// Accès réservé (policy `engagements_acces`, 0019) au fidèle lui-même,
+  /// à un pasteur (ou plus) et au trésorier de son nœud.
   @override
   Widget build(BuildContext context) {
+    final noeudDuFidele = context.watch<FideleController>().findById(fideleId)?.noeudId;
+    return AccesFinancesBuilder(
+      builder: (context, acces) => acces.peutConsulterFidele(fideleIdConsulte: fideleId, noeudDuFidele: noeudDuFidele)
+          ? _construire(context)
+          : EcranFinancesAccesReserve(titre: AppLocalizations.of(context)!.financesEngagementsTitre),
+    );
+  }
+
+  Widget _construire(BuildContext context) {
     final controller = context.read<FinancesController>();
     final l10n = AppLocalizations.of(context)!;
 

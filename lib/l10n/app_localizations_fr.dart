@@ -841,10 +841,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get financesValiderTitre => 'Valider la contribution';
 
   @override
-  String get financesChampRoleActeur => 'Rôle agissant';
+  String get financesAccesReserve =>
+      'Accès réservé à un pasteur, au trésorier du nœud ou au fidèle concerné.';
 
   @override
-  String get financesChampValidePar => 'Validé par';
+  String get financesFicheLieeRequise =>
+      'Liez d\'abord votre compte à votre fiche fidèle (« Lier mon compte à cette fiche ») : le valideur tracé est toujours une personne du registre.';
 
   @override
   String get financesValiderBouton => 'Valider';
@@ -1509,6 +1511,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String authLierMonCompteConfirmation(String nom) {
     return 'Votre compte administrateur sera lié à la fiche de $nom, qui prendra le rôle administrateur. La liaison est journalisée et ne se défait que par la résolution d\'un conflit de liaison.';
   }
+
+  @override
+  String get authLierMonCompteBouton => 'Lier mon compte';
 
   @override
   String get authLierMonCompteFait => 'Compte lié à votre fiche.';

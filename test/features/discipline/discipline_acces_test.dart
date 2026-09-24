@@ -94,7 +94,7 @@ void main() {
     await ouvrirFicheNoeud(tester, donnees.db);
 
     await tester.dragUntilVisible(
-      find.widgetWithText(OutlinedButton, 'Contributions'),
+      find.widgetWithText(OutlinedButton, 'Biens'),
       find.byType(ListView),
       const Offset(0, -200),
     );

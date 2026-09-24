@@ -72,6 +72,13 @@ class FinancesRepository {
         .write(TresoriersNoeudCompanion(dateFin: Value(DateTime.now())));
   }
 
+  /// Nœuds dont [fideleId] est trésorier en fonction (RG-XI-02, RG-SEC-06) :
+  /// habilitation par désignation, indépendante du rang.
+  Stream<Set<String>> watchNoeudsDuTresorier(String fideleId) {
+    final query = _db.select(_db.tresoriersNoeud)..where((t) => t.fideleId.equals(fideleId) & t.dateFin.isNull());
+    return query.watch().map((rows) => {for (final row in rows) row.noeudId});
+  }
+
   Future<bool> estTresorierDuNoeud({required String fideleId, required String noeudId}) async {
     final rows = await (_db.select(_db.tresoriersNoeud)
           ..where((t) => t.fideleId.equals(fideleId) & t.noeudId.equals(noeudId) & t.dateFin.isNull())
@@ -146,14 +153,7 @@ class FinancesRepository {
     if (contribution.statut != StatutContribution.enAttente) {
       throw AppError.contributionNonEnAttente();
     }
-    final estTresorier = await estTresorierDuNoeud(fideleId: valideParFideleId, noeudId: contribution.noeudId);
-    final erreur = FinancesRules.raisonBlocageValidationContribution(
-      roleActeur: roleActeur,
-      estTresorierDuNoeud: estTresorier,
-    );
-    if (erreur != null) {
-      throw erreur;
-    }
+    await _verifierHabilitation(roleActeur: roleActeur, acteurFideleId: valideParFideleId, noeudId: contribution.noeudId);
 
     await (_db.update(_db.contributions)..where((t) => t.id.equals(id))).write(
       ContributionsCompanion(
@@ -174,25 +174,45 @@ class FinancesRepository {
     return (await findContributionById(id))!;
   }
 
-  Future<Contribution> rejeterContribution({required String id, String? motifRejet}) async {
+  /// RG-XI-02 — même habilitation que la validation ; l'auteur de la
+  /// décision est tracé dans `valideParFideleId` (auteur de la décision
+  /// comptable, validation ou rejet — `dateValidation` reste vide).
+  Future<Contribution> rejeterContribution({
+    required String id,
+    required Role roleActeur,
+    required String rejeteParFideleId,
+    String? motifRejet,
+  }) async {
     final contribution = await _findContributionOrThrow(id);
     if (contribution.statut != StatutContribution.enAttente) {
       throw AppError.contributionNonEnAttente();
     }
+    await _verifierHabilitation(roleActeur: roleActeur, acteurFideleId: rejeteParFideleId, noeudId: contribution.noeudId);
     await (_db.update(_db.contributions)..where((t) => t.id.equals(id))).write(
-      ContributionsCompanion(statut: Value(StatutContribution.rejetee.code), motifRejet: Value(motifRejet)),
+      ContributionsCompanion(
+        statut: Value(StatutContribution.rejetee.code),
+        motifRejet: Value(motifRejet),
+        valideParFideleId: Value(rejeteParFideleId),
+      ),
     );
     return (await findContributionById(id))!;
   }
 
   /// RG-XI-05 — une contribution validée n'est jamais éditée : la correction
   /// prend la forme d'une nouvelle contribution de montant inverse,
-  /// directement validée (acte comptable), qui référence l'originale.
-  Future<Contribution> contrePasserContribution({required String id, String? motif}) async {
+  /// directement validée (acte comptable), qui référence l'originale. Même
+  /// habilitation que la validation (RG-XI-02), valideur tracé.
+  Future<Contribution> contrePasserContribution({
+    required String id,
+    required Role roleActeur,
+    required String valideParFideleId,
+    String? motif,
+  }) async {
     final origine = await _findContributionOrThrow(id);
     if (origine.statut != StatutContribution.validee) {
       throw AppError.contributionNonValideePourContrePassation();
     }
+    await _verifierHabilitation(roleActeur: roleActeur, acteurFideleId: valideParFideleId, noeudId: origine.noeudId);
 
     final nouvelId = IdGenerator.newId();
     final maintenant = DateTime.now();
@@ -212,6 +232,7 @@ class FinancesRepository {
             origine: origine.origine.code,
             dateSaisie: maintenant,
             dateValidation: Value(maintenant),
+            valideParFideleId: Value(valideParFideleId),
             motifRejet: Value(motif),
             contributionOrigineId: Value(origine.id),
             estContrePassation: const Value(true),
@@ -250,6 +271,20 @@ class FinancesRepository {
           ),
         )
         .toList(growable: false);
+  }
+
+  /// RG-XI-02 — rang pasteur (ou plus), ou trésorier désigné du nœud ; la
+  /// désignation se vérifie toujours sur l'acteur, jamais sur le donateur.
+  Future<void> _verifierHabilitation({
+    required Role roleActeur,
+    required String acteurFideleId,
+    required String noeudId,
+  }) async {
+    final erreur = FinancesRules.raisonBlocageValidationContribution(
+      roleActeur: roleActeur,
+      estTresorierDuNoeud: await estTresorierDuNoeud(fideleId: acteurFideleId, noeudId: noeudId),
+    );
+    if (erreur != null) throw erreur;
   }
 
   Future<Contribution> _findContributionOrThrow(String id) async {

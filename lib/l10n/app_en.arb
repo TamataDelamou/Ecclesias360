@@ -262,8 +262,8 @@
   "financesRecuTitre": "Contribution receipt",
   "financesIntrouvable": "This contribution cannot be found.",
   "financesValiderTitre": "Validate the contribution",
-  "financesChampRoleActeur": "Acting role",
-  "financesChampValidePar": "Validated by",
+  "financesAccesReserve": "Access restricted to a pastor, the node treasurer or the member concerned.",
+  "financesFicheLieeRequise": "First link your account to your member record (\"Link my account to this record\"): the recorded validator is always a person from the register.",
   "financesValiderBouton": "Validate",
   "financesRejeterTitre": "Reject the contribution",
   "financesChampMotif": "Reason",
@@ -471,5 +471,6 @@
   "roleAdministrateur": "Administrator",
   "authLierMonCompte": "Link my account to this record",
   "authLierMonCompteConfirmation": "Your administrator account will be linked to {nom}'s record, which will take the administrator role. The link is logged and can only be undone by resolving a link conflict.",
+  "authLierMonCompteBouton": "Link my account",
   "authLierMonCompteFait": "Account linked to your record."
 }

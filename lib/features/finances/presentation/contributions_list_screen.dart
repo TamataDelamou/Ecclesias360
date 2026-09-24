@@ -14,6 +14,7 @@ import '../domain/models/contribution.dart';
 import '../domain/models/origine_contribution.dart';
 import '../domain/models/statut_contribution.dart';
 import '../domain/models/type_offrande.dart';
+import 'acces_finances.dart';
 
 /// Écrans « Saisie rapide d'offrande » + « Historique des contributions
 /// d'un fidèle » + « Rapport rapide par type d'offrande », regroupés sur un
@@ -22,6 +23,11 @@ import '../domain/models/type_offrande.dart';
 /// (Module IX). Le nœud ajoute en outre le rapport par type d'offrande
 /// (somme des contributions validées affichées) et l'accès à la gestion
 /// des trésoriers (RG-XI-02).
+///
+/// RG-SEC-06 : un nœud n'est consulté que par un pasteur (ou plus) ou un
+/// trésorier de ce nœud ; l'historique d'un fidèle, aussi par lui-même.
+/// Chaque contribution listée est de plus filtrée (policy
+/// `contributions_lecture`, 0019).
 class ContributionsListScreen extends StatelessWidget {
   const ContributionsListScreen({this.noeudId, this.fideleId, super.key})
       : assert(
@@ -34,6 +40,22 @@ class ContributionsListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final noeudDuFidele = fideleId == null ? null : context.watch<FideleController>().findById(fideleId!)?.noeudId;
+    return AccesFinancesBuilder(
+      builder: (context, acces) {
+        final autorise = noeudId != null
+            ? acces.peutGererContributions(noeudId!)
+            : acces.peutConsulterFidele(fideleIdConsulte: fideleId!, noeudDuFidele: noeudDuFidele);
+        if (!autorise) {
+          return EcranFinancesAccesReserve(titre: noeudId != null ? l10n.financesTitre : l10n.financesHistoriqueTitre);
+        }
+        return _construire(context, acces);
+      },
+    );
+  }
+
+  Widget _construire(BuildContext context, AccesFinances acces) {
     final controller = context.read<FinancesController>();
     final l10n = AppLocalizations.of(context)!;
     final parNoeud = noeudId != null;
@@ -48,7 +70,7 @@ class ContributionsListScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text(parNoeud ? l10n.financesTitre : l10n.financesHistoriqueTitre),
             actions: [
-              if (parNoeud)
+              if (parNoeud && acces.peutDesignerTresoriers)
                 IconButton(
                   icon: const Icon(Icons.badge_outlined),
                   tooltip: l10n.financesTresoriersTitre,
@@ -66,7 +88,7 @@ class ContributionsListScreen extends StatelessWidget {
           body: StreamBuilder<List<Contribution>>(
             stream: parNoeud ? controller.watchContributions(noeudId!) : controller.watchContributionsDuFidele(fideleId!),
             builder: (context, snapshot) {
-              final contributions = snapshot.data ?? const <Contribution>[];
+              final contributions = (snapshot.data ?? const <Contribution>[]).where(acces.peutConsulter).toList();
               if (contributions.isEmpty) {
                 return Center(child: Text(parNoeud ? l10n.financesAucuneContribution : l10n.financesAucuneContributionFidele));
               }

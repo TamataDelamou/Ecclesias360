@@ -16,6 +16,17 @@ abstract final class FinancesRules {
     return AppError.roleInsuffisantPourValidationContribution();
   }
 
+  /// RG-SEC-06 — une contribution n'est consultée que par un pasteur (ou
+  /// rôle supérieur), un trésorier désigné de son nœud, ou son donateur.
+  /// Miroir local de la policy `contributions_lecture` (migration 0019).
+  static bool peutConsulterContribution({
+    required Role role,
+    required bool estTresorierDuNoeud,
+    required bool estDonateur,
+  }) {
+    return CapacityRules.possede(role: role, roleMinimalRequis: Role.pasteur) || estTresorierDuNoeud || estDonateur;
+  }
+
   /// RG-XI-03 — une dépense ne peut dépasser le solde disponible du projet
   /// sans dérogation tracée d'un rôle habilité.
   static AppError? raisonBlocageDepense({

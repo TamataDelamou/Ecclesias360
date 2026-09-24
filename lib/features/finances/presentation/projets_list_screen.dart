@@ -9,6 +9,7 @@ import '../../../core/widgets/staggered_fade_in.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/finances_controller.dart';
 import '../domain/models/projet.dart';
+import 'acces_finances.dart';
 
 /// Écran « Liste des projets » (RG-XI-03), scopé à un nœud.
 class ProjetsListScreen extends StatelessWidget {
@@ -62,8 +63,18 @@ class ProjetsListScreen extends StatelessWidget {
     }
   }
 
+  /// Accès réservé (policy `projets_acces`, 0019) au rang responsable et au
+  /// trésorier du nœud.
   @override
   Widget build(BuildContext context) {
+    return AccesFinancesBuilder(
+      builder: (context, acces) => acces.peutGererProjets(noeudId)
+          ? _construire(context)
+          : EcranFinancesAccesReserve(titre: AppLocalizations.of(context)!.financesProjetsTitre),
+    );
+  }
+
+  Widget _construire(BuildContext context) {
     final controller = context.read<FinancesController>();
     final l10n = AppLocalizations.of(context)!;
 

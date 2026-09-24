@@ -125,7 +125,12 @@ void main() {
         roleActeur: Role.pasteur,
         valideParFideleId: fideleId,
       );
-      final contrePassee = await financesRepository.contrePasserContribution(id: contribution.id, motif: 'Erreur de saisie');
+      final contrePassee = await financesRepository.contrePasserContribution(
+        id: contribution.id,
+        roleActeur: Role.pasteur,
+        valideParFideleId: fideleId,
+        motif: 'Erreur de saisie',
+      );
 
       final ecritures = await repository.watchEcritures(noeudId).first;
       // 2 lignes pour la contribution d'origine + 2 pour la contre-passation.

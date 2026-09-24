@@ -838,10 +838,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get financesValiderTitre => 'Validar a contribuição';
 
   @override
-  String get financesChampRoleActeur => 'Função atuante';
+  String get financesAccesReserve =>
+      'Acesso reservado a um pastor, ao tesoureiro do nó ou ao fiel em causa.';
 
   @override
-  String get financesChampValidePar => 'Validado por';
+  String get financesFicheLieeRequise =>
+      'Vincule primeiro a sua conta à sua ficha (\"Vincular a minha conta a esta ficha\"): o validador registado é sempre uma pessoa do registo.';
 
   @override
   String get financesValiderBouton => 'Validar';
@@ -1507,6 +1509,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String authLierMonCompteConfirmation(String nom) {
     return 'A sua conta de administrador será vinculada à ficha de $nom, que assumirá o papel de administrador. A vinculação é registada e só pode ser desfeita pela resolução de um conflito de vinculação.';
   }
+
+  @override
+  String get authLierMonCompteBouton => 'Vincular a minha conta';
 
   @override
   String get authLierMonCompteFait => 'Conta vinculada à sua ficha.';

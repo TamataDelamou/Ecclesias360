@@ -6,6 +6,7 @@ import '../../../core/constants/app_routes.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../discipline/presentation/acces_discipline.dart';
+import '../../finances/presentation/acces_finances.dart';
 import '../application/organisation_controller.dart';
 import '../domain/models/statut_noeud.dart';
 
@@ -130,18 +131,31 @@ class NodeDetailScreen extends StatelessWidget {
                     ),
                   ),
           ),
-          OutlinedButton.icon(
-            icon: const Icon(Icons.volunteer_activism_outlined),
-            label: Text(l10n.financesTitre),
-            onPressed: () => context.push(AppRoutes.financesDuNoeud(noeud.id)),
+          // RG-SEC-06 : finances réservées (pasteur ou plus, trésorier du nœud ;
+          // projets : rang responsable ou trésorier).
+          AccesFinancesBuilder(
+            builder: (context, acces) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (acces.peutGererContributions(noeud.id)) ...[
+                  OutlinedButton.icon(
+                    icon: const Icon(Icons.volunteer_activism_outlined),
+                    label: Text(l10n.financesTitre),
+                    onPressed: () => context.push(AppRoutes.financesDuNoeud(noeud.id)),
+                  ),
+                  const SizedBox(height: AppDimensions.spacingSm),
+                ],
+                if (acces.peutGererProjets(noeud.id)) ...[
+                  OutlinedButton.icon(
+                    icon: const Icon(Icons.savings_outlined),
+                    label: Text(l10n.financesProjetsTitre),
+                    onPressed: () => context.push(AppRoutes.projetsDuNoeud(noeud.id)),
+                  ),
+                  const SizedBox(height: AppDimensions.spacingSm),
+                ],
+              ],
+            ),
           ),
-          const SizedBox(height: AppDimensions.spacingSm),
-          OutlinedButton.icon(
-            icon: const Icon(Icons.savings_outlined),
-            label: Text(l10n.financesProjetsTitre),
-            onPressed: () => context.push(AppRoutes.projetsDuNoeud(noeud.id)),
-          ),
-          const SizedBox(height: AppDimensions.spacingSm),
           OutlinedButton.icon(
             icon: const Icon(Icons.inventory_2_outlined),
             label: Text(l10n.patrimoineTitre),

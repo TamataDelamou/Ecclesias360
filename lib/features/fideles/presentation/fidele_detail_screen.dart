@@ -7,6 +7,7 @@ import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/application/session_controller.dart';
 import '../../discipline/presentation/acces_discipline.dart';
+import '../../finances/presentation/acces_finances.dart';
 import '../../parametres/domain/models/role.dart';
 import '../application/fidele_controller.dart';
 import '../domain/models/lien_familial.dart';
@@ -163,18 +164,29 @@ class FideleDetailScreen extends StatelessWidget {
                     ),
                   ),
           ),
-          OutlinedButton.icon(
-            icon: const Icon(Icons.volunteer_activism_outlined),
-            label: Text(l10n.financesHistoriqueTitre),
-            onPressed: () => context.push(AppRoutes.financesDuFidele(fidele.id)),
+          // RG-SEC-06 : historique financier réservé au fidèle lui-même, à un
+          // pasteur (ou plus) et au trésorier de son nœud.
+          AccesFinancesBuilder(
+            builder: (context, acces) => !acces.peutConsulterFidele(fideleIdConsulte: fidele.id, noeudDuFidele: fidele.noeudId)
+                ? const SizedBox.shrink()
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                    OutlinedButton.icon(
+                      icon: const Icon(Icons.volunteer_activism_outlined),
+                      label: Text(l10n.financesHistoriqueTitre),
+                      onPressed: () => context.push(AppRoutes.financesDuFidele(fidele.id)),
+                    ),
+                    const SizedBox(height: AppDimensions.spacingSm),
+                    OutlinedButton.icon(
+                      icon: const Icon(Icons.event_repeat_outlined),
+                      label: Text(l10n.financesEngagementsTitre),
+                      onPressed: () => context.push(AppRoutes.engagementsDuFidele(fidele.id)),
+                    ),
+                    const SizedBox(height: AppDimensions.spacingSm),
+                    ],
+                  ),
           ),
-          const SizedBox(height: AppDimensions.spacingSm),
-          OutlinedButton.icon(
-            icon: const Icon(Icons.event_repeat_outlined),
-            label: Text(l10n.financesEngagementsTitre),
-            onPressed: () => context.push(AppRoutes.engagementsDuFidele(fidele.id)),
-          ),
-          const SizedBox(height: AppDimensions.spacingSm),
           OutlinedButton.icon(
             icon: const Icon(Icons.favorite_border),
             label: Text(l10n.mediathequeFavorisTitre),
@@ -207,7 +219,7 @@ Future<void> _lierMonCompte(BuildContext context, SessionController session, Str
       content: Text(l10n.authLierMonCompteConfirmation(nom)),
       actions: [
         TextButton(onPressed: () => context.pop(false), child: Text(l10n.commonAnnuler)),
-        FilledButton(onPressed: () => context.pop(true), child: Text(l10n.commonOui)),
+        FilledButton(onPressed: () => context.pop(true), child: Text(l10n.authLierMonCompteBouton)),
       ],
     ),
   );

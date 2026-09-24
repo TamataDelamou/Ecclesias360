@@ -1121,13 +1121,13 @@
   "@financesValiderTitre": {
     "description": "Titre du dialogue de validation comptable d'une contribution (RG-XI-02)."
   },
-  "financesChampRoleActeur": "Rôle agissant",
-  "@financesChampRoleActeur": {
-    "description": "Libellé du sélecteur de rôle agissant lors de la validation (pas de session réelle, RG-SEC-01 non construit)."
+  "financesAccesReserve": "Accès réservé à un pasteur, au trésorier du nœud ou au fidèle concerné.",
+  "@financesAccesReserve": {
+    "description": "Message affiché à un compte sans habilitation financière (RG-SEC-06)."
   },
-  "financesChampValidePar": "Validé par",
-  "@financesChampValidePar": {
-    "description": "Libellé du sélecteur de fidèle qui valide (RG-XI-02, trace l'auteur)."
+  "financesFicheLieeRequise": "Liez d'abord votre compte à votre fiche fidèle (« Lier mon compte à cette fiche ») : le valideur tracé est toujours une personne du registre.",
+  "@financesFicheLieeRequise": {
+    "description": "Message affiché à un compte habilité mais sans fiche liée (RG-XI-02)."
   },
   "financesValiderBouton": "Valider",
   "@financesValiderBouton": {
@@ -2032,6 +2032,10 @@
         "type": "String"
       }
     }
+  },
+  "authLierMonCompteBouton": "Lier mon compte",
+  "@authLierMonCompteBouton": {
+    "description": "Bouton de confirmation de la liaison du compte administrateur à une fiche."
   },
   "authLierMonCompteFait": "Compte lié à votre fiche.",
   "@authLierMonCompteFait": {

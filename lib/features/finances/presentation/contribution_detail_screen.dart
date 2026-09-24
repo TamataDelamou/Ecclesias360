@@ -3,16 +3,21 @@ import 'package:provider/provider.dart';
 
 import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
 import '../../fideles/application/fidele_controller.dart';
-import '../../parametres/domain/models/role.dart';
 import '../application/finances_controller.dart';
 import '../domain/models/contribution.dart';
 import '../domain/models/statut_contribution.dart';
 import '../domain/models/type_offrande.dart';
+import 'acces_finances.dart';
 
 /// Fiche d'une contribution — sert à la fois de « Reçu de contribution »
 /// (écran dédié du Cahier) et d'écran d'action pour la validation
 /// comptable (RG-XI-02), le rejet et la contre-passation (RG-XI-05).
+///
+/// L'acteur est la session : son rôle et sa fiche liée, tracée comme
+/// valideur (jamais un compte sans fiche). Lecture réservée (RG-SEC-06) au
+/// pasteur (ou plus), au trésorier du nœud et au donateur.
 class ContributionDetailScreen extends StatelessWidget {
   const ContributionDetailScreen({required this.contributionId, super.key});
 
@@ -33,7 +38,11 @@ class ContributionDetailScreen extends StatelessWidget {
           if (contribution == null) {
             return Center(child: Text(l10n.financesIntrouvable));
           }
-          return _ContributionDetailBody(contribution: contribution, controller: controller);
+          return AccesFinancesBuilder(
+            builder: (context, acces) => acces.peutConsulter(contribution)
+                ? _ContributionDetailBody(contribution: contribution, controller: controller, acces: acces)
+                : Center(child: Text(l10n.financesAccesReserve)),
+          );
         },
       ),
     );
@@ -41,10 +50,11 @@ class ContributionDetailScreen extends StatelessWidget {
 }
 
 class _ContributionDetailBody extends StatefulWidget {
-  const _ContributionDetailBody({required this.contribution, required this.controller});
+  const _ContributionDetailBody({required this.contribution, required this.controller, required this.acces});
 
   final Contribution contribution;
   final FinancesController controller;
+  final AccesFinances acces;
 
   @override
   State<_ContributionDetailBody> createState() => _ContributionDetailBodyState();
@@ -58,45 +68,18 @@ class _ContributionDetailBodyState extends State<_ContributionDetailBody> {
     if (mounted && contribution != null) setState(() => _contribution = contribution);
   }
 
-  Future<void> _valider(BuildContext context) async {
-    final fideleController = context.read<FideleController>();
-    final fidelesDuNoeud = fideleController.fideles.where((f) => f.noeudId == _contribution.noeudId).toList();
-    if (fidelesDuNoeud.isEmpty) return;
-
-    Role roleActeur = Role.pasteur;
-    String valideParFideleId = fidelesDuNoeud.first.id;
-
+  Future<void> _valider(BuildContext context, String acteurFideleId) async {
+    final session = context.read<SessionController>();
     final confirme = await showDialog<bool>(
       context: context,
       builder: (context) {
         final l10n = AppLocalizations.of(context)!;
-        return StatefulBuilder(
-          builder: (context, setState) => AlertDialog(
-            title: Text(l10n.financesValiderTitre),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                DropdownButtonFormField<Role>(
-                  isExpanded: true,
-                  initialValue: roleActeur,
-                  decoration: InputDecoration(labelText: l10n.financesChampRoleActeur),
-                  items: Role.values.map((r) => DropdownMenuItem(value: r, child: Text(r.code))).toList(),
-                  onChanged: (valeur) => setState(() => roleActeur = valeur ?? roleActeur),
-                ),
-                DropdownButtonFormField<String>(
-                  isExpanded: true,
-                  initialValue: valideParFideleId,
-                  decoration: InputDecoration(labelText: l10n.financesChampValidePar),
-                  items: fidelesDuNoeud.map((f) => DropdownMenuItem(value: f.id, child: Text(f.nomComplet))).toList(),
-                  onChanged: (valeur) => setState(() => valideParFideleId = valeur ?? valideParFideleId),
-                ),
-              ],
-            ),
-            actions: [
-              TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l10n.commonAnnuler)),
-              FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(l10n.financesValiderBouton)),
-            ],
-          ),
+        return AlertDialog(
+          title: Text(l10n.financesValiderTitre),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l10n.commonAnnuler)),
+            FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(l10n.financesValiderBouton)),
+          ],
         );
       },
     );
@@ -104,14 +87,15 @@ class _ContributionDetailBodyState extends State<_ContributionDetailBody> {
     if (confirme == true) {
       await widget.controller.validerContribution(
         id: _contribution.id,
-        roleActeur: roleActeur,
-        valideParFideleId: valideParFideleId,
+        roleActeur: session.role,
+        valideParFideleId: acteurFideleId,
       );
       await _rafraichir();
     }
   }
 
-  Future<void> _rejeter(BuildContext context) async {
+  Future<void> _rejeter(BuildContext context, String acteurFideleId) async {
+    final session = context.read<SessionController>();
     final motifController = TextEditingController();
     final confirme = await showDialog<bool>(
       context: context,
@@ -130,13 +114,16 @@ class _ContributionDetailBodyState extends State<_ContributionDetailBody> {
     if (confirme == true) {
       await widget.controller.rejeterContribution(
         id: _contribution.id,
+        roleActeur: session.role,
+        rejeteParFideleId: acteurFideleId,
         motifRejet: motifController.text.trim().isNotEmpty ? motifController.text.trim() : null,
       );
       await _rafraichir();
     }
   }
 
-  Future<void> _contrePasser(BuildContext context) async {
+  Future<void> _contrePasser(BuildContext context, String acteurFideleId) async {
+    final session = context.read<SessionController>();
     final motifController = TextEditingController();
     final confirme = await showDialog<bool>(
       context: context,
@@ -155,10 +142,35 @@ class _ContributionDetailBodyState extends State<_ContributionDetailBody> {
     if (confirme == true) {
       await widget.controller.contrePasserContribution(
         id: _contribution.id,
+        roleActeur: session.role,
+        valideParFideleId: acteurFideleId,
         motif: motifController.text.trim().isNotEmpty ? motifController.text.trim() : null,
       );
       await _rafraichir();
     }
+  }
+
+  /// Décision comptable (RG-XI-02/05) : réservée au pasteur (ou plus) et au
+  /// trésorier du nœud, et à un compte lié à sa fiche (valideur tracé).
+  List<Widget> _actions(BuildContext context, AppLocalizations l10n) {
+    final aDecider = _contribution.statut == StatutContribution.enAttente ||
+        (_contribution.statut == StatutContribution.validee && !_contribution.estContrePassation);
+    if (!aDecider || !widget.acces.peutGererContributions(_contribution.noeudId)) return const [];
+    final acteurFideleId = widget.acces.fideleId;
+    if (acteurFideleId == null) return [Text(l10n.financesFicheLieeRequise)];
+    if (_contribution.statut == StatutContribution.enAttente) {
+      return [
+        FilledButton(onPressed: () => _valider(context, acteurFideleId), child: Text(l10n.financesValiderBouton)),
+        const SizedBox(height: AppDimensions.spacingSm),
+        OutlinedButton(onPressed: () => _rejeter(context, acteurFideleId), child: Text(l10n.financesRejeterBouton)),
+      ];
+    }
+    return [
+      OutlinedButton(
+        onPressed: () => _contrePasser(context, acteurFideleId),
+        child: Text(l10n.financesContrePasserBouton),
+      ),
+    ];
   }
 
   @override
@@ -205,13 +217,7 @@ class _ContributionDetailBodyState extends State<_ContributionDetailBody> {
               ),
             ),
             const SizedBox(height: AppDimensions.spacingMd),
-            if (_contribution.statut == StatutContribution.enAttente) ...[
-              FilledButton(onPressed: () => _valider(context), child: Text(l10n.financesValiderBouton)),
-              const SizedBox(height: AppDimensions.spacingSm),
-              OutlinedButton(onPressed: () => _rejeter(context), child: Text(l10n.financesRejeterBouton)),
-            ],
-            if (_contribution.statut == StatutContribution.validee && !_contribution.estContrePassation)
-              OutlinedButton(onPressed: () => _contrePasser(context), child: Text(l10n.financesContrePasserBouton)),
+            ..._actions(context, l10n),
           ],
         );
       },

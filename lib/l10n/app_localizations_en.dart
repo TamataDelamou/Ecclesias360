@@ -837,10 +837,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesValiderTitre => 'Validate the contribution';
 
   @override
-  String get financesChampRoleActeur => 'Acting role';
+  String get financesAccesReserve =>
+      'Access restricted to a pastor, the node treasurer or the member concerned.';
 
   @override
-  String get financesChampValidePar => 'Validated by';
+  String get financesFicheLieeRequise =>
+      'First link your account to your member record (\"Link my account to this record\"): the recorded validator is always a person from the register.';
 
   @override
   String get financesValiderBouton => 'Validate';
@@ -1500,6 +1502,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String authLierMonCompteConfirmation(String nom) {
     return 'Your administrator account will be linked to $nom\'s record, which will take the administrator role. The link is logged and can only be undone by resolving a link conflict.';
   }
+
+  @override
+  String get authLierMonCompteBouton => 'Link my account';
 
   @override
   String get authLierMonCompteFait => 'Account linked to your record.';

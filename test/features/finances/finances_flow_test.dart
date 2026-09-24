@@ -74,6 +74,23 @@ void main() {
       await tester.tap(find.widgetWithText(FilledButton, 'Créer'));
       await tester.pumpAndSettle();
 
+      // L'administrateur d'amorçage, sans fiche, n'est pas encore un valideur
+      // traçable : il lie son compte à cette fiche (RG-XI-02 — le valideur
+      // tracé est toujours une personne du registre).
+      await tester.tap(find.text('Jean Doe'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('Lier mon compte à cette fiche'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(FilledButton, 'Lier mon compte'));
+      await tester.pumpAndSettle();
+      expect(find.text('Compte lié à votre fiche.'), findsOneWidget);
+      expect(find.byTooltip('Lier mon compte à cette fiche'), findsNothing);
+      // Laisse la notification expirer : elle recouvrirait les boutons du bas.
+      await tester.pump(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(BackButton));
+      await tester.pumpAndSettle();
+
       // Revient à l'accueil, va au nœud, ouvre l'écran Contributions.
       await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();
@@ -105,7 +122,8 @@ void main() {
       expect(find.text('5000 GNF'), findsOneWidget);
       expect(find.widgetWithText(FilledButton, 'Valider'), findsOneWidget);
 
-      // Valide la contribution (rôle « pasteur » par défaut suffit, RG-XI-02).
+      // Valide la contribution : l'acteur est la session (administrateur,
+      // tracé par sa fiche liée), RG-XI-02.
       // Le bouton de la fiche et celui du dialogue partagent le même
       // libellé « Valider » ; `.last` cible celui du dialogue une fois
       // ouvert (le premier tap n'a, lui, qu'une seule correspondance).

@@ -1674,17 +1674,17 @@ abstract class AppLocalizations {
   /// **'Valider la contribution'**
   String get financesValiderTitre;
 
-  /// Libellé du sélecteur de rôle agissant lors de la validation (pas de session réelle, RG-SEC-01 non construit).
+  /// Message affiché à un compte sans habilitation financière (RG-SEC-06).
   ///
   /// In fr, this message translates to:
-  /// **'Rôle agissant'**
-  String get financesChampRoleActeur;
+  /// **'Accès réservé à un pasteur, au trésorier du nœud ou au fidèle concerné.'**
+  String get financesAccesReserve;
 
-  /// Libellé du sélecteur de fidèle qui valide (RG-XI-02, trace l'auteur).
+  /// Message affiché à un compte habilité mais sans fiche liée (RG-XI-02).
   ///
   /// In fr, this message translates to:
-  /// **'Validé par'**
-  String get financesChampValidePar;
+  /// **'Liez d\'abord votre compte à votre fiche fidèle (« Lier mon compte à cette fiche ») : le valideur tracé est toujours une personne du registre.'**
+  String get financesFicheLieeRequise;
 
   /// Bouton de validation comptable d'une contribution.
   ///
@@ -2927,6 +2927,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Votre compte administrateur sera lié à la fiche de {nom}, qui prendra le rôle administrateur. La liaison est journalisée et ne se défait que par la résolution d\'un conflit de liaison.'**
   String authLierMonCompteConfirmation(String nom);
+
+  /// Bouton de confirmation de la liaison du compte administrateur à une fiche.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lier mon compte'**
+  String get authLierMonCompteBouton;
 
   /// Confirmation après liaison du compte à une fiche.
   ///
