@@ -1762,7 +1762,7 @@ Intégrer une Bible numérique structurée en Version / Livre / Chapitre / Verse
 
 ### **Règles de gestion**
 
-- **RG-XXIV-01 —** Les traductions libres de droits (Louis Segond 1910, Darby, King James Version) sont embarquées localement dès l'installation ; les traductions sous licence ou l'accès à une API biblique externe nécessitent une connexion et un contrôle de droits d'usage.
+- **RG-XXIV-01 —** Les traductions libres de droits proposées par défaut sont la Louis Segond 1910, la Darby (1885) et la Crampon (**édition 1923**, seule édition disponible en données structurées ; l'édition 1904 n'est pas retenue). La Crampon remplace la King James Version initialement prévue : écart francophone et catholique assumé, la Crampon comprenant les livres deutérocanoniques. La Louis Segond 1910 est embarquée localement dès l'installation ; la Darby et la Crampon, également libres de droits, sont téléchargées à la demande (pour contenir la taille de l'application) puis lisibles intégralement hors connexion. Les traductions sous licence ou l'accès à une API biblique externe nécessitent une connexion et un contrôle de droits d'usage. La King James Version reste prévue pour le volet multilingue (version par défaut de la langue anglaise), à inscrire ici lors de sa construction. *(Amendement de reconstruction, 2026-09 : décision prise avant le sinistre et jamais reportée au Cahier.)*
 
 - **RG-XXIV-02 —** Les notes personnelles, favoris et surlignages sont stockés localement en priorité (SQLite / Isar) et synchronisés au fidèle propriétaire dès qu'une connexion est disponible, jamais partagés par défaut avec d'autres utilisateurs.
 

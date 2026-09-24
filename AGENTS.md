@@ -331,8 +331,11 @@ prérequis de phase existent — voir tableau §7.
 
 4. **Langues locales pour la Bible et les cantiques, en prévision — NON TRANCHÉ, contrainte de
    conception à respecter dès la construction du Module XXIV.**
-   RG-XXIV-01 du Cahier ne prévoit actuellement que 3 traductions libres de droits embarquées
-   (Louis Segond 1910, Darby, King James Version), énumérées comme un ensemble fermé. Pour
+   RG-XXIV-01 du Cahier (amendé en 2026-09 : Crampon 1923 remplace KJV, Darby et Crampon
+   téléchargées à la demande) ne prévoit que 3 traductions libres de droits francophones
+   (Louis Segond 1910, Darby 1885, Crampon 1923) ; la KJV, la Reina-Valera 1909 (`SpaRV`) et la
+   Bíblia Livre relèvent du volet multilingue, sourcing déjà tranché
+   (`RECONSTRUCTION_ecclesias360.md` §4). Ces listes ne doivent pas être figées. Pour
    permettre l'ajout ultérieur d'une langue nationale/locale sans nouvelle version applicative —
    même principe que RG-XXIII-05 pour le paramétrage multilingue général — `VersionBiblique` (et
    son pendant pour les cantiques, non encore modélisé au Cahier) doit être conçu dès le départ
