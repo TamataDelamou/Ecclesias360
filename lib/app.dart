@@ -37,20 +37,27 @@ import 'features/organization/data/local/app_database.dart';
 import 'features/organization/data/organisation_node_repository.dart';
 import 'features/patrimoine/application/patrimoine_controller.dart';
 import 'features/patrimoine/data/patrimoine_repository.dart';
+import 'features/parametres/application/capacites_controller.dart';
 import 'features/parametres/application/zone_geographique_controller.dart';
+import 'features/parametres/data/referential/roles_referential.dart';
+import 'features/parametres/data/journal_parametres_repository.dart';
 import 'features/parametres/data/zone_geographique_repository.dart';
 import 'features/professions/application/profession_controller.dart';
 import 'features/professions/data/profession_repository.dart';
 import 'l10n/app_localizations.dart';
 
 class EcclesiasApp extends StatefulWidget {
-  const EcclesiasApp({required this.database, required this.authGateway, super.key});
+  const EcclesiasApp({required this.database, required this.authGateway, this.capacites, super.key});
 
   final AppDatabase database;
 
   /// RG-SEC-01 — `SupabaseAuthGateway` en production, implémentation en
   /// mémoire dans les tests.
   final AuthGateway authGateway;
+
+  /// RG-XXIII-02 — capacités de `roles.json` déjà chargées (production :
+  /// `main.dart`) ; à défaut, chargées en arrière-plan et refusées d'ici là.
+  final RolesReferential? capacites;
 
   @override
   State<EcclesiasApp> createState() => _EcclesiasAppState();
@@ -59,6 +66,7 @@ class EcclesiasApp extends StatefulWidget {
 class _EcclesiasAppState extends State<EcclesiasApp> {
   late final SyncCoordinator _syncCoordinator;
   late final SessionController _sessionController;
+  late final CapacitesController _capacitesController;
   late final GoRouter _router;
   late final OrganisationNodeRepository _organisationRepository;
   late final OrganisationController _organisationController;
@@ -100,13 +108,18 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     // Session instanciée à la racine : état global consommé par tous les
     // modules et par la garde du routeur (RG-SEC-01).
     _sessionController = SessionController(widget.authGateway, CompteRepository(widget.database));
+    // RG-XXIII-02 : capacités de roles.json, refusées tant qu'il n'est pas chargé.
+    _capacitesController = CapacitesController(referentiel: widget.capacites);
     _router = creerAppRouter(_sessionController);
     _organisationRepository = OrganisationNodeRepository(widget.database, _syncCoordinator);
     _organisationController = OrganisationController(_organisationRepository);
     _fideleRepository = FideleRepository(widget.database, _syncCoordinator);
     _fideleController = FideleController(_fideleRepository);
     _zoneGeographiqueRepository = ZoneGeographiqueRepository(widget.database);
-    _zoneGeographiqueController = ZoneGeographiqueController(_zoneGeographiqueRepository);
+    _zoneGeographiqueController = ZoneGeographiqueController(
+      _zoneGeographiqueRepository,
+      JournalParametresRepository(widget.database),
+    );
     _ministereRepository = MinistereRepository(widget.database, _syncCoordinator);
     _ministereController = MinistereController(_ministereRepository);
     _donSpirituelRepository = DonSpirituelRepository(widget.database);
@@ -148,6 +161,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   void dispose() {
     _router.dispose();
     _sessionController.dispose();
+    _capacitesController.dispose();
     _archivageController.dispose();
     _organisationController.dispose();
     _fideleController.dispose();
@@ -172,6 +186,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<SessionController>.value(value: _sessionController),
+        ChangeNotifierProvider<CapacitesController>.value(value: _capacitesController),
         ChangeNotifierProvider<OrganisationController>.value(value: _organisationController),
         ChangeNotifierProvider<FideleController>.value(value: _fideleController),
         ChangeNotifierProvider<ZoneGeographiqueController>.value(value: _zoneGeographiqueController),

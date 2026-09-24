@@ -560,6 +560,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fidelesAucun => 'No members registered yet.';
 
   @override
+  String get fidelesAccesReserve =>
+      'Restricted access: you can only view your own record.';
+
+  @override
+  String fideleHistoriqueAuteurDate(String auteur, String date) {
+    return 'By $auteur · $date';
+  }
+
+  @override
+  String get fideleHistoriqueAuteurInconnu => 'author not recorded';
+
+  @override
+  String get organisationTitre => 'Organization';
+
+  @override
+  String get organisationAccesReserve =>
+      'Restricted access: you can only view your own church.';
+
+  @override
   String get fidelesCreerAction => 'Create a member';
 
   @override
@@ -588,6 +607,61 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get moduleZonesGeographiques => 'Geographic zones';
+
+  @override
+  String get zonesCreerTitre => 'Create a geographic zone';
+
+  @override
+  String get zonesChampLibelle => 'Label';
+
+  @override
+  String get zonesChampParent => 'Parent zone (optional)';
+
+  @override
+  String get zonesAucuneParente => 'None (root)';
+
+  @override
+  String get zonesAucune => 'No geographic zone recorded.';
+
+  @override
+  String zonesSousParent(String parent) {
+    return 'under $parent';
+  }
+
+  @override
+  String get zonesDesactiver => 'Deactivate';
+
+  @override
+  String get zonesCreerAction => 'Create a zone';
+
+  @override
+  String get parametresJournalTitre => 'Change log';
+
+  @override
+  String get parametresJournalAucune => 'No change recorded.';
+
+  @override
+  String get parametresJournalCreation => 'Creation';
+
+  @override
+  String get parametresJournalModification => 'Modification';
+
+  @override
+  String get parametresJournalSuppression => 'Deletion';
+
+  @override
+  String parametresJournalAvant(String valeur) {
+    return 'Before: $valeur';
+  }
+
+  @override
+  String parametresJournalApres(String valeur) {
+    return 'After: $valeur';
+  }
+
+  @override
+  String get parametresJournalCompteSansFiche =>
+      'Account without a member record';
 
   @override
   String get navAccueil => 'Home';

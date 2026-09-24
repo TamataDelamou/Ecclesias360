@@ -4,8 +4,14 @@ import 'package:provider/provider.dart';
 
 import '../../../core/constants/app_routes.dart';
 import '../../../core/theme/app_dimensions.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
+import '../../parametres/application/capacites_controller.dart';
 import '../application/organisation_controller.dart';
 import '../domain/models/organisation_node.dart';
+import '../domain/models/type_noeud.dart';
+import '../domain/rules/organisation_acces_rules.dart';
+import 'acces_organisation.dart';
 
 /// Écran 1 (mobile) / Explorateur hiérarchique (Windows) — arbre navigable,
 /// et écran 7 (Recherche de nœud) intégré via la barre de recherche.
@@ -29,18 +35,30 @@ class _HierarchyScreenState extends State<HierarchyScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<OrganisationController>();
-    final racines = controller.enfantsDe(null);
-    final resultatsRecherche = _terme.isEmpty ? null : controller.rechercher(_terme);
+    final l10n = AppLocalizations.of(context)!;
+    final role = context.watch<SessionController>().role;
+    final sonEglise = noeudDuConsultant(context);
+    // RG-SEC-04/05 : l'arbre complet au rang de gestion ; en dessous, sa seule
+    // église (policy `organisation_nodes`), jamais ses nœuds enfants ; rien
+    // pour un utilisateur simple (RG-SEC-06bis).
+    final voitTout = OrganisationAccesRules.voitToutLArbre(role);
+    bool visible(OrganisationNode n) =>
+        OrganisationAccesRules.peutConsulterNoeud(role: role, noeudId: n.id, noeudDuConsultant: sonEglise);
+    final racines = voitTout ? controller.enfantsDe(null) : const <OrganisationNode>[];
+    final eglisePropre = voitTout || sonEglise == null ? null : controller.findById(sonEglise);
+    final resultatsRecherche =
+        _terme.isEmpty ? null : controller.rechercher(_terme).where(visible).toList(growable: false);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Organisation'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.church_outlined),
-            tooltip: 'Annuaire des Églises',
-            onPressed: () => context.push(AppRoutes.organisationAnnuaireEglises),
-          ),
+          if (capaciteAccordee(context, Capacites.consulterAnnuaireEglises))
+            IconButton(
+              icon: const Icon(Icons.church_outlined),
+              tooltip: 'Annuaire des Églises',
+              onPressed: () => context.push(AppRoutes.organisationAnnuaireEglises),
+            ),
         ],
       ),
       body: Column(
@@ -60,7 +78,19 @@ class _HierarchyScreenState extends State<HierarchyScreen> {
           Expanded(
             child: resultatsRecherche != null
                 ? _ListeResultatsRecherche(resultats: resultatsRecherche)
-                : racines.isEmpty
+                : eglisePropre != null
+                    ? ListView(
+                        children: [
+                          ListTile(
+                            title: Text(eglisePropre.nom),
+                            subtitle: Text(eglisePropre.codeInterne),
+                            onTap: () => context.push(AppRoutes.organisationNoeud(eglisePropre.id)),
+                          ),
+                        ],
+                      )
+                    : !voitTout
+                    ? Center(child: Text(l10n.organisationAccesReserve))
+                    : racines.isEmpty
                     ? const Center(child: Text('Aucun nœud — créez la racine (siège).'))
                     : ListView(
                         children: racines.map((noeud) => _NodeTile(node: noeud)).toList(),
@@ -68,11 +98,14 @@ class _HierarchyScreenState extends State<HierarchyScreen> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push(AppRoutes.organisationNouveauNoeud),
-        tooltip: 'Créer un nœud',
-        child: const Icon(Icons.add),
-      ),
+      // La racine (siège) est un nœud de niveau supérieur (RG-I-03).
+      floatingActionButton: peutCreerOuValiderType(context, TypeNoeud.siege)
+          ? FloatingActionButton(
+              onPressed: () => context.push(AppRoutes.organisationNouveauNoeud),
+              tooltip: 'Créer un nœud',
+              child: const Icon(Icons.add),
+            )
+          : null,
     );
   }
 }

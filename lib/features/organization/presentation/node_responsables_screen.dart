@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
 import '../../fideles/application/fidele_controller.dart';
 import '../application/organisation_controller.dart';
 import '../domain/models/node_responsable.dart';
+import '../domain/rules/organisation_acces_rules.dart';
 
 /// Écran 4 (Liste des responsables d'un nœud) + écran 5 (Affectation d'un
 /// responsable), RG-I-05.
@@ -60,6 +63,16 @@ class NodeResponsablesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Gardé aussi contre l'accès direct par la route (RG-SEC-04) : liste au rang
+    // de gestion, désignation au rang pasteur (policy node_responsables).
+    final role = context.watch<SessionController>().role;
+    if (!OrganisationAccesRules.peutGererNoeuds(role)) {
+      return Scaffold(
+        appBar: AppBar(title: Text(AppLocalizations.of(context)!.organisationTitre)),
+        body: Center(child: Text(AppLocalizations.of(context)!.organisationAccesReserve)),
+      );
+    }
+    final designe = OrganisationAccesRules.peutDesignerResponsables(role);
     final controller = context.read<OrganisationController>();
     final fideleController = context.watch<FideleController>();
     final noeud = controller.findById(nodeId);
@@ -84,7 +97,7 @@ class NodeResponsablesScreen extends StatelessWidget {
                 subtitle: Text(
                   actif ? responsable.fonction : '${responsable.fonction} (mandat terminé)',
                 ),
-                trailing: actif
+                trailing: actif && designe
                     ? IconButton(
                         icon: const Icon(Icons.close),
                         tooltip: 'Mettre fin au mandat',
@@ -96,11 +109,13 @@ class NodeResponsablesScreen extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _affecter(context, controller, fideleController),
-        tooltip: 'Affecter un responsable',
-        child: const Icon(Icons.person_add),
-      ),
+      floatingActionButton: designe
+          ? FloatingActionButton(
+              onPressed: () => _affecter(context, controller, fideleController),
+              tooltip: 'Affecter un responsable',
+              child: const Icon(Icons.person_add),
+            )
+          : null,
     );
   }
 }

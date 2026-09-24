@@ -4,8 +4,11 @@ import 'package:provider/provider.dart';
 
 import '../../../core/constants/app_routes.dart';
 import '../../../core/theme/app_dimensions.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../parametres/application/capacites_controller.dart';
 import '../application/organisation_controller.dart';
 import '../domain/models/categorie_confessionnelle.dart';
+import 'acces_organisation.dart';
 
 /// Écran 9 (Annuaire des Églises, filtrable par catégorie confessionnelle,
 /// RG-I-09).
@@ -21,6 +24,13 @@ class _ChurchDirectoryScreenState extends State<ChurchDirectoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // RG-I-09 : annuaire réservé à la capacité consulter_annuaire_eglises (roles.json).
+    if (!capaciteAccordee(context, Capacites.consulterAnnuaireEglises)) {
+      return Scaffold(
+        appBar: AppBar(title: Text(AppLocalizations.of(context)!.organisationTitre)),
+        body: Center(child: Text(AppLocalizations.of(context)!.organisationAccesReserve)),
+      );
+    }
     final controller = context.watch<OrganisationController>();
     final eglises = controller.annuaireEglises(filtre: _filtre);
 

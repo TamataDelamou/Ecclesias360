@@ -11,6 +11,8 @@ import '../../discipline/presentation/acces_discipline.dart';
 import '../../finances/presentation/acces_finances.dart';
 import '../../patrimoine/presentation/acces_patrimoine.dart';
 import '../application/organisation_controller.dart';
+import '../domain/rules/organisation_acces_rules.dart';
+import 'acces_organisation.dart';
 import '../domain/models/statut_noeud.dart';
 
 /// Écran 2 (Fiche d'un nœud) + écran 8 (Statistiques rapides du nœud).
@@ -22,9 +24,24 @@ class NodeDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<OrganisationController>();
-    final noeud = controller.findById(nodeId);
     final l10n = AppLocalizations.of(context)!;
+    final session = context.watch<SessionController>();
 
+    // RG-SEC-04/05 : son église, ou le rang de gestion (miroir de la policy
+    // `organisation_nodes`) — vérifié avant l'existence ; un accès direct par
+    // route ne contourne pas l'arbre.
+    if (!OrganisationAccesRules.peutConsulterNoeud(
+      role: session.role,
+      noeudId: nodeId,
+      noeudDuConsultant: noeudDuConsultant(context),
+    )) {
+      return Scaffold(
+        appBar: AppBar(title: Text(l10n.organisationTitre)),
+        body: Center(child: Text(l10n.organisationAccesReserve)),
+      );
+    }
+
+    final noeud = controller.findById(nodeId);
     if (noeud == null) {
       return Scaffold(
         appBar: AppBar(title: const Text('Nœud introuvable')),
@@ -33,21 +50,24 @@ class NodeDetailScreen extends StatelessWidget {
     }
 
     final enfants = controller.enfantsDe(noeud.id);
+    final gestion = OrganisationAccesRules.peutGererNoeuds(session.role);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(noeud.nom),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.history),
-            tooltip: 'Historique des rattachements',
-            onPressed: () => context.push(AppRoutes.organisationHistorique(noeud.id)),
-          ),
-          IconButton(
-            icon: const Icon(Icons.edit_outlined),
-            tooltip: 'Modifier',
-            onPressed: () => context.push(AppRoutes.organisationModifierNoeud(noeud.id)),
-          ),
+          if (gestion) ...[
+            IconButton(
+              icon: const Icon(Icons.history),
+              tooltip: 'Historique des rattachements',
+              onPressed: () => context.push(AppRoutes.organisationHistorique(noeud.id)),
+            ),
+            IconButton(
+              icon: const Icon(Icons.edit_outlined),
+              tooltip: 'Modifier',
+              onPressed: () => context.push(AppRoutes.organisationModifierNoeud(noeud.id)),
+            ),
+          ],
         ],
       ),
       body: ListView(
@@ -66,19 +86,22 @@ class NodeDetailScreen extends StatelessWidget {
           _LigneInfo(label: 'Profondeur dans la hiérarchie', valeur: noeud.depth.toString()),
           _LigneInfo(label: 'Nœuds enfants directs', valeur: enfants.length.toString()),
           const Divider(height: AppDimensions.spacingXxl),
-          if (noeud.statut == StatutNoeud.provisoire)
+          // RG-I-03 : validation au même seuil que la création de ce type.
+          if (noeud.statut == StatutNoeud.provisoire && peutCreerOuValiderType(context, noeud.typeNoeud))
             FilledButton.icon(
               icon: const Icon(Icons.check_circle_outline),
               label: const Text('Valider ce nœud (le faire passer au statut actif)'),
               onPressed: () => controller.validerNoeud(noeud.id),
             ),
           const SizedBox(height: AppDimensions.spacingSm),
-          OutlinedButton.icon(
-            icon: const Icon(Icons.people_outline),
-            label: const Text('Responsables'),
-            onPressed: () => context.push(AppRoutes.organisationResponsables(noeud.id)),
-          ),
-          const SizedBox(height: AppDimensions.spacingSm),
+          if (gestion) ...[
+            OutlinedButton.icon(
+              icon: const Icon(Icons.people_outline),
+              label: const Text('Responsables'),
+              onPressed: () => context.push(AppRoutes.organisationResponsables(noeud.id)),
+            ),
+            const SizedBox(height: AppDimensions.spacingSm),
+          ],
           OutlinedButton.icon(
             icon: const Icon(Icons.groups_outlined),
             label: const Text('Ministères'),
@@ -180,13 +203,15 @@ class NodeDetailScreen extends StatelessWidget {
             ),
             const SizedBox(height: AppDimensions.spacingSm),
           ],
-          OutlinedButton.icon(
-            icon: const Icon(Icons.add),
-            label: const Text('Ajouter un nœud enfant'),
-            onPressed: () => context.push(AppRoutes.organisationNouveauSousNoeud(noeud.id)),
-          ),
-          const SizedBox(height: AppDimensions.spacingSm),
-          if (noeud.statut != StatutNoeud.archive)
+          if (gestion) ...[
+            OutlinedButton.icon(
+              icon: const Icon(Icons.add),
+              label: const Text('Ajouter un nœud enfant'),
+              onPressed: () => context.push(AppRoutes.organisationNouveauSousNoeud(noeud.id)),
+            ),
+            const SizedBox(height: AppDimensions.spacingSm),
+          ],
+          if (gestion && noeud.statut != StatutNoeud.archive)
             OutlinedButton.icon(
               icon: const Icon(Icons.archive_outlined),
               label: const Text('Archiver'),

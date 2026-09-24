@@ -15,6 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../helpers/auth_gateway_memoire.dart';
+import '../../helpers/capacites_pour_tests.dart';
 
 /// Module XXI — l'accès à la comptabilité d'un nœud suit la session réelle
 /// (policy `ecritures_comptables_lecture`, 0019) : un responsable non
@@ -62,7 +63,7 @@ void main() {
     addTearDown(tester.platformDispatcher.clearLocalesTestValue);
 
     await tester.pumpWidget(
-      EcclesiasApp(
+      EcclesiasApp(capacites: capacitesDeTest, 
         database: db,
         authGateway: AuthGatewayMemoire(
           connecte: const UtilisateurAuthentifie(id: 'compte-marie', identifiant: IdentifiantEmail(email)),

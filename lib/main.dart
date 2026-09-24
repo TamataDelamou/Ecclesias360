@@ -7,6 +7,7 @@ import 'features/auth/data/auth_gateway.dart';
 import 'features/auth/data/remote/session_securisee_storage.dart';
 import 'features/auth/data/remote/supabase_auth_gateway.dart';
 import 'features/organization/data/local/app_database.dart';
+import 'features/parametres/data/referential/roles_referential.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,5 +27,14 @@ Future<void> main() async {
     authGateway = SupabaseAuthGateway(Supabase.instance.client.auth);
   }
 
-  runApp(EcclesiasApp(database: AppDatabase(), authGateway: authGateway));
+  // RG-XXIII-02 : capacités chargées avant le premier écran ; en cas d'échec,
+  // l'application démarre avec toutes les capacités refusées (jamais ouvertes).
+  RolesReferential? capacites;
+  try {
+    capacites = await RolesReferential.charger();
+  } on Object {
+    capacites = null;
+  }
+
+  runApp(EcclesiasApp(database: AppDatabase(), authGateway: authGateway, capacites: capacites));
 }

@@ -18,6 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../helpers/auth_gateway_memoire.dart';
+import '../../helpers/capacites_pour_tests.dart';
 
 void main() {
   testWidgets(
@@ -31,7 +32,7 @@ void main() {
       addTearDown(database.close);
       final gateway = AuthGatewayMemoire();
 
-      await tester.pumpWidget(EcclesiasApp(database: database, authGateway: gateway));
+      await tester.pumpWidget(EcclesiasApp(capacites: capacitesDeTest, database: database, authGateway: gateway));
       await tester.pumpAndSettle();
 
       // Garde d'accès : aucune route applicative sans session.
@@ -90,7 +91,7 @@ void main() {
     addTearDown(database.close);
     final gateway = AuthGatewayMemoire();
 
-    await tester.pumpWidget(EcclesiasApp(database: database, authGateway: gateway));
+    await tester.pumpWidget(EcclesiasApp(capacites: capacitesDeTest, database: database, authGateway: gateway));
     await tester.pumpAndSettle();
 
     expect(find.text('SMS'), findsOneWidget);
@@ -127,7 +128,7 @@ void main() {
       connecte: const UtilisateurAuthentifie(id: 'visiteur', identifiant: IdentifiantEmail('visiteur@exemple.org')),
     );
 
-    await tester.pumpWidget(EcclesiasApp(database: database, authGateway: gateway));
+    await tester.pumpWidget(EcclesiasApp(capacites: capacitesDeTest, database: database, authGateway: gateway));
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('Paramètres').last);

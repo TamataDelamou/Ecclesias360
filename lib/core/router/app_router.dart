@@ -69,6 +69,7 @@ import '../../features/parametres/presentation/roles_screen.dart';
 import '../../features/professions/presentation/fidele_competences_screen.dart';
 import '../../features/professions/presentation/profession_groupe_screen.dart';
 import '../../features/professions/presentation/professions_list_screen.dart';
+import '../../features/parametres/presentation/journal_parametres_screen.dart';
 import '../../features/parametres/presentation/zones_geographiques_screen.dart';
 import '../constants/app_routes.dart';
 import '../widgets/app_shell.dart';
@@ -83,7 +84,13 @@ String? redirectionSession(SessionController session, String location) {
   }
   if (!session.estConnecte) return surConnexion ? null : AppRoutes.connexion;
   if (surConnexion || location == AppRoutes.chargement) return AppRoutes.home;
-  if (location == AppRoutes.liaisonsComptes && !session.peut(Role.administrateur)) {
+  // RG-XXIII-06 : administration des paramètres réservée à l'administrateur.
+  const reservesAdministrateur = [
+    AppRoutes.liaisonsComptes,
+    AppRoutes.zonesGeographiques,
+    AppRoutes.journalParametres,
+  ];
+  if (reservesAdministrateur.contains(location) && !session.peut(Role.administrateur)) {
     return AppRoutes.parametres;
   }
   return null;
@@ -175,6 +182,10 @@ GoRouter creerAppRouter(SessionController session) => GoRouter(
     GoRoute(
       path: AppRoutes.roles,
       builder: (context, state) => const RolesScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.journalParametres,
+      builder: (context, state) => const JournalParametresScreen(),
     ),
     GoRoute(
       path: '/organisation/:id/ministeres',

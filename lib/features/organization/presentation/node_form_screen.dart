@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
 import '../application/organisation_controller.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../domain/models/categorie_confessionnelle.dart';
 import '../domain/models/type_noeud.dart';
+import '../domain/rules/organisation_acces_rules.dart';
+import 'acces_organisation.dart';
 
 /// Écran 3 (Création / édition d'un nœud).
 ///
@@ -79,7 +83,23 @@ class _NodeFormScreenState extends State<NodeFormScreen> {
     final controller = context.watch<OrganisationController>();
     _initialiserDepuisNoeudExistant(controller);
 
-    final typesDisponibles = TypeNoeud.values.where((type) => type != TypeNoeud.siege).toList();
+    // RG-I-03 : seuls les types que le compte peut créer sont proposés.
+    final typesDisponibles = TypeNoeud.values
+        .where((type) => type != TypeNoeud.siege && peutCreerOuValiderType(context, type))
+        .toList();
+    final l10n = AppLocalizations.of(context)!;
+    // Gardé aussi contre l'accès direct par la route (RG-SEC-04).
+    final autorise = _estEdition
+        ? OrganisationAccesRules.peutGererNoeuds(context.watch<SessionController>().role)
+        : widget.parentId == null
+            ? peutCreerOuValiderType(context, TypeNoeud.siege)
+            : typesDisponibles.isNotEmpty;
+    if (!autorise) {
+      return Scaffold(
+        appBar: AppBar(title: Text(l10n.organisationTitre)),
+        body: Center(child: Text(l10n.organisationAccesReserve)),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text(_estEdition ? 'Modifier le nœud' : 'Créer un nœud')),

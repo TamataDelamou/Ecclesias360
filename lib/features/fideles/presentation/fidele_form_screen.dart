@@ -4,10 +4,12 @@ import 'package:provider/provider.dart';
 
 import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
 import '../../organization/application/organisation_controller.dart';
 import '../application/fidele_controller.dart';
 import '../domain/models/sexe.dart';
 import '../domain/models/statut_civil.dart';
+import '../domain/rules/fidele_acces_rules.dart';
 
 /// Écran 3 (Création / édition fidèle) — création uniquement pour cette
 /// première itération ; l'édition des coordonnées est un écran dédié
@@ -55,8 +57,11 @@ class _FideleFormScreenState extends State<FideleFormScreen> {
         _noeudId == null) {
       return;
     }
+    final acteur = context.read<SessionController>().acteur;
+    if (acteur == null) return;
 
     final succes = await controller.creerFidele(
+      acteur: acteur,
       noeudId: _noeudId!,
       nom: _nomController.text.trim(),
       prenoms: _prenomsController.text.trim(),
@@ -72,6 +77,14 @@ class _FideleFormScreenState extends State<FideleFormScreen> {
     final fideleController = context.watch<FideleController>();
     final noeuds = context.watch<OrganisationController>().nodes;
     final l10n = AppLocalizations.of(context)!;
+
+    // Gardé aussi contre l'accès direct par la route (RG-SEC-04).
+    if (!FideleAccesRules.peutGererFideles(context.watch<SessionController>().role)) {
+      return Scaffold(
+        appBar: AppBar(title: Text(l10n.fidelesTitre)),
+        body: Center(child: Text(l10n.fidelesAccesReserve)),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.fidelesCreerAction)),

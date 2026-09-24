@@ -1,11 +1,14 @@
 import 'package:drift/native.dart';
 import 'package:ecclesias_360/app.dart';
+import 'package:ecclesias_360/core/constants/app_routes.dart';
 import 'package:ecclesias_360/features/organization/data/local/app_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../helpers/auth_gateway_memoire.dart';
 import '../../helpers/parcours.dart';
+import '../../helpers/capacites_pour_tests.dart';
 
 void main() {
   testWidgets(
@@ -24,7 +27,7 @@ void main() {
       addTearDown(tester.platformDispatcher.clearLocaleTestValue);
       addTearDown(tester.platformDispatcher.clearLocalesTestValue);
 
-      await tester.pumpWidget(EcclesiasApp(database: database, authGateway: AuthGatewayMemoire.connecte()));
+      await tester.pumpWidget(EcclesiasApp(capacites: capacitesDeTest, database: database, authGateway: AuthGatewayMemoire.connecte()));
       await tester.pumpAndSettle();
 
       final navOrganisation =
@@ -298,19 +301,18 @@ void main() {
       await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();
 
+      // Marie (membre, trésorière) ne lit pas la fiche de Jean (policy
+      // `fideles` de 0019 : soi-même ou le périmètre) — la liste des fidèles
+      // ne lui montre que sa fiche. Les engagements de Jean lui restent
+      // ouverts (trésorière de son nœud, AccesFinances) : ouverts par leur route.
       await tester.tap(navFideles);
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Jean Doe'));
-      await tester.pumpAndSettle();
-
-      await tester.dragUntilVisible(
-        find.widgetWithText(OutlinedButton, 'Engagements et échéances'),
-        find.byType(ListView),
-        const Offset(0, -200),
-      );
-      await tester.ensureVisible(find.widgetWithText(OutlinedButton, 'Engagements et échéances'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(OutlinedButton, 'Engagements et échéances'));
+      expect(find.text('Jean Doe'), findsNothing);
+      final jeanId = (await tester.runAsync(
+        () => (database.select(database.fideles)..where((t) => t.prenoms.equals('Jean'))).getSingle(),
+      ))!
+          .id;
+      GoRouter.of(tester.element(find.byType(Scaffold).first)).push(AppRoutes.engagementsDuFidele(jeanId));
       await tester.pumpAndSettle();
 
       expect(find.text('Aucun engagement.'), findsOneWidget);

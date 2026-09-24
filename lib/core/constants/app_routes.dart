@@ -28,6 +28,7 @@ abstract final class AppRoutes {
   static const String zonesGeographiques = '/parametres/zones-geographiques';
   static const String roles = '/parametres/roles';
   static const String liaisonsComptes = '/parametres/liaisons-comptes';
+  static const String journalParametres = '/parametres/journal';
 
   static String ministeresDuNoeud(String noeudId) => '/organisation/$noeudId/ministeres';
   static String ministeresNouveau(String noeudId) => '/organisation/$noeudId/ministeres/nouveau';

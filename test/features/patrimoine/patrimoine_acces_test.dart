@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/auth_gateway_memoire.dart';
+import '../../helpers/capacites_pour_tests.dart';
 
 /// Module XX — l'accès suit la session réelle : un membre ne voit pas le
 /// patrimoine du nœud (policy `biens_acces`, approchée par le rang
@@ -66,7 +67,7 @@ void main() {
     addTearDown(tester.platformDispatcher.clearLocalesTestValue);
 
     await tester.pumpWidget(
-      EcclesiasApp(
+      EcclesiasApp(capacites: capacitesDeTest, 
         database: db,
         authGateway: AuthGatewayMemoire(
           connecte: const UtilisateurAuthentifie(id: 'compte-marie', identifiant: IdentifiantEmail(email)),

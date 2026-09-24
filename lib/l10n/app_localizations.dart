@@ -1152,6 +1152,36 @@ abstract class AppLocalizations {
   /// **'Aucun fidèle enregistré.'**
   String get fidelesAucun;
 
+  /// Message affiché à un compte qui tente de consulter la fiche ou la liste d'autres fidèles sans habilitation (RG-SEC-04/05), ou de créer une fiche.
+  ///
+  /// In fr, this message translates to:
+  /// **'Accès réservé : vous ne pouvez consulter que votre propre fiche.'**
+  String get fidelesAccesReserve;
+
+  /// Auteur et date d'une modification historisée d'une fiche fidèle (RG-II-05).
+  ///
+  /// In fr, this message translates to:
+  /// **'Par {auteur} · {date}'**
+  String fideleHistoriqueAuteurDate(String auteur, String date);
+
+  /// Auteur d'une modification antérieure à la traçabilité de l'auteur, ou faite par un compte sans fiche.
+  ///
+  /// In fr, this message translates to:
+  /// **'auteur non tracé'**
+  String get fideleHistoriqueAuteurInconnu;
+
+  /// Titre des écrans du Module I affichant un accès réservé.
+  ///
+  /// In fr, this message translates to:
+  /// **'Organisation'**
+  String get organisationTitre;
+
+  /// Message affiché à un compte sans habilitation sur un nœud, l'arbre, l'annuaire ou une action de gestion du Module I (RG-SEC-04/05).
+  ///
+  /// In fr, this message translates to:
+  /// **'Accès réservé : vous ne pouvez consulter que votre Église.'**
+  String get organisationAccesReserve;
+
   /// Action de création d'un fidèle (infobulle et titre d'écran).
   ///
   /// In fr, this message translates to:
@@ -1211,6 +1241,102 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Zones géographiques'**
   String get moduleZonesGeographiques;
+
+  /// Titre du dialogue de création d'une zone géographique (Module XXIII).
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer une zone géographique'**
+  String get zonesCreerTitre;
+
+  /// Champ libellé d'une zone géographique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Libellé'**
+  String get zonesChampLibelle;
+
+  /// Champ zone parente d'une zone géographique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Zone parente (optionnel)'**
+  String get zonesChampParent;
+
+  /// Choix « pas de zone parente » : la zone est une racine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune (racine)'**
+  String get zonesAucuneParente;
+
+  /// Liste des zones géographiques vide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune zone géographique enregistrée.'**
+  String get zonesAucune;
+
+  /// Mention de la zone parente d'une zone.
+  ///
+  /// In fr, this message translates to:
+  /// **'sous {parent}'**
+  String zonesSousParent(String parent);
+
+  /// Action de désactivation non destructive d'une zone (RG-XXIII-03).
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactiver'**
+  String get zonesDesactiver;
+
+  /// Bouton flottant de création d'une zone géographique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer une zone'**
+  String get zonesCreerAction;
+
+  /// Titre de l'écran listant les modifications des paramètres avec auteur, date et valeur précédente (RG-XXIII-06).
+  ///
+  /// In fr, this message translates to:
+  /// **'Journal des modifications'**
+  String get parametresJournalTitre;
+
+  /// Journal des modifications des paramètres vide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune modification enregistrée.'**
+  String get parametresJournalAucune;
+
+  /// Action journalisée : création d'une valeur de paramètre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Création'**
+  String get parametresJournalCreation;
+
+  /// Action journalisée : modification d'une valeur de paramètre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modification'**
+  String get parametresJournalModification;
+
+  /// Action journalisée : suppression d'une valeur de paramètre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suppression'**
+  String get parametresJournalSuppression;
+
+  /// Valeur précédente d'une modification journalisée.
+  ///
+  /// In fr, this message translates to:
+  /// **'Avant : {valeur}'**
+  String parametresJournalAvant(String valeur);
+
+  /// Nouvelle valeur d'une modification journalisée.
+  ///
+  /// In fr, this message translates to:
+  /// **'Après : {valeur}'**
+  String parametresJournalApres(String valeur);
+
+  /// Auteur d'une modification dont le compte n'est lié à aucune fiche (administrateur d'amorçage).
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte sans fiche'**
+  String get parametresJournalCompteSansFiche;
 
   /// Libellé de l'onglet Accueil dans la navigation principale (AppShell).
   ///

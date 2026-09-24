@@ -155,6 +155,26 @@ class ZonesGeographiques extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// RG-XXIII-06 — journal des modifications des paramètres du Module XXIII
+/// (auteur, date, valeur précédente et nouvelle, instantanés JSON). Ajout
+/// seul. Trace locale : côté serveur, le journal est produit par un
+/// déclencheur sur chaque référentiel (0024), jamais poussé par le client.
+@DataClassName('JournalParametresRow')
+class JournalParametres extends Table {
+  TextColumn get id => text()();
+  TextColumn get referentiel => text()();
+  TextColumn get objetId => text()();
+  TextColumn get action => text()();
+  TextColumn get ancienneValeur => text().nullable()();
+  TextColumn get nouvelleValeur => text().nullable()();
+  TextColumn get auteurAuthUserId => text()();
+  TextColumn get auteurFideleId => text().nullable()();
+  DateTimeColumn get date => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 /// Table Drift TypeMinistere (Module III, RG-III-04) — catalogue
 /// paramétrable, vingt-quatre types standards protégés par défaut (seedés
 /// en migration, non désactivables depuis l'UI actuelle).

@@ -5,13 +5,14 @@ import 'package:ecclesias_360/features/organization/data/local/app_database.dart
 import 'package:flutter_test/flutter_test.dart';
 
 import 'helpers/auth_gateway_memoire.dart';
+import 'helpers/capacites_pour_tests.dart';
 
 void main() {
   testWidgets('EcclesiasApp démarre sur HomeScreen', (tester) async {
     final database = AppDatabase(NativeDatabase.memory());
     addTearDown(database.close);
 
-    await tester.pumpWidget(EcclesiasApp(database: database, authGateway: AuthGatewayMemoire.connecte()));
+    await tester.pumpWidget(EcclesiasApp(capacites: capacitesDeTest, database: database, authGateway: AuthGatewayMemoire.connecte()));
     await tester.pumpAndSettle();
 
     expect(find.byType(HomeScreen), findsOneWidget);

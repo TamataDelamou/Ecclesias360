@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/auth_gateway_memoire.dart';
+import '../../helpers/capacites_pour_tests.dart';
 
 /// RG-XII-06 — l'auteur des soumissions et des votes est la session : Marie
 /// (liée à sa fiche par son e-mail) vote sur la proposition de Paul, jamais
@@ -56,7 +57,7 @@ void main() {
     });
 
     await tester.pumpWidget(
-      EcclesiasApp(
+      EcclesiasApp(capacites: capacitesDeTest, 
         database: db,
         authGateway: AuthGatewayMemoire(
           connecte: const UtilisateurAuthentifie(id: 'compte-marie', identifiant: IdentifiantEmail('marie@ecclesias.test')),

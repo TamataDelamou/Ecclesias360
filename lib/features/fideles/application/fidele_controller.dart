@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
+import '../../../core/audit/acteur.dart';
 import '../../../core/error/app_error.dart';
 import '../data/fidele_repository.dart';
+import '../domain/rules/fidele_acces_rules.dart';
 import '../domain/models/fidele.dart';
 import '../domain/models/historique_fidele.dart';
 import '../domain/models/lien_familial.dart';
@@ -62,6 +64,7 @@ class FideleController extends ChangeNotifier {
       _repository.watchHistorique(fideleId);
 
   Future<bool> creerFidele({
+    required Acteur acteur,
     required String noeudId,
     required String nom,
     required String prenoms,
@@ -72,7 +75,8 @@ class FideleController extends ChangeNotifier {
     String? telephone,
     String? email,
     String? adresse,
-  }) => _executer(
+  }) => _executerEnTantQue(
+        acteur,
         () => _repository.creerFidele(
           noeudId: noeudId,
           nom: nom,
@@ -87,17 +91,27 @@ class FideleController extends ChangeNotifier {
         ),
       );
 
-  Future<bool> modifierStatutSpirituel({required String fideleId, required StatutSpirituel cible}) =>
-      _executer(() => _repository.modifierStatutSpirituel(fideleId: fideleId, cible: cible));
+  Future<bool> modifierStatutSpirituel({
+    required String fideleId,
+    required StatutSpirituel cible,
+    required Acteur acteur,
+  }) =>
+      _executerEnTantQue(
+        acteur,
+        () => _repository.modifierStatutSpirituel(fideleId: fideleId, cible: cible, auteurFideleId: acteur.fideleId),
+      );
 
   Future<bool> modifierCoordonnees({
     required String fideleId,
+    required Acteur acteur,
     String? telephone,
     String? email,
     String? adresse,
-  }) => _executer(
+  }) => _executerEnTantQue(
+        acteur,
         () => _repository.modifierCoordonnees(
           fideleId: fideleId,
+          auteurFideleId: acteur.fideleId,
           telephone: telephone,
           email: email,
           adresse: adresse,
@@ -105,12 +119,14 @@ class FideleController extends ChangeNotifier {
       );
 
   Future<bool> ajouterTuteur({
+    required Acteur acteur,
     required String mineurId,
     required String lien,
     String? tuteurFideleId,
     String? tuteurTiersNom,
     String? tuteurTiersTelephone,
-  }) => _executer(
+  }) => _executerEnTantQue(
+        acteur,
         () => _repository.ajouterTuteur(
           mineurId: mineurId,
           lien: lien,
@@ -121,10 +137,12 @@ class FideleController extends ChangeNotifier {
       );
 
   Future<bool> ajouterLienFamilial({
+    required Acteur acteur,
     required String fideleId1,
     required String fideleId2,
     required TypeLien typeLien,
-  }) => _executer(
+  }) => _executerEnTantQue(
+        acteur,
         () => _repository.ajouterLienFamilial(
           fideleId1: fideleId1,
           fideleId2: fideleId2,
@@ -132,11 +150,23 @@ class FideleController extends ChangeNotifier {
         ),
       );
 
-  Future<bool> retirerLienFamilial(String id) => _executer(() => _repository.retirerLienFamilial(id));
+  Future<bool> retirerLienFamilial(String id, {required Acteur acteur}) =>
+      _executerEnTantQue(acteur, () => _repository.retirerLienFamilial(id));
 
-  Future<bool> archiverFidele(String id) => _executer(() => _repository.archiverFidele(id));
+  Future<bool> archiverFidele(String id, {required Acteur acteur}) =>
+      _executerEnTantQue(acteur, () => _repository.archiverFidele(id));
 
-  Future<bool> supprimerFidele(String id) => _executer(() => _repository.supprimerFidele(id));
+  Future<bool> supprimerFidele(String id, {required Acteur acteur}) =>
+      _executerEnTantQue(acteur, () => _repository.supprimerFidele(id));
+
+  /// RG-SEC-04/06 — toute écriture sur une fiche est réservée au rang de
+  /// gestion (miroir de la policy `fideles` de 0019), vérifiée ici et pas
+  /// seulement par l'écran ; l'acteur est toujours la session (RG-II-05).
+  Future<bool> _executerEnTantQue(Acteur acteur, Future<void> Function() action) => _executer(() async {
+        final refus = FideleAccesRules.raisonBlocageGestion(roleActeur: acteur.role);
+        if (refus != null) throw refus;
+        await action();
+      });
 
   Future<bool> _executer(Future<void> Function() action) async {
     _enCours = true;

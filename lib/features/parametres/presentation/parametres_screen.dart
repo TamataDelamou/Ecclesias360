@@ -59,13 +59,24 @@ class ParametresScreen extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             child: Column(
               children: [
-                ListTile(
-                  leading: const Icon(Icons.public_outlined),
-                  title: Text(l10n.moduleZonesGeographiques),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => context.push(AppRoutes.zonesGeographiques),
-                ),
-                const Divider(height: AppDimensions.dividerHairline),
+                // RG-XXIII-06 : administration des paramètres réservée à l'administrateur ;
+                // la consultation des rôles (écran mobile 4) reste ouverte en lecture.
+                if (session.peut(Role.administrateur)) ...[
+                  ListTile(
+                    leading: const Icon(Icons.public_outlined),
+                    title: Text(l10n.moduleZonesGeographiques),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => context.push(AppRoutes.zonesGeographiques),
+                  ),
+                  const Divider(height: AppDimensions.dividerHairline),
+                  ListTile(
+                    leading: const Icon(Icons.history_outlined),
+                    title: Text(l10n.parametresJournalTitre),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => context.push(AppRoutes.journalParametres),
+                  ),
+                  const Divider(height: AppDimensions.dividerHairline),
+                ],
                 ListTile(
                   leading: const Icon(Icons.admin_panel_settings_outlined),
                   title: Text(l10n.moduleRoles),

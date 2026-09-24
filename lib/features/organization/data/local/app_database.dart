@@ -169,6 +169,7 @@ const List<(String code, String libelle, String type)> comptesComptablesDeDepart
   HistoriqueFideles,
   Tuteurs,
   ZonesGeographiques,
+  JournalParametres,
   TypesMinisteres,
   Ministeres,
   AffectationsMinisteres,
@@ -235,7 +236,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 20;
+  int get schemaVersion => 21;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -397,6 +398,10 @@ class AppDatabase extends _$AppDatabase {
           // v19 -> v20 : journal des consultations disciplinaires (RG-SEC-06).
           if (from < 20) {
             await m.createTable(consultationsDisciplinaires);
+          }
+          // v20 -> v21 : journal des modifications des paramètres (RG-XXIII-06).
+          if (from < 21) {
+            await m.createTable(journalParametres);
           }
         },
         beforeOpen: (details) async {

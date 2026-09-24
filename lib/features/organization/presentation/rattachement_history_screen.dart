@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
 import '../application/organisation_controller.dart';
 import '../domain/models/historique_rattachement.dart';
+import '../domain/rules/organisation_acces_rules.dart';
 
 /// Écran 6 (Historique des rattachements, RG-I-06).
 class RattachementHistoryScreen extends StatelessWidget {
@@ -12,6 +15,13 @@ class RattachementHistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Gardé aussi contre l'accès direct par la route (RG-SEC-04).
+    if (!OrganisationAccesRules.peutGererNoeuds(context.watch<SessionController>().role)) {
+      return Scaffold(
+        appBar: AppBar(title: Text(AppLocalizations.of(context)!.organisationTitre)),
+        body: Center(child: Text(AppLocalizations.of(context)!.organisationAccesReserve)),
+      );
+    }
     final controller = context.read<OrganisationController>();
     final noeud = controller.findById(nodeId);
 

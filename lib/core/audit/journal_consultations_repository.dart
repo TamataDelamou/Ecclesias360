@@ -40,7 +40,7 @@ class JournalConsultationsRepository {
   Stream<List<ConsultationDisciplinaire>> watchConsultations(String dossierId) {
     final query = _db.select(_db.consultationsDisciplinaires)
       ..where((t) => t.dossierId.equals(dossierId))
-      ..orderBy([(t) => OrderingTerm.desc(t.consulteLe)]);
+      ..orderBy([(t) => OrderingTerm.desc(t.consulteLe), (t) => OrderingTerm.desc(t.rowId)]);
     return query.watch().map(
           (rows) => rows
               .map(

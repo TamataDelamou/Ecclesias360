@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
+import '../../../core/audit/acteur.dart';
 import '../../../core/error/app_error.dart';
 import '../../parametres/domain/models/role.dart';
 import '../../parametres/domain/rules/capacity_rules.dart';
@@ -49,6 +50,14 @@ class SessionController extends ChangeNotifier {
   SessionUtilisateur? get session => _session;
   bool get estConnecte => _etat == EtatSession.connecte && _session != null;
   Role get role => _session?.role ?? Role.utilisateurSimple;
+
+  /// Auteur des actions tracées (RG-XXIII-06, RG-II-05) : le compte réel
+  /// de la session, `null` hors connexion.
+  Acteur? get acteur {
+    final session = _session;
+    if (!estConnecte || session == null) return null;
+    return Acteur(authUserId: session.authUserId, fideleId: session.fideleId, role: session.role);
+  }
   IdentifiantConnexion? get identifiantEnCours => _identifiantEnCours;
   MethodeOtp? get methodeEnCours => _methodeEnCours;
   bool get enCours => _enCours;

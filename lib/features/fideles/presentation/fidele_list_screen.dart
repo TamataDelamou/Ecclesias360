@@ -5,8 +5,10 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/application/session_controller.dart';
 import '../application/fidele_controller.dart';
 import '../domain/models/fidele.dart';
+import '../domain/rules/fidele_acces_rules.dart';
 
 /// Écran 1 (Liste des fidèles, filtrable) + écran 7 (Recherche avancée,
 /// intégrée via la barre de recherche).
@@ -30,8 +32,21 @@ class _FideleListScreenState extends State<FideleListScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<FideleController>();
-    final resultats = controller.rechercher(_terme);
+    final session = context.watch<SessionController>();
     final l10n = AppLocalizations.of(context)!;
+    // RG-SEC-04/05 : la liste complète au rang de gestion ; en dessous, sa
+    // seule fiche (policy `fideles` : lecture de soi) ; rien sans fiche.
+    final voitTout = FideleAccesRules.peutConsulterTousLesFideles(session.role);
+    final resultats = controller
+        .rechercher(_terme)
+        .where(
+          (f) => FideleAccesRules.peutConsulterFiche(
+            role: session.role,
+            fideleId: f.id,
+            fideleIdConsultant: session.session?.fideleId,
+          ),
+        )
+        .toList(growable: false);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.fidelesTitre)),
@@ -51,7 +66,7 @@ class _FideleListScreenState extends State<FideleListScreen> {
           ),
           Expanded(
             child: resultats.isEmpty
-                ? Center(child: Text(l10n.fidelesAucun))
+                ? Center(child: Text(voitTout ? l10n.fidelesAucun : l10n.fidelesAccesReserve))
                 : ListView.builder(
                     itemCount: resultats.length,
                     itemBuilder: (context, index) {
@@ -62,11 +77,13 @@ class _FideleListScreenState extends State<FideleListScreen> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push(AppRoutes.fidelesNouveau),
-        tooltip: l10n.fidelesCreerAction,
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: FideleAccesRules.peutGererFideles(session.role)
+          ? FloatingActionButton(
+              onPressed: () => context.push(AppRoutes.fidelesNouveau),
+              tooltip: l10n.fidelesCreerAction,
+              child: const Icon(Icons.add),
+            )
+          : null,
     );
   }
 }

@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/auth_gateway_memoire.dart';
+import '../../helpers/capacites_pour_tests.dart';
 
 /// RG-XIII-03 / RG-SEC-06bis — l'auteur des actions est la session : un
 /// utilisateur simple (compte sans fiche) lit la médiathèque sans agir et
@@ -63,7 +64,7 @@ void main() {
 
     // Base non vide, aucune fiche ne correspond : utilisateur simple.
     await tester.pumpWidget(
-      EcclesiasApp(
+      EcclesiasApp(capacites: capacitesDeTest, 
         database: db,
         authGateway: AuthGatewayMemoire(
           connecte: const UtilisateurAuthentifie(id: 'visiteur', identifiant: IdentifiantEmail('visiteur@exemple.org')),

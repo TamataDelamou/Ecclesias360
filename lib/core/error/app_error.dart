@@ -94,6 +94,16 @@ class AppError implements Exception {
         "Seul un pasteur (ou rôle supérieur) peut purger définitivement un document archivé.",
       );
 
+  factory AppError.administrationParametresReservee() => const AppError(
+        'administration_parametres_reservee',
+        "La modification des paramètres de l'application est réservée à un administrateur.",
+      );
+
+  factory AppError.gestionFidelesReservee() => const AppError(
+        'gestion_fideles_reservee',
+        "La gestion des fiches fidèles est réservée à un responsable (ou rôle supérieur).",
+      );
+
   factory AppError.dossierDisciplinaireAccesRefuse() => const AppError(
         'dossier_disciplinaire_acces_refuse',
         "Vous n'êtes pas habilité à consulter ce dossier disciplinaire.",

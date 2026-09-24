@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/auth_gateway_memoire.dart';
+import '../../helpers/capacites_pour_tests.dart';
 
 /// RG-SEC-06 / RG-XI-02 — l'accès aux finances suit la session réelle :
 /// Marie, membre liée à sa fiche par son e-mail, ne voit ni les finances du
@@ -73,7 +74,7 @@ void main() {
     addTearDown(tester.platformDispatcher.clearLocalesTestValue);
 
     await tester.pumpWidget(
-      EcclesiasApp(
+      EcclesiasApp(capacites: capacitesDeTest, 
         database: db,
         authGateway: AuthGatewayMemoire(
           connecte: const UtilisateurAuthentifie(id: 'compte-marie', identifiant: IdentifiantEmail(emailMembre)),

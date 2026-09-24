@@ -797,4 +797,36 @@ void main() {
 
     await db.close();
   });
+
+    test('un fichier créé en schéma v20 reçoit le journal des modifications des paramètres (RG-XXIII-06)', () async {
+    final fichier = File(
+      path.join(
+        Directory.systemTemp.path,
+        'ecclesias_migration_test_v20_${DateTime.now().microsecondsSinceEpoch}.sqlite',
+      ),
+    );
+    addTearDown(() {
+      if (fichier.existsSync()) fichier.deleteSync();
+    });
+
+    final dbInitiale = AppDatabase(NativeDatabase(fichier));
+    await dbInitiale
+        .into(dbInitiale.zonesGeographiques)
+        .insert(ZonesGeographiquesCompanion.insert(id: 'zone-1', libelle: 'Togo', niveau: 0));
+    await dbInitiale.close();
+
+    // Ramène le fichier au schéma v20 exact : pas de journal des paramètres.
+    final connexionBrute = sqlite3.sqlite3.open(fichier.path);
+    connexionBrute.execute('''
+      DROP TABLE journal_parametres;
+      PRAGMA user_version = 20;
+    ''');
+    connexionBrute.close();
+
+    final db = AppDatabase(NativeDatabase(fichier));
+    expect((await db.select(db.zonesGeographiques).getSingle()).libelle, 'Togo');
+    expect(await db.select(db.journalParametres).get(), isEmpty);
+
+    await db.close();
+  });
 }

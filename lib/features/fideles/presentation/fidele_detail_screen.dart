@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/audit/acteur.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
@@ -15,6 +16,7 @@ import '../domain/models/statut_fidele.dart';
 import '../domain/models/statut_spirituel.dart';
 import '../domain/models/tuteur.dart';
 import '../domain/models/type_lien.dart';
+import '../domain/rules/fidele_acces_rules.dart';
 import '../domain/rules/fidele_rules.dart';
 
 const List<StatutSpirituel> _chaineProgression = [
@@ -45,9 +47,24 @@ class FideleDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<FideleController>();
-    final fidele = controller.findById(fideleId);
     final l10n = AppLocalizations.of(context)!;
+    final session = context.watch<SessionController>();
 
+    // RG-SEC-04/05 : sa propre fiche, ou le rang de gestion (miroir de la policy
+    // `fideles`) — vérifié avant l'existence, qui n'est pas révélée ; un accès
+    // direct par route ne contourne pas la liste.
+    if (!FideleAccesRules.peutConsulterFiche(
+      role: session.role,
+      fideleId: fideleId,
+      fideleIdConsultant: session.session?.fideleId,
+    )) {
+      return Scaffold(
+        appBar: AppBar(title: Text(l10n.fidelesTitre)),
+        body: Center(child: Text(l10n.fidelesAccesReserve)),
+      );
+    }
+
+    final fidele = controller.findById(fideleId);
     if (fidele == null) {
       return Scaffold(
         appBar: AppBar(title: Text(l10n.fideleIntrouvableTitre)),
@@ -56,7 +73,9 @@ class FideleDetailScreen extends StatelessWidget {
     }
 
     final estMineur = FideleRules.estMineur(fidele.dateNaissance);
-    final session = context.watch<SessionController>();
+    // Écriture réservée au rang de gestion ; l'auteur tracé est la session (RG-II-05).
+    final acteur = session.acteur;
+    final gestion = acteur != null && FideleAccesRules.peutGererFideles(acteur.role) ? acteur : null;
     // Administrateur sans fiche (amorçage) : se lie à sa fiche pour être tracé
     // comme une personne du registre lors des validations (RG-XI-02).
     final peutLierSonCompte = session.peut(Role.administrateur) && session.session?.fideleId == null;
@@ -71,12 +90,13 @@ class FideleDetailScreen extends StatelessWidget {
               tooltip: l10n.authLierMonCompte,
               onPressed: () => _lierMonCompte(context, session, fidele.id, fidele.nomComplet),
             ),
-          IconButton(
-            icon: const Icon(Icons.edit_outlined),
-            tooltip: l10n.fideleModifierCoordonnees,
-            onPressed: () => _modifierCoordonnees(context, controller, fidele.id,
-                telephone: fidele.telephone, email: fidele.email, adresse: fidele.adresse),
-          ),
+          if (gestion != null)
+            IconButton(
+              icon: const Icon(Icons.edit_outlined),
+              tooltip: l10n.fideleModifierCoordonnees,
+              onPressed: () => _modifierCoordonnees(context, controller, fidele.id, gestion,
+                  telephone: fidele.telephone, email: fidele.email, adresse: fidele.adresse),
+            ),
           IconButton(
             icon: const Icon(Icons.history),
             tooltip: l10n.fideleHistoriqueTooltip,
@@ -102,13 +122,14 @@ class FideleDetailScreen extends StatelessWidget {
           const SizedBox(height: AppDimensions.spacingSm),
           _LigneInfo(label: l10n.fideleStatutActuel, valeur: fidele.statutSpirituel.code),
           const SizedBox(height: AppDimensions.spacingSm),
-          Wrap(
-            spacing: 8,
+          if (gestion != null)
+            Wrap(
+            spacing: AppDimensions.spacingSm,
             children: _prochainesCibles(fidele.statutSpirituel)
                 .map(
                   (cible) => OutlinedButton(
                     onPressed: () =>
-                        controller.modifierStatutSpirituel(fideleId: fidele.id, cible: cible),
+                        controller.modifierStatutSpirituel(fideleId: fidele.id, cible: cible, acteur: gestion),
                     child: Text(l10n.fideleTransitionVers(cible.code)),
                   ),
                 )
@@ -121,11 +142,11 @@ class FideleDetailScreen extends StatelessWidget {
           if (estMineur) ...[
             const Divider(height: AppDimensions.spacingXxl),
             Text(l10n.fideleTuteurLegalTitre, style: Theme.of(context).textTheme.titleMedium),
-            _TuteursSection(controller: controller, mineurId: fidele.id),
+            _TuteursSection(controller: controller, mineurId: fidele.id, gestion: gestion),
           ],
           const Divider(height: AppDimensions.spacingXxl),
           Text(l10n.fideleLiensFamiliauxTitre, style: Theme.of(context).textTheme.titleMedium),
-          _LiensFamiliauxSection(controller: controller, fideleId: fidele.id),
+          _LiensFamiliauxSection(controller: controller, fideleId: fidele.id, gestion: gestion),
           const Divider(height: AppDimensions.spacingXxl),
           OutlinedButton.icon(
             icon: const Icon(Icons.auto_awesome_outlined),
@@ -196,11 +217,11 @@ class FideleDetailScreen extends StatelessWidget {
             ),
             const SizedBox(height: AppDimensions.spacingSm),
           ],
-          if (fidele.statut != StatutFidele.inactif)
+          if (gestion != null && fidele.statut != StatutFidele.inactif)
             OutlinedButton.icon(
               icon: const Icon(Icons.archive_outlined),
               label: Text(l10n.fideleActionArchiver),
-              onPressed: () => controller.archiverFidele(fidele.id),
+              onPressed: () => controller.archiverFidele(fidele.id, acteur: gestion),
             ),
           if (controller.erreur != null) ...[
             const SizedBox(height: AppDimensions.spacingLg),
@@ -234,7 +255,8 @@ Future<void> _lierMonCompte(BuildContext context, SessionController session, Str
 Future<void> _modifierCoordonnees(
   BuildContext context,
   FideleController controller,
-  String fideleId, {
+  String fideleId,
+  Acteur acteur, {
   String? telephone,
   String? email,
   String? adresse,
@@ -268,6 +290,7 @@ Future<void> _modifierCoordonnees(
   if (confirme == true) {
     await controller.modifierCoordonnees(
       fideleId: fideleId,
+      acteur: acteur,
       telephone: telephoneController.text.trim(),
       email: emailController.text.trim(),
       adresse: adresseController.text.trim(),
@@ -300,10 +323,13 @@ class _LigneInfo extends StatelessWidget {
 }
 
 class _TuteursSection extends StatelessWidget {
-  const _TuteursSection({required this.controller, required this.mineurId});
+  const _TuteursSection({required this.controller, required this.mineurId, required this.gestion});
 
   final FideleController controller;
   final String mineurId;
+
+  /// Acteur habilité à modifier ; `null` : lecture seule.
+  final Acteur? gestion;
 
   Future<void> _ajouterTuteurTiers(BuildContext context) async {
     final nomController = TextEditingController();
@@ -330,6 +356,7 @@ class _TuteursSection extends StatelessWidget {
     );
     if (confirme == true && nomController.text.trim().isNotEmpty && lienController.text.trim().isNotEmpty) {
       await controller.ajouterTuteur(
+        acteur: gestion!,
         mineurId: mineurId,
         lien: lienController.text.trim(),
         tuteurTiersNom: nomController.text.trim(),
@@ -353,7 +380,8 @@ class _TuteursSection extends StatelessWidget {
                 title: Text(tuteur.tuteurTiersNom ?? tuteur.tuteurFideleId ?? '—'),
                 subtitle: Text(tuteur.lien),
               ),
-            TextButton.icon(
+            if (gestion != null)
+              TextButton.icon(
               icon: const Icon(Icons.add),
               label: Text(l10n.fideleAjouterTuteurBouton),
               onPressed: () => _ajouterTuteurTiers(context),
@@ -366,10 +394,13 @@ class _TuteursSection extends StatelessWidget {
 }
 
 class _LiensFamiliauxSection extends StatelessWidget {
-  const _LiensFamiliauxSection({required this.controller, required this.fideleId});
+  const _LiensFamiliauxSection({required this.controller, required this.fideleId, required this.gestion});
 
   final FideleController controller;
   final String fideleId;
+
+  /// Acteur habilité à modifier ; `null` : lecture seule.
+  final Acteur? gestion;
 
   Future<void> _ajouterLien(BuildContext context) async {
     final autresFideles = controller.fideles.where((f) => f.id != fideleId).toList();
@@ -414,7 +445,7 @@ class _LiensFamiliauxSection extends StatelessWidget {
     );
 
     if (confirme == true && autreId != null) {
-      await controller.ajouterLienFamilial(fideleId1: fideleId, fideleId2: autreId!, typeLien: type);
+      await controller.ajouterLienFamilial(acteur: gestion!, fideleId1: fideleId, fideleId2: autreId!, typeLien: type);
     }
   }
 
@@ -436,12 +467,15 @@ class _LiensFamiliauxSection extends StatelessWidget {
                       '—',
                 ),
                 subtitle: Text(lien.typeLien.code),
-                trailing: IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () => controller.retirerLienFamilial(lien.id),
-                ),
+                trailing: gestion == null
+                    ? null
+                    : IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () => controller.retirerLienFamilial(lien.id, acteur: gestion!),
+                      ),
               ),
-            TextButton.icon(
+            if (gestion != null)
+              TextButton.icon(
               icon: const Icon(Icons.add),
               label: Text(l10n.fideleAjouterLienBouton),
               onPressed: () => _ajouterLien(context),

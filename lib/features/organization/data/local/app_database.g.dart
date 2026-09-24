@@ -4482,6 +4482,597 @@ class ZonesGeographiquesCompanion extends UpdateCompanion<ZoneGeographiqueRow> {
   }
 }
 
+class $JournalParametresTable extends JournalParametres
+    with TableInfo<$JournalParametresTable, JournalParametresRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $JournalParametresTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _referentielMeta = const VerificationMeta(
+    'referentiel',
+  );
+  @override
+  late final GeneratedColumn<String> referentiel = GeneratedColumn<String>(
+    'referentiel',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _objetIdMeta = const VerificationMeta(
+    'objetId',
+  );
+  @override
+  late final GeneratedColumn<String> objetId = GeneratedColumn<String>(
+    'objet_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _actionMeta = const VerificationMeta('action');
+  @override
+  late final GeneratedColumn<String> action = GeneratedColumn<String>(
+    'action',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _ancienneValeurMeta = const VerificationMeta(
+    'ancienneValeur',
+  );
+  @override
+  late final GeneratedColumn<String> ancienneValeur = GeneratedColumn<String>(
+    'ancienne_valeur',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _nouvelleValeurMeta = const VerificationMeta(
+    'nouvelleValeur',
+  );
+  @override
+  late final GeneratedColumn<String> nouvelleValeur = GeneratedColumn<String>(
+    'nouvelle_valeur',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _auteurAuthUserIdMeta = const VerificationMeta(
+    'auteurAuthUserId',
+  );
+  @override
+  late final GeneratedColumn<String> auteurAuthUserId = GeneratedColumn<String>(
+    'auteur_auth_user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _auteurFideleIdMeta = const VerificationMeta(
+    'auteurFideleId',
+  );
+  @override
+  late final GeneratedColumn<String> auteurFideleId = GeneratedColumn<String>(
+    'auteur_fidele_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    referentiel,
+    objetId,
+    action,
+    ancienneValeur,
+    nouvelleValeur,
+    auteurAuthUserId,
+    auteurFideleId,
+    date,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'journal_parametres';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<JournalParametresRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('referentiel')) {
+      context.handle(
+        _referentielMeta,
+        referentiel.isAcceptableOrUnknown(
+          data['referentiel']!,
+          _referentielMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_referentielMeta);
+    }
+    if (data.containsKey('objet_id')) {
+      context.handle(
+        _objetIdMeta,
+        objetId.isAcceptableOrUnknown(data['objet_id']!, _objetIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_objetIdMeta);
+    }
+    if (data.containsKey('action')) {
+      context.handle(
+        _actionMeta,
+        action.isAcceptableOrUnknown(data['action']!, _actionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_actionMeta);
+    }
+    if (data.containsKey('ancienne_valeur')) {
+      context.handle(
+        _ancienneValeurMeta,
+        ancienneValeur.isAcceptableOrUnknown(
+          data['ancienne_valeur']!,
+          _ancienneValeurMeta,
+        ),
+      );
+    }
+    if (data.containsKey('nouvelle_valeur')) {
+      context.handle(
+        _nouvelleValeurMeta,
+        nouvelleValeur.isAcceptableOrUnknown(
+          data['nouvelle_valeur']!,
+          _nouvelleValeurMeta,
+        ),
+      );
+    }
+    if (data.containsKey('auteur_auth_user_id')) {
+      context.handle(
+        _auteurAuthUserIdMeta,
+        auteurAuthUserId.isAcceptableOrUnknown(
+          data['auteur_auth_user_id']!,
+          _auteurAuthUserIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_auteurAuthUserIdMeta);
+    }
+    if (data.containsKey('auteur_fidele_id')) {
+      context.handle(
+        _auteurFideleIdMeta,
+        auteurFideleId.isAcceptableOrUnknown(
+          data['auteur_fidele_id']!,
+          _auteurFideleIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  JournalParametresRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return JournalParametresRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      referentiel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}referentiel'],
+      )!,
+      objetId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}objet_id'],
+      )!,
+      action: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}action'],
+      )!,
+      ancienneValeur: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ancienne_valeur'],
+      ),
+      nouvelleValeur: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}nouvelle_valeur'],
+      ),
+      auteurAuthUserId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}auteur_auth_user_id'],
+      )!,
+      auteurFideleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}auteur_fidele_id'],
+      ),
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date'],
+      )!,
+    );
+  }
+
+  @override
+  $JournalParametresTable createAlias(String alias) {
+    return $JournalParametresTable(attachedDatabase, alias);
+  }
+}
+
+class JournalParametresRow extends DataClass
+    implements Insertable<JournalParametresRow> {
+  final String id;
+  final String referentiel;
+  final String objetId;
+  final String action;
+  final String? ancienneValeur;
+  final String? nouvelleValeur;
+  final String auteurAuthUserId;
+  final String? auteurFideleId;
+  final DateTime date;
+  const JournalParametresRow({
+    required this.id,
+    required this.referentiel,
+    required this.objetId,
+    required this.action,
+    this.ancienneValeur,
+    this.nouvelleValeur,
+    required this.auteurAuthUserId,
+    this.auteurFideleId,
+    required this.date,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['referentiel'] = Variable<String>(referentiel);
+    map['objet_id'] = Variable<String>(objetId);
+    map['action'] = Variable<String>(action);
+    if (!nullToAbsent || ancienneValeur != null) {
+      map['ancienne_valeur'] = Variable<String>(ancienneValeur);
+    }
+    if (!nullToAbsent || nouvelleValeur != null) {
+      map['nouvelle_valeur'] = Variable<String>(nouvelleValeur);
+    }
+    map['auteur_auth_user_id'] = Variable<String>(auteurAuthUserId);
+    if (!nullToAbsent || auteurFideleId != null) {
+      map['auteur_fidele_id'] = Variable<String>(auteurFideleId);
+    }
+    map['date'] = Variable<DateTime>(date);
+    return map;
+  }
+
+  JournalParametresCompanion toCompanion(bool nullToAbsent) {
+    return JournalParametresCompanion(
+      id: Value(id),
+      referentiel: Value(referentiel),
+      objetId: Value(objetId),
+      action: Value(action),
+      ancienneValeur: ancienneValeur == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ancienneValeur),
+      nouvelleValeur: nouvelleValeur == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nouvelleValeur),
+      auteurAuthUserId: Value(auteurAuthUserId),
+      auteurFideleId: auteurFideleId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(auteurFideleId),
+      date: Value(date),
+    );
+  }
+
+  factory JournalParametresRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return JournalParametresRow(
+      id: serializer.fromJson<String>(json['id']),
+      referentiel: serializer.fromJson<String>(json['referentiel']),
+      objetId: serializer.fromJson<String>(json['objetId']),
+      action: serializer.fromJson<String>(json['action']),
+      ancienneValeur: serializer.fromJson<String?>(json['ancienneValeur']),
+      nouvelleValeur: serializer.fromJson<String?>(json['nouvelleValeur']),
+      auteurAuthUserId: serializer.fromJson<String>(json['auteurAuthUserId']),
+      auteurFideleId: serializer.fromJson<String?>(json['auteurFideleId']),
+      date: serializer.fromJson<DateTime>(json['date']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'referentiel': serializer.toJson<String>(referentiel),
+      'objetId': serializer.toJson<String>(objetId),
+      'action': serializer.toJson<String>(action),
+      'ancienneValeur': serializer.toJson<String?>(ancienneValeur),
+      'nouvelleValeur': serializer.toJson<String?>(nouvelleValeur),
+      'auteurAuthUserId': serializer.toJson<String>(auteurAuthUserId),
+      'auteurFideleId': serializer.toJson<String?>(auteurFideleId),
+      'date': serializer.toJson<DateTime>(date),
+    };
+  }
+
+  JournalParametresRow copyWith({
+    String? id,
+    String? referentiel,
+    String? objetId,
+    String? action,
+    Value<String?> ancienneValeur = const Value.absent(),
+    Value<String?> nouvelleValeur = const Value.absent(),
+    String? auteurAuthUserId,
+    Value<String?> auteurFideleId = const Value.absent(),
+    DateTime? date,
+  }) => JournalParametresRow(
+    id: id ?? this.id,
+    referentiel: referentiel ?? this.referentiel,
+    objetId: objetId ?? this.objetId,
+    action: action ?? this.action,
+    ancienneValeur: ancienneValeur.present
+        ? ancienneValeur.value
+        : this.ancienneValeur,
+    nouvelleValeur: nouvelleValeur.present
+        ? nouvelleValeur.value
+        : this.nouvelleValeur,
+    auteurAuthUserId: auteurAuthUserId ?? this.auteurAuthUserId,
+    auteurFideleId: auteurFideleId.present
+        ? auteurFideleId.value
+        : this.auteurFideleId,
+    date: date ?? this.date,
+  );
+  JournalParametresRow copyWithCompanion(JournalParametresCompanion data) {
+    return JournalParametresRow(
+      id: data.id.present ? data.id.value : this.id,
+      referentiel: data.referentiel.present
+          ? data.referentiel.value
+          : this.referentiel,
+      objetId: data.objetId.present ? data.objetId.value : this.objetId,
+      action: data.action.present ? data.action.value : this.action,
+      ancienneValeur: data.ancienneValeur.present
+          ? data.ancienneValeur.value
+          : this.ancienneValeur,
+      nouvelleValeur: data.nouvelleValeur.present
+          ? data.nouvelleValeur.value
+          : this.nouvelleValeur,
+      auteurAuthUserId: data.auteurAuthUserId.present
+          ? data.auteurAuthUserId.value
+          : this.auteurAuthUserId,
+      auteurFideleId: data.auteurFideleId.present
+          ? data.auteurFideleId.value
+          : this.auteurFideleId,
+      date: data.date.present ? data.date.value : this.date,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('JournalParametresRow(')
+          ..write('id: $id, ')
+          ..write('referentiel: $referentiel, ')
+          ..write('objetId: $objetId, ')
+          ..write('action: $action, ')
+          ..write('ancienneValeur: $ancienneValeur, ')
+          ..write('nouvelleValeur: $nouvelleValeur, ')
+          ..write('auteurAuthUserId: $auteurAuthUserId, ')
+          ..write('auteurFideleId: $auteurFideleId, ')
+          ..write('date: $date')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    referentiel,
+    objetId,
+    action,
+    ancienneValeur,
+    nouvelleValeur,
+    auteurAuthUserId,
+    auteurFideleId,
+    date,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is JournalParametresRow &&
+          other.id == this.id &&
+          other.referentiel == this.referentiel &&
+          other.objetId == this.objetId &&
+          other.action == this.action &&
+          other.ancienneValeur == this.ancienneValeur &&
+          other.nouvelleValeur == this.nouvelleValeur &&
+          other.auteurAuthUserId == this.auteurAuthUserId &&
+          other.auteurFideleId == this.auteurFideleId &&
+          other.date == this.date);
+}
+
+class JournalParametresCompanion extends UpdateCompanion<JournalParametresRow> {
+  final Value<String> id;
+  final Value<String> referentiel;
+  final Value<String> objetId;
+  final Value<String> action;
+  final Value<String?> ancienneValeur;
+  final Value<String?> nouvelleValeur;
+  final Value<String> auteurAuthUserId;
+  final Value<String?> auteurFideleId;
+  final Value<DateTime> date;
+  final Value<int> rowid;
+  const JournalParametresCompanion({
+    this.id = const Value.absent(),
+    this.referentiel = const Value.absent(),
+    this.objetId = const Value.absent(),
+    this.action = const Value.absent(),
+    this.ancienneValeur = const Value.absent(),
+    this.nouvelleValeur = const Value.absent(),
+    this.auteurAuthUserId = const Value.absent(),
+    this.auteurFideleId = const Value.absent(),
+    this.date = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  JournalParametresCompanion.insert({
+    required String id,
+    required String referentiel,
+    required String objetId,
+    required String action,
+    this.ancienneValeur = const Value.absent(),
+    this.nouvelleValeur = const Value.absent(),
+    required String auteurAuthUserId,
+    this.auteurFideleId = const Value.absent(),
+    required DateTime date,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       referentiel = Value(referentiel),
+       objetId = Value(objetId),
+       action = Value(action),
+       auteurAuthUserId = Value(auteurAuthUserId),
+       date = Value(date);
+  static Insertable<JournalParametresRow> custom({
+    Expression<String>? id,
+    Expression<String>? referentiel,
+    Expression<String>? objetId,
+    Expression<String>? action,
+    Expression<String>? ancienneValeur,
+    Expression<String>? nouvelleValeur,
+    Expression<String>? auteurAuthUserId,
+    Expression<String>? auteurFideleId,
+    Expression<DateTime>? date,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (referentiel != null) 'referentiel': referentiel,
+      if (objetId != null) 'objet_id': objetId,
+      if (action != null) 'action': action,
+      if (ancienneValeur != null) 'ancienne_valeur': ancienneValeur,
+      if (nouvelleValeur != null) 'nouvelle_valeur': nouvelleValeur,
+      if (auteurAuthUserId != null) 'auteur_auth_user_id': auteurAuthUserId,
+      if (auteurFideleId != null) 'auteur_fidele_id': auteurFideleId,
+      if (date != null) 'date': date,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  JournalParametresCompanion copyWith({
+    Value<String>? id,
+    Value<String>? referentiel,
+    Value<String>? objetId,
+    Value<String>? action,
+    Value<String?>? ancienneValeur,
+    Value<String?>? nouvelleValeur,
+    Value<String>? auteurAuthUserId,
+    Value<String?>? auteurFideleId,
+    Value<DateTime>? date,
+    Value<int>? rowid,
+  }) {
+    return JournalParametresCompanion(
+      id: id ?? this.id,
+      referentiel: referentiel ?? this.referentiel,
+      objetId: objetId ?? this.objetId,
+      action: action ?? this.action,
+      ancienneValeur: ancienneValeur ?? this.ancienneValeur,
+      nouvelleValeur: nouvelleValeur ?? this.nouvelleValeur,
+      auteurAuthUserId: auteurAuthUserId ?? this.auteurAuthUserId,
+      auteurFideleId: auteurFideleId ?? this.auteurFideleId,
+      date: date ?? this.date,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (referentiel.present) {
+      map['referentiel'] = Variable<String>(referentiel.value);
+    }
+    if (objetId.present) {
+      map['objet_id'] = Variable<String>(objetId.value);
+    }
+    if (action.present) {
+      map['action'] = Variable<String>(action.value);
+    }
+    if (ancienneValeur.present) {
+      map['ancienne_valeur'] = Variable<String>(ancienneValeur.value);
+    }
+    if (nouvelleValeur.present) {
+      map['nouvelle_valeur'] = Variable<String>(nouvelleValeur.value);
+    }
+    if (auteurAuthUserId.present) {
+      map['auteur_auth_user_id'] = Variable<String>(auteurAuthUserId.value);
+    }
+    if (auteurFideleId.present) {
+      map['auteur_fidele_id'] = Variable<String>(auteurFideleId.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('JournalParametresCompanion(')
+          ..write('id: $id, ')
+          ..write('referentiel: $referentiel, ')
+          ..write('objetId: $objetId, ')
+          ..write('action: $action, ')
+          ..write('ancienneValeur: $ancienneValeur, ')
+          ..write('nouvelleValeur: $nouvelleValeur, ')
+          ..write('auteurAuthUserId: $auteurAuthUserId, ')
+          ..write('auteurFideleId: $auteurFideleId, ')
+          ..write('date: $date, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $TypesMinisteresTable extends TypesMinisteres
     with TableInfo<$TypesMinisteresTable, TypeMinistereRow> {
   @override
@@ -32164,6 +32755,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $TuteursTable tuteurs = $TuteursTable(this);
   late final $ZonesGeographiquesTable zonesGeographiques =
       $ZonesGeographiquesTable(this);
+  late final $JournalParametresTable journalParametres =
+      $JournalParametresTable(this);
   late final $TypesMinisteresTable typesMinisteres = $TypesMinisteresTable(
     this,
   );
@@ -32280,6 +32873,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     historiqueFideles,
     tuteurs,
     zonesGeographiques,
+    journalParametres,
     typesMinisteres,
     ministeres,
     affectationsMinisteres,
@@ -41028,6 +41622,316 @@ typedef $$ZonesGeographiquesTableProcessedTableManager =
       (ZoneGeographiqueRow, $$ZonesGeographiquesTableReferences),
       ZoneGeographiqueRow,
       PrefetchHooks Function({bool parentId})
+    >;
+typedef $$JournalParametresTableCreateCompanionBuilder =
+    JournalParametresCompanion Function({
+      required String id,
+      required String referentiel,
+      required String objetId,
+      required String action,
+      Value<String?> ancienneValeur,
+      Value<String?> nouvelleValeur,
+      required String auteurAuthUserId,
+      Value<String?> auteurFideleId,
+      required DateTime date,
+      Value<int> rowid,
+    });
+typedef $$JournalParametresTableUpdateCompanionBuilder =
+    JournalParametresCompanion Function({
+      Value<String> id,
+      Value<String> referentiel,
+      Value<String> objetId,
+      Value<String> action,
+      Value<String?> ancienneValeur,
+      Value<String?> nouvelleValeur,
+      Value<String> auteurAuthUserId,
+      Value<String?> auteurFideleId,
+      Value<DateTime> date,
+      Value<int> rowid,
+    });
+
+class $$JournalParametresTableFilterComposer
+    extends Composer<_$AppDatabase, $JournalParametresTable> {
+  $$JournalParametresTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get referentiel => $composableBuilder(
+    column: $table.referentiel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get objetId => $composableBuilder(
+    column: $table.objetId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get action => $composableBuilder(
+    column: $table.action,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ancienneValeur => $composableBuilder(
+    column: $table.ancienneValeur,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get nouvelleValeur => $composableBuilder(
+    column: $table.nouvelleValeur,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get auteurAuthUserId => $composableBuilder(
+    column: $table.auteurAuthUserId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get auteurFideleId => $composableBuilder(
+    column: $table.auteurFideleId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$JournalParametresTableOrderingComposer
+    extends Composer<_$AppDatabase, $JournalParametresTable> {
+  $$JournalParametresTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get referentiel => $composableBuilder(
+    column: $table.referentiel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get objetId => $composableBuilder(
+    column: $table.objetId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get action => $composableBuilder(
+    column: $table.action,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ancienneValeur => $composableBuilder(
+    column: $table.ancienneValeur,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get nouvelleValeur => $composableBuilder(
+    column: $table.nouvelleValeur,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get auteurAuthUserId => $composableBuilder(
+    column: $table.auteurAuthUserId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get auteurFideleId => $composableBuilder(
+    column: $table.auteurFideleId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$JournalParametresTableAnnotationComposer
+    extends Composer<_$AppDatabase, $JournalParametresTable> {
+  $$JournalParametresTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get referentiel => $composableBuilder(
+    column: $table.referentiel,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get objetId =>
+      $composableBuilder(column: $table.objetId, builder: (column) => column);
+
+  GeneratedColumn<String> get action =>
+      $composableBuilder(column: $table.action, builder: (column) => column);
+
+  GeneratedColumn<String> get ancienneValeur => $composableBuilder(
+    column: $table.ancienneValeur,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get nouvelleValeur => $composableBuilder(
+    column: $table.nouvelleValeur,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get auteurAuthUserId => $composableBuilder(
+    column: $table.auteurAuthUserId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get auteurFideleId => $composableBuilder(
+    column: $table.auteurFideleId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+}
+
+class $$JournalParametresTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $JournalParametresTable,
+          JournalParametresRow,
+          $$JournalParametresTableFilterComposer,
+          $$JournalParametresTableOrderingComposer,
+          $$JournalParametresTableAnnotationComposer,
+          $$JournalParametresTableCreateCompanionBuilder,
+          $$JournalParametresTableUpdateCompanionBuilder,
+          (
+            JournalParametresRow,
+            BaseReferences<
+              _$AppDatabase,
+              $JournalParametresTable,
+              JournalParametresRow
+            >,
+          ),
+          JournalParametresRow,
+          PrefetchHooks Function()
+        > {
+  $$JournalParametresTableTableManager(
+    _$AppDatabase db,
+    $JournalParametresTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$JournalParametresTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$JournalParametresTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$JournalParametresTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> referentiel = const Value.absent(),
+                Value<String> objetId = const Value.absent(),
+                Value<String> action = const Value.absent(),
+                Value<String?> ancienneValeur = const Value.absent(),
+                Value<String?> nouvelleValeur = const Value.absent(),
+                Value<String> auteurAuthUserId = const Value.absent(),
+                Value<String?> auteurFideleId = const Value.absent(),
+                Value<DateTime> date = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => JournalParametresCompanion(
+                id: id,
+                referentiel: referentiel,
+                objetId: objetId,
+                action: action,
+                ancienneValeur: ancienneValeur,
+                nouvelleValeur: nouvelleValeur,
+                auteurAuthUserId: auteurAuthUserId,
+                auteurFideleId: auteurFideleId,
+                date: date,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String referentiel,
+                required String objetId,
+                required String action,
+                Value<String?> ancienneValeur = const Value.absent(),
+                Value<String?> nouvelleValeur = const Value.absent(),
+                required String auteurAuthUserId,
+                Value<String?> auteurFideleId = const Value.absent(),
+                required DateTime date,
+                Value<int> rowid = const Value.absent(),
+              }) => JournalParametresCompanion.insert(
+                id: id,
+                referentiel: referentiel,
+                objetId: objetId,
+                action: action,
+                ancienneValeur: ancienneValeur,
+                nouvelleValeur: nouvelleValeur,
+                auteurAuthUserId: auteurAuthUserId,
+                auteurFideleId: auteurFideleId,
+                date: date,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$JournalParametresTable, JournalParametresRow>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $JournalParametresTable,
+                    JournalParametresRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$JournalParametresTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $JournalParametresTable,
+      JournalParametresRow,
+      $$JournalParametresTableFilterComposer,
+      $$JournalParametresTableOrderingComposer,
+      $$JournalParametresTableAnnotationComposer,
+      $$JournalParametresTableCreateCompanionBuilder,
+      $$JournalParametresTableUpdateCompanionBuilder,
+      (
+        JournalParametresRow,
+        BaseReferences<
+          _$AppDatabase,
+          $JournalParametresTable,
+          JournalParametresRow
+        >,
+      ),
+      JournalParametresRow,
+      PrefetchHooks Function()
     >;
 typedef $$TypesMinisteresTableCreateCompanionBuilder =
     TypesMinisteresCompanion Function({
@@ -70600,6 +71504,8 @@ class $AppDatabaseManager {
       $$TuteursTableTableManager(_db, _db.tuteurs);
   $$ZonesGeographiquesTableTableManager get zonesGeographiques =>
       $$ZonesGeographiquesTableTableManager(_db, _db.zonesGeographiques);
+  $$JournalParametresTableTableManager get journalParametres =>
+      $$JournalParametresTableTableManager(_db, _db.journalParametres);
   $$TypesMinisteresTableTableManager get typesMinisteres =>
       $$TypesMinisteresTableTableManager(_db, _db.typesMinisteres);
   $$MinisteresTableTableManager get ministeres =>

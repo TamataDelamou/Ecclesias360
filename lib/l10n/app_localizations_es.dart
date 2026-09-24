@@ -561,6 +561,25 @@ class AppLocalizationsEs extends AppLocalizations {
   String get fidelesAucun => 'Ningún feligrés registrado.';
 
   @override
+  String get fidelesAccesReserve =>
+      'Acceso reservado: solo puede consultar su propia ficha.';
+
+  @override
+  String fideleHistoriqueAuteurDate(String auteur, String date) {
+    return 'Por $auteur · $date';
+  }
+
+  @override
+  String get fideleHistoriqueAuteurInconnu => 'autor no registrado';
+
+  @override
+  String get organisationTitre => 'Organización';
+
+  @override
+  String get organisationAccesReserve =>
+      'Acceso reservado: solo puede consultar su propia iglesia.';
+
+  @override
   String get fidelesCreerAction => 'Crear un feligrés';
 
   @override
@@ -590,6 +609,60 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get moduleZonesGeographiques => 'Zonas geográficas';
+
+  @override
+  String get zonesCreerTitre => 'Crear una zona geográfica';
+
+  @override
+  String get zonesChampLibelle => 'Nombre';
+
+  @override
+  String get zonesChampParent => 'Zona superior (opcional)';
+
+  @override
+  String get zonesAucuneParente => 'Ninguna (raíz)';
+
+  @override
+  String get zonesAucune => 'Ninguna zona geográfica registrada.';
+
+  @override
+  String zonesSousParent(String parent) {
+    return 'bajo $parent';
+  }
+
+  @override
+  String get zonesDesactiver => 'Desactivar';
+
+  @override
+  String get zonesCreerAction => 'Crear una zona';
+
+  @override
+  String get parametresJournalTitre => 'Registro de cambios';
+
+  @override
+  String get parametresJournalAucune => 'Ningún cambio registrado.';
+
+  @override
+  String get parametresJournalCreation => 'Creación';
+
+  @override
+  String get parametresJournalModification => 'Modificación';
+
+  @override
+  String get parametresJournalSuppression => 'Eliminación';
+
+  @override
+  String parametresJournalAvant(String valeur) {
+    return 'Antes: $valeur';
+  }
+
+  @override
+  String parametresJournalApres(String valeur) {
+    return 'Después: $valeur';
+  }
+
+  @override
+  String get parametresJournalCompteSansFiche => 'Cuenta sin ficha';
 
   @override
   String get navAccueil => 'Inicio';
