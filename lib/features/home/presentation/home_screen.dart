@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/theme/app_dimensions.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../bible/presentation/verset_du_jour_carte.dart';
 
 /// Écran d'accueil — tableau de bord (reprend la composition de la
 /// maquette `dashboard_screen.dart` : en-tête de bienvenue puis grille de
@@ -28,6 +29,7 @@ class HomeScreen extends StatelessWidget {
       _Module(l10n.moduleGroupesEglise, Icons.groups_2_outlined, AppRoutes.groupesEglise),
       _Module(l10n.propositionsThemeTitre, Icons.forum_outlined, AppRoutes.propositionsTheme),
       _Module(l10n.mediathequeCatalogueTitre, Icons.video_library_outlined, AppRoutes.mediatheque),
+      _Module(l10n.bibleTitre, Icons.menu_book_outlined, AppRoutes.bible),
     ];
 
     return Scaffold(
@@ -36,6 +38,8 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(AppDimensions.spacingLg),
         children: [
           Text(l10n.homeWelcome, style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: AppDimensions.spacingLg),
+          const VersetDuJourCarte(),
           const SizedBox(height: AppDimensions.spacingXl),
           Text(l10n.dashboardModulesTitre, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: AppDimensions.spacingMd),

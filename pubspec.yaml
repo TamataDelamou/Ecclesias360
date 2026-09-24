@@ -26,6 +26,9 @@ dependencies:
   flutter_secure_storage: ^9.2.2
   intl: ^0.20.2
   uuid: ^4.5.1
+  shared_preferences: ^2.5.5
+  crypto: ^3.0.7
+  http: ^1.6.0
 
 dev_dependencies:
   flutter_test:
@@ -35,6 +38,7 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   build_runner: ^2.4.13
   drift_dev: ^2.35.0
+  archive: ^4.3.0
 
 flutter:
   uses-material-design: true
@@ -42,6 +46,9 @@ flutter:
 
   assets:
     - assets/config/
+    # Module XXIV — corpus embarqué (LSG 1910), produit par
+    # tool/bible/construire_corpus.dart ; les autres versions sont téléchargées.
+    - assets/bible/
     # Lu par flutter_dotenv depuis le bundle (AppConfig.load) : sans cette
     # déclaration, la configuration Supabase reste vide et la connexion est
     # impossible (RG-SEC-01). Créer .env depuis .env.example avant de compiler.

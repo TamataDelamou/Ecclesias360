@@ -6,6 +6,7 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../core/utils/id_generator.dart';
+import '../../../bible/data/catalogue_versions_initial.dart';
 import 'tables.dart';
 
 part 'app_database.g.dart';
@@ -210,6 +211,7 @@ const List<(String code, String libelle, String type)> comptesComptablesDeDepart
   ConsultationsDisciplinaires,
   NotesPastorales,
   ConsultationsNotesPastorales,
+  VersionsBibliques,
   TypesOffrande,
   Projets,
   Contributions,
@@ -239,7 +241,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 23;
+  int get schemaVersion => 24;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -422,12 +424,21 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(notesPastorales);
             await m.createTable(consultationsNotesPastorales);
           }
+          // v23 -> v24 : référentiel des versions bibliques (Module XXIV,
+          // RG-XXIV-01), amorcé à chaque ouverture (beforeOpen).
+          if (from < 24) {
+            await m.createTable(versionsBibliques);
+          }
         },
         beforeOpen: (details) async {
           // SQLite n'applique pas les contraintes de clé étrangère par
           // défaut : sans ceci, les `references()` déclarées dans
           // tables.dart ne sont que déclaratives.
           await customStatement('PRAGMA foreign_keys = ON');
+          // Catalogue des versions bibliques : rafraîchi à chaque ouverture,
+          // pour qu'une mise à jour de l'application livrant un nouveau
+          // corpus mette à jour taille et empreinte attendues.
+          await _amorcerCatalogueVersionsBibliques();
           if (details.wasCreated) {
             await _seedTypesMinisteresStandards();
             await _seedDonsSpirituelsStandards();
@@ -442,6 +453,31 @@ class AppDatabase extends _$AppDatabase {
           }
         },
       );
+
+  Future<void> _amorcerCatalogueVersionsBibliques() async {
+    await batch((b) {
+      for (final v in catalogueVersionsInitial) {
+        b.insert(
+          versionsBibliques,
+          VersionsBibliquesCompanion.insert(
+            code: v.code,
+            nom: v.nom,
+            langue: v.langue,
+            edition: v.edition,
+            licence: v.licence,
+            source: v.source,
+            embarquee: v.embarquee,
+            fichier: v.fichier,
+            taille: v.taille,
+            sha256: v.sha256,
+            nbLivres: v.nbLivres,
+            nbVersets: v.nbVersets,
+          ),
+          mode: InsertMode.insertOrReplace,
+        );
+      }
+    });
+  }
 
   Future<bool> _colonneExiste(String table, String colonne) async {
     final colonnes = await customSelect('PRAGMA table_info($table)').get();

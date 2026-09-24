@@ -892,4 +892,34 @@ void main() {
 
     await db.close();
   });
+
+  test('un fichier créé en schéma v23 reçoit le catalogue des versions bibliques (RG-XXIV-01)', () async {
+    final fichier = File(
+      path.join(Directory.systemTemp.path, 'ecclesias_migration_test_v23_${DateTime.now().microsecondsSinceEpoch}.sqlite'),
+    );
+    addTearDown(() {
+      if (fichier.existsSync()) fichier.deleteSync();
+    });
+
+    final dbInitiale = AppDatabase(NativeDatabase(fichier));
+    await dbInitiale.into(dbInitiale.zonesGeographiques).insert(
+          ZonesGeographiquesCompanion.insert(id: 'zone-1', libelle: 'Togo', niveau: 0),
+        );
+    await dbInitiale.close();
+
+    // Ramène le fichier au schéma v23 exact : pas de référentiel des versions.
+    final connexionBrute = sqlite3.sqlite3.open(fichier.path);
+    connexionBrute.execute('''
+      DROP TABLE versions_bibliques;
+      PRAGMA user_version = 23;
+    ''');
+    connexionBrute.close();
+
+    final db = AppDatabase(NativeDatabase(fichier));
+    expect((await db.select(db.zonesGeographiques).getSingle()).libelle, 'Togo');
+    final versions = await db.select(db.versionsBibliques).get();
+    expect(versions.map((v) => v.code), containsAll(['lsg1910', 'darby', 'crampon']));
+
+    await db.close();
+  });
 }

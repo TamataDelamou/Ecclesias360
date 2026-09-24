@@ -5,6 +5,9 @@ import '../../features/auth/application/session_controller.dart';
 import '../../features/auth/presentation/connexion_screen.dart';
 import '../../features/auth/presentation/liaisons_comptes_screen.dart';
 import '../../features/auth/presentation/verification_code_screen.dart';
+import '../../features/bible/domain/models/livre_biblique.dart';
+import '../../features/bible/presentation/bible_lecteur_screen.dart';
+import '../../features/bible/presentation/bible_recherche_screen.dart';
 import '../../features/parametres/domain/models/role.dart';
 
 import '../../features/archivage/presentation/corbeille_documents_screen.dart';
@@ -80,9 +83,13 @@ import '../widgets/app_shell.dart';
 import 'app_transitions.dart';
 
 /// Garde d'accès (RG-SEC-01) : aucune route applicative n'est accessible
-/// sans session ; la session restaurée hors ligne (RG-OFF) suffit.
+/// sans session ; la session restaurée hors ligne (RG-OFF) suffit. Seule
+/// exception, nommée : la lecture biblique (`AppRoutes.prefixesPublics`,
+/// RG-SEC-06bis amendé), ouverte avec ou sans session.
 String? redirectionSession(SessionController session, String location) {
   final surConnexion = location.startsWith(AppRoutes.connexion);
+  final publique = AppRoutes.prefixesPublics.any((p) => location == p || location.startsWith('$p/'));
+  if (publique) return null;
   if (session.etat == EtatSession.chargement) {
     return location == AppRoutes.chargement ? null : AppRoutes.chargement;
   }
@@ -107,6 +114,23 @@ GoRouter creerAppRouter(SessionController session) => GoRouter(
     GoRoute(
       path: AppRoutes.chargement,
       builder: (context, state) => const Scaffold(body: Center(child: CircularProgressIndicator())),
+    ),
+    GoRoute(
+      path: AppRoutes.bible,
+      builder: (context, state) {
+        final livre = int.tryParse(state.uri.queryParameters['livre'] ?? '');
+        final chapitre = int.tryParse(state.uri.queryParameters['chapitre'] ?? '');
+        final verset = int.tryParse(state.uri.queryParameters['verset'] ?? '');
+        return BibleLecteurScreen(
+          key: ValueKey(state.uri.toString()),
+          reference: livre == null || chapitre == null
+              ? null
+              : ReferenceBiblique(bookId: livre, chapitre: chapitre, verset: verset),
+        );
+      },
+      routes: [
+        GoRoute(path: 'recherche', builder: (context, state) => const BibleRechercheScreen()),
+      ],
     ),
     GoRoute(
       path: AppRoutes.connexion,

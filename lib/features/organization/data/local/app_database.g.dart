@@ -21988,6 +21988,707 @@ class ConsultationsNotesPastoralesCompanion
   }
 }
 
+class $VersionsBibliquesTable extends VersionsBibliques
+    with TableInfo<$VersionsBibliquesTable, VersionBibliqueRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VersionsBibliquesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+    'code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nomMeta = const VerificationMeta('nom');
+  @override
+  late final GeneratedColumn<String> nom = GeneratedColumn<String>(
+    'nom',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _langueMeta = const VerificationMeta('langue');
+  @override
+  late final GeneratedColumn<String> langue = GeneratedColumn<String>(
+    'langue',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _editionMeta = const VerificationMeta(
+    'edition',
+  );
+  @override
+  late final GeneratedColumn<String> edition = GeneratedColumn<String>(
+    'edition',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _licenceMeta = const VerificationMeta(
+    'licence',
+  );
+  @override
+  late final GeneratedColumn<String> licence = GeneratedColumn<String>(
+    'licence',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sourceMeta = const VerificationMeta('source');
+  @override
+  late final GeneratedColumn<String> source = GeneratedColumn<String>(
+    'source',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _embarqueeMeta = const VerificationMeta(
+    'embarquee',
+  );
+  @override
+  late final GeneratedColumn<bool> embarquee = GeneratedColumn<bool>(
+    'embarquee',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("embarquee" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _fichierMeta = const VerificationMeta(
+    'fichier',
+  );
+  @override
+  late final GeneratedColumn<String> fichier = GeneratedColumn<String>(
+    'fichier',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tailleMeta = const VerificationMeta('taille');
+  @override
+  late final GeneratedColumn<int> taille = GeneratedColumn<int>(
+    'taille',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sha256Meta = const VerificationMeta('sha256');
+  @override
+  late final GeneratedColumn<String> sha256 = GeneratedColumn<String>(
+    'sha256',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nbLivresMeta = const VerificationMeta(
+    'nbLivres',
+  );
+  @override
+  late final GeneratedColumn<int> nbLivres = GeneratedColumn<int>(
+    'nb_livres',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nbVersetsMeta = const VerificationMeta(
+    'nbVersets',
+  );
+  @override
+  late final GeneratedColumn<int> nbVersets = GeneratedColumn<int>(
+    'nb_versets',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    code,
+    nom,
+    langue,
+    edition,
+    licence,
+    source,
+    embarquee,
+    fichier,
+    taille,
+    sha256,
+    nbLivres,
+    nbVersets,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'versions_bibliques';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<VersionBibliqueRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('code')) {
+      context.handle(
+        _codeMeta,
+        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_codeMeta);
+    }
+    if (data.containsKey('nom')) {
+      context.handle(
+        _nomMeta,
+        nom.isAcceptableOrUnknown(data['nom']!, _nomMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nomMeta);
+    }
+    if (data.containsKey('langue')) {
+      context.handle(
+        _langueMeta,
+        langue.isAcceptableOrUnknown(data['langue']!, _langueMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_langueMeta);
+    }
+    if (data.containsKey('edition')) {
+      context.handle(
+        _editionMeta,
+        edition.isAcceptableOrUnknown(data['edition']!, _editionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_editionMeta);
+    }
+    if (data.containsKey('licence')) {
+      context.handle(
+        _licenceMeta,
+        licence.isAcceptableOrUnknown(data['licence']!, _licenceMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_licenceMeta);
+    }
+    if (data.containsKey('source')) {
+      context.handle(
+        _sourceMeta,
+        source.isAcceptableOrUnknown(data['source']!, _sourceMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sourceMeta);
+    }
+    if (data.containsKey('embarquee')) {
+      context.handle(
+        _embarqueeMeta,
+        embarquee.isAcceptableOrUnknown(data['embarquee']!, _embarqueeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_embarqueeMeta);
+    }
+    if (data.containsKey('fichier')) {
+      context.handle(
+        _fichierMeta,
+        fichier.isAcceptableOrUnknown(data['fichier']!, _fichierMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fichierMeta);
+    }
+    if (data.containsKey('taille')) {
+      context.handle(
+        _tailleMeta,
+        taille.isAcceptableOrUnknown(data['taille']!, _tailleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tailleMeta);
+    }
+    if (data.containsKey('sha256')) {
+      context.handle(
+        _sha256Meta,
+        sha256.isAcceptableOrUnknown(data['sha256']!, _sha256Meta),
+      );
+    } else if (isInserting) {
+      context.missing(_sha256Meta);
+    }
+    if (data.containsKey('nb_livres')) {
+      context.handle(
+        _nbLivresMeta,
+        nbLivres.isAcceptableOrUnknown(data['nb_livres']!, _nbLivresMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nbLivresMeta);
+    }
+    if (data.containsKey('nb_versets')) {
+      context.handle(
+        _nbVersetsMeta,
+        nbVersets.isAcceptableOrUnknown(data['nb_versets']!, _nbVersetsMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nbVersetsMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {code};
+  @override
+  VersionBibliqueRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VersionBibliqueRow(
+      code: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code'],
+      )!,
+      nom: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}nom'],
+      )!,
+      langue: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}langue'],
+      )!,
+      edition: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}edition'],
+      )!,
+      licence: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}licence'],
+      )!,
+      source: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}source'],
+      )!,
+      embarquee: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}embarquee'],
+      )!,
+      fichier: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fichier'],
+      )!,
+      taille: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}taille'],
+      )!,
+      sha256: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sha256'],
+      )!,
+      nbLivres: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}nb_livres'],
+      )!,
+      nbVersets: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}nb_versets'],
+      )!,
+    );
+  }
+
+  @override
+  $VersionsBibliquesTable createAlias(String alias) {
+    return $VersionsBibliquesTable(attachedDatabase, alias);
+  }
+}
+
+class VersionBibliqueRow extends DataClass
+    implements Insertable<VersionBibliqueRow> {
+  final String code;
+  final String nom;
+  final String langue;
+  final String edition;
+  final String licence;
+  final String source;
+  final bool embarquee;
+  final String fichier;
+  final int taille;
+  final String sha256;
+  final int nbLivres;
+  final int nbVersets;
+  const VersionBibliqueRow({
+    required this.code,
+    required this.nom,
+    required this.langue,
+    required this.edition,
+    required this.licence,
+    required this.source,
+    required this.embarquee,
+    required this.fichier,
+    required this.taille,
+    required this.sha256,
+    required this.nbLivres,
+    required this.nbVersets,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['code'] = Variable<String>(code);
+    map['nom'] = Variable<String>(nom);
+    map['langue'] = Variable<String>(langue);
+    map['edition'] = Variable<String>(edition);
+    map['licence'] = Variable<String>(licence);
+    map['source'] = Variable<String>(source);
+    map['embarquee'] = Variable<bool>(embarquee);
+    map['fichier'] = Variable<String>(fichier);
+    map['taille'] = Variable<int>(taille);
+    map['sha256'] = Variable<String>(sha256);
+    map['nb_livres'] = Variable<int>(nbLivres);
+    map['nb_versets'] = Variable<int>(nbVersets);
+    return map;
+  }
+
+  VersionsBibliquesCompanion toCompanion(bool nullToAbsent) {
+    return VersionsBibliquesCompanion(
+      code: Value(code),
+      nom: Value(nom),
+      langue: Value(langue),
+      edition: Value(edition),
+      licence: Value(licence),
+      source: Value(source),
+      embarquee: Value(embarquee),
+      fichier: Value(fichier),
+      taille: Value(taille),
+      sha256: Value(sha256),
+      nbLivres: Value(nbLivres),
+      nbVersets: Value(nbVersets),
+    );
+  }
+
+  factory VersionBibliqueRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VersionBibliqueRow(
+      code: serializer.fromJson<String>(json['code']),
+      nom: serializer.fromJson<String>(json['nom']),
+      langue: serializer.fromJson<String>(json['langue']),
+      edition: serializer.fromJson<String>(json['edition']),
+      licence: serializer.fromJson<String>(json['licence']),
+      source: serializer.fromJson<String>(json['source']),
+      embarquee: serializer.fromJson<bool>(json['embarquee']),
+      fichier: serializer.fromJson<String>(json['fichier']),
+      taille: serializer.fromJson<int>(json['taille']),
+      sha256: serializer.fromJson<String>(json['sha256']),
+      nbLivres: serializer.fromJson<int>(json['nbLivres']),
+      nbVersets: serializer.fromJson<int>(json['nbVersets']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'code': serializer.toJson<String>(code),
+      'nom': serializer.toJson<String>(nom),
+      'langue': serializer.toJson<String>(langue),
+      'edition': serializer.toJson<String>(edition),
+      'licence': serializer.toJson<String>(licence),
+      'source': serializer.toJson<String>(source),
+      'embarquee': serializer.toJson<bool>(embarquee),
+      'fichier': serializer.toJson<String>(fichier),
+      'taille': serializer.toJson<int>(taille),
+      'sha256': serializer.toJson<String>(sha256),
+      'nbLivres': serializer.toJson<int>(nbLivres),
+      'nbVersets': serializer.toJson<int>(nbVersets),
+    };
+  }
+
+  VersionBibliqueRow copyWith({
+    String? code,
+    String? nom,
+    String? langue,
+    String? edition,
+    String? licence,
+    String? source,
+    bool? embarquee,
+    String? fichier,
+    int? taille,
+    String? sha256,
+    int? nbLivres,
+    int? nbVersets,
+  }) => VersionBibliqueRow(
+    code: code ?? this.code,
+    nom: nom ?? this.nom,
+    langue: langue ?? this.langue,
+    edition: edition ?? this.edition,
+    licence: licence ?? this.licence,
+    source: source ?? this.source,
+    embarquee: embarquee ?? this.embarquee,
+    fichier: fichier ?? this.fichier,
+    taille: taille ?? this.taille,
+    sha256: sha256 ?? this.sha256,
+    nbLivres: nbLivres ?? this.nbLivres,
+    nbVersets: nbVersets ?? this.nbVersets,
+  );
+  VersionBibliqueRow copyWithCompanion(VersionsBibliquesCompanion data) {
+    return VersionBibliqueRow(
+      code: data.code.present ? data.code.value : this.code,
+      nom: data.nom.present ? data.nom.value : this.nom,
+      langue: data.langue.present ? data.langue.value : this.langue,
+      edition: data.edition.present ? data.edition.value : this.edition,
+      licence: data.licence.present ? data.licence.value : this.licence,
+      source: data.source.present ? data.source.value : this.source,
+      embarquee: data.embarquee.present ? data.embarquee.value : this.embarquee,
+      fichier: data.fichier.present ? data.fichier.value : this.fichier,
+      taille: data.taille.present ? data.taille.value : this.taille,
+      sha256: data.sha256.present ? data.sha256.value : this.sha256,
+      nbLivres: data.nbLivres.present ? data.nbLivres.value : this.nbLivres,
+      nbVersets: data.nbVersets.present ? data.nbVersets.value : this.nbVersets,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VersionBibliqueRow(')
+          ..write('code: $code, ')
+          ..write('nom: $nom, ')
+          ..write('langue: $langue, ')
+          ..write('edition: $edition, ')
+          ..write('licence: $licence, ')
+          ..write('source: $source, ')
+          ..write('embarquee: $embarquee, ')
+          ..write('fichier: $fichier, ')
+          ..write('taille: $taille, ')
+          ..write('sha256: $sha256, ')
+          ..write('nbLivres: $nbLivres, ')
+          ..write('nbVersets: $nbVersets')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    code,
+    nom,
+    langue,
+    edition,
+    licence,
+    source,
+    embarquee,
+    fichier,
+    taille,
+    sha256,
+    nbLivres,
+    nbVersets,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VersionBibliqueRow &&
+          other.code == this.code &&
+          other.nom == this.nom &&
+          other.langue == this.langue &&
+          other.edition == this.edition &&
+          other.licence == this.licence &&
+          other.source == this.source &&
+          other.embarquee == this.embarquee &&
+          other.fichier == this.fichier &&
+          other.taille == this.taille &&
+          other.sha256 == this.sha256 &&
+          other.nbLivres == this.nbLivres &&
+          other.nbVersets == this.nbVersets);
+}
+
+class VersionsBibliquesCompanion extends UpdateCompanion<VersionBibliqueRow> {
+  final Value<String> code;
+  final Value<String> nom;
+  final Value<String> langue;
+  final Value<String> edition;
+  final Value<String> licence;
+  final Value<String> source;
+  final Value<bool> embarquee;
+  final Value<String> fichier;
+  final Value<int> taille;
+  final Value<String> sha256;
+  final Value<int> nbLivres;
+  final Value<int> nbVersets;
+  final Value<int> rowid;
+  const VersionsBibliquesCompanion({
+    this.code = const Value.absent(),
+    this.nom = const Value.absent(),
+    this.langue = const Value.absent(),
+    this.edition = const Value.absent(),
+    this.licence = const Value.absent(),
+    this.source = const Value.absent(),
+    this.embarquee = const Value.absent(),
+    this.fichier = const Value.absent(),
+    this.taille = const Value.absent(),
+    this.sha256 = const Value.absent(),
+    this.nbLivres = const Value.absent(),
+    this.nbVersets = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  VersionsBibliquesCompanion.insert({
+    required String code,
+    required String nom,
+    required String langue,
+    required String edition,
+    required String licence,
+    required String source,
+    required bool embarquee,
+    required String fichier,
+    required int taille,
+    required String sha256,
+    required int nbLivres,
+    required int nbVersets,
+    this.rowid = const Value.absent(),
+  }) : code = Value(code),
+       nom = Value(nom),
+       langue = Value(langue),
+       edition = Value(edition),
+       licence = Value(licence),
+       source = Value(source),
+       embarquee = Value(embarquee),
+       fichier = Value(fichier),
+       taille = Value(taille),
+       sha256 = Value(sha256),
+       nbLivres = Value(nbLivres),
+       nbVersets = Value(nbVersets);
+  static Insertable<VersionBibliqueRow> custom({
+    Expression<String>? code,
+    Expression<String>? nom,
+    Expression<String>? langue,
+    Expression<String>? edition,
+    Expression<String>? licence,
+    Expression<String>? source,
+    Expression<bool>? embarquee,
+    Expression<String>? fichier,
+    Expression<int>? taille,
+    Expression<String>? sha256,
+    Expression<int>? nbLivres,
+    Expression<int>? nbVersets,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (code != null) 'code': code,
+      if (nom != null) 'nom': nom,
+      if (langue != null) 'langue': langue,
+      if (edition != null) 'edition': edition,
+      if (licence != null) 'licence': licence,
+      if (source != null) 'source': source,
+      if (embarquee != null) 'embarquee': embarquee,
+      if (fichier != null) 'fichier': fichier,
+      if (taille != null) 'taille': taille,
+      if (sha256 != null) 'sha256': sha256,
+      if (nbLivres != null) 'nb_livres': nbLivres,
+      if (nbVersets != null) 'nb_versets': nbVersets,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  VersionsBibliquesCompanion copyWith({
+    Value<String>? code,
+    Value<String>? nom,
+    Value<String>? langue,
+    Value<String>? edition,
+    Value<String>? licence,
+    Value<String>? source,
+    Value<bool>? embarquee,
+    Value<String>? fichier,
+    Value<int>? taille,
+    Value<String>? sha256,
+    Value<int>? nbLivres,
+    Value<int>? nbVersets,
+    Value<int>? rowid,
+  }) {
+    return VersionsBibliquesCompanion(
+      code: code ?? this.code,
+      nom: nom ?? this.nom,
+      langue: langue ?? this.langue,
+      edition: edition ?? this.edition,
+      licence: licence ?? this.licence,
+      source: source ?? this.source,
+      embarquee: embarquee ?? this.embarquee,
+      fichier: fichier ?? this.fichier,
+      taille: taille ?? this.taille,
+      sha256: sha256 ?? this.sha256,
+      nbLivres: nbLivres ?? this.nbLivres,
+      nbVersets: nbVersets ?? this.nbVersets,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (nom.present) {
+      map['nom'] = Variable<String>(nom.value);
+    }
+    if (langue.present) {
+      map['langue'] = Variable<String>(langue.value);
+    }
+    if (edition.present) {
+      map['edition'] = Variable<String>(edition.value);
+    }
+    if (licence.present) {
+      map['licence'] = Variable<String>(licence.value);
+    }
+    if (source.present) {
+      map['source'] = Variable<String>(source.value);
+    }
+    if (embarquee.present) {
+      map['embarquee'] = Variable<bool>(embarquee.value);
+    }
+    if (fichier.present) {
+      map['fichier'] = Variable<String>(fichier.value);
+    }
+    if (taille.present) {
+      map['taille'] = Variable<int>(taille.value);
+    }
+    if (sha256.present) {
+      map['sha256'] = Variable<String>(sha256.value);
+    }
+    if (nbLivres.present) {
+      map['nb_livres'] = Variable<int>(nbLivres.value);
+    }
+    if (nbVersets.present) {
+      map['nb_versets'] = Variable<int>(nbVersets.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VersionsBibliquesCompanion(')
+          ..write('code: $code, ')
+          ..write('nom: $nom, ')
+          ..write('langue: $langue, ')
+          ..write('edition: $edition, ')
+          ..write('licence: $licence, ')
+          ..write('source: $source, ')
+          ..write('embarquee: $embarquee, ')
+          ..write('fichier: $fichier, ')
+          ..write('taille: $taille, ')
+          ..write('sha256: $sha256, ')
+          ..write('nbLivres: $nbLivres, ')
+          ..write('nbVersets: $nbVersets, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $TypesOffrandeTable extends TypesOffrande
     with TableInfo<$TypesOffrandeTable, TypeOffrandeRow> {
   @override
@@ -34228,6 +34929,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   );
   late final $ConsultationsNotesPastoralesTable consultationsNotesPastorales =
       $ConsultationsNotesPastoralesTable(this);
+  late final $VersionsBibliquesTable versionsBibliques =
+      $VersionsBibliquesTable(this);
   late final $TypesOffrandeTable typesOffrande = $TypesOffrandeTable(this);
   late final $ProjetsTable projets = $ProjetsTable(this);
   late final $ContributionsTable contributions = $ContributionsTable(this);
@@ -34326,6 +35029,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     consultationsDisciplinaires,
     notesPastorales,
     consultationsNotesPastorales,
+    versionsBibliques,
     typesOffrande,
     projets,
     contributions,
@@ -63078,6 +63782,363 @@ typedef $$ConsultationsNotesPastoralesTableProcessedTableManager =
       ConsultationNotePastoraleRow,
       PrefetchHooks Function({bool noteId, bool fideleId})
     >;
+typedef $$VersionsBibliquesTableCreateCompanionBuilder =
+    VersionsBibliquesCompanion Function({
+      required String code,
+      required String nom,
+      required String langue,
+      required String edition,
+      required String licence,
+      required String source,
+      required bool embarquee,
+      required String fichier,
+      required int taille,
+      required String sha256,
+      required int nbLivres,
+      required int nbVersets,
+      Value<int> rowid,
+    });
+typedef $$VersionsBibliquesTableUpdateCompanionBuilder =
+    VersionsBibliquesCompanion Function({
+      Value<String> code,
+      Value<String> nom,
+      Value<String> langue,
+      Value<String> edition,
+      Value<String> licence,
+      Value<String> source,
+      Value<bool> embarquee,
+      Value<String> fichier,
+      Value<int> taille,
+      Value<String> sha256,
+      Value<int> nbLivres,
+      Value<int> nbVersets,
+      Value<int> rowid,
+    });
+
+class $$VersionsBibliquesTableFilterComposer
+    extends Composer<_$AppDatabase, $VersionsBibliquesTable> {
+  $$VersionsBibliquesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get nom => $composableBuilder(
+    column: $table.nom,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get langue => $composableBuilder(
+    column: $table.langue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get edition => $composableBuilder(
+    column: $table.edition,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get licence => $composableBuilder(
+    column: $table.licence,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get source => $composableBuilder(
+    column: $table.source,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get embarquee => $composableBuilder(
+    column: $table.embarquee,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fichier => $composableBuilder(
+    column: $table.fichier,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get taille => $composableBuilder(
+    column: $table.taille,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get sha256 => $composableBuilder(
+    column: $table.sha256,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get nbLivres => $composableBuilder(
+    column: $table.nbLivres,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get nbVersets => $composableBuilder(
+    column: $table.nbVersets,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$VersionsBibliquesTableOrderingComposer
+    extends Composer<_$AppDatabase, $VersionsBibliquesTable> {
+  $$VersionsBibliquesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get nom => $composableBuilder(
+    column: $table.nom,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get langue => $composableBuilder(
+    column: $table.langue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get edition => $composableBuilder(
+    column: $table.edition,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get licence => $composableBuilder(
+    column: $table.licence,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get source => $composableBuilder(
+    column: $table.source,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get embarquee => $composableBuilder(
+    column: $table.embarquee,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fichier => $composableBuilder(
+    column: $table.fichier,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get taille => $composableBuilder(
+    column: $table.taille,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get sha256 => $composableBuilder(
+    column: $table.sha256,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get nbLivres => $composableBuilder(
+    column: $table.nbLivres,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get nbVersets => $composableBuilder(
+    column: $table.nbVersets,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$VersionsBibliquesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VersionsBibliquesTable> {
+  $$VersionsBibliquesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<String> get nom =>
+      $composableBuilder(column: $table.nom, builder: (column) => column);
+
+  GeneratedColumn<String> get langue =>
+      $composableBuilder(column: $table.langue, builder: (column) => column);
+
+  GeneratedColumn<String> get edition =>
+      $composableBuilder(column: $table.edition, builder: (column) => column);
+
+  GeneratedColumn<String> get licence =>
+      $composableBuilder(column: $table.licence, builder: (column) => column);
+
+  GeneratedColumn<String> get source =>
+      $composableBuilder(column: $table.source, builder: (column) => column);
+
+  GeneratedColumn<bool> get embarquee =>
+      $composableBuilder(column: $table.embarquee, builder: (column) => column);
+
+  GeneratedColumn<String> get fichier =>
+      $composableBuilder(column: $table.fichier, builder: (column) => column);
+
+  GeneratedColumn<int> get taille =>
+      $composableBuilder(column: $table.taille, builder: (column) => column);
+
+  GeneratedColumn<String> get sha256 =>
+      $composableBuilder(column: $table.sha256, builder: (column) => column);
+
+  GeneratedColumn<int> get nbLivres =>
+      $composableBuilder(column: $table.nbLivres, builder: (column) => column);
+
+  GeneratedColumn<int> get nbVersets =>
+      $composableBuilder(column: $table.nbVersets, builder: (column) => column);
+}
+
+class $$VersionsBibliquesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $VersionsBibliquesTable,
+          VersionBibliqueRow,
+          $$VersionsBibliquesTableFilterComposer,
+          $$VersionsBibliquesTableOrderingComposer,
+          $$VersionsBibliquesTableAnnotationComposer,
+          $$VersionsBibliquesTableCreateCompanionBuilder,
+          $$VersionsBibliquesTableUpdateCompanionBuilder,
+          (
+            VersionBibliqueRow,
+            BaseReferences<
+              _$AppDatabase,
+              $VersionsBibliquesTable,
+              VersionBibliqueRow
+            >,
+          ),
+          VersionBibliqueRow,
+          PrefetchHooks Function()
+        > {
+  $$VersionsBibliquesTableTableManager(
+    _$AppDatabase db,
+    $VersionsBibliquesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VersionsBibliquesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VersionsBibliquesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$VersionsBibliquesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> code = const Value.absent(),
+                Value<String> nom = const Value.absent(),
+                Value<String> langue = const Value.absent(),
+                Value<String> edition = const Value.absent(),
+                Value<String> licence = const Value.absent(),
+                Value<String> source = const Value.absent(),
+                Value<bool> embarquee = const Value.absent(),
+                Value<String> fichier = const Value.absent(),
+                Value<int> taille = const Value.absent(),
+                Value<String> sha256 = const Value.absent(),
+                Value<int> nbLivres = const Value.absent(),
+                Value<int> nbVersets = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => VersionsBibliquesCompanion(
+                code: code,
+                nom: nom,
+                langue: langue,
+                edition: edition,
+                licence: licence,
+                source: source,
+                embarquee: embarquee,
+                fichier: fichier,
+                taille: taille,
+                sha256: sha256,
+                nbLivres: nbLivres,
+                nbVersets: nbVersets,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String code,
+                required String nom,
+                required String langue,
+                required String edition,
+                required String licence,
+                required String source,
+                required bool embarquee,
+                required String fichier,
+                required int taille,
+                required String sha256,
+                required int nbLivres,
+                required int nbVersets,
+                Value<int> rowid = const Value.absent(),
+              }) => VersionsBibliquesCompanion.insert(
+                code: code,
+                nom: nom,
+                langue: langue,
+                edition: edition,
+                licence: licence,
+                source: source,
+                embarquee: embarquee,
+                fichier: fichier,
+                taille: taille,
+                sha256: sha256,
+                nbLivres: nbLivres,
+                nbVersets: nbVersets,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$VersionsBibliquesTable, VersionBibliqueRow>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $VersionsBibliquesTable,
+                    VersionBibliqueRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$VersionsBibliquesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $VersionsBibliquesTable,
+      VersionBibliqueRow,
+      $$VersionsBibliquesTableFilterComposer,
+      $$VersionsBibliquesTableOrderingComposer,
+      $$VersionsBibliquesTableAnnotationComposer,
+      $$VersionsBibliquesTableCreateCompanionBuilder,
+      $$VersionsBibliquesTableUpdateCompanionBuilder,
+      (
+        VersionBibliqueRow,
+        BaseReferences<
+          _$AppDatabase,
+          $VersionsBibliquesTable,
+          VersionBibliqueRow
+        >,
+      ),
+      VersionBibliqueRow,
+      PrefetchHooks Function()
+    >;
 typedef $$TypesOffrandeTableCreateCompanionBuilder =
     TypesOffrandeCompanion Function({
       required String id,
@@ -75240,6 +76301,8 @@ class $AppDatabaseManager {
         _db,
         _db.consultationsNotesPastorales,
       );
+  $$VersionsBibliquesTableTableManager get versionsBibliques =>
+      $$VersionsBibliquesTableTableManager(_db, _db.versionsBibliques);
   $$TypesOffrandeTableTableManager get typesOffrande =>
       $$TypesOffrandeTableTableManager(_db, _db.typesOffrande);
   $$ProjetsTableTableManager get projets =>

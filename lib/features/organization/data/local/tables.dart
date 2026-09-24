@@ -837,6 +837,28 @@ class ConsultationsNotesPastorales extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Table Drift VersionBiblique (Module XXIV, RG-XXIV-01) — référentiel des
+/// versions, extensible en données (AGENTS.md §12 point 4), jamais un enum.
+/// Le texte lui-même vit dans un corpus séparé par version (`BibleCorpusDatabase`).
+@DataClassName('VersionBibliqueRow')
+class VersionsBibliques extends Table {
+  TextColumn get code => text()();
+  TextColumn get nom => text()();
+  TextColumn get langue => text()();
+  TextColumn get edition => text()();
+  TextColumn get licence => text()();
+  TextColumn get source => text()();
+  BoolColumn get embarquee => boolean()();
+  TextColumn get fichier => text()();
+  IntColumn get taille => integer()();
+  TextColumn get sha256 => text()();
+  IntColumn get nbLivres => integer()();
+  IntColumn get nbVersets => integer()();
+
+  @override
+  Set<Column> get primaryKey => {code};
+}
+
 /// Table Drift TypeOffrande (Module XI, RG-XI-01) — référentiel fermé et
 /// extensible des types d'offrande, même précédent que TypesMinisteres.
 @DataClassName('TypeOffrandeRow')

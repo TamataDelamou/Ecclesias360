@@ -1722,4 +1722,83 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get notesPastoralesCompteSansFiche => 'Cuenta sin ficha';
+
+  @override
+  String get bibleTitre => 'Biblia';
+
+  @override
+  String get bibleRetour => 'Volver';
+
+  @override
+  String get bibleLireSansCompte => 'Leer la Biblia sin cuenta';
+
+  @override
+  String bibleChapitre(int numero) {
+    return 'Capítulo $numero';
+  }
+
+  @override
+  String get bibleLivresTitre => 'Libros';
+
+  @override
+  String get bibleChangerDeLivre => 'Cambiar de libro';
+
+  @override
+  String get bibleAfficherChapitres => 'Capítulos del libro';
+
+  @override
+  String get bibleChapitrePrecedent => 'Capítulo anterior';
+
+  @override
+  String get bibleChapitreSuivant => 'Capítulo siguiente';
+
+  @override
+  String bibleChargementErreur(String erreur) {
+    return 'No se puede abrir la Biblia: $erreur';
+  }
+
+  @override
+  String get bibleVersionsTitre => 'Versiones';
+
+  @override
+  String get bibleVersionEmbarquee => 'Incluida en la aplicación';
+
+  @override
+  String get bibleVersionDisponible => 'Descargada — legible sin conexión';
+
+  @override
+  String get bibleVersionADemande =>
+      'Para descargar, luego legible sin conexión';
+
+  @override
+  String bibleVersionTelecharger(String taille) {
+    return 'Descargar ($taille MB)';
+  }
+
+  @override
+  String bibleEditionLicence(String edition, String licence) {
+    return '$edition · $licence';
+  }
+
+  @override
+  String get bibleRechercheTitre => 'Búsqueda';
+
+  @override
+  String get bibleRechercheChamp => 'Palabra o referencia (ej. Jn 3:16)';
+
+  @override
+  String bibleRechercheLocale(String version) {
+    return 'Búsqueda local, sin conexión — $version';
+  }
+
+  @override
+  String get bibleRechercheAucun => 'Sin resultados.';
+
+  @override
+  String bibleOuvrirReference(String reference) {
+    return 'Ir a $reference';
+  }
+
+  @override
+  String get bibleVersetDuJour => 'Versículo del día';
 }

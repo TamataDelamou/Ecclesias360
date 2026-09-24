@@ -183,7 +183,7 @@ qui lirait ces notes les exposerait hors de la règle d'accès et hors du journa
 | XVI — Intelligence artificielle | ⬜ à faire |
 | XVII — Communication | ⬜ à faire |
 | XIX — École biblique | ⬜ à faire |
-| XXIV — Bible numérique et vie de l'Église | ⬜ à faire |
+| XXIV — Bible numérique et vie de l'Église | ⚠️ partiel — **Lot A livré** (socle, plusieurs versions, navigation, lecture sans compte ; spécification du dossier de reconstruction §4). **Corpus** : `tool/bible/construire_corpus.dart` télécharge les sources, attribue les identifiants de livre stables (1..66 protocanon, 67..73 deutérocanoniques, jamais l'ordre d'affichage), construit une base SQLite par version (livres, versets, FTS5 `unicode61 remove_diacritics 2`), applique des contrôles bloquants (livres, chapitres contigus, doublons, balisage résiduel, deutérocanoniques attendus) et génère `lib/features/bible/data/catalogue_versions_initial.dart` ; construction reproductible (empreintes identiques d'une exécution à l'autre). Versets vides = omissions de l'édition, exclus et listés (`build/bible/<code>_versets_exclus.txt`), jamais comblés ; corrections éditoriales **nommées** et vérifiées (échec si le texte visé disparaît de la source). Sources et chiffres constatés : voir le rapport de construction (LSG 1910 : ebible.org `fraLSG`, domaine public ; Darby : révision BPC 2024 (JND v2.0), ebible.org `frajnd`, retenue par le porteur du projet faute de texte de 1885 structuré ; LSG via ebible plutôt que GetBible, dont la licence est une permission nommée à CrossWire ; Crampon 1923 : scrollmapper `FreCrampon`). **Données** : LSG 1910 embarquée (`assets/bible/lsg1910.db.gz`, décompressée au premier usage, marqueurs `bible_corpus_version` + taille de l'asset) ; Darby et Crampon téléchargées à la demande depuis le bucket public `corpus-bibliques` (migration `0027`), acceptées seulement à la taille et à l'empreinte du catalogue (`core/telechargement/TelechargementService`, nouvelles tentatives sur erreur réseau, jamais sur empreinte fausse) ; `BibleCorpusDatabase` = seconde base Drift en lecture seule (`query_only`, `user_version = 1`) ; référentiel `versions_bibliques` (Drift v24), rafraîchi à chaque ouverture depuis le catalogue. **Règles pures** : `BibleReferenceRules` (lecture d'une référence, chapitres suivant/précédent dans l'ordre de la version, adaptation d'une référence à une autre version), `RechercheBibliqueRules` (expression FTS5 neutralisant la syntaxe saisie), `VersetDuJourRules` (précédence manuel > plan > rotation ; seule la rotation est alimentée — source « manuel » différée par décision du porteur du projet, plan de lecture au Lot B). **Écrans** : lecteur (bouton retour explicite, nom du livre cliquable → chapitres → changer de livre, tiroir latéral des chapitres, chapitres précédent/suivant), versions et téléchargement (édition exacte et licence affichées), recherche locale (mot-clé ou référence, marquée « hors connexion » pour RG-XXIV-05), carte « Verset du jour » et tuile sur l'accueil. `BibleController` à la racine, indépendant de la session. **Lecture sans compte** : `AppRoutes.prefixesPublics` (seul `/bible`), RG-SEC-06bis amendé au Cahier ; aucune policy `anon` sur une table. Tests : règles, corpus réel (66 livres, 1189 chapitres, 31 170 versets, recherche sans accents, rotation présente), décompression, installation (conforme / altérée / sans stockage), service de téléchargement, routeur, parcours sans compte bout-en-bout, migration v23→v24 ; SQL `supabase/tests/0027_bucket_corpus_bibliques_test.sql` ; vérification HTTP réelle `tool/bible/televerser_corpus.dart --verifier` (lecture publique sans compte, empreinte, dépôts anonyme et authentifié refusés **par la RLS** — motif vérifié, un jeton invalide renvoyant aussi 400). **Reste** : Lot B (plans de lecture, Palier 2), Lot C (favoris, surlignages, notes, historique, comparaison — plan dédié ; **la comparaison exigera une table de correspondance chapitre/verset entre versions** : l'identifiant de livre stable ne suffit pas, la Crampon suivant la versification hébraïque pour certains livres — Joël en 4 chapitres, Malachie en 3 —, jamais une simple superposition), Lot D (prédication, RG-XXIV-04) ; partage (aucune infra), mode sombre/lecture (§12.3), chants (extension Cantiques) ; volet multilingue (KJV, RV1909 `SpaRV`, Bíblia Livre) |
 | XV — Espace de soutien à GSG | ⬜ à faire |
 | XVIII — Événements | ⬜ à faire |
 | XXII — Tableau de bord | ⬜ à faire |
@@ -246,6 +246,12 @@ prérequis de phase existent — voir tableau §7.
   rapport de référence : `supabase/tests/0019_rapport_rls.md`. `dans_perimetre()` inclut
   l'administrateur non borné : une exception nommée (Église Sœur, RG-ES-04, administrateur borné)
   doit appeler `noeuds_du_perimetre()` directement, jamais `dans_perimetre()`.
+- **Seule ouverture sans compte : la lecture biblique (depuis `0027`, RG-SEC-06bis amendé).**
+  Côté client, `AppRoutes.prefixesPublics` (seul `/bible`) ; côté serveur, **aucune table**
+  n'est ouverte au rôle `anon` (le texte est lu localement) — seul le bucket `corpus-bibliques`
+  est public en lecture, sans aucune policy d'écriture sur `storage.objects`. Toute nouvelle
+  ouverture anonyme (Cantiques…) est une exception nommée, testée comme telle, jamais un
+  élargissement de ce préfixe ou de ce bucket.
 - **Confidentialité tirée de la source (depuis `0023`)** : un objet qui dérive d'une donnée
   sensible (ex. pièce disciplinaire archivée) suit la règle d'accès de sa source, jamais un
   niveau stocké modifiable. Les colonnes qui portent cette confidentialité sont immuables
@@ -353,6 +359,11 @@ prérequis de phase existent — voir tableau §7.
 > décidé, ce qui reste à réconcilier au moment de la construction, et les dépendances externes.
 
 1. **Accès anonyme en lecture à la Bible (Module XXIV) et aux Cantiques.**
+   - **Bible : ✅ construit (Lot A du Module XXIV, 2026-09)** — RG-SEC-06bis amendé au Cahier ;
+     préfixes publics reconstruits (`AppRoutes.prefixesPublics`) ; **aucune policy `anon` sur une
+     table** n'a été nécessaire, contrairement à ce que prévoyait le point « côté serveur »
+     ci-dessous : le texte est lu localement, seul le bucket `corpus-bibliques` est public en
+     lecture (voir §10). **Cantiques : reste à faire** avec leur extension.
    - Décidé : la lecture (livres / chapitres / versets ; recueils / cantiques) est accessible **sans
      compte**, au même titre que la médiathèque (Module XIII) pour l'utilisateur non affilié.
      Seules les fonctionnalités personnelles — signets, notes, plans de lecture, favoris — exigent

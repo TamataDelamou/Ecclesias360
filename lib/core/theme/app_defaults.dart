@@ -43,4 +43,20 @@ abstract final class AppDefaults {
   /// partir duquel il est masqué automatiquement, en attendant une
   /// décision de modération. Le Cahier n'impose pas cette valeur.
   static const int mediathequeSeuilSignalementsAvantMasquage = 3;
+
+  /// Module XXIV — version biblique ouverte par défaut (RG-XXIV-01 : la
+  /// seule embarquée), tant que l'utilisateur n'en a pas choisi une autre.
+  static const String bibleVersionParDefaut = 'lsg1910';
+
+  /// Module XXIV — rotation du verset du jour (`VersetDuJourRules`), en
+  /// identifiants stables (livre 1..66, chapitre, verset) présents dans
+  /// toutes les versions. Le Cahier n'impose aucune liste : sélection
+  /// initiale, remplaçable sans migration.
+  static const List<(int, int, int)> bibleRotationVersetsDuJour = [
+    (19, 23, 1), (43, 3, 16), (45, 8, 28), (50, 4, 13), (20, 3, 5), (23, 40, 31), (24, 29, 11),
+    (19, 46, 2), (40, 11, 28), (43, 14, 6), (45, 12, 2), (46, 13, 4), (48, 5, 22), (49, 2, 8),
+    (58, 11, 1), (59, 1, 5), (60, 5, 7), (62, 4, 8), (19, 119, 105), (6, 1, 9), (5, 31, 6),
+    (33, 6, 8), (43, 8, 32), (40, 6, 33), (19, 37, 5), (47, 5, 17), (51, 3, 23), (50, 4, 6),
+    (43, 15, 13), (45, 5, 8), (19, 91, 1),
+  ];
 }

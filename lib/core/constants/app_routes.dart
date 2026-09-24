@@ -1,3 +1,5 @@
+import '../../features/bible/domain/models/livre_biblique.dart';
+
 /// Chemins de routage centralisés (`go_router`) — jamais de chemin en dur ailleurs.
 abstract final class AppRoutes {
   static const String home = '/';
@@ -6,6 +8,23 @@ abstract final class AppRoutes {
   static const String chargement = '/chargement';
   static const String connexion = '/connexion';
   static const String connexionVerification = '/connexion/verification';
+
+  // Module XXIV — lecture biblique, ouverte sans compte (RG-SEC-06bis amendé).
+  static const String bible = '/bible';
+  static const String bibleRecherche = '/bible/recherche';
+  static String bibleLecture(ReferenceBiblique reference) => Uri(
+        path: bible,
+        queryParameters: {
+          'livre': '${reference.bookId}',
+          'chapitre': '${reference.chapitre}',
+          if (reference.verset != null) 'verset': '${reference.verset}',
+        },
+      ).toString();
+
+  /// Seules routes accessibles sans session : la lecture biblique (lecture
+  /// seule, contenu du domaine public, aucune donnée personnelle). Toute
+  /// autre fonctionnalité exige un compte (RG-SEC-01, RG-SEC-06bis).
+  static const List<String> prefixesPublics = [bible];
 
   static const String organisation = '/organisation';
   static const String organisationNouveauNoeud = '/organisation/nouveau';

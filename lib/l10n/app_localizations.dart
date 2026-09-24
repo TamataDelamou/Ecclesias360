@@ -3281,6 +3281,138 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Compte sans fiche'**
   String get notesPastoralesCompteSansFiche;
+
+  /// Titre du Module XXIV (lecture biblique) et de sa tuile d'accueil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bible'**
+  String get bibleTitre;
+
+  /// Bouton retour explicite du lecteur biblique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour'**
+  String get bibleRetour;
+
+  /// Lien de l'écran de connexion vers la lecture biblique ouverte sans compte (RG-SEC-06bis amendé).
+  ///
+  /// In fr, this message translates to:
+  /// **'Lire la Bible sans compte'**
+  String get bibleLireSansCompte;
+
+  /// Entrée du tiroir des chapitres.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chapitre {numero}'**
+  String bibleChapitre(int numero);
+
+  /// Titre de la liste des livres d'une version.
+  ///
+  /// In fr, this message translates to:
+  /// **'Livres'**
+  String get bibleLivresTitre;
+
+  /// Bouton de la feuille des chapitres ouvrant la liste des livres.
+  ///
+  /// In fr, this message translates to:
+  /// **'Changer de livre'**
+  String get bibleChangerDeLivre;
+
+  /// Bouton ouvrant le tiroir latéral des chapitres du livre courant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chapitres du livre'**
+  String get bibleAfficherChapitres;
+
+  /// Navigation vers le chapitre précédent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chapitre précédent'**
+  String get bibleChapitrePrecedent;
+
+  /// Navigation vers le chapitre suivant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chapitre suivant'**
+  String get bibleChapitreSuivant;
+
+  /// Échec d'ouverture du corpus biblique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible d\'ouvrir la Bible : {erreur}'**
+  String bibleChargementErreur(String erreur);
+
+  /// Titre du choix des versions et de leur téléchargement (écran 11 du Module XXIV).
+  ///
+  /// In fr, this message translates to:
+  /// **'Versions'**
+  String get bibleVersionsTitre;
+
+  /// Version embarquée (RG-XXIV-01).
+  ///
+  /// In fr, this message translates to:
+  /// **'Incluse dans l\'application'**
+  String get bibleVersionEmbarquee;
+
+  /// Version téléchargée sur l'appareil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Téléchargée — lisible hors connexion'**
+  String get bibleVersionDisponible;
+
+  /// Version proposée au téléchargement à la demande.
+  ///
+  /// In fr, this message translates to:
+  /// **'À télécharger, puis lisible hors connexion'**
+  String get bibleVersionADemande;
+
+  /// Bouton de téléchargement d'une version, avec sa taille.
+  ///
+  /// In fr, this message translates to:
+  /// **'Télécharger ({taille} Mo)'**
+  String bibleVersionTelecharger(String taille);
+
+  /// Édition exacte et licence d'une version.
+  ///
+  /// In fr, this message translates to:
+  /// **'{edition} · {licence}'**
+  String bibleEditionLicence(String edition, String licence);
+
+  /// Titre de la recherche biblique (écran 2 du Module XXIV).
+  ///
+  /// In fr, this message translates to:
+  /// **'Recherche'**
+  String get bibleRechercheTitre;
+
+  /// Libellé du champ de recherche biblique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot ou référence (ex. Jn 3:16)'**
+  String get bibleRechercheChamp;
+
+  /// Rappel que la recherche est locale (RG-XXIV-05).
+  ///
+  /// In fr, this message translates to:
+  /// **'Recherche locale, hors connexion — {version}'**
+  String bibleRechercheLocale(String version);
+
+  /// Recherche biblique sans résultat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun résultat.'**
+  String get bibleRechercheAucun;
+
+  /// Proposition d'ouvrir une référence reconnue dans la saisie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aller à {reference}'**
+  String bibleOuvrirReference(String reference);
+
+  /// Titre de la carte du verset du jour sur l'accueil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Verset du jour'**
+  String get bibleVersetDuJour;
 }
 
 class _AppLocalizationsDelegate

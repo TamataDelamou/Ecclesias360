@@ -154,6 +154,21 @@ class AppError implements Exception {
         "Les engagements d'un fidèle sont réservés à lui-même, à un pasteur ou au trésorier de son nœud.",
       );
 
+  factory AppError.telechargementInvalide() => const AppError(
+        'telechargement_invalide',
+        "Le fichier téléchargé est incomplet ou altéré : il n'a pas été installé.",
+      );
+
+  factory AppError.telechargementEchoue() => const AppError(
+        'telechargement_echoue',
+        "Le téléchargement a échoué. Vérifiez votre connexion et réessayez.",
+      );
+
+  factory AppError.versionBibliqueIndisponible() => const AppError(
+        'version_biblique_indisponible',
+        "Cette version de la Bible n'est pas encore téléchargée sur cet appareil.",
+      );
+
   factory AppError.notePastoraleAccesRefuse() => const AppError(
         'note_pastorale_acces_refuse',
         "Les notes pastorales privées sont réservées à leur auteur et aux pasteurs ; jamais au fidèle concerné.",

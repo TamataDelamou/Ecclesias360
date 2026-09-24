@@ -138,6 +138,13 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
               onPressed: session.enCours ? null : () => _envoyer(session),
               child: Text(l10n.authEnvoyerCode),
             ),
+            const SizedBox(height: AppDimensions.spacingLg),
+            // RG-SEC-06bis amendé : la lecture biblique n'exige pas de compte.
+            OutlinedButton.icon(
+              icon: const Icon(Icons.menu_book_outlined),
+              label: Text(l10n.bibleLireSansCompte),
+              onPressed: () => context.push(AppRoutes.bible),
+            ),
           ],
         ),
       ),

@@ -9,6 +9,8 @@ import 'features/archivage/application/archivage_controller.dart';
 import 'features/auth/application/session_controller.dart';
 import 'features/auth/data/auth_gateway.dart';
 import 'features/auth/data/compte_repository.dart';
+import 'features/bible/application/bible_controller.dart';
+import 'features/bible/data/bible_repository.dart';
 import 'features/archivage/data/archivage_repository.dart';
 import 'features/comite/application/comite_controller.dart';
 import 'features/comite/data/comite_repository.dart';
@@ -49,7 +51,13 @@ import 'features/professions/data/profession_repository.dart';
 import 'l10n/app_localizations.dart';
 
 class EcclesiasApp extends StatefulWidget {
-  const EcclesiasApp({required this.database, required this.authGateway, this.capacites, super.key});
+  const EcclesiasApp({
+    required this.database,
+    required this.authGateway,
+    this.capacites,
+    this.bibleRepository,
+    super.key,
+  });
 
   final AppDatabase database;
 
@@ -60,6 +68,10 @@ class EcclesiasApp extends StatefulWidget {
   /// RG-XXIII-02 — capacités de `roles.json` déjà chargées (production :
   /// `main.dart`) ; à défaut, chargées en arrière-plan et refusées d'ici là.
   final RolesReferential? capacites;
+
+  /// Module XXIV — corpus biblique ; à défaut, celui de l'application réelle
+  /// (`BibleRepository.pourApplication`). Injecté par les tests.
+  final BibleRepository? bibleRepository;
 
   @override
   State<EcclesiasApp> createState() => _EcclesiasAppState();
@@ -75,6 +87,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
   late final FideleRepository _fideleRepository;
   late final FideleController _fideleController;
   late final NotesPastoralesController _notesPastoralesController;
+  late final BibleController _bibleController;
   late final ZoneGeographiqueRepository _zoneGeographiqueRepository;
   late final ZoneGeographiqueController _zoneGeographiqueController;
   late final MinistereRepository _ministereRepository;
@@ -119,6 +132,8 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _fideleRepository = FideleRepository(widget.database, _syncCoordinator);
     _fideleController = FideleController(_fideleRepository);
     _notesPastoralesController = NotesPastoralesController(NotesPastoralesRepository(widget.database));
+    // Module XXIV : à la racine, indépendant de la session (lecture sans compte).
+    _bibleController = BibleController(widget.bibleRepository ?? BibleRepository.pourApplication(widget.database));
     _zoneGeographiqueRepository = ZoneGeographiqueRepository(widget.database);
     _zoneGeographiqueController = ZoneGeographiqueController(
       _zoneGeographiqueRepository,
@@ -170,6 +185,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
     _organisationController.dispose();
     _fideleController.dispose();
     _notesPastoralesController.dispose();
+    _bibleController.dispose();
     _zoneGeographiqueController.dispose();
     _ministereController.dispose();
     _donSpirituelController.dispose();
@@ -195,6 +211,7 @@ class _EcclesiasAppState extends State<EcclesiasApp> {
         ChangeNotifierProvider<OrganisationController>.value(value: _organisationController),
         ChangeNotifierProvider<FideleController>.value(value: _fideleController),
         ChangeNotifierProvider<NotesPastoralesController>.value(value: _notesPastoralesController),
+        ChangeNotifierProvider<BibleController>.value(value: _bibleController),
         ChangeNotifierProvider<ZoneGeographiqueController>.value(value: _zoneGeographiqueController),
         ChangeNotifierProvider<MinistereController>.value(value: _ministereController),
         ChangeNotifierProvider<DonSpirituelController>.value(value: _donSpirituelController),
